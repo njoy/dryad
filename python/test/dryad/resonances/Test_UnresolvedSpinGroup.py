@@ -12,6 +12,7 @@ from njoy.dryad.resonances import Channel
 from njoy.dryad.resonances import UnresolvedResonanceTable
 from njoy.dryad.resonances import UnresolvedSpinGroup
 from njoy.dryad.resonances import Kinematics
+from njoy.dryad.resonances import TabulatedAverageWidths, TabulatedLevelSpacing
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
@@ -68,17 +69,24 @@ def verify_chunk( self, chunk ) :
                      protonQ, protonBoundary, protonRadii )
 
     # unresolved resonance table
+    channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
+                ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ]
+
+    energies = [ 1., 2., 3., 4. ]
+    spacings = TabulatedLevelSpacing( energies, [10., 11., 12., 13.])
+    widths = [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+              TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
+              TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] ),
+              TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
+              ]
+
     table = UnresolvedResonanceTable(
-                channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
-                             ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
-                             ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
-                             ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ],
-                energies = [ 1., 2., 3., 4. ],
-                spacing_values = [ 10., 11., 12., 13. ],
-                width_values = [ [ 0.11, 0.12, 0.13, 0.14 ],
-                                 [ 0.21, 0.22, 0.23, 0.24 ],
-                                 [ 0.31, 0.32, 0.33, 0.34 ],
-                                 [ 0.41, 0.42, 0.43, 0.44 ] ] )
+            channels = channels,
+            level_spacings = spacings, 
+            average_widths = widths )
+    # unresolved resonance table
 
     self.assertEqual( 1, chunk.total_angular_momentum )
     self.assertEqual( +1, chunk.parity )
@@ -154,17 +162,23 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                          protonQ, protonBoundary, protonRadii )
 
         # unresolved resonance table
+        channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                     ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ]
+
+        energies = [ 1., 2., 3., 4. ]
+        spacings = TabulatedLevelSpacing( energies, [10., 11., 12., 13.])
+        widths = [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+                   TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
+                   TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] ),
+                   TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
+                  ]
+
         table = UnresolvedResonanceTable(
-                    channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
-                                 ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
-                                 ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
-                                 ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ],
-                    energies = [ 1., 2., 3., 4. ],
-                    spacing_values = [ 10., 11., 12., 13. ],
-                    width_values = [ [ 0.11, 0.12, 0.13, 0.14 ],
-                                     [ 0.21, 0.22, 0.23, 0.24 ],
-                                     [ 0.31, 0.32, 0.33, 0.34 ],
-                                     [ 0.41, 0.42, 0.43, 0.44 ] ] )
+                    channels = channels,
+                    level_spacings = spacings, 
+                    average_widths = widths )
 
         # sorted channels
         chunk = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table )
@@ -228,26 +242,40 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                          protonQ, protonBoundary, protonRadii )
 
         # unresolved resonance tables
+        channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                     ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ]
+
+        energies = [ 1., 2., 3., 4. ]
+        spacings = TabulatedLevelSpacing( energies, [10., 11., 12., 13.])
+        widths = [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+                   TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
+                   TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] ),
+                   TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
+                  ]
+
         table1 = UnresolvedResonanceTable(
-                     channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
-                                  ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
-                                  ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
-                                  ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ],
-                     energies = [ 1., 2., 3., 4. ],
-                     spacing_values = [ 10., 11., 12., 13. ],
-                     width_values = [ [ 0.11, 0.12, 0.13, 0.14 ],
-                                      [ 0.21, 0.22, 0.23, 0.24 ],
-                                      [ 0.31, 0.32, 0.33, 0.34 ],
-                                      [ 0.41, 0.42, 0.43, 0.44 ] ] )
+                    channels = channels,
+                    level_spacings = spacings, 
+                    average_widths = widths )
+
+        channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' )
+                    ]
+
+        energies = [ 1., 2., 3., 4. ]
+        spacings = TabulatedLevelSpacing( energies, [10., 11., 12., 13.])
+        widths = [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+                   TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
+                   TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] ),
+                  ]
+
         table2 = UnresolvedResonanceTable(
-                     channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
-                                  ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
-                                  ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ) ],
-                     energies = [ 1., 2., 3., 4. ],
-                     spacing_values = [ 10., 11., 12., 13. ],
-                     width_values = [ [ 0.11, 0.12, 0.13, 0.14 ],
-                                      [ 0.21, 0.22, 0.23, 0.24 ],
-                                      [ 0.31, 0.32, 0.33, 0.34 ] ] )
+                    channels = channels,
+                    level_spacings = spacings, 
+                    average_widths = widths )
 
         left = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table1 )
         equal = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table1 )
@@ -321,17 +349,24 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                          protonQ, protonBoundary, protonRadii )
 
         # full table
-        table = UnresolvedResonanceTable(
-                    channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
-                                 ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
-                                 ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
-                                 ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ],
-                    energies = [ 1., 2., 3., 4. ],
-                    spacing_values = [ 10., 11., 12., 13. ],
-                    width_values = [ [ 0.11, 0.12, 0.13, 0.14 ],
-                                     [ 0.21, 0.22, 0.23, 0.24 ],
-                                     [ 0.31, 0.32, 0.33, 0.34 ],
-                                     [ 0.41, 0.42, 0.43, 0.44 ] ] )
+        channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
+                     ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                     ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ]
+
+        energies = [ 1., 2., 3., 4. ]
+        spacings = TabulatedLevelSpacing( energies, [10., 11., 12., 13.])
+        widths = [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+                   TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
+                   TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] ),
+                   TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
+                  ]
+
+        table  = UnresolvedResonanceTable(
+                    channels = channels,
+                    level_spacings = spacings, 
+                    average_widths = widths 
+                    )
 
         # empty channel list
         with self.assertRaises( Exception ) :
@@ -340,16 +375,24 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
 
         # channel/table count mismatch
         with self.assertRaises( Exception ) :
+            channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                         ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
+                         ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' )
+                        ]
+
+            energies = [ 1., 2., 3., 4. ]
+            spacings = TabulatedLevelSpacing( energies, [10., 11., 12., 13.])
+            widths = [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+                       TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
+                       TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] )
+                      ]
 
             shorter = UnresolvedResonanceTable(
-                          channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
-                                       ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
-                                       ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ) ],
-                          energies = [ 1., 2., 3., 4. ],
-                          spacing_values = [ 10., 11., 12., 13. ],
-                          width_values = [ [ 0.11, 0.12, 0.13, 0.14 ],
-                                           [ 0.21, 0.22, 0.23, 0.24 ],
-                                           [ 0.31, 0.32, 0.33, 0.34 ] ] )
+                                                channels = channels,
+                                                level_spacings = spacings, 
+                                                average_widths = widths 
+                                              )           
+
             chunk = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], shorter )
 
         # duplicate channel

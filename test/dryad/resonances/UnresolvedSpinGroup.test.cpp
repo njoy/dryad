@@ -7,6 +7,8 @@ using Catch::Matchers::WithinRel;
 #include "njoy/dryad/resonances/UnresolvedSpinGroup.hpp"
 
 // other includes
+#include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"
+#include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
@@ -68,17 +70,26 @@ SCENARIO( "UnresolvedSpinGroup" ) {
                     protonQ, protonBoundary, protonRadii );
 
     // unresolved resonance table
-    UnresolvedResonanceTable table(
-        { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
-          id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
-          id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-          id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) },
-        { 1., 2., 3., 4. },
-        { 10., 11., 12., 13. },
-        { { 0.11, 0.12, 0.13, 0.14 },
-          { 0.21, 0.22, 0.23, 0.24 },
-          { 0.31, 0.32, 0.33, 0.34 },
-          { 0.41, 0.42, 0.43, 0.44 } } );
+    std::vector< id::ChannelID > channelIDs = { 
+      id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+      id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
+      id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+      id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) 
+    };
+
+    TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+    std::vector< TabulatedAverageWidths > widths = {
+      TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.11, 0.12, 0.13, 0.14 } ),
+      TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.21, 0.22, 0.23, 0.24 } ),
+      TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.31, 0.32, 0.33, 0.34 } ),
+      TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.41, 0.42, 0.43, 0.44 } )
+        };
+
+    UnresolvedResonanceTable table( std::move( channelIDs ),
+                                    std::move( widths ),
+                                    std::move( spacings )
+        );
 
     THEN( "an UnresolvedSpinGroup can be constructed" ) {
 
@@ -146,26 +157,44 @@ SCENARIO( "UnresolvedSpinGroup" ) {
                       protonQ, protonBoundary, protonRadii );
 
       // unresolved resonance tables
-      UnresolvedResonanceTable table1(
-          { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
-            id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
-            id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-            id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) },
-          { 1., 2., 3., 4. },
-          { 10., 11., 12., 13. },
-          { { 0.11, 0.12, 0.13, 0.14 },
-            { 0.21, 0.22, 0.23, 0.24 },
-            { 0.31, 0.32, 0.33, 0.34 },
-            { 0.41, 0.42, 0.43, 0.44 } } );
-      UnresolvedResonanceTable table2(
-          { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
-            id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
-            id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ) },
-          { 1., 2., 3., 4. },
-          { 10., 11., 12., 13. },
-          { { 0.11, 0.12, 0.13, 0.14 },
-            { 0.21, 0.22, 0.23, 0.24 },
-            { 0.31, 0.32, 0.33, 0.34 } } );
+      //
+      std::vector< id::ChannelID > channelIDs1 = { 
+        id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+        id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
+        id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+        id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) 
+      };
+
+      TabulatedLevelSpacing spacings1( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+      std::vector< TabulatedAverageWidths > widths1 = {
+        TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.11, 0.12, 0.13, 0.14 } ),
+        TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.21, 0.22, 0.23, 0.24 } ),
+        TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.31, 0.32, 0.33, 0.34 } ),
+        TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.41, 0.42, 0.43, 0.44 } )
+          };
+      UnresolvedResonanceTable table1( std::move( channelIDs1 ),
+                                       std::move( widths1 ),
+                                       std::move( spacings1 )
+          );
+
+      std::vector< id::ChannelID > channelIDs2 = { 
+        id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+        id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
+        id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+      };
+
+      TabulatedLevelSpacing spacings2( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+      std::vector< TabulatedAverageWidths > widths2 = {
+        TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.11, 0.12, 0.13, 0.14 } ),
+        TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.21, 0.22, 0.23, 0.24 } ),
+        TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.31, 0.32, 0.33, 0.34 } )
+          };
+      UnresolvedResonanceTable table2( std::move( channelIDs2 ),
+                                       std::move( widths2 ),
+                                       std::move( spacings2 )
+          );
 
       UnresolvedSpinGroup left( { capture, elastic, inelastic, proton }, table1 );
       UnresolvedSpinGroup equal( { capture, elastic, inelastic, proton }, table1 );
@@ -242,17 +271,28 @@ void verifyChunk( const UnresolvedSpinGroup& chunk ) {
                   protonQ, protonBoundary, protonRadii );
 
   // unresolved resonance table
-  UnresolvedResonanceTable table(
-      { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
-        id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
-        id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-        id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) },
-      { 1., 2., 3., 4. },
-      { 10., 11., 12., 13. },
-      { { 0.11, 0.12, 0.13, 0.14 },
-        { 0.21, 0.22, 0.23, 0.24 },
-        { 0.31, 0.32, 0.33, 0.34 },
-        { 0.41, 0.42, 0.43, 0.44 } } );
+  //
+  std::vector< id::ChannelID > channelIDs = { 
+    id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+    id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
+    id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+    id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) 
+  };
+
+  TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+  std::vector< TabulatedAverageWidths > widths = {
+    TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.11, 0.12, 0.13, 0.14 } ),
+    TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.21, 0.22, 0.23, 0.24 } ),
+    TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.31, 0.32, 0.33, 0.34 } ),
+    TabulatedAverageWidths( {1., 2., 3., 4., }, { 0.41, 0.42, 0.43, 0.44 } )
+  };
+
+  UnresolvedResonanceTable table( std::move( channelIDs ),
+                                  std::move( widths ),
+                                  std::move( spacings )
+  );
+
 
   CHECK( 1 == chunk.totalAngularMomentum() );
   CHECK( +1 == chunk.parity() );
