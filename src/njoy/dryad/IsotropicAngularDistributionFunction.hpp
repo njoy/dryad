@@ -121,7 +121,7 @@ namespace dryad {
     /**
      *  @brief Return the integral of the distribution function over its domain
      */
-    constexpr double integral() const {
+    double integral() const {
 
       return 2. * this->value();
     }
