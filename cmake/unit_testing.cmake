@@ -142,6 +142,7 @@ add_cpp_test( format.createIndex                                                
 add_cpp_test( format.createVector                                                      format/createVector.test.cpp )
 add_cpp_test( format.adjustScatterLevel                                                format/adjustScatterLevel.test.cpp )
 add_cpp_test( format.collectParticleIdentifiers                                        format/collectParticleIdentifiers.test.cpp )
+add_cpp_test( format.convertLegendreMoments                                            format/convertLegendreMoments.test.cpp )
 
 add_cpp_test( format.ace.read.createProjectileIdentifier                               format/ace/read/createProjectileIdentifier.test.cpp )
 add_cpp_test( format.ace.read.createTabulatedScatteringFunction                        format/ace/read/createTabulatedScatteringFunction.test.cpp )
