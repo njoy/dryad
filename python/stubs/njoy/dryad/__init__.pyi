@@ -953,7 +953,7 @@ class MixedAngularDistribution:
                     njoy.dryad.LegendreAngularDistributionFunction,
                     njoy.dryad.TabulatedAngularDistributionFunction]
             the distribution function
-        value : float, default 0.5
+        value : float
             the value of the distribution (0.5 for a normalised distribution)
         coefficients : list of float
             the coefficients of the Legendre series (from
