@@ -11,9 +11,10 @@
 #include "njoy/format/endf/read/createProductIdentifier.hpp"
 #include "njoy/format/endf/read/createReferenceFrame.hpp"
 #include "njoy/format/endf/read/createMultiplicity.hpp"
-#include "njoy/format/endf/read/createTabulatedEnergyDistributions.hpp"
-#include "njoy/format/endf/read/createTabulatedAngularDistributions.hpp"
 #include "njoy/format/endf/read/createLegendreAngularDistributions.hpp"
+#include "njoy/format/endf/read/createTabulatedAngularDistributions.hpp"
+#include "njoy/format/endf/read/createMixedAngularDistributions.hpp"
+#include "njoy/format/endf/read/createTabulatedEnergyDistributions.hpp"
 #include "njoy/format/endf/read/createTabulatedAverageEnergy.hpp"
 #include "njoy/format/endf/read/createTabulatedFormFactor.hpp"
 #include "njoy/format/endf/read/createTabulatedScatteringFunction.hpp"
@@ -60,9 +61,9 @@ namespace read {
 
         return createTabulatedAngularDistributions( distributions, normalise );
       },
-      [&] ( const MixedDistributions& ) -> dryad::TwoBodyDistributionData::AngularDistributions {
+      [&] ( const MixedDistributions& distributions ) -> dryad::TwoBodyDistributionData::AngularDistributions {
 
-        throw std::runtime_error( "Any MF4 LTT = 3 is not implemented yet, contact a developer" );
+        return createMixedAngularDistributions( distributions, normalise );
       }
     };
 

@@ -36,7 +36,7 @@ void wrapMixedAngularDistribution( python::module& module ) {
     "                njoy.dryad.LegendreAngularDistributionFunction,\n"
     "                njoy.dryad.TabulatedAngularDistributionFunction]\n"
     "        the distribution function\n"
-    "    value : float, default 0.5\n"
+    "    value : float\n"
     "        the value of the distribution (0.5 for a normalised distribution)\n"
     "    coefficients : list of float\n"
     "        the coefficients of the Legendre series (from\n"
