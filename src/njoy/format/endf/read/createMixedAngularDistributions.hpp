@@ -31,22 +31,27 @@ namespace read {
 
     try {
 
-      auto legendre = distribution.legendre();
-      auto tabulated = distribution.tabulated();
-
-      auto energies = createVector( legendre.incidentEnergies() );
-      energies.insert( energies.end(), tabulated.incidentEnergies().begin(), tabulated.incidentEnergies().end() );
-
+      auto energies = createVector( distribution.incidentEnergies() );
       std::vector< dryad::MixedAngularDistribution > distributions;
       distributions.reserve( energies.size() );
 
-      for ( auto&& entry : legendre.angularDistributions() ) {
+      using LegendreCoefficients = std::reference_wrapper< const ENDFtk::section::Type< 4 >::LegendreCoefficients >;
+      using TabulatedDistribution = std::reference_wrapper< const ENDFtk::section::Type< 4 >::TabulatedDistribution >;
+      auto create = tools::overload{
 
-        distributions.emplace_back( createMixedAngularDistribution( entry.coefficients(), true, false ) );
-      }
-      for ( auto&& entry : tabulated.angularDistributions() ) {
+        [&] ( const LegendreCoefficients& distribution ) -> dryad::MixedAngularDistribution {
 
-        distributions.emplace_back( createMixedAngularDistribution( entry, normalise ) );
+          return createMixedAngularDistribution( distribution, normalise );
+        },
+        [&] ( const TabulatedDistribution& distribution ) -> dryad::MixedAngularDistribution {
+
+          return createMixedAngularDistribution( distribution, normalise );
+        }
+      };
+
+      for ( auto&& entry : distribution.angularDistributions() ) {
+
+        distributions.emplace_back( std::visit( create, entry ) );
       }
 
       auto boundaries = createBoundaries( distribution.boundaries() );

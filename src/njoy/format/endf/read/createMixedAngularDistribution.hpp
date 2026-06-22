@@ -17,18 +17,15 @@ namespace read {
   /**
    *  @brief Create a MixedAngularDistribution from a range of moments
    */
-  template < typename Range >
-  dryad::MixedAngularDistribution
-  createMixedAngularDistribution( const Range& range, bool addOrderZero,
-                                  bool normalise ) {
+  inline dryad::MixedAngularDistribution
+  createMixedAngularDistribution(
+      const ENDFtk::section::Type< 4 >::LegendreCoefficients& distribution,
+      bool normalise ) {
 
     try {
 
-      auto coefficients = createVector( range );
-      if ( addOrderZero ) {
-
-        coefficients.insert( coefficients.begin(), 1. );
-      }
+      auto coefficients = createVector( distribution.coefficients() );
+      coefficients.insert( coefficients.begin(), 1. );
       convertLegendreMoments( coefficients );
 
       return dryad::MixedAngularDistribution( std::move( coefficients ), normalise );

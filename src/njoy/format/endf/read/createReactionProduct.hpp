@@ -85,20 +85,10 @@ namespace read {
     auto frame = createReferenceFrame( section.referenceFrame() );
     int multiplicity = reaction.particles()->at( id );
 
-    if ( section.LTT() != 3 ) {
-
-      auto distribution = dryad::TwoBodyDistributionData(
-                            frame,
-                            std::visit( createDistributions, section.distributions() ) );
-      return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
-    }
-    else {
-
-      // temporary code: remove when we implement mixed distributions
-
-      Log::info( "Any MF4 LTT = 3 is not implemented yet" );
-      return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::nullopt );
-    }
+    auto distribution = dryad::TwoBodyDistributionData(
+                          frame,
+                          std::visit( createDistributions, section.distributions() ) );
+    return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
   }
 
   /**
