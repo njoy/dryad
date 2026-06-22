@@ -9,6 +9,7 @@
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
 #include "njoy/format/createVector.hpp"
 #include "njoy/format/convertLegendreMoments.hpp"
+#include "ENDFtk/section/4.hpp"
 #include "ENDFtk/section/6.hpp"
 
 namespace njoy {
@@ -17,20 +18,21 @@ namespace endf {
 namespace read {
 
   /**
-   *  @brief Create a LegendreAngularDistribution from a range of moments
+   *  @brief Create a MixedAngularDistribution from MF4 Legendre moments
    */
-  template < typename Range >
-  dryad::LegendreAngularDistribution
-  createLegendreAngularDistribution( const Range& range, bool addOrderZero,
-                                     bool normalise ) {
+  template < typename LegendreCoefficients >
+  auto createLegendreAngularDistribution( const LegendreCoefficients& distribution,
+                                          bool normalise )
+  -> std::enable_if_t< ( std::is_same_v< LegendreCoefficients,
+                                         ENDFtk::section::Type< 4 >::LegendreCoefficients > ||
+                         std::is_same_v< LegendreCoefficients,
+                                         ENDFtk::section::Type< 6 >::DiscreteTwoBodyScattering::LegendreCoefficients > ),
+                       dryad::LegendreAngularDistribution > {
 
     try {
 
-      auto coefficients = createVector( range );
-      if ( addOrderZero ) {
-
-        coefficients.insert( coefficients.begin(), 1. );
-      }
+      auto coefficients = createVector( distribution.coefficients() );
+      coefficients.insert( coefficients.begin(), 1. );
       convertLegendreMoments( coefficients );
 
       return dryad::LegendreAngularDistribution( std::move( coefficients ), normalise );

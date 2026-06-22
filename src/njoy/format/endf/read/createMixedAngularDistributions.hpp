@@ -6,10 +6,12 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/dryad/MixedAngularDistributions.hpp"
 #include "njoy/format/createVector.hpp"
 #include "njoy/format/endf/read/createBoundaries.hpp"
 #include "njoy/format/endf/read/createInterpolants.hpp"
 #include "njoy/format/endf/read/createMixedAngularDistribution.hpp"
+#include "ENDFtk/section/4.hpp"
 
 namespace njoy {
 namespace format {

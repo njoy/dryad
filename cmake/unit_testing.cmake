@@ -239,6 +239,8 @@ add_cpp_test( format.endf.read.createLegendreAngularDistribution                
 add_cpp_test( format.endf.read.createLegendreAngularDistributions                      format/endf/read/createLegendreAngularDistributions.test.cpp )
 add_cpp_test( format.endf.read.createTabulatedAngularDistribution                      format/endf/read/createTabulatedAngularDistribution.test.cpp )
 add_cpp_test( format.endf.read.createTabulatedAngularDistributions                     format/endf/read/createTabulatedAngularDistributions.test.cpp )
+add_cpp_test( format.endf.read.createMixedAngularDistribution                          format/endf/read/createMixedAngularDistribution.test.cpp )
+add_cpp_test( format.endf.read.createMixedAngularDistributions                         format/endf/read/createMixedAngularDistributions.test.cpp )
 add_cpp_test( format.endf.read.createTabulatedEnergyDistribution                       format/endf/read/createTabulatedEnergyDistribution.test.cpp )
 add_cpp_test( format.endf.read.createTabulatedEnergyDistributions                      format/endf/read/createTabulatedEnergyDistributions.test.cpp )
 add_cpp_test( format.endf.read.createTabulatedAverageEnergy                            format/endf/read/createTabulatedAverageEnergy.test.cpp )

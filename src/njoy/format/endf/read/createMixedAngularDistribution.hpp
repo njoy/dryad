@@ -8,6 +8,10 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/MixedAngularDistribution.hpp"
 #include "njoy/format/createVector.hpp"
+#include "njoy/format/convertLegendreMoments.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
+#include "ENDFtk/section/4.hpp"
 
 namespace njoy {
 namespace format {
@@ -15,7 +19,7 @@ namespace endf {
 namespace read {
 
   /**
-   *  @brief Create a MixedAngularDistribution from a range of moments
+   *  @brief Create a MixedAngularDistribution from MF4 Legendre moments
    */
   inline dryad::MixedAngularDistribution
   createMixedAngularDistribution(

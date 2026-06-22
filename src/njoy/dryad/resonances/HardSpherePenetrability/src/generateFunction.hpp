@@ -14,7 +14,7 @@ static PolynomialSeriesRatio generateFunction( unsigned int l ) {
     default : {
 
       Log::error( "Cannot handle wave functions with l above 5, got \'{}\', "
-                  "contact dryad developers", l );
+                  "contact njoy developers", l );
       throw std::exception();
     }
   }

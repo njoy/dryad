@@ -49,10 +49,10 @@ namespace dryad {
      *                         all probability data (default: no normalisation)
      */
     MixedAngularDistributions( std::vector< double > grid,
-                                   std::vector< MixedAngularDistribution > distributions,
-                                   std::vector< std::size_t > boundaries,
-                                   std::vector< InterpolationType > interpolants,
-                                   bool normalise = false ) :
+                               std::vector< MixedAngularDistribution > distributions,
+                               std::vector< std::size_t > boundaries,
+                               std::vector< InterpolationType > interpolants,
+                               bool normalise = false ) :
       Parent( std::move( grid ), std::move( distributions ),
               std::move( boundaries ), std::move( interpolants ) ) {
 
@@ -72,9 +72,9 @@ namespace dryad {
      *                         all probability data (default: no normalisation)
      */
     MixedAngularDistributions( std::vector< double > grid,
-                                   std::vector< MixedAngularDistribution > distributions,
-                                   InterpolationType interpolant = InterpolationType::LinearLinear,
-                                   bool normalise = false ) :
+                               std::vector< MixedAngularDistribution > distributions,
+                               InterpolationType interpolant = InterpolationType::LinearLinear,
+                               bool normalise = false ) :
       Parent( std::move( grid ), std::move( distributions ), interpolant ) {
 
       if ( normalise ) {
