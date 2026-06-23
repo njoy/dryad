@@ -4,37 +4,35 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createParticles.hpp"
+#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createReactions.hpp"
-#include "ENDFtk/tree/fromFile.hpp"
+#include "ACEtk/fromFile.hpp"
+#include "ACEtk/ContinuousEnergyTable.hpp"
+#include "njoy/dryad/format/ace/continuous/createReactions.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::constants;
 
 // include common test verification functions
-#include "test_verification_functions.hpp"
 
 SCENARIO( "createParticles" ) {
 
-  GIVEN( "ENDF materials - incident neutrons - stable target" ) {
+  GIVEN( "instances of ContinuousEnergyTable" ) {
 
-    WHEN( "a single ENDF material is given" ) {
+    WHEN( "a Lib81 formatted table is given" ) {
 
-      using Tape = njoy::ENDFtk::tree::Tape;
-      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
-      auto material = tape.materials().front();
-      auto information = material.section( 1, 451 ).parse< 1, 451 >();
+      njoy::ACEtk::ContinuousEnergyTable table( njoy::ACEtk::fromFile( "1001.10c" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "a ProjectileTarget can be derived" ) {
+
+        using namespace njoy::constants;
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
-        std::map< id::ParticleID, double > masses;
-        auto reactions = format::endf::createReactions( projectile, target, material, false, masses );
-        auto particles = format::endf::createParticleDatabase( projectile, target, reactions, information, masses );
+        auto reactions = format::ace::continuous::createReactions( projectile, target, table, false );
+        auto particles = format::ace::createParticleDatabase( target, reactions, table );
 
         CHECK( 4 == particles.numberParticles() );
 
@@ -61,13 +59,13 @@ SCENARIO( "createParticles" ) {
         CHECK( +1 == particle.parity().value() );
         CHECK( std::nullopt == particle.energy() );
         CHECK( std::nullopt == particle.nuclearMass() );
-        CHECK( std::nullopt == particle.massUncertainty() );
+        CHECK_THAT( neutron_mass_uncertainty, WithinRel( particle.massUncertainty().value() ) );
         CHECK( std::nullopt == particle.nuclearMassUncertainty() );
         CHECK( std::nullopt == particle.energyUncertainty() );
 
         particle = particles.particle( id::ParticleID( "H1" ) );
         CHECK( id::ParticleID( "H1" ) == particle.identifier() );
-        CHECK_THAT( 0.9991673 * neutron_mass, WithinRel( particle.mass().value() ) );
+        CHECK_THAT( 0.999167 * neutron_mass, WithinRel( particle.mass().value() ) );
         CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
         CHECK( +1 == particle.parity().value() );
         CHECK_THAT( 0., WithinRel( particle.energy().value() ) );
@@ -78,12 +76,12 @@ SCENARIO( "createParticles" ) {
 
         particle = particles.particle( id::ParticleID( "H2[all]" ) );
         CHECK( id::ParticleID( "H2[all]" ) == particle.identifier() );
-        CHECK_THAT( 1.996256 * neutron_mass , WithinRel( particle.mass().value() ) );
+        CHECK_THAT( 2.014101777844, WithinRel( particle.mass().value() ) );
         CHECK( std::nullopt == particle.spin() );
         CHECK( std::nullopt == particle.parity() );
         CHECK( std::nullopt == particle.energy() );
         CHECK( std::nullopt == particle.nuclearMass() );
-        CHECK( std::nullopt == particle.massUncertainty() );
+        CHECK_THAT( 0.000000000015, WithinRel( particle.massUncertainty().value() ) );
         CHECK( std::nullopt == particle.nuclearMassUncertainty() );
         CHECK( std::nullopt == particle.energyUncertainty() );
       } // THEN

@@ -11,6 +11,7 @@
 #include "njoy/dryad/format/endf/createReactionProduct.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/constants.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
@@ -54,7 +55,8 @@ namespace endf {
   createReactionProducts( const id::ReactionID& reaction,
                           const ENDFtk::tree::Material& material,
                           int mt,
-                          bool normalise ) {
+                          bool normalise,
+                          std::map< id::ParticleID, double >& masses ) {
 
     std::vector< ReactionProduct > products;
 
@@ -148,6 +150,20 @@ namespace endf {
             else {
 
               products.emplace_back( createReactionProduct( reaction, product, normalise ) );
+
+              auto id = products.back().productIdentifier().groundState();
+              if ( id != id::ParticleID::photon() ) {
+
+                // for photons, the mass value is actually the energy of the primary photon
+                // so we skip those
+
+                double mass = product.productWeightRatio() * constants::neutron_mass;
+                auto iter = masses.find( id );
+                if ( iter == masses.end() ) {
+
+                  masses[ id ] = mass;
+                }
+              }
             }
           }
 

@@ -42,9 +42,8 @@ namespace endf {
     id::ParticleID target = createTargetIdentifier( information.ZA(), information.excitedLevel() );
     InteractionType type = createInteractionType( information.subLibrary() );
 
-    std::vector< Particle > particles = createParticles( projectile, target, information );
-
-    std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
+    std::map< id::ParticleID, double > masses;
+    std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise, masses );
 
     std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
     if ( type == InteractionType::Nuclear ) {
@@ -53,13 +52,13 @@ namespace endf {
                                                           material.section( 2, 151 ).parse< 2, 151 >() );
     }
 
-    ParticleDatabase database( std::move( particles ) );
+    ParticleDatabase particles = createParticleDatabase( projectile, target, reactions, information, masses );
 
     std::optional< dryad::covariance::CovarianceData > covariances = covariance::createCovarianceData( projectile, target, material );
 
     return ProjectileTarget( std::move( documentation ), std::move( projectile ),
                              std::move( target ), type, std::move( reactions ),
-                             std::move( database ), std::move( resonances ),
+                             std::move( particles ), std::move( resonances ),
                              std::move( covariances ) );
   }
 

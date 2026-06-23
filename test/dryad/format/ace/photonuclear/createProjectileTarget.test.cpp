@@ -37,6 +37,9 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( InteractionType::Nuclear == C12.interactionType() );
 
+        CHECK( std::nullopt != C12.particleData() );
+        photonuclear::la150u::c12::verifyParticleDatabase( C12.particleData().value() );
+
         CHECK( std::nullopt == C12.resonances() );
 
         CHECK( true == C12.hasReaction( id::ReactionID( "g,C12->total" ) ) );
