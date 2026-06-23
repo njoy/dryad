@@ -18,7 +18,7 @@ using namespace njoy::constants;
 
 // include common test verification functions
 
-SCENARIO( "createParticles" ) {
+SCENARIO( "createParticleDatabase" ) {
 
   GIVEN( "instances of ContinuousEnergyTable" ) {
 

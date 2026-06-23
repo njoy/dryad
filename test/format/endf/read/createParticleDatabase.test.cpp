@@ -18,7 +18,7 @@ using namespace njoy::constants;
 // include common test verification functions
 #include "test_verification_functions.hpp"
 
-SCENARIO( "createParticles" ) {
+SCENARIO( "createParticleDatabase" ) {
 
   GIVEN( "ENDF materials - incident neutrons - stable target" ) {
 
