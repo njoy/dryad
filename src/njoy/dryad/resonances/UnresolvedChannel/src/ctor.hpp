@@ -24,4 +24,7 @@ UnresolvedChannel( Channel channel,
                    double reference_energy = 1. ) :
     channel_( std::move( channel ) ),
     reference_energy_( reference_energy ),
-    conversion_factor_( selectWidthConversionFactor( this->channel_.outgoingParticlePair() ) ) {}
+    conversion_factor_( 
+        selectWidthConversionFactor( this->channel_.quantumNumbers().orbitalAngularMomentum(),
+                                     this->reference_energy_,
+                                     this->channel_.outgoingParticlePair() ) ) {}

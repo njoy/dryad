@@ -1,14 +1,16 @@
 static ConversionFactor
-selectWidthConversionFactor( const std::optional< ParticlePair >& outgoing ) {
+selectWidthConversionFactor( unsigned int l,
+                             double reference_energy,
+                             const std::optional< ParticlePair >& outgoing ) {
 
   if ( outgoing.has_value() ) {
 
     if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
 
-      return NeutronWidthConversion();
+      return ReducedWidthConversion( l, reference_energy);
     }
   }
-  return ConstantWidthConversion();
+  return 1.;
 } 
 
 #endif
