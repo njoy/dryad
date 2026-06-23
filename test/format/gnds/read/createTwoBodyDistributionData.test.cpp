@@ -15,6 +15,7 @@ using namespace njoy::format;
 
 void verifyChunkLegendre( const TwoBodyDistributionData& );
 void verifyChunkTabulated( const TwoBodyDistributionData&, bool );
+void verifyChunkMixed( const TwoBodyDistributionData&, bool );
 
 SCENARIO( "createTwoBodyDistributionData" ) {
 
@@ -67,6 +68,32 @@ SCENARIO( "createTwoBodyDistributionData" ) {
 
         verifyChunkTabulated( chunk1, false );
         verifyChunkTabulated( chunk2, true );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "GNDS two body distribution data node with mixed angular data" ) {
+
+    pugi::xml_document document;
+    document.load_file( "n-010_Ne_022.endf.gnds.xml" );
+    pugi::xml_node node = document.child( "reactionSuite" ).child( "reactions" ).
+                                   find_child_by_attribute( "reaction", "ENDF_MT", "2" ).
+                                   child( "outputChannel" ).
+                                   child( "products" ).
+                                   find_child_by_attribute( "product", "label", "n" ).
+                                   child( "distribution" );
+
+    pugi::xml_node twobody = node.child( "angularTwoBody" );
+
+    WHEN( "a single two body data node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk1 = gnds::read::createTwoBodyDistributionData( twobody, false );
+        auto chunk2 = gnds::read::createTwoBodyDistributionData( twobody, true );
+
+        verifyChunkMixed( chunk1, false );
+        verifyChunkMixed( chunk2, true );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -258,4 +285,71 @@ void verifyChunkTabulated( const TwoBodyDistributionData& chunk, bool normalise 
   CHECK_THAT(  6.60323499999927e-16 / normalisation15, WithinRel( angle.distributions()[15].cdf().values()[1] ) );
   CHECK_THAT(  0.90986985942462     / normalisation15, WithinRel( angle.distributions()[15].cdf().values()[94] ) );
   CHECK_THAT(  1.00000000937718     / normalisation15, WithinRel( angle.distributions()[15].cdf().values()[95] ) );
+}
+
+void verifyChunkMixed( const TwoBodyDistributionData& chunk, bool normalise ) {
+
+  CHECK( DistributionDataType::TwoBody == chunk.type() );
+  CHECK( true == std::holds_alternative< MixedAngularDistributions >( chunk.angle() ) );
+  auto angle = std::get< MixedAngularDistributions >( chunk.angle() );
+  CHECK( 51 == angle.numberPoints() );
+  CHECK( 2 == angle.numberRegions() );
+  CHECK( 51 == angle.grid().size() );
+  CHECK( 51 == angle.distributions().size() );
+  CHECK( 2 == angle.boundaries().size() );
+  CHECK( 2 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5 , WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 1e+5 , WithinRel( angle.grid()[1] ) );
+  CHECK_THAT( 3e+7 , WithinRel( angle.grid()[35] ) );
+  CHECK_THAT( 3e+7 , WithinRel( angle.grid()[36] ) );
+  CHECK_THAT( 16e+7, WithinRel( angle.grid()[49] ) );
+  CHECK_THAT( 20e+7, WithinRel( angle.grid()[50] ) );
+  CHECK( 35 == angle.boundaries()[0] );
+  CHECK( 50 == angle.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[1] );
+
+  CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( angle.distributions()[0].pdf() ) );
+  CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( angle.distributions()[35].pdf() ) );
+  CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( angle.distributions()[36].pdf() ) );
+  CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( angle.distributions()[50].pdf() ) );
+
+  auto pdf0 = std::get< LegendreAngularDistributionFunction >( angle.distributions()[0].pdf() );
+  auto pdf35 = std::get< LegendreAngularDistributionFunction >( angle.distributions()[35].pdf() );
+  auto pdf36 = std::get< TabulatedAngularDistributionFunction >( angle.distributions()[36].pdf() );
+  auto pdf50 = std::get< TabulatedAngularDistributionFunction >( angle.distributions()[50].pdf() );
+
+  CHECK(  1 == pdf0.coefficients().size() );
+  CHECK( 31 == pdf35.coefficients().size() );
+  CHECK_THAT(  0.5        , WithinRel( pdf0.coefficients()[0] ) );
+  CHECK_THAT(  0.5        , WithinRel( pdf35.coefficients()[0] ) );
+  CHECK_THAT( -1.455580e-9 * 30.5, WithinRel( pdf35.coefficients()[30] ) );
+
+  // the numbers in the tests given below are the values as found in the test
+  // file so they need to be normalised. the following values are the scaling
+  // factors that need to be applied (calculated by integrating the distributions
+  // in excel).
+  double normalisation36 = normalise ? 0.99999988111130 : 1.;
+  double normalisation50 = normalise ? 1.00000091921303 : 1.;
+
+  CHECK( 91 == pdf36.cosines().size() );
+  CHECK( 91 == pdf36.values().size() );
+  CHECK(  1 == pdf36.interpolants().size() );
+  CHECK(  1 == pdf36.boundaries().size() );
+  CHECK( 91 == pdf50.cosines().size() );
+  CHECK( 91 == pdf50.values().size() );
+  CHECK(  1 == pdf50.interpolants().size() );
+  CHECK(  1 == pdf50.boundaries().size() );
+  CHECK( 90 == pdf36.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf36.interpolants()[0] );
+  CHECK_THAT( -1., WithinRel( pdf36.cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( pdf36.cosines()[90] ) );
+  CHECK_THAT( 2.562149e-3 / normalisation36, WithinRel( pdf36.values()[0] ) );
+  CHECK_THAT( 1.593952e+1 / normalisation36, WithinRel( pdf36.values()[90] ) );
+  CHECK( 90 == pdf50.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf50.interpolants()[0] );
+  CHECK_THAT( -1., WithinRel( pdf50.cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( pdf50.cosines()[90] ) );
+  CHECK_THAT( 7.050719e-7 / normalisation50, WithinRel( pdf50.values()[0] ) );
+  CHECK_THAT( 7.964481e+1 / normalisation50, WithinRel( pdf50.values()[90] ) );
 }

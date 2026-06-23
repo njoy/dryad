@@ -18,9 +18,10 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief Create a TabulatedAngularDistribution from a GNDS XYs1d node
+   *  @brief Create a TabulatedAngularDistributionFunction from a GNDS XYs1d or regions1d node
    *
-   *  @todo is it possible to have a regions1d version?
+   *  @param[in] legendre   the gnds XYs1d or regions1d node
+   *  @param[in] units      the unit information
    */
   inline std::pair< std::optional< double >,
                     dryad::TabulatedAngularDistributionFunction >
@@ -53,6 +54,45 @@ namespace read {
       values = std::move( std::get< 4 >( data ) );
       boundaries.emplace_back( cosines.size() - 1 );
       interpolants.emplace_back( interpolant );
+    }
+    else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
+
+      // get the outer domain value
+      auto attribute = node.attribute( "outerDomainValue" );
+      if ( attribute ) {
+
+        outer = attribute.as_double();
+        convertEnergy( outer.value(), std::get< 1 >( units[0] ).value() );
+      }
+
+      // loop over the children of function1ds
+      pugi::xml_node function1ds = node.child( "function1ds" );
+      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" );
+            xys1d; xys1d = xys1d.next_sibling(  "XYs1d"  ) ) {
+
+        // read the current interpolation region
+        auto data = readXYs1D( xys1d, units );
+
+        // get the interpolation type
+        auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+
+        // check for duplicate points at interpolation region boundaries
+        std::size_t offset = 0;
+        if ( cosines.size() > 0 ) {
+
+          if ( cosines.back() == std::get< 2 >( data ).front() &&
+               values.back() == std::get< 4 >( data ).front() ) {
+
+            offset = 1;
+          }
+        }
+
+        // grow the data accordingly
+        cosines.insert( cosines.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
+        values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
+        boundaries.emplace_back( cosines.size() - 1 );
+        interpolants.emplace_back( interpolant );
+      }
     }
     else {
 

@@ -17,7 +17,10 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief Create a LegendreAngularDistribution from a GNDS legendre node
+   *  @brief Create LegendreAngularDistributionFunction instances from a GNDS function1ds node
+   *
+   *  @param[in] function1ds   the gnds function1ds node
+   *  @param[in] units         the unit information
    */
   inline std::pair< std::vector< std::optional< double > >,
                     std::vector< dryad::LegendreAngularDistributionFunction > >

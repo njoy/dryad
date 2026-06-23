@@ -19,9 +19,10 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief Create a TabulatedEnergyDistribution from a GNDS XYs1d node
+   *  @brief Create a TabulatedEnergyDistributionFunction from a GNDS XYs1d or regions1d node
    *
-   *  @todo is it possible to have a regions1d version?
+   *  @param[in] legendre   the gnds XYs1d or regions1d node
+   *  @param[in] units      the unit information
    */
   inline std::pair< std::optional< double >,
                     dryad::TabulatedEnergyDistributionFunction >
@@ -41,7 +42,7 @@ namespace read {
       // get the interpolation type
       auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
-      // cosine and probability data does not need to be converted
+      // probability data does not need to be converted
       // convert outer domain value if necessary
       if ( std::get< 0 >( data ).has_value() ) {
 
@@ -78,7 +79,7 @@ namespace read {
         auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
         // convert units - if necessary
-        // cosine and probability data does not need to be converted
+        // probability data does not need to be converted
         convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
 
         // check for duplicate points at interpolation region boundaries

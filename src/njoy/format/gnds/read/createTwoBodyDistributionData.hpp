@@ -9,8 +9,9 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/TwoBodyDistributionData.hpp"
 #include "njoy/format/gnds/read/createReferenceFrame.hpp"
-#include "njoy/format/gnds/read/createLegendreAngularDistributionFunctions.hpp"
-#include "njoy/format/gnds/read/createTabulatedAngularDistributionFunctions.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistributions.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistributions.hpp"
+#include "njoy/format/gnds/read/createMixedAngularDistributions.hpp"
 
 namespace njoy {
 namespace format {
@@ -33,9 +34,6 @@ namespace read {
     auto node = twobody.first_child();
     if ( strcmp( node.name(), "XYs2d" ) == 0 ) {
 
-      // read the axes
-      auto units = readAxes( node.child( "axes" ) );
-
       // get the functions
       auto function1ds = node.child( "function1ds" );
       auto function = function1ds.first_child();
@@ -44,35 +42,15 @@ namespace read {
 
         if ( strcmp( function.name(), "Legendre" ) == 0 ) {
 
-          std::vector< double > grid;
-          std::vector< dryad::LegendreAngularDistribution > distributions;
-
-          auto data = createLegendreAngularDistributionFunctions( function1ds, units );
-          for ( std::size_t i = 0; i < data.first.size(); ++i ) {
-
-            grid.emplace_back( data.first[i].value() );
-            distributions.emplace_back( std::move( data.second[i] ), normalise );
-          }
-
           return dryad::TwoBodyDistributionData(
                    std::move( frame ),
-                   dryad::LegendreAngularDistributions( std::move( grid ), std::move( distributions ) ) );
+                   createLegendreAngularDistributions( node, normalise ) );
         }
         else {
 
-          std::vector< double > grid;
-          std::vector< dryad::TabulatedAngularDistribution > distributions;
-
-          auto data = createTabulatedAngularDistributionFunctions( function1ds, units );
-          for ( std::size_t i = 0; i < data.first.size(); ++i ) {
-
-            grid.emplace_back( data.first[i].value() );
-            distributions.emplace_back( std::move( data.second[i] ), normalise );
-          }
-
           return dryad::TwoBodyDistributionData(
                    std::move( frame ),
-                   dryad::TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) ) );
+                   createTabulatedAngularDistributions( node, normalise ) );
         }
       }
       else {
@@ -87,13 +65,9 @@ namespace read {
     }
     else if ( strcmp( node.name(), "regions2d" ) == 0 ) {
 
-
-
-
-
-      Log::error( "Mixed Legendre and tabulated angular distribution data is "
-                  "currently unsupported" );
-      throw std::exception();
+      return dryad::TwoBodyDistributionData(
+               std::move( frame ),
+               createMixedAngularDistributions( node, normalise ) );
     }
     else {
 

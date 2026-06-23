@@ -10,6 +10,7 @@
 #include "njoy/dryad/IsotropicAngularDistributions.hpp"
 #include "njoy/dryad/LegendreAngularDistributions.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
+#include "njoy/dryad/MixedAngularDistributions.hpp"
 #include "njoy/dryad/MultiEnergyDistributions.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributions.hpp"
 #include "tools/overload.hpp"
@@ -39,7 +40,8 @@ namespace dryad {
     /* type aliases */
     using AngularDistributions = std::variant< IsotropicAngularDistributions,
                                                LegendreAngularDistributions,
-                                               TabulatedAngularDistributions >;
+                                               TabulatedAngularDistributions,
+                                               MixedAngularDistributions >;
     using EnergyDistributions = std::variant< MultiEnergyDistributions,
                                               TabulatedEnergyDistributions >;
 
