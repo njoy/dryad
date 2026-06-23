@@ -4,7 +4,7 @@
 // system includes
 #include <map>
 
-#if __has_include(<filesystem>) && (__cplusplus >= 201703L)
+#if __has_include(<filesystem>) && (defined(_MSVC_LANG) ? (_MSVC_LANG >= 201703L) : (__cplusplus >= 201703L))
 #include <filesystem>
 namespace filesystem = std::filesystem;
 #elif __has_include(<experimental/filesystem>)
@@ -75,7 +75,7 @@ namespace ripl3 {
      */
     static bool hasEntry( const id::ParticleID& id ) {
 
-      return iterator( id ) == Levels::levels_.end();
+      return iterator( id ) != Levels::levels_.end();
     }
 
     /**

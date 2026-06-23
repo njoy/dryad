@@ -4,7 +4,7 @@
 // system includes
 #include <map>
 
-#if __has_include(<filesystem>) && (__cplusplus >= 201703L)
+#if __has_include(<filesystem>) && (defined(_MSVC_LANG) ? (_MSVC_LANG >= 201703L) : (__cplusplus >= 201703L))
 #include <filesystem>
 namespace filesystem = std::filesystem;
 #elif __has_include(<experimental/filesystem>)
@@ -61,7 +61,7 @@ namespace ame {
      */
     static bool hasEntry( const id::ParticleID& id ) {
 
-      return iterator( id ) == Masses::masses_.end();
+      return iterator( id ) != Masses::masses_.end();
     }
 
     /**
@@ -71,7 +71,7 @@ namespace ame {
      */
     static const MassEntry& entry( const id::ParticleID& id ) {
 
-      auto iter = iterator( id.groundState() );
+      auto iter = iterator( id );
       if ( iter == Masses::masses_.end() ) {
 
         throw std::out_of_range( "Particle not found in the AME2020 masses" );

@@ -1,12 +1,12 @@
 static auto iterator( const id::ParticleID& id ) {
 
-  auto iter = Masses::masses_.find( id );
+  auto iter = Masses::masses_.find( id.groundState() );
   if ( iter == Masses::masses_.end() ) {
 
     if ( Masses::size() == 0 ) {
 
       Masses::loadData();
-      iter = Masses::masses_.find( id );
+      iter = Masses::masses_.find( id.groundState() );
     }
   }
 

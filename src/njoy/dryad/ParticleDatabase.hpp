@@ -24,8 +24,68 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/ParticleDatabase/src/iterator.hpp"
-    #include "njoy/dryad/ParticleDatabase/src/sort.hpp"
+    /**
+     *  @brief Return an iterator to the Particle instance for the
+     *         requested id
+     *
+     *  @param[in] id   the particle identifier to look for
+     */
+    auto iterator( const id::ParticleID& id ) const {
+
+      auto compare = [] ( auto&& left, auto&& right ) {
+
+        return left.identifier() < right;
+      };
+
+      auto iter = std::lower_bound( this->particles().begin(), this->particles().end(),
+                                    id, compare );
+      return iter;
+    }
+
+    /**
+     *  @brief Sort the particle instances
+     */
+    void sort() {
+
+      auto less = [] ( auto&&left, auto&& right ) {
+
+        return left.identifier() < right.identifier();
+      };
+
+      std::sort( this->particles().begin(), this->particles().end(), less );
+    }
+
+    /**
+     *  @brief Generate default particle instances based on a set of
+     *         particle identifiers
+     *
+     *  @param[in] identifiers   the particle identifiers
+     */
+    static std::vector< Particle >
+    defaultParticles( const std::vector< id::ParticleID > identifiers ) {
+
+      auto less = [] ( auto&&left, auto&& right ) {
+
+        return left.identifier() < right.identifier();
+      };
+      auto equal = [] ( auto&&left, auto&& right ) {
+
+        return left.identifier() == right.identifier();
+      };
+      auto default_particle =  [] ( auto&& id ) {
+
+        return Particle::defaultParticle( id );
+      };
+
+      std::vector< Particle > particles( identifiers.size() );
+      std::transform( identifiers.begin(), identifiers.end(), particles.begin(),
+                      default_particle );
+      std::sort( particles.begin(), particles.end(), less );
+      particles.erase( std::unique( particles.begin(), particles.end(), equal ),
+                       particles.end() );
+
+      return particles;
+    }
 
   public:
 
@@ -52,6 +112,14 @@ namespace dryad {
 
       this->sort();
     }
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] particles   the particle identifiers
+     */
+    ParticleDatabase( const std::vector< id::ParticleID >& particles ) :
+      ParticleDatabase( defaultParticles( particles ) ) {}
 
     /* methods */
 
