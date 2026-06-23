@@ -12,12 +12,45 @@
 namespace njoy {
 namespace dryad {
 
+  // forward declarations
+  class TabulatedEnergyDistribution;
+
   /**
    *  @class
    *  @brief An energy distribution function using tabulated data
    */
   class TabulatedEnergyDistributionFunction :
       protected scion::math::InterpolationTable< double, double > {
+
+    /* friend declaration */
+
+    friend TabulatedEnergyDistribution;
+
+    /* constructor */
+
+    /**
+     *  @brief Private constructor
+     *
+     *  @param table   the interpolation table
+     */
+    TabulatedEnergyDistributionFunction( InterpolationTable< double, double > table ) :
+      InterpolationTable( std::move( table ) ) {}
+
+  protected:
+
+    /**
+     *  @brief Calculate a cdf from the distribution function
+     */
+    TabulatedEnergyDistributionFunction calculateCdf( bool set_cdf_to_one = false ) const {
+
+      std::vector< double > cdf = this->cumulativeIntegral();
+      if ( set_cdf_to_one ) {
+
+        cdf.back() = 1.;
+      }
+      return TabulatedEnergyDistributionFunction( this->energies(), std::move( cdf ),
+                                                  this->boundaries(), this->interpolants() );
+    }
 
   public:
 
@@ -27,7 +60,45 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/TabulatedEnergyDistributionFunction/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    TabulatedEnergyDistributionFunction() = default;
+
+    TabulatedEnergyDistributionFunction( const TabulatedEnergyDistributionFunction& ) = default;
+    TabulatedEnergyDistributionFunction( TabulatedEnergyDistributionFunction&& ) = default;
+
+    TabulatedEnergyDistributionFunction& operator=( const TabulatedEnergyDistributionFunction& ) = default;
+    TabulatedEnergyDistributionFunction& operator=( TabulatedEnergyDistributionFunction&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param energies       the energy values
+     *  @param values         the probability values
+     *  @param boundaries     the boundaries of the interpolation regions
+     *  @param interpolants   the interpolation types of the interpolation regions
+     */
+    TabulatedEnergyDistributionFunction(
+        std::vector< double > energies,
+        std::vector< double > values,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants ) :
+      InterpolationTable( std::move( energies ), std::move( values ),
+                          std::move( boundaries ), std::move( interpolants ) ) {}
+
+    /**
+     *  @brief Constructor for an energy distirbution using a single interpolation zone
+     *
+     *  @param energies       the energy values
+     *  @param values         the probability values
+     *  @param interpolant    the interpolation type of the data (default lin-lin)
+     */
+    TabulatedEnergyDistributionFunction(
+        std::vector< double > energies,
+        std::vector< double > values,
+        InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
 
     /* methods */
 

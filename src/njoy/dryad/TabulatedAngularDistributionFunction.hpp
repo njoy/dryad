@@ -45,7 +45,7 @@ namespace dryad {
     /**
      *  @brief Calculate a cdf from the distribution function
      */
-    TabulatedAngularDistributionFunction cdf( bool set_cdf_to_one = false ) const {
+    TabulatedAngularDistributionFunction calculateCdf( bool set_cdf_to_one = false ) const {
 
       std::vector< double > cdf = this->cumulativeIntegral();
       if ( set_cdf_to_one ) {
