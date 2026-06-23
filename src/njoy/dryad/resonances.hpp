@@ -29,3 +29,4 @@
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
 
 #include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"
+#include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"

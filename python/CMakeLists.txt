@@ -41,6 +41,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/SammyBackground.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/TabulatedBackground.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/TabulatedLevelSpacing.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/TabulatedAverageWidths.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/Channel.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/ResonanceTable.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/SpinGroup.python.cpp
