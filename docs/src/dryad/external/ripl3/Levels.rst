@@ -9,4 +9,4 @@ Methods
 .. autosummary::
     :toctree: generated/
 
-    ~Levels.level
+    ~Levels.entry

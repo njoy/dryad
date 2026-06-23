@@ -4,20 +4,20 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/external/ripl3/Levels.hpp"
+#include "njoy/dryad/external/ame/Masses.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace dryad {
 namespace external {
-namespace ripl3 {
+namespace ame {
 
-void wrapLevels( python::module& module ) {
+void wrapMasses( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::external::ripl3::Levels;
-  using LevelEntry = njoy::dryad::external::ripl3::LevelEntry;
+  using Component = njoy::dryad::external::ame::Masses;
+  using MassEntry = njoy::dryad::external::ame::MassEntry;
   using ParticleID = njoy::dryad::id::ParticleID;
 
   // wrap views created by this component
@@ -26,10 +26,9 @@ void wrapLevels( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "Levels",
+    "Masses",
     "RIPL-3 level data\n\n"
-    "The Levels class allows a user to interact with the  nuclear levels part of the RIPL-3\n"
-    "database."
+    "The Masses class allows a user to interact with the AME2020 mass data."
   );
 
   // wrap the component
@@ -38,7 +37,7 @@ void wrapLevels( python::module& module ) {
 
     "size",
     &Component::size,
-    "Return the current size of the RIPL-3 levels data"
+    "Return the current size of the AME2020 mass data"
   )
   .def_static(
 
@@ -56,7 +55,7 @@ void wrapLevels( python::module& module ) {
     "entry",
     &Component::entry,
     python::arg( "id" ),
-    "Retrieve a level entry for a given particle\n\n"
+    "Retrieve a mass entry for a given particle\n\n"
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
@@ -64,6 +63,6 @@ void wrapLevels( python::module& module ) {
   );
 }
 
-} // ripl3 namespace
+} // ame namespace
 } // external namespace
 } // dryad namespace

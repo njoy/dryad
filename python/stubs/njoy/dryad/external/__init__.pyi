@@ -4,8 +4,9 @@ External data and models
 from __future__ import annotations
 import njoy.dryad
 import njoy.dryad.id
+from . import ame
 from . import ripl3
-__all__: list[str] = ['ComptonProfiles', 'ripl3']
+__all__: list[str] = ['ComptonProfiles', 'ame', 'ripl3']
 class ComptonProfiles:
     """
     Compton profile data and models

@@ -366,6 +366,8 @@ add_cpp_test( dryad.external.ComptonProfiles                                    
 add_cpp_test( dryad.external.KleinNishina                                               dryad/external/KleinNishina.test.cpp )
 add_cpp_test( dryad.external.ripl3.LevelEntry                                           dryad/external/ripl3/LevelEntry.test.cpp )
 add_cpp_test( dryad.external.ripl3.Levels                                               dryad/external/ripl3/Levels.test.cpp )
+add_cpp_test( dryad.external.ame.MassEntry                                              dryad/external/ame/MassEntry.test.cpp )
+add_cpp_test( dryad.external.ame.Masses                                                 dryad/external/ame/Masses.test.cpp )
 
 # psychic tests
 
