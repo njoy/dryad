@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/format/gnds/read/createLegendreAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistributionFunction.hpp"
 
 // other includes
 #include "pugixml.hpp"
@@ -14,11 +14,11 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::format;
 
-void verifyChunk( const std::pair< std::optional< double >, LegendreAngularDistribution >& );
+void verifyChunk( const std::pair< std::optional< double >, LegendreAngularDistributionFunction >& );
 
-SCENARIO( "createLegendreAngularDistribution" ) {
+SCENARIO( "createLegendreAngularDistributionFunction" ) {
 
-  GIVEN( "GNDS average energy node from electroatomic data" ) {
+  GIVEN( "GNDS Legendre node from incident neutron data" ) {
 
     pugi::xml_document document;
     document.load_file( "n-001_H_001.endf.gnds.xml" );
@@ -36,41 +36,30 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = gnds::read::createLegendreAngularDistribution( legendre, axes, false );
-        auto chunk2 = gnds::read::createLegendreAngularDistribution( legendre, axes, true );
+        auto chunk = gnds::read::createLegendreAngularDistributionFunction( legendre, axes );
 
-        //! @todo we need an unnormalised GNDS snippet
-        verifyChunk( chunk1 );
-        verifyChunk( chunk2 );
+        verifyChunk( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk(  const std::pair< std::optional< double >, LegendreAngularDistribution >& chunk ) {
+void verifyChunk(  const std::pair< std::optional< double >,
+                                    LegendreAngularDistributionFunction >& chunk ) {
 
   // outer domain value and unit
   CHECK( 1e-5 == chunk.first );
 
   // Legendre angular distribution
-  auto pdf = chunk.second.pdf();
-  CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
-  CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
-  CHECK( 6 == pdf.order() );
-  CHECK( 7 == pdf.coefficients().size() );
-  CHECK_THAT( 0.5               , WithinRel( pdf.coefficients()[0] ) );
-  CHECK_THAT( 1.5 * -1.1674e-14 , WithinRel( pdf.coefficients()[1] ) );
-  CHECK_THAT( 2.5 * -1.01123e-16, WithinRel( pdf.coefficients()[2] ) );
-  CHECK_THAT( 3.5 * -1.82863e-17, WithinRel( pdf.coefficients()[3] ) );
-  CHECK_THAT( 4.5 * 3.03417e-17 , WithinRel( pdf.coefficients()[4] ) );
-  CHECK_THAT( 5.5 * -3.10313e-18, WithinRel( pdf.coefficients()[5] ) );
-  CHECK_THAT( 6.5 * 3.93859e-18 , WithinRel( pdf.coefficients()[6] ) );
-
-  auto cdf = chunk.second.cdf();
-  CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
-  CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
-  CHECK( 7 == cdf.order() );
-  CHECK( 8 == cdf.coefficients().size() );
-  CHECK_THAT( 0., WithinRel( cdf( -1. ) ) );
-  CHECK_THAT( 1., WithinRel( cdf(  1. ) ) );
+  CHECK_THAT( -1., WithinRel( chunk.second.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.second.upperCosineLimit() ) );
+  CHECK( 6 == chunk.second.order() );
+  CHECK( 7 == chunk.second.coefficients().size() );
+  CHECK_THAT( 0.5               , WithinRel( chunk.second.coefficients()[0] ) );
+  CHECK_THAT( 1.5 * -1.1674e-14 , WithinRel( chunk.second.coefficients()[1] ) );
+  CHECK_THAT( 2.5 * -1.01123e-16, WithinRel( chunk.second.coefficients()[2] ) );
+  CHECK_THAT( 3.5 * -1.82863e-17, WithinRel( chunk.second.coefficients()[3] ) );
+  CHECK_THAT( 4.5 * 3.03417e-17 , WithinRel( chunk.second.coefficients()[4] ) );
+  CHECK_THAT( 5.5 * -3.10313e-18, WithinRel( chunk.second.coefficients()[5] ) );
+  CHECK_THAT( 6.5 * 3.93859e-18 , WithinRel( chunk.second.coefficients()[6] ) );
 }

@@ -1,13 +1,14 @@
-#ifndef NJOY_FORMAT_GNDS_READ_CREATELEGENDREANGULARDISTRIBUTION
-#define NJOY_FORMAT_GNDS_READ_CREATELEGENDREANGULARDISTRIBUTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATELEGENDREANGULARDISTRIBUTIONFUNCTION
+#define NJOY_FORMAT_GNDS_READ_CREATELEGENDREANGULARDISTRIBUTIONFUNCTION
 
 // system includes
+#include <optional>
 #include <vector>
 
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/LegendreAngularDistribution.hpp"
+#include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/format/convertLegendreMoments.hpp"
 #include "njoy/format/gnds/read/readAxes.hpp"
 #include "njoy/format/gnds/read/readLegendre.hpp"
@@ -22,9 +23,8 @@ namespace read {
    *  @brief Create a LegendreAngularDistribution from a GNDS legendre node
    */
   inline std::pair< std::optional< double >,
-                    dryad::LegendreAngularDistribution >
-  createLegendreAngularDistribution( pugi::xml_node legendre, const Axes& units,
-                                     bool normalise ) {
+                    dryad::LegendreAngularDistributionFunction >
+  createLegendreAngularDistributionFunction( pugi::xml_node legendre, const Axes& units ) {
 
     // read data from the node and convert to coefficients
     auto data = readLegendre( legendre );
@@ -37,7 +37,7 @@ namespace read {
     }
 
     return { std::move( data.first ),
-             dryad::LegendreAngularDistribution( std::move( data.second ), normalise ) };
+             dryad::LegendreAngularDistributionFunction( std::move( data.second ) ) };
   }
 
 } // read namespace

@@ -10,9 +10,9 @@
 #include "njoy/dryad/IsotropicAngularDistributions.hpp"
 #include "njoy/dryad/UncorrelatedDistributionData.hpp"
 #include "njoy/format/gnds/read/createReferenceFrame.hpp"
-#include "njoy/format/gnds/read/createLegendreAngularDistribution.hpp"
-#include "njoy/format/gnds/read/createTabulatedAngularDistribution.hpp"
-#include "njoy/format/gnds/read/createTabulatedEnergyDistribution.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistributionFunctions.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistributionFunctions.hpp"
+#include "njoy/format/gnds/read/createTabulatedEnergyDistributionFunctions.hpp"
 
 namespace njoy {
 namespace format {
@@ -48,31 +48,35 @@ namespace read {
         auto units = readAxes( node.child( "axes" ) );
 
         // get the functions
-        auto function = node.child( "function1ds" ).first_child();
+        auto function1ds = node.child( "function1ds" );
+        auto function = function1ds.first_child();
         if ( strcmp( function.name(), "Legendre" ) == 0 ||
              strcmp( function.name(), "XYs1d" ) == 0 ) {
 
-          std::vector< double > grid;
           if ( strcmp( function.name(), "Legendre" ) == 0 ) {
 
+            std::vector< double > grid;
             std::vector< dryad::LegendreAngularDistribution > distributions;
-            for ( ; function; function = function.next_sibling( "Legendre" ) ) {
 
-              auto legendre = createLegendreAngularDistribution( function, units, normalise );
-              grid.push_back( legendre.first.value() );
-              distributions.emplace_back( std::move( legendre.second ) );
+            auto data = createLegendreAngularDistributionFunctions( function1ds, units );
+            for ( std::size_t i = 0; i < data.first.size(); ++i ) {
+
+              grid.emplace_back( data.first[i].value() );
+              distributions.emplace_back( std::move( data.second[i] ), normalise );
             }
 
             angular = dryad::LegendreAngularDistributions( std::move( grid ), std::move( distributions ) );
           }
           else {
 
+            std::vector< double > grid;
             std::vector< dryad::TabulatedAngularDistribution > distributions;
-            for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
 
-              auto tabulated = createTabulatedAngularDistribution( function, units, normalise );
-              grid.push_back( tabulated.first.value() );
-              distributions.emplace_back( std::move( tabulated.second ) );
+            auto data = createTabulatedAngularDistributionFunctions( function1ds, units );
+            for ( std::size_t i = 0; i < data.first.size(); ++i ) {
+
+              grid.emplace_back( data.first[i].value() );
+              distributions.emplace_back( std::move( data.second[i] ), normalise );
             }
 
             angular = dryad::TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) );
@@ -84,7 +88,7 @@ namespace read {
           throw std::exception();
         }
       }
-      else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
+      else if ( strcmp( node.name(), "regions2d" ) == 0 ) {
 
         Log::error( "Mixed Legendre and tabulated angular distribution data is "
                     "currently unsupported" );
@@ -110,18 +114,27 @@ namespace read {
         auto units = readAxes( node.child( "axes" ) );
 
         // get the functions
-        auto function = node.child( "function1ds" ).first_child();
+        auto function1ds = node.child( "function1ds" );
+        auto function = function1ds.first_child();
+        if ( strcmp( function.name(), "XYs1d" ) == 0 ) {
 
-        std::vector< double > grid;
-        std::vector< dryad::TabulatedEnergyDistribution > distributions;
-        for ( ; function; function = function.next_sibling() ) {
+          std::vector< double > grid;
+          std::vector< dryad::TabulatedEnergyDistribution > distributions;
 
-          auto tabulated = createTabulatedEnergyDistribution( function, units, normalise );
-          grid.push_back( tabulated.first.value() );
-          distributions.emplace_back( std::move( tabulated.second ) );
+          auto data = createTabulatedEnergyDistributionFunctions( function1ds, units );
+          for ( std::size_t i = 0; i < data.first.size(); ++i ) {
+
+            grid.emplace_back( data.first[i].value() );
+            distributions.emplace_back( std::move( data.second[i] ), normalise );
+          }
+
+          energyd = dryad::TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
         }
+        else {
 
-        energyd = dryad::TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
+          Log::error( "Only XYs1d nodes are allowed in an angular XYs2d" );
+          throw std::exception();
+        }
       }
       else if ( strcmp( node.name(), "evaporation" ) == 0 ) {
 

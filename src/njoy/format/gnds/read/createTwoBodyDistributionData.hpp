@@ -9,8 +9,8 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/TwoBodyDistributionData.hpp"
 #include "njoy/format/gnds/read/createReferenceFrame.hpp"
-#include "njoy/format/gnds/read/createLegendreAngularDistribution.hpp"
-#include "njoy/format/gnds/read/createTabulatedAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistributionFunctions.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistributionFunctions.hpp"
 
 namespace njoy {
 namespace format {
@@ -37,19 +37,21 @@ namespace read {
       auto units = readAxes( node.child( "axes" ) );
 
       // get the functions
-      auto function = node.child( "function1ds" ).first_child();
+      auto function1ds = node.child( "function1ds" );
+      auto function = function1ds.first_child();
       if ( strcmp( function.name(), "Legendre" ) == 0 ||
            strcmp( function.name(), "XYs1d" ) == 0 ) {
 
-        std::vector< double > grid;
         if ( strcmp( function.name(), "Legendre" ) == 0 ) {
 
+          std::vector< double > grid;
           std::vector< dryad::LegendreAngularDistribution > distributions;
-          for ( ; function; function = function.next_sibling( "Legendre" ) ) {
 
-            auto legendre = createLegendreAngularDistribution( function, units, normalise );
-            grid.push_back( legendre.first.value() );
-            distributions.emplace_back( std::move( legendre.second ) );
+          auto data = createLegendreAngularDistributionFunctions( function1ds, units );
+          for ( std::size_t i = 0; i < data.first.size(); ++i ) {
+
+            grid.emplace_back( data.first[i].value() );
+            distributions.emplace_back( std::move( data.second[i] ), normalise );
           }
 
           return dryad::TwoBodyDistributionData(
@@ -58,12 +60,14 @@ namespace read {
         }
         else {
 
+          std::vector< double > grid;
           std::vector< dryad::TabulatedAngularDistribution > distributions;
-          for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
 
-            auto tabulated = createTabulatedAngularDistribution( function, units, normalise );
-            grid.push_back( tabulated.first.value() );
-            distributions.emplace_back( std::move( tabulated.second ) );
+          auto data = createTabulatedAngularDistributionFunctions( function1ds, units );
+          for ( std::size_t i = 0; i < data.first.size(); ++i ) {
+
+            grid.emplace_back( data.first[i].value() );
+            distributions.emplace_back( std::move( data.second[i] ), normalise );
           }
 
           return dryad::TwoBodyDistributionData(
@@ -81,7 +85,11 @@ namespace read {
 
       return dryad::TwoBodyDistributionData( std::move( frame ), dryad::IsotropicAngularDistributions() );
     }
-    else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
+    else if ( strcmp( node.name(), "regions2d" ) == 0 ) {
+
+
+
+
 
       Log::error( "Mixed Legendre and tabulated angular distribution data is "
                   "currently unsupported" );

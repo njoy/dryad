@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDENERGYDISTRIBUTION
-#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDENERGYDISTRIBUTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDENERGYDISTRIBUTIONFUNCTION
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDENERGYDISTRIBUTIONFUNCTION
 
 // system includes
 #include <vector>
@@ -7,7 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/TabulatedEnergyDistribution.hpp"
+#include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
 #include "njoy/format/gnds/read/createInterpolationType.hpp"
 #include "njoy/format/gnds/read/convertEnergy.hpp"
 #include "njoy/format/gnds/read/convertEnergies.hpp"
@@ -24,9 +24,8 @@ namespace read {
    *  @todo is it possible to have a regions1d version?
    */
   inline std::pair< std::optional< double >,
-                    dryad::TabulatedEnergyDistribution >
-  createTabulatedEnergyDistribution( pugi::xml_node node, const Axes& units,
-                                     bool normalise ) {
+                    dryad::TabulatedEnergyDistributionFunction >
+  createTabulatedEnergyDistributionFunction( pugi::xml_node node, const Axes& units ) {
 
     std::optional< double > outer = std::nullopt;
     std::vector< double > energies;
@@ -107,10 +106,9 @@ namespace read {
     }
 
     return { std::move( outer ),
-             dryad::TabulatedEnergyDistribution(
+             dryad::TabulatedEnergyDistributionFunction(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ),
-               normalise ) };
+               std::move( boundaries ), std::move( interpolants ) ) };
   }
 
 } // read namespace

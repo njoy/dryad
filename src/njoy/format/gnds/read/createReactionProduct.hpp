@@ -108,8 +108,7 @@ namespace read {
 
         // ignore recoil or regions2d distributions for now
         auto recoil = node.child( "recoil" );
-        auto regions2d = node.child( "regions2d" );
-        if ( ! recoil && ! regions2d ) {
+        if ( ! recoil ) {
 
           distribution = createTwoBodyDistributionData( node, normalise );
         }

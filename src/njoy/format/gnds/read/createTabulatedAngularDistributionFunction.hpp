@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTION
-#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTIONFUNCTION
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTIONFUNCTION
 
 // system includes
 #include <vector>
@@ -7,7 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "njoy/format/gnds/read/createInterpolationType.hpp"
 #include "njoy/format/gnds/read/convertEnergy.hpp"
 #include "njoy/format/gnds/read/readXYs1d.hpp"
@@ -23,9 +23,8 @@ namespace read {
    *  @todo is it possible to have a regions1d version?
    */
   inline std::pair< std::optional< double >,
-                    dryad::TabulatedAngularDistribution >
-  createTabulatedAngularDistribution( pugi::xml_node node, const Axes& units,
-                                      bool normalise ) {
+                    dryad::TabulatedAngularDistributionFunction >
+  createTabulatedAngularDistributionFunction( pugi::xml_node node, const Axes& units ) {
 
     std::optional< double > outer = std::nullopt;
     std::vector< double > cosines;
@@ -62,10 +61,9 @@ namespace read {
     }
 
     return { std::move( outer ),
-             dryad::TabulatedAngularDistribution(
+             dryad::TabulatedAngularDistributionFunction(
                std::move( cosines ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ),
-               normalise ) };
+               std::move( boundaries ), std::move( interpolants ) ) };
   }
 
 } // read namespace

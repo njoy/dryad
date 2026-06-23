@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/format/gnds/read/createTabulatedAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistributionFunction.hpp"
 
 // other includes
 #include "njoy/format/gnds/read/readAxes.hpp"
@@ -15,9 +15,9 @@ using namespace njoy::dryad;
 using namespace njoy::format;
 
 void verifyChunk( const std::pair< std::optional< double >,
-                                   TabulatedAngularDistribution >&, bool );
+                                   TabulatedAngularDistributionFunction >& );
 
-SCENARIO( "createTabulatedAngularDistribution" ) {
+SCENARIO( "createTabulatedAngularDistributionFunction" ) {
 
   GIVEN( "GNDS two body distribution data node with tabulated angular data" ) {
 
@@ -39,41 +39,24 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = gnds::read::createTabulatedAngularDistribution( xys1d, axes, false );
-        auto chunk2 = gnds::read::createTabulatedAngularDistribution( xys1d, axes, true );
+        auto chunk = gnds::read::createTabulatedAngularDistributionFunction( xys1d, axes );
 
-        verifyChunk( chunk1, false );
-        verifyChunk( chunk2, true );
+        verifyChunk( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const std::pair< std::optional< double >,
-                                   TabulatedAngularDistribution >& chunk,
-                  bool normalise ) {
+                                   TabulatedAngularDistributionFunction >& chunk ) {
 
   CHECK_THAT( 10., WithinRel( chunk.first.value() ) );
 
-  CHECK(  2 == chunk.second.pdf().cosines().size() );
-  CHECK(  2 == chunk.second.pdf().values().size() );
+  CHECK(  2 == chunk.second.cosines().size() );
+  CHECK(  2 == chunk.second.values().size() );
 
-  // the numbers in the tests given below are the values as found in the test
-  // file so they need to be normalised. the following values are the scaling
-  // factors that need to be applied (calculated by integrating the distributions
-  // in excel).
-  double normalisation00 = normalise ? 0.9999995 : 1.;
-
-  CHECK_THAT( -1.                   , WithinRel( chunk.second.pdf().cosines()[0] ) );
-  CHECK_THAT(  0.999999             , WithinRel( chunk.second.pdf().cosines()[1] ) );
-  CHECK_THAT(  0.5 / normalisation00, WithinRel( chunk.second.pdf().values()[0] ) );
-  CHECK_THAT(  0.5 / normalisation00, WithinRel( chunk.second.pdf().values()[1] ) );
-
-  CHECK(  2 == chunk.second.cdf().cosines().size() );
-  CHECK(  2 == chunk.second.cdf().values().size() );
-
-  CHECK_THAT( -1.                                    , WithinRel( chunk.second.cdf().cosines()[0] ) );
-  CHECK_THAT(  0.999999                              , WithinRel( chunk.second.cdf().cosines()[1] ) );
-  CHECK_THAT(  0.            / normalisation00       , WithinRel( chunk.second.cdf().values()[0] ) );
-  CHECK_THAT(  1.999999 / 2. / normalisation00       , WithinRel( chunk.second.cdf().values()[1] ) );
+  CHECK_THAT( -1.      , WithinRel( chunk.second.cosines()[0] ) );
+  CHECK_THAT(  0.999999, WithinRel( chunk.second.cosines()[1] ) );
+  CHECK_THAT(  0.5     , WithinRel( chunk.second.values()[0] ) );
+  CHECK_THAT(  0.5     , WithinRel( chunk.second.values()[1] ) );
 }
