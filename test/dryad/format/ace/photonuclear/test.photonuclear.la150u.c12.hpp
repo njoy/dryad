@@ -4,6 +4,38 @@ namespace photonuclear {
 namespace la150u {
 namespace c12 {
 
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "C12" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "g" ) );
+    CHECK( id::ParticleID::photon() == particle.identifier() );
+    CHECK( std::nullopt == particle.mass() );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "C12" ) );
+    CHECK( id::ParticleID( "C12" ) == particle.identifier() );
+    CHECK_THAT( 11.89691 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+  }
+
   void verifyTotalReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,C12->total" ) == reaction.identifier() );

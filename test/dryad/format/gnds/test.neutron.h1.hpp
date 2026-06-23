@@ -94,7 +94,6 @@ namespace h1 {
       "analyses,\" Nuclear Data Sheets, 109, 2812 (2008).                 \n"
       " **************************************************************** \n";
 
-    CHECK( std::nullopt == documentation.awr() );
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
     CHECK( std::nullopt == documentation.description() );

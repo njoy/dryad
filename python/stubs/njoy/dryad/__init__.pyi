@@ -281,6 +281,15 @@ class DistributionDataType:
 class Documentation:
     """
     Documentation associated to the dryad data
+    
+    Parameters
+    ----------
+        library : int
+             the library number
+        version : list of int
+             the version numbers (major and minor)
+        description : str
+             the description
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> Documentation:
@@ -289,26 +298,11 @@ class Documentation:
         ...
     def __eq__(self, arg0: Documentation) -> bool:
         ...
-    def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
+    def __init__(self, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
         """
         Initialise the documentation
-        
-        Arguments:
-            self          the documentation
-            awr           the atomic weight ratio
-            library       the library number
-            version       the version number
-            description   the description
         """
     def __ne__(self, arg0: Documentation) -> bool:
-        ...
-    @property
-    def awr(self) -> float | None:
-        """
-        The atomic weight ratio
-        """
-    @awr.setter
-    def awr(self, arg1: float | None) -> None:
         ...
     @property
     def description(self) -> str | None:

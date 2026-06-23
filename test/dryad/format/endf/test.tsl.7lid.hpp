@@ -63,7 +63,6 @@ namespace li7inli7d {
       "                                                                  \n"
       " -----------------------------------------------------------------\n";
 
-    CHECK( 6.955734 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 1 ) == documentation.version() );
     CHECK( description == documentation.description() );

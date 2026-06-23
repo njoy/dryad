@@ -31,9 +31,7 @@ namespace endf {
                                               const std::string& filename ) {
 
     int zaid = relaxation.elementIdentifier().number() * 1000;
-    double awr = relaxation.documentation().awr().has_value()
-                 ? relaxation.documentation().awr().value()
-                 : 0.;
+    double awr = 0.;
     int lrp = -1;
     int lfi = 0;
     int nlib = relaxation.documentation().library().has_value()

@@ -28,7 +28,6 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H1 = format::ace::continuous::createProjectileTarget( table, false );
 
-        CHECK( std::nullopt == H1.documentation().awr() );
         CHECK( std::nullopt == H1.documentation().library() );
         CHECK( std::nullopt == H1.documentation().version() );
         CHECK( std::nullopt == H1.documentation().description() );
@@ -37,6 +36,9 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == H1.interactionType() );
+
+        CHECK( std::nullopt != H1.particleData() );
+        continuous::lib81::h1::verifyParticleDatabase( H1.particleData().value() );
 
         CHECK( std::nullopt == H1.resonances() );
 

@@ -23,33 +23,28 @@ void wrapDocumentation( python::module& module ) {
 
     module,
     "Documentation",
-    "Documentation associated to the dryad data"
+    "Documentation associated to the dryad data\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    library : int\n"
+    "         the library number\n"
+    "    version : list of int\n"
+    "         the version numbers (major and minor)\n"
+    "    description : str\n"
+    "         the description"
    );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::optional< double >,
-                  std::optional< int >,
+    python::init< std::optional< int >,
                   std::optional< std::pair< int, int > >,
                   std::optional< std::string > >(),
-    python::arg( "awr" ), python::arg( "library" ),
-    python::arg( "version" ), python::arg( "description" ),
-    "Initialise the documentation\n\n"
-    "Arguments:\n"
-    "    self          the documentation\n"
-    "    awr           the atomic weight ratio\n"
-    "    library       the library number\n"
-    "    version       the version number\n"
-    "    description   the description"
-  )
-  .def_property(
-
-    "awr",
-    python::overload_cast<>( &Component::awr, python::const_ ),
-    python::overload_cast< std::optional< double > >( &Component::awr ),
-    "The atomic weight ratio"
+    python::arg( "library" ),
+    python::arg( "version" ),
+    python::arg( "description" ),
+    "Initialise the documentation"
   )
   .def_property(
 

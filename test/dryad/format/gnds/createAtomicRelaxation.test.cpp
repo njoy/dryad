@@ -38,7 +38,6 @@ SCENARIO( "createAtomicRelaxation" ) {
 void verifyChunk( const AtomicRelaxation& chunk,
                   bool normalise ) {
 
-  CHECK( std::nullopt == chunk.documentation().awr() );
   CHECK( std::nullopt == chunk.documentation().library() );
   CHECK( std::nullopt == chunk.documentation().version() );
   CHECK( std::nullopt == chunk.documentation().description() );

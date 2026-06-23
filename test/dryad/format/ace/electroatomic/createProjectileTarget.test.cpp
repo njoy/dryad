@@ -28,7 +28,6 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table, false );
 
-        CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
         CHECK( std::nullopt == H0.documentation().version() );
         CHECK( std::nullopt == H0.documentation().description() );
@@ -37,6 +36,12 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
+
+        CHECK( std::nullopt != H0.particleData() );
+
+        CHECK( std::nullopt == H0.resonances() );
+
+        CHECK( 0 == H0.reactions().size() );
       } // THEN
     } // WHEN
 
@@ -48,7 +53,6 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table, false );
 
-        CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
         CHECK( std::nullopt == H0.documentation().version() );
         CHECK( std::nullopt == H0.documentation().description() );
@@ -57,6 +61,9 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
+
+        CHECK( std::nullopt != H0.particleData() );
+        electroatomic::eprdata12::h::verifyParticleDatabase( H0.particleData().value() );
 
         CHECK( std::nullopt == H0.resonances() );
 
@@ -116,7 +123,6 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table, false );
 
-        CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
         CHECK( std::nullopt == H0.documentation().version() );
         CHECK( std::nullopt == H0.documentation().description() );
@@ -125,6 +131,9 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
+
+        CHECK( std::nullopt != H0.particleData() );
+        electroatomic::eprdata14::h::verifyParticleDatabase( H0.particleData().value() );
 
         CHECK( std::nullopt == H0.resonances() );
 

@@ -13,6 +13,7 @@
 #include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/constants.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 #include "ENDFtk/tree/updateDirectory.hpp"
@@ -39,8 +40,9 @@ namespace endf {
     auto target = transport.targetIdentifier();
 
     int zaid = target.za();
-    double awr = transport.documentation().awr().has_value()
-                 ? transport.documentation().awr().value()
+    double awr = transport.particleData().has_value()
+                 ? transport.particleData()->particle( target ).mass().value() /
+                   constants::neutron_mass
                  : 0.;
     int lrp = transport.resonances().has_value() ? 1 : -1;
     int lfi = 0;
@@ -48,12 +50,17 @@ namespace endf {
                ? transport.documentation().library().value()
                : 0;
     int nmod = 0;
-    double elis = 0;
+    double elis = transport.particleData().has_value()
+                  ? transport.particleData()->particle( target ).energy().value()
+                  : 0.;
     double sta = 0;
     int lis = target.e();
     int liso = 0;
     int nfor = 6;
-    double awi = 0;
+    double awi = transport.particleData().has_value()
+                 ? transport.particleData()->particle( projectile ).mass().value() /
+                   constants::neutron_mass
+                 : 0.;
     double emax = transport.reactions().front().crossSection().upperEnergyLimit();
     int lrel = transport.documentation().version().has_value()
                ? transport.documentation().version()->second

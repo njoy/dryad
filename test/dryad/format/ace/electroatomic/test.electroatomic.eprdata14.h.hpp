@@ -4,6 +4,38 @@ namespace electroatomic {
 namespace eprdata14 {
 namespace h {
 
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "e-" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "e-" ) );
+    CHECK( id::ParticleID::electron() == particle.identifier() );
+    CHECK( std::nullopt == particle.mass() );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == particle.identifier() );
+    CHECK_THAT( .999242 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+  }
+
   void verifyTotalReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "e-,H->total[atomic]" ) == reaction.identifier() );

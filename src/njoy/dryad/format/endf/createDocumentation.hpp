@@ -15,12 +15,14 @@ namespace endf {
 
   /**
    *  @brief Create a Documentation instance from a parsed MF1 MT451 section
+   *
+   *  @param[in] information   the parsed MF1 MT451 section
    */
   inline Documentation
   createDocumentation( const ENDFtk::section::Type< 1, 451 >& information ) {
 
     Log::info( "Reading documentation" );
-    return Documentation( information.atomicWeightRatio(), information.libraryType(),
+    return Documentation( information.libraryType(),
                           std::make_pair( information.versionNumber(),
                                           information.releaseNumber() ),
                           information.description() );

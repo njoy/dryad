@@ -316,7 +316,6 @@ namespace li7 {
       " Delete Section if Cross Section =0 at All Energies-----------Yes \n"
       " **************** Program DICTIN (VERSION 2018-1) ****************\n";
 
-    CHECK( std::nullopt == documentation.awr() );
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
     CHECK( std::nullopt == documentation.description() );

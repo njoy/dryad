@@ -159,10 +159,41 @@ namespace h0 {
       " ***************** Program FIXUP (Version 2023-2) ****************\n"
       " **************** Program DICTIN (VERSION 2023-1) ****************\n";
 
-    CHECK( .999242 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 1 ) == documentation.version() );
     CHECK( description == documentation.description() );
+  }
+
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "g" ) );
+    CHECK( id::ParticleID::photon() == particle.identifier() );
+    CHECK_THAT( 0., WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == particle.identifier() );
+    CHECK_THAT( .999242 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0. , WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {
@@ -421,6 +452,8 @@ namespace h0 {
 
   void verifyElectronFieldPairProductionReaction( const Reaction& reaction ) {
 
+    using namespace njoy::constants;
+
     CHECK( id::ReactionID( "g,H->2e-,e+,H[pair-production-electron]" ) == reaction.identifier() );
     CHECK( 515 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
@@ -430,7 +463,7 @@ namespace h0 {
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
-    CHECK_THAT( -2 * njoy::constants::electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
+    CHECK_THAT( -2 * electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 217 == reaction.crossSection().numberPoints() );
@@ -495,6 +528,8 @@ namespace h0 {
 
   void verifyNuclearFieldPairProductionReaction( const Reaction& reaction ) {
 
+    using namespace njoy::constants;
+
     CHECK( id::ReactionID( "g,H->e-,e+,H[pair-production-nuclear]" ) == reaction.identifier() );
     CHECK( 517 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
@@ -504,7 +539,7 @@ namespace h0 {
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
-    CHECK_THAT( -2 * njoy::constants::electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
+    CHECK_THAT( -2 * electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 308 == reaction.crossSection().numberPoints() );
@@ -707,6 +742,9 @@ namespace h0 {
 
     CHECK( InteractionType::Atomic == H0.interactionType() );
 
+    CHECK( std::nullopt != H0.particleData() );
+    verifyParticleDatabase( H0.particleData().value() );
+
     CHECK( std::nullopt == H0.resonances() );
 
     CHECK( true == H0.hasReaction( id::ReactionID(  "g,H->total[atomic]" ) ) );
@@ -768,10 +806,6 @@ namespace h0 {
 
     ionisation = H0.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
     verifyIonisationReaction( ionisation );
-
-    CHECK( std::nullopt == H0.particleData() );
-
-    CHECK( std::nullopt == H0.resonances() );
 
     CHECK( std::nullopt == H0.covarianceData() );
   }

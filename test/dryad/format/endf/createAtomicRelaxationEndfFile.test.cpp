@@ -118,7 +118,6 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
     };
 
     AtomicRelaxation relaxation( element, subshells );
-    relaxation.documentation().awr( 15.8619530 );
     relaxation.documentation().library( 0 );
     relaxation.documentation().version( std::make_pair( 8, 1 ) );
     relaxation.documentation().description( std::move( description ) );
@@ -139,7 +138,7 @@ std::string chunk() {
 
   return
     "Atomic relaxation data for Oxygen                                    0 0  0     \n"
-    " 8.000000+3 15.8619530         -1          0          0          0 800 1451     \n"
+    " 8.000000+3 0.000000+0         -1          0          0          0 800 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6 800 1451     \n"
     " 0.000000+0 0.000000+0          1          0          6          8 800 1451     \n"
     " 0.000000+0 0.000000+0          0          0         75          2 800 1451     \n"
@@ -222,7 +221,7 @@ std::string chunk() {
     "                               28        533         17          0 800 1451     \n"
     "                                                                   800 1  0     \n"
     "                                                                   800 0  0     \n"
-    " 8.000000+3 15.8619530          0          0          4          0 80028533     \n"
+    " 8.000000+3 0.000000+0          0          0          4          0 80028533     \n"
     " 1.000000+0 0.000000+0          0          0         54          8 80028533     \n"
     " 5.380000+2 2.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 80028533     \n"
     " 3.000000+0 0.000000+0 5.230900+2 1.907680-3 0.000000+0 0.000000+0 80028533     \n"

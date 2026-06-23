@@ -159,7 +159,6 @@ namespace h0 {
       " ***************** Program FIXUP (Version 2023-2) ****************\n"
       " **************** Program DICTIN (VERSION 2023-1) ****************\n";
 
-    CHECK( std::nullopt == documentation.awr() );
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
     CHECK( std::nullopt == documentation.description() );

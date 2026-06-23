@@ -315,10 +315,41 @@ namespace li7 {
       " Delete Section if Cross Section =0 at All Energies-----------Yes \n"
       " **************** Program DICTIN (VERSION 2018-1) ****************\n";
 
-    CHECK( 6.955732 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 1 ) == documentation.version() );
     CHECK( description == documentation.description() );
+  }
+
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID::neutron() == particle.identifier() );
+    CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "Li7" ) );
+    CHECK( id::ParticleID( "Li7" ) == particle.identifier() );
+    CHECK_THAT( 6.955732 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0. , WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {
@@ -1859,6 +1890,9 @@ namespace li7 {
 
     CHECK( InteractionType::Nuclear == Li7.interactionType() );
 
+    CHECK( std::nullopt != Li7.particleData() );
+    verifyParticleDatabase( Li7.particleData().value() );
+
     CHECK( std::nullopt == Li7.resonances() );
 
     CHECK( true == Li7.hasReaction( id::ReactionID( "n,Li7->total" ) ) );
@@ -2001,10 +2035,6 @@ namespace li7 {
 
     lumped = Li7.reaction( id::ReactionID( "n,Li7->lumped9" ) );
     neutron::li7::verifyLumpedReaction859( lumped );
-
-    CHECK( std::nullopt == Li7.particleData() );
-
-    CHECK( std::nullopt == Li7.resonances() );
 
     CHECK( std::nullopt != Li7.covarianceData() );
 
