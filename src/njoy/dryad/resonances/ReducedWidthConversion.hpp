@@ -27,6 +27,8 @@ namespace resonances {
 
     public:
 
+      #include "njoy/dryad/resonances/ReducedWidthConversion/src/ctor.hpp"
+
       /**
        *  @brief Return the orbital angular momentum of the channel
        */
@@ -55,6 +57,30 @@ namespace resonances {
       double calculateConversionFactor( double rho, double energy ) const {
 
         return ( this->penetrability_( rho ) / rho ) * std::sqrt( energy / this->reference_energy_ );
+      }
+      /**
+       *  @brief Equality comparison
+       *
+       *  @param[in] left    the object on the left hand side
+       *  @param[in] right   the object on the right hand side
+       */
+      friend bool operator==( const ReducedWidthConversion& left,
+                              const ReducedWidthConversion& right ) {
+
+        return ( left.penetrability_ == right.penetrability_ )
+          && ( left.reference_energy_ == right.reference_energy_ );
+      }
+
+      /**
+       *  @brief Inequality comparison
+       *
+       *  @param[in] left    the object on the left hand side
+       *  @param[in] right   the object on the right hand side
+       */
+      friend bool operator!=( const ReducedWidthConversion& left,
+                              const ReducedWidthConversion& right ) {
+
+        return ! ( left == right );
       }
 
   };

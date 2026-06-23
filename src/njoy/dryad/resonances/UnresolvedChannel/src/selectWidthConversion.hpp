@@ -12,5 +12,3 @@ selectWidthConversionFactor( unsigned int l,
   }
   return 1.;
 } 
-
-#endif

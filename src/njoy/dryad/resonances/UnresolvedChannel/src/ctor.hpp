@@ -26,5 +26,5 @@ UnresolvedChannel( Channel channel,
     reference_energy_( reference_energy ),
     conversion_factor_( 
         selectWidthConversionFactor( this->channel_.quantumNumbers().orbitalAngularMomentum(),
-                                     this->reference_energy_,
+                                     reference_energy,
                                      this->channel_.outgoingParticlePair() ) ) {}

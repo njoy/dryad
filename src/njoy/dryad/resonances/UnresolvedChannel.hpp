@@ -4,10 +4,11 @@
 #include <cmath>
 #include <tuple>
 #include <variant>
+#include <optional>
 
 #include "tools/overload.hpp"
 #include "njoy/dryad/resonances/Channel.hpp"
-#include "njoy/dryad/resonances/UnresolvedWidthConversion.hpp"
+#include "njoy/dryad/resonances/ReducedWidthConversion.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -17,8 +18,8 @@ namespace resonances {
 
     public:
 
-      using ConversionFactor = std::variant< ConstantWidthConversion,
-                                             NeutronWidthConversion >;
+      using ConversionFactor = std::variant< double,
+                                             ReducedWidthConversion >;
 
     private:
 
@@ -67,6 +68,14 @@ namespace resonances {
       }
 
       /**
+       *  @brief Return the reference energy of a reduced channel
+       */
+      const double referenceEnergy() const {
+
+        return this->reference_energy_;
+      }
+
+      /**
        *  @brief Return the outgoing particle pair (if defined)
        *
        */
@@ -83,38 +92,63 @@ namespace resonances {
         return this->channel_.channelRadii();
       }
 
+      const ConversionFactor& conversionFactor() const {
+
+        return this->conversion_factor_;
+      }
+
       /**
        *  @brief Calculate the conversion factor for a width
        *
        *  @param[in] energy   the energy (given in eV)
        */
-      double conversion_factor( double energy ) const {
+      const double widthConversionFactor( double energy ) const {
 
         tools::overload visitor{
 
-          [&] ( const ConstantWidthConversion& ) -> double {
+          []  ( const double ) -> double {
 
-            return 1;
+            return 1.0;
           },
-          [&] ( const NeutronWidthConversion& ) -> double {
+          [&] ( const ReducedWidthConversion& function ) -> double {
 
             double rho = this->channel_.waveNumber( energy ) * this->channelRadii().calculatePenetrabilityRadius( energy );
-            const auto p_e = this->channel_.penetrability( energy );
-            return p_e / rho * std::sqrt( energy / this->reference_energy_);
+            return function.calculateConversionFactor( rho, energy);
+
           }
         };
 
         return std::visit( visitor, this->conversion_factor_);
       }
 
+      /**
+       *  @brief Equality comparison
+       *
+       *  @param[in]  left    the object on the left hand side
+       *  @param[in]  right   the object on the right hand side
+       */
+      friend bool operator==( const UnresolvedChannel& left,
+                              const UnresolvedChannel& right ) {
 
+        return std::tie( left.channel_, left.conversion_factor_, left.reference_energy_ ) ==
+               std::tie( right.channel_, right.conversion_factor_, right.reference_energy_ );
+      }
 
+      /**
+       *  @brief Inequality comparison
+       *
+       *  @param[in]  left    the object on the left hand side
+       *  @param[in]  right   the object on the right hand side
+       */
+      friend bool operator!=( const UnresolvedChannel& left,
+                              const UnresolvedChannel& right ) {
 
-
+        return ! ( left == right );
+      }
   };
-    
-}
-}
-}
+   
+} // namespace resonances
+} // namespace dryad
+} // namespace njoy
 
 #endif

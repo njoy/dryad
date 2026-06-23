@@ -85,6 +85,7 @@ add_cpp_test( dryad.resonances.CompoundSystem                                   
 add_cpp_test( dryad.resonances.TabulatedLevelSpacing                                    dryad/resonances/TabulatedLevelSpacing.test.cpp )
 add_cpp_test( dryad.resonances.TabulatedAverageWidths                                   dryad/resonances/TabulatedAverageWidths.test.cpp )
 add_cpp_test( dryad.resonances.UnresolvedResonanceTable                                 dryad/resonances/UnresolvedResonanceTable.test.cpp )
+add_cpp_test( dryad.resonances.UnresolvedChannel                                        dryad/resonances/UnresolvedChannel.test.cpp )
 
 add_cpp_test( dryad.thermal.TabulatedScatteringKernelFunction                           dryad/thermal/TabulatedScatteringKernelFunction.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedScatteringKernel                                   dryad/thermal/TabulatedScatteringKernel.test.cpp )
