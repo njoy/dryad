@@ -2,13 +2,13 @@ private:
 
 /**
  *  @brief  Private constructor
- *  @param  table   the interpolation table
+ *
  *  @param  dof     the degrees of freedom
+ *  @param  table   the interpolation table
  */
 TabulatedAverageWidths( std::optional< int > dof,
                         InterpolationTable< double, double > table ) :
-  InterpolationTable( std::move( table ) ), degrees_freedom_(  dof ) {}
-
+  InterpolationTable( std::move( table ) ), degrees_freedom_( dof ) {}
 
 public:
 
@@ -24,11 +24,13 @@ TabulatedAverageWidths& operator=( const TabulatedAverageWidths& ) = default;
 TabulatedAverageWidths& operator=( TabulatedAverageWidths&& ) = default;
 
 /**
- *  @param[in]  dof             the degrees of freedom for Porter-Thomas distribution sampling for each width
- *  @param[in]  energies        the energy values (eV)
- *  @param[in]  widths          the average width values (eV)
- *  @param[in]  boundaries      the boundaries of the interpolation regions
- *  @param[in]  interpolants    the interpolation types of the interpolation regions
+ *  @brief Constructor
+ *
+ *  @param[in]  dof            the degrees of freedom
+ *  @param[in]  energies       the energy values (eV)
+ *  @param[in]  widths         the average width values (eV)
+ *  @param[in]  boundaries     the boundaries of the interpolation regions
+ *  @param[in]  interpolants   the interpolation types of the interpolation regions
  */
 TabulatedAverageWidths( int dof,
                         std::vector< double > energies,
@@ -39,16 +41,15 @@ TabulatedAverageWidths( int dof,
                           InterpolationTable< double, double >( std::move( energies ),
                                                                 std::move( widths ),
                                                                 std::move( boundaries ),
-                                                                std::move( interpolants ) )
-                          ) {}
+                                                                std::move( interpolants ) ) ) {}
 
 /**
  *  @brief Constructor for a single interpolation zone
  *
- *  @param[in] dof            the degrees of freedom for Porter-Thomas sampling for each width
- *  @param[in] energies       the energy values (eV)
- *  @param[in] widths         the average width values (eV)
- *  @param[in] interpolant    the interpolation type (default lin-lin)
+ *  @param[in] dof           the degrees of freedom
+ *  @param[in] energies      the energy values (eV)
+ *  @param[in] widths        the average width values (eV)
+ *  @param[in] interpolant   the interpolation type (default lin-lin)
  */
 TabulatedAverageWidths( int dof,
                         std::vector< double > energies,
@@ -57,11 +58,10 @@ TabulatedAverageWidths( int dof,
   TabulatedAverageWidths( std::optional< int >( dof ),
                           InterpolationTable< double, double >( std::move( energies ),
                                                                 std::move( widths ),
-                                                                interpolant )
-                          ) {}
+                                                                interpolant ) ) {}
 
 /**
- *  @brief Constructor with a default dof (nullopt)
+ *  @brief Constructor without the degrees of freedom
  *
  *  @param[in] energies       the energy values (eV)
  *  @param[in] widths         the average width values (eV)
@@ -76,11 +76,10 @@ TabulatedAverageWidths( std::vector< double > energies,
                           InterpolationTable< double, double >( std::move( energies ),
                                                                 std::move( widths ),
                                                                 std::move( boundaries ),
-                                                                std::move( interpolants ) )
-                          ) {}
+                                                                std::move( interpolants ) ) ) {}
 
 /**
- *  @brief Constructor for a single interpolation zone with a default dof (nullopt)
+ *  @brief Constructor for a single interpolation zone without the degrees of freedom
  *
  *  @param[in] energies       the energy values (eV)
  *  @param[in] widths         the average width values (eV)
@@ -92,5 +91,4 @@ TabulatedAverageWidths( std::vector< double > energies,
   TabulatedAverageWidths( std::nullopt,
                           InterpolationTable< double, double >( std::move( energies ),
                                                                 std::move( widths ),
-                                                                interpolant )
-                          ) {}
+                                                                interpolant ) ) {}
