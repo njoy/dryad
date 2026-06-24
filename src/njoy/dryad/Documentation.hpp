@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_METADATA
-#define NJOY_DRYAD_METADATA
+#ifndef NJOY_DRYAD_DOCUMENTATION
+#define NJOY_DRYAD_DOCUMENTATION
 
 // system includes
 #include <optional>

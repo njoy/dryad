@@ -276,6 +276,9 @@ add_cpp_test( format.endf.write.createThermalScatteringFile                     
 add_cpp_test( format.gendf.read.covariance.createCrossSectionCovarianceMatrix          format/gendf/read/covariance/createCrossSectionCovarianceMatrix.test.cpp )
 add_cpp_test( format.gendf.read.covariance.createCrossSectionCovarianceData            format/gendf/read/covariance/createCrossSectionCovarianceData.test.cpp )
 add_cpp_test( format.gendf.read.covariance.createCrossSectionCovarianceDataFromFile    format/gendf/read/covariance/createCrossSectionCovarianceDataFromFile.test.cpp )
+add_cpp_test( format.gendf.read.covariance.createAngularDistributionCovarianceMatrix          format/gendf/read/covariance/createAngularDistributionCovarianceMatrix.test.cpp )
+add_cpp_test( format.gendf.read.covariance.createAngularDistributionCovarianceData            format/gendf/read/covariance/createAngularDistributionCovarianceData.test.cpp )
+add_cpp_test( format.gendf.read.covariance.createAngularDistributionCovarianceDataFromFile    format/gendf/read/covariance/createAngularDistributionCovarianceDataFromFile.test.cpp )
 
 add_cpp_test( format.gnds.read.convertEnergy                                           format/gnds/read/convertEnergy.test.cpp )
 add_cpp_test( format.gnds.read.convertEnergies                                         format/gnds/read/convertEnergies.test.cpp )

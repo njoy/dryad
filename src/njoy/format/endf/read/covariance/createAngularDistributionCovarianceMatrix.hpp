@@ -109,7 +109,8 @@ namespace covariance {
 
     if ( on_diagonal ) {
 
-      return CovarianceMatrix( std::move( frame ), Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+      return CovarianceMatrix( std::move( frame ),
+                               Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                std::move( matrix ),
                                relative );
     }
