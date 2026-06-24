@@ -32,6 +32,7 @@ namespace resonances {
   void wrapSammyBackground( python::module& );
   void wrapTabulatedBackground( python::module& );
   void wrapTabulatedLevelSpacing( python::module& );
+  void wrapTabulatedAverageWidths( python::module& );
   void wrapChannel( python::module& );
   void wrapResonanceTable( python::module& );
   void wrapSpinGroup( python::module& );
@@ -71,6 +72,7 @@ void wrapResonances( python::module& module ) {
   resonances::wrapSammyBackground( submodule );
   resonances::wrapTabulatedBackground( submodule );
   resonances::wrapTabulatedLevelSpacing( submodule );
+  resonances::wrapTabulatedAverageWidths( submodule );
   resonances::wrapChannel( submodule );
   resonances::wrapResonanceTable( submodule );
   resonances::wrapSpinGroup( submodule );
