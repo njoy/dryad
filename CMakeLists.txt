@@ -39,6 +39,8 @@ cmake_dependent_option(
 
 option( njoy.installation "Install njoy" OFF )
 
+set( NJOY_DATAPATH "" CACHE STRING "Path to NJOY data directory" )
+
 ########################################################################
 # Dependencies
 ########################################################################
@@ -96,6 +98,9 @@ if(MSVC)
   target_link_options(njoy INTERFACE "/STACK:8388608")
 endif()
 
+if ( NJOY_DATAPATH )
+    target_compile_definitions( njoy INTERFACE NJOY_DATAPATH="${NJOY_DATAPATH}" )
+endif()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # njoy : python bindings

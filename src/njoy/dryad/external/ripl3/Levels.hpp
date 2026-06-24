@@ -29,8 +29,11 @@ namespace ripl3 {
    *  @class
    *  @brief RIPL-3 level data
    *
-   *  The Levels class allows a user to interact with the  nuclear levels part of the RIPL-3
+   *  The Levels class allows a user to interact with the nuclear levels part of the RIPL-3
    *  database.
+   *
+   *  While elementary particles (g, n, p, d, t, h, a) are not included in RIPL-3, their spin
+   *  and parity information has been added.
    */
   class Levels {
 

@@ -1,6 +1,7 @@
 // include Catch2
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
+#include <string>
 using Catch::Matchers::WithinRel;
 
 // what we are testing
@@ -492,14 +493,25 @@ SCENARIO( "Levels" ) {
 
     THEN( "requesting a non-existent particle throws an exception" ) {
 
-      if ( std::getenv( "NJOY_DATAPATH" ) ) {
+
+      bool has_datapath = true;
+      try {
+
+        njoy::datapath();
+      }
+      catch ( const std::exception& ) {
+
+        has_datapath = false;
+      }
+
+      if ( has_datapath ) {
 
         id::ParticleID u214( "U214" ); // first available is U215
         id::ParticleID u235( "U235" );
-
         CHECK_THROWS( Levels::entry( u214 ) );
         CHECK_NOTHROW( Levels::entry( u235 ) );
       }
+
     } // THEN
   } // GIVEN
 } // SCENARIO

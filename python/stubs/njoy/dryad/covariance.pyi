@@ -402,7 +402,7 @@ class AngularDistributionMetadata:
     @property
     def moments(self) -> list[int]:
         """
-        The Legendre moments
+        The Legendre moment orders
         """
     @property
     def reaction_identifiers(self) -> list[njoy.dryad.id.ReactionID]:

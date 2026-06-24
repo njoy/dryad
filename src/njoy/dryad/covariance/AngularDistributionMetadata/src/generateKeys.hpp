@@ -22,7 +22,7 @@ static std::vector< Key > generateKeys( const std::vector< id::ReactionID >& rea
       for ( std::size_t k = 0; k < energies.size() - 1; ++k ) {
 
         keys.emplace_back( Key{ reactions[i],
-                                moments[j], 
+                                moments[j],
                                 { energies[k], energies[k+1] } } );
       }
     }

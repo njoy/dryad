@@ -55,7 +55,7 @@ namespace covariance {
     }
 
     /**
-     *  @brief Return the Legendre moments
+     *  @brief Return the Legendre moment orders
      */
     const std::vector< std::size_t >& moments() const {
 

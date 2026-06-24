@@ -4,7 +4,7 @@ static void loadData() {
   filesystem::path path( config );
   if ( ! path.is_absolute() ) {
 
-    path = filesystem::path( std::getenv( "NJOY_DATAPATH" ) );
+    path = filesystem::path( datapath() );
     path /= config;
   }
 
