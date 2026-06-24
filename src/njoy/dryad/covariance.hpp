@@ -1,4 +1,6 @@
 // components
+#include "njoy/dryad/covariance/CovarianceData.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
 #include "njoy/dryad/covariance/CrossSectionMetadata.hpp"
 #include "njoy/dryad/covariance/AngularDistributionMetadata.hpp"
 #include "njoy/dryad/covariance/ProductMultiplicityMetadata.hpp"
