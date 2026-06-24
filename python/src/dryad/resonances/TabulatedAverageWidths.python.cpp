@@ -13,8 +13,8 @@ namespace python = pybind11;
 namespace dryad {
 namespace resonances {
 
-void wrapTabulatedAverageWidths( python::module& module ) {  
-    
+void wrapTabulatedAverageWidths( python::module& module ) {
+
   // type aliases
   using Component = njoy::dryad::resonances::TabulatedAverageWidths;
   using InterpolationType = njoy::dryad::InterpolationType;
@@ -43,7 +43,7 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     "Initialise the average width table\n\n"
     "Arguments:\n"
     "    self           the average width table\n"
-    "    dof            the degrees of freedom for Porter-Thomas sampling for each width\n"
+    "    dof            the degrees of freedom\n"
     "    energies       the energy values\n"
     "    values         the average width values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
@@ -52,7 +52,7 @@ void wrapTabulatedAverageWidths( python::module& module ) {
   )
   .def(
 
-    python::init< int ,
+    python::init< int,
                   std::vector< double >,
                   std::vector< double >,
                   InterpolationType >(),
@@ -61,9 +61,9 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     "Initialise the average width table\n\n"
     "Arguments:\n"
     "    self           the average width table\n"
-    "    dof            the degrees of freedom for Porter-Thomas sampling for each width\n"
+    "    dof            the degrees of freedom\n"
     "    energies       the energy values\n"
-    "    values         the average width  values\n"
+    "    values         the average width values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
     "                   see InterpolationType for all interpolation types"
   )
@@ -82,11 +82,11 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     "    interpolant    the interpolation type (default lin-lin),\n"
     "                   see InterpolationType for all interpolation types"
   )
-  .def_property_readonly(
-
-    "dof",
-    &Component::degreesOfFreedom,
-    "The degrees of freedom for Porter-Thomas sampling for each width"
+  .def_property(
+    "degrees_of_freedom",
+    python::overload_cast<>( &Component::degreesOfFreedom, python::const_ ),
+    python::overload_cast< std::optional< int > >( &Component::degreesOfFreedom ),
+    "The degrees of freedom"
   )
   .def_property_readonly(
 
