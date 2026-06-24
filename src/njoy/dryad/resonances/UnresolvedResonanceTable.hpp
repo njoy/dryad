@@ -1,152 +1,267 @@
-#ifndef NJOY_DRYAD_RESONANCES__UNRESOLVEDRESONANCETABLE
-#define NJOY_DRYAD_RESONANCES__UNRESOLVEDRESONANCETABLE
+#ifndef NJOY_DRYAD_RESONANCES_UNRESOLVEDRESONANCETABLE
+#define NJOY_DRYAD_RESONANCES_UNRESOLVEDRESONANCETABLE
 
+// system includes
 #include <vector>
 #include <algorithm>
-#include <numeric>
 #include <tuple>
-#include <optional>
 
+// other includes
 #include "tools/apply_permutation.hpp"
 #include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"
 #include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"
 #include "njoy/dryad/id/ChannelID.hpp"
 
-
 namespace njoy{
 namespace dryad{
-
 namespace resonances{
 
+  /**
+   *  @class
+   *  @brief A table of unresolved average parameters for a set of channels
+   */
+  class UnresolvedResonanceTable {
+
+    /* fields */
+
+    std::vector< id::ChannelID > channels_;
+    std::vector< TabulatedAverageWidths > widths_;
+    TabulatedLevelSpacing spacings_;
+
+    /* auxiliary functions */
+
     /**
-     * @class
-     * @brief A resonance table of average resonance parameters corresponding 
-     *        to a Jpi quantum number set for use in the unresolved resonance
-     *        region
+     *  @brief Process the data before storing it in the table
+     *
+     *  @param[in] channels   the channel identifiers (nc values)
+     *  @param[in] widths     the tabulated average widths (nc values)
+     *  @param[in] spacings   the average level spacing
      */
+    static auto processTable( std::vector< id::ChannelID > channels,
+                              std::vector< TabulatedAverageWidths > widths,
+                              TabulatedLevelSpacing spacings ) {
 
-    class UnresolvedResonanceTable {
+      // verify if the channels are sorted by channel id
+      if ( ! std::is_sorted( channels.begin(), channels.end() ) ) {
 
-      private:
+        std::vector< std::size_t > order( channels.size() );
+        std::iota( order.begin(), order.end(), 0 );
+        std::sort( order.begin(), order.end(),
+                   [&] ( auto i, auto j ) { return channels[i] < channels[j]; } );
 
-        std::vector< id::ChannelID > channels_;
-        std::vector< TabulatedAverageWidths > widths_;
-        TabulatedLevelSpacing spacings_;
+        std::sort( channels.begin(), channels.end() );
+        tools::apply_permutation( widths,   order );
+      }
 
-        /* auxiliary functions */
-        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/processTable.hpp"
-        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/verifyTable.hpp"
-        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/iterator.hpp"
+      return std::make_tuple( std::move( channels ), std::move( widths ), std::move( spacings ) );
+    }
 
+    /**
+     *  @brief Basic verification of the table
+     *
+     *  @param[in] channels   the channel identifiers (nc values)
+     *  @param[in] widths     the tabulated average widths (nc values)
+     *  @param[in] spacings   the average level spacing
+     */
+    static void verifyTable( const std::vector< id::ChannelID >& channels,
+                             const std::vector< TabulatedAverageWidths >& widths,
+                             const TabulatedLevelSpacing& spacings ) {
 
-    
+      std::size_t nc = channels.size();
 
-      public:
-        /* constructor */
-        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/ctor.hpp"
+      if ( nc == 0 ) {
 
-        /* methods */
+        Log::error( "At least one channel should be defined" );
+        Log::info( "Number channels: {}", nc );
+        throw std::exception();
+      }
 
-        /**
-        * @brief return the number of channels in the table
-        */
-        std::size_t numberChannels() const {
-          return this->channels_.size();
-        }
+      auto channel = std::adjacent_find( channels.begin(), channels.end() );
+      if ( channel != channels.end() ) {
 
-        /**
-        * @brief return the channel identifiers
-        */
-        const std::vector< id::ChannelID >& channels() const { 
-          return this->channels_;
-        }
+        Log::error( "The channels are not unique" );
+        Log::info( "The channel = {} appears more than once", channel->symbol() );
+        throw std::exception();
+      }
 
-        /**
-        * @brief Return the channel identifiers
-        */
+      if ( nc != widths.size() ) {
 
-        std::vector< id::ChannelID >& channels() { 
-          return this->channels_;
-        }
+        Log::error( "The number of channel identifiers and the number of average "
+                    "widths is not as expected" );
+        Log::info( "Number channel identifiers: {}", nc );
+        Log::info( "Number average widths: {}", widths.size() );
+        throw std::exception();
+      }
+    }
 
-        /**
-        * @brief Returns if the table has a given channel
-        */
-        bool hasChannel( const id::ChannelID& channel ) const {
-            auto iter = this->iterator( channel );
-            return iter != this->channels().end() && *iter == channel;
-        }
+    /**
+     *  @brief Return an iterator for the channel identifier (using lower_bound)
+     */
+    auto iterator( const id::ChannelID& id ) const {
 
-        /**
-        * @brief Return the TabulatedAverageWidths for a given channel
-        */
-        const TabulatedAverageWidths& channelWidths( const id::ChannelID& channel ) const {
-          auto iter = this->iterator( channel );
-          if ( iter == this->channels().cend() || *iter != channel ) {
-            Log::error( "Channel {} not found in table", channel.symbol() );
-            throw std::exception();
-          }
-          return this->widths()[ std::distance( this->channels().cbegin(), iter ) ];
-        }
+      return std::lower_bound( this->channels().begin(), this->channels().end(), id );
+    }
 
-        /**
-        * @brief Return the TabulatedAverageWidths for a given channel
-        */
-        TabulatedAverageWidths& channelWidths( const id::ChannelID& channel ) {
+    /* constructors */
 
-          return const_cast< TabulatedAverageWidths& > ( const_cast< const UnresolvedResonanceTable& >( *this ).channelWidths( channel ) );
-        }
+    /**
+     *  @brief Private intermediate constructor
+     */
+    UnresolvedResonanceTable( std::tuple< std::vector< id::ChannelID >,
+                                          std::vector< TabulatedAverageWidths >,
+                                          TabulatedLevelSpacing >&& data ) :
+        channels_( std::move( std::get< 0 >( data ) ) ),
+        widths_( std::move( std::get< 1 >( data ) ) ),
+        spacings_( std::move( std::get< 2 >( data ) ) ) {
 
-        /**
-        * @brief Return the average widths
-        */
-        const std::vector< TabulatedAverageWidths >& widths() const {
-          return this->widths_;
-        }
+      verifyTable( this->channels(), this->widths(), this->spacings() );
+    }
 
-        /**
-        * @brief Return the average widths
-        */
-        std::vector< TabulatedAverageWidths >& widths() {
-          return this->widths_;
-        }
+  public:
 
-        /**
-        * @brief Return the level spacings
-        */
-        const TabulatedLevelSpacing& spacings() const {
-          return this->spacings_;
-        }
+    /* constructor */
 
-        /**
-        * @brief Return the level spacings
-        */
-        TabulatedLevelSpacing& spacings() {
-          return this->spacings_;
-        }
+    /**
+     * @brief Default constructor (for pybind11 purposes only)
+     */
+    UnresolvedResonanceTable() = default;
 
-        /**
-        * @brief Equality comparison
-        *
-        * @param[in] left    the object on the left hand side
-        * @param[in] right   the object on the right hand side
-        */
-        friend bool operator==( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
-          return std::tie( left.channels(), left.widths(), left.spacings() ) ==
-                 std::tie( right.channels(), right.widths(), right.spacings() );
-        }
+    UnresolvedResonanceTable( const UnresolvedResonanceTable& ) = default;
+    UnresolvedResonanceTable( UnresolvedResonanceTable&& ) = default;
 
-        /**
-        * @brief Inequality comparison
-        *
-        * @param[in] left    the object on the left hand side
-        * @param[in] right   the object on the right hand side
-        */
-        friend bool operator!=( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
-          return ! ( left == right );
-        }
+    UnresolvedResonanceTable& operator=( const UnresolvedResonanceTable& ) = default;
+    UnresolvedResonanceTable& operator=( UnresolvedResonanceTable&& ) = default;
 
-    };
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] channels   the channel identifiers (nc values)
+     *  @param[in] widths     the tabulated average widths (nc values)
+     *  @param[in] spacings   the average level spacing
+     */
+    UnresolvedResonanceTable( std::vector< id::ChannelID > channels,
+                              std::vector< TabulatedAverageWidths > widths,
+                              TabulatedLevelSpacing spacings ) :
+        UnresolvedResonanceTable( processTable( std::move( channels ),
+                                                std::move( widths ),
+                                                std::move( spacings ) ) ) {}
+
+    /* methods */
+
+    /**
+     *  @brief Return the channel identifiers
+     */
+    const std::vector< id::ChannelID >& channels() const {
+
+      return this->channels_;
+    }
+
+    /**
+     *  @brief Return the channel identifiers
+     */
+    std::vector< id::ChannelID >& channels() {
+
+      return this->channels_;
+    }
+
+    /**
+     *  @brief Return the average widths
+     */
+    const std::vector< TabulatedAverageWidths >& widths() const {
+
+      return this->widths_;
+    }
+
+    /**
+     *  @brief Return the average widths
+     */
+    std::vector< TabulatedAverageWidths >& widths() {
+
+      return this->widths_;
+    }
+
+    /**
+     *  @brief Return the level spacings
+     */
+    const TabulatedLevelSpacing& spacings() const {
+
+      return this->spacings_;
+    }
+
+    /**
+     *  @brief Return the level spacings
+     */
+    TabulatedLevelSpacing& spacings() {
+
+      return this->spacings_;
+    }
+
+    /**
+     *  @brief Return the number of channels in the table
+     */
+    std::size_t numberChannels() const { return this->channels().size(); }
+
+    /**
+     *  @brief Return whether or not a given channel is present
+     *
+     *  @param[in] id   the channel identifier
+     */
+    bool hasChannel( const id::ChannelID& id ) const {
+
+      auto iter = this->iterator( id );
+      return iter != this->channels().end() && *iter == id;
+    }
+
+    /**
+     *  @brief Return the average widths for a given channel
+     *
+     *  @param[in] id   the channel identifier
+     */
+    const TabulatedAverageWidths& channelWidths( const id::ChannelID& id ) const {
+
+      auto iter = this->iterator( id );
+      if ( iter == this->channels().end() || *iter != id ) {
+
+        Log::error( "Channel {} not found in table", id.symbol() );
+        throw std::exception();
+      }
+      return this->widths()[ std::distance( this->channels().begin(), iter ) ];
+    }
+
+    /**
+     *  @brief Return the average widths for a given channel
+     *
+     *  @param[in] id   the channel identifier
+     */
+    TabulatedAverageWidths& channelWidths( const id::ChannelID& id ) {
+
+      return const_cast< TabulatedAverageWidths& > ( const_cast< const UnresolvedResonanceTable& >( *this ).channelWidths( id ) );
+    }
+
+    /**
+     *  @brief Equality comparison
+     *
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
+     */
+    friend bool operator==( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
+
+      return std::tie( left.channels(), left.widths(), left.spacings() ) ==
+             std::tie( right.channels(), right.widths(), right.spacings() );
+    }
+
+    /**
+     *  @brief Inequality comparison
+     *
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
+     */
+    friend bool operator!=( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
+
+      return ! ( left == right );
+    }
+  };
+
 } // namespace resonances
 } // namespace dryad
 } // namespace njoy

@@ -5,10 +5,9 @@ using Catch::Matchers::WithinRel;
 
 // what we are testing
 #include "njoy/dryad/resonances/UnresolvedResonanceTable.hpp"
-#include "njoy/dryad/id/ChannelID.hpp"
-
 
 // other includes
+#include "njoy/dryad/id/ChannelID.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;

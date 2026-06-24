@@ -27,30 +27,26 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
 
     module,
     "UnresolvedResonanceTable",
-    "A resonance table of average resonance parameters corresponding\n"
-    "to a Jpi quantum number set for use in the unresolved resonance\n"
-    "region"
+    "A table of unresolved average parameters for a set of channels"
   );
 
   // wrap the component
   component
   .def(
-    
+
 
     python::init< std::vector< ChannelID >,
-                  std::vector<TabulatedAverageWidths>,
+                  std::vector< TabulatedAverageWidths >,
                   TabulatedLevelSpacing >(),
-    python::arg( "channels" ), python::arg( "average_widths" ),
+    python::arg( "channels" ),
+    python::arg( "average_widths" ),
     python::arg( "level_spacings" ),
     "Initialise the table\n\n"
-    "The channels do not have to be sorted (they will be sorted upon\n"
-    "construction). The shared energy grid is used to construct the\n"
-    "level spacing table and the average width tables.\n\n"
     "Arguments:\n"
-    "    self             the table\n"
-    "    channels         the channel identifiers (nc values)\n"
-    "    average_widths   the average widths for all channels\n"
-    "    level_spacings   the level spacings"
+    "    self       the table\n"
+    "    channels   the channel identifiers (nc values)\n"
+    "    widths     the tabulated average widths (nc values)\n"
+    "    spacings   the average level spacing"
   )
   .def_property_readonly(
 
@@ -62,7 +58,7 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
 
     "widths",
     python::overload_cast<>( &Component::widths, python::const_ ),
-    "The average widths for all channels"
+    "The average widths"
   )
   .def_property_readonly(
 
