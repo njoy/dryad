@@ -181,7 +181,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    constexpr bool operator==( const IsotropicAngularDistributionFunction& right ) const {
+    bool operator==( const IsotropicAngularDistributionFunction& right ) const {
 
       return this->value() == right.value();
     }
@@ -191,7 +191,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    constexpr bool operator!=( const IsotropicAngularDistributionFunction& right ) const {
+    bool operator!=( const IsotropicAngularDistributionFunction& right ) const {
 
       return ! this->operator==( right );
     }
