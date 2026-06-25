@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedResonanceTable']
 class BoundaryCondition:
     """
     The boundary condition options for resonance reconstruction
@@ -1170,10 +1170,20 @@ class ResonanceTable:
     def has_channel(self, channel: njoy.dryad.id.ChannelID) -> bool:
         """
         Return whether or not a channel is present
+        
+        Parameters
+        ----------
+            channel : njoy.dryad.id.CHannelID
+                the channel identifier
         """
     def has_energy(self, energy: float) -> bool:
         """
         Return whether or not an energy is present
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     @property
     def channels(self) -> list[njoy.dryad.id.ChannelID]:
@@ -1446,6 +1456,21 @@ class SpinGroup:
 class TabulatedAverageWidths:
     """
     A table of average widths
+    
+    Parameters
+    ----------
+        dof : int
+            the degrees of freedom
+        energies : list of float
+            the energy values
+        values : list of float
+            the average width values
+        boundaries : list of int, optional
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType, optional
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default=LinearLinear
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1458,9 +1483,10 @@ class TabulatedAverageWidths:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the average width table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedAverageWidths:
         ...
@@ -1479,41 +1505,22 @@ class TabulatedAverageWidths:
     @typing.overload
     def __init__(self, dof: int, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
         """
-        Initialise the average width table
-        
-        Arguments:
-            self           the average width table
-            dof            the degrees of freedom
-            energies       the energy values
-            values         the average width values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the average width table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, dof: int, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
-        Initialise the average width table
-        
-        Arguments:
-            self           the average width table
-            dof            the degrees of freedom
-            energies       the energy values
-            values         the average width values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the average width table with a single interpolation region
+        """
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the average width table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
-        Initialise the average width table
-        
-        Arguments:
-            self           the average width table
-            energies       the energy values
-            values         the average width  values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the average width table with a single interpolation region
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAverageWidths:
@@ -1550,7 +1557,7 @@ class TabulatedAverageWidths:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -1562,6 +1569,9 @@ class TabulatedAverageWidths:
         """
         The degrees of freedom
         """
+    @degrees_of_freedom.setter
+    def degrees_of_freedom(self, arg1: int | None) -> None:
+        ...
     @property
     def energies(self) -> list[float]:
         """
@@ -2164,4 +2174,70 @@ class TabulatedWaveFunction:
     def values(self) -> list[float]:
         """
         The wave function values
+        """
+class UnresolvedResonanceTable:
+    """
+    A table of unresolved average parameters for a set of channels
+    
+    Parameters
+    ----------
+        light_particle : njoy.dryad.Particle
+            the light particle
+        heavy_particle : njoy.dryad.Particle
+            the heavy particle    channels : list of njoy.dryad.id.ChannelID
+            the channel identifiers (nc values)
+        widths : list of njoy.dryad.resonances.TabulatedAverageWidths
+            the tabulated average widths (nc values)
+        spacings : njoy.dryad.id.TabulatedLevelSpacing
+            the average level spacing
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> UnresolvedResonanceTable:
+        ...
+    def __deepcopy__(self, arg0: dict) -> UnresolvedResonanceTable:
+        ...
+    def __eq__(self, arg0: UnresolvedResonanceTable) -> bool:
+        ...
+    def __init__(self, channels: list[njoy.dryad.id.ChannelID], average_widths: list[TabulatedAverageWidths], level_spacings: TabulatedLevelSpacing) -> None:
+        """
+        Initialise the table
+        """
+    def __ne__(self, arg0: UnresolvedResonanceTable) -> bool:
+        ...
+    def channel_widths(self, channel: njoy.dryad.id.ChannelID) -> TabulatedAverageWidths:
+        """
+        Return the average widths for a given channel
+        
+        Arguments:
+            self      the table
+            channel   the channel identifier
+        """
+    def has_channel(self, channel: njoy.dryad.id.ChannelID) -> bool:
+        """
+        Return whether or not a channel is present
+        
+        Parameters
+        ----------
+            channel : njoy.dryad.id.CHannelID
+                the channel identifier
+        """
+    @property
+    def channels(self) -> list[njoy.dryad.id.ChannelID]:
+        """
+        The channel identifiers
+        """
+    @property
+    def number_channels(self) -> int:
+        """
+        The number of channels in the table
+        """
+    @property
+    def spacings(self) -> TabulatedLevelSpacing:
+        """
+        The level spacings
+        """
+    @property
+    def widths(self) -> list[TabulatedAverageWidths]:
+        """
+        The average widths
         """
