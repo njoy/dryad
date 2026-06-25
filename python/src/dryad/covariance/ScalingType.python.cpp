@@ -31,10 +31,18 @@ void wrapScalingType( python::module& module ) {
 
   // wrap the component
   component
-  .value( "Inverse",  Component::Inverse,
-          "The variance of group j is inversely proportional to the width of group j" )
-  .value( "Direct",   Component::Direct,
-          "The variance of group j is directly proportional to the width of group j" );
+  .value(
+
+    "Inverse",
+    Component::Inverse,
+    "The variance of group j is inversely proportional to the width of group k that contains group j"
+  )
+  .value(
+
+    "Direct",
+    Component::Direct,
+    "The variance of group j is directly proportional to the width of group j that contains group j"
+  );
 }
 
 } // covariance namespace

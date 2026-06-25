@@ -301,8 +301,6 @@ class ChannelQuantumNumbers:
             the total angular momentum
         parity : int
             the parity (+1 or -1)
-        parity : int
-            the parity (+1 or -1)
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -421,6 +419,21 @@ class ChannelRadii:
     The penetrability P, shift factor S and phase shift phi require knowledge
     of the channel radius in their calculation. The ChannelRadii class provides
     these radii for each one of these.
+    
+    Parameters
+    ----------
+        radius : float or njoy.dryad.resonances.TabulatedRadius
+            the channel radius to be used for P, S and phi
+        true_radius : float or njoy.dryad.resonances.TabulatedRadius
+            the channel radius to be used for P and S
+        effective_radius : float or njoy.dryad.resonances.TabulatedRadius
+            the channel radius to be used for phi
+        penetrability : float or njoy.dryad.resonances.TabulatedRadius
+            the channel radius to be used for P
+        shift_factor : float or njoy.dryad.resonances.TabulatedRadius
+            the channel radius to be used for S
+        phase_shift : float or njoy.dryad.resonances.TabulatedRadius
+            the channel radius to be used for phi
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ChannelRadii:
@@ -1173,7 +1186,7 @@ class ResonanceTable:
         
         Parameters
         ----------
-            channel : njoy.dryad.id.CHannelID
+            channel : njoy.dryad.id.ChannelID
                 the channel identifier
         """
     def has_energy(self, energy: float) -> bool:
@@ -1251,17 +1264,6 @@ class SammyBackground:
     def __init__(self, polynomial_coefficients: typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(3)], logarithmic_coefficients: typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(2)], lower_singularity: float, upper_singularity: float) -> None:
         """
         Initialise the background function
-        
-        Parameters
-        ----------
-            polynomial_coefficients : list of float
-               the coefficients of the polymonial term (order 2)
-            logarithmic_coefficients : list of float
-               the coefficients of the logarithmic term (order 1)
-            lower_singularity : float
-               the lower logarithmic singularity values
-            upper_singularity : float
-               the upper logarithmic singularity values
         """
     def __ne__(self, arg0: SammyBackground) -> bool:
         ...
@@ -2181,10 +2183,7 @@ class UnresolvedResonanceTable:
     
     Parameters
     ----------
-        light_particle : njoy.dryad.Particle
-            the light particle
-        heavy_particle : njoy.dryad.Particle
-            the heavy particle    channels : list of njoy.dryad.id.ChannelID
+        channels : list of njoy.dryad.id.ChannelID
             the channel identifiers (nc values)
         widths : list of njoy.dryad.resonances.TabulatedAverageWidths
             the tabulated average widths (nc values)
@@ -2208,9 +2207,10 @@ class UnresolvedResonanceTable:
         """
         Return the average widths for a given channel
         
-        Arguments:
-            self      the table
-            channel   the channel identifier
+        Parameters
+        ----------
+            channel : njoy.dryad.id.ChannelID
+                the channel identifier
         """
     def has_channel(self, channel: njoy.dryad.id.ChannelID) -> bool:
         """
@@ -2218,7 +2218,7 @@ class UnresolvedResonanceTable:
         
         Parameters
         ----------
-            channel : njoy.dryad.id.CHannelID
+            channel : njoy.dryad.id.ChannelID
                 the channel identifier
         """
     @property

@@ -35,4 +35,5 @@ namespace reconr {
       "        the linearisation tolerance (default: 0.1%)"
     );
   }
+
 } // reconr namespace

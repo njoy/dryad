@@ -110,7 +110,7 @@ void wrapResonanceTable( python::module& module ) {
     "Return whether or not a channel is present\n\n"
     "Parameters\n"
     "----------\n"
-    "    channel : njoy.dryad.id.CHannelID\n"
+    "    channel : njoy.dryad.id.ChannelID\n"
     "        the channel identifier"
   )
   .def(

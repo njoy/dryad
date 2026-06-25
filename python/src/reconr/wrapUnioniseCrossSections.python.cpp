@@ -39,4 +39,5 @@ namespace reconr {
       "        option to exclude summation reactions in the unionisation"
     );
   }
+
 } // reconr namespace

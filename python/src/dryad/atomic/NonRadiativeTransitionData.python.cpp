@@ -27,7 +27,7 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     "NonRadiativeTransitionData",
     "A non-radiative transition in atomic relaxation\n\n"
     "In a non-radiative transition, an electron from another shell fills a\n"
-    "vacancy in the current shell while another electron () is emitted. The\n"
+    "vacancy in the current shell while another electron is emitted. The\n"
     "energy of the emitted electron is equal to the binding energy of the\n"
     "subshell with the vacancy minus the binding energy of the subshell from\n"
     "which the electron filling the vacancy originated from and the subshell\n"

@@ -34,4 +34,5 @@ namespace medic {
       "        the projectile-target data to be modified"
     );
   }
+
 } // medic namespace

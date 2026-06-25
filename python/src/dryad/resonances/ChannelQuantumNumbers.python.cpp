@@ -38,8 +38,6 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "    J : float\n"
     "        the total angular momentum\n"
     "    parity : int\n"
-    "        the parity (+1 or -1)\n"
-    "    parity : int\n"
     "        the parity (+1 or -1)"
    );
 

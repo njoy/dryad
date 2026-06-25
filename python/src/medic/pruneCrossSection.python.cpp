@@ -34,4 +34,5 @@ namespace medic {
       "        the cross section table to be modified"
     );
   }
+
 } // medic namespace

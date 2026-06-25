@@ -48,4 +48,5 @@ namespace acer {
       "        the ace file title"
     );
   }
-} // medic namespace
+
+} // acer namespace

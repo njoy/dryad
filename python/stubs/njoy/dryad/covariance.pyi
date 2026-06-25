@@ -1234,9 +1234,9 @@ class ScalingType:
     
     Members:
     
-      Inverse : The variance of group j is inversely proportional to the width of group j
+      Inverse : The variance of group j is inversely proportional to the width of group k that contains group j
     
-      Direct : The variance of group j is directly proportional to the width of group j
+      Direct : The variance of group j is directly proportional to the width of group j that contains group j
     """
     Direct: typing.ClassVar[ScalingType]  # value = <ScalingType.Direct: 2>
     Inverse: typing.ClassVar[ScalingType]  # value = <ScalingType.Inverse: 1>

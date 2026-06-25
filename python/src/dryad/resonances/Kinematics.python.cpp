@@ -37,10 +37,18 @@ void wrapKinematics( python::module& module ) {
 
   // wrap the component
   component
-  .value( "NonRelativistic", Component::NonRelativistic,
-          "Non-relativistic kinematics" )
-  .value( "Relativistic", Component::Relativistic,
-          "Relativistic kinematics" );
+  .value(
+
+    "NonRelativistic",
+    Component::NonRelativistic,
+    "Non-relativistic kinematics"
+  )
+  .value(
+
+    "Relativistic",
+    Component::Relativistic,
+    "Relativistic kinematics"
+  );
 }
 
 } // resonances namespace

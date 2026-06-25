@@ -215,7 +215,7 @@ class NonRadiativeTransitionData:
     A non-radiative transition in atomic relaxation
     
     In a non-radiative transition, an electron from another shell fills a
-    vacancy in the current shell while another electron () is emitted. The
+    vacancy in the current shell while another electron is emitted. The
     energy of the emitted electron is equal to the binding energy of the
     subshell with the vacancy minus the binding energy of the subshell from
     which the electron filling the vacancy originated from and the subshell
@@ -295,14 +295,13 @@ class RadiativeTransitionData:
     
     Parameters
     ----------
-        originating_shell : njoy.dryad.id.ElectronSubshellID 
+        originating_shell : njoy.dryad.id.ElectronSubshellID
             the identifier of the subshell from which the
             vacancy filling electron originated
         probability : float
             the probability of the transition
         energy : float,  default None
             the energy of the emitted photon (default: undefined)
-    
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> RadiativeTransitionData:
@@ -352,9 +351,11 @@ class TransitionType:
     
     Members:
     
-      Radiative
+      Radiative : A radiative transition, an electron from another shell fills a vacancy in the current
+    shell while emitting a photon
     
-      NonRadiative
+      NonRadiative : An electron from another shell fills a vacancy in the current shell while another electron
+    is emitted
     """
     NonRadiative: typing.ClassVar[TransitionType]  # value = <TransitionType.NonRadiative: 1>
     Radiative: typing.ClassVar[TransitionType]  # value = <TransitionType.Radiative: 0>
