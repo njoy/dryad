@@ -18,6 +18,12 @@ namespace dryad {
 
 void wrapProjectileTarget( python::module& module ) {
 
+  // constants
+  std::ostringstream integration_tolerance;
+  integration_tolerance << std::setprecision( 1 ) << njoy::constants::integration::tolerance;
+  std::ostringstream linearisation_tolerance;
+  linearisation_tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   // type aliases
   using Component = njoy::dryad::ProjectileTarget;
   using Documentation = njoy::dryad::Documentation;
@@ -192,11 +198,11 @@ void wrapProjectileTarget( python::module& module ) {
     "calculate_average_energy",
     &Component::calculateAverageEnergy,
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
-    "Calculate average outgoing energies for all reaction products\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 1e-8\n"
-    "        the integration tolerance"
+    std::string( "Calculate average outgoing energies for all reaction products\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + integration_tolerance.str() + "\n"
+                 "        the integration tolerance" ).c_str()
   )
   .def(
 
@@ -221,11 +227,11 @@ void wrapProjectileTarget( python::module& module ) {
     "calculate_summation_cross_sections",
     &Component::calculateSummationCrossSections,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
-    "Calculate summation cross sections\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 0.001\n"
-    "        the linearisation tolerance"
+    std::string( "Calculate summation cross sections\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + linearisation_tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
   )
   .def(
 

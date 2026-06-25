@@ -386,8 +386,8 @@ class IncoherentDistributionData:
                 the incident energy
             energies : list of float 
                 the incident energies
-            tolerance : float 
-                the integration tolerance (default: 1e-8)
+            tolerance : float, default 1e-08
+                the linearisation tolerance
         """
     @typing.overload
     def average_energy(self, energies: list[float], tolerance: float = 1e-08) -> list[float]:
@@ -1621,7 +1621,7 @@ class ProjectileTarget:
         
         Parameters
         ----------
-            tolerance : float, default 1e-8
+            tolerance : float, default 1e-08
                 the integration tolerance
         """
     def calculate_summation_cross_sections(self, tolerance: float = 0.001) -> None:
@@ -1807,7 +1807,7 @@ class Reaction:
         
         Parameters
         ----------
-            tolerance : float, default 1e-8
+            tolerance : float, default 1e-08
                 the integration tolerance
         """
     @typing.overload
@@ -2878,13 +2878,13 @@ class TabulatedComptonProfile:
         ...
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedComptonProfile:
         """
-        Linearise the distribution 
+        Linearise the distributions
         
         Parameters
         ----------
             tolerance : float, default 0.001
                 the linearisation tolerance
-            normalise : bool, default false
+            normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
         """

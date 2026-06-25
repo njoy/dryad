@@ -54,6 +54,11 @@ namespace covariance {
 
     /* constructor */
 
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] ratio   the smallest allowable positive eigenvalue ratio
+     */
     EigenvalueRatio( double ratio = njoy::constants::psychic::smallest_eigenvalue_ratio ) :
       Parent( "psychic.covariance.EigenvalueRatio" ),
       acceptable_ratio_( ratio ) {}
@@ -133,8 +138,8 @@ namespace covariance {
      *  available.
      *
      *  The test returns the following status values:
-     *    - Success : the eigenvalue ratio is larger than or equal to the tolerance
-     *    - Fail    : the eigenvalue ratio is smaller than the tolerance
+     *    - Success : the eigenvalue ratio is larger than or equal to the smallest allowed ratio
+     *    - Fail    : the eigenvalue ratio is smaller than the smallest allowed ratio
      *    - Skipped : the test was skipped
      *
      *  The smallest and largest positive eigenvalue and their ratio is always available.

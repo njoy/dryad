@@ -13,6 +13,10 @@ namespace dryad {
 
 void wrapIsotropicAngularDistributionFunction( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   // type aliases
   using Component = njoy::dryad::IsotropicAngularDistributionFunction;
 
@@ -97,14 +101,14 @@ void wrapIsotropicAngularDistributionFunction( python::module& module ) {
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
-    "Linearise the distribution function\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 0.001\n"
-    "        the linearisation tolerance\n"
-    "    normalise : bool, default False\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    std::string( "Linearise the distribution function\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance\n"
+                 "    normalise : bool, default False\n"
+                 "        option to indicate whether or not to normalise\n"
+                 "        all probability data (default: no normalisation)" ).c_str()
   )
   .def(
 

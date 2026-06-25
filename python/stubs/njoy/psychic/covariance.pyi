@@ -13,7 +13,7 @@ class BoundedCorrelations:
     Parameters
     ----------
         tolerance : float, default 1e-10
-            the comparison tolerance
+            the absolute comparison tolerance
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -89,7 +89,7 @@ class DiagonalCorrelations:
     Parameters
     ----------
         tolerance : float, default 1e-10
-            the comparison tolerance
+            the absolute comparison tolerance
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -146,7 +146,7 @@ class EigenvalueRatio:
     
     Parameters
     ----------
-        ratio : float, default 1e-8
+        ratio : float, default 1e-08
             the smallest allowable positive eigenvalue ratio
     """
     @typing.overload
@@ -156,8 +156,8 @@ class EigenvalueRatio:
         
         The test returns the following status values:
         
-          - Success : the eigenvalue ratio is larger than or equal to the tolerance
-          - Fail    : the eigenvalue ratio is smaller than the tolerance
+          - Success : the eigenvalue ratio is larger than or equal to the smallest allowed ratio
+          - Fail    : the eigenvalue ratio is smaller than the smallest allowed ratio
           - Skipped : the test was skipped
         
         The smallest and largest positive eigenvalue and their ratio is always available.
@@ -354,7 +354,7 @@ class TestSuite:
             the comparison tolerance
         negative : float, default -1e-10
             the largest allowed negative eigenvalue
-        ratio : float, default 1e-8
+        ratio : float, default 1e-08
             the smallest allowable positive eigenvalue ratio
     """
     @typing.overload

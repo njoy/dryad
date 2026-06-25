@@ -17,7 +17,7 @@ def calculate_summation_cross_sections(pt: njoy.dryad.ProjectileTarget, toleranc
         pt : njoy.dryad.ProjectileTarget
             the projectile-target data to be modified
         tolerance : float, default 0.001
-            the linearisation tolerance (default: 0.1%)
+            the absolute linearisation tolerance
     """
 def unionise_cross_sections(pt: njoy.dryad.ProjectileTarget, exclude_summation: bool = False) -> None:
     """

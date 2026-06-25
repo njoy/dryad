@@ -1,6 +1,8 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <sstream>
+#include <iomanip>
 
 // local includes
 #include "dryad/definitions.hpp"
@@ -13,6 +15,14 @@ namespace psychic {
 namespace covariance {
 
 void wrapTestSuite( python::module& module ) {
+
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 1 ) << njoy::constants::psychic::tolerance;
+  std::ostringstream negative;
+  negative << std::setprecision( 1 ) << njoy::constants::psychic::largest_allowed_negative_eigenvalue;
+  std::ostringstream ratio;
+  ratio << std::setprecision( 1 ) << njoy::constants::psychic::smallest_eigenvalue_ratio;
 
   // type aliases
   using Component = njoy::psychic::covariance::TestSuite;
@@ -28,15 +38,15 @@ void wrapTestSuite( python::module& module ) {
 
     module,
     "TestSuite",
-    "A comprehensive covariance test suite\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 1e-10\n"
-    "        the comparison tolerance\n"
-    "    negative : float, default -1e-10\n"
-    "        the largest allowed negative eigenvalue\n"
-    "    ratio : float, default 1e-8\n"
-    "        the smallest allowable positive eigenvalue ratio"
+    std::string( "A comprehensive covariance test suite\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the comparison tolerance\n"
+                 "    negative : float, default " + negative.str() + "\n"
+                 "        the largest allowed negative eigenvalue\n"
+                 "    ratio : float, default " + ratio.str() + "\n"
+                 "        the smallest allowable positive eigenvalue ratio" ).c_str()
   );
   // wrap the component
   component

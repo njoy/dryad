@@ -58,6 +58,13 @@ namespace covariance {
 
     /* constructor */
 
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] tolerance   the absolute comparison tolerance
+     *  @param[in] negative    the largest allowed negative eigenvalue
+     *  @param[in] ratio       the smallest allowable positive eigenvalue ratio
+     */
     TestSuite( double tolerance = constants::psychic::tolerance,
                double negative = constants::psychic::largest_allowed_negative_eigenvalue,
                double ratio = njoy::constants::psychic::smallest_eigenvalue_ratio ) :

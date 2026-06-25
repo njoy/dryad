@@ -1,6 +1,8 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <sstream>
+#include <iomanip>
 
 // local includes
 #include "dryad/definitions.hpp"
@@ -13,6 +15,10 @@ namespace psychic {
 namespace covariance {
 
 void wrapPositiveSemiDefinite( python::module& module ) {
+
+  // constants
+  std::ostringstream negative;
+  negative << std::setprecision( 1 ) << njoy::constants::psychic::largest_allowed_negative_eigenvalue;
 
   // type aliases
   using Component = njoy::psychic::covariance::PositiveSemiDefinite;
@@ -28,11 +34,11 @@ void wrapPositiveSemiDefinite( python::module& module ) {
 
     module,
     "PositiveSemiDefinite",
-    "Test to verify if a covariance matrix is positive semi-definite\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    negative : float, default -1e-10\n"
-    "        the largest allowed negative eigenvalue"
+    ( "Test to verify if a covariance matrix is positive semi-definite\n\n"
+      "Parameters\n"
+      "----------\n"
+      "    negative : float, default " + negative.str() + "\n"
+      "        the largest allowed negative eigenvalue" ).c_str()
   );
   // wrap the component
   component

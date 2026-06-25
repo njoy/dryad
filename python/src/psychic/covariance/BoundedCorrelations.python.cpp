@@ -1,6 +1,8 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <sstream>
+#include <iomanip>
 
 // local includes
 #include "dryad/definitions.hpp"
@@ -13,6 +15,10 @@ namespace psychic {
 namespace covariance {
 
 void wrapBoundedCorrelations( python::module& module ) {
+
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 1 ) << njoy::constants::psychic::tolerance;
 
   // type aliases
   using Component = njoy::psychic::covariance::BoundedCorrelations;
@@ -28,11 +34,11 @@ void wrapBoundedCorrelations( python::module& module ) {
 
     module,
     "BoundedCorrelations",
-    "Test to verify if all correlation values are between -1 and 1\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 1e-10\n"
-    "        the comparison tolerance"
+    std::string( "Test to verify if all correlation values are between -1 and 1\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the absolute comparison tolerance" ).c_str()
   );
   // wrap the component
   component
