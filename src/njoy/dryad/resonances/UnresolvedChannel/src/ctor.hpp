@@ -28,3 +28,24 @@ UnresolvedChannel( Channel channel,
         selectWidthConversionFactor( this->channel_.quantumNumbers().orbitalAngularMomentum(),
                                      reference_energy,
                                      this->channel_.outgoingParticlePair() ) ) {}
+
+UnresolvedChannel(  id::ChannelID identifier,
+                    ParticlePair incident,
+                    std::optional< ParticlePair > outgoing,
+                    double qValue,
+                    std::optional< double > boundary,
+                    ChannelRadii radii,
+                    Kinematics kinematics = Kinematics::NonRelativistic,
+                    std::optional< Background > background = std::nullopt,
+                    double reference_energy = 1. ) :
+  UnresolvedChannel( Channel( std::move( identifier ), 
+                              std::move( incident ), 
+                              std::move( outgoing ), 
+                              qValue, 
+                              std::move( boundary ),
+                              std::move( radii ),
+                              std::move( kinematics ),
+                              std::move( background )
+                              ),
+                      reference_energy ) {}
+
