@@ -107,14 +107,22 @@ void wrapResonanceTable( python::module& module ) {
     "has_channel",
     &Component::hasChannel,
     python::arg( "channel" ),
-    "Return whether or not a channel is present"
+    "Return whether or not a channel is present\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    channel : njoy.dryad.id.CHannelID\n"
+    "        the channel identifier"
   )
   .def(
 
     "has_energy",
     &Component::hasEnergy,
     python::arg( "energy" ),
-    "Return whether or not an energy is present"
+    "Return whether or not an energy is present\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   )
   .def( python::self += python::self )
   .def( python::self + python::self );
