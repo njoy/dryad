@@ -34,6 +34,8 @@
 #include "njoy/dryad/IncoherentDistributionData.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 #include "njoy/dryad/TabulatedFormFactor.hpp"
+#include "njoy/dryad/TabulatedComptonProfileFunction.hpp"
+#include "njoy/dryad/TabulatedComptonProfile.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"
 #include "njoy/dryad/IsotropicAngularDistributionFunction.hpp"
