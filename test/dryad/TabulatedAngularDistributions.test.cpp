@@ -349,7 +349,7 @@ void verifyChunk( const TabulatedAngularDistributions& chunk, bool normalise ) {
   CHECK_THAT( 0.945 / normalisation, WithinRel( chunk( 2.5, -0.5 ) ) );
   CHECK_THAT( 0.75  / normalisation, WithinRel( chunk( 3.5, -0.5 ) ) );
 
-  // average cosine
+  // average cosine - always the mean value even for unnormalised distributions
   auto cosines = chunk.averageCosines();
 
   CHECK_THAT( 1., WithinRel( cosines.lowerEnergyLimit() ) );
@@ -364,10 +364,10 @@ void verifyChunk( const TabulatedAngularDistributions& chunk, bool normalise ) {
   CHECK_THAT( 2., WithinRel( cosines.energies()[1] ) );
   CHECK_THAT( 3., WithinRel( cosines.energies()[2] ) );
   CHECK_THAT( 4., WithinRel( cosines.energies()[3] ) );
-  CHECK_THAT( 0.        / normalisation, WithinRel( cosines.values()[0] ) );
-  CHECK_THAT( 0.04 / 3. / normalisation, WithinRel( cosines.values()[1] ) );
-  CHECK_THAT( 0.4 / 3.  / normalisation, WithinRel( cosines.values()[2] ) );
-  CHECK_THAT( 1.6 / 3.  / normalisation, WithinRel( cosines.values()[3] ) );
+  CHECK_THAT( 0.            , WithinRel( cosines.values()[0] ) );
+  CHECK_THAT( 0.04 / 3. / 2., WithinRel( cosines.values()[1] ) );
+  CHECK_THAT( 0.4 / 3. / 2. , WithinRel( cosines.values()[2] ) );
+  CHECK_THAT( 1.6 / 3. / 2. , WithinRel( cosines.values()[3] ) );
   CHECK( 3 == cosines.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == cosines.interpolants()[0] );
   CHECK( true == cosines.isLinearised() );

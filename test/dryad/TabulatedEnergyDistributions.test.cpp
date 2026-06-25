@@ -340,7 +340,7 @@ void verifyChunk( const TabulatedEnergyDistributions& chunk, bool normalise ) {
   CHECK_THAT( 0.5   / normalisation, WithinRel( chunk( 2.5, 3. ) ) );
   CHECK_THAT( 0.58  / normalisation, WithinRel( chunk( 3.5, 3. ) ) );
 
-  // average energy
+  // average energy - always the mean value even for unnormalised distributions
   auto energies = chunk.averageEnergies();
 
   CHECK_THAT( 1., WithinRel( energies.lowerEnergyLimit() ) );
@@ -355,10 +355,10 @@ void verifyChunk( const TabulatedEnergyDistributions& chunk, bool normalise ) {
   CHECK_THAT( 2., WithinRel( energies.energies()[1] ) );
   CHECK_THAT( 3., WithinRel( energies.energies()[2] ) );
   CHECK_THAT( 4., WithinRel( energies.energies()[3] ) );
-  CHECK_THAT( 2. * 2.           / normalisation, WithinRel( energies.values()[0] ) );
-  CHECK_THAT( 2. * 1184. / 600. / normalisation, WithinRel( energies.values()[1] ) );
-  CHECK_THAT( 2. * 1216. / 600. / normalisation, WithinRel( energies.values()[2] ) );
-  CHECK_THAT( 2. * 2.4          / normalisation, WithinRel( energies.values()[3] ) );
+  CHECK_THAT( 2. * 2. / 2.          , WithinRel( energies.values()[0] ) );
+  CHECK_THAT( 2. * 1184. / 600. / 2., WithinRel( energies.values()[1] ) );
+  CHECK_THAT( 2. * 1216. / 600. / 2., WithinRel( energies.values()[2] ) );
+  CHECK_THAT( 2. * 2.4          / 2., WithinRel( energies.values()[3] ) );
   CHECK( 3 == energies.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energies.interpolants()[0] );
   CHECK( true == energies.isLinearised() );
