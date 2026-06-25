@@ -30,7 +30,8 @@ namespace covariance {
   createCrossSectionCovarianceMatrix(
       dryad::id::ParticleID projectile,
       dryad::id::ParticleID target,
-      std::vector< double > boundaries, bool relative,
+      std::vector< double > boundaries,
+      bool relative,
       ENDFtk::section::GType< 33 >& section ) {
 
     std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
@@ -41,6 +42,12 @@ namespace covariance {
 
       Log::info( "No covariance data for MT{}, included in lumped MT{} covariances",
                  mt, lumped );
+    }
+
+    if ( boundaries.size() < 2 ) {
+
+      Log::error( "The number of energy boundaries in the GENDF file is less than 2" );
+      throw std::exception();
     }
 
     dryad::id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
