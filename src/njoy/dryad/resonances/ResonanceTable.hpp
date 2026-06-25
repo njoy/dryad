@@ -101,6 +101,8 @@ namespace resonances {
 
     /**
      *  @brief Return whether or not a given channel is present
+     *
+     *  @param[in] id   the channel identifier
      */
     bool hasChannel( const id::ChannelID& id ) const {
 
@@ -110,6 +112,8 @@ namespace resonances {
 
     /**
      *  @brief Return whether or not a given energy is present
+     *
+     *  @param[in] energy   the energy value
      */
     bool hasEnergy( double energy ) const {
 

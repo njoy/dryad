@@ -36,7 +36,8 @@ SCENARIO( "CovarianceData" ) {
                     2., 4., 5.,
                     3., 5., 6.;
       AngularDistributionCovarianceData
-      angular( { AngularDistributionCovarianceMatrix( std::move( ang_metadata ), std::move( ang_matrix ) ) } );
+      angular( { AngularDistributionCovarianceMatrix( ReferenceFrame::Laboratory,
+                                                      std::move( ang_metadata ), std::move( ang_matrix ) ) } );
 
       CovarianceData chunk( std::move( xs ), std::move( angular ) );
 

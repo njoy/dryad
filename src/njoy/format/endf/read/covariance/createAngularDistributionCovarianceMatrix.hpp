@@ -109,18 +109,18 @@ namespace covariance {
 
     if ( on_diagonal ) {
 
-      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+      return CovarianceMatrix( std::move( frame ),
+                               Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                std::move( matrix ),
-                               relative,
-                              std::move( frame ) );
+                               relative );
     }
     else {
 
-      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+      return CovarianceMatrix( std::move( frame ),
+                               Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                Metadata( columnReaction, columnMoment, std::move( columnStructure ) ),
                                std::move( matrix ),
-                               relative,
-                               std::move( frame ) );
+                               relative );
     }
   }
 
