@@ -69,16 +69,14 @@ void wrapDiagonalCorrelations( python::module& module ) {
        { return self( covariance ); },
     python::arg( "covariance" ),
     "Verify if the provided covariance matrix has diagonal correlations equal to 1\n\n"
-    "The test returns the following status values:\n"
+    "The test returns the following status values:\n\n"
     "  - Success : all diagonal correlations are equal to 1\n"
     "  - Warning : all diagonal correlations are equal to 1, taking into account a tolerance\n"
     "  - Fail : not all diagonal correlations are equal to 1\n"
     "  - Skipped : the test was skipped\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
-    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
-    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

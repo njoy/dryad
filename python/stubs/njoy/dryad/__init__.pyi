@@ -197,8 +197,7 @@ class CoherentDistributionData:
     @property
     def has_anomalous_form_factor(self) -> bool:
         """
-        Flag indicating whether or not the coherent distribution data has an anomalous
-        form factor
+        Flag indicating whether or not the coherent distribution data has an anomalous form factor
         """
     @property
     def imaginary_anomalous_form_factor(self) -> TabulatedFormFactor | None:
@@ -352,7 +351,7 @@ class IncoherentDistributionData:
     differential cross section.
     
     This corresponds with the incoherent scattering function data given in MF27 MT504,
-    supplemented with optional external Compton profile data. 
+    supplemented with optional external Compton profile data.
     
     Parameters
     ----------
@@ -565,7 +564,9 @@ class IsotropicAngularDistributionFunction:
         ...
     def __init__(self, value: float = 0.5) -> None:
         """
-        Initialise the isotropic angular distributionParameters
+        Initialise the isotropic angular distribution
+        
+        Parameters
         ----------
             value : float, default 0.5
                 the value of the distribution (0.5 for a normalised distribution)
@@ -640,8 +641,7 @@ class IsotropicAngularDistributions:
         ...
 class LegendreAngularDistribution:
     """
-    An angular distribution defined by a pdf and cdf using a Legendre series
-    expansion
+    An angular distribution defined by a pdf and cdf using a Legendre series expansion
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
@@ -949,9 +949,7 @@ class MixedAngularDistribution:
     
     Parameters
     ----------
-        pdf : Union[njoy.dryad.IsotropicAngularDistributionFunction,
-                    njoy.dryad.LegendreAngularDistributionFunction,
-                    njoy.dryad.TabulatedAngularDistributionFunction]
+        pdf : njoy.dryad.IsotropicAngularDistributionFunction, njoy.dryad.LegendreAngularDistributionFunction or njoy.dryad.TabulatedAngularDistributionFunction]
             the distribution function
         value : float
             the value of the distribution (0.5 for a normalised distribution)
@@ -1165,6 +1163,7 @@ class Particle:
     Particle information
     
     The Particle class contains specific information for a particle:
+    
       - a particle identifier
       - an optional atomic mass value (always for the ground state) and an
         optional uncertainty
@@ -1174,6 +1173,7 @@ class Particle:
       - an optional spin and parity (which is either + or -)
     
     The data is stored in the following units:
+    
       - atomic mass values are in atomic mass units
       - energy values are in eV
     

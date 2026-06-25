@@ -30,10 +30,18 @@ void wrapInteractionType( python::module& module ) {
 
   // wrap the component
   component
-  .value( "Nuclear", Component::Nuclear,
-          "The projectile-target interaction is nuclear" )
-  .value( "Atomic",  Component::Atomic,
-          "The projectile-target interaction is atomic" );
+  .value(
+
+    "Nuclear",
+    Component::Nuclear,
+    "The projectile-target interaction is nuclear"
+  )
+  .value(
+
+    "Atomic",
+    Component::Atomic,
+    "The projectile-target interaction is atomic"
+  );
 }
 
 } // dryad namespace

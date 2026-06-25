@@ -32,7 +32,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "together with the Klein-Nishina cross section determines the double\n"
     "differential cross section.\n\n"
     "This corresponds with the incoherent scattering function data given in MF27 MT504,\n"
-    "supplemented with optional external Compton profile data. \n\n"
+    "supplemented with optional external Compton profile data.\n\n"
     "Parameters\n"
     "----------\n"
     "    frame : njoy.dryad.ReferenceFrame\n"

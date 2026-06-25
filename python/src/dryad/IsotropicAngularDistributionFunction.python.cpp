@@ -35,7 +35,7 @@ void wrapIsotropicAngularDistributionFunction( python::module& module ) {
 
     python::init< double >(),
     python::arg( "value" ) = 0.5,
-    "Initialise the isotropic angular distribution"
+    "Initialise the isotropic angular distribution\n\n"
     "Parameters\n"
     "----------\n"
     "    value : float, default 0.5\n"

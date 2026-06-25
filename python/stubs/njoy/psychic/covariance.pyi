@@ -21,6 +21,7 @@ class BoundedCorrelations:
         Verify if the provided covariance matrix has correlations between -1 and 1
         
         The test returns the following status values:
+        
           - Success : the correlations are between -1 and 1
           - Warning : the correlations are between -1 and 1, taking into account a tolerance
           - Fail : the correlations matrix are outside the -1 and 1 range
@@ -30,9 +31,7 @@ class BoundedCorrelations:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
-                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
-                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -98,6 +97,7 @@ class DiagonalCorrelations:
         Verify if the provided covariance matrix has diagonal correlations equal to 1
         
         The test returns the following status values:
+        
           - Success : all diagonal correlations are equal to 1
           - Warning : all diagonal correlations are equal to 1, taking into account a tolerance
           - Fail : not all diagonal correlations are equal to 1
@@ -105,9 +105,7 @@ class DiagonalCorrelations:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
-                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
-                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -157,6 +155,7 @@ class EigenvalueRatio:
         Verify if the provided covariance matrix has a reasonable eigenvalue ratio
         
         The test returns the following status values:
+        
           - Success : the eigenvalue ratio is larger than or equal to the tolerance
           - Fail    : the eigenvalue ratio is smaller than the tolerance
           - Skipped : the test was skipped
@@ -165,9 +164,7 @@ class EigenvalueRatio:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
-                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
-                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -246,6 +243,7 @@ class PositiveSemiDefinite:
         this particular aspect is not tested here.
         
         The test returns the following status values:
+        
           - Success : the covariance matrix is positive semi-definite
           - Warning : the covariance matrix is can be considered positive semi-definite by accepting small negative eigenvalues
           - Fail : the on-diagonal covariance matrix is not positive semi-definite
@@ -255,9 +253,7 @@ class PositiveSemiDefinite:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
-                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
-                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -310,6 +306,7 @@ class PositiveVariances:
         Verify if the provided covariance matrix has variances that are strictly positive
         
         The test returns the following status values:
+        
           - Success : all variances are strictly positive
           - Warning : all variances are positive
           - Fail : some of the variances seem to be negative
@@ -317,9 +314,7 @@ class PositiveVariances:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
-                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
-                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -369,9 +364,7 @@ class TestSuite:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
-                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
-                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload

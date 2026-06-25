@@ -119,9 +119,7 @@ void wrapTestSuite( python::module& module ) {
     "Perform the test suite on the provided covariance matrix\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
-    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
-    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

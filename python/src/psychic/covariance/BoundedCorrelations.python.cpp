@@ -83,7 +83,7 @@ void wrapBoundedCorrelations( python::module& module ) {
        { return self( covariance ); },
     python::arg( "covariance" ),
     "Verify if the provided covariance matrix has correlations between -1 and 1\n\n"
-    "The test returns the following status values:\n"
+    "The test returns the following status values:\n\n"
     "  - Success : the correlations are between -1 and 1\n"
     "  - Warning : the correlations are between -1 and 1, taking into account a tolerance\n"
     "  - Fail : the correlations matrix are outside the -1 and 1 range\n"
@@ -91,9 +91,7 @@ void wrapBoundedCorrelations( python::module& module ) {
     "The smallest and largest correlation values are available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
-    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
-    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

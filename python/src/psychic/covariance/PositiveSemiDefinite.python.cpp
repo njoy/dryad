@@ -80,7 +80,7 @@ void wrapPositiveSemiDefinite( python::module& module ) {
     "that has eigenvalues that are larger than or equal to zero. Construction of\n"
     "on-diagonal covariance matrices already requires square and symmetric matrices so\n"
     "this particular aspect is not tested here.\n\n"
-    "The test returns the following status values:\n"
+    "The test returns the following status values:\n\n"
     "  - Success : the covariance matrix is positive semi-definite\n"
     "  - Warning : the covariance matrix is can be considered positive semi-definite by accepting small negative eigenvalues\n"
     "  - Fail : the on-diagonal covariance matrix is not positive semi-definite\n"
@@ -88,9 +88,7 @@ void wrapPositiveSemiDefinite( python::module& module ) {
     "The largest negative eigenvalue is available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
-    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
-    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

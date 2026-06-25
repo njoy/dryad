@@ -50,14 +50,14 @@ void wrapAtomicRelaxation( python::module& module ) {
     python::init< Documentation, ElementID, std::vector< ElectronSubshellConfiguration >, bool >(),
     python::arg( "documentation" ), python::arg( "element" ),
     python::arg( "subshells" ), python::arg( "normalise" ) = false,
-    "Initialise the atomic relaxation data with documentation\n"
+    "Initialise the atomic relaxation data with documentation"
   )
   .def(
 
     python::init< ElementID, std::vector< ElectronSubshellConfiguration >, bool >(),
     python::arg( "element" ), python::arg( "subshells" ),
     python::arg( "normalise" ) = false,
-    "Initialise the atomic relaxation data without documentation\n"
+    "Initialise the atomic relaxation data without documentation"
   )
   .def_property(
 

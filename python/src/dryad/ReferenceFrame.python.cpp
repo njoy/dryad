@@ -31,10 +31,18 @@ void wrapReferenceFrame( python::module& module ) {
 
   // wrap the component
   component
-  .value( "Laboratory",   Component::Laboratory,
-          "The data is given in the laboratory frame of reference" )
-  .value( "CentreOfMass", Component::CentreOfMass,
-          "The data is given in the centre of mass frame of reference" );
+  .value(
+
+    "Laboratory",
+    Component::Laboratory,
+    "The data is given in the laboratory frame of reference"
+  )
+  .value(
+
+    "CentreOfMass",
+    Component::CentreOfMass,
+    "The data is given in the centre of mass frame of reference"
+  );
 }
 
 } // dryad namespace

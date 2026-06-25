@@ -24,8 +24,7 @@ void wrapLegendreAngularDistribution( python::module& module ) {
 
     module,
     "LegendreAngularDistribution",
-    "An angular distribution defined by a pdf and cdf using a Legendre series\n"
-    "expansion"
+    "An angular distribution defined by a pdf and cdf using a Legendre series expansion"
   );
 
   // wrap the component

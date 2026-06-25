@@ -30,14 +30,30 @@ void wrapDistributionDataType( python::module& module ) {
 
   // wrap the component
   component
-  .value( "TwoBody",      Component::TwoBody,
-          "The distribution data is given as two body scattering" )
-  .value( "Uncorrelated", Component::Uncorrelated,
-          "The distribution data is uncorrelated" )
-  .value( "Coherent",     Component::Coherent,
-          "The distribution data is for coherent scattering for photoatomic interactions" )
-  .value( "Incoherent",   Component::Incoherent,
-          "The distribution data is for incoherent scattering for photoatomic interactions" );
+  .value(
+
+    "TwoBody",
+    Component::TwoBody,
+    "The distribution data is given as two body scattering"
+  )
+  .value(
+
+    "Uncorrelated",
+    Component::Uncorrelated,
+    "The distribution data is uncorrelated"
+  )
+  .value(
+
+    "Coherent",
+    Component::Coherent,
+    "The distribution data is for coherent scattering for photoatomic interactions"
+  )
+  .value(
+
+    "Incoherent",
+    Component::Incoherent,
+    "The distribution data is for incoherent scattering for photoatomic interactions"
+  );
 }
 
 } // dryad namespace

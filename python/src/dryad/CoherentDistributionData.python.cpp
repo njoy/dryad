@@ -83,8 +83,7 @@ void wrapCoherentDistributionData( python::module& module ) {
 
     "has_anomalous_form_factor",
     &Component::hasAnomalousFormFactor,
-    "Flag indicating whether or not the coherent distribution data has an anomalous\n"
-    "form factor"
+    "Flag indicating whether or not the coherent distribution data has an anomalous form factor"
   )
   .def_property(
 

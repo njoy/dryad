@@ -90,16 +90,14 @@ void wrapEigenvalueRatio( python::module& module ) {
        { return self( covariance ); },
     python::arg( "covariance" ),
     "Verify if the provided covariance matrix has a reasonable eigenvalue ratio\n\n"
-    "The test returns the following status values:\n"
+    "The test returns the following status values:\n\n"
     "  - Success : the eigenvalue ratio is larger than or equal to the tolerance\n"
     "  - Fail    : the eigenvalue ratio is smaller than the tolerance\n"
     "  - Skipped : the test was skipped\n\n"
     "The smallest and largest positive eigenvalue and their ratio is always available.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
-    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
-    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

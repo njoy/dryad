@@ -28,16 +28,36 @@ void wrapInterpolationType( python::module& module ) {
 
   // wrap the component
   component
-  .value( "Histogram",    Component::Histogram,
-          "Constant or histogram interpolation" )
-  .value( "LinearLinear", Component::LinearLinear,
-          "y is linear in x" )
-  .value( "LinearLog",    Component::LinearLog,
-          "y is linear in ln(x)" )
-  .value( "LogLinear",    Component::LogLinear,
-          "ln(y) is linear in x" )
-  .value( "LogLog",       Component::LogLog,
-          "ln(y) is linear in ln(x)" );
+  .value(
+
+    "Histogram",
+    Component::Histogram,
+    "Constant or histogram interpolation"
+  )
+  .value(
+
+    "LinearLinear",
+    Component::LinearLinear,
+    "y is linear in x"
+  )
+  .value(
+
+    "LinearLog",
+    Component::LinearLog,
+    "y is linear in ln(x)"
+  )
+  .value(
+
+    "LogLinear",
+    Component::LogLinear,
+    "ln(y) is linear in x"
+  )
+  .value(
+
+    "LogLog",
+    Component::LogLog,
+    "ln(y) is linear in ln(x)"
+  );
 }
 
 } // dryad namespace

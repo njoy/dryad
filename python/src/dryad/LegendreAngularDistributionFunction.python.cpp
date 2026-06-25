@@ -46,7 +46,7 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
     "----------\n"
     "    coefficients : list of float\n"
     "        the coefficients of the Legendre series (from\n"
-    "        lowest to highest order coefficient)\n"
+    "        lowest to highest order coefficient)"
   )
   .def_property_readonly(
 
