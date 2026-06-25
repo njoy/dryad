@@ -36,6 +36,8 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "dimension): the reactions, the Legendre moments and the energy groups.\n\n"
     "Parameters\n"
     "----------\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
+    "        the reference frame of the covariance data\n"
     "    metadata : njoy.dryad.covariance.AngularDistributionMetadata\n"
     "        the row and column metadata (on-diagonal)\n"
     "    row_metadata : njoy.dryad.covariance.AngularDistributionMetadata\n"
@@ -57,83 +59,81 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    eigenvectors : list of array-like\n"
     "        the associated eigenvectors\n"
     "    relative : bool, default True\n"
-    "        the relative covariance flag\n"
-    "    frame : njoy.dryad.ReferenceFrame, default Laboratory\n"
-    "        the reference frame of the covariance data"
+    "        the relative covariance flag"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< AngularDistributionMetadata,
+    python::init< ReferenceFrame,
+                  AngularDistributionMetadata,
                   Matrix,
-                  bool,
-                  ReferenceFrame >(),
+                  bool >(),
+    python::arg( "frame" ),
     python::arg( "metadata" ),
     python::arg( "covariances" ),
     python::arg( "relative" ) = true,
-    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an on-diagonal angular distribution covariance matrix"
   )
   .def(
 
-    python::init< AngularDistributionMetadata,
+    python::init< ReferenceFrame,
+                  AngularDistributionMetadata,
                   AngularDistributionMetadata,
                   Matrix,
-                  bool,
-                  ReferenceFrame >(),
+                  bool >(),
+    python::arg( "frame" ),
     python::arg( "row_metadata" ),
     python::arg( "column_metadata" ),
     python::arg( "covariances" ),
     python::arg( "relative" ) = true,
-    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an off-diagonal angular distribution covariance matrix"
   )
   .def(
 
-    python::init< AngularDistributionMetadata,
+    python::init< ReferenceFrame,
+                  AngularDistributionMetadata,
                   std::vector< double >,
                   Matrix,
-                  bool,
-                  ReferenceFrame >(),
+                  bool >(),
+    python::arg( "frame" ),
     python::arg( "metadata" ),
     python::arg( "deviations" ),
     python::arg( "correlations" ),
     python::arg( "relative" ) = true,
-    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an on-diagonal angular distribution correlation matrix"
   )
   .def(
 
-    python::init< AngularDistributionMetadata,
+    python::init< ReferenceFrame,
+                  AngularDistributionMetadata,
                   AngularDistributionMetadata,
                   std::vector< double >,
                   std::vector< double >,
                   Matrix,
-                  bool,
-                  ReferenceFrame >(),
+                  bool >(),
+    python::arg( "frame" ),
     python::arg( "row_metadata" ),
     python::arg( "column_metadata" ),
     python::arg( "row_deviations" ),
     python::arg( "column_deviations" ),
     python::arg( "correlations" ),
     python::arg( "relative" ) = true,
-    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an off-diagonal angular distribution correlation matrix"
   )
   .def(
 
-    python::init< AngularDistributionMetadata,
+    python::init< ReferenceFrame,
+                  AngularDistributionMetadata,
                   std::vector< double >,
                   std::vector< Vector >,
-                  bool,
-                  ReferenceFrame >(),
+                  bool >(),
+    python::arg( "frame" ),
     python::arg( "metadata" ),
     python::arg( "eigenvalues" ),
     python::arg( "eigenvectors" ),
     python::arg( "relative" ) = true,
-    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an on-diagonal angular distribution covariance matrix using eigenvalues\n"
     "and eigenvectors"
   )

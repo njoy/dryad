@@ -3,7 +3,6 @@
 #include "njoy/dryad/resonances/Formalism.hpp"
 #include "njoy/dryad/resonances/Kinematics.hpp"
 #include "njoy/dryad/resonances/TabulatedRadius.hpp"
-#include "njoy/dryad/resonances/TabulatedRadius.hpp"
 #include "njoy/dryad/resonances/ChannelRadii.hpp"
 #include "njoy/dryad/resonances/ChannelQuantumNumbers.hpp"
 #include "njoy/dryad/resonances/ParticlePair.hpp"
@@ -27,5 +26,7 @@
 #include "njoy/dryad/resonances/CompoundSystem.hpp"
 
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
+#include "njoy/dryad/resonances/UnresolvedResonanceTable.hpp"
 
 #include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"
+#include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"

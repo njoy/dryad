@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options for resonance reconstruction
@@ -1442,6 +1442,165 @@ class SpinGroup:
     def total_angular_momentum(self) -> float:
         """
         The total angular momentum J of the channels
+        """
+class TabulatedAverageWidths:
+    """
+    A table of average widths
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    @typing.overload
+    def __add__(self, arg0: TabulatedAverageWidths) -> TabulatedAverageWidths:
+        ...
+    def __call__(self, energy: float) -> float:
+        """
+        Evaluate the table for a given energy value
+        
+        Arguments:
+            self      the average width table
+            energy    the energy value
+        """
+    def __copy__(self) -> TabulatedAverageWidths:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedAverageWidths:
+        ...
+    def __eq__(self, arg0: TabulatedAverageWidths) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: TabulatedAverageWidths) -> TabulatedAverageWidths:
+        ...
+    def __imul__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    @typing.overload
+    def __init__(self, dof: int, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the average width table
+        
+        Arguments:
+            self           the average width table
+            dof            the degrees of freedom
+            energies       the energy values
+            values         the average width values
+            boundaries     the boundaries of the interpolation regions
+            interpolants   the interpolation types of the interpolation regions,
+                           see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, dof: int, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the average width table
+        
+        Arguments:
+            self           the average width table
+            dof            the degrees of freedom
+            energies       the energy values
+            values         the average width values
+            interpolant    the interpolation type (default lin-lin),
+                           see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the average width table
+        
+        Arguments:
+            self           the average width table
+            energies       the energy values
+            values         the average width  values
+            interpolant    the interpolation type (default lin-lin),
+                           see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: TabulatedAverageWidths) -> TabulatedAverageWidths:
+        ...
+    def __itruediv__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    def __mul__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    def __ne__(self, arg0: TabulatedAverageWidths) -> bool:
+        ...
+    def __neg__(self) -> TabulatedAverageWidths:
+        ...
+    def __radd__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    def __rmul__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    def __rsub__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: TabulatedAverageWidths) -> TabulatedAverageWidths:
+        ...
+    def __truediv__(self, arg0: float) -> TabulatedAverageWidths:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> TabulatedAverageWidths:
+        """
+        Linearise the table
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def degrees_of_freedom(self) -> int | None:
+        """
+        The degrees of freedom
+        """
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy values
+        """
+    @property
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def is_linearised(self) -> bool:
+        """
+        Flag indicating whether or not the table is linearised
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The average width values
         """
 class TabulatedBackground:
     """

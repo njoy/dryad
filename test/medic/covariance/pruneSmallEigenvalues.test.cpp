@@ -30,6 +30,16 @@ SCENARIO( "pruneSmallEigenvalues" ) {
 
     THEN( "eigenvalues can be eliminated" ) {
 
+      CHECK( 3 == chunk.eigenvalues().value().size() );
+      CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[0] ) );
+      CHECK_THAT(  0., WithinRel( chunk.eigenvalues().value()[1] ) );
+      CHECK_THAT(  0., WithinRel( chunk.eigenvalues().value()[2] ) );
+
+      CHECK( 3 == chunk.eigenvectors().value().size() );
+      CHECK_THAT( 0.2672612419124246, WithinRel( chunk.eigenvectors().value()[0](0) ) );
+      CHECK_THAT( 0.5345224838248487, WithinRel( chunk.eigenvectors().value()[0](1) ) );
+      CHECK_THAT( 0.8017837257372732, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+
       pruneSmallEigenvalues( 1e-8, chunk );
 
       CHECK( 1 == chunk.rowMetadata().reactionIdentifiers().size() );
@@ -90,6 +100,8 @@ SCENARIO( "pruneSmallEigenvalues" ) {
       CHECK_THAT( 0.2672612419124246, WithinRel( chunk.eigenvectors().value()[0](0) ) );
       CHECK_THAT( 0.5345224838248487, WithinRel( chunk.eigenvectors().value()[0](1) ) );
       CHECK_THAT( 0.8017837257372732, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+
+      CHECK_THROWS( pruneSmallEigenvalues( 100., chunk ) );
     } // THEN
   } // GIVEN
 } // SCENARIO
