@@ -118,13 +118,13 @@ void wrapTabulatedComptonProfile( python::module& module ) {
   .def_property_readonly(
 
     "pdf",
-    &Component::pdf,
+    python::overload_cast<>( &Component::pdf, python::const_ ),
     "The probability distribution function (pdf) of the distribution"
   )
   .def_property_readonly(
 
     "cdf",
-    &Component::cdf,
+    python::overload_cast<>( &Component::cdf, python::const_ ),
     "The cumulative distribution function (cdf) of the distribution"
   )
   .def(

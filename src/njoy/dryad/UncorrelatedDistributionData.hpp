@@ -38,6 +38,7 @@ namespace dryad {
   public:
 
     /* type aliases */
+
     using AngularDistributions = std::variant< IsotropicAngularDistributions,
                                                LegendreAngularDistributions,
                                                TabulatedAngularDistributions,
@@ -48,6 +49,7 @@ namespace dryad {
   private:
 
     /* fields */
+
     ReferenceFrame frame_;
     AngularDistributions angle_;
     EnergyDistributions energy_;
@@ -56,7 +58,39 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/UncorrelatedDistributionData/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    UncorrelatedDistributionData() = default;
+
+    UncorrelatedDistributionData( const UncorrelatedDistributionData& ) = default;
+    UncorrelatedDistributionData( UncorrelatedDistributionData&& ) = default;
+
+    UncorrelatedDistributionData& operator=( const UncorrelatedDistributionData& ) = default;
+    UncorrelatedDistributionData& operator=( UncorrelatedDistributionData&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param frame       the reference frame of the distribution data
+     *  @param angle       the angular distributions
+     *  @param energy      the energy distributions
+     *  @param normalise   option to indicate whether or not to normalise
+     *                     all probability data (default: no normalisation)
+     */
+    UncorrelatedDistributionData( ReferenceFrame frame,
+                                  AngularDistributions angle,
+                                  EnergyDistributions energy,
+                                  bool normalise = false ) :
+        frame_( std::move( frame ) ),
+        angle_( std::move( angle ) ),
+        energy_( std::move( energy ) ) {
+
+      if ( normalise ) {
+
+        this->normalise();
+      }
+    }
 
     /* methods */
 
