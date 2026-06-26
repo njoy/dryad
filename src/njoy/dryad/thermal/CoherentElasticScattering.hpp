@@ -28,14 +28,62 @@ namespace thermal {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/thermal/CoherentElasticScattering/src/sortAndExtractTemperatures.hpp"
-    #include "njoy/dryad/thermal/CoherentElasticScattering/src/iterator.hpp"
+    /**
+     *  @brief Process the Bragg edge data
+     *
+     *  This sorts the Bragg edges by temperature and extract temperatures
+     */
+    void sortAndExtractTemperatures() {
+
+      std::sort( this->braggEdges().begin(), this->braggEdges().end(),
+                 [] ( auto&& left, auto&& right )
+                    { return left.temperature() < right.temperature(); } );
+
+      this->moderatorTemperatures().resize( this->braggEdges().size() );
+      std::transform( this->braggEdges().begin(), this->braggEdges().end(),
+                      this->moderatorTemperatures().begin(),
+                      [] ( auto&& data )
+                         { return data.temperature(); } );
+    }
+
+    /**
+     *  @brief Return an iterator for a given temperature (using lower_bound)
+     *
+     *  @param[in] temperature   the temperature
+     */
+    auto iterator( double temperature ) const {
+
+      return std::lower_bound( this->braggEdges().begin(), this->braggEdges().end(),
+                               temperature,
+                               [] ( auto&& edges, auto&& right )
+                                  { return edges.temperature() < right; } );
+    }
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/thermal/CoherentElasticScattering/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    CoherentElasticScattering() = default;
+
+    CoherentElasticScattering( const CoherentElasticScattering& ) = default;
+    CoherentElasticScattering( CoherentElasticScattering&& ) = default;
+
+    CoherentElasticScattering& operator=( const CoherentElasticScattering& ) = default;
+    CoherentElasticScattering& operator=( CoherentElasticScattering&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param braggEdges   the Bragg edge data
+     */
+    CoherentElasticScattering( std::vector< BraggEdgeData > braggEdges ) :
+        edges_( std::move( braggEdges ) ) {
+
+      this->sortAndExtractTemperatures();
+    }
 
     /* methods */
 
