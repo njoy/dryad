@@ -17,6 +17,8 @@ namespace thermal {
    *
    *  Temperature values are assumed to be in K and the integral values are
    *  assumed to be in 1/eV.
+   *
+   *  There currently is not possibility for interpolation on these values.
    */
   class DebyeWallerIntegralData {
 

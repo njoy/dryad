@@ -2,8 +2,6 @@
 #define NJOY_DRYAD_THERMAL_INCOHERENTELASTICSCATTERING
 
 // system includes
-#include <optional>
-#include <variant>
 
 // other includes
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
@@ -16,7 +14,7 @@ namespace thermal {
    *  @class
    *  @brief Incoherent elastic thermal scattering data
    *
-   *  @todo add a function to retrieve the cross section (interpolation type is 1/E)
+   *  @todo add a function to retrieve the cross section
    *        and the angular distribution or the discrete cosines
    */
   class IncoherentElasticScattering {
