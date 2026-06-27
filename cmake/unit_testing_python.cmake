@@ -92,6 +92,7 @@ add_python_test( dryad.Documentation                                   dryad/Tes
 add_python_test( dryad.Particle                                        dryad/Test_Particle.py )
 add_python_test( dryad.ParticleDatabase                                dryad/Test_ParticleDatabase.py )
 
+add_python_test( dryad.PolynomialMultiplicity                          dryad/Test_PolynomialMultiplicity.py )
 add_python_test( dryad.TabulatedMultiplicity                           dryad/Test_TabulatedMultiplicity.py )
 add_python_test( dryad.TabulatedAverageEnergy                          dryad/Test_TabulatedAverageEnergy.py )
 add_python_test( dryad.TabulatedAverageCosine                          dryad/Test_TabulatedAverageCosine.py )
