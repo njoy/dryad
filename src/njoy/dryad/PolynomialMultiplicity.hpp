@@ -55,8 +55,8 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param[in] lower          the lower limit of the domain
-     *  @param[in] upper          the upper limit of the domain
+     *  @param[in] lower          the lower energy limit
+     *  @param[in] upper          the upper energy limit
      *  @param[in] coefficients   the coefficients of the polynomial series (from
      *                            lowest to highest order coefficient)
      */
