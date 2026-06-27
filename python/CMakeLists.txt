@@ -54,6 +54,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringKernel.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/CoherentElasticScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticScattering.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticScatteringCrossSection.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ScalingType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/VarianceScaling.python.cpp

@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticScattering', 'IncoherentElasticScatteringCrossSection', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -197,6 +197,72 @@ class IncoherentElasticScattering:
     def number_moderator_temperatures(self) -> int:
         """
         The moderator temperature values
+        """
+class IncoherentElasticScatteringCrossSection:
+    """
+    Incoherent elastic thermal scattering cross section
+    
+    Parameters
+    ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
+        xs : float
+            the bound atom cross section
+        debye_waller_integral : float
+            the Debye-Waller integral value
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the cross section for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> IncoherentElasticScatteringCrossSection:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IncoherentElasticScatteringCrossSection:
+        ...
+    def __eq__(self, arg0: IncoherentElasticScatteringCrossSection) -> bool:
+        ...
+    def __init__(self, lower: float, upper: float, xs: float, debye_waller_integral: float) -> None:
+        """
+        Initialise the incoherent elastic scattering data
+        """
+    def __ne__(self, arg0: IncoherentElasticScatteringCrossSection) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> ...:
+        """
+        Linearise the cross section
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    @property
+    def bound_cross_section(self) -> float:
+        """
+        The bound atom cross section value
+        """
+    @property
+    def debye_waller_integral(self) -> float:
+        """
+        The Debye-Waller integral value
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
         """
 class TabulatedScatteringKernel:
     """

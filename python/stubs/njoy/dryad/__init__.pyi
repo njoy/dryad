@@ -1426,9 +1426,9 @@ class PolynomialMultiplicity:
     Parameters
     ----------
         lower : float
-            the lower limit of the domain
+            the lower energy limit
         upper : float
-            the upper limit of the domain
+            the upper energy limit
         coefficients : list of float
             the coefficients of the polynomial series (from
             lowest to highest order coefficient)
