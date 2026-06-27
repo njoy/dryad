@@ -3,9 +3,13 @@
 
 // system includes
 #include <cmath>
+#include <tuple>
 
 // other includes
 #include "scion/math/OneDimensionalFunctionBase.hpp"
+#include "scion/linearisation/Lineariser.hpp"
+#include "scion/linearisation/MidpointSplit.hpp"
+#include "scion/linearisation/ToleranceConvergence.hpp"
 #include "njoy/dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
@@ -20,12 +24,58 @@ namespace thermal {
       protected scion::math::OneDimensionalFunctionBase< IncoherentElasticScatteringCrossSection,
                                                          double, double > {
 
+    /* friend declarations */
+    friend class scion::math::OneDimensionalFunctionBase< IncoherentElasticScatteringCrossSection,
+                                                          double, double >;
+
+    /* type aliases */
+
+    using Parent = scion::math::OneDimensionalFunctionBase< IncoherentElasticScatteringCrossSection,
+                                                            double, double >;
+
     /* fields */
 
     double bound_xs_;
     double debye_waller_;
 
+    //! @todo we may need to add natom (number of principle scatterers) for older evaluations
+
+    /* auxiliary functions */
+
+    /**
+     *  @brief Generate the initial grid for linearisation
+     */
+    std::vector< double > grid() const {
+
+      // the analytical form of the cross section is continuously decreasing
+      // so the minimal grid can be set to the lower and upper energy
+
+      //! @todo should we add a user option to add a point for each decade in
+      //!       between the lower and upper energy (ie 1e-5, 1e-4, 1e-3, etc)
+
+      return { this->lowerEnergyLimit(), this->upperEnergyLimit() };
+    }
+
+    /* interface imposed function */
+
+    /**
+     *  @brief Evaluate the cross section for a given energy value
+     *
+     *  @param[in] energy   the energy value
+     */
+    double evaluate( double energy ) const {
+
+      double product = energy * this->debyeWallerIntegral();
+      return 0.25 * this->boundCrossSection() * ( 1. - std::exp( -4. * product ) ) / product;
+    }
+
   public:
+
+    /* type aliases */
+
+    using typename Parent::XType;
+    using typename Parent::YType;
+    using typename Parent::DomainVariant;
 
     /* constructor */
 
@@ -43,16 +93,36 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
+     *  @param[in] lower                 the lower energy limit
+     *  @param[in] upper                 the upper energy limit
      *  @param[in] xs                    the bound atom cross section
      *  @param[in] debyeWallerIntegral   the Debye-Waller integral value
      */
-    IncoherentElasticScatteringCrossSection( double xs,
+    IncoherentElasticScatteringCrossSection( double lower,
+                                             double upper,
+                                             double xs,
                                              double debyeWallerIntegral ) :
-
-      bound_xs_( xs ),
+      Parent( scion::math::IntervalDomain< double >( lower, upper ) ),
+      bound_xs_( std::move( xs ) ),
       debye_waller_( std::move( debyeWallerIntegral ) ) {}
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return std::get< scion::math::IntervalDomain< double > >( this->domain() ).lowerLimit();
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return std::get< scion::math::IntervalDomain< double > >( this->domain() ).upperLimit();
+    }
 
     /**
      *  @brief Return the bound atom cross section value
@@ -63,16 +133,6 @@ namespace thermal {
     }
 
     /**
-     *  @brief Set the bound atom cross section value
-     *
-     *  @param[in] xs   the reaction product identifier
-     */
-    void boundCrossSection( double xs ) {
-
-      this->bound_xs_ = xs;
-    }
-
-    /**
      *  @brief Return the Debye-Waller integral value
      */
     double debyeWallerIntegral() const {
@@ -80,47 +140,26 @@ namespace thermal {
       return this->debye_waller_;
     }
 
-    /**
-     *  @brief Set the Debye-Waller integral value
-     *
-     *  @param[in] debyeWaller   the Debye-Waller integral value
-     */
-    void debyeWallerIntegral( double debyeWaller ) {
-
-      this->debye_waller_ = std::move( debyeWaller );
-    }
-
-    /**
-     *  @brief Evaluate the cross section for a given energy value
-     *
-     *  @param[in] energy   the energy value
-     */
-    double operator()( double energy ) const {
-
-      double product = energy * this->debyeWallerIntegral();
-      return 0.25 * this->boundCrossSection() * ( 1. - std::exp( -4. * product ) ) / product;
-    }
+    using Parent::operator();
 
     /**
      *  @brief Return a linearised cross section table
      *
-     *  @param[in] lower       the lower energy limit
-     *  @param[in] upper       the upper energy limit
      *  @param[in] tolerance   the linearisation tolerance
      */
-    TabulatedCrossSection linearise( double lower = 1e-5,
-                                     double upper = 10.,
-                                     double tolerance = constants::linearisation::tolerance ) const {
+    TabulatedCrossSection linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      using MidpointSplit = scion::linearisation::MidpointSplit< double, double >;
+      using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
+      using Lineariser = scion::linearisation::Lineariser< std::vector< double >, std::vector< double > >;
 
       std::vector< double > energies;
       std::vector< double > values;
-      linearisation::Lineariser lineariser( energies, values );
-      lineariser( { lower, upper },
+      Lineariser lineariser( energies, values );
+      lineariser( this->grid(),
                   *this,
                   Tolerance( tolerance, constants::linearisation::threshold ),
-                  linearisation::MidpointSplit< double, double >() );
+                  MidpointSplit() );
 
       return TabulatedCrossSection( std::move( energies ), std::move( values ) );
     }
@@ -132,8 +171,8 @@ namespace thermal {
      */
     bool operator==( const IncoherentElasticScatteringCrossSection& right ) const {
 
-      return std::tie( this->bound_xs_, this->debyeWallerIntegral() ) ==
-             std::tie( right.bound_xs_, right.debyeWallerIntegral() );
+      return std::tie( this->bound_xs_, this->debye_waller_, this->domain() ) ==
+             std::tie( right.bound_xs_, right.debye_waller_, this->domain() );
     }
 
     /**

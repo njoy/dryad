@@ -24,6 +24,8 @@ namespace thermal {
     double bound_xs_;
     DebyeWallerIntegralData debye_waller_;
 
+    //! @todo we may need to add natom (number of principle scatterers) for older evaluations
+
   public:
 
     /* constructor */
