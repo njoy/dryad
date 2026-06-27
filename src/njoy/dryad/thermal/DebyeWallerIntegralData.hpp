@@ -43,8 +43,8 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param temperatures   the temperatures values
-     *  @param values         the integral values
+     *  @param[in] temperatures   the temperatures values
+     *  @param[in] values         the integral values
      */
     DebyeWallerIntegralData( std::vector< double > temperatures,
                              std::vector< double > values ) :

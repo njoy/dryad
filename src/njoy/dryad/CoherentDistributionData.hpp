@@ -43,10 +43,10 @@ namespace dryad {
     /**
      *  @brief Private constructor
      *
-     *  @param frame        the reference frame of the distribution data
-     *  @param scattering   the scattering function
-     *  @param real         the optional real part of the anomalous form factor
-     *  @param imaginary    the optional imaginary part of the anomalous form factor
+     *  @param[in] frame        the reference frame of the distribution data
+     *  @param[in] scattering   the scattering function
+     *  @param[in] real         the optional real part of the anomalous form factor
+     *  @param[in] imaginary    the optional imaginary part of the anomalous form factor
      */
     CoherentDistributionData( ReferenceFrame&& frame,
                               TabulatedScatteringFunction&& scattering,
@@ -73,8 +73,8 @@ namespace dryad {
     /**
      *  @brief Constructor (no anomolous form factors)
      *
-     *  @param frame        the reference frame of the distribution data
-     *  @param scattering   the scattering function
+     *  @param[in] frame        the reference frame of the distribution data
+     *  @param[in] scattering   the scattering function
      */
     CoherentDistributionData( ReferenceFrame frame,
                               TabulatedScatteringFunction scattering ) :
@@ -84,10 +84,10 @@ namespace dryad {
     /**
      *  @brief Constructor (with anomolous form factors)
      *
-     *  @param frame        the reference frame of the distribution data
-     *  @param scattering   the scattering function
-     *  @param real         the real part of the anomalous form factor
-     *  @param imaginary    the imaginary part of the anomalous form factor
+     *  @param[in] frame        the reference frame of the distribution data
+     *  @param[in] scattering   the scattering function
+     *  @param[in] real         the real part of the anomalous form factor
+     *  @param[in] imaginary    the imaginary part of the anomalous form factor
      */
     CoherentDistributionData( ReferenceFrame frame,
                               TabulatedScatteringFunction scattering,
@@ -118,7 +118,7 @@ namespace dryad {
     /**
      *  @brief Set the reference frame
      *
-     *  @param frame   the reference frame of the distribution data
+     *  @param[in] frame   the reference frame of the distribution data
      */
     void frame( ReferenceFrame frame ) {
 
@@ -126,7 +126,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the coherent distribution data has an Anomalous
+     *  @brief Return whether or not the coherent distribution data has an anomalous
      *         form factor
      */
     bool hasAnomalousFormFactor() const {
@@ -145,7 +145,7 @@ namespace dryad {
     /**
      *  @brief Set the scattering function
      *
-     *  @param scattering   the scattering function
+     *  @param[in] scattering   the scattering function
      */
     void scatteringFunction( TabulatedScatteringFunction scattering ) {
 
@@ -153,7 +153,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the real part of the Anomalous form factor
+     *  @brief Return the real part of the anomalous form factor
      */
     const std::optional< TabulatedFormFactor >& realAnomalousFormFactor() const {
 
@@ -161,9 +161,9 @@ namespace dryad {
     }
 
     /**
-     *  @brief Set the real part of the Anomalous form factor
+     *  @brief Set the real part of the anomalous form factor
      *
-     *  @param real   the real part of the anamolous form factor
+     *  @param[in] real   the real part of the anamolous form factor
      */
     void realAnomalousFormFactor( std::optional< TabulatedFormFactor > real ) {
 
@@ -171,7 +171,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the imaginary part of the Anomalous form factor
+     *  @brief Return the imaginary part of the anomalous form factor
      */
     const std::optional< TabulatedFormFactor >& imaginaryAnomalousFormFactor() const {
 
@@ -179,9 +179,9 @@ namespace dryad {
     }
 
     /**
-     *  @brief Set the imaginary part of the Anomalous form factor
+     *  @brief Set the imaginary part of the anomalous form factor
      *
-     *  @param real   the imaginary part of the anamolous form factor
+     *  @param[in] imaginary   the imaginary part of the anamolous form factor
      */
     void imaginaryAnomalousFormFactor( std::optional< TabulatedFormFactor > imaginary ) {
 

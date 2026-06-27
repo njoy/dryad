@@ -19,6 +19,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedFormFactor from a GNDS form factor node
+   *
+   *  @param[in] node   the gnds XYs1d or regions1d node
    */
   inline dryad::TabulatedFormFactor
   createTabulatedFormFactorFromNodes( const pugi::xml_node& node ) {

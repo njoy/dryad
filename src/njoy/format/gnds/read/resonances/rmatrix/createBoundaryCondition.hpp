@@ -22,6 +22,8 @@ namespace rmatrix {
 
   /**
    *  @brief Create the rmatrix boundary condition from a GNDS string
+   *
+   *  @param[in] boundary   the boundary condition string
    */
   inline BoundaryCondition createBoundaryCondition( const std::string& boundary ) {
 

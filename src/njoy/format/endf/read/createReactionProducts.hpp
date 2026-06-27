@@ -50,6 +50,7 @@ namespace read {
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
+   *  @param[in] masses       the atomic mass values read from the ENDF file
    */
   inline std::vector< dryad::ReactionProduct >
   createReactionProducts( const dryad::id::ReactionID& reaction,

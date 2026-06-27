@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create an interpolation type from an ENDF interpolation type
+   *
+   *  @param[in] interpolant    the ENDF interpolation value
    */
   inline dryad::InterpolationType
   createInterpolant( int interpolant ) {

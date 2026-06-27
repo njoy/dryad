@@ -20,6 +20,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedFormFactor from a parsed ENDF section
+   *
+   *  @param[in] section   the parsed ENDF form factors
    */
   inline dryad::TabulatedFormFactor
   createTabulatedFormFactor( const ENDFtk::section::Type< 27 >& section ) {
@@ -51,6 +53,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedFormFactor from an unparsed ENDF section
+   *
+   *  @param[in] section   the unparsed ENDF form factors
    */
   dryad::TabulatedFormFactor
   createTabulatedFormFactor( const ENDFtk::tree::Section& tree ) {

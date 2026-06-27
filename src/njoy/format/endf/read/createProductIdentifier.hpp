@@ -19,8 +19,6 @@ namespace read {
    *
    *  @param[in] zap        the product identifier
    *  @param[in] lip        the isomeric state or multiple emission value
-   *  @param[in] multiple   flag to indicate whether or not there is multiple
-   *                        emission of the product
    */
   inline dryad::id::ParticleID createProductIdentifier( int zap, int lip ) {
 

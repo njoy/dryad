@@ -17,17 +17,17 @@ namespace read {
   /**
    *  @brief Convert a temperature range from GNDS into K
    *
-   *  @param[in] temperatures   the temperature values
-   *  @param[in] unit           the unit
+   *  @param[in] values   the values to convert
+   *  @param[in] unit     the unit of the values
    */
-  inline void convertTemperatures( std::vector< double >& temperatures, const std::string& unit ) {
+  inline void convertTemperatures( std::vector< double >& values, const std::string& unit ) {
 
     if ( unit != "K" ) {
 
       if ( unit == "degrees C" ) {
 
-        std::for_each( temperatures.begin(), temperatures.end(),
-                       [] ( double& temperature ) { temperature += 273.15; } );
+        std::for_each( values.begin(), values.end(),
+                       [] ( double& value ) { value += 273.15; } );
       }
       else {
 

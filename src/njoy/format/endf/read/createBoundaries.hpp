@@ -17,6 +17,8 @@ namespace read {
 
   /**
    *  @brief Create boundary indices from ENDF boundary indices
+   *
+   *  @param[in] boundaries    the one-based boundary index values
    */
   template < typename Range >
   auto createBoundaries( const Range& boundaries )

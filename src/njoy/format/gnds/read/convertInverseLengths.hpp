@@ -15,8 +15,8 @@ namespace read {
   /**
    *  @brief Convert an inverse length range from GNDS into Angstrom
    *
-   *  @param[in] values   the inverse length values
-   *  @param[in] unit     the unit
+   *  @param[in] values   the values to convert
+   *  @param[in] unit     the unit of the values
    */
   inline void convertInverseLengths( std::vector< double >& /* values */, const std::string& unit ) {
 

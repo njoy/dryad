@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create the particle identifier
+   *
+   *  @param[in] str   the particle identifier string
    */
   inline dryad::id::ParticleID createParticleIdentifier( const char* str ) {
 

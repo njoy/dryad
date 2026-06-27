@@ -20,6 +20,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS constant1d node as a double
+   *
+   *  @param[in] constant1d   the gnds constant1d node
    */
   inline RealConstant1d readConstant1dAsDouble( const pugi::xml_node& constant1d ) {
 
@@ -42,6 +44,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS constant1d node as an int
+   *
+   *  @param[in] constant1d   the gnds constant1d node
    */
   IntegerConstant1d readConstant1dAsInteger( const pugi::xml_node& constant1d ) {
 

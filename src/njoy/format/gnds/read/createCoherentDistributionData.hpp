@@ -19,6 +19,8 @@ namespace read {
 
   /**
    *  @brief Create a CoherentDistributionData from a GNDS coherentPhotonScattering node
+   *
+   *  @param[in] coherent    the GNDS coherentPhotonScattering node
    */
   inline dryad::CoherentDistributionData
   createCoherentDistributionData( const pugi::xml_node& coherent ) {

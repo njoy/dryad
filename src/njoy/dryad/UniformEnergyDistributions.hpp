@@ -40,10 +40,10 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param grid            the grid values
-     *  @param distributions   the associated distributions
-     *  @param boundaries      the boundaries of the interpolation regions
-     *  @param interpolants    the interpolation types of the interpolation regions
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] boundaries      the boundaries of the interpolation regions
+     *  @param[in] interpolants    the interpolation types of the interpolation regions
      */
     UniformEnergyDistributions( std::vector< double > grid,
                                 std::vector< UniformEnergyDistribution > distributions,
@@ -55,9 +55,9 @@ namespace dryad {
     /**
      *  @brief Constructor for energy distributions using a single interpolation zone
      *
-     *  @param grid            the grid values
-     *  @param distributions   the associated distributions
-     *  @param interpolant     the interpolation type of the data (default lin-lin)
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] interpolant     the interpolation type of the data (default lin-lin)
      */
     UniformEnergyDistributions( std::vector< double > grid,
                                 std::vector< UniformEnergyDistribution > distributions,

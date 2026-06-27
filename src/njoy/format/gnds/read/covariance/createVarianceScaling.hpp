@@ -23,6 +23,8 @@ namespace covariance {
 
   /**
    *  @brief Create a VarianceScaling from a GNDS variance scaling node
+   *
+   *  @param[in] scaling    the gnds shortRangeSelfScalingVariance node
    */
   inline dryad::covariance::VarianceScaling
   createVarianceScaling( const pugi::xml_node& scaling ) {

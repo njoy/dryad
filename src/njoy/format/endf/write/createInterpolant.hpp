@@ -15,6 +15,8 @@ namespace write {
 
   /**
    *  @brief Create an interpolation type from an ENDF interpolation type
+   *
+   *  @param[in] interpolant   the interpolation enum value
    */
   inline long createInterpolant( dryad::InterpolationType interpolant ) {
 

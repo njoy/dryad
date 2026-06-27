@@ -17,6 +17,18 @@ namespace ace {
 namespace write {
 namespace photoatomic {
 
+  /**
+   *  @brief Calculate the average fluorescence energy
+   *
+   *  The code in this function reproduces the results from the alax subroutine
+   *  in NJOY2016. The eprdata files contain the atomic relaxation data in addition
+   *  to this fluorescence model so technically speaking one could use the relaxation
+   *  data instead of this model to generate X-rays and Auger electrons. However, the
+   *  heating numbers still assume the use of this older fluorescence model.
+   *
+   *  @param[in] photoatomic   the photoatomic data
+   *  @param[in] relaxation    the atomic relaxation data
+   */
   inline dryad::TabulatedAverageEnergy
   calculateAverageFluorescenceEnergy( const dryad::ProjectileTarget& photoatomic,
                                       const dryad::AtomicRelaxation& relaxation ) {

@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create the interpolation type from a GNDS string value
+   *
+   *  @param[in] type   the interpolation type string
    */
   inline dryad::InterpolationType createInterpolationType( const std::string& type ) {
 

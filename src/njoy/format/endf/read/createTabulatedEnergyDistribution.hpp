@@ -21,6 +21,12 @@ namespace read {
   /**
    *  @brief Create a TabulatedEnergyDistribution from a parsed ENDF MF6 LAW = 1
    *         LegendreCoefficients entry
+   *
+   *  This lifts the total emission probabilities from the Legendre coefficients (P0 value)
+   *
+   *  @param[in] distribution   the parsed ENDF Legendre coefficients
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   inline dryad::TabulatedEnergyDistribution
   createTabulatedEnergyDistribution(
@@ -45,6 +51,12 @@ namespace read {
   /**
    *  @brief Create a TabulatedEnergyDistribution from a parsed ENDF MF26 LAW = 1
    *         LegendreCoefficients entry (with NA = 0)
+   *
+   *  This lifts the total emission probabilities from the Legendre coefficients (P0 value)
+   *
+   *  @param[in] distribution   the parsed ENDF Legendre coefficients
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   inline dryad::TabulatedEnergyDistribution
   createTabulatedEnergyDistribution(

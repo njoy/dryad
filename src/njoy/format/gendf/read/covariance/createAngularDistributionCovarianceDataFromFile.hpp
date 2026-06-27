@@ -22,6 +22,7 @@ namespace covariance {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
+   *  @param[in] frame        the reference frame
    *  @param[in] filename     the GENDF file name
    */
   inline std::optional< dryad::covariance::AngularDistributionCovarianceData >

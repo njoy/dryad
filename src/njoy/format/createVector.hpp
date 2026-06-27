@@ -17,6 +17,8 @@ namespace format {
    *  The range only need a begin and end iterator associated to it, The vector
    *  that will be produced will use the underlying value type so no conversion
    *  or casting will occur.
+   *
+   *  @param[in] data   the range to be transformed in a vector
    */
   template < typename Range >
   auto createVector( Range&& data )

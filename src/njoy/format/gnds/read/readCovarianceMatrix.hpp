@@ -22,6 +22,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS covarianceMatrix node
+   *
+   *  @param[in] covariance   the gnds covariance node
    */
   inline CovarianceMatrix readCovarianceMatrix( const pugi::xml_node& covariance ) {
 

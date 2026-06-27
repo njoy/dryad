@@ -221,8 +221,8 @@ namespace id {
     /**
      *  @brief Return whether or not the the numbers correspond to a registered identifier
      *
-     *  @param za       the particle za number
-     *  @param number   the particle level or subshell number (default is zero)
+     *  @param[in] za       the particle za number
+     *  @param[in] number   the particle level or subshell number (default is zero)
      */
     static bool isRegistered( int za, int number = 0 ) {
 

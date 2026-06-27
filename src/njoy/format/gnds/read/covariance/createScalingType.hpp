@@ -17,6 +17,8 @@ namespace covariance {
 
   /**
    *  @brief Create the scaling type from a GNDS string value
+   *
+   *  @param[in] type    the scaling type string
    */
   inline dryad::covariance::ScalingType createScalingType( const std::string& type ) {
 

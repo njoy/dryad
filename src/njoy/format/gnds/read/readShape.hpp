@@ -16,6 +16,8 @@ namespace read {
 
   /**
    *  @brief Convert the shape
+   *
+   *  @param[in] shape   the shape string
    */
   inline std::vector< std::size_t > readShape( const std::string& shape ) {
 

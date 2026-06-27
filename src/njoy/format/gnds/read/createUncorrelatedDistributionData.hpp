@@ -22,6 +22,10 @@ namespace read {
 
   /**
    *  @brief Create a UncorrelatedDistributionData from a GNDS uncorrelated node
+   *
+   *  @param[in] uncorrelated   the gnds angularTwoBody node
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   inline dryad::UncorrelatedDistributionData
   createUncorrelatedDistributionData( const pugi::xml_node& uncorrelated,

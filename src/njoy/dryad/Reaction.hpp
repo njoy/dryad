@@ -112,13 +112,13 @@ namespace dryad {
     /**
      *  @brief Constructor for primary reactions
      *
-     *  @param id           the reaction identifier
-     *  @param xs           the cross section of the reaction
-     *  @param products     the reaction products
-     *  @param mass_q       the mass difference Q value
-     *  @param reaction_q   the reaction Q value
-     *  @param normalise    option to indicate whether or not to normalise
-     *                      all probability data (default: no normalisation)
+     *  @param[in] id           the reaction identifier
+     *  @param[in] xs           the cross section of the reaction
+     *  @param[in] products     the reaction products
+     *  @param[in] mass_q       the mass difference Q value
+     *  @param[in] reaction_q   the reaction Q value
+     *  @param[in] normalise    option to indicate whether or not to normalise
+     *                          all probability data (default: no normalisation)
      */
     Reaction( id::ReactionID id,
               TabulatedCrossSection xs,
@@ -142,13 +142,13 @@ namespace dryad {
      *  weighted Q value could be calculated using the partial reactions making up
      *  the summation reaction.
      *
-     *  @param id          the reaction identifier
-     *  @param xs          the cross section of the reaction
-     *  @param partials    the identifiers of the partials of the reaction
-     *  @param products    the reaction products associated to the summation reaction
-     *                     (defaults to no reaction products)
-     *  @param normalise   option to indicate whether or not to normalise
-     *                     all probability data (default: no normalisation)
+     *  @param[in] id          the reaction identifier
+     *  @param[in] xs          the cross section of the reaction
+     *  @param[in] partials    the identifiers of the partials of the reaction
+     *  @param[in] products    the reaction products associated to the summation reaction
+     *                         (defaults to no reaction products)
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
     Reaction( id::ReactionID id,
               std::vector< id::ReactionID > partials,
@@ -179,7 +179,7 @@ namespace dryad {
     /**
      *  @brief Set the reaction identifier
      *
-     *  @param id  the reaction identifier
+     *  @param[in] id  the reaction identifier
      */
     void identifier( id::ReactionID id ) {
 

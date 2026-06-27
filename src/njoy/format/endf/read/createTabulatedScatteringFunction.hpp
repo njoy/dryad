@@ -20,6 +20,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedScatteringFunction from a parsed ENDF section
+   *
+   *  @param[in] section   the parsed ENDF MF27 section
    */
   inline dryad::TabulatedScatteringFunction
   createTabulatedScatteringFunction( const ENDFtk::section::Type< 27 >& section ) {
@@ -51,6 +53,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedScatteringFunction from an unparsed ENDF section
+   *
+   *  @param[in] section   the unparsed ENDF MF27 section
    */
   inline dryad::TabulatedScatteringFunction
   createTabulatedScatteringFunction( const ENDFtk::tree::Section& tree ) {

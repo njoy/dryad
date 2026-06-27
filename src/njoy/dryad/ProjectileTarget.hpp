@@ -103,16 +103,16 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param documentation   the documentation
-     *  @param projectile      the projectile identifier
-     *  @param target          the target identifier
-     *  @param type            the interaction type
-     *  @param reactions       the reaction data
-     *  @param particles       the optional particle data (default: none)
-     *  @param resonances      the optional resonance parameters (default: none)
-     *  @param covariances     the optional covariance data (default: none)
-     *  @param normalise       option to indicate whether or not to normalise
-     *                         all probability data (default: no normalisation)
+     *  @param[in] documentation   the documentation
+     *  @param[in] projectile      the projectile identifier
+     *  @param[in] target          the target identifier
+     *  @param[in] type            the interaction type
+     *  @param[in] reactions       the reaction data
+     *  @param[in] particles       the optional particle data (default: none)
+     *  @param[in] resonances      the optional resonance parameters (default: none)
+     *  @param[in] covariances     the optional covariance data (default: none)
+     *  @param[in] normalise       option to indicate whether or not to normalise
+     *                             all probability data (default: no normalisation)
      */
     ProjectileTarget( Documentation documentation,
                       id::ParticleID projectile,
@@ -136,15 +136,15 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param projectile    the projectile identifier
-     *  @param target        the target identifier
-     *  @param type.         the interaction type
-     *  @param reactions     the reaction data
-     *  @param particles     the optional particle data (default: none)
-     *  @param resonances    the optional resonance parameters (default: none)
-     *  @param covariances   the optional covariance data (default: none)
-     *  @param normalise     option to indicate whether or not to normalise
-     *                       all probability data (default: no normalisation)
+     *  @param[in] projectile    the projectile identifier
+     *  @param[in] target        the target identifier
+     *  @param[in] type.         the interaction type
+     *  @param[in] reactions     the reaction data
+     *  @param[in] particles     the optional particle data (default: none)
+     *  @param[in] resonances    the optional resonance parameters (default: none)
+     *  @param[in] covariances   the optional covariance data (default: none)
+     *  @param[in] normalise     option to indicate whether or not to normalise
+     *                           all probability data (default: no normalisation)
      */
     ProjectileTarget( id::ParticleID projectile,
                       id::ParticleID target,
@@ -203,7 +203,7 @@ namespace dryad {
     /**
      *  @brief Set the projectile identifier
      *
-     *  @param projectile   the projectile identifier
+     *  @param[in] projectile   the projectile identifier
      */
     void projectileIdentifier( id::ParticleID projectile ) {
 
@@ -221,7 +221,7 @@ namespace dryad {
     /**
      *  @brief Set the target identifier
      *
-     *  @param target   the target identifier
+     *  @param[in] target   the target identifier
      */
     void targetIdentifier( id::ParticleID target ) {
 
@@ -239,7 +239,7 @@ namespace dryad {
     /**
      *  @brief Set the interaction type
      *
-     *  @param type   the interaction type
+     *  @param[in] type   the interaction type
      */
     void interactionType( InteractionType type ) {
 

@@ -24,14 +24,16 @@ namespace read {
    *
    *  @param[in] projectile    the projectile identifier
    *  @param[in] target        the target identifier
+   *  @param[in] reactions     the reactions
    *  @param[in] information   the parsed MF1 MT451 section
+   *  @param[in] masses        the atomic mass values read from the ENDF file
    */
   inline dryad::ParticleDatabase
   createParticleDatabase( const dryad::id::ParticleID& projectile,
                           const dryad::id::ParticleID& target,
                           const std::vector< dryad::Reaction >& reactions,
                           const ENDFtk::section::Type< 1, 451 >& information,
-                          std::map< dryad::id::ParticleID, double >& masses ) {
+                          const std::map< dryad::id::ParticleID, double >& masses ) {
 
     dryad::ParticleDatabase particles( collectParticleIdentifiers( reactions ) );
 
@@ -51,16 +53,23 @@ namespace read {
     }
 
     // update the mass for products that were in MF6
-    masses[ target.groundState() ] = target_entry.mass().value();
     for ( auto& entry : particles.particles() ) {
 
       if ( entry.identifier() != projectile && entry.identifier() != target ) {
 
-        auto iter = masses.find( entry.identifier().groundState() );
-        if ( iter != masses.end() ) {
+        if ( entry.identifier().groundState() == target.groundState() ) {
 
-          entry.mass( iter->second );
+          entry.mass( target_entry.mass().value() );
           entry.massUncertainty( std::nullopt );
+        }
+        else {
+
+          auto iter = masses.find( entry.identifier().groundState() );
+          if ( iter != masses.end() ) {
+
+            entry.mass( iter->second );
+            entry.massUncertainty( std::nullopt );
+          }
         }
       }
     }

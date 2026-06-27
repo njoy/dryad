@@ -21,6 +21,8 @@ namespace read {
   /**
    *  @brief Create a TabulatedAverageEnergy from a parsed ENDF MF26
    *         energy transfer component
+   *
+   *  @param[in] transfer   the parsed ENDF energy transfer data
    */
   inline dryad::TabulatedAverageEnergy
   createTabulatedAverageEnergy( const ENDFtk::section::Type< 26 >::EnergyTransfer& transfer ) {

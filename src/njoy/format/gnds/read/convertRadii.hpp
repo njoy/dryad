@@ -16,15 +16,18 @@ namespace read {
 
   /**
    *  @brief Convert a range of radii from GNDS into fm
+   *
+   *  @param[in] values   the values to convert
+   *  @param[in] unit     the unit of the values
    */
-  inline void convertRadii( std::vector< double >& radii, const std::string& unit ) {
+  inline void convertRadii( std::vector< double >& values, const std::string& unit ) {
 
     if ( unit != "fm" ) {
 
       if ( unit == "nm" ) {
 
-        std::for_each( radii.begin(), radii.end(),
-                       [] ( double& radius ) { radius *= constants::mega; } );
+        std::for_each( values.begin(), values.end(),
+                       [] ( double& value ) { value *= constants::mega; } );
       }
       else {
 

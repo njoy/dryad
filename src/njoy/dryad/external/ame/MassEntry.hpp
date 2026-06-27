@@ -100,7 +100,7 @@ namespace ame {
     /**
      *  @brief Set the particle identifier
      *
-     *  @param id  the particle identifier
+     *  @param[in] id  the particle identifier
      */
     void identifier( id::ParticleID id ) {
 
@@ -118,7 +118,7 @@ namespace ame {
     /**
      *  @brief Set the mass excess
      *
-     *  @param mass_excess  the mass excess
+     *  @param[in] mass_excess  the mass excess
      */
     void massExcess( std::optional< double > mass_excess ) {
 
@@ -136,7 +136,7 @@ namespace ame {
     /**
      *  @brief Set the mass excess uncertainty
      *
-     *  @param mass_excess_uncertainty  the mass excess uncertainty
+     *  @param[in] mass_excess_uncertainty  the mass excess uncertainty
      */
     void massExcessUncertainty( std::optional< double > mass_excess_uncertainty ) {
 
@@ -154,7 +154,7 @@ namespace ame {
     /**
      *  @brief Set the binding energy per nucleon
      *
-     *  @param binding_energy  the binding energy per nucleon
+     *  @param[in] binding_energy  the binding energy per nucleon
      */
     void bindingEnergy( std::optional< double > binding_energy ) {
 
@@ -172,7 +172,7 @@ namespace ame {
     /**
      *  @brief Set the binding energy per nucleon uncertainty
      *
-     *  @param binding_energy_uncertainty  the binding energy per nucleon uncertainty
+     *  @param[in] binding_energy_uncertainty  the binding energy per nucleon uncertainty
      */
     void bindingEnergyUncertainty( std::optional< double > binding_energy_uncertainty ) {
 
@@ -190,7 +190,7 @@ namespace ame {
     /**
      *  @brief Set the beta decay energy per nucleon
      *
-     *  @param decay_energy  the beta decay energy
+     *  @param[in] decay_energy  the beta decay energy
      */
     void betaDecayEnergy( std::optional< double > decay_energy ) {
 
@@ -208,7 +208,7 @@ namespace ame {
     /**
      *  @brief Set the beta decay energy per nucleon uncertainty
      *
-     *  @param decay_energy_uncertainty  the beta decay energy uncertainty
+     *  @param[in] decay_energy_uncertainty  the beta decay energy uncertainty
      */
     void betaDecayEnergyUncertainty( std::optional< double > decay_energy_uncertainty ) {
 
@@ -226,7 +226,7 @@ namespace ame {
     /**
      *  @brief Set the atomic mass
      *
-     *  @param mass  the atomic mass
+     *  @param[in] mass  the atomic mass
      */
     void atomicMass( std::optional< double > mass ) {
 
@@ -244,7 +244,7 @@ namespace ame {
     /**
      *  @brief Set the atomic mass uncertainty
      *
-     *  @param mass_uncertainty  the atomic mass uncertainty
+     *  @param[in] mass_uncertainty  the atomic mass uncertainty
      */
     void atomicMassUncertainty( std::optional< double > mass_uncertainty ) {
 

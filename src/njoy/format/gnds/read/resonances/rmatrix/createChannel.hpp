@@ -29,6 +29,7 @@ namespace rmatrix {
    *  @param[in] reactions            the resonance reaction information from the GNDS file
    *  @param[in] spin                 the total angular momentum value
    *  @param[in] parity               the parity
+   *  @param[in] partial              the optional partial id for a channel
    *  @param[in] channel              the GNDS channel xml node
    */
   inline auto createChannel(

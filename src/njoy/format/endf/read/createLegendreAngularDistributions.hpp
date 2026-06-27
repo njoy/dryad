@@ -21,6 +21,8 @@ namespace read {
   /**
    *  @brief Create a LegendreAngularDistributions instance from a parsed
    *         ENDF MF4 section
+   *
+   *  @param[in] distribution   the parsed MF4 Legendre distributions
    */
   inline dryad::LegendreAngularDistributions
   createLegendreAngularDistributions(

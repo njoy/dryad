@@ -18,6 +18,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS string node
+   *
+   *  @param[in] node   the gnds string node
    */
   inline String readString( const pugi::xml_node& node ) {
 

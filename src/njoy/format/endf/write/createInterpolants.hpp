@@ -18,6 +18,8 @@ namespace write {
 
   /**
    *  @brief Convert a range of interpolation types for ENDF
+   *
+   *  @param[in] interpolants   the interpolation enum values
    */
   template < typename Range >
   auto createInterpolants( const Range& interpolants )

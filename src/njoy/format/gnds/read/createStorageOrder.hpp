@@ -20,6 +20,8 @@ namespace read {
 
   /**
    *  @brief Create the storage order from a GNDS string
+   *
+   *  @param[in] order   the storage order string
    */
   inline StorageOrder createStorageOrder( const std::string& order ) {
 

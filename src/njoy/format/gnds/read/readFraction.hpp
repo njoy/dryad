@@ -20,6 +20,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS fraction node
+   *
+   *  @param[in] node   the gnds fraction node
    */
   inline Fraction readFraction( const pugi::xml_node& node ) {
 

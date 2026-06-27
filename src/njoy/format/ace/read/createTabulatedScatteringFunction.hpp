@@ -18,15 +18,17 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedScatteringFunction from a CoherentFormFactorBlock
+   *
+   *  @param[in] coherent   the coherent form factor block from a photoatomic ace file
    */
   inline dryad::TabulatedScatteringFunction
-  createTabulatedScatteringFunction( const njoy::ACEtk::photoatomic::CoherentFormFactorBlock& block ) {
+  createTabulatedScatteringFunction( const njoy::ACEtk::photoatomic::CoherentFormFactorBlock& coherent ) {
 
     try {
 
       Log::info( "Reading scattering function data" );
-      auto x = createVector( block.momentum() );
-      auto values = createVector( block.formFactors() );
+      auto x = createVector( coherent.momentum() );
+      auto values = createVector( coherent.formFactors() );
       std::vector< std::size_t > boundaries = { x.size() - 1 };
       std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
       return dryad::TabulatedScatteringFunction(
@@ -42,15 +44,17 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedScatteringFunction from a CoherentFormFactorBlock
+   *
+   *  @param[in] incoherent   the incoherent form factor block from a photoatomic ace file
    */
   inline dryad::TabulatedScatteringFunction
-  createTabulatedScatteringFunction( const njoy::ACEtk::photoatomic::IncoherentScatteringFunctionBlock& block ) {
+  createTabulatedScatteringFunction( const njoy::ACEtk::photoatomic::IncoherentScatteringFunctionBlock& incoherent ) {
 
     try {
 
       Log::info( "Reading scattering function data" );
-      auto x = createVector( block.momentum() );
-      auto values = createVector( block.values() );
+      auto x = createVector( incoherent.momentum() );
+      auto values = createVector( incoherent.values() );
       std::vector< std::size_t > boundaries = { x.size() - 1 };
       std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
       return dryad::TabulatedScatteringFunction(

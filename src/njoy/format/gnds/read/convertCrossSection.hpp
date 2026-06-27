@@ -15,14 +15,17 @@ namespace read {
 
   /**
    *  @brief Convert an cross section value from GNDS into b
+   *
+   *  @param[in] value   the value to convert
+   *  @param[in] unit    the unit of the value
    */
-  inline void convertCrossSection( double& xs, const std::string& unit ) {
+  inline void convertCrossSection( double& value, const std::string& unit ) {
 
     if ( unit != "b" ) {
 
       if ( unit == "Mb" ) {
 
-        xs *= constants::mega;
+        value *= constants::mega;
       }
       else {
 

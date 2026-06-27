@@ -88,7 +88,7 @@ namespace ripl3 {
     /**
      *  @brief Set the particle identifier
      *
-     *  @param id  the particle identifier
+     *  @param[in] id  the particle identifier
      */
     void identifier( id::ParticleID id ) {
 
@@ -106,7 +106,7 @@ namespace ripl3 {
     /**
      *  @brief Set the level energy
      *
-     *  @param energy  the level energy
+     *  @param[in] energy  the level energy
      */
     void energy( std::optional< double > energy ) {
 
@@ -124,7 +124,7 @@ namespace ripl3 {
     /**
      *  @brief Set the spin of the level
      *
-     *  @param spin  the level spin
+     *  @param[in] spin  the level spin
      */
     void spin( std::optional< double > spin ) {
 
@@ -142,7 +142,7 @@ namespace ripl3 {
     /**
      *  @brief Set the level spin parity
      *
-     *  @param parity  the level parity
+     *  @param[in] parity  the level parity
      */
     void parity( std::optional< short > parity ) {
 
@@ -160,7 +160,7 @@ namespace ripl3 {
     /**
      *  @brief Set the half-life of the level
      *
-     *  @param halfLife  the half-life
+     *  @param[in] halfLife  the half-life
      */
     void halfLife( std::optional< double > halfLife ) {
 
