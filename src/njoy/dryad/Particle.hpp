@@ -242,7 +242,7 @@ namespace dryad {
     /**
      *  @brief Set the particle identifier
      *
-     *  @param id  the particle identifier
+     *  @param[in] id  the particle identifier
      */
     void identifier( id::ParticleID id ) {
 
@@ -270,7 +270,7 @@ namespace dryad {
     /**
      *  @brief Set the atomic mass of the particle in the ground state
      *
-     *  @param mass  the atomic mass
+     *  @param[in] mass  the atomic mass
      */
     void mass( std::optional< double > mass ) {
 
@@ -288,7 +288,7 @@ namespace dryad {
     /**
      *  @brief Set the nuclear mass of the particle in the ground state
      *
-     *  @param mass  the nuclear mass
+     *  @param[in] mass  the nuclear mass
      */
     void nuclearMass( std::optional< double > mass ) {
 
@@ -306,7 +306,7 @@ namespace dryad {
     /**
      *  @brief Set the excited state energy value of the particle
      *
-     *  @param energy  the excited state energy
+     *  @param[in] energy  the excited state energy
      */
     void energy( std::optional< double > energy ) {
 
@@ -324,7 +324,7 @@ namespace dryad {
     /**
      *  @brief Set the atomic mass uncertainty
      *
-     *  @param massUncertainty  the atomic mass uncertainty
+     *  @param[in] massUncertainty  the atomic mass uncertainty
      */
     void massUncertainty( std::optional< double > massUncertainty ) {
 
@@ -342,7 +342,7 @@ namespace dryad {
     /**
      *  @brief Set the nuclear mass uncertainty
      *
-     *  @param massUncertainty  the nuclear mass uncertainty
+     *  @param[in] massUncertainty  the nuclear mass uncertainty
      */
     void nuclearMassUncertainty( std::optional< double > massUncertainty ) {
 
@@ -360,7 +360,7 @@ namespace dryad {
     /**
      *  @brief Set the excited state energy uncertainty
      *
-     *  @param energyUncertainty  the excited state energy uncertainty
+     *  @param[in] energyUncertainty  the excited state energy uncertainty
      */
     void energyUncertainty( std::optional< double > energyUncertainty ) {
 
@@ -378,7 +378,7 @@ namespace dryad {
     /**
      *  @brief Set the spin of the particle
      *
-     *  @param spin  the particle spin
+     *  @param[in] spin  the particle spin
      */
     void spin( std::optional< double > spin ) {
 
@@ -396,7 +396,7 @@ namespace dryad {
     /**
      *  @brief Set the particle spin parity
      *
-     *  @param parity  the particle spin
+     *  @param[in] parity  the particle spin
      */
     void parity( std::optional< short > parity ) {
 

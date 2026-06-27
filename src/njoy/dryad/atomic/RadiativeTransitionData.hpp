@@ -58,8 +58,8 @@ namespace atomic {
      *  @brief Set the identifier of the subshell from which the
      *         electron filling the vacancy originated
      *
-     *  @param originatingShell   the identifier of the subshell from which the
-     *                            vacancy filling electron originated
+     *  @param[in] originatingShell   the identifier of the subshell from which the
+     *                                vacancy filling electron originated
      */
     void originatingShell( id::ElectronSubshellID originatingShell ) {
 

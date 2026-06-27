@@ -149,11 +149,11 @@ namespace dryad {
     /**
      *  @brief Constructor for a pdf using a single interpolation zone
      *
-     *  @param cosines        the cosine values
-     *  @param values         the probability values
-     *  @param interpolant    the interpolation type of the data (default lin-lin)
-     *  @param normalise      option to indicate whether or not to normalise
-     *                        all probability data (default: no normalisation)
+     *  @param[in] cosines        the cosine values
+     *  @param[in] values         the probability values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
      */
     MixedAngularDistribution(
         std::vector< double > cosines,
@@ -202,7 +202,7 @@ namespace dryad {
     /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param cosine   the value to be evaluated
+     *  @param[in] cosine   the value to be evaluated
      */
     double operator()( double cosine ) const {
 

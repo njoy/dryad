@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create the interaction type based of the sublibrary value
+   *
+   *  @param[in] sublibrary    the sublibrary value
    */
   inline dryad::InteractionType
   createInteractionType( int sublibrary ) {

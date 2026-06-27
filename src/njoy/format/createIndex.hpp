@@ -12,6 +12,8 @@ namespace format {
 
   /**
    *  @brief Create an index from a one-based index
+   *
+   *  @param[in] index   the one-based index value
    */
   inline std::size_t createIndex( int index ) {
 

@@ -19,6 +19,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS legendre node
+   *
+   *  @param[in] legendre   the gnds legendre node
    */
   inline Legendre readLegendre( const pugi::xml_node& legendre ) {
 

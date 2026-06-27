@@ -21,6 +21,14 @@ namespace read {
 
   /**
    *  @brief Create a Reaction from GNDS node (reaction or crossSectionSum)
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] suite        the gnds xml reaction suite
+   *  @param[in] suite        the gnds xml reaction node
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline dryad::Reaction
   createReaction( const dryad::id::ParticleID& projectile,

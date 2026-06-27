@@ -19,6 +19,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS axis node
+   *
+   *  @param[in] axis   the gnds axis node
    */
   inline Axis readAxis( const pugi::xml_node& axis ) {
 

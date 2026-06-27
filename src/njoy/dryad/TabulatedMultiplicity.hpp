@@ -28,7 +28,7 @@ namespace dryad {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     TabulatedMultiplicity( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}
@@ -56,10 +56,10 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param energies       the energy values
-     *  @param values         the multiplicity values
-     *  @param boundaries     the boundaries of the interpolation regions
-     *  @param interpolants   the interpolation types of the interpolation regions
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the multiplicity values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
      */
     TabulatedMultiplicity( std::vector< double > energies,
                            std::vector< double > values,
@@ -71,9 +71,9 @@ namespace dryad {
     /**
      *  @brief Constructor for a multiplicity using a single interpolation zone
      *
-     *  @param energies       the energy values
-     *  @param values         the multiplicity values
-     *  @param interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the multiplicity values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
      */
     TabulatedMultiplicity( std::vector< double > energies,
                            std::vector< double > values,

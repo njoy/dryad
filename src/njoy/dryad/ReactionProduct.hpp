@@ -133,7 +133,7 @@ namespace dryad {
     /**
      *  @brief Set the particle identifier for the reaction product
      *
-     *  @param product   the reaction product identifier
+     *  @param[in] product   the reaction product identifier
      */
     void productIdentifier( id::ParticleID product ) {
 
@@ -151,7 +151,7 @@ namespace dryad {
     /**
      *  @brief Set the particle identifier for the parent product
      *
-     *  @param parent   the parent product identifier
+     *  @param[in] parent   the parent product identifier
      */
     void parentIdentifier( std::optional< id::ParticleID > parent ) {
 
@@ -169,7 +169,7 @@ namespace dryad {
     /**
      *  @brief Set the chain index of the reaction product
      *
-     *  @param index   the chain index
+     *  @param[in] index   the chain index
      */
     void chainIndex( std::size_t index ) {
 
@@ -187,7 +187,7 @@ namespace dryad {
     /**
      *  @brief Set the reaction product multiplicity
      *
-     *  @param multiplicity   the multiplicity of the reaction product
+     *  @param[in] multiplicity   the multiplicity of the reaction product
      */
     void multiplicity( Multiplicity multiplicity ) {
 
@@ -205,7 +205,7 @@ namespace dryad {
     /**
      *  @brief Set the average reaction product cosine
      *
-     *  @param averageCosine   the average reaction product cosine
+     *  @param[in] averageCosine   the average reaction product cosine
      */
     void averageCosine( std::optional< TabulatedAverageCosine > averageCosine ) {
 
@@ -223,7 +223,7 @@ namespace dryad {
     /**
      *  @brief Set the average reaction product energy
      *
-     *  @param averageEnergy   the average reaction product energy
+     *  @param[in] averageEnergy   the average reaction product energy
      */
     void averageEnergy( std::optional< TabulatedAverageEnergy > averageEnergy ) {
 
@@ -249,7 +249,7 @@ namespace dryad {
     /**
      *  @brief Set the reaction product distribution data
      *
-     *  @param distribution   the reaction product distribution data
+     *  @param[in] distribution   the reaction product distribution data
      */
     void distributionData( std::optional< DistributionData > distribution ) {
 

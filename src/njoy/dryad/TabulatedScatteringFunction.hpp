@@ -24,7 +24,7 @@ namespace dryad {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     TabulatedScatteringFunction( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}
@@ -51,10 +51,10 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param x              the x values
-     *  @param values         the scattering function values
-     *  @param boundaries     the boundaries of the interpolation regions
-     *  @param interpolants   the interpolation types of the interpolation regions
+     *  @param[in] x              the x values
+     *  @param[in] values         the scattering function values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
      */
     TabulatedScatteringFunction( std::vector< double > x,
                                  std::vector< double > values,
@@ -66,9 +66,9 @@ namespace dryad {
     /**
      *  @brief Constructor for a cross section using a single interpolation zone
      *
-     *  @param x              the x values
-     *  @param values         the scattering function values
-     *  @param interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] x              the x values
+     *  @param[in] values         the scattering function values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
      */
     TabulatedScatteringFunction( std::vector< double > x,
                                  std::vector< double > values,
@@ -112,8 +112,8 @@ namespace dryad {
     /**
      *  @brief Return the inverse length value associated to an energy,cosine pair
      *
-     *  @param energy   the incident photon energy
-     *  @param cosine   the outgoing photon cosine
+     *  @param[in] energy   the incident photon energy
+     *  @param[in] cosine   the outgoing photon cosine
      */
     double inverseLength( double energy, double cosine ) const {
 
@@ -132,8 +132,8 @@ namespace dryad {
     /**
      *  @brief Evaluate the scattering function for an energy,cosine pair
      *
-     *  @param energy   the incident photon energy
-     *  @param cosine   the outgoing photon cosine
+     *  @param[in] energy   the incident photon energy
+     *  @param[in] cosine   the outgoing photon cosine
      */
     double operator()( double energy, double cosine ) const {
 

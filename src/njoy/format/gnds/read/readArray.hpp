@@ -22,6 +22,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS array node
+   *
+   *  @param[in] array   the gnds array node
    */
   inline matrix::Matrix< double > readArray( const pugi::xml_node& array ) {
 

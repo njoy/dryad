@@ -49,9 +49,9 @@ namespace dryad {
     /**
      *  @brief Constructor using a pdf
      *
-     *  @param pdf         the pdf of the distribution
-     *  @param normalise   option to indicate whether or not to normalise
-     *                     all probability data (default: no normalisation)
+     *  @param[in] pdf         the pdf of the distribution
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
     TabulatedEnergyDistribution( TabulatedEnergyDistributionFunction pdf,
                                  bool normalise = false ) :
@@ -70,12 +70,12 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param energies       the energy values
-     *  @param values         the probability values
-     *  @param boundaries     the boundaries of the interpolation regions
-     *  @param interpolants   the interpolation types of the interpolation regions
-     *  @param normalise      option to indicate whether or not to normalise
-     *                        all probability data (default: no normalisation)
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the probability values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
      */
     TabulatedEnergyDistribution(
         std::vector< double > energies,
@@ -91,11 +91,11 @@ namespace dryad {
     /**
      *  @brief Constructor for an energy distirbution using a single interpolation zone
      *
-     *  @param energies       the energy values
-     *  @param values         the probability values
-     *  @param interpolant    the interpolation type of the data (default lin-lin)
-     *  @param normalise      option to indicate whether or not to normalise
-     *                        all probability data (default: no normalisation)
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the probability values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
      */
     TabulatedEnergyDistribution(
         std::vector< double > energies,
@@ -110,8 +110,8 @@ namespace dryad {
     /**
      *  @brief Constructor using a pdf and cdf
      *
-     *  @param pdf         the pdf of the distribution
-     *  @param cdf         the cdf of the distribution
+     *  @param[in] pdf         the pdf of the distribution
+     *  @param[in] cdf         the cdf of the distribution
      */
     TabulatedEnergyDistribution( TabulatedEnergyDistributionFunction pdf,
                                  TabulatedEnergyDistributionFunction cdf ) :
@@ -186,7 +186,7 @@ namespace dryad {
     /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param cosine   the value to be evaluated
+     *  @param[in] cosine   the value to be evaluated
      */
     double operator()( double cosine ) const {
 

@@ -15,15 +15,18 @@ namespace read {
 
   /**
    *  @brief Convert a variance scaling factor range from GNDS into b**2
+   *
+   *  @param[in] values   the values to convert
+   *  @param[in] unit     the unit of the values
    */
-  inline void convertVarianceScalingFactors( std::vector< double >& factors, const std::string& unit ) {
+  inline void convertVarianceScalingFactors( std::vector< double >& values, const std::string& unit ) {
 
     if ( unit != "b**2" ) {
 
       if ( unit == "Mb**2" ) {
 
-        std::for_each( factors.begin(), factors.end(),
-                       [] ( double& factor ) { factor *= 1e+12; } );
+        std::for_each( values.begin(), values.end(),
+                       [] ( double& value ) { value *= 1e+12; } );
       }
       else {
 

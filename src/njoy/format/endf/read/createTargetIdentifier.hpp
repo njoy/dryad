@@ -15,6 +15,9 @@ namespace read {
 
   /**
    *  @brief Create the target identifier
+   *
+   *  @param[in] za        the za value
+   *  @param[in] level     the level number
    */
   inline dryad::id::ParticleID createTargetIdentifier( int za, int level ) {
 

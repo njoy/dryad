@@ -31,7 +31,7 @@ namespace dryad {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     TabulatedEnergyDistributionFunction( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}
@@ -74,10 +74,10 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param energies       the energy values
-     *  @param values         the probability values
-     *  @param boundaries     the boundaries of the interpolation regions
-     *  @param interpolants   the interpolation types of the interpolation regions
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the probability values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
      */
     TabulatedEnergyDistributionFunction(
         std::vector< double > energies,
@@ -90,9 +90,9 @@ namespace dryad {
     /**
      *  @brief Constructor for an energy distirbution using a single interpolation zone
      *
-     *  @param energies       the energy values
-     *  @param values         the probability values
-     *  @param interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the probability values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
      */
     TabulatedEnergyDistributionFunction(
         std::vector< double > energies,

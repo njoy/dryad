@@ -19,6 +19,9 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedAverageEnergy from a GNDS average node
+   *
+   *  @param[in] average   the gnds averageProductEnergy node
+   *  @param[in] style     the gnds style to process (default is eval)
    */
   inline dryad::TabulatedAverageEnergy
   createTabulatedAverageEnergy( const pugi::xml_node& average,

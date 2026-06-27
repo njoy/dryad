@@ -16,15 +16,18 @@ namespace read {
 
   /**
    *  @brief Convert an energy range from GNDS into eV
+   *
+   *  @param[in] values   the values to convert
+   *  @param[in] unit     the unit of the values
    */
-  inline void convertEnergies( std::vector< double >& energies, const std::string& unit ) {
+  inline void convertEnergies( std::vector< double >& values, const std::string& unit ) {
 
     if ( unit != "eV" ) {
 
       if ( unit == "MeV" ) {
 
-        std::for_each( energies.begin(), energies.end(),
-                       [] ( double& energy ) { energy *= constants::mega; } );
+        std::for_each( values.begin(), values.end(),
+                       [] ( double& value ) { value *= constants::mega; } );
       }
       else {
 

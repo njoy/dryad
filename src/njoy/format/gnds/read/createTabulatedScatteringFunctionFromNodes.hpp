@@ -19,6 +19,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedScatteringFunction from a GNDS scattering function node
+   *
+   *  @param[in] node   the gnds XYs1d or regions1d node
    */
   inline dryad::TabulatedScatteringFunction
   createTabulatedScatteringFunctionFromNodes( const pugi::xml_node& node ) {

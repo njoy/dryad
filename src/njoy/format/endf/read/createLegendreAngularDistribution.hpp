@@ -19,6 +19,10 @@ namespace read {
 
   /**
    *  @brief Create a MixedAngularDistribution from MF4 Legendre moments
+   *
+   *  @param[in] distribution   the parsed MF4 or an MF6 Legendre distribution
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   template < typename LegendreCoefficients >
   auto createLegendreAngularDistribution( const LegendreCoefficients& distribution,

@@ -22,6 +22,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS column headers node
+   *
+   *  @param[in] headers   the gnds columnHeaders node
    */
   inline Headers readColumnHeaders( const pugi::xml_node& headers ) {
 

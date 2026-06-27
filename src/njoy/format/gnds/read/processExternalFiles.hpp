@@ -12,6 +12,12 @@ namespace format {
 namespace gnds {
 namespace read {
 
+  /**
+   *  @brief Traverse a node and all its descendants and apply a function on each
+   *
+   *  @param[in] node       the gnds node
+   *  @param[in] function   the to be applied
+   */
   template < typename Functor >
   void traverseNodesAndApply( pugi::xml_node node, Functor function ) {
 

@@ -18,6 +18,9 @@ namespace read {
 
   /**
    *  @brief Create a Q value from a GNDS q node
+   *
+   *  @param[in] q       the gnds q node
+   *  @param[in] style   the gnds style to process (default is eval)
    */
   inline double createQValue( pugi::xml_node q, const std::string& style = "eval" ) {
 

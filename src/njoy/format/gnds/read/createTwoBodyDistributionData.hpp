@@ -20,6 +20,10 @@ namespace read {
 
   /**
    *  @brief Create a TwoBodyDistributionData from a GNDS angularTwoBody node
+   *
+   *  @param[in] twobody     the gnds angularTwoBody node
+   *  @param[in] normalise   the flag to indicate whether or not distributions
+   *                         need to be normalised
    */
   inline dryad::TwoBodyDistributionData
   createTwoBodyDistributionData( const pugi::xml_node& twobody,

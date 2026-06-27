@@ -18,7 +18,7 @@ namespace read {
    *  @brief Convert an inverse energy range from GNDS into 1/eV
    *
    *  @param[in] values   the inverse energy values
-   *  @param[in] unit     the unit
+   *  @param[in] unit     the unit the values are given in
    */
   inline void convertInverseEnergies( std::vector< double >& values, const std::string& unit ) {
 

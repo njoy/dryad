@@ -25,7 +25,7 @@ namespace rmatrix {
   /**
    *  @brief Create a SammyBackground from a GNDS externalRMatrix node
    *
-   *  @param[in] node   the GNDS XYs1d or regions1d node
+   *  @param[in] node   the GNDS externalRMatrix node
    */
   inline std::variant< njoy::dryad::resonances::FrohnerBackground,
                        njoy::dryad::resonances::SammyBackground,

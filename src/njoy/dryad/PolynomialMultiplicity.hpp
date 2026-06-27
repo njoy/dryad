@@ -27,7 +27,7 @@ namespace dryad {
     /**
      *  @brief Private constructor
      *
-     *  @param series   the polynomial series
+     *  @param[in] series   the polynomial series
      */
     PolynomialMultiplicity( PolynomialSeries< double, double > series ) :
       PolynomialSeries( std::move( series ) ) {}
@@ -55,10 +55,10 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param lower          the lower limit of the domain
-     *  @param upper          the upper limit of the domain
-     *  @param coefficients   the coefficients of the polynomial series (from
-     *                        lowest to highest order coefficient)
+     *  @param[in] lower          the lower limit of the domain
+     *  @param[in] upper          the upper limit of the domain
+     *  @param[in] coefficients   the coefficients of the polynomial series (from
+     *                            lowest to highest order coefficient)
      */
     PolynomialMultiplicity( double lower, double upper, std::vector< double > coefficients ) :
       PolynomialSeries( std::move( lower ), std::move( upper ), std::move( coefficients ) ) {}

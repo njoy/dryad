@@ -33,6 +33,12 @@ namespace rmatrix {
                                         std::optional< double >,
                                         bool >;
 
+  /**
+   *  @brief Find the Particle instance for the given identifier
+   *
+   *  @param[in] id           the particle identifier
+   *  @param[in] particles    the particle data from the global and local pops
+   */
   inline dryad::Particle
   retrieveParticle( const dryad::id::ParticleID& id,
                     const std::vector< dryad::Particle >& particles ) {

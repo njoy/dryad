@@ -17,6 +17,8 @@ namespace write {
 
   /**
    *  @brief Create boundary indices for ENDF
+   *
+   *  @param[in] boundaries   the zero-based boundary index values
    */
   template < typename Range >
   auto createBoundaries( const Range& boundaries )

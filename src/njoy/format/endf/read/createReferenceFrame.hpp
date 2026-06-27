@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create a reference frame from an ENDF reference frame value
+   *
+   *  @param[in] lct   the ENDF reference frame value
    */
   inline dryad::ReferenceFrame createReferenceFrame( int lct ) {
 

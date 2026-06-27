@@ -21,6 +21,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedCrossSection from a parsed ENDF section
+   *
+   *  @param[in] section   the parsed ENDF cross section (MF3 or MF23)
    */
   template < typename Section >
   auto createTabulatedCrossSection( const Section& section )
@@ -48,6 +50,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedCrossSection from an unparsed ENDF section
+   *
+   *  @param[in] section   the unparsed ENDF cross section (MF3 or MF23)
    */
   inline dryad::TabulatedCrossSection
   createTabulatedCrossSection( const ENDFtk::tree::Section& tree ) {

@@ -15,18 +15,21 @@ namespace read {
 
   /**
    *  @brief Convert a mass value from GNDS into amu
+   *
+   *  @param[in] value   the value to convert
+   *  @param[in] unit    the unit of the value
    */
-  inline void convertMass( double& mass, const std::string& unit ) {
+  inline void convertMass( double& value, const std::string& unit ) {
 
     if ( unit != "amu" ) {
 
       if ( unit == "kg" ) {
 
-        mass /= constants::amu;
+        value /= constants::amu;
       }
       else if ( unit == "nmu" ) {
 
-        mass *= constants::neutron_mass;
+        value *= constants::neutron_mass;
       }
       else {
 

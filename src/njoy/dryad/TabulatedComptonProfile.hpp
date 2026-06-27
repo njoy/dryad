@@ -48,10 +48,10 @@ namespace dryad {
     /**
      *  @brief Constructor using a pdf
      *
-     *  @param identifier   the electron subshell identifier
-     *  @param pdf          the pdf of the distribution
-     *  @param normalise    option to indicate whether or not to normalise
-     *                      all probability data (default: no normalisation)
+     *  @param[in] identifier   the electron subshell identifier
+     *  @param[in] pdf          the pdf of the distribution
+     *  @param[in] normalise    option to indicate whether or not to normalise
+     *                          all probability data (default: no normalisation)
      */
     TabulatedComptonProfile(
         id::ElectronSubshellID identifier,
@@ -73,13 +73,13 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param identifier     the electron subshell identifier
-     *  @param momentum       the momentum values
-     *  @param values         the probability values
-     *  @param boundaries     the boundaries of the interpolation regions
-     *  @param interpolants   the interpolation types of the interpolation regions
-     *  @param normalise      option to indicate whether or not to normalise
-     *                        all probability data (default: no normalisation)
+     *  @param[in] identifier     the electron subshell identifier
+     *  @param[in] momentum       the momentum values
+     *  @param[in] values         the probability values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
      */
     TabulatedComptonProfile(
         id::ElectronSubshellID identifier,
@@ -97,12 +97,12 @@ namespace dryad {
     /**
      *  @brief Constructor for a pdf using a single interpolation zone
      *
-     *  @param identifier     the electron subshell identifier
-     *  @param momentum       the momentum values
-     *  @param values         the probability values
-     *  @param interpolant    the interpolation type of the data (default lin-lin)
-     *  @param normalise      option to indicate whether or not to normalise
-     *                        all probability data (default: no normalisation)
+     *  @param[in] identifier     the electron subshell identifier
+     *  @param[in] momentum       the momentum values
+     *  @param[in] values         the probability values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
      */
     TabulatedComptonProfile(
         id::ElectronSubshellID identifier,
@@ -119,9 +119,9 @@ namespace dryad {
     /**
      *  @brief Constructor using a pdf and cdf
      *
-     *  @param identifier   the electron subshell identifier
-     *  @param pdf          the pdf of the distribution
-     *  @param cdf          the cdf of the distribution
+     *  @param[in] identifier   the electron subshell identifier
+     *  @param[in] pdf          the pdf of the distribution
+     *  @param[in] cdf          the cdf of the distribution
      */
     TabulatedComptonProfile(
         id::ElectronSubshellID identifier,
@@ -207,7 +207,7 @@ namespace dryad {
     /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param cosine   the value to be evaluated
+     *  @param[in] cosine   the value to be evaluated
      */
     double operator()( double cosine ) const {
 

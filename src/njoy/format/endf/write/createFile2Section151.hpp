@@ -18,6 +18,7 @@ namespace write {
   /**
    *  @brief Create an ENDF MF2 MT151 section object from a ResonanceParameters object
    *
+   *  @param[in] awr                      the atomic weight ratio
    *  @param[in] parameters               the resonance parameter data
    *  @param[in] reducedWidthAmplitudes   use reduced width amplitudes
    */
