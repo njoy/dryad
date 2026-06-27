@@ -626,14 +626,14 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
 
         CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
 
-        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
-        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
-        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
-        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
-        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
-        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( -1.  , WithinRel( linear.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( linear.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( linear.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( linear.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( linear.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( linear.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( linear.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( linear.values()[3] ) );
 
         CHECK( true == linear.isLinearised() );
       } // THEN
