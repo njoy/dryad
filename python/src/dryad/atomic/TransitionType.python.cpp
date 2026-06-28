@@ -33,15 +33,13 @@ void wrapTransitionType( python::module& module ) {
 
     "Radiative",
     Component::Radiative,
-    "A radiative transition, an electron from another shell fills a vacancy in the current\n"
-    "shell while emitting a photon"
+    "A radiative transition, an electron from another shell fills a vacancy in the current shell while emitting a photon"
   )
   .value(
 
     "NonRadiative",
     Component::NonRadiative,
-    "An electron from another shell fills a vacancy in the current shell while another electron\n"
-    "is emitted"
+    "An electron from another shell fills a vacancy in the current shell while another electron is emitted"
   );
 }
 
