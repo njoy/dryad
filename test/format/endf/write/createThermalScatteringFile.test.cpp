@@ -182,7 +182,7 @@ SCENARIO( "createThermalScatteringFile" ) {
       "                                                                  \n";
 
     thermal::IncoherentElasticScattering
-    incoherent( 6.337872,
+    incoherent( 1e-5, 10., 6.337872,
                 { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                   { 2.013538, 2.677764, 3.323456, 3.972601,
                     4.623738, 5.276127, 6.583171, 7.891981 } } );
@@ -285,7 +285,7 @@ SCENARIO( "createThermalScatteringFile" ) {
                          { 3.337757e-3, 1.178474e-2, 3.861519e-2, 3.861519e-2 } } } );
 
     thermal::IncoherentElasticScattering
-    incoherent( 6.337872,
+    incoherent( 1e-5, 10., 6.337872,
                 { { 293.6, 400, 500, 600, 800 },
                   { 2.013538, 2.677764, 3.323456, 3.972601,
                     5.276127 } } );

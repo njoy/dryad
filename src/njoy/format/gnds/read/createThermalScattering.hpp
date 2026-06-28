@@ -19,11 +19,14 @@ namespace read {
   /**
    *  @brief Create a ThermalScattering instance from a GNDS xml document
    *
+   *  @param[in] lower      the lower energy limit
+   *  @param[in] upper      the upper energy limit
    *  @param[in] document   the GNDS xml document
    *  @param[in] style      the gnds style to process (default is eval)
    */
   inline dryad::ThermalScattering
-  createThermalScattering( const pugi::xml_document& document,
+  createThermalScattering( double lower, double upper,
+                           const pugi::xml_document& document,
                            const std::string& style = "eval" ) {
 
    auto suite = document.child( "reactionSuite" );
@@ -46,7 +49,7 @@ namespace read {
         }
         else if ( strcmp( tsl.name(), "thermalNeutronScatteringLaw_incoherentElastic" ) == 0 ) {
 
-          incoherent = thermal::createIncoherentElasticScattering( tsl );
+          incoherent = thermal::createIncoherentElasticScattering( lower, upper, tsl );
         }
       }
 
