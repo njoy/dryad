@@ -11,6 +11,8 @@ from njoy.dryad import InterpolationType
 
 def verify_chunk( self, chunk ) :
 
+    self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
+    self.assertAlmostEqual( 10. , chunk.upper_energy_limit )
     self.assertAlmostEqual( 6.337872, chunk.bound_cross_section )
 
     self.assertEqual( 8, len( chunk.debye_waller_integral.temperatures ) )
@@ -30,6 +32,8 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
     def test_component( self ) :
 
         chunk = IncoherentElasticScattering(
+                  lower = 1e-5,
+                  upper = 10.,
                   xs = 6.337872,
                   debye_waller_integral = DebyeWallerIntegralData(
                                             [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
@@ -41,6 +45,8 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
     def test_setter_functions( self ) :
 
         chunk = IncoherentElasticScattering(
+                  lower = 1e-5,
+                  upper = 10.,
                   xs = 6.337872,
                   debye_waller_integral = DebyeWallerIntegralData(
                                             [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
@@ -79,18 +85,24 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
     def test_comparison( self ) :
 
         left = IncoherentElasticScattering(
+                 lower = 1e-5,
+                 upper = 10.,
                  xs = 6.337872,
                  debye_waller_integral = DebyeWallerIntegralData(
                                            [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
                                            [ 2.013538, 2.677764, 3.323456, 3.972601,
                                              4.623738, 5.276127, 6.583171, 7.891981 ] ) )
         equal = IncoherentElasticScattering(
+                  lower = 1e-5,
+                  upper = 10.,
                   xs = 6.337872,
                   debye_waller_integral = DebyeWallerIntegralData(
                                             [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
                                             [ 2.013538, 2.677764, 3.323456, 3.972601,
                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) )
         different = IncoherentElasticScattering(
+                      lower = 1e-5,
+                      upper = 10.,
                       xs = 25,
                       debye_waller_integral = DebyeWallerIntegralData(
                                                 [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
