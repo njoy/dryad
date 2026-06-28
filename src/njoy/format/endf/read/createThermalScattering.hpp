@@ -21,10 +21,13 @@ namespace read {
   /**
    *  @brief Create a ThermalScattering instance from an unparsed ENDF material
    *
-   *  @param[in] material    the unparsed ENDF material
+   *  @param[in] lower      the lower energy limit
+   *  @param[in] upper      the upper energy limit
+   *  @param[in] material   the unparsed ENDF material
    */
   inline dryad::ThermalScattering
-  createThermalScattering( const ENDFtk::tree::Material& material ) {
+  createThermalScattering( double lower, double upper,
+                           const ENDFtk::tree::Material& material ) {
 
     if ( material.hasSection( 7, 2 ) || material.hasSection( 7, 4 ) ) {
 
@@ -65,11 +68,11 @@ namespace read {
           },
           [&] ( const IncoherentElastic& law ) -> IncoherentElasticScatteringType {
 
-            return thermal::createIncoherentElasticScattering( law );
+            return thermal::createIncoherentElasticScattering( lower, upper, law );
           },
           [&] ( const MixedElastic& law ) -> IncoherentElasticScatteringType {
 
-            return thermal::createIncoherentElasticScattering( law.incoherent() );
+            return thermal::createIncoherentElasticScattering( lower, upper, law.incoherent() );
           }
         };
 

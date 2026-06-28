@@ -28,7 +28,7 @@ SCENARIO( "createIncoherentElasticScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::thermal::createIncoherentElasticScattering( incoherent );
+        auto chunk = endf::read::thermal::createIncoherentElasticScattering( 1e-5, 10., incoherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -38,6 +38,8 @@ SCENARIO( "createIncoherentElasticScattering" ) {
 
 void verifyChunk( const thermal::IncoherentElasticScattering& chunk ) {
 
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 10. , WithinRel( chunk.upperEnergyLimit() ) );
   CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
 
   CHECK( 8 == chunk.debyeWallerIntegral().temperatures().size() );

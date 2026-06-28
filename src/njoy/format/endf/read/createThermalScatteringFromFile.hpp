@@ -19,15 +19,18 @@ namespace read {
    *  If there are multiple materials in the ENDF file, only the first material
    *  will be transformed into a ThermalScattering instance.
    *
+   *  @param[in] lower      the lower energy limit
+   *  @param[in] upper      the upper energy limit
    *  @param[in] filename    the ENDF file name
    */
   inline dryad::ThermalScattering
-  createThermalScatteringFromFile( const std::string& filename ) {
+  createThermalScatteringFromFile( double lower, double upper,
+                                   const std::string& filename ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 
     auto tape = ENDFtk::tree::fromFile< ENDFtk::tree::Tape >( filename );
-    return createThermalScattering( tape.materials().front() );
+    return createThermalScattering( lower, upper, tape.materials().front() );
   }
 
 } // read namespace

@@ -24,7 +24,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( "tsl-Be-metal.endf" );
+        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( 1e-5, 10., "tsl-Be-metal.endf" );
 
         tsl::bemetal::verifyBeMetal( chunk );
       } // THEN
@@ -37,7 +37,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( "tsl-ZrinZrH.endf" );
+        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( 1e-5, 10., "tsl-ZrinZrH.endf" );
 
         tsl::zrinzrh::verifyZrInZrH( chunk );
       } // THEN
@@ -50,7 +50,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( "tsl-7Liin7LiD-mixed.endf" );
+        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( 1e-5, 10., "tsl-7Liin7LiD-mixed.endf" );
 
         tsl::li7inli7d::verifyLi7InLi7D( chunk );
       } // THEN
