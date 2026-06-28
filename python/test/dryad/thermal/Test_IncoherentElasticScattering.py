@@ -26,6 +26,56 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 6.583171, chunk.debye_waller_integral.values[6] )
     self.assertAlmostEqual( 7.891981, chunk.debye_waller_integral.values[7] )
 
+def verify_xs( self, chunk ) :
+
+    xs = chunk.cross_section( temperature = 296 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 2.013538, xs.debye_waller_integral )
+
+    xs = chunk.cross_section( temperature = 400 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 2.677764, xs.debye_waller_integral )
+
+    xs = chunk.cross_section( temperature = 500 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 3.323456, xs.debye_waller_integral )
+
+    xs = chunk.cross_section( temperature = 600 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 3.972601, xs.debye_waller_integral )
+
+    xs = chunk.cross_section( temperature = 700 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 4.623738, xs.debye_waller_integral )
+
+    xs = chunk.cross_section( temperature = 800 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 5.276127, xs.debye_waller_integral )
+
+    xs = chunk.cross_section( temperature = 1000 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 6.583171, xs.debye_waller_integral )
+
+    xs = chunk.cross_section( temperature = 1200 )
+    self.assertAlmostEqual( 1e-5, xs.lower_energy_limit )
+    self.assertAlmostEqual( 10. , xs.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
+    self.assertAlmostEqual( 7.891981, xs.debye_waller_integral )
+
 class Test_IncoherentElasticScattering( unittest.TestCase ) :
     """Unit test for the IncoherentElasticScattering class."""
 
@@ -41,6 +91,7 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) )
 
         verify_chunk( self, chunk )
+        verify_xs( self, chunk )
 
     def test_setter_functions( self ) :
 
