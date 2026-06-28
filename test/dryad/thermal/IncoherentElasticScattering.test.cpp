@@ -37,6 +37,80 @@ SCENARIO( "IncoherentElasticScattering" ) {
         verifyChunk( chunk );
       } // THEN
     } // WHEN
+
+    WHEN( "requesting cross section data" ) {
+
+      double lower = 1e-5;
+      double upper = 10.;
+      double xs = 6.337872;
+      DebyeWallerIntegralData debyeWaller(
+
+        { 296, 400, 500, 600, 700, 800, 1000, 1200 },
+        { 2.013538, 2.677764, 3.323456, 3.972601,
+          4.623738, 5.276127, 6.583171, 7.891981 }
+      );
+
+      IncoherentElasticScattering chunk( lower, upper, xs, std::move( debyeWaller ) );
+
+      THEN( "the proper data is returned" ) {
+
+        auto xs = chunk.crossSection( 296. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 2.013538, WithinRel( xs.debyeWallerIntegral() ) );
+
+        xs = chunk.crossSection( 400. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 2.677764, WithinRel( xs.debyeWallerIntegral() ) );
+
+        xs = chunk.crossSection( 500. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 3.323456, WithinRel( xs.debyeWallerIntegral() ) );
+
+        xs = chunk.crossSection( 600. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 3.972601, WithinRel( xs.debyeWallerIntegral() ) );
+
+        xs = chunk.crossSection( 700. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 4.623738, WithinRel( xs.debyeWallerIntegral() ) );
+
+        xs = chunk.crossSection( 800. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 5.276127, WithinRel( xs.debyeWallerIntegral() ) );
+
+        xs = chunk.crossSection( 1000. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 6.583171, WithinRel( xs.debyeWallerIntegral() ) );
+
+        xs = chunk.crossSection( 1200. );
+
+        CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
+        CHECK_THAT( 10. , WithinRel( xs.upperEnergyLimit() ) );
+        CHECK_THAT( 6.337872, WithinRel( xs.boundCrossSection() ) );
+        CHECK_THAT( 7.891981, WithinRel( xs.debyeWallerIntegral() ) );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "setter functions" ) {

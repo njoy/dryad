@@ -134,9 +134,10 @@ namespace thermal {
     }
 
     /**
-     *  @brief Set the Debye-Waller integral data
+     *  @brief Return the incoherent elastic scattering cross section
      *
-     *  @param[in] temperature   the moderator temperature
+     *  @param[in] temperature   the moderator temeprature for which the
+     *                           cross section is requested
      */
     IncoherentElasticScatteringCrossSection
     crossSection( double temperature ) {
