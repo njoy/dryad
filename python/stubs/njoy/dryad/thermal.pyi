@@ -176,6 +176,15 @@ class IncoherentElasticScattering:
         """
     def __ne__(self, arg0: IncoherentElasticScattering) -> bool:
         ...
+    def cross_section(self, temperature: float) -> ...:
+        """
+        Return the incoherent elastic scattering cross section
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temeprature for which the cross section is requested
+        """
     @property
     def bound_cross_section(self) -> float:
         """

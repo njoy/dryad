@@ -85,6 +85,17 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     python::overload_cast<>( &Component::debyeWallerIntegral, python::const_ ),
     python::overload_cast< DebyeWallerIntegralData >( &Component::debyeWallerIntegral ),
     "The Debye-Waller integral data"
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "temperature" ),
+    "Return the incoherent elastic scattering cross section\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the moderator temeprature for which the cross section is requested\n"
   );
 
   // add standard equality comparison definitions
