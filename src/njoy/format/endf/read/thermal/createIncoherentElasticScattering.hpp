@@ -21,14 +21,18 @@ namespace thermal {
    *  @brief Create an IncoherentElasticScattering from a parsed incoherent
    *         elastic thermal scattering component
    *
+   *  @param[in] lower        the lower energy limit
+   *  @param[in] upper        the upper energy limit
    *  @param[in] incoherent   the incoherent elastic thermal scattering component
    */
   inline dryad::thermal::IncoherentElasticScattering
   createIncoherentElasticScattering(
+      double lower, double upper,
       const ENDFtk::section::Type< 7, 2 >::IncoherentElastic& incoherent ) {
 
     Log::info( "Reading incoherent elastic scattering data" );
     return dryad::thermal::IncoherentElasticScattering(
+             lower, upper,
              incoherent.boundCrossSection(),
              createDebyeWallerIntegralData( incoherent ) );
   }

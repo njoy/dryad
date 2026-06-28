@@ -20,6 +20,8 @@ SCENARIO( "IncoherentElasticScattering" ) {
 
     WHEN( "the data is given explicitly" ) {
 
+      double lower = 1e-5;
+      double upper = 10.;
       double xs = 6.337872;
       DebyeWallerIntegralData debyeWaller(
 
@@ -28,7 +30,7 @@ SCENARIO( "IncoherentElasticScattering" ) {
           4.623738, 5.276127, 6.583171, 7.891981 }
       );
 
-      IncoherentElasticScattering chunk( xs, std::move( debyeWaller ) );
+      IncoherentElasticScattering chunk( lower, upper, xs, std::move( debyeWaller ) );
 
       THEN( "IncoherentElasticScattering can be constructed and members can be tested" ) {
 
@@ -41,7 +43,7 @@ SCENARIO( "IncoherentElasticScattering" ) {
 
     WHEN( "an instance of IncoherentElasticScattering is given" ) {
 
-      IncoherentElasticScattering chunk( 6.337872,
+      IncoherentElasticScattering chunk( 1e-5, 10., 6.337872,
                                          { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                            { 2.013538, 2.677764, 3.323456, 3.972601,
                                              4.623738, 5.276127, 6.583171, 7.891981 } } );
@@ -89,15 +91,15 @@ SCENARIO( "IncoherentElasticScattering" ) {
 
     WHEN( "two instances of IncoherentElasticScattering are given" ) {
 
-      IncoherentElasticScattering left( 6.337872,
+      IncoherentElasticScattering left( 1e-5, 10., 6.337872,
                                         { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                           { 2.013538, 2.677764, 3.323456, 3.972601,
                                             4.623738, 5.276127, 6.583171, 7.891981 } } );
-      IncoherentElasticScattering equal( 6.337872,
+      IncoherentElasticScattering equal( 1e-5, 10., 6.337872,
                                          { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                            { 2.013538, 2.677764, 3.323456, 3.972601,
                                              4.623738, 5.276127, 6.583171, 7.891981 } } );
-      IncoherentElasticScattering different( 25.,
+      IncoherentElasticScattering different( 1e-5, 10., 25.,
                                              { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                                { 2.013538, 2.677764, 3.323456, 3.972601,
                                                  4.623738, 5.276127, 6.583171, 7.891981 } } );
@@ -119,6 +121,9 @@ SCENARIO( "IncoherentElasticScattering" ) {
 void verifyChunk( const IncoherentElasticScattering& chunk ) {
 
   CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
+
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 10. , WithinRel( chunk.upperEnergyLimit() ) );
 
   CHECK( 8 == chunk.numberModeratorTemperatures() );
   CHECK( 8 == chunk.moderatorTemperatures().size() );

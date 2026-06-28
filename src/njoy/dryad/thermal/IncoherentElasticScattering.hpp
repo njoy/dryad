@@ -4,7 +4,10 @@
 // system includes
 
 // other includes
+#include "scion/math/compare.hpp"
+#include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticScatteringCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -21,6 +24,8 @@ namespace thermal {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     double bound_xs_;
     DebyeWallerIntegralData debye_waller_;
 
@@ -44,15 +49,37 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
+     *  @param[in] lower                 the lower energy limit
+     *  @param[in] upper                 the upper energy limit
      *  @param[in] xs                    the bound atom cross section
      *  @param[in] debyeWallerIntegral   the Debye-Waller integral data
      */
-    IncoherentElasticScattering( double xs,
+    IncoherentElasticScattering( double lower,
+                                 double upper,
+                                 double xs,
                                  DebyeWallerIntegralData debyeWallerIntegral ) :
+      lower_( lower ),
+      upper_( upper ),
       bound_xs_( xs ),
       debye_waller_( std::move( debyeWallerIntegral ) ) {}
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
 
     /**
      *  @brief Return the number of moderator temperatures for which data is available
@@ -104,6 +131,33 @@ namespace thermal {
     void debyeWallerIntegral( DebyeWallerIntegralData debyeWaller ) {
 
       this->debye_waller_ = std::move( debyeWaller );
+    }
+
+    /**
+     *  @brief Set the Debye-Waller integral data
+     *
+     *  @param[in] temperature   the moderator temperature
+     */
+    IncoherentElasticScatteringCrossSection
+    crossSection( double temperature ) {
+
+      // find the closest temperature, within 0.001 K
+      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
+                                         this->moderatorTemperatures().end(),
+                                         temperature, 0.001 );
+      if ( iter == this->moderatorTemperatures().end() ) {
+
+        throw std::runtime_error( "The requested temperature "
+                                  + std::to_string( temperature )
+                                  + " K is not present" );
+      }
+
+      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
+      return IncoherentElasticScatteringCrossSection(
+                 this->lowerEnergyLimit(),
+                 this->upperEnergyLimit(),
+                 this->boundCrossSection(),
+                 this->debyeWallerIntegral().values()[index] );
     }
 
     /**
