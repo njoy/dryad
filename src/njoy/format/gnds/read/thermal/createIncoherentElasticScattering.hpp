@@ -20,10 +20,13 @@ namespace thermal {
   /**
    *  @brief Create an IncoherentElasticScattering from a GNDS tsl node
    *
-   *  @param[in] tsl   the GNDS tsl node
+   *  @param[in] lower   the lower energy limit
+   *  @param[in] upper   the upper energy limit
+   *  @param[in] tsl     the GNDS tsl node
    */
   inline dryad::thermal::IncoherentElasticScattering
-  createIncoherentElasticScattering( const pugi::xml_node& tsl ) {
+  createIncoherentElasticScattering( double lower, double upper,
+                                     const pugi::xml_node& tsl ) {
 
     Log::info( "Reading incoherent elastic scattering data" );
 
@@ -39,7 +42,7 @@ namespace thermal {
     node = tsl.child( "DebyeWallerIntegral" );
     dryad::thermal::DebyeWallerIntegralData integral = createDebyeWallerIntegralData( node );
 
-    return dryad::thermal::IncoherentElasticScattering( xs, std::move( integral ) );
+    return dryad::thermal::IncoherentElasticScattering( lower, upper, xs, std::move( integral ) );
   }
 
 } // thermal namespace

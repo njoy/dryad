@@ -154,6 +154,10 @@ class IncoherentElasticScattering:
     
     Parameters
     ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
         xs : float
             the bound atom cross section
         debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData
@@ -166,7 +170,7 @@ class IncoherentElasticScattering:
         ...
     def __eq__(self, arg0: IncoherentElasticScattering) -> bool:
         ...
-    def __init__(self, xs: float, debye_waller_integral: DebyeWallerIntegralData) -> None:
+    def __init__(self, lower: float, upper: float, xs: float, debye_waller_integral: DebyeWallerIntegralData) -> None:
         """
         Initialise the incoherent elastic scattering data
         """
@@ -189,6 +193,11 @@ class IncoherentElasticScattering:
     def debye_waller_integral(self, arg1: DebyeWallerIntegralData) -> None:
         ...
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
     def moderator_temperatures(self) -> list[float]:
         """
         The moderator temperature values
@@ -197,6 +206,11 @@ class IncoherentElasticScattering:
     def number_moderator_temperatures(self) -> int:
         """
         The moderator temperature values
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
         """
 class IncoherentElasticScatteringCrossSection:
     """
