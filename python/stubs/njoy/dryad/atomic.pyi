@@ -351,11 +351,9 @@ class TransitionType:
     
     Members:
     
-      Radiative : A radiative transition, an electron from another shell fills a vacancy in the current
-    shell while emitting a photon
+      Radiative : A radiative transition, an electron from another shell fills a vacancy in the current shell while emitting a photon
     
-      NonRadiative : An electron from another shell fills a vacancy in the current shell while another electron
-    is emitted
+      NonRadiative : An electron from another shell fills a vacancy in the current shell while another electron is emitted
     """
     NonRadiative: typing.ClassVar[TransitionType]  # value = <TransitionType.NonRadiative: 1>
     Radiative: typing.ClassVar[TransitionType]  # value = <TransitionType.Radiative: 0>
