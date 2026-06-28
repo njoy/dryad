@@ -32,6 +32,10 @@ message( STATUS "Adding njoy C++ unit testing" )
 add_cpp_test( configuration                                                            configuration.test.cpp )
 add_cpp_test( matrix                                                                   matrix.test.cpp )
 
+# utility tests
+
+add_cpp_test( utility.find_closest                                                     utility/find_closest.test.cpp )
+
 # dryad tests
 
 add_cpp_test( dryad.base.UniformDistribution                                           dryad/base/UniformDistribution.test.cpp )
