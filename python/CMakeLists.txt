@@ -82,6 +82,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAverageCosine.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAverageEnergy.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IsotropicAngularDistributions.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IsotropicAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/LegendreAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/LegendreAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/LegendreAngularDistributions.python.cpp

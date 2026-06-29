@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -521,6 +521,79 @@ class InterpolationType:
     @property
     def value(self) -> int:
         ...
+class IsotropicAngularDistributionFunction:
+    """
+    An isotropic angular distribution function
+    
+    In this distribution, all cosines are equally probable. The equivalent
+    tabulated distribution is 0.5 on the [-1, 1] domain and the equivalent
+    Legendre distribution uses 0.5 as the P0 coefficient.
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the distribution for a given cosine value
+        
+        Parameters
+        ----------
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> IsotropicAngularDistributionFunction:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IsotropicAngularDistributionFunction:
+        ...
+    def __eq__(self, arg0: IsotropicAngularDistributionFunction) -> bool:
+        ...
+    def __init__(self) -> None:
+        """
+        Initialise the isotropic angular distribution
+        """
+    def __ne__(self, arg0: IsotropicAngularDistributionFunction) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> ...:
+        """
+        Linearise the distribution function
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
+            normalise : bool, default False
+                 option to normalise probability data
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution function
+        """
+    def to_legendre_distribution(self) -> ...:
+        """
+        Convert to the equivalent Legendre distribution
+        """
+    def to_tabulated_distribution(self) -> ...:
+        """
+        Convert to the equivalent tabulated distribution
+        """
+    @property
+    def integral(self) -> float:
+        """
+        The integral of the distribution function over its domain
+        """
+    @property
+    def lower_cosine_limit(self) -> float:
+        """
+        The lower cosine limit
+        """
+    @property
+    def mean(self) -> float:
+        """
+        The mean value of the distribution function over its domain
+        """
+    @property
+    def upper_cosine_limit(self) -> float:
+        """
+        The upper cosine limit
+        """
 class IsotropicAngularDistributions:
     """
     The angular distribution data is fully isotropic
@@ -717,7 +790,7 @@ class LegendreAngularDistributionFunction:
     @property
     def integral(self) -> float:
         """
-        The integral (zeroth order moment) of the distribution function over its domain
+        The integral of the distribution function over its domain
         """
     @property
     def lower_cosine_limit(self) -> float:
@@ -727,7 +800,7 @@ class LegendreAngularDistributionFunction:
     @property
     def mean(self) -> float:
         """
-        The mean (first order raw moment) of the distribution function over its domain
+        The mean value of the distribution function over its domain
         """
     @property
     def order(self) -> int:
@@ -2037,7 +2110,7 @@ class TabulatedAngularDistributionFunction:
     @property
     def integral(self) -> float:
         """
-        The integral (zeroth order moment) of the distribution function over its domain
+        The integral of the distribution function over its domain
         """
     @property
     def interpolants(self) -> list[InterpolationType]:
@@ -2057,7 +2130,7 @@ class TabulatedAngularDistributionFunction:
     @property
     def mean(self) -> float:
         """
-        The mean (first order raw moment) of the distribution function over its domain
+        The mean value of the distribution function over its domain
         """
     @property
     def number_points(self) -> int:
@@ -3082,7 +3155,7 @@ class TabulatedEnergyDistributionFunction:
     @property
     def integral(self) -> float:
         """
-        The integral (zeroth order moment) of the distribution function over its domain
+        The integral of the distribution function over its domain
         """
     @property
     def interpolants(self) -> list[InterpolationType]:
@@ -3102,7 +3175,7 @@ class TabulatedEnergyDistributionFunction:
     @property
     def mean(self) -> float:
         """
-        The mean (first order raw moment) of the distribution function over its domain
+        The mean value of the distribution function over its domain
         """
     @property
     def number_points(self) -> int:

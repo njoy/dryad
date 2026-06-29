@@ -4,17 +4,17 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
+#include "njoy/dryad/IsotropicAngularDistributionFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace dryad {
 
-void wrapLegendreAngularDistributionFunction( python::module& module ) {
+void wrapIsotropicAngularDistributionFunction( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::LegendreAngularDistributionFunction;
+  using Component = njoy::dryad::IsotropicAngularDistributionFunction;
 
   // wrap views created by this component
 
@@ -22,31 +22,19 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "LegendreAngularDistributionFunction",
-    "An angular distribution function using a Legendre expansion defined by a\n"
-    "set of coefficients\n\n"
-    "Note: ENDF and GNDS Legendre expansions use Legendre moments for the angular\n"
-    "distributions in MF4 and MF6 LAW=1 & LAW=2 so an additional ( 2 * n + 1 ) / 2\n"
-    "factor for the coefficient of order n needs to be applied to obtain the series\n"
-    "coefficients. This distribution function assumes those factors are already\n"
-    "integrated in the coefficients.\n\n"
-    "A distribution function does not have to normalised as this class can be used\n"
-    "to represent both a pdf and cdf. Proper normalisation should be applied after\n"
-    "construction using the normalise() function if required."
+    "IsotropicAngularDistributionFunction",
+    "An isotropic angular distribution function\n\n"
+    "In this distribution, all cosines are equally probable. The equivalent\n"
+    "tabulated distribution is 0.5 on the [-1, 1] domain and the equivalent\n"
+    "Legendre distribution uses 0.5 as the P0 coefficient."
    );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double > >(),
-    python::arg( "coefficients" ),
-    "Initialise the angular distribution\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    coefficients : list of float\n"
-    "         the coefficients of the Legendre series (from\n"
-    "         lowest to highest order coefficient)\n"
+    python::init<>(),
+    "Initialise the isotropic angular distribution"
   )
   .def_property_readonly(
 
@@ -77,13 +65,13 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
   .def_property_readonly(
 
     "integral",
-    [] ( const Component& self ) { return self.integral(); },
+    &Component::integral,
     "The integral of the distribution function over its domain"
   )
   .def_property_readonly(
 
     "mean",
-    [] ( const Component& self ) { return self.mean(); },
+    &Component::mean,
     "The mean value of the distribution function over its domain"
   )
   .def(
@@ -91,13 +79,36 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
     "normalise",
     &Component::normalise,
     "Normalise the distribution function"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    python::arg( "normalise" ) = false,
+    "Linearise the distribution function\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 0.001\n"
+    "         the linearisation tolerance\n"
+    "    normalise : bool, default False\n"
+    "         option to normalise probability data"
+  )
+  .def(
+
+    "to_legendre_distribution",
+    &Component::toLegendreDistribution,
+    "Convert to the equivalent Legendre distribution"
+  )
+  .def(
+
+    "to_tabulated_distribution",
+    &Component::toTabulatedDistribution,
+    "Convert to the equivalent tabulated distribution"
   );
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
-
-  // add standard tabulated data definitions
-  addStandardSeriesDefinitions< Component >( component );
 
   // add standard copy definitions
   addStandardCopyDefinitions< Component >( component );

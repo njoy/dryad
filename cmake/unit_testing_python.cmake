@@ -92,6 +92,7 @@ add_python_test( dryad.ParticleDatabase                                dryad/Tes
 add_python_test( dryad.TabulatedMultiplicity                           dryad/Test_TabulatedMultiplicity.py )
 add_python_test( dryad.TabulatedAverageEnergy                          dryad/Test_TabulatedAverageEnergy.py )
 add_python_test( dryad.TabulatedAverageCosine                          dryad/Test_TabulatedAverageCosine.py )
+add_python_test( dryad.IsotropicAngularDistributionFunction            dryad/Test_IsotropicAngularDistributionFunction.py )
 add_python_test( dryad.LegendreAngularDistributionFunction             dryad/Test_LegendreAngularDistributionFunction.py )
 add_python_test( dryad.LegendreAngularDistribution                     dryad/Test_LegendreAngularDistribution.py )
 add_python_test( dryad.LegendreAngularDistributions                    dryad/Test_LegendreAngularDistributions.py )

@@ -42,6 +42,7 @@
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
 #include "njoy/dryad/LegendreAngularDistributions.hpp"
+#include "njoy/dryad/IsotropicAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
