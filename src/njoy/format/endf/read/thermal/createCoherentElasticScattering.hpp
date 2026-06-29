@@ -21,13 +21,17 @@ namespace thermal {
    *  @brief Create a CoherentElasticScattering from a parsed coherent
    *         elastic thermal scattering component
    *
+   *  @param[in] lower      the lower energy limit
+   *  @param[in] upper      the upper energy limit
    *  @param[in] coherent   the coherent elastic thermal scattering component
    */
   inline dryad::thermal::CoherentElasticScattering
-  createCoherentElasticScattering( const ENDFtk::section::Type< 7, 2 >::CoherentElastic& coherent ) {
+  createCoherentElasticScattering(
+      double lower, double upper,
+      const ENDFtk::section::Type< 7, 2 >::CoherentElastic& coherent ) {
 
     Log::info( "Reading coherent elastic scattering data" );
-    return dryad::thermal::CoherentElasticScattering( createBraggEdges( coherent ) );
+    return dryad::thermal::CoherentElasticScattering( lower, upper, createBraggEdges( coherent ) );
   }
 
 } // thermal namespace
