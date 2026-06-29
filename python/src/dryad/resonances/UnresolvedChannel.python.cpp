@@ -118,8 +118,8 @@ void wrapUnresolvedChannel( python::module& module ){
   )
   .def_property_readonly(
  
-    "conversion_factor",
-    &Component::conversionFactor,
+    "conversion_factor_strategy",
+    &Component::conversionFactorStrategy,
     "The width conversion strategy applied to the channel"
   )
   .def(

@@ -20,7 +20,7 @@ namespace resonances {
 
       using ConversionFactor = std::variant< double,
                                              ReducedWidthConversion >;
-      using Background = njoy::dryad::resonances::Channel::Background;
+      using Background = Channel::Background;
 
     private:
 
@@ -93,7 +93,11 @@ namespace resonances {
         return this->channel_.channelRadii();
       }
 
-      const ConversionFactor& conversionFactor() const {
+      /**
+       *  @brief Returns the conversion factor strategy to be applied to the given width
+       *
+       */
+      const ConversionFactor& conversionFactorStrategy() const {
 
         return this->conversion_factor_;
       }
