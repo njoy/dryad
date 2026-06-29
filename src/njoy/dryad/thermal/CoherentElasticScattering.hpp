@@ -7,7 +7,9 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/BraggEdgeData.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -192,6 +194,30 @@ namespace thermal {
                     temperature );
         throw std::exception();
       }
+    }
+
+    /**
+     *  @brief Return the incoherent elastic scattering cross section
+     *
+     *  @param[in] temperature   the moderator temeprature for which the
+     *                           cross section is requested
+     */
+    TabulatedCrossSection
+    crossSection( double temperature ) const {
+
+      // find the closest temperature, within 0.001 K
+      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
+                                         this->moderatorTemperatures().end(),
+                                         temperature, 0.001 );
+      if ( iter == this->moderatorTemperatures().end() ) {
+
+        throw std::runtime_error( "The requested temperature "
+                                  + std::to_string( temperature )
+                                  + " K is not present" );
+      }
+
+      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
+      return this->braggEdges()[index].crossSection( this->upperEnergyLimit() );
     }
 
     /**
