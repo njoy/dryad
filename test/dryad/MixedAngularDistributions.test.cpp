@@ -21,8 +21,8 @@ SCENARIO( "MixedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > energies = { 1., 2., 3., 4. };
-      const std::vector< MixedAngularDistribution > distributions = {
+      std::vector< double > energies = { 1., 2., 3., 4. };
+      std::vector< MixedAngularDistribution > distributions = {
 
         { IsotropicAngularDistributionFunction{ 1. } },
         { LegendreAngularDistributionFunction{ { 1.0, 0.02 } } },
@@ -31,10 +31,8 @@ SCENARIO( "MixedAngularDistributions" ) {
       };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      MixedAngularDistributions chunk1( std::move( energies ), std::move( distributions ),
-                                        interpolant, false );
-      MixedAngularDistributions chunk2( std::move( energies ), std::move( distributions ),
-                                        interpolant, true );
+      MixedAngularDistributions chunk1( energies, distributions, interpolant, false );
+      MixedAngularDistributions chunk2( energies, distributions, interpolant, true );
 
       verifyChunk( chunk1, false );
       verifyChunk( chunk2, true );
@@ -296,6 +294,7 @@ void verifyChunk( const MixedAngularDistributions& chunk, bool normalise ) {
   CHECK( 2 == pdf1.coefficients().size() );
   CHECK( 2 == pdf2.coefficients().size() );
   CHECK( 2 == pdf3.coefficients().size() );
+  CHECK_THAT( 1.0  / normalisation, WithinRel( pdf1.coefficients()[0] ) );
   CHECK_THAT( 0.02 / normalisation, WithinRel( pdf1.coefficients()[1] ) );
   CHECK_THAT( 1.0  / normalisation, WithinRel( pdf2.coefficients()[0] ) );
   CHECK_THAT( 0.2  / normalisation, WithinRel( pdf2.coefficients()[1] ) );
