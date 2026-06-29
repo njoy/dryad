@@ -48,7 +48,7 @@ namespace read {
 
           [&] ( const CoherentElastic& law ) -> CoherentElasticScatteringType {
 
-            return thermal::createCoherentElasticScattering( law );
+            return thermal::createCoherentElasticScattering( lower, upper, law );
           },
           [&] ( const IncoherentElastic& ) -> CoherentElasticScatteringType {
 
@@ -56,7 +56,7 @@ namespace read {
           },
           [&] ( const MixedElastic& law ) -> CoherentElasticScatteringType {
 
-            return thermal::createCoherentElasticScattering( law.coherent() );
+            return thermal::createCoherentElasticScattering( lower, upper, law.coherent() );
           }
         };
 

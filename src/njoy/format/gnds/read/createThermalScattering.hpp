@@ -45,7 +45,7 @@ namespace read {
                            .find_child_by_attribute( "label", style.c_str() );
         if ( strcmp( tsl.name(), "thermalNeutronScatteringLaw_coherentElastic" ) == 0 ) {
 
-          coherent = thermal::createCoherentElasticScattering( tsl );
+          coherent = thermal::createCoherentElasticScattering( lower, upper, tsl );
         }
         else if ( strcmp( tsl.name(), "thermalNeutronScatteringLaw_incoherentElastic" ) == 0 ) {
 

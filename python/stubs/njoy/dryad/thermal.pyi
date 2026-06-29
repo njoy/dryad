@@ -60,6 +60,10 @@ class CoherentElasticScattering:
     
     Parameters
     ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
         bragg_edges : list of njoy.dryad.thermal.BraggEdgeData
             the Bragg edge data
     """
@@ -70,7 +74,7 @@ class CoherentElasticScattering:
         ...
     def __eq__(self, arg0: CoherentElasticScattering) -> bool:
         ...
-    def __init__(self, bragg_edges: list[BraggEdgeData]) -> None:
+    def __init__(self, lower: float, upper: float, bragg_edges: list[BraggEdgeData]) -> None:
         """
         Initialise the coherent elastic scattering data
         """
@@ -103,6 +107,11 @@ class CoherentElasticScattering:
     def bragg_edges(self, arg1: list[BraggEdgeData]) -> None:
         ...
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
     def moderator_temperatures(self) -> list[float]:
         """
         The moderator temperature values
@@ -111,6 +120,11 @@ class CoherentElasticScattering:
     def number_moderator_temperatures(self) -> int:
         """
         The moderator temperature values
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
         """
 class DebyeWallerIntegralData:
     """

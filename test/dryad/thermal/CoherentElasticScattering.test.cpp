@@ -20,13 +20,15 @@ SCENARIO( "CoherentElasticScattering" ) {
 
     WHEN( "the data is given explicitly" ) {
 
+      double lower = 1e-5;
+      double upper = 10.;
       std::vector< BraggEdgeData > bragg_edges = {
 
         BraggEdgeData( 600.0, { 5.219736e-3, 5. }, { 1e-2, 1. } ),
         BraggEdgeData( 293.6, { 5.219736e-3, 5. }, { 8.703783e-3, 9.484639e-1 } )
       };
 
-      CoherentElasticScattering chunk( std::move( bragg_edges ) );
+      CoherentElasticScattering chunk( lower, upper, std::move( bragg_edges ) );
 
       THEN( "CoherentElasticScattering can be constructed and members can be tested" ) {
 
@@ -40,6 +42,7 @@ SCENARIO( "CoherentElasticScattering" ) {
     WHEN( "an instance of CoherentElasticScattering is given" ) {
 
       CoherentElasticScattering chunk(
+          1e-5, 10.,
           { BraggEdgeData( 600.0, { 5.219736e-3, 5. }, { 1e-2, 1. } ),
             BraggEdgeData( 293.6, { 5.219736e-3, 5. }, { 8.703783e-3, 9.484639e-1 } ) } );
 
@@ -71,12 +74,15 @@ SCENARIO( "CoherentElasticScattering" ) {
     WHEN( "two instances of CoherentElasticScattering are given" ) {
 
       CoherentElasticScattering left(
+          1e-5, 10.,
           { BraggEdgeData( 600.0, { 5.219736e-3, 5. }, { 1e-2, 1. } ),
             BraggEdgeData( 293.6, { 5.219736e-3, 5. }, { 8.703783e-3, 9.484639e-1 } ) } );
       CoherentElasticScattering equal(
+          1e-5, 10.,
           { BraggEdgeData( 600.0, { 5.219736e-3, 5. }, { 1e-2, 1. } ),
             BraggEdgeData( 293.6, { 5.219736e-3, 5. }, { 8.703783e-3, 9.484639e-1 } ) } );
       CoherentElasticScattering different(
+          1e-5, 10.,
           { BraggEdgeData( 300.0, { 5.219736e-3, 5. }, { 1e-2, 1. } ) } );
 
       THEN( "they can be compared" ) {
@@ -94,6 +100,9 @@ SCENARIO( "CoherentElasticScattering" ) {
 } // SCENARIO
 
 void verifyChunk( const CoherentElasticScattering& chunk ) {
+
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 10. , WithinRel( chunk.upperEnergyLimit() ) );
 
   CHECK( 2 == chunk.numberModeratorTemperatures() );
   CHECK( 2 == chunk.moderatorTemperatures().size() );
