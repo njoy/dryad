@@ -5,17 +5,20 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/constants.hpp"
-#include "njoy/dryad/LegendreAngularDistribution.hpp"
+#include "njoy/dryad/MixedAngularDistribution.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace dryad {
 
-void wrapLegendreAngularDistribution( python::module& module ) {
+void wrapMixedAngularDistribution( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::LegendreAngularDistribution;
+  using Component = njoy::dryad::MixedAngularDistribution;
+  using IsotropicAngularDistributionFunction = njoy::dryad::IsotropicAngularDistributionFunction;
+  using LegendreAngularDistributionFunction = njoy::dryad::LegendreAngularDistributionFunction;
+  using TabulatedAngularDistributionFunction = njoy::dryad::TabulatedAngularDistributionFunction;
 
   // wrap views created by this component
 
@@ -23,32 +26,31 @@ void wrapLegendreAngularDistribution( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "LegendreAngularDistribution",
-    "An angular distribution defined by a pdf and cdf using a Legendre series\n"
-    "expansion"
+    "MixedAngularDistribution",
+    "An angular distribution defined by a pdf that is an isotropic, legendre or\n"
+    "tabulated distribution function\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    function : Union[njoy.dryad.IsotropicAngularDistributionFunction,\n"
+    "               njoy.dryad.LegendreAngularDistributionFunction,\n"
+    "               njoy.dryad.TabulatedAngularDistributionFunction]\n"
+    "        the distribution function\n"
+    "    normalise : bool, default False\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double >, bool >(),
-    python::arg( "coefficients" ), python::arg( "normalise" ) = false,
-    "Initialise the angular distribution\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    coefficients : list of float\n"
-    "        the coefficients of the Legendre series (from\n"
-    "        lowest to highest order coefficient)\n"
-    "    normalise : bool, default False\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
-  )
-  .def_property_readonly(
-
-    "coefficients",
-    &Component::coefficients,
-    "The coefficients"
+    python::init< std::variant< IsotropicAngularDistributionFunction,
+                                LegendreAngularDistributionFunction,
+                                TabulatedAngularDistributionFunction >,
+                  bool >(),
+    python::arg( "function" ),
+    python::arg( "normalise" ) = false,
+    "Initialise the angular distribution"
   )
   .def_property_readonly(
 
