@@ -37,6 +37,7 @@ void wrapUnresolvedChannel( python::module& module ){
   .def(
 
     python::init< ChannelID,
+                  ParticlePair,
                   std::optional< ParticlePair >,
                   double,
                   std::optional< double >,
@@ -118,7 +119,7 @@ void wrapUnresolvedChannel( python::module& module ){
   )
   .def_property_readonly(
  
-    "conversion_factor_strategy",
+    "conversion_factor",
     &Component::conversionFactorStrategy,
     "The width conversion strategy applied to the channel"
   )

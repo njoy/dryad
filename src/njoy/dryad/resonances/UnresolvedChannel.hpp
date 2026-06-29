@@ -20,7 +20,8 @@ namespace resonances {
 
       using ConversionFactor = std::variant< double,
                                              ReducedWidthConversion >;
-      using Background = Channel::Background;
+      using Background = njoy::dryad::resonances::Channel::Background;
+      using ParticlePair = njoy::dryad::resonances::ParticlePair;
 
     private:
 
