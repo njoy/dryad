@@ -2,10 +2,10 @@
 #define NJOY_DRYAD_ISOTROPICANGULARDISTRIBUTIONFUNCTION
 
 // system includes
-#include <vector>
 
 // other includes
 #include "scion/math/OneDimensionalFunctionBase.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 
