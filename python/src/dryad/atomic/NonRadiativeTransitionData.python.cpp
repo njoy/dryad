@@ -52,7 +52,7 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
                   double, std::optional< double > >(),
     python::arg( "originating_shell" ), python::arg( "emitting_shell" ),
     python::arg( "probability" ), python::arg( "energy" ) = std::nullopt,
-    ""
+    "Initialise the non-radiative transition data"
   )
   .def_property_readonly(
 

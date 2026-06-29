@@ -13,7 +13,7 @@ class BoundedCorrelations:
     Parameters
     ----------
         tolerance : float, default 1e-10
-             the comparison tolerance
+            the comparison tolerance
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -30,7 +30,9 @@ class BoundedCorrelations:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -88,7 +90,7 @@ class DiagonalCorrelations:
     Parameters
     ----------
         tolerance : float, default 1e-10
-             the comparison tolerance
+            the comparison tolerance
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -103,7 +105,9 @@ class DiagonalCorrelations:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -145,7 +149,7 @@ class EigenvalueRatio:
     Parameters
     ----------
         ratio : float, default 1e-8
-             the smallest allowable positive eigenvalue ratio
+            the smallest allowable positive eigenvalue ratio
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -161,7 +165,9 @@ class EigenvalueRatio:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -227,7 +233,7 @@ class PositiveSemiDefinite:
     Parameters
     ----------
         negative : float, default -1e-10
-             the largest allowed negative eigenvalue
+            the largest allowed negative eigenvalue
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -249,7 +255,9 @@ class PositiveSemiDefinite:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -304,12 +312,14 @@ class PositiveVariances:
         The test returns the following status values:
           - Success : all variances are strictly positive
           - Warning : all variances are positive
-          - Fail : soem of the variances seem to be negative
+          - Fail : some of the variances seem to be negative
           - Skipped : the test was skipped
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
@@ -346,11 +356,11 @@ class TestSuite:
     Parameters
     ----------
         tolerance : float, default 1e-10
-             the comparison tolerance
+            the comparison tolerance
         negative : float, default -1e-10
-             the largest allowed negative eigenvalue
+            the largest allowed negative eigenvalue
         ratio : float, default 1e-8
-             the smallest allowable positive eigenvalue ratio
+            the smallest allowable positive eigenvalue ratio
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -359,7 +369,9 @@ class TestSuite:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload

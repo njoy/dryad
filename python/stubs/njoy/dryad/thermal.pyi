@@ -9,14 +9,17 @@ class BraggEdgeData:
     """
     Bragg edge data for a single temperature
     
+    The Bragg edge data consists of edge energies and structure
+    factor values.
+    
     Parameters
     ----------
         temperature : float
-             the temperature
+            the temperature
         energies : list of float
-             the temperature
+            the temperature
         values : list of float
-             the structure factor values
+            the structure factor values
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> BraggEdgeData:
@@ -58,7 +61,7 @@ class CoherentElasticScattering:
     Parameters
     ----------
         bragg_edges : list of njoy.dryad.thermal.BraggEdgeData
-             the Bragg edge data
+            the Bragg edge data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CoherentElasticScattering:
@@ -80,7 +83,7 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                 the temperature
+                the temperature
         """
     def has_bragg_edge_data(self, temperature: float) -> bool:
         """
@@ -89,7 +92,7 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                 the temperature
+                the temperature
         """
     @property
     def bragg_edges(self) -> list[BraggEdgeData]:
@@ -118,9 +121,9 @@ class DebyeWallerIntegralData:
     Parameters
     ----------
         temperatures : list of float
-             the temperature values
+            the temperature values
         values : list of float
-             the intergal values
+            the intergal values
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> DebyeWallerIntegralData:
@@ -152,9 +155,9 @@ class IncoherentElasticScattering:
     Parameters
     ----------
         xs : float
-             the bound atom cross section
+            the bound atom cross section
         debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData
-             the Debye-Waller integral data
+            the Debye-Waller integral data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> IncoherentElasticScattering:
@@ -202,19 +205,19 @@ class TabulatedScatteringKernel:
     Parameters
     ----------
         moderator_temperature : float
-             the moderator temperature
+            the moderator temperature
         effective_temperature : float
-             the effective temperature used in the SCT approximation
+            the effective temperature used in the SCT approximation
         energy_transfers : list of float
-             the energy transfer values
+            the energy transfer values
         functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction
-             the tabulated S(a) scattering functions
+            the tabulated S(a) scattering functions
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
+            the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
@@ -253,7 +256,7 @@ class TabulatedScatteringKernel:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -302,15 +305,15 @@ class TabulatedScatteringKernelFunction:
     Parameters
     ----------
         momentum_transfers : list of float
-             the momentum transfer values
+            the momentum transfer values
         values : list of float
-             the scattering function values
+            the scattering function values
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
+            the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -387,7 +390,7 @@ class TabulatedScatteringKernelFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:

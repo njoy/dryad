@@ -294,8 +294,8 @@ void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
   CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
   CHECK( true == data.scatteringFunction().isLinearised() );
 
-  CHECK( std::nullopt != data.realAnomolousFormFactor() );
-  auto factor = data.realAnomolousFormFactor().value();
+  CHECK( std::nullopt != data.realAnomalousFormFactor() );
+  auto factor = data.realAnomalousFormFactor().value();
   CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
   CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
   CHECK( 297 == factor.energies().size() );
@@ -314,8 +314,8 @@ void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
   CHECK( true == factor.isLinearised() );
 
-  CHECK( std::nullopt != data.imaginaryAnomolousFormFactor() );
-  factor = data.imaginaryAnomolousFormFactor().value();
+  CHECK( std::nullopt != data.imaginaryAnomalousFormFactor() );
+  factor = data.imaginaryAnomalousFormFactor().value();
   CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
   CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
   CHECK( 297 == factor.energies().size() );

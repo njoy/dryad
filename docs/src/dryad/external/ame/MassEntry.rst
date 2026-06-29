@@ -1,7 +1,7 @@
 .. currentmodule:: njoy.dryad.external.ame
 
 MassEntry
-==========
+=========
 
 The MassEntry class contains level information for a particle from the RIPL-3 database.
 

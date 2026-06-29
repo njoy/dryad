@@ -32,11 +32,11 @@ void wrapTestSuite( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 1e-10\n"
-    "         the comparison tolerance\n"
+    "        the comparison tolerance\n"
     "    negative : float, default -1e-10\n"
-    "         the largest allowed negative eigenvalue\n"
+    "        the largest allowed negative eigenvalue\n"
     "    ratio : float, default 1e-8\n"
-    "         the smallest allowable positive eigenvalue ratio"
+    "        the smallest allowable positive eigenvalue ratio"
   );
   // wrap the component
   component
@@ -119,7 +119,9 @@ void wrapTestSuite( python::module& module ) {
     "Perform the test suite on the provided covariance matrix\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
+    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
+    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

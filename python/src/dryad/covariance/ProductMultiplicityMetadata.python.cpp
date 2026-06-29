@@ -29,7 +29,17 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
 
     module,
     "ProductMultiplicityMetadata",
-    "Covariance metadata for product multiplicities"
+    "Covariance metadata for product multiplicities\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    reactions : list of njoy.dryad.id.ReactionID\n"
+    "        the reaction identifiers\n"
+    "    energies : list of float\n"
+    "        the energy boundary values\n"
+    "    products : list of njoy.dryad.id.ParticleID\n"
+    "        the product identifiers\n"
+    "    keys : list of tuple\n"
+    "        the metadata keys (tuples of ReactionID, EnergyGroup, ParticleID)"
   );
 
   // wrap the component
@@ -39,23 +49,16 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
     python::init< std::vector< ReactionID >,
                   std::vector< double >,
                   std::vector< ParticleID > >(),
-    python::arg( "reactions" ), python::arg( "energies" ),
+    python::arg( "reactions" ),
+    python::arg( "energies" ),
     python::arg( "products" ),
-    "Initialise the product multiplicity covariance metadata\n\n"
-    "Arguments:\n"
-    "    self          the covariance metadata\n"
-    "    reactions     the reaction identifiers\n"
-    "    energies      the group structure\n"
-    "    products      the product identifiers"
+    "Initialise the product multiplicity covariance metadata"
   )
   .def(
 
     python::init< std::vector< Key > >(),
     python::arg( "keys" ),
-    "Initialise the product multiplicity covariance metadata\n\n"
-    "Arguments:\n"
-    "    self   the covariance metadata\n"
-    "    keys   the metadata keys"
+    "Initialise the product multiplicity covariance metadata with metadata keys"
   )
   .def_property_readonly(
 

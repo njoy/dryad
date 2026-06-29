@@ -38,9 +38,9 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    coefficients : list of float\n"
-    "         the coefficients of the Legendre series (from\n"
-    "         lowest to highest order coefficient)\n"
-    "    normalise : bool, default false\n"
+    "        the coefficients of the Legendre series (from\n"
+    "        lowest to highest order coefficient)\n"
+    "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   )
@@ -96,8 +96,8 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
-    "    normalise : bool, default false\n"
+    "        the linearisation tolerance\n"
+    "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );

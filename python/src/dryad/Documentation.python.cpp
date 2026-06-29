@@ -26,24 +26,29 @@ void wrapDocumentation( python::module& module ) {
     "Documentation associated to the dryad data\n\n"
     "Parameters\n"
     "----------\n"
-    "    library : int\n"
-    "         the library number\n"
-    "    version : list of int\n"
-    "         the version numbers (major and minor)\n"
-    "    description : str\n"
-    "         the description"
+    "    library : int, optional\n"
+    "        the library number\n"
+    "    version : tuple of int, optional\n"
+    "        the version numbers (major and minor)\n"
+    "    description : str, optional\n"
+    "        the description"
    );
 
   // wrap the component
   component
   .def(
 
+    python::init<>(),
+    "Initialise the documentation with default values"
+  )
+  .def(
+
     python::init< std::optional< int >,
                   std::optional< std::pair< int, int > >,
                   std::optional< std::string > >(),
-    python::arg( "library" ),
-    python::arg( "version" ),
-    python::arg( "description" ),
+    python::arg( "library" ) = std::nullopt,
+    python::arg( "version" ) = std::nullopt,
+    python::arg( "description" ) = std::nullopt,
     "Initialise the documentation"
   )
   .def_property(
@@ -51,14 +56,14 @@ void wrapDocumentation( python::module& module ) {
     "library",
     python::overload_cast<>( &Component::library, python::const_ ),
     python::overload_cast< std::optional< int > >( &Component::library ),
-    "The library"
+    "The library number"
   )
   .def_property(
 
     "version",
     python::overload_cast<>( &Component::version, python::const_ ),
     python::overload_cast< std::optional< std::pair< int, int > > >( &Component::version ),
-    "The version"
+    "The version numbers (major and minor)"
   )
   .def_property(
 

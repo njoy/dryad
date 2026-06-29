@@ -23,14 +23,24 @@ void wrapFormalism( python::module& module ) {
 
     module,
     "Formalism",
-    "The resonance formalism",
+    "The resonance formalism for resonance reconstruction\n\n"
+    "This enum differentiates between different resonance formalisms used\n"
+    "in resonance reconstruction calculations.\n\n"
+    "Values\n"
+    "------\n"
+    "    ReichMoore : 1\n"
+    "        the Reich-Moore formalism using a single eliminated capture channel\n"
+    "    GeneralRMatrix : 2\n"
+    "        the general R-matrix formalism",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "ReichMoore", Component::ReichMoore )
-  .value( "GeneralRMatrix", Component::GeneralRMatrix );
+  .value( "ReichMoore", Component::ReichMoore,
+          "Reich-Moore formalism with single eliminated capture channel" )
+  .value( "GeneralRMatrix", Component::GeneralRMatrix,
+          "General R-matrix formalism" );
 }
 
 } // resonances namespace

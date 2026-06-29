@@ -31,19 +31,19 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    moderator_temperature : float\n"
-    "         the moderator temperature\n"
+    "        the moderator temperature\n"
     "    effective_temperature : float\n"
-    "         the effective temperature used in the SCT approximation\n"
+    "        the effective temperature used in the SCT approximation\n"
     "    energy_transfers : list of float\n"
-    "         the energy transfer values\n"
+    "        the energy transfer values\n"
     "    functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction\n"
-    "         the tabulated S(a) scattering functions\n"
+    "        the tabulated S(a) scattering functions\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)"
+    "        the interpolation type (default lin-lin)"
   );
 
   // wrap the component
@@ -120,7 +120,7 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance"
+    "        the linearisation tolerance"
   );
 
   // add standard equality comparison definitions

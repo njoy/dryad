@@ -32,8 +32,8 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "The angular distribution covariance data\n\n"
     "Parameters\n"
     "----------\n"
-    "    matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceData \n"
-    "         the covariance matrices"
+    "    matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceMatrix\n"
+    "        the covariance matrices"
   );
 
   // wrap the component
@@ -42,7 +42,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
 
     python::init< std::vector< AngularDistributionCovarianceMatrix > >(),
     python::arg( "matrices" ),
-    "Initialise the covariance data\n"
+    "Initialise the angular distribution covariance data"
   )
   .def_property_readonly(
 
@@ -82,9 +82,9 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row : njoy.dryad.id.ReactionID\n"
-    "         the row reaction identifier\n"
+    "        the row reaction identifier\n"
     "    column : njoy.dryad.id.ReactionID\n"
-    "         the column reaction identifier"
+    "        the column reaction identifier"
   )
   .def(
 
@@ -96,7 +96,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier"
+    "        the reaction identifier"
   )
   .def(
 
@@ -108,9 +108,9 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row : njoy.dryad.id.ReactionID\n"
-    "         the row reaction identifier\n"
+    "        the row reaction identifier\n"
     "    column : njoy.dryad.id.ReactionID\n"
-    "         the column reaction identifier",
+    "        the column reaction identifier",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -123,7 +123,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier",
+    "        the reaction identifier",
     python::return_value_policy::reference_internal
   )
   .def_static(
@@ -143,13 +143,13 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
-    "         the projectile identifier\n"
+    "        the projectile identifier\n"
     "    target : njoy.dryad.id.ParticleID\n"
-    "         the target identifier\n"
+    "        the target identifier\n"
     "    frame : njoy.dryad.ReferenceFrame\n"
-    "         the reference frame of the projectile target\n"
+    "        the reference frame of the projectile target\n"
     "    filename : str\n"
-    "         the GENDF file name"
+    "        the GENDF file name"
   );
 
   // add standard equality comparison definitions

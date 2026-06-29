@@ -39,7 +39,7 @@ void wrapParticle( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier\n"
+    "        the particle identifier\n"
     "    mass : float, default None\n"
     "        the atomic mass (default: None)\n"
     "    nuclear_mass : float, default None\n"
@@ -55,7 +55,7 @@ void wrapParticle( python::module& module ) {
     "    nuclear_mass_uncertainty : float, default None\n"
     "        the uncertainty on the nuclear mass value (default: None)\n"
     "    energy_uncertainty : float, default None\n"
-    "        the uncertainty on the ecited level energy value (default: None)"
+    "        the uncertainty on the excited level energy value (default: None)"
   );
 
   // wrap the component
@@ -152,7 +152,7 @@ void wrapParticle( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier"
+    "        the particle identifier"
   )
   .def_property(
 

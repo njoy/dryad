@@ -90,9 +90,10 @@ void wrapIsotropicAngularDistributionFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
+    "        the linearisation tolerance\n"
     "    normalise : bool, default False\n"
-    "         option to normalise probability data"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def(
 

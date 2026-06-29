@@ -22,14 +22,19 @@ void wrapReferenceFrame( python::module& module ) {
 
     module,
     "ReferenceFrame",
-    "The reference frame used to describe data",
+    "The reference frame type\n\n"
+    "This enum is used to differentiate reference frames for distribution data\n"
+    "in the ProjectileTarget. We currently distinguish two different frames:\n"
+    "centre of mass or laboratory.",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "Laboratory",   Component::Laboratory )
-  .value( "CentreOfMass", Component::CentreOfMass );
+  .value( "Laboratory",   Component::Laboratory,
+          "The data is given in the laboratory frame of reference" )
+  .value( "CentreOfMass", Component::CentreOfMass,
+          "The data is given in the centre of mass frame of reference" );
 }
 
 } // dryad namespace

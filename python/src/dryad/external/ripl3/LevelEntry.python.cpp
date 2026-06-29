@@ -40,7 +40,7 @@ void wrapLevelEntry( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier\n"
+    "        the particle identifier\n"
     "    energy : float, default None\n"
     "        the level energy (default: None)\n"
     "    spin : float, default None\n"

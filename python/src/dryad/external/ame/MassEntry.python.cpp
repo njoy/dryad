@@ -37,7 +37,7 @@ void wrapMassEntry( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier\n"
+    "        the particle identifier\n"
     "    mass_excess : float, default None\n"
     "        the mass excess (default: None)\n"
     "    mass_excess_uncertainty : float, default None\n"

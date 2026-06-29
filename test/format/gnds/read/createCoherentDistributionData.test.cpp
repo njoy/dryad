@@ -62,8 +62,8 @@ void verifyChunk( const CoherentDistributionData& chunk ) {
   CHECK( InterpolationType::LinearLinear == chunk.scatteringFunction().interpolants()[0] );
   CHECK( true == chunk.scatteringFunction().isLinearised() );
 
-  CHECK( std::nullopt != chunk.realAnomolousFormFactor() );
-  auto factor = chunk.realAnomolousFormFactor().value();
+  CHECK( std::nullopt != chunk.realAnomalousFormFactor() );
+  auto factor = chunk.realAnomalousFormFactor().value();
   CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
   CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
   CHECK( 297 == factor.energies().size() );
@@ -82,8 +82,8 @@ void verifyChunk( const CoherentDistributionData& chunk ) {
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
   CHECK( true == factor.isLinearised() );
 
-  CHECK( std::nullopt != chunk.imaginaryAnomolousFormFactor() );
-  factor = chunk.imaginaryAnomolousFormFactor().value();
+  CHECK( std::nullopt != chunk.imaginaryAnomalousFormFactor() );
+  factor = chunk.imaginaryAnomalousFormFactor().value();
   CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
   CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
   CHECK( 297 == factor.energies().size() );

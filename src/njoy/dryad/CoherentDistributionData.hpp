@@ -22,7 +22,7 @@ namespace dryad {
    *  In this representation, a scattering function S(x,Z) and two optional form factor
    *  functions are defined which together with the Thompson cross section determine the
    *  double differential cross section. The optional form factors are the real and
-   *  complex part of the anomolous form factor. These are defined as optional because
+   *  complex part of the anomalous form factor. These are defined as optional because
    *  photoatomic MCNP data files produced in 2024 or earlier do not contain these form
    *  factors even though the photoatomic ENDF evaluations define them.
    *
@@ -72,10 +72,10 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the coherent distribution data has an anomolous
+     *  @brief Return whether or not the coherent distribution data has an Anomalous
      *         form factor
      */
-    bool hasAnomolousFormFactor() const {
+    bool hasAnomalousFormFactor() const {
 
       return this->real_.has_value() || this->imaginary_.has_value();
     }
@@ -99,37 +99,37 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the real part of the anomolous form factor
+     *  @brief Return the real part of the Anomalous form factor
      */
-    const std::optional< TabulatedFormFactor >& realAnomolousFormFactor() const {
+    const std::optional< TabulatedFormFactor >& realAnomalousFormFactor() const {
 
       return this->real_;
     }
 
     /**
-     *  @brief Set the real part of the anomolous form factor
+     *  @brief Set the real part of the Anomalous form factor
      *
      *  @param real   the real part of the anamolous form factor
      */
-    void realAnomolousFormFactor( std::optional< TabulatedFormFactor > real ) {
+    void realAnomalousFormFactor( std::optional< TabulatedFormFactor > real ) {
 
       this->real_ = real;
     }
 
     /**
-     *  @brief Return the imaginary part of the anomolous form factor
+     *  @brief Return the imaginary part of the Anomalous form factor
      */
-    const std::optional< TabulatedFormFactor >& imaginaryAnomolousFormFactor() const {
+    const std::optional< TabulatedFormFactor >& imaginaryAnomalousFormFactor() const {
 
       return this->imaginary_;
     }
 
     /**
-     *  @brief Set the imaginary part of the anomolous form factor
+     *  @brief Set the imaginary part of the Anomalous form factor
      *
      *  @param real   the imaginary part of the anamolous form factor
      */
-    void imaginaryAnomolousFormFactor( std::optional< TabulatedFormFactor > imaginary ) {
+    void imaginaryAnomalousFormFactor( std::optional< TabulatedFormFactor > imaginary ) {
 
       this->imaginary_ = imaginary;
     }
@@ -143,8 +143,8 @@ namespace dryad {
 
       return this->frame() == right.frame() &&
              this->scatteringFunction() == right.scatteringFunction() &&
-             this->realAnomolousFormFactor() == right.realAnomolousFormFactor()&&
-             this->imaginaryAnomolousFormFactor() == right.imaginaryAnomolousFormFactor();
+             this->realAnomalousFormFactor() == right.realAnomalousFormFactor()&&
+             this->imaginaryAnomalousFormFactor() == right.imaginaryAnomalousFormFactor();
     }
 
     /**

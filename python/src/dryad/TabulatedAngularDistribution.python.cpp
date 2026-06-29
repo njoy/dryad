@@ -29,16 +29,20 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    cosines : list of float\n"
-    "         the cosine values\n"
+    "        the cosine values\n"
     "    values : list of float\n"
-    "         the probability values\n"
+    "        the probability values\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)\n"
-    "    normalise : bool, default false\n"
+    "        the interpolation type (default lin-lin)\n"
+    "    pdf : njoy.dryad.TabulatedAngularDistributionFunction\n"
+    "        the probability distribution function\n"
+    "    cdf : njoy.dryad.TabulatedAngularDistributionFunction\n"
+    "        the cumulative distribution function\n"
+    "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );
@@ -64,6 +68,19 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
     "Initialise the angular distribution with a single interpolation zone"
+  )
+  .def(
+
+    python::init< njoy::dryad::TabulatedAngularDistributionFunction, bool >(),
+    python::arg( "pdf" ), python::arg( "normalise" ) = false,
+    "Initialise the angular distribution using a pdf"
+  )
+  .def(
+
+    python::init< njoy::dryad::TabulatedAngularDistributionFunction,
+                  njoy::dryad::TabulatedAngularDistributionFunction >(),
+    python::arg( "pdf" ), python::arg( "cdf" ),
+    "Initialise the angular distribution using a pdf and cdf"
   )
   .def_property_readonly(
 
@@ -135,8 +152,8 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
-    "    normalise : bool, default false\n"
+    "        the linearisation tolerance\n"
+    "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );

@@ -32,15 +32,15 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Atomic relaxation data for a given element\n\n"
     "Parameters\n"
     "----------\n"
-    "    documentation : njoy.dryad.Documentation \n"
-    "         the documentation \n"
-    "    element : njoy.dryad.id.ElementID \n"
-    "         the element identifier \n"
-    "    subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration \n"
-    "         the electron subshell configuration data \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
-    "        all probability data (default: no normalisation) \n\n"
+    "    documentation : njoy.dryad.Documentation\n"
+    "        the documentation\n"
+    "    element : njoy.dryad.id.ElementID\n"
+    "        the element identifier\n"
+    "    subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration\n"
+    "        the electron subshell configuration data\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -91,22 +91,22 @@ void wrapAtomicRelaxation( python::module& module ) {
     "has_subshell",
     &Component::hasSubshell,
     python::arg( "identifier" ),
-    "Return whether or not a subshell is present \n\n"
+    "Return whether or not a subshell is present\n\n"
     "Parameters\n"
     "----------\n"
-    "    identifier : njoy.dryad.id.ElectronSubshellID \n"
-    "         the electron subshell identifier \n"
+    "    identifier : njoy.dryad.id.ElectronSubshellID\n"
+    "        the electron subshell identifier"
   )
   .def(
 
     "subshell",
     &Component::subshell,
     python::arg( "identifier" ),
-    "Return the requested subshell \n\n"
+    "Return the requested subshell\n\n"
     "Parameters\n"
     "----------\n"
-    "    identifier : njoy.dryad.id.ElectronSubshellID \n"
-    "         the electron subshell identifier \n",
+    "    identifier : njoy.dryad.id.ElectronSubshellID\n"
+    "        the electron subshell identifier",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -134,11 +134,11 @@ void wrapAtomicRelaxation( python::module& module ) {
     "will be transformed into a AtomicRelaxation.\n\n"
     "Parameters\n"
     "----------\n"
-    "    filename : str \n"
-    "         the ENDF file name\n"
-    "    normalise : bool, default false \n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)\n\n"
+    "    filename : str\n"
+    "        the ENDF file name\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def_static(
 
@@ -149,13 +149,13 @@ void wrapAtomicRelaxation( python::module& module ) {
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from a GNDS file\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    filename : str \n"
-    "         the GNDS file name\n"
-    "    normalise : bool, default false \n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str\n"
+    "        the GNDS file name\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def(
 
@@ -168,10 +168,10 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Write the AtomicRelaxation data to an ENDF file\n\n"
     "Parameters\n"
     "----------\n"
-    "    mat : int \n"
-    "         the ENDF mat number to be used \n"
-    "    filename : str \n"
-    "         the ENDF file name \n"
+    "    mat : int\n"
+    "        the ENDF mat number to be used\n"
+    "    filename : str\n"
+    "        the ENDF file name"
   );
 
   // add standard equality comparison definitions

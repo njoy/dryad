@@ -31,7 +31,35 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
 
     module,
     "AngularDistributionCovarianceMatrix",
-    "A covariance matrix for angular distributions"
+    "A covariance matrix for angular distributions\n\n"
+    "This covariance matrix uses 3 dimensions as follows (from outer to inner\n"
+    "dimension): the reactions, the Legendre moments and the energy groups.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
+    "        the reference frame of the covariance data\n"
+    "    metadata : njoy.dryad.covariance.AngularDistributionMetadata\n"
+    "        the row and column metadata (on-diagonal)\n"
+    "    row_metadata : njoy.dryad.covariance.AngularDistributionMetadata\n"
+    "        the row metadata (off-diagonal)\n"
+    "    column_metadata : njoy.dryad.covariance.AngularDistributionMetadata\n"
+    "        the column metadata (off-diagonal)\n"
+    "    covariances : array-like\n"
+    "        the covariance matrix\n"
+    "    deviations : list of float\n"
+    "        the standard deviations (on-diagonal)\n"
+    "    row_deviations : list of float\n"
+    "        the standard deviations to be applied to each row (off-diagonal)\n"
+    "    column_deviations : list of float\n"
+    "        the standard deviations to be applied to each column (off-diagonal)\n"
+    "    correlations : array-like\n"
+    "        the correlation matrix\n"
+    "    eigenvalues : list of float\n"
+    "        the eigenvalues\n"
+    "    eigenvectors : list of array-like\n"
+    "        the associated eigenvectors\n"
+    "    relative : bool, default True\n"
+    "        the relative covariance flag"
   );
 
   // wrap the component
@@ -46,13 +74,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     python::arg( "metadata" ),
     python::arg( "covariances" ),
     python::arg( "relative" ) = true,
-    "Initialise an on-diagonal angular distribution covariance matrix\n\n"
-    "Arguments:\n"
-    "    self          the covariance matrix\n"
-    "    frame         the reference frame of the covariance data\n"
-    "    metadata      the row and column metadata\n"
-    "    covariances   the covariance matrix\n"
-    "    relative      the relative covariance flag (default is true)"
+    "Initialise an on-diagonal angular distribution covariance matrix"
   )
   .def(
 
@@ -66,14 +88,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     python::arg( "column_metadata" ),
     python::arg( "covariances" ),
     python::arg( "relative" ) = true,
-    "Initialise an off-diagonal angular distribution covariance matrix\n\n"
-    "Arguments:\n"
-    "    self             the covariance matrix\n"
-    "    frame            the reference frame of the covariance data\n"
-    "    row_metadata     the row metadata\n"
-    "    column_metadata  the column metadata\n"
-    "    covariances      the covariance matrix\n"
-    "    relative         the relative covariance flag (default is true)"
+    "Initialise an off-diagonal angular distribution covariance matrix"
   )
   .def(
 
@@ -87,14 +102,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     python::arg( "deviations" ),
     python::arg( "correlations" ),
     python::arg( "relative" ) = true,
-    "Initialise an on-diagonal angular distribution correlation matrix\n\n"
-    "Arguments:\n"
-    "    self           the covariance matrix\n"
-    "    frame          the reference frame of the covariance data\n"
-    "    metadata       the row and column metadata\n"
-    "    deviations     the standard deviations\n"
-    "    correlations   the correlation matrix\n"
-    "    relative       the relative covariance flag (default is true)"
+    "Initialise an on-diagonal angular distribution correlation matrix"
   )
   .def(
 
@@ -112,16 +120,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     python::arg( "column_deviations" ),
     python::arg( "correlations" ),
     python::arg( "relative" ) = true,
-    "Initialise an off-diagonal angular distribution correlation matrix\n\n"
-    "Arguments:\n"
-    "    self               the covariance matrix\n"
-    "    frame              the reference frame of the covariance data\n"
-    "    row_metadata       the row metadata\n"
-    "    column_metadata    the column metadata\n"
-    "    row_deviations     the standard deviations to be applied to each row\n"
-    "    column_deviations  the standard deviations to be applied to each column\n"
-    "    correlations       the correlation matrix\n"
-    "    relative           the relative covariance flag (default is true)"
+    "Initialise an off-diagonal angular distribution correlation matrix"
   )
   .def(
 
@@ -136,14 +135,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     python::arg( "eigenvectors" ),
     python::arg( "relative" ) = true,
     "Initialise an on-diagonal angular distribution covariance matrix using eigenvalues\n"
-    "and eigenvectors\n\n"
-    "Arguments:\n"
-    "    self           the covariance matrix\n"
-    "    frame         the reference frame of the covariance data\n"
-    "    metadata       the row and column metadata\n"
-    "    eigenvalues    the eigenvalues\n"
-    "    eigenvectors   the associated eigenvectors\n"
-    "    relative       the relative covariance flag (default is true)"
+    "and eigenvectors"
   )
   .def_property(
 
@@ -171,28 +163,28 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "is_relative_matrix",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isRelativeMatrix(); },
-    "Flag to indicate whether or not this covariance matrix is relative or not"
+    "The flag to indicate whether or not this covariance matrix is relative or not"
   )
   .def_property_readonly(
 
     "is_absolute_matrix",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isAbsoluteMatrix(); },
-    "Flag to indicate whether or not this covariance matrix is absolute or not"
+    "The flag to indicate whether or not this covariance matrix is absolute or not"
   )
   .def_property_readonly(
 
     "is_off_diagonal",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isOffDiagonal(); },
-    "Flag to indicate whether or not this covariance matrix is off-diagonal"
+    "The flag to indicate whether or not this covariance matrix is off-diagonal"
   )
   .def_property_readonly(
 
     "is_on_diagonal",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isOnDiagonal(); },
-    "Flag to indicate whether or not this covariance matrix is on-diagonal"
+    "The flag to indicate whether or not this covariance matrix is on-diagonal"
   )
   .def_property(
 
@@ -261,10 +253,10 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "calculate_covariances",
     [] ( Component& self )
        { return self.calculateCovariances(); },
-    "Calculate the covariances (for on diagonal blocks)\n\n"
+    "Calculate the covariances (for on-diagonal blocks)\n\n"
     "The covariances can be calculated without input of the standard\n"
     "deviations for blocks on the diagonal of the matrix.\n\n"
-    "When this method is called on an off diagonal block, the method has no effect.\n\n"
+    "When this method is called on an off-diagonal block, the method has no effect.\n\n"
     "When this method is called on a block that has no correlations, the method\n"
     "has no effect."
   )
@@ -276,17 +268,18 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
          const std::vector< double >& column )
        { return self.calculateCovariances( row, column ); },
     python::arg( "row_deviations" ), python::arg( "column_deviations" ),
-    "Calculate the covariances (for off diagonal matrices)\n\n"
+    "Calculate the covariances (for off-diagonal matrices)\n\n"
     "The covariances can only be calculated with input of the standard deviations\n"
-    "for blocks that are off diagonal in the matrix. Standard deviations will not\n"
+    "for blocks that are off-diagonal in the matrix. Standard deviations will not\n"
     "be stored.\n\n"
     "When this method is called on a block that has no correlations, the method\n"
-    "has no effect.\n"
-    "Standard deviations will not be stored.\n\n"
-    "Arguments:\n"
-    "    self                the covariance matrix\n"
-    "    row_deviations      the standard deviations to be applied to each row\n"
-    "    column_deviations   the standard deviations to be applied to each column"
+    "has no effect.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    row_deviations : list of float\n"
+    "        the standard deviations to be applied to each row\n"
+    "    column_deviations : list of float\n"
+    "        the standard deviations to be applied to each column"
   )
   .def(
 
@@ -296,18 +289,18 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "Calculate the standard deviations from the covariances\n\n"
     "The standard deviations can only be calculated from covariance matrices on the\n"
     "diagonal of the full covariance matrix. When this function is called on an\n"
-    "off diagonal matrix, the function has no effect."
+    "off-diagonal matrix, the function has no effect."
   )
   .def(
 
     "calculate_correlations",
     [] ( Component& self )
        { return self.calculateCorrelations(); },
-    "Calculate the correlations (for on diagonal matrices)\n\n"
+    "Calculate the correlations (for on-diagonal matrices)\n\n"
     "The correlations can be calculated without input of the standard\n"
     "deviations for matrices on the diagonal of the full matrix. Standard\n"
-    "deviations will be calculated and stored as well.\n"
-    "When this method is called on an off diagonal matrix, the method has\n"
+    "deviations will be calculated and stored as well.\n\n"
+    "When this method is called on an off-diagonal matrix, the method has\n"
     "no effect."
   )
   .def(
@@ -318,14 +311,16 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
          const std::vector< double >& column )
        { return self.calculateCorrelations( row, column ); },
     python::arg( "row_deviations" ), python::arg( "column_deviations" ),
-    "Calculate the correlations (for off diagonal matrices)\n\n"
+    "Calculate the correlations (for off-diagonal matrices)\n\n"
     "The correlations can only be calculated with input of the standard deviations\n"
-    "for covariance matrices that are off diagonal in the full covariance matrix.\n"
+    "for covariance matrices that are off-diagonal in the full covariance matrix.\n"
     "Standard deviations will not be stored.\n\n"
-    "Arguments:\n"
-    "    self                the covariance matrix\n"
-    "    row_deviations      the standard deviations to be applied to each row\n"
-    "    column_deviations   the standard deviations to be applied to each column"
+    "Parameters\n"
+    "----------\n"
+    "    row_deviations : list of float\n"
+    "        the standard deviations to be applied to each row\n"
+    "    column_deviations : list of float\n"
+    "        the standard deviations to be applied to each column"
   )
   .def(
 
@@ -334,7 +329,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
        { return self.calculateEigenvalues(); },
     "Calculate the eigenvalues from the covariances\n\n"
     "The eigenvalues can only be calculated from matrices on the diagonal\n"
-    "of the full matrix. When this function is called on an off diagonal matrix,\n"
+    "of the full matrix. When this function is called on an off-diagonal matrix,\n"
     "the function has no effect."
   )
   .def(
@@ -346,7 +341,16 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     ( &Component::extract, python::const_ ),
     python::arg( "reaction" ),
     python::arg( "moment" ),
-    python::arg( "group" )
+    python::arg( "group" ),
+    "Extract a submatrix from the covariance matrix based on selected values\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    reaction : njoy.dryad.id.ReactionID or None\n"
+    "        the reaction identifier to extract\n"
+    "    moment : int or None\n"
+    "        the Legendre moment to extract\n"
+    "    group : njoy.dryad.id.EnergyGroup or None\n"
+    "        the energy group to extract"
   )
   .def(
 
@@ -363,7 +367,22 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     python::arg( "row_group" ),
     python::arg( "col_reaction" ),
     python::arg( "col_moment" ),
-    python::arg( "col_group" )
+    python::arg( "col_group" ),
+    "Extract a submatrix from the covariance matrix based on selected row and column values\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    row_reaction : njoy.dryad.id.ReactionID or None\n"
+    "        the row reaction identifier to extract\n"
+    "    row_moment : int or None\n"
+    "        the row Legendre moment to extract\n"
+    "    row_group : njoy.dryad.id.EnergyGroup or None\n"
+    "        the row energy group to extract\n"
+    "    col_reaction : njoy.dryad.id.ReactionID or None\n"
+    "        the column reaction identifier to extract\n"
+    "    col_moment : int or None\n"
+    "        the column Legendre moment to extract\n"
+    "    col_group : njoy.dryad.id.EnergyGroup or None\n"
+    "        the column energy group to extract"
   );
 
   // add standard copy definitions

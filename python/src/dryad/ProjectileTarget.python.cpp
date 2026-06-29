@@ -36,7 +36,28 @@ void wrapProjectileTarget( python::module& module ) {
 
     module,
     "ProjectileTarget",
-    "Data associated to a given projectile and target"
+    "Data associated to a given projectile and target\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    documentation : njoy.dryad.Documentation, optional\n"
+    "        the documentation\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "        the projectile identifier\n"
+    "    target : njoy.dryad.id.ParticleID\n"
+    "        the target identifier\n"
+    "    type : njoy.dryad.InteractionType\n"
+    "        the interaction type\n"
+    "    reactions : list of njoy.dryad.Reaction\n"
+    "        the reaction data\n"
+    "    particles : njoy.dryad.ParticleDatabase, default None\n"
+    "        the optional particle data\n"
+    "    resonances : njoy.dryad.resonances.ResonanceParameters, default None\n"
+    "        the optional resonance parameters\n"
+    "    covariances : njoy.dryad.covariance.CovarianceData, default None\n"
+    "        the optional covariance data\n"
+    "    normalise : bool, default False\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   );
 
   // wrap the component
@@ -59,19 +80,7 @@ void wrapProjectileTarget( python::module& module ) {
     python::arg( "resonances" ) = std::nullopt,
     python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
-    "Initialise the ProjectileTarget\n\n"
-    "Arguments:\n"
-    "    self            the reaction\n"
-    "    documentation   the documentation\n"
-    "    projectile      the particle identifier\n"
-    "    target          the target identifier\n"
-    "    type            the interaction type\n"
-    "    reactions       the reaction data\n"
-    "    particles       the optional particle data (default: none)\n"
-    "    resonances      the optional resonance parameters (default: none)\n"
-    "    covariances     the optional covariance data (default: none)\n"
-    "    normalise       option to indicate whether or not to normalise\n"
-    "                    all probability data (default: no normalisation)"
+    "Initialise the ProjectileTarget with documentation"
   )
   .def(
 
@@ -91,18 +100,7 @@ void wrapProjectileTarget( python::module& module ) {
     python::arg( "resonances" ) = std::nullopt,
     python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
-    "Initialise the ProjectileTarget\n\n"
-    "Arguments:\n"
-    "    self          the reaction\n"
-    "    projectile    the particle identifier\n"
-    "    target        the target identifier\n"
-    "    type          the interaction type\n"
-    "    reactions     the reaction data\n"
-    "    particles       the optional particle data (default: none)\n"
-    "    resonances    the optional resonance parameters (default: none)\n"
-    "    covariances   the optional covariance data (default: none)\n"
-    "    normalise     option to indicate whether or not to normalise\n"
-    "                  all probability data (default: no normalisation)"
+    "Initialise the ProjectileTarget without documentation"
   )
   .def_property(
 
@@ -165,9 +163,10 @@ void wrapProjectileTarget( python::module& module ) {
     &Component::hasReaction,
     python::arg( "id" ),
     "Return whether or not a reaction is present\n\n"
-    "Arguments:\n"
-    "    self   the ProjectileTarget data\n"
-    "    id     the reaction identifier"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ReactionID\n"
+    "        the reaction identifier"
   )
   .def(
 
@@ -175,9 +174,10 @@ void wrapProjectileTarget( python::module& module ) {
     python::overload_cast< const ReactionID& >( &Component::reaction, python::const_ ),
     python::arg( "id" ),
     "Return the requested reaction\n\n"
-    "Arguments:\n"
-    "    self   the ProjectileTarget data\n"
-    "    id     the reaction identifier",
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ReactionID\n"
+    "        the reaction identifier",
     python::return_value_policy::reference_internal
   )
   .def_property(
@@ -193,9 +193,10 @@ void wrapProjectileTarget( python::module& module ) {
     &Component::calculateAverageEnergy,
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
     "Calculate average outgoing energies for all reaction products\n\n"
-    "Arguments:\n"
-    "    self        the ProjectileTarget data\n"
-    "    tolerance    the integration tolerance (default: 1e-8)"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 1e-8\n"
+    "        the integration tolerance"
   )
   .def(
 
@@ -206,14 +207,14 @@ void wrapProjectileTarget( python::module& module ) {
     "This function takes all cross section data and unionises the cross section\n"
     "grids. It does not linearise the data but reevaluates the data using the\n"
     "proper interpolation types of the cross section data.\n\n"
-    "By default, summation cross sections are included in the unionisation process.\n"
+    "By default, summation cross sections are included in the unionisation process\n"
     "unless explicitly excluded by the user. Switching on the exclusion of summation\n"
     "cross sections may be useful when the user is going to recalculate the summation\n"
     "cross sections after unionisation.\n\n"
-    "Arguments:\n"
-    "    self                the ProjectileTarget data\n"
-    "    exclude_summation   option to exclude summation reactions in the\n"
-    "                        unionisation (default: false)"
+    "Parameters\n"
+    "----------\n"
+    "    exclude_summation : bool, default False\n"
+    "        option to exclude summation reactions in the unionisation"
   )
   .def(
 
@@ -221,9 +222,10 @@ void wrapProjectileTarget( python::module& module ) {
     &Component::calculateSummationCrossSections,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     "Calculate summation cross sections\n\n"
-    "Arguments:\n"
-    "    self        the ProjectileTarget data\n"
-    "    tolerance   the linearisation tolerance"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 0.001\n"
+    "        the linearisation tolerance"
   )
   .def(
 
@@ -242,10 +244,13 @@ void wrapProjectileTarget( python::module& module ) {
     "Create ProjectileTarget data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a ProjectileTarget.\n\n"
-    "Arguments:\n"
-    "    filename    the ENDF file name\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str\n"
+    "        the ENDF file name\n"
+    "    normalise : bool, default False\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   )
   .def_static(
 
@@ -256,10 +261,13 @@ void wrapProjectileTarget( python::module& module ) {
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create ProjectileTarget data from a GNDS file\n\n"
-    "Arguments:\n"
-    "    filename    the GNDS file name\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str\n"
+    "        the GNDS file name\n"
+    "    normalise : bool, default False\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   )
   .def_static(
 
@@ -273,10 +281,13 @@ void wrapProjectileTarget( python::module& module ) {
     "Most files will produce a single ProjectileTarget. The exception here is the\n"
     "photoatomic ACE file which may yield one ProjectileTarget (pre-eprdata) or two\n"
     "ProjectileTarget for eprdata files.\n\n"
-    "Arguments:\n"
-    "    filename    the ACE file name\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str\n"
+    "        the ACE file name\n"
+    "    normalise : bool, default False\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   )
   .def(
 
@@ -290,12 +301,14 @@ void wrapProjectileTarget( python::module& module ) {
     python::arg( "mat" ), python::arg( "filename" ),
     python::arg( "use_reduced_width_amplitudes" ) = true,
     "Write the ProjectileTarget data to an ENDF file\n\n"
-    "Arguments:\n"
-    "    self                           the ProjectileTarget data\n"
-    "    mat                            the ENDF mat number to be used\n"
-    "    filename                       the ENDF file name\n"
-    "    use_reduced_width_amplitudes   if there are resonances, use reduced width amplitudes\n"
-    "                                   (default is true)"
+    "Parameters\n"
+    "----------\n"
+    "    mat : int\n"
+    "        the ENDF mat number to be used\n"
+    "    filename : str\n"
+    "        the ENDF file name\n"
+    "    use_reduced_width_amplitudes : bool, default True\n"
+    "        if there are resonances, use reduced width amplitudes"
   );
 
   // add standard equality comparison definitions

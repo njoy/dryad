@@ -23,14 +23,24 @@ void wrapKinematics( python::module& module ) {
 
     module,
     "Kinematics",
-    "The kinematics option",
+    "The kinematics option for resonance reconstruction\n\n"
+    "This enum differentiates between relativistic and non-relativistic\n"
+    "kinematics in resonance reconstruction calculations.\n\n"
+    "Values\n"
+    "------\n"
+    "    NonRelativistic : 0\n"
+    "        use non-relativistic kinematics\n"
+    "    Relativistic : 1\n"
+    "        use relativistic kinematics",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "NonRelativistic", Component::NonRelativistic )
-  .value( "Relativistic", Component::Relativistic );
+  .value( "NonRelativistic", Component::NonRelativistic,
+          "Non-relativistic kinematics" )
+  .value( "Relativistic", Component::Relativistic,
+          "Relativistic kinematics" );
 }
 
 } // resonances namespace

@@ -32,7 +32,7 @@ void wrapPositiveSemiDefinite( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    negative : float, default -1e-10\n"
-    "         the largest allowed negative eigenvalue"
+    "        the largest allowed negative eigenvalue"
   );
   // wrap the component
   component
@@ -88,7 +88,9 @@ void wrapPositiveSemiDefinite( python::module& module ) {
     "The largest negative eigenvalue is available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
+    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
+    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

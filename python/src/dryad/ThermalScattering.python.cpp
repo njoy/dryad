@@ -33,11 +33,11 @@ void wrapThermalScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    documentation : njoy.dryad.Documentation\n"
-    "         the documentation associated to the thermal scattering data\n"
+    "        the documentation associated to the thermal scattering data\n"
     "    coherent : njoy.dryad.thermal.CoherentElasticScattering\n"
-    "         coherent elastic scattering data (default: none)"
+    "        coherent elastic scattering data (default: none)"
     "    incoherent : njoy.dryad.thermal.IncoherentElasticScattering\n"
-    "         incoherent elastic scattering data (default: none)"
+    "        incoherent elastic scattering data (default: none)"
   );
 
   // wrap the component
@@ -119,7 +119,7 @@ void wrapThermalScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    filename : string\n"
-    "         the ENDF file name"
+    "        the ENDF file name"
   )
   .def_static(
 
@@ -133,9 +133,9 @@ void wrapThermalScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    filename : string\n"
-    "         the GNDS file name\n"
+    "        the GNDS file name\n"
     "    style : string\n"
-    "         the GNDS style to process (default is eval)"
+    "        the GNDS style to process (default is eval)"
   )
   .def(
 
@@ -149,11 +149,11 @@ void wrapThermalScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    za : int\n"
-    "         the ENDF za number to be used\n"
+    "        the ENDF za number to be used\n"
     "    mat : int\n"
-    "         the ENDF mat number to be used\n"
+    "        the ENDF mat number to be used\n"
     "    filename : string\n"
-    "         the ENDF file name\n"
+    "        the ENDF file name\n"
   );
 
   // add standard equality comparison definitions

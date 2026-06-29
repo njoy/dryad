@@ -207,7 +207,7 @@ void addStandardTabulatedDefinitions( PythonClass& component ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance"
+    "        the linearisation tolerance"
   )
   .def_property_readonly(
 
@@ -259,7 +259,7 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance"
+    "        the linearisation tolerance"
   );
 
   // add math operators
