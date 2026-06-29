@@ -168,8 +168,8 @@ namespace thermal {
      */
     bool operator==( const IncoherentElasticScattering& right ) const {
 
-      return std::tie( this->bound_xs_, this->debyeWallerIntegral() ) ==
-             std::tie( right.bound_xs_, right.debyeWallerIntegral() );
+      return std::tie( this->lower_, this->upper_, this->bound_xs_, this->debyeWallerIntegral() ) ==
+             std::tie( right.lower_, right.upper_, right.bound_xs_, right.debyeWallerIntegral() );
     }
 
     /**

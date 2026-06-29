@@ -10,6 +10,9 @@ from njoy.dryad.thermal import BraggEdgeData
 
 def verify_chunk( self, chunk ) :
 
+    self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
+    self.assertAlmostEqual( 10. , chunk.upper_energy_limit )
+
     self.assertEqual( 2, chunk.number_moderator_temperatures )
     self.assertEqual( 2, len( chunk.moderator_temperatures ) )
     self.assertEqual( 2, len( chunk.bragg_edges ) )
@@ -63,6 +66,7 @@ class Test_CoherentElasticScattering( unittest.TestCase ) :
     def test_component( self ) :
 
         chunk = CoherentElasticScattering(
+                  lower = 1e-5, upper = 10,
                   bragg_edges = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
                                   BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ] )
 
@@ -71,6 +75,7 @@ class Test_CoherentElasticScattering( unittest.TestCase ) :
     def test_setter_functions( self ) :
 
         chunk = CoherentElasticScattering(
+                  lower = 1e-5, upper = 10,
                   bragg_edges = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
                                   BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ] )
 
@@ -90,13 +95,16 @@ class Test_CoherentElasticScattering( unittest.TestCase ) :
     def test_comparison( self ) :
 
         left = CoherentElasticScattering(
+                   lower = 1e-5, upper = 10,
                    bragg_edges = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
                                    BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ] )
         equal = CoherentElasticScattering(
+                    lower = 1e-5, upper = 10,
                     bragg_edges = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
                                     BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ] )
         different = CoherentElasticScattering(
-                        bragg_edges = [ BraggEdgeData( 300.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ) ] )
+                      lower = 1e-5, upper = 10,
+                      bragg_edges = [ BraggEdgeData( 300.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ) ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

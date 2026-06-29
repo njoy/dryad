@@ -30,7 +30,7 @@ SCENARIO( "createCoherentElasticScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = gnds::read::thermal::createCoherentElasticScattering( coherent );
+        auto chunk = gnds::read::thermal::createCoherentElasticScattering( 1e-5, 10, coherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -40,6 +40,8 @@ SCENARIO( "createCoherentElasticScattering" ) {
 
 void verifyChunk( const thermal::CoherentElasticScattering& chunk ) {
 
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 10. , WithinRel( chunk.upperEnergyLimit() ) );
 
   CHECK( 11 == chunk.numberModeratorTemperatures() );
   CHECK_THAT(   77, WithinRel( chunk.braggEdges()[0].temperature() ) );

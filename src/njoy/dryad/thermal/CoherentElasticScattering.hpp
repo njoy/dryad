@@ -23,6 +23,8 @@ namespace thermal {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     std::vector< double > temperatures_;
     std::vector< BraggEdgeData > edges_;
 
@@ -77,15 +79,37 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
+     *  @param[in] lower        the lower energy limit
+     *  @param[in] upper        the upper energy limit
      *  @param[in] braggEdges   the Bragg edge data
      */
-    CoherentElasticScattering( std::vector< BraggEdgeData > braggEdges ) :
+    CoherentElasticScattering( double lower,
+                               double upper,
+                               std::vector< BraggEdgeData > braggEdges ) :
+        lower_( lower ),
+        upper_( upper ),
         edges_( std::move( braggEdges ) ) {
 
       this->sortAndExtractTemperatures();
     }
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
 
     /**
      *  @brief Return the number of moderator temperatures for which data is available
@@ -177,7 +201,8 @@ namespace thermal {
      */
     bool operator==( const CoherentElasticScattering& right ) const {
 
-      return std::tie( this->braggEdges() ) == std::tie( right.braggEdges() );
+      return std::tie( this->lower_, this->upper_, this->braggEdges() ) ==
+             std::tie( right.lower_, right.upper_, right.braggEdges() );
     }
 
     /**
