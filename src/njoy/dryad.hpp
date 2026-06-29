@@ -46,6 +46,8 @@
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
+#include "njoy/dryad/MixedAngularDistribution.hpp"
+#include "njoy/dryad/MixedAngularDistributions.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedEnergyDistribution.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributions.hpp"
