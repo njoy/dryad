@@ -34,6 +34,7 @@ namespace resonances {
   void wrapTabulatedLevelSpacing( python::module& );
   void wrapTabulatedAverageWidths( python::module& );
   void wrapChannel( python::module& );
+  void wrapUnresolvedChannel( python::module& );
   void wrapResonanceTable( python::module& );
   void wrapUnresolvedResonanceTable( python::module& );
   void wrapSpinGroup( python::module& );
@@ -75,6 +76,7 @@ void wrapResonances( python::module& module ) {
   resonances::wrapTabulatedLevelSpacing( submodule );
   resonances::wrapTabulatedAverageWidths( submodule );
   resonances::wrapChannel( submodule );
+  resonances::wrapUnresolvedChannel( submodule );
   resonances::wrapResonanceTable( submodule );
   resonances::wrapUnresolvedResonanceTable( submodule );
   resonances::wrapSpinGroup( submodule );
