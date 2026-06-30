@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_THERMAL_INCOHERENTELASTICSCATTERINGCROSSSECTION
-#define NJOY_DRYAD_THERMAL_INCOHERENTELASTICSCATTERINGCROSSSECTION
+#ifndef NJOY_DRYAD_THERMAL_INCOHERENTELASTICCROSSSECTION
+#define NJOY_DRYAD_THERMAL_INCOHERENTELASTICCROSSSECTION
 
 // system includes
 #include <cmath>
@@ -20,17 +20,17 @@ namespace thermal {
    *  @class
    *  @brief Incoherent elastic thermal scattering cross section
    */
-  class IncoherentElasticScatteringCrossSection :
-      protected scion::math::OneDimensionalFunctionBase< IncoherentElasticScatteringCrossSection,
+  class IncoherentElasticCrossSection :
+      protected scion::math::OneDimensionalFunctionBase< IncoherentElasticCrossSection,
                                                          double, double > {
 
     /* friend declarations */
-    friend class scion::math::OneDimensionalFunctionBase< IncoherentElasticScatteringCrossSection,
+    friend class scion::math::OneDimensionalFunctionBase< IncoherentElasticCrossSection,
                                                           double, double >;
 
     /* type aliases */
 
-    using Parent = scion::math::OneDimensionalFunctionBase< IncoherentElasticScatteringCrossSection,
+    using Parent = scion::math::OneDimensionalFunctionBase< IncoherentElasticCrossSection,
                                                             double, double >;
 
     /* fields */
@@ -82,13 +82,13 @@ namespace thermal {
     /**
      *  @brief Default constructor (for pybind11 purposes only)
      */
-    IncoherentElasticScatteringCrossSection() = default;
+    IncoherentElasticCrossSection() = default;
 
-    IncoherentElasticScatteringCrossSection( const IncoherentElasticScatteringCrossSection& ) = default;
-    IncoherentElasticScatteringCrossSection( IncoherentElasticScatteringCrossSection&& ) = default;
+    IncoherentElasticCrossSection( const IncoherentElasticCrossSection& ) = default;
+    IncoherentElasticCrossSection( IncoherentElasticCrossSection&& ) = default;
 
-    IncoherentElasticScatteringCrossSection& operator=( const IncoherentElasticScatteringCrossSection& ) = default;
-    IncoherentElasticScatteringCrossSection& operator=( IncoherentElasticScatteringCrossSection&& ) = default;
+    IncoherentElasticCrossSection& operator=( const IncoherentElasticCrossSection& ) = default;
+    IncoherentElasticCrossSection& operator=( IncoherentElasticCrossSection&& ) = default;
 
     /**
      *  @brief Constructor
@@ -98,7 +98,7 @@ namespace thermal {
      *  @param[in] xs                    the bound atom cross section
      *  @param[in] debyeWallerIntegral   the Debye-Waller integral value
      */
-    IncoherentElasticScatteringCrossSection( double lower,
+    IncoherentElasticCrossSection( double lower,
                                              double upper,
                                              double xs,
                                              double debyeWallerIntegral ) :
@@ -169,7 +169,7 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const IncoherentElasticScatteringCrossSection& right ) const {
+    bool operator==( const IncoherentElasticCrossSection& right ) const {
 
       return std::tie( this->bound_xs_, this->debye_waller_, this->domain() ) ==
              std::tie( right.bound_xs_, right.debye_waller_, this->domain() );
@@ -180,7 +180,7 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const IncoherentElasticScatteringCrossSection& right ) const {
+    bool operator!=( const IncoherentElasticCrossSection& right ) const {
 
       return ! this->operator==( right );
     }
