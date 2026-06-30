@@ -21,13 +21,13 @@ UnresolvedChannel& operator=( UnresolvedChannel&& ) = default;
  *                                 defined; defaults to 1 eV
  */
 UnresolvedChannel( Channel channel,
-                   double reference_energy = 1. ) :
-    channel_( std::move( channel ) ),
+                   double reference_energy = 1. ) : 
+    Channel( std::move( channel) ),
     reference_energy_( reference_energy ),
     conversion_factor_( 
-        selectWidthConversionFactor( this->channel_.quantumNumbers().orbitalAngularMomentum(),
+        selectWidthConversionFactor( Channel::quantumNumbers().orbitalAngularMomentum(),
                                      reference_energy,
-                                     this->channel_.outgoingParticlePair() ) ) {}
+                                     Channel::outgoingParticlePair() ) ) {}
 
 UnresolvedChannel(  id::ChannelID identifier,
                     ParticlePair incident,
@@ -38,14 +38,14 @@ UnresolvedChannel(  id::ChannelID identifier,
                     Kinematics kinematics = Kinematics::NonRelativistic,
                     std::optional< Background > background = std::nullopt,
                     double reference_energy = 1. ) :
-  UnresolvedChannel( Channel( std::move( identifier ), 
-                              std::move( incident ), 
-                              std::move( outgoing ), 
-                              qValue, 
-                              std::move( boundary ),
-                              std::move( radii ),
-                              std::move( kinematics ),
-                              std::move( background )
-                              ),
-                      reference_energy ) {}
+    UnresolvedChannel( Channel( std::move( identifier ), 
+                                std::move( incident ), 
+                                std::move( outgoing ), 
+                                qValue, 
+                                std::move( boundary ),
+                                std::move( radii ),
+                                std::move( kinematics ),
+                                std::move( background )
+                                ),
+                        reference_energy ) {}
 

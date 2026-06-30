@@ -14,18 +14,23 @@ namespace njoy {
 namespace dryad {
 namespace resonances {
 
-  class UnresolvedChannel {
+  class UnresolvedChannel : protected Channel {
 
     public:
 
       using ConversionFactor = std::variant< double,
                                              ReducedWidthConversion >;
-      using Background = njoy::dryad::resonances::Channel::Background;
-      using ParticlePair = njoy::dryad::resonances::ParticlePair;
+      using Background = Channel::Background;
+
+      using Channel::reaction;
+      using Channel::identifier;
+      using Channel::waveNumber;
+      using Channel::outgoingParticlePair;
+      using Channel::incidentParticlePair;
+      using Channel::channelRadii;
 
     private:
 
-      Channel channel_;
       ConversionFactor conversion_factor_;
       double reference_energy_;
 
@@ -37,61 +42,9 @@ namespace resonances {
     public: 
       #include "njoy/dryad/resonances/UnresolvedChannel/src/ctor.hpp"
 
-      /**
-       *  @brief Return the underlying channel
-       */
-      const Channel& channel() const {
-
-        return this->channel_;
-      }
-
-      /**
-       *  @brief Return the channel identifier
-       */
-      const id::ChannelID& identifier() const {
-
-        return this->channel_.identifier();
-      }
-
-      /**
-       *  @brief Return the reaction this channel contributes to
-       */
-      const id::ReactionID& reaction() const {
-
-        return this->channel_.reaction();
-      }
-
-      /**
-       *  @brief Return the wave number at a specific energy
-       */
-      const double waveNumber( double energy ) {
-
-        return this->channel_.waveNumber( energy );
-      }
-
-      /**
-       *  @brief Return the reference energy of a reduced channel
-       */
       const double referenceEnergy() const {
 
         return this->reference_energy_;
-      }
-
-      /**
-       *  @brief Return the outgoing particle pair (if defined)
-       *
-       */
-      const std::optional< ParticlePair >& outgoingParticlePair() const {
-
-        return this->channel_.outgoingParticlePair();
-      }
-
-      /**
-       *  @brief Return the channel radii
-       */
-      const ChannelRadii& channelRadii() const {
-
-        return this->channel_.channelRadii();
       }
 
       /**
@@ -118,7 +71,7 @@ namespace resonances {
           },
           [&] ( const ReducedWidthConversion& function ) -> double {
 
-            double rho = this->channel_.waveNumber( energy ) * this->channelRadii().calculatePenetrabilityRadius( energy );
+            double rho = this->Channel::waveNumber( energy ) * this->channelRadii().calculatePenetrabilityRadius( energy );
             return function.calculateConversionFactor( rho, energy);
 
           }
@@ -136,8 +89,9 @@ namespace resonances {
       friend bool operator==( const UnresolvedChannel& left,
                               const UnresolvedChannel& right ) {
 
-        return std::tie( left.channel_, left.conversion_factor_, left.reference_energy_ ) ==
-               std::tie( right.channel_, right.conversion_factor_, right.reference_energy_ );
+        return static_cast< const Channel& >( left ) == static_cast< const Channel& >( right ) &&
+               std::tie( left.conversion_factor_, left.reference_energy_ ) ==
+               std::tie( right.conversion_factor_, right.reference_energy_ );
       }
 
       /**

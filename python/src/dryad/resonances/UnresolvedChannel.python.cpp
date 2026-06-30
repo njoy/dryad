@@ -17,6 +17,7 @@ void wrapUnresolvedChannel( python::module& module ){
  using Component = njoy::dryad::resonances::UnresolvedChannel;
  using Channel = njoy::dryad::resonances::Channel;
  using ChannelID = njoy::dryad::id::ChannelID;
+ using ReactionID = njoy::dryad::id::ReactionID;
  using ParticlePair = njoy::dryad::resonances::ParticlePair;
  using ChannelRadii = njoy::dryad::resonances::ChannelRadii;
  using Kinematics = njoy::dryad::resonances::Kinematics;
@@ -81,34 +82,38 @@ void wrapUnresolvedChannel( python::module& module ){
     "    reference_energy   the energy at which reduced widths are defined\n"
     "                       (default is 1 eV)"
   )
-  .def_property_readonly(
- 
-    "channel",
-    &Component::channel,
-    "The underlying channel"
-  )
-  .def_property_readonly(
+  .def_property(
  
     "identifier",
-    &Component::identifier,
+    [] ( const Component& self ) -> const ChannelID& { return self.identifier(); },
+    [] ( Component& self, ChannelID id ) { self.identifier( std::move( id ) ); },
     "The channel identifier"
   )
   .def_property_readonly(
  
     "reaction",
-    &Component::reaction,
+    [] ( const Component& self ) -> const ReactionID& { return self.reaction(); },
     "The reaction this channel contributes to"
   )
-  .def_property_readonly(
+  .def_property(
  
-    "outgoing_particle_pair",
-    &Component::outgoingParticlePair,
+    "incident_particle_pair",
+    [] ( const Component& self ) -> const ParticlePair& { return self.incidentParticlePair(); },
+    [] ( Component& self, ParticlePair pair ) { self.incidentParticlePair( std::move( pair ) ); },
     "The outgoing particle pair (if defined)"
   )
-  .def_property_readonly(
+  .def_property(
+ 
+    "outgoing_particle_pair",
+    [] ( const Component& self ) -> const std::optional< ParticlePair >& { return self.outgoingParticlePair(); },
+    [] ( Component& self, std::optional< ParticlePair > pair ) { self.outgoingParticlePair( std::move( pair ) ); },
+    "The outgoing particle pair (if defined)"
+  )
+  .def_property(
  
     "channel_radii",
-    &Component::channelRadii,
+    [] ( const Component& self ) -> const ChannelRadii& { return self.channelRadii(); },
+    [] ( Component& self, ChannelRadii radii ) { self.channelRadii( std::move( radii ) ); },
     "The channel radii"
   )
   .def_property_readonly(
@@ -126,7 +131,7 @@ void wrapUnresolvedChannel( python::module& module ){
   .def(
  
     "wave_number",
-    &Component::waveNumber,
+    [] ( const Component& self, double energy ) -> double { return self.waveNumber( energy ); },
     python::arg( "energy" ),
     "Calculate the channel wave number (given in fm^-1) at a given energy\n\n"
     "Arguments:\n"

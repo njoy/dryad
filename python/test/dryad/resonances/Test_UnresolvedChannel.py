@@ -55,7 +55,6 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
 
         chunk = UnresolvedChannel( elastic, reference_energy )
 
-        self.assertEqual( elastic, chunk.channel )
         self.assertEqual( elasticID, chunk.identifier )
         self.assertEqual( elasticRID, chunk.reaction )
         self.assertEqual( elasticPair, chunk.outgoing_particle_pair )
@@ -64,7 +63,6 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
 
         chunk = UnresolvedChannel( elastic, reference_energy )
 
-        self.assertEqual( elastic, chunk.channel )
         self.assertEqual( elasticID, chunk.identifier )
         self.assertEqual( elasticRID, chunk.reaction )
         self.assertEqual( elasticPair, chunk.outgoing_particle_pair )
@@ -78,7 +76,6 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
 
         chunk = UnresolvedChannel( capture, reference_energy )
 
-        self.assertEqual( capture, chunk.channel )
         self.assertEqual( captureID, chunk.identifier )
         self.assertEqual( captureRID, chunk.reaction )
         self.assertEqual( capturePair, chunk.outgoing_particle_pair )
@@ -125,7 +122,6 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
 
         self.assertEqual( True, ( UnresolvedChannel( elastic, reference_energy ) == chunk ) )
 
-        self.assertEqual( elastic, chunk.channel )
         self.assertEqual( elasticID, chunk.identifier )
         self.assertEqual( elasticRID, chunk.reaction )
         self.assertEqual( elasticPair, chunk.outgoing_particle_pair )
@@ -143,7 +139,6 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
 
         self.assertEqual( True, ( UnresolvedChannel( elastic, 2. ) == chunk ) )
 
-        self.assertEqual( elastic, chunk.channel )
         self.assertAlmostEqual( 2., chunk.reference_energy )
 
         self.assertAlmostEqual( 2.23606797749979e-3, chunk.width_conversion_factor( 1e-5 ) )
@@ -155,7 +150,6 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
 
         self.assertEqual( True, ( UnresolvedChannel( capture, reference_energy ) == chunk ) )
 
-        self.assertEqual( capture, chunk.channel )
         self.assertEqual( capturePair, chunk.outgoing_particle_pair )
 
         self.assertAlmostEqual( 1., chunk.width_conversion_factor( 1e-5 ) )

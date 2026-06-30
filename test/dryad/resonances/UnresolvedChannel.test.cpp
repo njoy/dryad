@@ -50,7 +50,6 @@ SCENARIO( "UnresolvedChannel" ) {
 
       UnresolvedChannel chunk( elastic, reference );
 
-      CHECK( elastic == chunk.channel() );
       CHECK( elasticID == chunk.identifier() );
       CHECK( elasticRID == chunk.reaction() );
       CHECK( elasticPair == chunk.outgoingParticlePair() );
@@ -66,7 +65,6 @@ SCENARIO( "UnresolvedChannel" ) {
 
       UnresolvedChannel chunk( capture, reference );
 
-      CHECK( capture == chunk.channel() );
       CHECK( captureID == chunk.identifier() );
       CHECK( captureRID == chunk.reaction() );
       CHECK( capturePair == chunk.outgoingParticlePair() );
@@ -87,7 +85,6 @@ SCENARIO( "UnresolvedChannel" ) {
 
       CHECK( UnresolvedChannel( elastic, reference ) == chunk );
 
-      CHECK( elastic == chunk.channel() );
       CHECK( elasticID == chunk.identifier() );
       CHECK( elasticRID == chunk.reaction() );
       CHECK( elasticPair == chunk.outgoingParticlePair() );
@@ -108,7 +105,6 @@ SCENARIO( "UnresolvedChannel" ) {
 
       CHECK( UnresolvedChannel( elastic, 2. ) == chunk );
 
-      CHECK( elastic == chunk.channel() );
       CHECK_THAT( 2., WithinRel( chunk.referenceEnergy() ) );
 
       CHECK_THAT( 2.23606797749979e-3,  WithinRel( chunk.widthConversionFactor( 1e-5 ) ) );
@@ -123,7 +119,6 @@ SCENARIO( "UnresolvedChannel" ) {
 
       CHECK( UnresolvedChannel( capture, reference ) == chunk );
 
-      CHECK( capture == chunk.channel() );
       CHECK( capturePair == chunk.outgoingParticlePair() );
 
       // not a neutron channel : the conversion factor is 1 at every energy
