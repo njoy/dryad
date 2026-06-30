@@ -64,7 +64,7 @@ namespace read {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating an mixed angular distributions" );
+      Log::info( "Error encountered while creating a mixed angular distributions" );
       throw;
     }
   }
