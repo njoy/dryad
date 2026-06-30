@@ -1,7 +1,7 @@
 .. currentmodule:: njoy.dryad.thermal
 
-IncoherentElasticScatteringCrossSection
-=======================================
+IncoherentElasticCrossSection
+=============================
 
 General information about this concept
 
@@ -10,7 +10,7 @@ Constructor
 .. autosummary::
     :toctree:  generated/
 
-    IncoherentElasticScatteringCrossSection
+    IncoherentElasticCrossSection
 
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
@@ -19,8 +19,8 @@ Read-only Attributes
 
     ~IncoherentElasticScattering.lower_energy_limit
     ~IncoherentElasticScattering.upper_energy_limit
-    ~IncoherentElasticScatteringCrossSection.bound_cross_section
-    ~IncoherentElasticScatteringCrossSection.debye_waller_integral
+    ~IncoherentElasticCrossSection.bound_cross_section
+    ~IncoherentElasticCrossSection.debye_waller_integral
 
 Methods
 ~~~~~~~
@@ -28,5 +28,5 @@ Methods
 .. autosummary::
     :toctree: generated/
 
-    ~IncoherentElasticScatteringCrossSection.__call__
-    ~IncoherentElasticScatteringCrossSection.linearise
+    ~IncoherentElasticCrossSection.__call__
+    ~IncoherentElasticCrossSection.linearise
