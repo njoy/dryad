@@ -85,7 +85,7 @@ add_python_test( dryad.thermal.TabulatedScatteringKernelFunction       dryad/the
 add_python_test( dryad.thermal.TabulatedScatteringFunctions            dryad/thermal/Test_TabulatedScatteringKernel.py )
 add_python_test( dryad.thermal.CoherentElasticScattering               dryad/thermal/Test_CoherentElasticScattering.py )
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
-add_python_test( dryad.thermal.IncoherentElasticScatteringCrossSection dryad/thermal/Test_IncoherentElasticScatteringCrossSection.py )
+add_python_test( dryad.thermal.IncoherentElasticCrossSection           dryad/thermal/Test_IncoherentElasticCrossSection.py )
 
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )
 

@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/thermal/IncoherentElasticScatteringCrossSection.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,14 +12,14 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapIncoherentElasticScatteringCrossSection( python::module& module ) {
+void wrapIncoherentElasticCrossSection( python::module& module ) {
 
   // constants
   std::ostringstream tolerance;
   tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
 
   // type aliases
-  using Component = njoy::dryad::thermal::IncoherentElasticScatteringCrossSection;
+  using Component = njoy::dryad::thermal::IncoherentElasticCrossSection;
 
   // wrap views created by this component
 
@@ -27,7 +27,7 @@ void wrapIncoherentElasticScatteringCrossSection( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "IncoherentElasticScatteringCrossSection",
+    "IncoherentElasticCrossSection",
     "Incoherent elastic thermal scattering cross section\n\n"
     "Parameters\n"
     "----------\n"

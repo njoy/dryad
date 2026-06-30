@@ -7,7 +7,7 @@
 #include "scion/math/compare.hpp"
 #include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
-#include "njoy/dryad/thermal/IncoherentElasticScatteringCrossSection.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -139,7 +139,7 @@ namespace thermal {
      *  @param[in] temperature   the moderator temeprature for which the
      *                           cross section is requested
      */
-    IncoherentElasticScatteringCrossSection
+    IncoherentElasticCrossSection
     crossSection( double temperature ) {
 
       // find the closest temperature, within 0.001 K
@@ -154,7 +154,7 @@ namespace thermal {
       }
 
       std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
-      return IncoherentElasticScatteringCrossSection(
+      return IncoherentElasticCrossSection(
                  this->lowerEnergyLimit(),
                  this->upperEnergyLimit(),
                  this->boundCrossSection(),
