@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -544,8 +544,8 @@ class IsotropicAngularDistributionFunction:
     An isotropic angular distribution function
     
     In this distribution, all cosines are equally probable. The equivalent
-    tabulated distribution is 0.5 on the [-1, 1] domain and the equivalent
-    Legendre distribution uses 0.5 as the P0 coefficient.
+    normalised tabulated distribution is 0.5 on the [-1, 1] domain and the
+    equivalent Legendre distribution uses 0.5 as the P0 coefficient.
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
@@ -563,9 +563,12 @@ class IsotropicAngularDistributionFunction:
         ...
     def __eq__(self, arg0: IsotropicAngularDistributionFunction) -> bool:
         ...
-    def __init__(self) -> None:
+    def __init__(self, value: float = 0.5) -> None:
         """
-        Initialise the isotropic angular distribution
+        Initialise the isotropic angular distributionParameters
+        ----------
+            value : float, default 0.5
+                the value of the distribution (0.5 for a normalised distribution)
         """
     def __ne__(self, arg0: IsotropicAngularDistributionFunction) -> bool:
         ...
@@ -612,6 +615,11 @@ class IsotropicAngularDistributionFunction:
     def upper_cosine_limit(self) -> float:
         """
         The upper cosine limit
+        """
+    @property
+    def value(self) -> float:
+        """
+        The value of the distribution
         """
 class IsotropicAngularDistributions:
     """
@@ -893,6 +901,11 @@ class LegendreAngularDistributions:
     def normalise(self) -> None:
         """
         Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
         """
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
@@ -996,6 +1009,112 @@ class MixedAngularDistribution:
     def pdf(self) -> IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
+        """
+class MixedAngularDistributions:
+    """
+    Angular distribution data given using Legendre expansions
+    
+    Parameters
+    ----------
+        grid : list of float
+            the grid values
+        distributions : list of njoy.dryad.MixedAngularDistribution
+            the angular distributions
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
+        normalise : bool, default False
+            option to indicate whether or not to normalise
+            all probability data (default: no normalisation)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, value: float, cosine: float) -> float:
+        """
+        Evaluate the angular distribution for a given grid and cosine value
+        
+        Parameters
+        ----------
+            value : float
+                the grid value
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> MixedAngularDistributions:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MixedAngularDistributions:
+        ...
+    def __eq__(self, arg0: MixedAngularDistributions) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+        """
+        Initialise the angular distributions with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+        """
+        Initialise the angular distributions with a single interpolation zone
+        """
+    def __ne__(self, arg0: MixedAngularDistributions) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
+        """
+        Linearise the distributions
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
+        """
+    @property
+    def average_cosines(self) -> TabulatedAverageCosine:
+        """
+        The average cosine values
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def distributions(self) -> list[MixedAngularDistribution]:
+        """
+        The associated distributions
+        """
+    @property
+    def grid(self) -> list[float]:
+        """
+        The grid values for which distributions are given
+        """
+    @property
+    def interpolants(self) -> list[InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
         """
 class MultiEnergyDistributions:
     __hash__: typing.ClassVar[None] = None
@@ -2346,6 +2465,11 @@ class TabulatedAngularDistributions:
     def normalise(self) -> None:
         """
         Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
         """
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
@@ -3401,6 +3525,11 @@ class TabulatedEnergyDistributions:
     def normalise(self) -> None:
         """
         Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
         """
     @property
     def average_energies(self) -> TabulatedAverageEnergy:

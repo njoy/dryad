@@ -1,13 +1,14 @@
-#ifndef NJOY_DRYAD_TABULATEDANGULARDISTRIBUTIONS
-#define NJOY_DRYAD_TABULATEDANGULARDISTRIBUTIONS
+#ifndef NJOY_DRYAD_MIXEDANGULARDISTRIBUTIONS
+#define NJOY_DRYAD_MIXEDANGULARDISTRIBUTIONS
 
 // system includes
 
 // other includes
 #include "njoy/constants.hpp"
 #include "njoy/dryad/base/GridDistributions.hpp"
-#include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "njoy/dryad/MixedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAverageCosine.hpp"
+#include "njoy/dryad/TabulatedAngularDistributions.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -16,11 +17,11 @@ namespace dryad {
    *  @class
    *  @brief Angular distribution data given using tables
    */
-  class TabulatedAngularDistributions :
-      protected base::GridDistributions< TabulatedAngularDistribution > {
+  class MixedAngularDistributions :
+      protected base::GridDistributions< MixedAngularDistribution > {
 
     /* type aliases */
-    using Parent = base::GridDistributions< TabulatedAngularDistribution >;
+    using Parent = base::GridDistributions< MixedAngularDistribution >;
 
   public:
 
@@ -29,13 +30,13 @@ namespace dryad {
     /**
      *  @brief Default constructor (for pybind11 purposes only)
      */
-    TabulatedAngularDistributions() = default;
+    MixedAngularDistributions() = default;
 
-    TabulatedAngularDistributions( const TabulatedAngularDistributions& ) = default;
-    TabulatedAngularDistributions( TabulatedAngularDistributions&& ) = default;
+    MixedAngularDistributions( const MixedAngularDistributions& ) = default;
+    MixedAngularDistributions( MixedAngularDistributions&& ) = default;
 
-    TabulatedAngularDistributions& operator=( const TabulatedAngularDistributions& ) = default;
-    TabulatedAngularDistributions& operator=( TabulatedAngularDistributions&& ) = default;
+    MixedAngularDistributions& operator=( const MixedAngularDistributions& ) = default;
+    MixedAngularDistributions& operator=( MixedAngularDistributions&& ) = default;
 
     /**
      *  @brief Constructor
@@ -47,8 +48,8 @@ namespace dryad {
      *  @param normalise       option to indicate whether or not to normalise
      *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistributions( std::vector< double > grid,
-                                   std::vector< TabulatedAngularDistribution > distributions,
+    MixedAngularDistributions( std::vector< double > grid,
+                                   std::vector< MixedAngularDistribution > distributions,
                                    std::vector< std::size_t > boundaries,
                                    std::vector< InterpolationType > interpolants,
                                    bool normalise = false ) :
@@ -70,8 +71,8 @@ namespace dryad {
      *  @param normalise       option to indicate whether or not to normalise
      *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistributions( std::vector< double > grid,
-                                   std::vector< TabulatedAngularDistribution > distributions,
+    MixedAngularDistributions( std::vector< double > grid,
+                                   std::vector< MixedAngularDistribution > distributions,
                                    InterpolationType interpolant = InterpolationType::LinearLinear,
                                    bool normalise = false ) :
       Parent( std::move( grid ), std::move( distributions ), interpolant ) {
@@ -149,7 +150,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedAngularDistributions& right ) const {
+    bool operator==( const MixedAngularDistributions& right ) const {
 
       return Parent::operator==( right );
     }
@@ -159,7 +160,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedAngularDistributions& right ) const {
+    bool operator!=( const MixedAngularDistributions& right ) const {
 
       return ! this->operator==( right );
     }

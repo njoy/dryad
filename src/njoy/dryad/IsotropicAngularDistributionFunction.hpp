@@ -19,9 +19,9 @@ namespace dryad {
    *  @class
    *  @brief An isotropic angular distribution function
    *
-   *  In this distribution, all cosines are equally probable. The
-   *  equivalent tabulated distribution is 0.5 on the -1,1 domain and
-   *  the equivalent Legendre distribution uses 0.5 as the P0 coefficient.
+   *  In this distribution, all cosines are equally probable. The equivalent
+   *  normalised tabulated distribution is 0.5 on the -1,1 domain and the
+   *  equivalent Legendre distribution uses 0.5 as the P0 coefficient.
    */
   class IsotropicAngularDistributionFunction :
       protected scion::math::OneDimensionalFunctionBase<
@@ -38,6 +38,12 @@ namespace dryad {
     using Parent = scion::math::OneDimensionalFunctionBase<
         IsotropicAngularDistributionFunction, double, double >;
 
+    /* fields */
+
+    double value_;
+
+    /* interface imposed functions */
+
     /**
      *  @brief Evaluate the function
      *
@@ -45,7 +51,7 @@ namespace dryad {
      */
     double evaluate( double cosine ) const {
 
-      return this->isInside( cosine ) ? 0.5 : 0.0;
+      return this->isInside( cosine ) ? this->value() : 0.0;
     }
 
   protected:
@@ -55,7 +61,7 @@ namespace dryad {
      */
     TabulatedAngularDistributionFunction cdf() const {
 
-      return TabulatedAngularDistributionFunction( { -1., 1. }, { 0., 1. } );
+      return TabulatedAngularDistributionFunction( { -1., 1. }, { 0., this->integral() } );
     }
 
   public:
@@ -68,10 +74,13 @@ namespace dryad {
     /* constructor */
 
     /**
-     *  @brief Default constructor
+     *  @brief Constructor
+     *
+     *  @param[in] value   the value of the distribution (0.5 for a normalised distribution)
      */
-    IsotropicAngularDistributionFunction() :
-      Parent( scion::math::IntervalDomain< double >( -1.0, 1.0 ) ) {}
+    IsotropicAngularDistributionFunction( double value = 0.5 ) :
+      Parent( scion::math::IntervalDomain< double >( -1.0, 1.0 ) ),
+      value_( std::move( value ) ) {}
 
     IsotropicAngularDistributionFunction( const IsotropicAngularDistributionFunction& ) = default;
     IsotropicAngularDistributionFunction( IsotropicAngularDistributionFunction&& ) = default;
@@ -80,6 +89,22 @@ namespace dryad {
     IsotropicAngularDistributionFunction& operator=( IsotropicAngularDistributionFunction&& ) = default;
 
     /* methods */
+
+    /**
+     *  @brief Return the value of the distribution
+     */
+    double value() const {
+
+      return this->value_;
+    }
+
+    /**
+     *  @brief Return the value of the distribution
+     */
+    double& value() {
+
+      return this->value_;
+    }
 
     /**
      *  @brief Return the lower cosine limit
@@ -96,9 +121,9 @@ namespace dryad {
     /**
      *  @brief Return the integral of the distribution function over its domain
      */
-    constexpr double integral() const {
+    double integral() const {
 
-      return 1.0;
+      return 2. * this->value();
     }
 
     /**
@@ -114,7 +139,7 @@ namespace dryad {
      */
     void normalise() {
 
-      // isotropic distributions are always normalized
+      this->value() = 0.5;
     }
 
     /**
@@ -125,9 +150,14 @@ namespace dryad {
      *                         all probability data (default: no normalisation)
      */
     TabulatedAngularDistributionFunction linearise( double = constants::linearisation::tolerance,
-                                                    bool = false ) const {
+                                                    bool normalise = false ) const {
 
-      return this->toTabulatedDistribution();
+      auto table = this->toTabulatedDistribution();
+      if ( normalise ) {
+
+        table.normalise();
+      }
+      return table;
     }
 
     /**
@@ -135,7 +165,7 @@ namespace dryad {
      */
     LegendreAngularDistributionFunction toLegendreDistribution() const {
 
-      return LegendreAngularDistributionFunction( { 0.5 } );
+      return LegendreAngularDistributionFunction( { this->value() } );
     }
 
     /**
@@ -143,7 +173,7 @@ namespace dryad {
      */
     TabulatedAngularDistributionFunction toTabulatedDistribution() const {
 
-      return TabulatedAngularDistributionFunction( { -1., 1. }, { 0.5, 0.5 } );
+      return TabulatedAngularDistributionFunction( { -1., 1. }, { this->value(), this->value() } );
     }
 
     /**
