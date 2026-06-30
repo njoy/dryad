@@ -5,11 +5,11 @@ import sys
 # third party imports
 
 # local imports
-from njoy.dryad.thermal import IncoherentElasticScatteringCrossSection
+from njoy.dryad.thermal import IncoherentElasticCrossSection
 from njoy.dryad import InterpolationType
 
-class Test_IncoherentElasticScatteringCrossSection( unittest.TestCase ) :
-    """Unit test for the IncoherentElasticScatteringCrossSection class."""
+class Test_IncoherentElasticCrossSection( unittest.TestCase ) :
+    """Unit test for the IncoherentElasticCrossSection class."""
 
     def verify_chunk( self, chunk ) :
 
@@ -43,7 +43,7 @@ class Test_IncoherentElasticScatteringCrossSection( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        chunk = IncoherentElasticScatteringCrossSection(
+        chunk = IncoherentElasticCrossSection(
                   lower = 1e-5,
                   upper = 10.,
                   xs = 6.337872,
@@ -53,9 +53,9 @@ class Test_IncoherentElasticScatteringCrossSection( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = IncoherentElasticScatteringCrossSection( 1e-5, 10., 6.337872, 2.013538 )
-        equal = IncoherentElasticScatteringCrossSection( 1e-5, 10., 6.337872, 2.013538 )
-        different = IncoherentElasticScatteringCrossSection( 1e-5, 5., 7., 3. )
+        left = IncoherentElasticCrossSection( 1e-5, 10., 6.337872, 2.013538 )
+        equal = IncoherentElasticCrossSection( 1e-5, 10., 6.337872, 2.013538 )
+        different = IncoherentElasticCrossSection( 1e-5, 5., 7., 3. )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

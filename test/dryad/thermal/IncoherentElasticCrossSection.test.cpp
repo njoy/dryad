@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/thermal/IncoherentElasticScatteringCrossSection.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 
 // other includes
 #include <iomanip>
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const thermal::IncoherentElasticScatteringCrossSection& );
+void verifyChunk( const thermal::IncoherentElasticCrossSection& );
 
-SCENARIO( "IncoherentElasticScatteringCrossSection" ) {
+SCENARIO( "IncoherentElasticCrossSection" ) {
 
   GIVEN( "valid incoherent scattering data" ) {
 
@@ -24,9 +24,9 @@ SCENARIO( "IncoherentElasticScatteringCrossSection" ) {
       double xs = 6.337872;
       double debyeWaller = 2.013538;
 
-      thermal::IncoherentElasticScatteringCrossSection chunk( lower, upper, xs, debyeWaller );
+      thermal::IncoherentElasticCrossSection chunk( lower, upper, xs, debyeWaller );
 
-      THEN( "IncoherentElasticScatteringCrossSection can be constructed and members can be tested" ) {
+      THEN( "IncoherentElasticCrossSection can be constructed and members can be tested" ) {
 
         verifyChunk( chunk );
       } // THEN
@@ -35,11 +35,11 @@ SCENARIO( "IncoherentElasticScatteringCrossSection" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of IncoherentElasticScatteringCrossSection are given" ) {
+    WHEN( "two instances of IncoherentElasticCrossSection are given" ) {
 
-      thermal::IncoherentElasticScatteringCrossSection left( 1e-5, 10., 6.337872, 2.013538 );
-      thermal::IncoherentElasticScatteringCrossSection equal( 1e-5, 10., 6.337872, 2.013538 );
-      thermal::IncoherentElasticScatteringCrossSection different( 1e-5, 5., 7., 3. );
+      thermal::IncoherentElasticCrossSection left( 1e-5, 10., 6.337872, 2.013538 );
+      thermal::IncoherentElasticCrossSection equal( 1e-5, 10., 6.337872, 2.013538 );
+      thermal::IncoherentElasticCrossSection different( 1e-5, 5., 7., 3. );
 
       THEN( "they can be compared" ) {
 
@@ -55,7 +55,7 @@ SCENARIO( "IncoherentElasticScatteringCrossSection" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const thermal::IncoherentElasticScatteringCrossSection& chunk ) {
+void verifyChunk( const thermal::IncoherentElasticCrossSection& chunk ) {
 
   CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 10. , WithinRel( chunk.upperEnergyLimit() ) );
