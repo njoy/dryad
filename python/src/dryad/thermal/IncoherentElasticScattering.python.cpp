@@ -91,11 +91,26 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     "cross_section",
     &Component::crossSection,
     python::arg( "temperature" ),
-    "Return the incoherent elastic scattering cross section\n\n"
+    "Return the incoherent elastic scattering cross section for a given temperature\n\n"
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "        the moderator temeprature for which the cross section is requested\n"
+    "        the moderator temperature for which the cross section is requested"
+  )
+  .def(
+
+    "angular_distribution",
+    &Component::angularDistribution,
+    python::arg( "incident" ),
+    python::arg( "temperature" ),
+    "Return the incoherent elastic scattering angular distribution for a given\n"
+    "incident energy and temperature\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    incident : float\n"
+    "        the incident energy\n"
+    "    temperature : float\n"
+    "        the moderator temperature for which the angular distribution is requested"
   );
 
   // add standard equality comparison definitions
