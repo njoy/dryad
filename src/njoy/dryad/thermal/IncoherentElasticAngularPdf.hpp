@@ -40,6 +40,7 @@ namespace thermal {
     double debye_waller_;
 
     double normalisation_;
+    double mean_;
 
     //! @todo we may need to add natom (number of principle scatterers) for older evaluations
 
@@ -112,7 +113,8 @@ namespace thermal {
       normalisation_( [] ( double ew ) {
 
                         return ( 1. - std::exp( -4. * ew ) ) / ew;
-                      }( incident * debyeWallerIntegral ) ) {}
+                      }( incident * debyeWallerIntegral ) ),
+      mean_( 0. ) {}
 
     /* methods */
 
@@ -158,7 +160,21 @@ namespace thermal {
 
     using Parent::operator();
 
-    //! @todo add integral() and mean()
+    /**
+     *  @brief Calculate the integral over the distribution domain
+     */
+    constexpr double integral() const {
+
+      return 1.;
+    }
+
+    /**
+     *  @brief Calculate the mean over the distribution domain
+     */
+    double mean() const {
+
+      return this->mean_;
+    }
 
     /**
      *  @brief Return a linearised angular distribution table
