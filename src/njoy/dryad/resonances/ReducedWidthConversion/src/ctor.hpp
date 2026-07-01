@@ -18,5 +18,6 @@ ReducedWidthConversion& operator=( ReducedWidthConversion&& ) = default;
  */
 ReducedWidthConversion( unsigned int orbitalAngularMomentum,
                      double reference_energy ) :
+  orbital_angular_momentum_( orbitalAngularMomentum ),
   penetrability_( orbitalAngularMomentum ),
   reference_energy_( reference_energy ) {}
