@@ -6,7 +6,6 @@
 #include <optional>
 
 // other includes
-#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"

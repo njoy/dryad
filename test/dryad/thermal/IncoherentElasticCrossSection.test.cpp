@@ -7,7 +7,7 @@ using Catch::Matchers::WithinRel;
 #include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 
 // other includes
-#include <iomanip>
+
 // convenience typedefs
 using namespace njoy::dryad;
 

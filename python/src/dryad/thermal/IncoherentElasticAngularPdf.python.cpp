@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticAngularPdf.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,14 +12,14 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapIncoherentElasticCrossSection( python::module& module ) {
+void wrapIncoherentElasticAngularPdf( python::module& module ) {
 
   // constants
   std::ostringstream tolerance;
   tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
 
   // type aliases
-  using Component = njoy::dryad::thermal::IncoherentElasticCrossSection;
+  using Component = njoy::dryad::thermal::IncoherentElasticAngularPdf;
 
   // wrap views created by this component
 
@@ -27,16 +27,12 @@ void wrapIncoherentElasticCrossSection( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "IncoherentElasticCrossSection",
-    "Incoherent elastic thermal scattering cross section\n\n"
+    "IncoherentElasticAngularPdf",
+    "Incoherent elastic thermal scattering angular distribution pdf\n\n"
     "Parameters\n"
     "----------\n"
-    "    lower : float\n"
-    "        the lower energy limit\n"
-    "    upper : float\n"
-    "        the upper energy limit\n"
-    "    xs : float\n"
-    "        the bound atom cross section\n"
+    "    incident : float\n"
+    "        the incident energy\n"
     "    debye_waller_integral : float\n"
     "        the Debye-Waller integral value"
   );
@@ -45,28 +41,27 @@ void wrapIncoherentElasticCrossSection( python::module& module ) {
   component
   .def(
 
-    python::init< double, double, double, double >(),
-    python::arg( "lower" ), python::arg( "upper" ),
-    python::arg( "xs" ), python::arg( "debye_waller_integral" ),
-    "Initialise the incoherent elastic scattering cross section"
+    python::init< double, double >(),
+    python::arg( "incident" ), python::arg( "debye_waller_integral" ),
+    "Initialise the incoherent elastic scattering angular distribution pdf"
   )
   .def_property_readonly(
 
-    "lower_energy_limit",
-    &Component::lowerEnergyLimit,
-    "The lower energy limit"
+    "lower_cosine_limit",
+    &Component::lowerCosineLimit,
+    "The lower cosine limit"
   )
   .def_property_readonly(
 
-    "upper_energy_limit",
-    &Component::upperEnergyLimit,
-    "The upper energy limit"
+    "upper_cosine_limit",
+    &Component::upperCosineLimit,
+    "The upper cosine limit"
   )
   .def_property_readonly(
 
-    "bound_cross_section",
-    python::overload_cast<>( &Component::boundCrossSection, python::const_ ),
-    "The bound atom cross section value"
+    "incident_energy",
+    python::overload_cast<>( &Component::incidentEnergy, python::const_ ),
+    "The incident energy value"
   )
   .def_property_readonly(
 
@@ -80,18 +75,36 @@ void wrapIncoherentElasticCrossSection( python::module& module ) {
     [] ( const Component& self, double energy ) -> decltype(auto)
        { return self( energy ); },
     python::arg( "cosine" ),
-    "Evaluate the cross section for a given energy value\n\n"
+    "Evaluate the angular distribution for a given cosine value\n\n"
     "Parameters\n"
     "----------\n"
-    "    energy : float\n"
-    "        the energy value"
+    "    cosine : float\n"
+    "        the cosine value"
+  )
+  .def_property_readonly(
+
+    "integral",
+    [] ( const Component& self ) { return self.integral(); },
+    "The integral of the distribution over its domain"
+  )
+  .def_property_readonly(
+
+    "mean",
+    &Component::mean,
+    "The mean value of the distribution over its domain"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution"
   )
   .def(
 
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
-    std::string( "Linearise the cross section\n\n"
+    std::string( "Linearise the angular distribution\n\n"
                  "Parameters\n"
                  "----------\n"
                  "    tolerance : float, default " + tolerance.str() + "\n"

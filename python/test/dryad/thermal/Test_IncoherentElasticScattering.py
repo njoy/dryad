@@ -76,6 +76,40 @@ def verify_xs( self, chunk ) :
     self.assertAlmostEqual( 6.337872, xs.bound_cross_section )
     self.assertAlmostEqual( 7.891981, xs.debye_waller_integral )
 
+def verify_distribution( self, chunk ) :
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 296 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 400 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 500 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 600 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 700 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 800 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 1000 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
+    distribution = chunk.angular_distribution( incident = 1e-5, temperature = 1200 )
+    self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
+    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+
 class Test_IncoherentElasticScattering( unittest.TestCase ) :
     """Unit test for the IncoherentElasticScattering class."""
 

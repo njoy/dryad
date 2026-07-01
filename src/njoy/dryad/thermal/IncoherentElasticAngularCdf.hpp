@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_THERMAL_INCOHERENTELASTICANGULARPDF
-#define NJOY_DRYAD_THERMAL_INCOHERENTELASTICANGULARPDF
+#ifndef NJOY_DRYAD_THERMAL_INCOHERENTELASTICANGULARCDF
+#define NJOY_DRYAD_THERMAL_INCOHERENTELASTICANGULARCDF
 
 // system includes
 #include <cmath>
@@ -18,19 +18,19 @@ namespace thermal {
 
   /**
    *  @class
-   *  @brief Incoherent elastic thermal scattering angular distribution pdf
+   *  @brief Incoherent elastic thermal scattering angular distribution cdf
    */
-  class IncoherentElasticAngularPdf :
-      protected scion::math::OneDimensionalFunctionBase< IncoherentElasticAngularPdf,
+  class IncoherentElasticAngularCdf :
+      protected scion::math::OneDimensionalFunctionBase< IncoherentElasticAngularCdf,
                                                          double, double > {
 
     /* friend declarations */
-    friend class scion::math::OneDimensionalFunctionBase< IncoherentElasticAngularPdf,
+    friend class scion::math::OneDimensionalFunctionBase< IncoherentElasticAngularCdf,
                                                           double, double >;
 
     /* type aliases */
 
-    using Parent = scion::math::OneDimensionalFunctionBase< IncoherentElasticAngularPdf,
+    using Parent = scion::math::OneDimensionalFunctionBase< IncoherentElasticAngularCdf,
                                                             double, double >;
 
     /* fields */
@@ -56,30 +56,21 @@ namespace thermal {
     /* interface imposed function */
 
     /**
-     *  @brief Evaluate the angular distribution pdf for a given cosine value
+     *  @brief Evaluate the angular distribution cdf for a given cosine value
      *
-     *  The differential cross section is given by:
+     *  The integral of the pdf between -1 and x is given by:
      *
-     *  \frac{d\sigma}{d\mu} = \frac{\sigma_{b}}{2} e^{−2 w E \left( 1−\mu \right)}
+     *  \frac{e^{2 w E \left( \mu + 1 \right)} - 1}{e^{4 w E} - 1}
      *
-     *  The integral of the differential cross section between -1 and 1 is the
-     *  cross section value:
-     *
-     *  \frac{\sigma_{b}}{2} \frac{1 - e^{−4 w E }}{2 w E}
-     *
-     *  The pdf is the ratio between the differential cross section and the
-     *  integrated cross section and is always normalised.
+     *  as calculated by Wolfram alpha
      *
      *  @param[in] cosine   the cosine value
      */
     double evaluate( double cosine ) const {
 
-      // this is normalised by the integrated cross section
-      // there is a common factor of sigma / 2 so it is not included here
-
       double product = this->incidentEnergy() * this->debyeWallerIntegral();
-      return 2. * product * std::exp( -2. * product * ( 1. - cosine ) )
-             / ( 1. - std::exp( -4. * product ) );
+      return ( std::exp( 2. * product * ( cosine + 1. ) ) - 1. )
+             / ( std::exp( 4. * product ) - 1. );
     }
 
   public:
@@ -95,13 +86,13 @@ namespace thermal {
     /**
      *  @brief Default constructor (for pybind11 purposes only)
      */
-    IncoherentElasticAngularPdf() = default;
+    IncoherentElasticAngularCdf() = default;
 
-    IncoherentElasticAngularPdf( const IncoherentElasticAngularPdf& ) = default;
-    IncoherentElasticAngularPdf( IncoherentElasticAngularPdf&& ) = default;
+    IncoherentElasticAngularCdf( const IncoherentElasticAngularCdf& ) = default;
+    IncoherentElasticAngularCdf( IncoherentElasticAngularCdf&& ) = default;
 
-    IncoherentElasticAngularPdf& operator=( const IncoherentElasticAngularPdf& ) = default;
-    IncoherentElasticAngularPdf& operator=( IncoherentElasticAngularPdf&& ) = default;
+    IncoherentElasticAngularCdf& operator=( const IncoherentElasticAngularCdf& ) = default;
+    IncoherentElasticAngularCdf& operator=( IncoherentElasticAngularCdf&& ) = default;
 
     /**
      *  @brief Constructor
@@ -109,7 +100,7 @@ namespace thermal {
      *  @param[in] incident              the incident energy
      *  @param[in] debyeWallerIntegral   the Debye-Waller integral value
      */
-    IncoherentElasticAngularPdf( double incident,
+    IncoherentElasticAngularCdf( double incident,
                                  double debyeWallerIntegral ) :
       Parent( scion::math::IntervalDomain< double >( -1., 1. ) ),
       incident_( incident ),
@@ -152,31 +143,6 @@ namespace thermal {
     using Parent::operator();
 
     /**
-     *  @brief Calculate the integral over the distribution domain
-     */
-    static constexpr double integral() {
-
-      return 1.;
-    }
-
-    /**
-     *  @brief Calculate the mean over the distribution domain
-     */
-    double mean() const {
-
-      double product = this->incidentEnergy() * this->debyeWallerIntegral();
-      return 1. / std::tanh( 2. * product ) - 0.5 / product;
-    }
-
-    /**
-     *  @brief Normalise the distribution
-     */
-    void normalise() {
-
-      // nothing to do here, the pdf is already normalised
-    }
-
-    /**
      *  @brief Return a linearised angular distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
@@ -203,7 +169,7 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const IncoherentElasticAngularPdf& right ) const {
+    bool operator==( const IncoherentElasticAngularCdf& right ) const {
 
       return std::tie( this->incident_, this->debye_waller_ ) ==
              std::tie( right.incident_, right.debye_waller_ );
@@ -214,7 +180,7 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const IncoherentElasticAngularPdf& right ) const {
+    bool operator!=( const IncoherentElasticAngularCdf& right ) const {
 
       return ! this->operator==( right );
     }

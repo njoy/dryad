@@ -100,6 +100,8 @@ add_cpp_test( dryad.thermal.DebyeWallerIntegralData                             
 add_cpp_test( dryad.thermal.CoherentElasticScattering                                  dryad/thermal/CoherentElasticScattering.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticCrossSection                              dryad/thermal/IncoherentElasticCrossSection.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticAngularPdf                                dryad/thermal/IncoherentElasticAngularPdf.test.cpp )
+add_cpp_test( dryad.thermal.IncoherentElasticAngularCdf                                dryad/thermal/IncoherentElasticAngularCdf.test.cpp )
+add_cpp_test( dryad.thermal.IncoherentElasticAngularDistribution                       dryad/thermal/IncoherentElasticAngularDistribution.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticScattering                                dryad/thermal/IncoherentElasticScattering.test.cpp )
 
 add_cpp_test( dryad.Documentation                                                      dryad/Documentation.test.cpp )
