@@ -24,6 +24,7 @@ namespace resonances {
 
       using Channel::reaction;
       using Channel::identifier;
+      using Channel::quantumNumbers;
       using Channel::waveNumber;
       using Channel::outgoingParticlePair;
       using Channel::incidentParticlePair;
