@@ -24,7 +24,7 @@ UnresolvedSpinGroup& operator=( UnresolvedSpinGroup&& ) = default;
 //       SpinGroup's ctor that takes a Formalism and BoundaryCondition and
 //       calls selectCalculator). For now the spin group only stores the
 //       channels and the average parameter table.
-UnresolvedSpinGroup( std::vector< Channel > channels,
+UnresolvedSpinGroup( std::vector< UnresolvedChannel > channels,
                      UnresolvedResonanceTable resonances ) :
                   channels_( std::move( channels ) ),
                   table_( std::move( resonances ) ) {

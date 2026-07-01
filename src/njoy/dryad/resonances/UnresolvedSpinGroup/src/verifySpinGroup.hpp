@@ -1,4 +1,4 @@
-static void verifySpinGroup( const std::vector< Channel >& channels,
+static void verifySpinGroup( const std::vector< UnresolvedChannel >& channels,
                              const UnresolvedResonanceTable& table ) {
 
   std::size_t nc = channels.size();

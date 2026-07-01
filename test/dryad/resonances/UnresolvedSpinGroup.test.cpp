@@ -60,13 +60,13 @@ SCENARIO( "UnresolvedSpinGroup" ) {
     ChannelRadii protonRadii( 4.822220, 3.667980 );
 
     // channels
-    Channel capture( captureID, elasticPair, capturePair,
+    UnresolvedChannel capture( captureID, elasticPair, capturePair,
                      captureQ, captureBoundary, captureRadii );
-    Channel elastic( elasticID, elasticPair, elasticPair,
+    UnresolvedChannel elastic( elasticID, elasticPair, elasticPair,
                      elasticQ, elasticBoundary, elasticRadii );
-    Channel inelastic( inelasticID, elasticPair, inelasticPair,
+    UnresolvedChannel inelastic( inelasticID, elasticPair, inelasticPair,
                        inelasticQ, inelasticBoundary, inelasticRadii );
-    Channel proton( protonID, elasticPair, protonPair,
+    UnresolvedChannel proton( protonID, elasticPair, protonPair,
                     protonQ, protonBoundary, protonRadii );
 
     // unresolved resonance table
@@ -147,13 +147,13 @@ SCENARIO( "UnresolvedSpinGroup" ) {
       ChannelRadii protonRadii( 4.822220, 3.667980 );
 
       // channels
-      Channel capture( captureID, elasticPair, capturePair,
+      UnresolvedChannel capture( captureID, elasticPair, capturePair,
                        captureQ, captureBoundary, captureRadii );
-      Channel elastic( elasticID, elasticPair, elasticPair,
+      UnresolvedChannel elastic( elasticID, elasticPair, elasticPair,
                        elasticQ, elasticBoundary, elasticRadii );
-      Channel inelastic( inelasticID, elasticPair, inelasticPair,
+      UnresolvedChannel inelastic( inelasticID, elasticPair, inelasticPair,
                          inelasticQ, inelasticBoundary, inelasticRadii );
-      Channel proton( protonID, elasticPair, protonPair,
+      UnresolvedChannel proton( protonID, elasticPair, protonPair,
                       protonQ, protonBoundary, protonRadii );
 
       // unresolved resonance tables
@@ -261,13 +261,13 @@ void verifyChunk( const UnresolvedSpinGroup& chunk ) {
   ChannelRadii protonRadii( 4.822220, 3.667980 );
 
   // channels
-  Channel capture( captureID, elasticPair, capturePair,
+  UnresolvedChannel capture( captureID, elasticPair, capturePair,
                    captureQ, captureBoundary, captureRadii );
-  Channel elastic( elasticID, elasticPair, elasticPair,
+  UnresolvedChannel elastic( elasticID, elasticPair, elasticPair,
                    elasticQ, elasticBoundary, elasticRadii );
-  Channel inelastic( inelasticID, elasticPair, inelasticPair,
+  UnresolvedChannel inelastic( inelasticID, elasticPair, inelasticPair,
                      inelasticQ, inelasticBoundary, inelasticRadii );
-  Channel proton( protonID, elasticPair, protonPair,
+  UnresolvedChannel proton( protonID, elasticPair, protonPair,
                   protonQ, protonBoundary, protonRadii );
 
   // unresolved resonance table
@@ -297,7 +297,6 @@ void verifyChunk( const UnresolvedSpinGroup& chunk ) {
   CHECK( 1 == chunk.totalAngularMomentum() );
   CHECK( +1 == chunk.parity() );
 
-  CHECK( Kinematics::NonRelativistic == chunk.kinematicsType() );
   CHECK( false == chunk.hasChannelsWithBackground() );
 
   CHECK( 4 == chunk.reactions().size() );

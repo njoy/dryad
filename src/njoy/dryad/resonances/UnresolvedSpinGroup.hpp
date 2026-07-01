@@ -6,7 +6,7 @@
 #include <algorithm>
 
 // other includes
-#include "njoy/dryad/resonances/Channel.hpp"
+#include "njoy/dryad/resonances/UnresolvedChannel.hpp"
 #include "njoy/dryad/resonances/UnresolvedResonanceTable.hpp"
 
 
@@ -27,7 +27,7 @@ namespace resonances {
       // using Calculator = std::variant< calculator::HauserFeshbach, calculator::MoldauerWidthFluctuation, ... >;
       // using Sampler    = std::variant< sampler::GOESampler, sampler::WignerDistributionSampler, ... >;
 
-      std::vector< Channel > channels_;
+      std::vector< UnresolvedChannel > channels_;
       UnresolvedResonanceTable table_;
       std::vector< id::ReactionID > reactions_;
 
@@ -49,7 +49,7 @@ namespace resonances {
         /**
          *  @brief Return the channels in the spin group
          */
-        const std::vector< Channel >& channels() const {
+        const std::vector< UnresolvedChannel >& channels() const {
 
           return this->channels_;
         }
@@ -57,7 +57,7 @@ namespace resonances {
         /**
          *  @brief Return the channels in the spin group
          */
-        std::vector< Channel >& channels() {
+        std::vector< UnresolvedChannel >& channels() {
 
           return this->channels_;
         }
@@ -97,7 +97,7 @@ namespace resonances {
         /**
          * @brief Set the channels in the spin group
          */
-        void channels( std::vector< Channel > channels ) {
+        void channels( std::vector< UnresolvedChannel > channels ) {
 
           this->channels_ = std::move( channels );
           this->processChannels();
@@ -125,12 +125,6 @@ namespace resonances {
         short parity() const {
 
           return this->channels().front().quantumNumbers().parity();
-        }
-        /**
-         * @brief Return the kinematics type of the spin group
-         */
-        Kinematics kinematicsType() const {
-          return this->channels().front().kinematicsType();
         }
 
         /**

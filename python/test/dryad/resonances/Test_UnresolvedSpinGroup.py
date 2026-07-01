@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import Particle
 from njoy.dryad.resonances import ParticlePair
 from njoy.dryad.resonances import ChannelRadii
-from njoy.dryad.resonances import Channel
+from njoy.dryad.resonances import UnresolvedChannel
 from njoy.dryad.resonances import UnresolvedResonanceTable
 from njoy.dryad.resonances import UnresolvedSpinGroup
 from njoy.dryad.resonances import Kinematics
@@ -59,13 +59,13 @@ def verify_chunk( self, chunk ) :
     protonRadii = ChannelRadii( 4.822220, 3.667980 )
 
     # channels
-    capture = Channel( captureID, elasticPair, capturePair,
+    capture = UnresolvedChannel( captureID, elasticPair, capturePair,
                        captureQ, captureBoundary, captureRadii )
-    elastic = Channel( elasticID, elasticPair, elasticPair,
+    elastic = UnresolvedChannel( elasticID, elasticPair, elasticPair,
                        elasticQ, elasticBoundary, elasticRadii )
-    inelastic = Channel( inelasticID, elasticPair, inelasticPair,
+    inelastic = UnresolvedChannel( inelasticID, elasticPair, inelasticPair,
                          inelasticQ, inelasticBoundary, inelasticRadii )
-    proton = Channel( protonID, elasticPair, protonPair,
+    proton = UnresolvedChannel( protonID, elasticPair, protonPair,
                      protonQ, protonBoundary, protonRadii )
 
     # unresolved resonance table
@@ -91,7 +91,6 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 1, chunk.total_angular_momentum )
     self.assertEqual( +1, chunk.parity )
 
-    self.assertEqual( Kinematics.NonRelativistic, chunk.kinematics_type )
     self.assertEqual( False, chunk.has_channels_with_background )
 
     self.assertEqual( 4, len( chunk.reactions ) )
@@ -152,13 +151,13 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
         protonRadii = ChannelRadii( 4.822220, 3.667980 )
 
         # channels
-        capture = Channel( captureID, elasticPair, capturePair,
+        capture = UnresolvedChannel( captureID, elasticPair, capturePair,
                            captureQ, captureBoundary, captureRadii )
-        elastic = Channel( elasticID, elasticPair, elasticPair,
+        elastic = UnresolvedChannel( elasticID, elasticPair, elasticPair,
                            elasticQ, elasticBoundary, elasticRadii )
-        inelastic = Channel( inelasticID, elasticPair, inelasticPair,
+        inelastic = UnresolvedChannel( inelasticID, elasticPair, inelasticPair,
                              inelasticQ, inelasticBoundary, inelasticRadii )
-        proton = Channel( protonID, elasticPair, protonPair,
+        proton = UnresolvedChannel( protonID, elasticPair, protonPair,
                          protonQ, protonBoundary, protonRadii )
 
         # unresolved resonance table
@@ -232,13 +231,13 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
         protonRadii = ChannelRadii( 4.822220, 3.667980 )
 
         # channels
-        capture = Channel( captureID, elasticPair, capturePair,
+        capture = UnresolvedChannel( captureID, elasticPair, capturePair,
                            captureQ, captureBoundary, captureRadii )
-        elastic = Channel( elasticID, elasticPair, elasticPair,
+        elastic = UnresolvedChannel( elasticID, elasticPair, elasticPair,
                            elasticQ, elasticBoundary, elasticRadii )
-        inelastic = Channel( inelasticID, elasticPair, inelasticPair,
+        inelastic = UnresolvedChannel( inelasticID, elasticPair, inelasticPair,
                              inelasticQ, inelasticBoundary, inelasticRadii )
-        proton = Channel( protonID, elasticPair, protonPair,
+        proton = UnresolvedChannel( protonID, elasticPair, protonPair,
                          protonQ, protonBoundary, protonRadii )
 
         # unresolved resonance tables
@@ -339,13 +338,13 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
         protonRadii = ChannelRadii( 4.822220, 3.667980 )
 
         # channels
-        capture = Channel( captureID, elasticPair, capturePair,
+        capture = UnresolvedChannel( captureID, elasticPair, capturePair,
                            captureQ, captureBoundary, captureRadii )
-        elastic = Channel( elasticID, elasticPair, elasticPair,
+        elastic = UnresolvedChannel( elasticID, elasticPair, elasticPair,
                            elasticQ, elasticBoundary, elasticRadii )
-        inelastic = Channel( inelasticID, elasticPair, inelasticPair,
+        inelastic = UnresolvedChannel( inelasticID, elasticPair, inelasticPair,
                              inelasticQ, inelasticBoundary, inelasticRadii )
-        proton = Channel( protonID, elasticPair, protonPair,
+        proton = UnresolvedChannel( protonID, elasticPair, protonPair,
                          protonQ, protonBoundary, protonRadii )
 
         # full table

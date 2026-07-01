@@ -15,7 +15,7 @@ void wrapUnresolvedSpinGroup( python::module& module ) {
  
   // type aliases
   using Component = njoy::dryad::resonances::UnresolvedSpinGroup;
-  using Channel = njoy::dryad::resonances::Channel;
+  using UnresolvedChannel = njoy::dryad::resonances::UnresolvedChannel;
   using UnresolvedResonanceTable = njoy::dryad::resonances::UnresolvedResonanceTable;
   using ReactionID = njoy::dryad::id::ReactionID;
 
@@ -33,7 +33,7 @@ void wrapUnresolvedSpinGroup( python::module& module ) {
   component
   .def(
  
-    python::init< std::vector< Channel >, UnresolvedResonanceTable >(),
+    python::init< std::vector< UnresolvedChannel >, UnresolvedResonanceTable >(),
     python::arg( "channels" ), python::arg( "resonances" ),
     "Initialise the unresolved spin group\n\n"
     "If the channels are not sorted, they will get sorted through the order\n"
@@ -48,7 +48,7 @@ void wrapUnresolvedSpinGroup( python::module& module ) {
  
     "channels",
     python::overload_cast<>( &Component::channels, python::const_ ),
-    python::overload_cast< std::vector< Channel > >( &Component::channels ),
+    python::overload_cast< std::vector< UnresolvedChannel > >( &Component::channels ),
     "The channels in the spin group"
   )
   .def_property(
@@ -75,12 +75,6 @@ void wrapUnresolvedSpinGroup( python::module& module ) {
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions to which this spin group contributes"
-  )
-  .def_property_readonly(
- 
-    "kinematics_type",
-    &Component::kinematicsType,
-    "The kinematics type applied to the spin group"
   )
   .def_property_readonly(
  
