@@ -33,9 +33,9 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const IsotropicAngularDistributions& ) const {
+    bool operator!=( const IsotropicAngularDistributions& right ) const {
 
-      return false;
+      return ! this->operator==( right );
     }
   };
 
