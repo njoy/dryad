@@ -51,16 +51,23 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return an iterator for a given temperature (using lower_bound)
+     *  @brief Return an iterator for a given temperature (within a given tolerance)
      *
      *  @param[in] temperature   the temperature
+     *  @param[in] tolerance     the tolerance
      */
-    auto iterator( double temperature ) const {
+    auto iterator( double temperature, double tolerance ) const {
 
-      return std::lower_bound( this->braggEdges().begin(), this->braggEdges().end(),
-                               temperature,
-                               [] ( auto&& edges, auto&& right )
-                                  { return edges.temperature() < right; } );
+      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
+                                         this->moderatorTemperatures().end(),
+                                         temperature, tolerance );
+      if ( iter != this->moderatorTemperatures().end() ) {
+
+        return std::next( this->braggEdges().begin(),
+                          std::distance( this->moderatorTemperatures().begin(), iter ) );
+      }
+
+      return this->braggEdges().end();
     }
 
   public:
@@ -171,8 +178,9 @@ namespace thermal {
      */
     bool hasBraggEdgeData( double temperature ) const {
 
-      auto iter = this->iterator( temperature );
-      return iter != this->braggEdges().end() && iter->temperature() == temperature;
+      // get the closest temperature within 0.001 K
+      auto iter = this->iterator( temperature, 0.001 );
+      return iter != this->braggEdges().end();
     }
 
     /**
@@ -183,8 +191,9 @@ namespace thermal {
     const BraggEdgeData&
     braggEdgeData( double temperature ) const {
 
-      auto iter = this->iterator( temperature );
-      if ( iter != this->braggEdges().end() && iter->temperature() == temperature ) {
+      // get the closest temperature within 0.001 K
+      auto iter = this->iterator( temperature, 0.001 );
+      if ( iter != this->braggEdges().end() ) {
 
         return *iter;
       }
@@ -197,7 +206,7 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return the incoherent elastic scattering cross section
+     *  @brief Return the coherent elastic scattering cross section
      *
      *  @param[in] temperature   the moderator temeprature for which the
      *                           cross section is requested
@@ -205,19 +214,18 @@ namespace thermal {
     TabulatedCrossSection
     crossSection( double temperature ) const {
 
-      // find the closest temperature, within 0.001 K
-      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
-                                         this->moderatorTemperatures().end(),
-                                         temperature, 0.001 );
-      if ( iter == this->moderatorTemperatures().end() ) {
+      // get the closest temperature within 0.001 K
+      auto iter = this->iterator( temperature, 0.001 );
+      if ( iter != this->braggEdges().end() ) {
 
-        throw std::runtime_error( "The requested temperature "
-                                  + std::to_string( temperature )
-                                  + " K is not present" );
+        return iter->crossSection( this->upperEnergyLimit() );
       }
+      else {
 
-      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
-      return this->braggEdges()[index].crossSection( this->upperEnergyLimit() );
+        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
+                    temperature );
+        throw std::exception();
+      }
     }
 
     /**

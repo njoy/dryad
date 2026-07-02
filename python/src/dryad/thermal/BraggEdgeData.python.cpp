@@ -72,6 +72,17 @@ void wrapBraggEdgeData( python::module& module ) {
     "values",
     python::overload_cast<>( &Component::values, python::const_ ),
     "The structure factor values"
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "upper" ),
+    "Return the coherent elastic scattering cross section up to the given energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    upper : float\n"
+    "        the upper energy limit"
   );
 
   // add standard equality comparison definitions
