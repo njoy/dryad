@@ -34,6 +34,15 @@ class BraggEdgeData:
         """
     def __ne__(self, arg0: BraggEdgeData) -> bool:
         ...
+    def cross_section(self, upper: float) -> ...:
+        """
+        Return the coherent elastic scattering cross section up to the given energy
+        
+        Parameters
+        ----------
+            upper : float
+                the upper energy limit
+        """
     @property
     def energies(self) -> list[float]:
         """
@@ -88,6 +97,15 @@ class CoherentElasticScattering:
         ----------
             temperature : float
                 the temperature
+        """
+    def cross_section(self, temperature: float) -> ...:
+        """
+        Return the incoherent elastic scattering cross section for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temperature for which the cross section is requested
         """
     def has_bragg_edge_data(self, temperature: float) -> bool:
         """
