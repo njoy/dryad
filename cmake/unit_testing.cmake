@@ -112,6 +112,7 @@ add_cpp_test( dryad.ParticleDatabase                                            
 add_cpp_test( dryad.CoherentDistributionData                                           dryad/CoherentDistributionData.test.cpp )
 add_cpp_test( dryad.IncoherentDistributionData                                         dryad/IncoherentDistributionData.test.cpp )
 
+add_cpp_test( dryad.MultigroupMultiplicity                                             dryad/MultigroupMultiplicity.test.cpp )
 add_cpp_test( dryad.MultigroupCrossSection                                             dryad/MultigroupCrossSection.test.cpp )
 
 add_cpp_test( dryad.TabulatedFormFactor                                                dryad/TabulatedFormFactor.test.cpp )

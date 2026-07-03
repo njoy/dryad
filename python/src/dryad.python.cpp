@@ -64,6 +64,7 @@ namespace dryad {
   void wrapMultiEnergyDistributions( python::module& );
   void wrapMultigroupCrossSection( python::module& );
   void wrapTabulatedCrossSection( python::module& );
+  void wrapMultigroupMultiplicity( python::module& );
   void wrapPolynomialMultiplicity( python::module& );
   void wrapTabulatedMultiplicity( python::module& );
   void wrapTabulatedAverageCosine( python::module& );
@@ -120,6 +121,7 @@ void wrapDryad( python::module& module ) {
   dryad::wrapAtomic( submodule );
 
   // wrap components - reaction products
+  dryad::wrapMultigroupMultiplicity( submodule );
   dryad::wrapTabulatedMultiplicity( submodule );
   dryad::wrapPolynomialMultiplicity( submodule );
   dryad::wrapTabulatedAverageCosine( submodule );

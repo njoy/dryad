@@ -93,6 +93,9 @@ add_python_test( dryad.Documentation                                   dryad/Tes
 add_python_test( dryad.Particle                                        dryad/Test_Particle.py )
 add_python_test( dryad.ParticleDatabase                                dryad/Test_ParticleDatabase.py )
 
+add_python_test( dryad.MultigroupMultiplicity                          dryad/Test_MultigroupMultiplicity.py )
+add_python_test( dryad.MultigroupCrossSection                          dryad/Test_MultigroupCrossSection.py )
+
 add_python_test( dryad.PolynomialMultiplicity                          dryad/Test_PolynomialMultiplicity.py )
 add_python_test( dryad.TabulatedMultiplicity                           dryad/Test_TabulatedMultiplicity.py )
 add_python_test( dryad.TabulatedAverageEnergy                          dryad/Test_TabulatedAverageEnergy.py )
@@ -123,7 +126,6 @@ add_python_test( dryad.CoherentDistributionData                        dryad/Tes
 add_python_test( dryad.IncoherentDistributionData                      dryad/Test_IncoherentDistributionData.py )
 add_python_test( dryad.ReactionProduct                                 dryad/Test_ReactionProduct.py )
 
-add_python_test( dryad.MultigroupCrossSection                          dryad/Test_MultigroupCrossSection.py )
 add_python_test( dryad.TabulatedCrossSection                           dryad/Test_TabulatedCrossSection.py )
 add_python_test( dryad.Reaction                                        dryad/Test_Reaction.py )
 
