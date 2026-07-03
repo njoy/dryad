@@ -76,13 +76,14 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Documentation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Particle.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ParticleDatabase.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupCrossSection.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupMultiplicity.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/DistributionDataType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InteractionType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ReactionCategory.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ReferenceFrame.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/UniformDistributionType.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupCrossSection.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedCrossSection.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/PolynomialMultiplicity.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedMultiplicity.python.cpp
