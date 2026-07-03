@@ -17,9 +17,6 @@ namespace thermal {
   /**
    *  @class
    *  @brief Incoherent elastic thermal scattering data
-   *
-   *  @todo add a function to retrieve the cross section
-   *        and the angular distribution or the discrete cosines
    */
   class IncoherentElasticScattering {
 
