@@ -26,7 +26,6 @@ namespace thermal {
     /* fields */
 
     double moderator_temperature_;
-    double effective_temperature_;
 
   public:
 
@@ -46,41 +45,35 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param[in] moderatorTemperature   the moderator temperature
-     *  @param[in] effectiveTemperature   the effective temperature used in the SCT approximation
+     *  @param[in] temperature            the moderator temperature
      *  @param[in] energyTransfers        the energy transfer values
      *  @param[in] functions              the associated scattering functions
      *  @param[in] boundaries             the boundaries of the interpolation regions
      *  @param[in] interpolants           the interpolation types of the interpolation regions
      */
-    TabulatedScatteringKernel( double moderatorTemperature,
-                               double effectiveTemperature,
+    TabulatedScatteringKernel( double temperature,
                                std::vector< double > energyTransfers,
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                std::vector< std::size_t > boundaries,
                                std::vector< InterpolationType > interpolants ) :
       Parent( std::move( energyTransfers ), std::move( functions ),
               std::move( boundaries ), std::move( interpolants ) ),
-      moderator_temperature_( moderatorTemperature ),
-      effective_temperature_( effectiveTemperature ) {}
+      moderator_temperature_( temperature ) {}
 
     /**
      *  @brief Constructor for scattering functions using a single interpolation zone
      *
-     *  @param[in] moderatorTemperature   the moderator temperature
-     *  @param[in] effectiveTemperature   the effective temperature used in the SCT approximation
+     *  @param[in] temperature            the moderator temperature
      *  @param[in] energyTransfers        the energy transfer values
      *  @param[in] functions              the associated functions
      *  @param[in] interpolant            the interpolation type of the data (default lin-lin)
      */
-    TabulatedScatteringKernel( double moderatorTemperature,
-                               double effectiveTemperature,
+    TabulatedScatteringKernel( double temperature,
                                std::vector< double > energyTransfers,
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                InterpolationType interpolant = InterpolationType::LinearLinear ) :
       Parent( std::move( energyTransfers ), std::move( functions ), interpolant ),
-      moderator_temperature_( moderatorTemperature ),
-      effective_temperature_( effectiveTemperature ) {}
+      moderator_temperature_( temperature ) {}
 
     /* methods */
 
@@ -90,14 +83,6 @@ namespace thermal {
     double moderatorTemperature() const {
 
       return this->moderator_temperature_;
-    }
-
-    /**
-     *  @brief Return the effective temperature used for the short collision time approximation
-     */
-    double effectiveTemperature() const {
-
-      return this->effective_temperature_;
     }
 
     /**
@@ -153,7 +138,6 @@ namespace thermal {
                         ( auto&& function )
                         { return function.linearise( std::move( tolerance ) ); } );
       return TabulatedScatteringKernel( this->moderatorTemperature(),
-                                        this->effectiveTemperature(),
                                         this->energyTransfers(), std::move( functions ),
                                         this->boundaries(), this->interpolants() );
     }
@@ -165,8 +149,7 @@ namespace thermal {
      */
     bool operator==( const TabulatedScatteringKernel& right ) const {
 
-      return std::tie( this->moderator_temperature_, this->effective_temperature_ ) ==
-             std::tie( right.moderator_temperature_, right.effective_temperature_ ) &&
+      return this->moderatorTemperature() == right.moderatorTemperature() &&
              Parent::operator==( right );
     }
 

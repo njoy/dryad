@@ -550,10 +550,8 @@ class TabulatedScatteringKernel:
     
     Parameters
     ----------
-        moderator_temperature : float
+        temperature : float
             the moderator temperature
-        effective_temperature : float
-            the effective temperature used in the SCT approximation
         energy_transfers : list of float
             the energy transfer values
         functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction
@@ -584,12 +582,12 @@ class TabulatedScatteringKernel:
     def __eq__(self, arg0: TabulatedScatteringKernel) -> bool:
         ...
     @typing.overload
-    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
         """
         Initialise the S(a,b) scattering kernel with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
         Initialise the S(a,b) scattering kernel with a single interpolation zone
         """
@@ -608,11 +606,6 @@ class TabulatedScatteringKernel:
     def boundaries(self) -> list[int]:
         """
         The boundaries of the interpolation regions
-        """
-    @property
-    def effective_temperature(self) -> float:
-        """
-        The effective temperature used for the short collision time approximation
         """
     @property
     def energy_transfers(self) -> list[float]:
