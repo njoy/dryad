@@ -65,6 +65,7 @@ The ``dryad`` module conta ins the data structures used throughout ``njoy``.
    :caption: Multigroup data
 
    dryad/MultigroupCrossSection
+   dryad/MultigroupMultiplicity
 
 .. toctree::
    :maxdepth: 1
