@@ -550,8 +550,6 @@ class TabulatedScatteringKernel:
     
     Parameters
     ----------
-        temperature : float
-            the moderator temperature
         energy_transfers : list of float
             the energy transfer values
         functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction
@@ -582,14 +580,14 @@ class TabulatedScatteringKernel:
     def __eq__(self, arg0: TabulatedScatteringKernel) -> bool:
         ...
     @typing.overload
-    def __init__(self, temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
         """
-        Initialise the S(a,b) scattering kernel with multiple interpolation zones
+        Initialise the tabulated S(a,b) scattering kernel with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
-        Initialise the S(a,b) scattering kernel with a single interpolation zone
+        Initialise the tabulated S(a,b) scattering kernel with a single interpolation zone
         """
     def __ne__(self, arg0: TabulatedScatteringKernel) -> bool:
         ...
@@ -621,11 +619,6 @@ class TabulatedScatteringKernel:
     def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
-        """
-    @property
-    def moderator_temperature(self) -> float:
-        """
-        The moderator temperature
         """
     @property
     def number_points(self) -> int:
