@@ -276,6 +276,43 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
   addStandardMathOperatorDefinitions< Component >( component );
 }
 
+/**
+ *  @brief Add standard multigroup data definitions
+ *
+ *  This adds the following standard properties:
+ *    - boundaries, values
+ *    - number_groups
+ *    - arithmetic operators
+ *
+ *  @param[in] component   the component to which the definitions have to be added
+ */
+template < typename Component, typename PythonClass >
+void addStandardMultigroupDefinitions( PythonClass& component ) {
+
+  component
+  .def_property_readonly(
+
+    "number_groups",
+    [] ( const Component& self ) { return self.numberGroups(); },
+    "The number of groups"
+  )
+  .def_property_readonly(
+
+    "boundaries",
+    [] ( const Component& self ) { return self.boundaries(); },
+    "The energy boundaries"
+  )
+  .def_property_readonly(
+
+    "values",
+    [] ( const Component& self ) { return self.values(); },
+    "The cross section values"
+  );
+
+  // add math operators
+  addStandardMathOperatorDefinitions< Component >( component );
+}
+
 } // dryad namespace
 
 #endif
