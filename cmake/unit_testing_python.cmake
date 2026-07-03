@@ -123,6 +123,7 @@ add_python_test( dryad.CoherentDistributionData                        dryad/Tes
 add_python_test( dryad.IncoherentDistributionData                      dryad/Test_IncoherentDistributionData.py )
 add_python_test( dryad.ReactionProduct                                 dryad/Test_ReactionProduct.py )
 
+add_python_test( dryad.MultigroupCrossSection                          dryad/Test_MultigroupCrossSection.py )
 add_python_test( dryad.TabulatedCrossSection                           dryad/Test_TabulatedCrossSection.py )
 add_python_test( dryad.Reaction                                        dryad/Test_Reaction.py )
 
