@@ -15,6 +15,8 @@ namespace thermal {
   /**
    *  @class
    *  @brief An S(a,b) scattering kernel using tabulated scattering kernel functions
+   *
+   *  @todo add a symmetry flag so we can set tables that are symmetric in beta
    */
   class TabulatedScatteringKernel :
       protected scion::math::InterpolationTableFunction< double, TabulatedScatteringKernelFunction > {
@@ -24,8 +26,6 @@ namespace thermal {
     using Parent = scion::math::InterpolationTableFunction< double, TabulatedScatteringKernelFunction >;
 
     /* fields */
-
-    double moderator_temperature_;
 
   public:
 
@@ -45,45 +45,31 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param[in] temperature            the moderator temperature
      *  @param[in] energyTransfers        the energy transfer values
      *  @param[in] functions              the associated scattering functions
      *  @param[in] boundaries             the boundaries of the interpolation regions
      *  @param[in] interpolants           the interpolation types of the interpolation regions
      */
-    TabulatedScatteringKernel( double temperature,
-                               std::vector< double > energyTransfers,
+    TabulatedScatteringKernel( std::vector< double > energyTransfers,
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                std::vector< std::size_t > boundaries,
                                std::vector< InterpolationType > interpolants ) :
       Parent( std::move( energyTransfers ), std::move( functions ),
-              std::move( boundaries ), std::move( interpolants ) ),
-      moderator_temperature_( temperature ) {}
+              std::move( boundaries ), std::move( interpolants ) ) {}
 
     /**
      *  @brief Constructor for scattering functions using a single interpolation zone
      *
-     *  @param[in] temperature            the moderator temperature
      *  @param[in] energyTransfers        the energy transfer values
      *  @param[in] functions              the associated functions
      *  @param[in] interpolant            the interpolation type of the data (default lin-lin)
      */
-    TabulatedScatteringKernel( double temperature,
-                               std::vector< double > energyTransfers,
+    TabulatedScatteringKernel( std::vector< double > energyTransfers,
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      Parent( std::move( energyTransfers ), std::move( functions ), interpolant ),
-      moderator_temperature_( temperature ) {}
+      Parent( std::move( energyTransfers ), std::move( functions ), interpolant ) {}
 
     /* methods */
-
-    /**
-     *  @brief Return the moderator temperature
-     */
-    double moderatorTemperature() const {
-
-      return this->moderator_temperature_;
-    }
 
     /**
      *  @brief Return the energy transfer values
@@ -137,8 +123,7 @@ namespace thermal {
                       [tolerance]
                         ( auto&& function )
                         { return function.linearise( std::move( tolerance ) ); } );
-      return TabulatedScatteringKernel( this->moderatorTemperature(),
-                                        this->energyTransfers(), std::move( functions ),
+      return TabulatedScatteringKernel( this->energyTransfers(), std::move( functions ),
                                         this->boundaries(), this->interpolants() );
     }
 
@@ -149,8 +134,7 @@ namespace thermal {
      */
     bool operator==( const TabulatedScatteringKernel& right ) const {
 
-      return this->moderatorTemperature() == right.moderatorTemperature() &&
-             Parent::operator==( right );
+      return Parent::operator==( right );
     }
 
     /**
