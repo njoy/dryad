@@ -22,8 +22,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      double moderatorTemperature = 293.6;
-      double effectiveTemperature = 300.;
+      double temperature = 293.6;
       const std::vector< double > energyTransfers = { 1., 2., 3., 4. };
       const std::vector< TabulatedScatteringKernelFunction > functions = {
 
@@ -35,7 +34,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
       TabulatedScatteringKernel
-      chunk( moderatorTemperature, effectiveTemperature,
+      chunk( temperature,
              std::move( energyTransfers ),
              std::move( functions ), interpolant );
 
@@ -51,8 +50,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      double moderatorTemperature = 293.6;
-      double effectiveTemperature = 300.;
+      double temperature = 293.6;
       const std::vector< double > energyTransfers = { 1., 2., 2., 2., 3., 4. };
       const std::vector< TabulatedScatteringKernelFunction > functions = {
 
@@ -65,7 +63,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
       };
 
       TabulatedScatteringKernel
-      chunk( moderatorTemperature, effectiveTemperature,
+      chunk( temperature,
              std::move( energyTransfers ),
              std::move( functions ) );
 
@@ -82,8 +80,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      double moderatorTemperature = 293.6;
-      double effectiveTemperature = 300.;
+      double temperature = 293.6;
       const std::vector< double > energyTransfers = { 1., 1., 2., 3., 4. };
       const std::vector< TabulatedScatteringKernelFunction > functions = {
 
@@ -95,7 +92,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
       };
 
       TabulatedScatteringKernel
-      chunk( moderatorTemperature, effectiveTemperature,
+      chunk( temperature,
              std::move( energyTransfers ), std::move( functions ) );
 
       THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
@@ -111,8 +108,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      double moderatorTemperature = 293.6;
-      double effectiveTemperature = 300.;
+      double temperature = 293.6;
       const std::vector< double > energyTransfers = { 1., 2., 3., 4., 4. };
       const std::vector< TabulatedScatteringKernelFunction > functions = {
 
@@ -124,7 +120,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
       };
 
       TabulatedScatteringKernel
-      chunk( moderatorTemperature, effectiveTemperature,
+      chunk( temperature,
              std::move( energyTransfers ), std::move( functions ) );
 
       THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
@@ -138,19 +134,19 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
     WHEN( "two instances of TabulatedScatteringKernel are given" ) {
 
-      TabulatedScatteringKernel left( 293.6, 300.,
+      TabulatedScatteringKernel left( 293.6,
                                       { 1., 2., 3., 4. },
                                       { { { 1., 3. }, { 0.5, 0.5 } },
                                         { { 1., 3. }, { 0.49, 0.51 } },
                                         { { 1., 3. }, { 0.4, 0.6 } },
                                         { { 1., 3. }, { 0.1, 0.9 } } } );
-      TabulatedScatteringKernel equal( 293.6, 300.,
+      TabulatedScatteringKernel equal( 293.6,
                                        { 1., 2., 3., 4. },
                                        { { { 1., 3. }, { 0.5, 0.5 } },
                                          { { 1., 3. }, { 0.49, 0.51 } },
                                          { { 1., 3. }, { 0.4, 0.6 } },
                                          { { 1., 3. }, { 0.1, 0.9 } } } );
-      TabulatedScatteringKernel different( 293.6, 300.,
+      TabulatedScatteringKernel different( 293.6,
                                            { 1., 4. },
                                            { { { 1., 3. }, { 0.5, 0.5 } },
                                              { { 1., 3. }, { 0.1, 0.9 } } } );
@@ -179,10 +175,10 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,gempty, dempty ) );
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,gone, done ) );
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,gempty, done ) );
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,gone, dempty ) );
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6, gempty, dempty ) );
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6, gone, done ) );
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6, gempty, done ) );
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6, gone, dempty ) );
       } // THEN
     } // WHEN
 
@@ -198,7 +194,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6,
                                                  std::move( energyTransfers ),
                                                  std::move( functions ) ) );
       } // THEN
@@ -219,7 +215,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6,
                                                  std::move( energyTransfers ),
                                                  std::move( functions ),
                                                  std::move( boundaries ),
@@ -240,7 +236,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6,
                                                  std::move( energyTransfers ),
                                                  std::move( functions ) ) );
       } // THEN
@@ -261,7 +257,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringKernel( 293.6, 300.,
+        CHECK_THROWS( TabulatedScatteringKernel( 293.6,
                                                  std::move( energyTransfers ),
                                                  std::move( functions ),
                                                  std::move( boundaries ),
@@ -274,7 +270,6 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 void verifyChunk( const TabulatedScatteringKernel& chunk ) {
 
   CHECK_THAT( 293.6, WithinRel( chunk.moderatorTemperature() ) );
-  CHECK_THAT( 300. , WithinRel( chunk.effectiveTemperature() ) );
 
   CHECK( 4 == chunk.numberPoints() );
   CHECK( 1 == chunk.numberRegions() );
@@ -378,7 +373,6 @@ void verifyChunk( const TabulatedScatteringKernel& chunk ) {
 void verifyChunkWithJump( const TabulatedScatteringKernel& chunk ) {
 
   CHECK_THAT( 293.6, WithinRel( chunk.moderatorTemperature() ) );
-  CHECK_THAT( 300. , WithinRel( chunk.effectiveTemperature() ) );
 
   CHECK( 5 == chunk.numberPoints() );
   CHECK( 2 == chunk.numberRegions() );
