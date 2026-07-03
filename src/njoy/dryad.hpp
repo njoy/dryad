@@ -25,6 +25,10 @@
 // components - thermal
 #include "njoy/dryad/thermal.hpp"
 
+// components - multigroup data
+#include "njoy/dryad/MultigroupMultiplicity.hpp"
+#include "njoy/dryad/MultigroupCrossSection.hpp"
+
 // components - resonances
 #include "njoy/dryad/resonances.hpp"
 
