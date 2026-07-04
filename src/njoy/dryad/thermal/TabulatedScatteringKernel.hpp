@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_THERMAL_TABULATEDSCATTERINGKERNEL
 
 // system includes
+#include <algorithm>
 
 // other includes
 #include "scion/math/InterpolationTableFunction.hpp"
@@ -16,7 +17,9 @@ namespace thermal {
    *  @class
    *  @brief An S(a,b) scattering kernel using tabulated scattering kernel functions
    *
-   *  @todo add a symmetry flag so we can set tables that are symmetric in beta
+   *  @todo add a symmetry flag for tables that are symmetric in beta, or handle that at read time
+   *  @todo psychic test to verify the domain of the TabulatedScatteringKernel
+   *  @todo medic function to prune the TabulatedScatteringKernel to the domain
    */
   class TabulatedScatteringKernel :
       protected scion::math::InterpolationTableFunction< double, TabulatedScatteringKernelFunction > {
@@ -26,6 +29,34 @@ namespace thermal {
     using Parent = scion::math::InterpolationTableFunction< double, TabulatedScatteringKernelFunction >;
 
     /* fields */
+
+    double lower_a_;
+    double upper_a_;
+
+    /* auxiliary functions */
+
+    /**
+     *  @brief Return the momentum transfer limits
+     *
+     *  All functions should have the same lower and upper momentum transfer limit,
+     *  but there can be an error or roundoff. We take the largest value of the lower
+     *  limit and the smallest value of the upper limit of each scattering function
+     *  to ensure we do not have any gaps in the table's alpha domain.
+     */
+    void retrieveMomentumTransferLimits() {
+
+      auto compare_lower = [] ( const auto& left, const auto& right )
+                              { return left.lowerMomentumTransferLimit()
+                                       < right.lowerMomentumTransferLimit(); };
+      auto compare_upper = [] ( const auto& left, const auto& right )
+                              { return left.upperMomentumTransferLimit()
+                                       < right.upperMomentumTransferLimit(); };
+
+      this->lower_a_ = std::max_element( this->functions().begin(), this->functions().end(),
+                                         compare_lower )->lowerMomentumTransferLimit();
+      this->upper_a_ = std::min_element( this->functions().begin(), this->functions().end(),
+                                         compare_upper )->upperMomentumTransferLimit();
+    }
 
   public:
 
@@ -101,6 +132,38 @@ namespace thermal {
     std::vector< TabulatedScatteringKernelFunction >& functions() {
 
       return this->f();
+    }
+
+    /**
+     *  @brief Return the lower energy transfer limit
+     */
+    double lowerEnergyTransferLimit() const {
+
+      return this->x().front();
+    }
+
+    /**
+     *  @brief Return the upper energy transfer limit
+     */
+    double upperEnergyTransferLimit() const {
+
+      return this->x().back();
+    }
+
+    /**
+     *  @brief Return the lower momentum transfer limit
+     */
+    double lowerMomentumTransferLimit() const {
+
+      return this->lower_a_;
+    }
+
+    /**
+     *  @brief Return the upper momentum transfer limit
+     */
+    double upperMomentumTransferLimit() const {
+
+      return this->upper_a_;
     }
 
     using Parent::boundaries;
