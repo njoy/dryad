@@ -210,7 +210,7 @@ SCENARIO( "TabulatedScatteringKernel" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "the x energyTransfers is not sorted" ) {
+    WHEN( "the energyTransfers is not sorted" ) {
 
       const std::vector< double > energyTransfers = { 1., 3., 2., 4. };
       const std::vector< TabulatedScatteringKernelFunction > functions = {
@@ -253,6 +253,11 @@ SCENARIO( "TabulatedScatteringKernel" ) {
 } // SCENARIO
 
 void verifyChunk( const TabulatedScatteringKernel& chunk ) {
+
+  CHECK_THAT( 1., WithinRel( chunk.lowerEnergyTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperEnergyTransferLimit() ) );
+  CHECK_THAT( 0., WithinRel( chunk.lowerMomentumTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
 
   CHECK( 4 == chunk.numberPoints() );
   CHECK( 1 == chunk.numberRegions() );
@@ -311,6 +316,11 @@ void verifyChunk( const TabulatedScatteringKernel& chunk ) {
   // linearisation
   auto linear = chunk.linearise();
 
+  CHECK_THAT( 1., WithinRel( linear.lowerEnergyTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( linear.upperEnergyTransferLimit() ) );
+  CHECK_THAT( 0., WithinRel( linear.lowerMomentumTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( linear.upperMomentumTransferLimit() ) );
+
   CHECK( 4 == linear.numberPoints() );
   CHECK( 1 == linear.numberRegions() );
   CHECK( 4 == linear.energyTransfers().size() );
@@ -354,6 +364,11 @@ void verifyChunk( const TabulatedScatteringKernel& chunk ) {
 }
 
 void verifyChunkWithJump( const TabulatedScatteringKernel& chunk ) {
+
+  CHECK_THAT( 1., WithinRel( chunk.lowerEnergyTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperEnergyTransferLimit() ) );
+  CHECK_THAT( 0., WithinRel( chunk.lowerMomentumTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
 
   CHECK( 5 == chunk.numberPoints() );
   CHECK( 2 == chunk.numberRegions() );
