@@ -85,8 +85,11 @@ namespace thermal {
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                std::vector< std::size_t > boundaries,
                                std::vector< InterpolationType > interpolants ) :
-      Parent( std::move( energyTransfers ), std::move( functions ),
-              std::move( boundaries ), std::move( interpolants ) ) {}
+        Parent( std::move( energyTransfers ), std::move( functions ),
+                std::move( boundaries ), std::move( interpolants ) ) {
+
+      this->retrieveMomentumTransferLimits();
+    }
 
     /**
      *  @brief Constructor for scattering functions using a single interpolation zone
@@ -98,7 +101,10 @@ namespace thermal {
     TabulatedScatteringKernel( std::vector< double > energyTransfers,
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      Parent( std::move( energyTransfers ), std::move( functions ), interpolant ) {}
+        Parent( std::move( energyTransfers ), std::move( functions ), interpolant ) {
+
+      this->retrieveMomentumTransferLimits();
+    }
 
     /* methods */
 
