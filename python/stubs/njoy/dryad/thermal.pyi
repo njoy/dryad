@@ -96,7 +96,7 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                the temperature
+                the moderator temperature
         """
     def cross_section(self, temperature: float) -> ...:
         """
@@ -114,7 +114,7 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                the temperature
+                the moderator temperature
         """
     @property
     def bragg_edges(self) -> list[BraggEdgeData]:

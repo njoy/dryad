@@ -174,7 +174,7 @@ namespace thermal {
     /**
      *  @brief Return whether or not there is Bragg edge data for a given temperature
      *
-     *  @param[in] temperature   the temperature
+     *  @param[in] temperature   the moderator temperature
      */
     bool hasBraggEdgeData( double temperature ) const {
 
@@ -186,7 +186,7 @@ namespace thermal {
     /**
      *  @brief Return the Bragg edge data for a given temperature
      *
-     *  @param[in] temperature   the temperature
+     *  @param[in] temperature   the moderator temperature
      */
     const BraggEdgeData&
     braggEdgeData( double temperature ) const {
@@ -208,7 +208,7 @@ namespace thermal {
     /**
      *  @brief Return the coherent elastic scattering cross section
      *
-     *  @param[in] temperature   the moderator temeprature for which the
+     *  @param[in] temperature   the moderator temperature for which the
      *                           cross section is requested
      */
     TabulatedCrossSection

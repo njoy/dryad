@@ -20,5 +20,12 @@ Read-only Attributes
     ~CoherentElasticScattering.number_moderator_temperatures
     ~CoherentElasticScattering.moderator_temperatures
     ~CoherentElasticScattering.bragg_edges
+
+Methods
+~~~~~~~
+
+.. autosummary::
+    :toctree: generated/
+
     ~CoherentElasticScattering.has_bragg_edge_data
     ~CoherentElasticScattering.bragg_edge_data
