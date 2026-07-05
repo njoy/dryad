@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'ShortCollisionTimeScatteringKernel', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -561,6 +561,53 @@ class IncoherentElasticScattering:
     def upper_energy_limit(self) -> float:
         """
         The upper energy limit
+        """
+class ShortCollisionTimeScatteringKernel:
+    """
+    Bragg edge data for a single temperature
+    
+    An S(a,b) scattering kernel using the short collision time approximation
+    
+    Parameters
+    ----------
+        moderator_temperature : float
+            the moderator temperature
+        effective_temperature : float
+            the effective temperature
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, a: float, b: float) -> float:
+        """
+        Evaluate the table for a given energy value
+        
+        Parameters
+        ----------
+            a : float
+                the momentum transfer value
+            b : float
+                the energy transfer value
+        """
+    def __copy__(self) -> ShortCollisionTimeScatteringKernel:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ShortCollisionTimeScatteringKernel:
+        ...
+    def __eq__(self, arg0: ShortCollisionTimeScatteringKernel) -> bool:
+        ...
+    def __init__(self, moderator_temperature: float, effective_temperature: float) -> None:
+        """
+        Initialise the scattering kernel
+        """
+    def __ne__(self, arg0: ShortCollisionTimeScatteringKernel) -> bool:
+        ...
+    @property
+    def effective_temperature(self) -> float:
+        """
+        The effective temperature
+        """
+    @property
+    def moderator_temperature(self) -> float:
+        """
+        The moderator temperature
         """
 class TabulatedScatteringKernel:
     """
