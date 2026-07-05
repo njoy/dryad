@@ -73,16 +73,38 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
   .def_property_readonly(
 
     "energy_transfers",
-    [] ( const Component& self ) -> decltype(auto)
-       { return self.energyTransfers(); },
+    python::overload_cast<>( &Component::energyTransfers, python::const_ ),
     "The energy transfer values for which scattering functions are given"
   )
   .def_property_readonly(
 
     "functions",
-    [] ( const Component& self ) -> decltype(auto)
-       { return self.functions(); },
+    python::overload_cast<>( &Component::functions, python::const_ ),
     "The associated scattering functions"
+  )
+  .def_property_readonly(
+
+    "lower_energy_transfer_limit",
+    &Component::lowerEnergyTransferLimit,
+    "The lower energy transfer limit"
+  )
+  .def_property_readonly(
+
+    "upper_energy_transfer_limit",
+    &Component::upperEnergyTransferLimit,
+    "The upper energy transfer limit"
+  )
+  .def_property_readonly(
+
+    "lower_momentum_transfer_limit",
+    &Component::lowerMomentumTransferLimit,
+    "The lower momentum transfer limit"
+  )
+  .def_property_readonly(
+
+    "upper_momentum_transfer_limit",
+    &Component::upperMomentumTransferLimit,
+    "The upper momentum transfer limit"
   )
   .def(
 
