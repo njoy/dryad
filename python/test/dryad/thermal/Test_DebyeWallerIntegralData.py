@@ -21,6 +21,18 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 2., chunk.values[2] )
     self.assertAlmostEqual( 1., chunk.values[3] )
 
+    self.assertEqual( True, chunk.has_value( 1. ) )
+    self.assertEqual( True, chunk.has_value( 2. ) )
+    self.assertEqual( True, chunk.has_value( 3. ) )
+    self.assertEqual( True, chunk.has_value( 4. ) )
+    self.assertEqual( False, chunk.has_value( 3.5 ) )
+    self.assertAlmostEqual( 4., chunk.value( 1. ) )
+    self.assertAlmostEqual( 3., chunk.value( 2. ) )
+    self.assertAlmostEqual( 2., chunk.value( 3. ) )
+    self.assertAlmostEqual( 1., chunk.value( 4. ) )
+
+    with self.assertRaises( Exception ) : chunk.value( 3.5 )
+
 class Test_DebyeWallerIntegralData( unittest.TestCase ) :
     """Unit test for the DebyeWallerIntegralData class."""
 
