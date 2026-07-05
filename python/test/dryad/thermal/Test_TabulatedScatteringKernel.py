@@ -17,6 +17,10 @@ class Test_TabulatedScatteringKernel( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # verify content
+            self.assertAlmostEqual( 1., chunk.lower_energy_transfer_limit )
+            self.assertAlmostEqual( 4., chunk.upper_energy_transfer_limit )
+            self.assertAlmostEqual( 0., chunk.lower_momentum_transfer_limit )
+            self.assertAlmostEqual( 4., chunk.upper_momentum_transfer_limit )
 
             self.assertEqual( 4, chunk.number_points )
             self.assertEqual( 1, chunk.number_regions )
@@ -71,6 +75,11 @@ class Test_TabulatedScatteringKernel( unittest.TestCase ) :
             # verify linearisation
             linear = chunk.linearise()
 
+            self.assertAlmostEqual( 1., linear.lower_energy_transfer_limit )
+            self.assertAlmostEqual( 4., linear.upper_energy_transfer_limit )
+            self.assertAlmostEqual( 0., linear.lower_momentum_transfer_limit )
+            self.assertAlmostEqual( 4., linear.upper_momentum_transfer_limit )
+
             self.assertEqual( 4, linear.number_points )
             self.assertEqual( 1, linear.number_regions )
             self.assertEqual( 4, len( linear.energy_transfers ) )
@@ -108,6 +117,11 @@ class Test_TabulatedScatteringKernel( unittest.TestCase ) :
         def verify_chunk_jump( self, chunk ) :
 
             # verify content
+
+            self.assertAlmostEqual( 1., chunk.lower_energy_transfer_limit )
+            self.assertAlmostEqual( 4., chunk.upper_energy_transfer_limit )
+            self.assertAlmostEqual( 0., chunk.lower_momentum_transfer_limit )
+            self.assertAlmostEqual( 4., chunk.upper_momentum_transfer_limit )
 
             self.assertEqual( 5, chunk.number_points )
             self.assertEqual( 2, chunk.number_regions )

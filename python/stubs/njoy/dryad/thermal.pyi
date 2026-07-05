@@ -639,6 +639,16 @@ class TabulatedScatteringKernel:
         The interpolation types of the interpolation regions
         """
     @property
+    def lower_energy_transfer_limit(self) -> float:
+        """
+        The lower energy transfer limit
+        """
+    @property
+    def lower_momentum_transfer_limit(self) -> float:
+        """
+        The lower momentum transfer limit
+        """
+    @property
     def number_points(self) -> int:
         """
         The number of points in the table
@@ -647,6 +657,16 @@ class TabulatedScatteringKernel:
     def number_regions(self) -> int:
         """
         The number of interpolation regions in the table
+        """
+    @property
+    def upper_energy_transfer_limit(self) -> float:
+        """
+        The upper energy transfer limit
+        """
+    @property
+    def upper_momentum_transfer_limit(self) -> float:
+        """
+        The upper momentum transfer limit
         """
 class TabulatedScatteringKernelFunction:
     """
