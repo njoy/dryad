@@ -19,3 +19,12 @@ Read-only Attributes
 
     ~DebyeWallerIntegralData.temperatures
     ~DebyeWallerIntegralData.values
+
+Methods
+~~~~~~~
+
+.. autosummary::
+    :toctree: generated/
+
+    ~DebyeWallerIntegralData.has_value
+    ~DebyeWallerIntegralData.value

@@ -84,7 +84,7 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "        the temperature"
+    "        the moderator temperature"
   )
   .def(
 
@@ -95,7 +95,7 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "        the temperature",
+    "        the moderator temperature",
     python::return_value_policy::reference_internal
   )
   .def(
