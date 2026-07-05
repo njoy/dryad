@@ -135,29 +135,17 @@ namespace thermal {
      *  @brief Return the incoherent elastic scattering cross section for a given
      *         temperature
      *
-     *  @param[in] temperature   the moderator temeprature for which the
+     *  @param[in] temperature   the moderator temperature for which the
      *                           cross section is requested
      */
     IncoherentElasticCrossSection
     crossSection( double temperature ) {
 
-      // find the closest temperature, within 0.001 K
-      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
-                                         this->moderatorTemperatures().end(),
-                                         temperature, 0.001 );
-      if ( iter == this->moderatorTemperatures().end() ) {
-
-        throw std::runtime_error( "The requested temperature "
-                                  + std::to_string( temperature )
-                                  + " K is not present" );
-      }
-
-      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
       return IncoherentElasticCrossSection(
                  this->lowerEnergyLimit(),
                  this->upperEnergyLimit(),
                  this->boundCrossSection(),
-                 this->debyeWallerIntegral().values()[index] );
+                 this->debyeWallerIntegral().value( temperature ) );
     }
 
     /**
@@ -172,21 +160,9 @@ namespace thermal {
     angularDistribution( double incident,
                          double temperature ) {
 
-      // find the closest temperature, within 0.001 K
-      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
-                                         this->moderatorTemperatures().end(),
-                                         temperature, 0.001 );
-      if ( iter == this->moderatorTemperatures().end() ) {
-
-        throw std::runtime_error( "The requested temperature "
-                                  + std::to_string( temperature )
-                                  + " K is not present" );
-      }
-
-      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
       return IncoherentElasticAngularDistribution(
                  incident,
-                 this->debyeWallerIntegral().values()[index] );
+                 this->debyeWallerIntegral().value( temperature ) );
     }
 
     /**

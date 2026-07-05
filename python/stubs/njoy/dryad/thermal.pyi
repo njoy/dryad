@@ -170,6 +170,24 @@ class DebyeWallerIntegralData:
         """
     def __ne__(self, arg0: DebyeWallerIntegralData) -> bool:
         ...
+    def has_value(self, temperature: float) -> bool:
+        """
+        Return whether or not there is a Debye-Waller integral value for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the temperature
+        """
+    def value(self, temperature: float) -> float:
+        """
+        Return the Debye-Waller integral value for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the temperature
+        """
     @property
     def temperatures(self) -> list[float]:
         """
