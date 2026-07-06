@@ -40,7 +40,7 @@ namespace dryad {
     /**
      *  @brief Return an iterator for a given channel (using lower_bound)
      *
-     *  @param[in] identifier   the subshell identifier
+     *  @param[in] id   the subshell identifier
      */
     auto iterator( const id::ElectronSubshellID& id ) const {
 
