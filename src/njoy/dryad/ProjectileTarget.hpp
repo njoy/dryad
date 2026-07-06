@@ -138,7 +138,7 @@ namespace dryad {
      *
      *  @param[in] projectile    the projectile identifier
      *  @param[in] target        the target identifier
-     *  @param[in] type.         the interaction type
+     *  @param[in] type          the interaction type
      *  @param[in] reactions     the reaction data
      *  @param[in] particles     the optional particle data (default: none)
      *  @param[in] resonances    the optional resonance parameters (default: none)

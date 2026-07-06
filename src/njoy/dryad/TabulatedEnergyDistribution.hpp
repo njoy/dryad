@@ -89,7 +89,7 @@ namespace dryad {
           normalise ) {}
 
     /**
-     *  @brief Constructor for an energy distirbution using a single interpolation zone
+     *  @brief Constructor for an energy distribution using a single interpolation zone
      *
      *  @param[in] energies       the energy values
      *  @param[in] values         the probability values
