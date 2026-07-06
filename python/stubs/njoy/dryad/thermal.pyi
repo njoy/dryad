@@ -633,10 +633,10 @@ class TabulatedScatteringKernel:
         
         Parameters
         ----------
-            b : float
-                the energy transfer value
             a : float
                 the momentum transfer value
+            b : float
+                the energy transfer value
         """
     def __copy__(self) -> TabulatedScatteringKernel:
         ...

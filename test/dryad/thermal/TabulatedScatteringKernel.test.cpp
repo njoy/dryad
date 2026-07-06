@@ -298,20 +298,20 @@ void verifyChunk( const TabulatedScatteringKernel& chunk ) {
 
   // evaluate
 
-  // values of x in the x grid
-  CHECK_THAT( 0.5 , WithinRel( chunk( 1., 3. ) ) );
-  CHECK_THAT( 0.49, WithinRel( chunk( 2., 3. ) ) );
+  // values of b in the b grid
+  CHECK_THAT( 0.5 , WithinRel( chunk( 3., 1. ) ) );
+  CHECK_THAT( 0.49, WithinRel( chunk( 3., 2. ) ) );
   CHECK_THAT( 0.51, WithinRel( chunk( 3., 3. ) ) );
-  CHECK_THAT( 0.65, WithinRel( chunk( 4., 3. ) ) );
+  CHECK_THAT( 0.65, WithinRel( chunk( 3., 4. ) ) );
 
-  // values of x outside the x grid
-  CHECK_THAT( 0., WithinRel( chunk( 0., 3. ) ) );
-  CHECK_THAT( 0., WithinRel( chunk( 5., 3. ) ) );
+  // values of b outside the b grid
+  CHECK_THAT( 0., WithinRel( chunk( 3.0, 0. ) ) );
+  CHECK_THAT( 0., WithinRel( chunk( 3.5, 5. ) ) );
 
   // values of x inside the x grid
-  CHECK_THAT( 0.495, WithinRel( chunk( 1.5, 3. ) ) );
-  CHECK_THAT( 0.5  , WithinRel( chunk( 2.5, 3. ) ) );
-  CHECK_THAT( 0.58 , WithinRel( chunk( 3.5, 3. ) ) );
+  CHECK_THAT( 0.495, WithinRel( chunk( 3., 1.5 ) ) );
+  CHECK_THAT( 0.5  , WithinRel( chunk( 3., 2.5 ) ) );
+  CHECK_THAT( 0.58 , WithinRel( chunk( 3., 3.5 ) ) );
 
   // linearisation
   auto linear = chunk.linearise();
