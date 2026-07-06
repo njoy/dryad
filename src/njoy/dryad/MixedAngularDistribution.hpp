@@ -42,7 +42,7 @@ namespace dryad {
     /**
      *  @brief Calculate the cdf from the pdf
      */
-    MixedDistributionFunction deriveCdf( bool set_cdf_to_one = false ) {
+    MixedDistributionFunction deriveCdf( bool set_cdf_to_one = false ) const {
 
       auto calculate = tools::overload{
 

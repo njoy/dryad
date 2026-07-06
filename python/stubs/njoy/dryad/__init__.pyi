@@ -387,7 +387,7 @@ class IncoherentDistributionData:
             energies : list of float 
                 the incident energies
             tolerance : float, default 1e-08
-                the linearisation tolerance
+                the integration tolerance
         """
     @typing.overload
     def average_energy(self, energies: list[float], tolerance: float = 1e-08) -> list[float]:
