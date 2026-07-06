@@ -50,6 +50,24 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
+     *  @param pdf         the pdf function
+     *  @param normalise   option to indicate whether or not to normalise
+     *                     all probability data (default: no normalisation)
+     */
+    LegendreAngularDistribution( LegendreAngularDistributionFunction pdf,
+                                 bool normalise = false ) :
+        pdf_( std::move( pdf ) ), cdf_() {
+
+      if ( normalise ) {
+
+        this->pdf().normalise();
+      }
+      this->cdf() = this->pdf().calculateCdf();
+    }
+
+    /**
+     *  @brief Constructor
+     *
      *  @param coefficients   the coefficients of the distribution pdf represented by a
      *                        Legendre series (from lowest to highest order coefficient)
      *  @param normalise      option to indicate whether or not to normalise
@@ -57,14 +75,9 @@ namespace dryad {
      */
     LegendreAngularDistribution( std::vector< double > coefficients,
                                  bool normalise = false ) :
-        pdf_( std::move( coefficients ) ), cdf_() {
-
-      if ( normalise ) {
-
-        this->pdf().normalise();
-      }
-      this->cdf() = this->pdf().cdf();
-    }
+        LegendreAngularDistribution(
+            LegendreAngularDistributionFunction( std::move( coefficients ) ),
+            normalise ) {}
 
     /* methods */
 
@@ -124,7 +137,7 @@ namespace dryad {
     void normalise() {
 
       this->pdf().normalise();
-      this->cdf() = this->pdf().cdf();
+      this->cdf() = this->pdf().calculateCdf();
     }
 
     /**

@@ -10,9 +10,10 @@
 #include "njoy/dryad/IsotropicAngularDistributions.hpp"
 #include "njoy/dryad/UncorrelatedDistributionData.hpp"
 #include "njoy/format/gnds/read/createReferenceFrame.hpp"
-#include "njoy/format/gnds/read/createLegendreAngularDistribution.hpp"
-#include "njoy/format/gnds/read/createTabulatedAngularDistribution.hpp"
-#include "njoy/format/gnds/read/createTabulatedEnergyDistribution.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistributions.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistributions.hpp"
+#include "njoy/format/gnds/read/createMixedAngularDistributions.hpp"
+#include "njoy/format/gnds/read/createTabulatedEnergyDistributions.hpp"
 
 namespace njoy {
 namespace format {
@@ -44,38 +45,19 @@ namespace read {
       }
       else if ( strcmp( node.name(), "XYs2d" ) == 0 ) {
 
-        // read the axes
-        auto units = readAxes( node.child( "axes" ) );
-
         // get the functions
-        auto function = node.child( "function1ds" ).first_child();
+        auto function1ds = node.child( "function1ds" );
+        auto function = function1ds.first_child();
         if ( strcmp( function.name(), "Legendre" ) == 0 ||
              strcmp( function.name(), "XYs1d" ) == 0 ) {
 
-          std::vector< double > grid;
           if ( strcmp( function.name(), "Legendre" ) == 0 ) {
 
-            std::vector< dryad::LegendreAngularDistribution > distributions;
-            for ( ; function; function = function.next_sibling( "Legendre" ) ) {
-
-              auto legendre = createLegendreAngularDistribution( function, units, normalise );
-              grid.push_back( legendre.first.value() );
-              distributions.emplace_back( std::move( legendre.second ) );
-            }
-
-            angular = dryad::LegendreAngularDistributions( std::move( grid ), std::move( distributions ) );
+            angular = createLegendreAngularDistributions( node, normalise );
           }
           else {
 
-            std::vector< dryad::TabulatedAngularDistribution > distributions;
-            for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
-
-              auto tabulated = createTabulatedAngularDistribution( function, units, normalise );
-              grid.push_back( tabulated.first.value() );
-              distributions.emplace_back( std::move( tabulated.second ) );
-            }
-
-            angular = dryad::TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) );
+            angular = createTabulatedAngularDistributions( node, normalise );
           }
         }
         else {
@@ -84,15 +66,13 @@ namespace read {
           throw std::exception();
         }
       }
-      else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
+      else if ( strcmp( node.name(), "regions2d" ) == 0 ) {
 
-        Log::error( "Mixed Legendre and tabulated angular distribution data is "
-                    "currently unsupported" );
-        throw std::exception();
+        angular = createMixedAngularDistributions( node, normalise );
       }
       else {
 
-        Log::error( "Expected either an isotropic or XYs2d node "
+        Log::error( "Expected either an isotropic, XYs2d or regions2d node "
                     "for uncorrelated angular distribution data" );
         throw std::exception();
       }
@@ -106,22 +86,7 @@ namespace read {
       auto node = energy.first_child();
       if ( strcmp( node.name(), "XYs2d" ) == 0 ) {
 
-        // read the axes
-        auto units = readAxes( node.child( "axes" ) );
-
-        // get the functions
-        auto function = node.child( "function1ds" ).first_child();
-
-        std::vector< double > grid;
-        std::vector< dryad::TabulatedEnergyDistribution > distributions;
-        for ( ; function; function = function.next_sibling() ) {
-
-          auto tabulated = createTabulatedEnergyDistribution( function, units, normalise );
-          grid.push_back( tabulated.first.value() );
-          distributions.emplace_back( std::move( tabulated.second ) );
-        }
-
-        energyd = dryad::TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
+          energyd = createTabulatedEnergyDistributions( node, normalise );
       }
       else if ( strcmp( node.name(), "evaporation" ) == 0 ) {
 

@@ -4252,7 +4252,7 @@ class UncorrelatedDistributionData:
         ...
     def __eq__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions, normalise: bool = False) -> None:
+    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions, normalise: bool = False) -> None:
         """
         Initialise the uncorrelated distribution data
         """
@@ -4263,12 +4263,12 @@ class UncorrelatedDistributionData:
         Normalise the distribution data
         """
     @property
-    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
+    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions:
         """
         The angular distributions
         """
     @angle.setter
-    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
+    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions) -> None:
         ...
     @property
     def energy(self) -> MultiEnergyDistributions | TabulatedEnergyDistributions:

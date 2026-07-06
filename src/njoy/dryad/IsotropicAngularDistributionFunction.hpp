@@ -59,7 +59,7 @@ namespace dryad {
     /**
      *  @brief Calculate a cdf from the distribution function
      */
-    TabulatedAngularDistributionFunction cdf() const {
+    TabulatedAngularDistributionFunction calculateCdf() const {
 
       return TabulatedAngularDistributionFunction( { -1., 1. }, { 0., this->integral() } );
     }

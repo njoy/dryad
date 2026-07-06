@@ -48,11 +48,11 @@ namespace dryad {
 
         [&] ( const TabulatedAngularDistributionFunction& function ) -> MixedDistributionFunction {
 
-          return function.cdf( set_cdf_to_one );
+          return function.calculateCdf( set_cdf_to_one );
         },
         [] ( auto&& function ) -> MixedDistributionFunction {
 
-          return function.cdf();
+          return function.calculateCdf();
         }
       };
 

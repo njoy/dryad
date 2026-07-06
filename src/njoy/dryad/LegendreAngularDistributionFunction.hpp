@@ -52,7 +52,7 @@ namespace dryad {
     /**
      *  @brief Calculate a cdf from the distribution function
      */
-    LegendreAngularDistributionFunction cdf() const {
+    LegendreAngularDistributionFunction calculateCdf() const {
 
       return LegendreSeries::primitive( -1. );
     }
