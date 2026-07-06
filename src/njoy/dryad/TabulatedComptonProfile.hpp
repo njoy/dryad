@@ -220,7 +220,7 @@ namespace dryad {
     void normalise() {
 
       this->pdf().normalise();
-      this->cdf() = this->pdf().calculateCdf();
+      this->cdf() = this->pdf().calculateCdf( true );
     }
 
     /**
