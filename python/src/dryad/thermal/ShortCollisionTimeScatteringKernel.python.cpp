@@ -24,7 +24,6 @@ void wrapShortCollisionTimeScatteringKernel( python::module& module ) {
 
     module,
     "ShortCollisionTimeScatteringKernel",
-    "Bragg edge data for a single temperature\n\n"
     "An S(a,b) scattering kernel using the short collision time approximation\n\n"
     "Parameters\n"
     "----------\n"
@@ -62,7 +61,7 @@ void wrapShortCollisionTimeScatteringKernel( python::module& module ) {
        { return self( a, b ); },
     python::arg( "a" ),
     python::arg( "b" ),
-    "Evaluate the table for a given energy value\n\n"
+    "Evaluate the scattering kernel for a given energy value\n\n"
     "Parameters\n"
     "----------\n"
     "    a : float\n"
