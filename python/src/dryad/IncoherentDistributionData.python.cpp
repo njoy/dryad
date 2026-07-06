@@ -15,7 +15,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
 
   // constants
   std::ostringstream tolerance;
-  tolerance << std::setprecision( 4 ) << njoy::constants::integration::tolerance;
+  tolerance << std::setprecision( 1 ) << njoy::constants::integration::tolerance;
 
   // type aliases
   using Component = njoy::dryad::IncoherentDistributionData;
@@ -112,7 +112,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
                  "    energies : list of float \n"
                  "        the incident energies\n"
                  "    tolerance : float, default " + tolerance.str() + "\n"
-                 "        the linearisation tolerance" ).c_str()
+                 "        the integration tolerance" ).c_str()
   )
   .def(
 
