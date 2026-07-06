@@ -176,15 +176,18 @@ SCENARIO( "IsotropicAngularDistributionFunction" ) {
     WHEN( "two instances of IsotropicAngularDistributionFunction are given" ) {
 
       IsotropicAngularDistributionFunction left;
-      IsotropicAngularDistributionFunction right;
+      IsotropicAngularDistributionFunction equal;
+      IsotropicAngularDistributionFunction different( 1. );
 
       THEN( "they can be compared" ) {
 
         CHECK( true == ( left == left ) );
-        CHECK( true == ( left == right ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
 
         CHECK( false == ( left != left ) );
-        CHECK( false == ( left != right ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN

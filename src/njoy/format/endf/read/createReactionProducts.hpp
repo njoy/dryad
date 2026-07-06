@@ -163,6 +163,15 @@ namespace read {
 
                   masses[ id ] = mass;
                 }
+                else {
+
+                  if ( iter->second != mass ) {
+
+                    Log::warning( "Different mass values detected for \'{}\'", id.symbol() );
+                    Log::info( "Previously found mass: {}", iter->second );
+                    Log::info( "Current mass: {}", mass );
+                  }
+                }
               }
             }
           }

@@ -121,6 +121,8 @@ class AngularDistributionCovarianceMatrix:
     
     Parameters
     ----------
+        frame : njoy.dryad.ReferenceFrame
+            the reference frame of the covariance data
         metadata : njoy.dryad.covariance.AngularDistributionMetadata
             the row and column metadata (on-diagonal)
         row_metadata : njoy.dryad.covariance.AngularDistributionMetadata
@@ -143,35 +145,33 @@ class AngularDistributionCovarianceMatrix:
             the associated eigenvectors
         relative : bool, default True
             the relative covariance flag
-        frame : njoy.dryad.ReferenceFrame, default Laboratory
-            the reference frame of the covariance data
     """
     def __copy__(self) -> AngularDistributionCovarianceMatrix:
         ...
     def __deepcopy__(self, arg0: dict) -> AngularDistributionCovarianceMatrix:
         ...
     @typing.overload
-    def __init__(self, metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, frame: njoy.dryad.ReferenceFrame = ...) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an on-diagonal angular distribution covariance matrix
         """
     @typing.overload
-    def __init__(self, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, frame: njoy.dryad.ReferenceFrame = ...) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an off-diagonal angular distribution covariance matrix
         """
     @typing.overload
-    def __init__(self, metadata: AngularDistributionMetadata, deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, frame: njoy.dryad.ReferenceFrame = ...) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, metadata: AngularDistributionMetadata, deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an on-diagonal angular distribution correlation matrix
         """
     @typing.overload
-    def __init__(self, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, frame: njoy.dryad.ReferenceFrame = ...) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an off-diagonal angular distribution correlation matrix
         """
     @typing.overload
-    def __init__(self, metadata: AngularDistributionMetadata, eigenvalues: list[float], eigenvectors: list[numpy.ndarray[numpy.float64[m, 1]]], relative: bool = True, frame: njoy.dryad.ReferenceFrame = ...) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, metadata: AngularDistributionMetadata, eigenvalues: list[float], eigenvectors: list[numpy.ndarray[numpy.float64[m, 1]]], relative: bool = True) -> None:
         """
         Initialise an on-diagonal angular distribution covariance matrix using eigenvalues
         and eigenvectors
