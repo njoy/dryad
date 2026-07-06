@@ -60,17 +60,17 @@ class Test_TabulatedScatteringKernel( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 
             # verify evaluation
-            self.assertAlmostEqual( 0.5 , chunk( 1., 3. ) )
-            self.assertAlmostEqual( 0.49, chunk( 2., 3. ) )
+            self.assertAlmostEqual( 0.5 , chunk( 3., 1. ) )
+            self.assertAlmostEqual( 0.49, chunk( 3., 2. ) )
             self.assertAlmostEqual( 0.51, chunk( 3., 3. ) )
-            self.assertAlmostEqual( 0.65, chunk( 4., 3. ) )
+            self.assertAlmostEqual( 0.65, chunk( 3., 4. ) )
 
-            self.assertAlmostEqual( 0.    , chunk( 0., 3. ) )
-            self.assertAlmostEqual( 0.    , chunk( 5., 3. ) )
+            self.assertAlmostEqual( 0.    , chunk( 3., 0. ) )
+            self.assertAlmostEqual( 0.    , chunk( 3., 5. ) )
 
-            self.assertAlmostEqual( 0.495, chunk( 1.5, 3. ) )
-            self.assertAlmostEqual( 0.5  , chunk( 2.5, 3. ) )
-            self.assertAlmostEqual( 0.58 , chunk( 3.5, 3. ) )
+            self.assertAlmostEqual( 0.495, chunk( 3., 1.5 ) )
+            self.assertAlmostEqual( 0.5  , chunk( 3., 2.5 ) )
+            self.assertAlmostEqual( 0.58 , chunk( 3., 3.5 ) )
 
             # verify linearisation
             linear = chunk.linearise()
