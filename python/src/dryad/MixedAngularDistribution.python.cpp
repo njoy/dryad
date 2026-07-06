@@ -19,6 +19,7 @@ void wrapMixedAngularDistribution( python::module& module ) {
   using IsotropicAngularDistributionFunction = njoy::dryad::IsotropicAngularDistributionFunction;
   using LegendreAngularDistributionFunction = njoy::dryad::LegendreAngularDistributionFunction;
   using TabulatedAngularDistributionFunction = njoy::dryad::TabulatedAngularDistributionFunction;
+  using InterpolationType = njoy::dryad::InterpolationType;
 
   // wrap views created by this component
 
@@ -31,10 +32,25 @@ void wrapMixedAngularDistribution( python::module& module ) {
     "tabulated distribution function\n\n"
     "Parameters\n"
     "----------\n"
-    "    function : Union[njoy.dryad.IsotropicAngularDistributionFunction,\n"
-    "               njoy.dryad.LegendreAngularDistributionFunction,\n"
-    "               njoy.dryad.TabulatedAngularDistributionFunction]\n"
+    "    pdf : Union[njoy.dryad.IsotropicAngularDistributionFunction,\n"
+    "                njoy.dryad.LegendreAngularDistributionFunction,\n"
+    "                njoy.dryad.TabulatedAngularDistributionFunction]\n"
     "        the distribution function\n"
+    "    value : float\n"
+    "        the value of the distribution (0.5 for a normalised distribution)\n"
+    "    coefficients : list of float\n"
+    "        the coefficients of the Legendre series (from\n"
+    "        lowest to highest order coefficient)\n"
+    "    cosines : list of float\n"
+    "        the cosine values\n"
+    "    values : list of float\n"
+    "        the probability values\n"
+    "    boundaries : list of int\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "        the interpolation type (default lin-lin)\n"
     "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
@@ -48,9 +64,45 @@ void wrapMixedAngularDistribution( python::module& module ) {
                                 LegendreAngularDistributionFunction,
                                 TabulatedAngularDistributionFunction >,
                   bool >(),
-    python::arg( "function" ),
+    python::arg( "pdf" ),
     python::arg( "normalise" ) = false,
     "Initialise the angular distribution"
+  )
+  .def(
+
+    python::init< double, bool >(),
+    python::arg( "value" ),
+    python::arg( "normalise" ) = false,
+    "Initialise the angular distribution as isotropic"
+  )
+  .def(
+
+    python::init< std::vector< double >, bool >(),
+    python::arg( "coefficients" ),
+    python::arg( "normalise" ) = false,
+    "Initialise the angular distribution with Legendre coefficients"
+  )
+  .def(
+
+    python::init< std::vector< double >, std::vector< double >,
+                  std::vector< std::size_t >,
+                  std::vector< InterpolationType >,
+                  bool >(),
+    python::arg( "cosines" ), python::arg( "values" ),
+    python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "normalise" ) = false,
+    "Initialise the angular distribution with tabulated data with multiple\n"
+    "interpolation zones"
+  )
+  .def(
+
+    python::init< std::vector< double >, std::vector< double >,
+                  InterpolationType, bool >(),
+    python::arg( "cosines" ), python::arg( "values" ),
+    python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "normalise" ) = false,
+    "Initialise the angular distribution with tabulated data with a single\n"
+    "interpolation zone"
   )
   .def_property_readonly(
 

@@ -949,10 +949,25 @@ class MixedAngularDistribution:
     
     Parameters
     ----------
-        function : Union[njoy.dryad.IsotropicAngularDistributionFunction,
-                   njoy.dryad.LegendreAngularDistributionFunction,
-                   njoy.dryad.TabulatedAngularDistributionFunction]
+        pdf : Union[njoy.dryad.IsotropicAngularDistributionFunction,
+                    njoy.dryad.LegendreAngularDistributionFunction,
+                    njoy.dryad.TabulatedAngularDistributionFunction]
             the distribution function
+        value : float
+            the value of the distribution (0.5 for a normalised distribution)
+        coefficients : list of float
+            the coefficients of the Legendre series (from
+            lowest to highest order coefficient)
+        cosines : list of float
+            the cosine values
+        values : list of float
+            the probability values
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
@@ -973,9 +988,32 @@ class MixedAngularDistribution:
         ...
     def __eq__(self, arg0: MixedAngularDistribution) -> bool:
         ...
-    def __init__(self, function: IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction, normalise: bool = False) -> None:
+    @typing.overload
+    def __init__(self, pdf: IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction, normalise: bool = False) -> None:
         """
         Initialise the angular distribution
+        """
+    @typing.overload
+    def __init__(self, value: float, normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution as isotropic
+        """
+    @typing.overload
+    def __init__(self, coefficients: list[float], normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution with Legendre coefficients
+        """
+    @typing.overload
+    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution with tabulated data with multiple
+        interpolation zones
+        """
+    @typing.overload
+    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution with tabulated data with a single
+        interpolation zone
         """
     def __ne__(self, arg0: MixedAngularDistribution) -> bool:
         ...
@@ -4150,7 +4188,7 @@ class TwoBodyDistributionData:
         ...
     def __eq__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, normalise: bool = False) -> None:
+    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions, normalise: bool = False) -> None:
         """
         Initialise the two-body distribution data
         """
@@ -4161,12 +4199,12 @@ class TwoBodyDistributionData:
         Normalise the distribution data
         """
     @property
-    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
+    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions:
         """
         The angular distributions
         """
     @angle.setter
-    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
+    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions) -> None:
         ...
     @property
     def frame(self) -> ReferenceFrame:

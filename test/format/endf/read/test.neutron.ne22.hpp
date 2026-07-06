@@ -585,6 +585,133 @@ namespace ne22 {
     CHECK( std::nullopt == particle.energyUncertainty() );
   }
 
+  void verifyElasticReaction( const Reaction& reaction, bool normalise ) {
+
+    CHECK( id::ReactionID( "n,Ne22->n,Ne22" ) == reaction.identifier() );
+    CHECK( 50 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+
+    CHECK( std::nullopt != reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
+    CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
+
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 278 == reaction.crossSection().numberPoints() );
+    CHECK( 2 == reaction.crossSection().numberRegions() );
+    CHECK( 278 == reaction.crossSection().energies().size() );
+    CHECK( 278 == reaction.crossSection().values().size() );
+    CHECK( 2 == reaction.crossSection().boundaries().size() );
+    CHECK( 2 == reaction.crossSection().interpolants().size() );
+    CHECK(   2 == reaction.crossSection().boundaries()[0] );
+    CHECK( 277 == reaction.crossSection().boundaries()[1] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 1e-5, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 2e+8, WithinRel( reaction.crossSection().energies()[277] ) );
+    CHECK_THAT( 0.     , WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( .174254, WithinRel( reaction.crossSection().values()[277] ) );
+
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Ne22" ) ) );
+
+    auto neutron = reaction.product( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
+    CHECK( false == neutron.hasAverageEnergy() );
+    CHECK( true == neutron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
+    auto multiplicity = std::get< int >( neutron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
+    CHECK( std::nullopt == neutron.averageEnergy() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( neutron.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< MixedAngularDistributions >( data.angle() ) );
+    auto angle = std::get< MixedAngularDistributions >( data.angle() );
+    CHECK( 51 == angle.numberPoints() );
+    CHECK( 2 == angle.numberRegions() );
+    CHECK( 51 == angle.grid().size() );
+    CHECK( 51 == angle.distributions().size() );
+    CHECK( 2 == angle.boundaries().size() );
+    CHECK( 2 == angle.interpolants().size() );
+    CHECK_THAT( 1e-5 , WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 1e+5 , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 3e+7 , WithinRel( angle.grid()[35] ) );
+    CHECK_THAT( 3e+7 , WithinRel( angle.grid()[36] ) );
+    CHECK_THAT( 16e+7, WithinRel( angle.grid()[49] ) );
+    CHECK_THAT( 20e+7, WithinRel( angle.grid()[50] ) );
+    CHECK( 35 == angle.boundaries()[0] );
+    CHECK( 50 == angle.boundaries()[1] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[1] );
+
+    CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( angle.distributions()[0].pdf() ) );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( angle.distributions()[35].pdf() ) );
+    CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( angle.distributions()[36].pdf() ) );
+    CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( angle.distributions()[50].pdf() ) );
+
+    auto pdf0 = std::get< LegendreAngularDistributionFunction >( angle.distributions()[0].pdf() );
+    auto pdf35 = std::get< LegendreAngularDistributionFunction >( angle.distributions()[35].pdf() );
+    auto pdf36 = std::get< TabulatedAngularDistributionFunction >( angle.distributions()[36].pdf() );
+    auto pdf50 = std::get< TabulatedAngularDistributionFunction >( angle.distributions()[50].pdf() );
+
+    CHECK(  1 == pdf0.coefficients().size() );
+    CHECK( 31 == pdf35.coefficients().size() );
+    CHECK_THAT(  0.5        , WithinRel( pdf0.coefficients()[0] ) );
+    CHECK_THAT(  0.5        , WithinRel( pdf35.coefficients()[0] ) );
+    CHECK_THAT( -1.455580e-9 * 30.5, WithinRel( pdf35.coefficients()[30] ) );
+
+    // the numbers in the tests given below are the values as found in the test
+    // file so they need to be normalised. the following values are the scaling
+    // factors that need to be applied (calculated by integrating the distributions
+    // in excel).
+    double normalisation36 = normalise ? 0.99999988111130 : 1.;
+    double normalisation50 = normalise ? 1.00000091921303 : 1.;
+
+    CHECK( 91 == pdf36.cosines().size() );
+    CHECK( 91 == pdf36.values().size() );
+    CHECK(  1 == pdf36.interpolants().size() );
+    CHECK(  1 == pdf36.boundaries().size() );
+    CHECK( 91 == pdf50.cosines().size() );
+    CHECK( 91 == pdf50.values().size() );
+    CHECK(  1 == pdf50.interpolants().size() );
+    CHECK(  1 == pdf50.boundaries().size() );
+    CHECK( 90 == pdf36.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == pdf36.interpolants()[0] );
+    CHECK_THAT( -1., WithinRel( pdf36.cosines()[0] ) );
+    CHECK_THAT(  1., WithinRel( pdf36.cosines()[90] ) );
+    CHECK_THAT( 2.562149e-3 / normalisation36, WithinRel( pdf36.values()[0] ) );
+    CHECK_THAT( 1.593952e+1 / normalisation36, WithinRel( pdf36.values()[90] ) );
+    CHECK( 90 == pdf50.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == pdf50.interpolants()[0] );
+    CHECK_THAT( -1., WithinRel( pdf50.cosines()[0] ) );
+    CHECK_THAT(  1., WithinRel( pdf50.cosines()[90] ) );
+    CHECK_THAT( 7.050719e-7 / normalisation50, WithinRel( pdf50.values()[0] ) );
+    CHECK_THAT( 7.964481e+1 / normalisation50, WithinRel( pdf50.values()[90] ) );
+
+    auto ne22 = reaction.product( id::ParticleID( "Ne22" ) );
+    CHECK( id::ParticleID( "Ne22" ) == ne22.productIdentifier() );
+    CHECK( std::nullopt == ne22.parentIdentifier() );
+    CHECK( 0 == ne22.chainIndex() );
+    CHECK( false == ne22.hasAverageCosine() );
+    CHECK( false == ne22.hasAverageEnergy() );
+    CHECK( false == ne22.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( ne22.multiplicity() ) );
+    multiplicity = std::get< int >( ne22.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == ne22.averageCosine() );
+    CHECK( std::nullopt == ne22.averageEnergy() );
+    CHECK( std::nullopt == ne22.distributionData() );
+  }
+
   void verifyAngularDistributionCovariances( const covariance::AngularDistributionCovarianceData& angle ) {
 
     CHECK( false == angle.hasCovarianceMatrix( id::ReactionID( "n,Ne22->total" ) ) );
@@ -1050,7 +1177,7 @@ namespace ne22 {
     CHECK(  5.335100e-2 == matrix.covariances()( 8, 8) );
   }
 
-  void verifyNe22( const ProjectileTarget& Ne22, bool /* normalise */ ) {
+  void verifyNe22( const ProjectileTarget& Ne22, bool normalise ) {
 
     neutron::ne22::verifyDocumentation( Ne22.documentation() );
 
@@ -1063,6 +1190,9 @@ namespace ne22 {
     verifyParticleDatabase( Ne22.particleData().value() );
 
     CHECK( std::nullopt == Ne22.resonances() );
+
+    auto elastic = Ne22.reaction( id::ReactionID( "n,Ne22->n,Ne22" ) );
+    neutron::ne22::verifyElasticReaction( elastic, normalise );
 
     CHECK( std::nullopt != Ne22.covarianceData() );
 

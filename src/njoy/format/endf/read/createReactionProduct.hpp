@@ -11,9 +11,10 @@
 #include "njoy/format/endf/read/createProductIdentifier.hpp"
 #include "njoy/format/endf/read/createReferenceFrame.hpp"
 #include "njoy/format/endf/read/createMultiplicity.hpp"
-#include "njoy/format/endf/read/createTabulatedEnergyDistributions.hpp"
-#include "njoy/format/endf/read/createTabulatedAngularDistributions.hpp"
 #include "njoy/format/endf/read/createLegendreAngularDistributions.hpp"
+#include "njoy/format/endf/read/createTabulatedAngularDistributions.hpp"
+#include "njoy/format/endf/read/createMixedAngularDistributions.hpp"
+#include "njoy/format/endf/read/createTabulatedEnergyDistributions.hpp"
 #include "njoy/format/endf/read/createTabulatedAverageEnergy.hpp"
 #include "njoy/format/endf/read/createTabulatedFormFactor.hpp"
 #include "njoy/format/endf/read/createTabulatedScatteringFunction.hpp"
@@ -60,9 +61,9 @@ namespace read {
 
         return createTabulatedAngularDistributions( distributions, normalise );
       },
-      [&] ( const MixedDistributions& ) -> dryad::TwoBodyDistributionData::AngularDistributions {
+      [&] ( const MixedDistributions& distributions ) -> dryad::TwoBodyDistributionData::AngularDistributions {
 
-        throw std::runtime_error( "Any MF4 LTT = 3 is not implemented yet, contact a developer" );
+        return createMixedAngularDistributions( distributions, normalise );
       }
     };
 
@@ -84,20 +85,10 @@ namespace read {
     auto frame = createReferenceFrame( section.referenceFrame() );
     int multiplicity = reaction.particles()->at( id );
 
-    if ( section.LTT() != 3 ) {
-
-      auto distribution = dryad::TwoBodyDistributionData(
-                            frame,
-                            std::visit( createDistributions, section.distributions() ) );
-      return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
-    }
-    else {
-
-      // temporary code: remove when we implement mixed distributions
-
-      Log::info( "Any MF4 LTT = 3 is not implemented yet" );
-      return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::nullopt );
-    }
+    auto distribution = dryad::TwoBodyDistributionData(
+                          frame,
+                          std::visit( createDistributions, section.distributions() ) );
+    return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
   }
 
   /**

@@ -82,11 +82,13 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param function   the distribution function
+     *  @param[in] pdf         the pdf of the distribution
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    MixedAngularDistribution( MixedDistributionFunction function,
+    MixedAngularDistribution( MixedDistributionFunction pdf,
                               bool normalise = false ) :
-        pdf_( std::move( function ) ),
+        pdf_( std::move( pdf ) ),
         cdf_() {
 
       if ( normalise ) {
@@ -95,9 +97,73 @@ namespace dryad {
       }
       else {
 
-        this->cdf_ = this->deriveCdf();
+        this->cdf() = this->deriveCdf();
       }
     }
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] value       the value of the distribution (0.5 for a normalised distribution)
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
+     */
+    MixedAngularDistribution( double value, bool normalise = false ) :
+      MixedAngularDistribution( IsotropicAngularDistributionFunction( std::move( value ) ),
+                                normalise ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] coefficients   the coefficients of the distribution pdf represented by a
+     *                            Legendre series (from lowest to highest order coefficient)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
+     */
+    MixedAngularDistribution( std::vector< double > coefficients,
+                              bool normalise = false ) :
+      MixedAngularDistribution( LegendreAngularDistributionFunction( std::move( coefficients ) ),
+                                normalise ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] cosines        the cosine values
+     *  @param[in] values         the probability values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
+     */
+    MixedAngularDistribution(
+        std::vector< double > cosines,
+        std::vector< double > values,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants,
+        bool normalise = false ) :
+      MixedAngularDistribution(
+          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
+                                                std::move( boundaries ), std::move( interpolants ) ),
+          normalise ) {}
+
+    /**
+     *  @brief Constructor for a pdf using a single interpolation zone
+     *
+     *  @param cosines        the cosine values
+     *  @param values         the probability values
+     *  @param interpolant    the interpolation type of the data (default lin-lin)
+     *  @param normalise      option to indicate whether or not to normalise
+     *                        all probability data (default: no normalisation)
+     */
+    MixedAngularDistribution(
+        std::vector< double > cosines,
+        std::vector< double > values,
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool normalise = false ) :
+      MixedAngularDistribution(
+          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
+                                                std::move( interpolant ) ),
+          normalise ) {}
 
     /* methods */
 

@@ -6,7 +6,6 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
 #include "njoy/format/createVector.hpp"
 #include "njoy/format/endf/read/createBoundaries.hpp"

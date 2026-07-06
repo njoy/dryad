@@ -8,6 +8,7 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
+#include "njoy/format/convertLegendreMoments.hpp"
 #include "njoy/format/gnds/read/readAxes.hpp"
 #include "njoy/format/gnds/read/readLegendre.hpp"
 #include "njoy/format/gnds/read/convertEnergy.hpp"
@@ -25,12 +26,9 @@ namespace read {
   createLegendreAngularDistribution( pugi::xml_node legendre, const Axes& units,
                                      bool normalise ) {
 
-    // read data from the node
+    // read data from the node and convert to coefficients
     auto data = readLegendre( legendre );
-    for ( std::size_t index = 0; index < data.second.size(); ++index ) {
-
-      data.second[index] *= 0.5 * ( 2 * index + 1 );
-    }
+    convertLegendreMoments( data.second );
 
     // convert outer domain value if necessary
     if ( data.first.has_value() ) {

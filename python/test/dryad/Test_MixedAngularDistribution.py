@@ -248,8 +248,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
 
         # the data is given explicitly
-        chunk1 = MixedAngularDistribution( function =IsotropicAngularDistributionFunction(), normalise = False )
-        chunk2 = MixedAngularDistribution( function =IsotropicAngularDistributionFunction(), normalise = True )
+        chunk1 = MixedAngularDistribution( pdf =IsotropicAngularDistributionFunction(), normalise = False )
+        chunk2 = MixedAngularDistribution( pdf =IsotropicAngularDistributionFunction(), normalise = True )
 
         verify_isotropic_chunk( self, chunk1 )
         verify_isotropic_chunk( self, chunk2 )
@@ -261,8 +261,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
         verify_isotropic_chunk( self, chunk2 )
 
         # the data is given explicitly
-        chunk1 = MixedAngularDistribution( function = LegendreAngularDistributionFunction( [ 1., 0.5 ] ), normalise = False )
-        chunk2 = MixedAngularDistribution( function = LegendreAngularDistributionFunction( [ 1., 0.5 ] ), normalise = True )
+        chunk1 = MixedAngularDistribution( pdf = LegendreAngularDistributionFunction( [ 1., 0.5 ] ), normalise = False )
+        chunk2 = MixedAngularDistribution( pdf = LegendreAngularDistributionFunction( [ 1., 0.5 ] ), normalise = True )
 
         verify_legendre_chunk( self, chunk1, False )
         verify_legendre_chunk( self, chunk2, True )
@@ -274,9 +274,9 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
         verify_legendre_chunk( self, chunk2, True )
 
         # the data is given explicitly using a normalised table
-        chunk1 = MixedAngularDistribution( function = TabulatedAngularDistributionFunction( [ -1., 0., 0.5, 1. ], [ 0., 1., 1.5, 2. ] ),
+        chunk1 = MixedAngularDistribution( pdf = TabulatedAngularDistributionFunction( [ -1., 0., 0.5, 1. ], [ 0., 1., 1.5, 2. ] ),
                                            normalise = False )
-        chunk2 = MixedAngularDistribution( function = TabulatedAngularDistributionFunction( [ -1., 0., 0.5, 1. ], [ 0., 1., 1.5, 2. ] ),
+        chunk2 = MixedAngularDistribution( pdf = TabulatedAngularDistributionFunction( [ -1., 0., 0.5, 1. ], [ 0., 1., 1.5, 2. ] ),
                                            normalise = True )
 
         verify_tabulated_chunk( self, chunk1, False )

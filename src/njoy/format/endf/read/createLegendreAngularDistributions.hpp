@@ -37,7 +37,7 @@ namespace read {
       distributions.reserve( energies.size() );
       for ( auto&& entry : distribution.angularDistributions() ) {
 
-        distributions.emplace_back( createLegendreAngularDistribution( entry.coefficients(), true, false ) );
+        distributions.emplace_back( createLegendreAngularDistribution( entry, false ) );
       }
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );
