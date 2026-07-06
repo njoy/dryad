@@ -53,6 +53,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringKernelFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringKernel.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/ShortCollisionTimeScatteringKernel.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/ScatteringKernel.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/CoherentElasticScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticCrossSection.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticAngularPdf.python.cpp

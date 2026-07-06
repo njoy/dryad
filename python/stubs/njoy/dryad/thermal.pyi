@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'ShortCollisionTimeScatteringKernel', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'ScatteringKernel', 'ShortCollisionTimeScatteringKernel', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -562,10 +562,91 @@ class IncoherentElasticScattering:
         """
         The upper energy limit
         """
+class ScatteringKernel:
+    """
+    An S(a,b) scattering kernel using the short collision time approximation
+    
+    Parameters
+    ----------
+        moderator_temperature : float
+            the moderator temperature
+        effective_temperature : float
+            the effective temperature
+        table : njoy.dryad.thermal.TabulatedScatteringKernel
+            the tabulated S(a,b) scattering kernel
+        energy_transfers : list of float
+            the energy transfer values
+        functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction
+            the tabulated S(a) scattering functions
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, a: float, b: float) -> float:
+        """
+        Evaluate the scattering kernel for a given energy value
+        
+        Parameters
+        ----------
+            a : float
+                the momentum transfer value
+            b : float
+                the energy transfer value
+        """
+    def __copy__(self) -> ScatteringKernel:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ScatteringKernel:
+        ...
+    def __eq__(self, arg0: ScatteringKernel) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, moderator_temperature: float, effective_temperature: float, table: TabulatedScatteringKernel) -> None:
+        """
+        Initialise the scattering kernel with a tabulated scattering kernel
+        """
+    @typing.overload
+    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the scattering kernel with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the scattering kernel with a single interpolation zone
+        """
+    def __ne__(self, arg0: ScatteringKernel) -> bool:
+        ...
+    @property
+    def effective_temperature(self) -> float:
+        """
+        The effective temperature
+        """
+    @property
+    def is_energy_transfer_symmetric(self) -> bool:
+        """
+        Flag to indicate whether or not the scattering kernel is symmetric along the energy transfer axis
+        """
+    @property
+    def moderator_temperature(self) -> float:
+        """
+        The moderator temperature
+        """
+    @property
+    def short_collision_time(self) -> ShortCollisionTimeScatteringKernel:
+        """
+        The short collision time approximation
+        """
+    @property
+    def tabulated_scattering_kernel(self) -> TabulatedScatteringKernel:
+        """
+        The tabulated scattering kernel
+        """
 class ShortCollisionTimeScatteringKernel:
     """
-    Bragg edge data for a single temperature
-    
     An S(a,b) scattering kernel using the short collision time approximation
     
     Parameters
@@ -578,7 +659,7 @@ class ShortCollisionTimeScatteringKernel:
     __hash__: typing.ClassVar[None] = None
     def __call__(self, a: float, b: float) -> float:
         """
-        Evaluate the table for a given energy value
+        Evaluate the scattering kernel for a given energy value
         
         Parameters
         ----------

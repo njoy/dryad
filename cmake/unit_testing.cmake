@@ -96,6 +96,7 @@ add_cpp_test( dryad.resonances.UnresolvedResonanceTable                         
 add_cpp_test( dryad.thermal.ShortCollisionTimeScatteringKernel                         dryad/thermal/ShortCollisionTimeScatteringKernel.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedScatteringKernelFunction                          dryad/thermal/TabulatedScatteringKernelFunction.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedScatteringKernel                                  dryad/thermal/TabulatedScatteringKernel.test.cpp )
+add_cpp_test( dryad.thermal.ScatteringKernel                                           dryad/thermal/ScatteringKernel.test.cpp )
 add_cpp_test( dryad.thermal.BraggEdgeData                                              dryad/thermal/BraggEdgeData.test.cpp )
 add_cpp_test( dryad.thermal.DebyeWallerIntegralData                                    dryad/thermal/DebyeWallerIntegralData.test.cpp )
 add_cpp_test( dryad.thermal.CoherentElasticScattering                                  dryad/thermal/CoherentElasticScattering.test.cpp )

@@ -16,6 +16,7 @@ namespace thermal {
   void wrapTabulatedScatteringKernelFunction( python::module& );
   void wrapTabulatedScatteringKernel( python::module& );
   void wrapShortCollisionTimeScatteringKernel( python::module& );
+  void wrapScatteringKernel( python::module& );
 
   void wrapCoherentElasticScattering( python::module& );
   void wrapIncoherentElasticCrossSection( python::module& );
@@ -40,6 +41,7 @@ void wrapThermal( python::module& module ) {
   thermal::wrapTabulatedScatteringKernelFunction( submodule );
   thermal::wrapTabulatedScatteringKernel( submodule );
   thermal::wrapShortCollisionTimeScatteringKernel( submodule );
+  thermal::wrapScatteringKernel( submodule );
 
   thermal::wrapCoherentElasticScattering( submodule );
   thermal::wrapIncoherentElasticCrossSection( submodule );
