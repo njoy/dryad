@@ -16,7 +16,7 @@ namespace format {
   /**
    *  @brief Convert a range of Legendre moments into coefficients
    *
-   *  @param[in] moments   the legendre moments of the distribution
+   *  @param[in,out] moments   the legendre moments of the distribution
    */
   void convertLegendreMoments( std::vector< double >& moments ) {
 
