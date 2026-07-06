@@ -1,6 +1,8 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <sstream>
+#include <iomanip>
 
 // local includes
 #include "dryad/definitions.hpp"
@@ -58,16 +60,14 @@ void wrapPositiveVariances( python::module& module ) {
        { return self( covariance ); },
     python::arg( "covariance" ),
     "Verify if the provided covariance matrix has variances that are strictly positive\n\n"
-    "The test returns the following status values:\n"
+    "The test returns the following status values:\n\n"
     "  - Success : all variances are strictly positive\n"
     "  - Warning : all variances are positive\n"
     "  - Fail : some of the variances seem to be negative\n"
     "  - Skipped : the test was skipped\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
-    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
-    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

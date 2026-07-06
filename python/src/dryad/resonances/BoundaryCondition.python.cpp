@@ -37,10 +37,18 @@ void wrapBoundaryCondition( python::module& module ) {
 
   // wrap the component
   component
-  .value( "ShiftFactor", Component::ShiftFactor,
-          "Eliminate energy dependent shift factor so L = iP" )
-  .value( "Constant", Component::Constant,
-          "Use constant boundary condition" );
+  .value(
+
+    "ShiftFactor",
+    Component::ShiftFactor,
+    "Eliminate energy dependent shift factor so L = iP"
+  )
+  .value(
+
+    "Constant",
+    Component::Constant,
+    "Use constant boundary condition"
+  );
 }
 
 } // resonances namespace

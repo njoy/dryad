@@ -30,10 +30,18 @@ void wrapReactionCategory( python::module& module ) {
 
   // wrap the component
   component
-  .value( "Primary",   Component::Primary,
-          "A primary independent reaction that contributes to the total cross section" )
-  .value( "Summation", Component::Summation,
-          "A summation reaction with or without reaction products that does not count towards the total cross section" );
+  .value(
+
+    "Primary",
+    Component::Primary,
+    "A primary independent reaction that contributes to the total cross section"
+  )
+  .value(
+
+    "Summation",
+    Component::Summation,
+    "A summation reaction with or without reaction products that does not count towards the total cross section"
+  );
 }
 
 } // dryad namespace

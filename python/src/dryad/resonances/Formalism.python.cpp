@@ -37,10 +37,17 @@ void wrapFormalism( python::module& module ) {
 
   // wrap the component
   component
-  .value( "ReichMoore", Component::ReichMoore,
-          "Reich-Moore formalism with single eliminated capture channel" )
-  .value( "GeneralRMatrix", Component::GeneralRMatrix,
-          "General R-matrix formalism" );
+  .value(
+
+    "ReichMoore",
+    Component::ReichMoore,
+    "Reich-Moore formalism with single eliminated capture channel"
+  )
+  .value(
+
+    "GeneralRMatrix",
+    Component::GeneralRMatrix,
+    "General R-matrix formalism" );
 }
 
 } // resonances namespace

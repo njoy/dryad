@@ -11,6 +11,7 @@ class LevelEntry:
     
     The LevelEntry class contains level information for a particle from the
     RIPL-3 database:
+    
       - a particle identifier
       - an optional level energy value
       - an optional spin value
@@ -18,6 +19,7 @@ class LevelEntry:
       - an optional half life value
     
     The data is stored in the following units:
+    
       - energy values are in eV
       - half life values are in seconds
     

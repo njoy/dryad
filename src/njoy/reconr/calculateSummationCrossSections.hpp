@@ -19,7 +19,7 @@ namespace reconr {
    *  the partials (if required) and summing them together.
    *
    *  @param[in,out] pt          the projectile-target data to be modified
-   *  @param[in]     tolerance   the linearisation tolerance (default: 0.1%)
+   *  @param[in]     tolerance   the absolute linearisation tolerance
    */
   inline void calculateSummationCrossSections( dryad::ProjectileTarget& pt,
                                                double tolerance = constants::linearisation::tolerance ) {

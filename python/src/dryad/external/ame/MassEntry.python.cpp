@@ -28,7 +28,7 @@ void wrapMassEntry( python::module& module ) {
     "MassEntry",
     "Mass entry information from the Atomic Mass Evaluation\n\n"
     "The MassEntry class contains specific information from the atomic mass\n"
-    "evaluations:\n"
+    "evaluations:\n\n"
     "  - a particle identifier\n"
     "  - mass excess and uncertainty (in eV)\n"
     "  - binding energy per nucleon and uncertainty (in eV)\n"

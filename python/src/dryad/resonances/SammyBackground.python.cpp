@@ -54,17 +54,7 @@ void wrapSammyBackground( python::module& module ) {
     python::arg( "logarithmic_coefficients" ),
     python::arg( "lower_singularity" ),
     python::arg( "upper_singularity" ),
-    "Initialise the background function\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    polynomial_coefficients : list of float\n"
-    "       the coefficients of the polymonial term (order 2)\n"
-    "    logarithmic_coefficients : list of float\n"
-    "       the coefficients of the logarithmic term (order 1)\n"
-    "    lower_singularity : float\n"
-    "       the lower logarithmic singularity values\n"
-    "    upper_singularity : float\n"
-    "       the upper logarithmic singularity values\n"
+    "Initialise the background function"
   )
   .def_property_readonly(
 

@@ -1,6 +1,8 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <sstream>
+#include <iomanip>
 
 // local includes
 #include "dryad/definitions.hpp"
@@ -13,6 +15,10 @@ namespace psychic {
 namespace covariance {
 
 void wrapBoundedCorrelations( python::module& module ) {
+
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 1 ) << njoy::constants::psychic::tolerance;
 
   // type aliases
   using Component = njoy::psychic::covariance::BoundedCorrelations;
@@ -28,11 +34,11 @@ void wrapBoundedCorrelations( python::module& module ) {
 
     module,
     "BoundedCorrelations",
-    "Test to verify if all correlation values are between -1 and 1\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 1e-10\n"
-    "        the comparison tolerance"
+    std::string( "Test to verify if all correlation values are between -1 and 1\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the absolute comparison tolerance" ).c_str()
   );
   // wrap the component
   component
@@ -83,7 +89,7 @@ void wrapBoundedCorrelations( python::module& module ) {
        { return self( covariance ); },
     python::arg( "covariance" ),
     "Verify if the provided covariance matrix has correlations between -1 and 1\n\n"
-    "The test returns the following status values:\n"
+    "The test returns the following status values:\n\n"
     "  - Success : the correlations are between -1 and 1\n"
     "  - Warning : the correlations are between -1 and 1, taking into account a tolerance\n"
     "  - Fail : the correlations matrix are outside the -1 and 1 range\n"
@@ -91,9 +97,7 @@ void wrapBoundedCorrelations( python::module& module ) {
     "The smallest and largest correlation values are available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
-    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
-    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

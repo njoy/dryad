@@ -29,7 +29,21 @@ void wrapChannelRadii( python::module& module ) {
     "Channel radii used in wave function calculations\n\n"
     "The penetrability P, shift factor S and phase shift phi require knowledge\n"
     "of the channel radius in their calculation. The ChannelRadii class provides\n"
-    "these radii for each one of these."
+    "these radii for each one of these.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    radius : float or njoy.dryad.resonances.TabulatedRadius\n"
+    "        the channel radius to be used for P, S and phi\n"
+    "    true_radius : float or njoy.dryad.resonances.TabulatedRadius\n"
+    "        the channel radius to be used for P and S\n"
+    "    effective_radius : float or njoy.dryad.resonances.TabulatedRadius\n"
+    "        the channel radius to be used for phi\n"
+    "    penetrability : float or njoy.dryad.resonances.TabulatedRadius\n"
+    "        the channel radius to be used for P\n"
+    "    shift_factor : float or njoy.dryad.resonances.TabulatedRadius\n"
+    "        the channel radius to be used for S\n"
+    "    phase_shift : float or njoy.dryad.resonances.TabulatedRadius\n"
+    "        the channel radius to be used for phi"
    );
 
   // wrap the component

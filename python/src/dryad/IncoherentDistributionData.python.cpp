@@ -13,6 +13,10 @@ namespace dryad {
 
 void wrapIncoherentDistributionData( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::integration::tolerance;
+
   // type aliases
   using Component = njoy::dryad::IncoherentDistributionData;
   using ReferenceFrame = njoy::dryad::ReferenceFrame;
@@ -32,7 +36,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "together with the Klein-Nishina cross section determines the double\n"
     "differential cross section.\n\n"
     "This corresponds with the incoherent scattering function data given in MF27 MT504,\n"
-    "supplemented with optional external Compton profile data. \n\n"
+    "supplemented with optional external Compton profile data.\n\n"
     "Parameters\n"
     "----------\n"
     "    frame : njoy.dryad.ReferenceFrame\n"
@@ -100,15 +104,15 @@ void wrapIncoherentDistributionData( python::module& module ) {
     python::overload_cast< double, double >( &Component::averageEnergy, python::const_ ),
     python::arg( "energy" ),
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
-    "Calculate the average outgoing energy\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    energy : float \n"
-    "        the incident energy\n"
-    "    energies : list of float \n"
-    "        the incident energies\n"
-    "    tolerance : float \n"
-    "        the integration tolerance (default: 1e-8)"
+    std::string( "Calculate the average outgoing energy\n\n"
+                 "Parameters \n"
+                 "---------- \n"
+                 "    energy : float \n"
+                 "        the incident energy\n"
+                 "    energies : list of float \n"
+                 "        the incident energies\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
   )
   .def(
 

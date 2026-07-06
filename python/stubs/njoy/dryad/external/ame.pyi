@@ -11,6 +11,7 @@ class MassEntry:
     
     The MassEntry class contains specific information from the atomic mass
     evaluations:
+    
       - a particle identifier
       - mass excess and uncertainty (in eV)
       - binding energy per nucleon and uncertainty (in eV)

@@ -33,13 +33,13 @@ void wrapRadiativeTransitionData( python::module& module ) {
     "electron filling the vacancy originated from.\n\n"
     "Parameters\n"
     "----------\n"
-    "    originating_shell : njoy.dryad.id.ElectronSubshellID \n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
     "        the identifier of the subshell from which the\n"
     "        vacancy filling electron originated\n"
     "    probability : float\n"
     "        the probability of the transition\n"
     "    energy : float,  default None\n"
-    "        the energy of the emitted photon (default: undefined)\n\n"
+    "        the energy of the emitted photon (default: undefined)"
   );
 
   // wrap the component

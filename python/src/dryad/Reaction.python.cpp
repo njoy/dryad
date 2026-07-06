@@ -13,6 +13,10 @@ namespace dryad {
 
 void wrapReaction( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 1 ) << njoy::constants::integration::tolerance;
+
   // type aliases
   using Component = njoy::dryad::Reaction;
   using ReactionID = njoy::dryad::id::ReactionID;
@@ -240,11 +244,11 @@ void wrapReaction( python::module& module ) {
     "calculate_average_energy",
     &Component::calculateAverageEnergy,
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
-    "Calculate average outgoing energies for all reaction products\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 1e-8\n"
-    "        the integration tolerance"
+    std::string( "Calculate average outgoing energies for all reaction products\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the integration tolerance" ).c_str()
   );
 
   // add standard equality comparison definitions
