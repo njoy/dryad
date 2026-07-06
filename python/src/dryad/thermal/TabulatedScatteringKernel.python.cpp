@@ -109,16 +109,16 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
   .def(
 
     "__call__",
-    [] ( const Component& self, double b, double a ) -> decltype(auto)
-       { return self( b, a ); },
+    [] ( const Component& self, double a, double b ) -> decltype(auto)
+       { return self( a, b ); },
     python::arg( "value" ), python::arg( "cosine" ),
     "Evaluate the S(a,b) scattering kernel for a given energy and momentum transfer value\n\n"
     "Parameters\n"
     "----------\n"
-    "    b : float\n"
-    "        the energy transfer value\n"
     "    a : float\n"
-    "        the momentum transfer value"
+    "        the momentum transfer value\n"
+    "    b : float\n"
+    "        the energy transfer value"
   )
   .def(
 

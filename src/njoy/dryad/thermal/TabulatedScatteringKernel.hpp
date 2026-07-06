@@ -176,7 +176,17 @@ namespace thermal {
     using Parent::interpolants;
     using Parent::numberPoints;
     using Parent::numberRegions;
-    using Parent::operator();
+
+    /**
+     *  @brief Evaluate the scattering kernel for a given momentum and energy transfer value
+     *
+     *  @param[in] a   the momentum transfer value
+     *  @param[in] b   the energy transfer value
+     */
+    double operator()( double a, double b ) const {
+
+      return Parent::operator()( b, a );
+    }
 
     /**
      *  @brief Return linearised scattering functions
