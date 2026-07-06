@@ -71,7 +71,7 @@ namespace dryad {
     CoherentDistributionData& operator=( CoherentDistributionData&& ) = default;
 
     /**
-     *  @brief Constructor (no anomolous form factors)
+     *  @brief Constructor (no anomalous form factors)
      *
      *  @param[in] frame        the reference frame of the distribution data
      *  @param[in] scattering   the scattering function
@@ -82,7 +82,7 @@ namespace dryad {
                                   std::nullopt, std::nullopt ) {}
 
     /**
-     *  @brief Constructor (with anomolous form factors)
+     *  @brief Constructor (with anomalous form factors)
      *
      *  @param[in] frame        the reference frame of the distribution data
      *  @param[in] scattering   the scattering function

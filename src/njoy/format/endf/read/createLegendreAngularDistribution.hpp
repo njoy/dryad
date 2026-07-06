@@ -18,7 +18,7 @@ namespace endf {
 namespace read {
 
   /**
-   *  @brief Create a MixedAngularDistribution from MF4 Legendre moments
+   *  @brief Create a LegendreAngularDistribution from MF4 or MF6 Legendre moments
    *
    *  @param[in] distribution   the parsed MF4 or an MF6 Legendre distribution
    *  @param[in] normalise      the flag to indicate whether or not distributions
