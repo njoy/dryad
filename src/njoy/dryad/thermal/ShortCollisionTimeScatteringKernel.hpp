@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_THERMAL_SHORTCOLLISIONTIMESCATTERINGKERNEL
 
 // system includes
+#include <cmath>
 #include <tuple>
 
 // other includes
