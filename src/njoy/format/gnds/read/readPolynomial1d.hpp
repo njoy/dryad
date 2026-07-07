@@ -22,6 +22,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS polynomial1d node
+   *
+   *  @param[in] polynomial1d   the gnds polynomial1d node
    */
   inline Polynomial1d readPolynomial1d( const pugi::xml_node& polynomial1d ) {
 

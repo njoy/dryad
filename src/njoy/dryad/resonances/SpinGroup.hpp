@@ -77,7 +77,7 @@ namespace resonances {
     /**
      *  @brief Set the channels in the spin group
      *
-     *  @param channels  the channels
+     *  @param[in] channels  the channels
      */
     void channels( std::vector< Channel > channels ) {
 
@@ -104,7 +104,7 @@ namespace resonances {
     /**
      *  @brief Set the resonance table
      *
-     *  @param table  the resonance table
+     *  @param[in] table  the resonance table
      */
     void resonanceTable( ResonanceTable table ) {
 

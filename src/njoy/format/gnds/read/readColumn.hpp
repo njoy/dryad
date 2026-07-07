@@ -19,6 +19,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS column node
+   *
+   *  @param[in] column   the gnds column node
    */
   inline Column readColumn( const pugi::xml_node& column ) {
 

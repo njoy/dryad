@@ -17,6 +17,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS values node
+   *
+   *  @param[in] values   the gnds values node
    */
   inline std::vector< double >
   readValues( const pugi::xml_node& values ) {

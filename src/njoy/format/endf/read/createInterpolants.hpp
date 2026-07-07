@@ -18,6 +18,8 @@ namespace read {
 
   /**
    *  @brief Convert a range of ENDF interpolation type
+   *
+   *  @param[in] interpolant    the ENDF interpolation values
    */
   template < typename Range >
   auto createInterpolants( const Range& interpolants )

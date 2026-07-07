@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create the interpolation type from a GNDS string value
+   *
+   *  @param[in] type   the interaction type string
    */
   inline dryad::InteractionType createInteractionType( const std::string& type ) {
 

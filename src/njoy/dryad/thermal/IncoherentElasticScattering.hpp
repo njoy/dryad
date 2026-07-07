@@ -44,8 +44,8 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param xs                    the bound atom cross section
-     *  @param debyeWallerIntegral   the Debye-Waller integral data
+     *  @param[in] xs                    the bound atom cross section
+     *  @param[in] debyeWallerIntegral   the Debye-Waller integral data
      */
     IncoherentElasticScattering( double xs,
                                  DebyeWallerIntegralData debyeWallerIntegral ) :
@@ -81,7 +81,7 @@ namespace thermal {
     /**
      *  @brief Set the bound atom cross section value
      *
-     *  @param xs   the reaction product identifier
+     *  @param[in] xs   the reaction product identifier
      */
     void boundCrossSection( double xs ) {
 
@@ -99,7 +99,7 @@ namespace thermal {
     /**
      *  @brief Set the Debye-Waller integral data
      *
-     *  @param debyeWaller   the Debye-Waller integral data
+     *  @param[in] debyeWaller   the Debye-Waller integral data
      */
     void debyeWallerIntegral( DebyeWallerIntegralData debyeWaller ) {
 

@@ -20,6 +20,8 @@ namespace read {
 
   /**
    *  @brief Create a MixedAngularDistribution from MF4 Legendre moments
+   *
+   *  @param[in] distribution   the parsed MF4 Legendre distribution
    */
   inline dryad::MixedAngularDistribution
   createMixedAngularDistribution(

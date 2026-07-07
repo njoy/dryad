@@ -23,6 +23,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS grid node
+   *
+   *  @param[in] grid   the gnds grid node
    */
   inline Grid readGrid( const pugi::xml_node& grid ) {
 

@@ -23,7 +23,9 @@ namespace covariance {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
-   *  @param[in] material     the unparsed ENDF material
+   *  @param[in] boundaries   the group structure
+   *  @param[in] frame        the reference frame
+   *  @param[in] section      the parsed ENDF MF34 section
    */
   inline std::vector< dryad::covariance::AngularDistributionCovarianceMatrix >
   createAngularDistributionCovarianceMatrix(

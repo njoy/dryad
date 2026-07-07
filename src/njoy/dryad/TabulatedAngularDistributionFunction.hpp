@@ -35,7 +35,7 @@ namespace dryad {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     TabulatedAngularDistributionFunction( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}
@@ -78,10 +78,10 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param cosines        the cosine values
-     *  @param values         the probability values
-     *  @param boundaries     the boundaries of the interpolation regions
-     *  @param interpolants   the interpolation types of the interpolation regions
+     *  @param[in] cosines        the cosine values
+     *  @param[in] values         the probability values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
      */
     TabulatedAngularDistributionFunction(
         std::vector< double > cosines,
@@ -94,9 +94,9 @@ namespace dryad {
     /**
      *  @brief Constructor for a probability using a single interpolation zone
      *
-     *  @param cosines        the cosine values
-     *  @param values         the probability values
-     *  @param interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] cosines        the cosine values
+     *  @param[in] values         the probability values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
      */
     TabulatedAngularDistributionFunction(
         std::vector< double > cosines,

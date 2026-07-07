@@ -90,7 +90,7 @@ namespace resonances {
     /**
      *  @brief Set the spin groups that make up the compound system
      *
-     *  @param spinGroups  the spin groups
+     *  @param[in] spinGroups  the spin groups
      */
     void spinGroups( std::vector< SpinGroup > spinGroups ) {
 

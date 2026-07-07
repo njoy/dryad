@@ -93,7 +93,7 @@ namespace resonances {
     /**
      *  @brief Set the penetrability radius
      *
-     *  @param radius  the radius
+     *  @param[in] radius  the radius
      */
     void penetrabilityRadius( Radius radius ) {
 
@@ -103,7 +103,7 @@ namespace resonances {
     /**
      *  @brief Set the shift factor radius
      *
-     *  @param radius  the radius
+     *  @param[in] radius  the radius
      */
     void shiftFactorRadius( std::optional< Radius > radius ) {
 
@@ -113,7 +113,7 @@ namespace resonances {
     /**
      *  @brief Set the phase shift radius
      *
-     *  @param radius  the radius
+     *  @param[in] radius  the radius
      */
     void phaseShiftRadius( std::optional< Radius > radius ) {
 

@@ -18,6 +18,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS double node
+   *
+   *  @param[in] node   the gnds double node
    */
   inline Double readDouble( const pugi::xml_node& node ) {
 

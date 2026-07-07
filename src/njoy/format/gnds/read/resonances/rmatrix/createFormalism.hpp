@@ -16,6 +16,8 @@ namespace rmatrix {
 
   /**
    *  @brief Create the rmatrix formalism from a GNDS string
+   *
+   *  @param[in] formalism   the formalism string
    */
   inline dryad::resonances::Formalism createFormalism( const std::string& formalism ) {
 

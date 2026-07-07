@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create the projectile identifier based of the sublibrary value
+   *
+   *  @param[in] sublibrary    the sublibrary value
    */
   inline dryad::id::ParticleID createProjectileIdentifier( int sublibrary ) {
 

@@ -17,7 +17,7 @@ namespace atomic {
   /**
    *  @brief Create an ENDF subshell designator
    *
-   *  @param[in] subshell   the subshell identifier
+   *  @param[in] id   the subshell identifier
    */
   inline unsigned int createSubshellDesignator( const dryad::id::ElectronSubshellID& id ) {
 

@@ -30,6 +30,7 @@ namespace read {
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
+   *  @param[in,out] masses   the atomic mass values read from the ENDF file
    */
   inline dryad::Reaction
   createReaction( const dryad::id::ParticleID& projectile,

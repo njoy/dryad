@@ -72,11 +72,11 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param frame       the reference frame of the distribution data
-     *  @param angle       the angular distributions
-     *  @param energy      the energy distributions
-     *  @param normalise   option to indicate whether or not to normalise
-     *                     all probability data (default: no normalisation)
+     *  @param[in] frame       the reference frame of the distribution data
+     *  @param[in] angle       the angular distributions
+     *  @param[in] energy      the energy distributions
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
     UncorrelatedDistributionData( ReferenceFrame frame,
                                   AngularDistributions angle,
@@ -113,7 +113,7 @@ namespace dryad {
     /**
      *  @brief Set the reference frame
      *
-     *  @param frame   the reference frame of the distribution data
+     *  @param[in] frame   the reference frame of the distribution data
      */
     void frame( ReferenceFrame frame ) {
 
@@ -139,7 +139,7 @@ namespace dryad {
     /**
      *  @brief Set the angular distributions
      *
-     *  @param angle   the angular distributions
+     *  @param[in] angle   the angular distributions
      */
     void angle( AngularDistributions angle ) {
 
@@ -165,7 +165,7 @@ namespace dryad {
     /**
      *  @brief Set the energy distributions
      *
-     *  @param energy   the energy distributions
+     *  @param[in] energy   the energy distributions
      */
     void energy( EnergyDistributions energy ) {
 

@@ -52,8 +52,8 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param cosines   the cosine values
-     *  @param type      the uniform distribution type
+     *  @param[in] cosines   the cosine values
+     *  @param[in] type      the uniform distribution type
      */
     UniformAngularDistribution( std::vector< double > cosines,
                                 UniformDistributionType type ) :

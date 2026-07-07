@@ -22,6 +22,10 @@ namespace read {
   /**
    *  @brief Create a TabulatedEnergyDistributions instance from a parsed
    *         ENDF MF26 ContinuumEnergyAngle component
+   *
+   *  @param[in] distribution   the parsed ENDF continuum angle distribution
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   inline dryad::TabulatedEnergyDistributions
   createTabulatedEnergyDistributions(

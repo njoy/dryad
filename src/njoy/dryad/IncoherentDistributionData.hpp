@@ -70,9 +70,9 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param frame        the reference frame of the distribution data
-     *  @param scattering   the scattering function
-     *  @param profiles     the optional Compton profiles
+     *  @param[in] frame        the reference frame of the distribution data
+     *  @param[in] scattering   the scattering function
+     *  @param[in] profiles     the optional Compton profiles
      */
     IncoherentDistributionData( ReferenceFrame frame,
                                 TabulatedScatteringFunction scattering,

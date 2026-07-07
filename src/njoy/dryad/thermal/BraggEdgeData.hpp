@@ -46,9 +46,9 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param temperature   the temperature
-     *  @param energies      the Bragg edge energies
-     *  @param values        the structure factor values
+     *  @param[in] temperature   the temperature
+     *  @param[in] energies      the Bragg edge energies
+     *  @param[in] values        the structure factor values
      */
     BraggEdgeData( double temperature,
                    std::vector< double > energies,

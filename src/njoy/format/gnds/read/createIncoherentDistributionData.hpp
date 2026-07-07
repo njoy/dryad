@@ -18,6 +18,8 @@ namespace read {
 
   /**
    *  @brief Create a IncoherentDistributionData from a GNDS coherentPhotonScattering node
+   *
+   *  @param[in] coherent    the GNDS incoherentPhotonScattering node
    */
   inline dryad::IncoherentDistributionData
   createIncoherentDistributionData( const pugi::xml_node& incoherent ) {

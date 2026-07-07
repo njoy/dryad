@@ -19,6 +19,7 @@ namespace write {
   /**
    *  @brief Create an ENDF MF23 section object from a Reaction object
    *
+   *  @param[in] awr        the atomic weight ratio
    *  @param[in] reaction   the reaction data
    */
   inline ENDFtk::section::Type< 23 >

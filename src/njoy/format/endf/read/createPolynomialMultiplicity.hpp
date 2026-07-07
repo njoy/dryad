@@ -19,6 +19,10 @@ namespace read {
 
   /**
    *  @brief Create a PolynomialMultiplicity from a parsed ENDF multiplicity
+   *
+   *  @param[in] lower          the lower energy limit
+   *  @param[in] upper          the upper energy limit
+   *  @param[in] multiplicity   the parsed ENDF polynomial multiplicity
    */
   inline dryad::PolynomialMultiplicity
   createPolynomialMultiplicity( double lower, double upper,

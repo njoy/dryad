@@ -46,12 +46,12 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param moderatorTemperature   the moderator temperature
-     *  @param effectiveTemperature   the effective temperature used in the SCT approximation
-     *  @param energyTransfers        the energy transfer values
-     *  @param functions              the associated scattering functions
-     *  @param boundaries             the boundaries of the interpolation regions
-     *  @param interpolants           the interpolation types of the interpolation regions
+     *  @param[in] moderatorTemperature   the moderator temperature
+     *  @param[in] effectiveTemperature   the effective temperature used in the SCT approximation
+     *  @param[in] energyTransfers        the energy transfer values
+     *  @param[in] functions              the associated scattering functions
+     *  @param[in] boundaries             the boundaries of the interpolation regions
+     *  @param[in] interpolants           the interpolation types of the interpolation regions
      */
     TabulatedScatteringKernel( double moderatorTemperature,
                                double effectiveTemperature,
@@ -67,11 +67,11 @@ namespace thermal {
     /**
      *  @brief Constructor for scattering functions using a single interpolation zone
      *
-     *  @param moderatorTemperature   the moderator temperature
-     *  @param effectiveTemperature   the effective temperature used in the SCT approximation
-     *  @param energyTransfers        the energy transfer values
-     *  @param functions              the associated functions
-     *  @param interpolant            the interpolation type of the data (default lin-lin)
+     *  @param[in] moderatorTemperature   the moderator temperature
+     *  @param[in] effectiveTemperature   the effective temperature used in the SCT approximation
+     *  @param[in] energyTransfers        the energy transfer values
+     *  @param[in] functions              the associated functions
+     *  @param[in] interpolant            the interpolation type of the data (default lin-lin)
      */
     TabulatedScatteringKernel( double moderatorTemperature,
                                double effectiveTemperature,

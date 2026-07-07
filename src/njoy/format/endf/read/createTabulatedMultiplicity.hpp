@@ -21,6 +21,8 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedMultiplicity from a parsed ENDF multiplicity
+   *
+   *  @param[in] multiplicity   the parsed ENDF tabulated multiplicity (MF1, MF6 or MF26)
    */
   template < typename Multiplicity >
   auto createTabulatedMultiplicity( const Multiplicity& multiplicity )

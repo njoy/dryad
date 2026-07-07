@@ -58,7 +58,7 @@ namespace covariance {
     /**
      *  @brief Set the reference frame
      *
-     *  @param frame   the reference frame of the covariance data
+     *  @param[in] frame   the reference frame of the covariance data
      */
     void frame( ReferenceFrame frame ) {
 

@@ -15,14 +15,17 @@ namespace read {
 
   /**
    *  @brief Convert an energy value from GNDS into eV
+   *
+   *  @param[in] value   the value to convert
+   *  @param[in] unit    the unit of the value
    */
-  inline void convertEnergy( double& energy, const std::string& unit ) {
+  inline void convertEnergy( double& value, const std::string& unit ) {
 
     if ( unit != "eV" ) {
 
       if ( unit == "MeV" ) {
 
-        energy *= constants::mega;
+        value *= constants::mega;
       }
       else {
 

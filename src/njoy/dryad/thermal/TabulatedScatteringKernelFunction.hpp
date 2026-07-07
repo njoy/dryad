@@ -25,7 +25,7 @@ namespace thermal {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     TabulatedScatteringKernelFunction( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}
@@ -53,10 +53,10 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param momentumTransfers   the momentum transfer values
-     *  @param values              the scattering function values
-     *  @param boundaries          the boundaries of the interpolation regions
-     *  @param interpolants        the interpolation types of the interpolation regions
+     *  @param[in] momentumTransfers   the momentum transfer values
+     *  @param[in] values              the scattering function values
+     *  @param[in] boundaries          the boundaries of the interpolation regions
+     *  @param[in] interpolants        the interpolation types of the interpolation regions
      */
     TabulatedScatteringKernelFunction( std::vector< double > momentumTransfers,
                                        std::vector< double > values,
@@ -68,9 +68,9 @@ namespace thermal {
     /**
      *  @brief Constructor for a scattering function table using a single interpolation zone
      *
-     *  @param momentumTransfers   the momentum transfer values
-     *  @param values              the effective temperature values
-     *  @param interpolant         the interpolation type of the data (default lin-lin)
+     *  @param[in] momentumTransfers   the momentum transfer values
+     *  @param[in] values              the effective temperature values
+     *  @param[in] interpolant         the interpolation type of the data (default lin-lin)
      */
     TabulatedScatteringKernelFunction( std::vector< double > momentumTransfers,
                                        std::vector< double > values,

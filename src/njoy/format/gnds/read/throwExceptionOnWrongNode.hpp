@@ -14,6 +14,9 @@ namespace read {
 
   /**
    *  @brief Throw a node exception
+   *
+   *  @param[in] node   the gnds node
+   *  @param[in] name   the name to look for
    */
   inline void throwExceptionOnWrongNode( const pugi::xml_node& node, const char* name ) {
 

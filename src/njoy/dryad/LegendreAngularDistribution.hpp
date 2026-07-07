@@ -50,9 +50,9 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param pdf         the pdf function
-     *  @param normalise   option to indicate whether or not to normalise
-     *                     all probability data (default: no normalisation)
+     *  @param[in] pdf         the pdf function
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
     LegendreAngularDistribution( LegendreAngularDistributionFunction pdf,
                                  bool normalise = false ) :
@@ -68,10 +68,10 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param coefficients   the coefficients of the distribution pdf represented by a
-     *                        Legendre series (from lowest to highest order coefficient)
-     *  @param normalise      option to indicate whether or not to normalise
-     *                        all probability data (default: no normalisation)
+     *  @param[in] coefficients   the coefficients of the distribution pdf represented by a
+     *                            Legendre series (from lowest to highest order coefficient)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
      */
     LegendreAngularDistribution( std::vector< double > coefficients,
                                  bool normalise = false ) :
@@ -124,7 +124,7 @@ namespace dryad {
     /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param cosine   the value to be evaluated
+     *  @param[in] cosine   the value to be evaluated
      */
     double operator()( double cosine ) const {
 

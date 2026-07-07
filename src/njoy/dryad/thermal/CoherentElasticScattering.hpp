@@ -77,7 +77,7 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param braggEdges   the Bragg edge data
+     *  @param[in] braggEdges   the Bragg edge data
      */
     CoherentElasticScattering( std::vector< BraggEdgeData > braggEdges ) :
         edges_( std::move( braggEdges ) ) {
@@ -130,7 +130,7 @@ namespace thermal {
     /**
      *  @brief Set the Bragg edge data
      *
-     *  @param braggEdges   the Bragg edge data
+     *  @param[in] braggEdges   the Bragg edge data
      */
     void braggEdges( std::vector< BraggEdgeData > braggEdges ) {
 

@@ -15,6 +15,8 @@ namespace read {
 
   /**
    *  @brief Create the reference frame from a GNDS string
+   *
+   *  @param[in] frame   the reference frame string
    */
   inline dryad::ReferenceFrame createReferenceFrame( const std::string& frame ) {
 

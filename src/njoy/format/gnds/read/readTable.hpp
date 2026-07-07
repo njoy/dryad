@@ -27,6 +27,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS table node
+   *
+   *  @param[in] table   the gnds table node
    */
   inline Table readTable( const pugi::xml_node& table ) {
 

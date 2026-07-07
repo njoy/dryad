@@ -16,16 +16,16 @@ namespace read {
   /**
    *  @brief Convert a temperature value from GNDS into K
    *
-   *  @param[in] temperature   the temperature value
-   *  @param[in] unit          the unit
+   *  @param[in] value   the value to convert
+   *  @param[in] unit    the unit of the value
    */
-  inline void convertTemperature( double& temperature, const std::string& unit ) {
+  inline void convertTemperature( double& value, const std::string& unit ) {
 
     if ( unit != "K" ) {
 
       if ( unit == "degrees C" ) {
 
-        temperature += 273.15;
+        value += 273.15;
       }
       else {
 

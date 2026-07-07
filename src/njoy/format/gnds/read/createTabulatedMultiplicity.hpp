@@ -19,6 +19,9 @@ namespace read {
 
   /**
    *  @brief Create a TabulatedMultiplicity from a GNDS multiplicity node
+   *
+   *  @param[in] multiplicity   the gnds XYs1d or regions1d node
+   *  @param[in] style          the gnds style to process (default is eval)
    */
   inline dryad::TabulatedMultiplicity
   createTabulatedMultiplicity( const pugi::xml_node& multiplicity,

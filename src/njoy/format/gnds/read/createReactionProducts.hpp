@@ -22,7 +22,8 @@ namespace read {
    *  @param[in] multiplicity    the multiplicity of the target
    *  @param[in, out] products   the current set of reaction products
    */
-  inline void addProduct( const dryad::id::ParticleID& particle, int multiplicity,
+  inline void addProduct( const dryad::id::ParticleID& particle,
+                          int multiplicity,
                           std::vector< dryad::ReactionProduct >& products ) {
 
     auto iter = std::find_if( products.begin(), products.end(),

@@ -14,6 +14,8 @@ namespace write {
 
   /**
    *  @brief Create an one-based index from a zero-based index
+   *
+   *  @param[in] index   the zero-based index values
    */
   inline long createIndex( int index ) {
 

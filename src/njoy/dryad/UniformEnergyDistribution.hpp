@@ -47,8 +47,8 @@ namespace dryad {
     /**
      *  @brief Constructor
      *
-     *  @param energies   the energy values
-     *  @param type       the uniform distribution type
+     *  @param[in] energies   the energy values
+     *  @param[in] type       the uniform distribution type
      */
     UniformEnergyDistribution( std::vector< double > energies,
                                UniformDistributionType type ) :

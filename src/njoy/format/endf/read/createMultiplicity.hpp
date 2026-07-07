@@ -20,6 +20,8 @@ namespace read {
 
   /**
    *  @brief Create an integer multiplicity
+   *
+   *  @param[in] multiplicity   the integer multiplicity
    */
   inline std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity >
   createMultiplicity( int multiplicity ) {
@@ -29,6 +31,10 @@ namespace read {
 
   /**
    *  @brief Create a polynomial multiplicity from a parsed ENDF multiplicity
+   *
+   *  @param[in] lower          the lower energy limit
+   *  @param[in] upper          the upper energy limit
+   *  @param[in] multiplicity   the parsed ENDF polynomial multiplicity
    */
   std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity >
   createMultiplicity( double lower, double upper,
@@ -39,6 +45,8 @@ namespace read {
 
   /**
    *  @brief Create a tabulated multiplicity from a parsed ENDF multiplicity
+   *
+   *  @param[in] multiplicity   the parsed ENDF tabulated multiplicity
    */
   std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity >
   createMultiplicity( double, double,
@@ -49,6 +57,8 @@ namespace read {
 
   /**
    *  @brief Create an integer or tabulated multiplicity from a parsed ENDF multiplicity
+   *
+   *  @param[in] multiplicity   the integer, polynomial or tabulated multiplicity
    */
   template < typename Multiplicity >
   auto createMultiplicity( const Multiplicity& multiplicity )

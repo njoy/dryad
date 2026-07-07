@@ -18,6 +18,9 @@ namespace read {
 
   /**
    *  @brief Create a PolynomialMultiplicity from a GNDS multiplicity node
+   *
+   *  @param[in] multiplicity   the gnds multiplicity node
+   *  @param[in] style          the gnds style to process (default is eval)
    */
   inline dryad::PolynomialMultiplicity
   createPolynomialMultiplicity( const pugi::xml_node& multiplicity,

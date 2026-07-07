@@ -26,6 +26,8 @@ namespace read {
 
   /**
    *  @brief Read data from a GNDS XYs1D node
+   *
+   *  @param[in] xys1d   the gnds xys1d node
    */
   inline XYs1d readXYs1D( const pugi::xml_node& xys1d ) {
 

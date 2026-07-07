@@ -16,6 +16,9 @@ namespace write {
   /**
    *  @brief Create the ENDF sublibrary type based on the interaction
    *         type and projectile type
+   *
+   *  @param[in] projectile    the projectile identifier
+   *  @param[in] interaction   the interaction type
    */
   inline int createSublibraryType( const dryad::id::ParticleID& projectile,
                                    const dryad::InteractionType& interaction ) {
