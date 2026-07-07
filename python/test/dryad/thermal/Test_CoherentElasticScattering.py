@@ -81,7 +81,6 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( InterpolationType.LogLog, xs.interpolants[0] )
     self.assertEqual( InterpolationType.LogLog, xs.interpolants[0] )
 
-
 class Test_CoherentElasticScattering( unittest.TestCase ) :
     """Unit test for the CoherentElasticScattering class."""
 
@@ -111,6 +110,30 @@ class Test_CoherentElasticScattering( unittest.TestCase ) :
         self.assertEqual( newedges, chunk.bragg_edges )
 
         chunk.bragg_edges = original
+
+        verify_chunk( self, chunk )
+
+        # the lower energy limit can be changed
+        newlimit = 1e-4
+        original = 1e-5
+
+        chunk.lower_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.lower_energy_limit )
+
+        chunk.lower_energy_limit = original
+
+        verify_chunk( self, chunk )
+
+        # the upper energy limit can be changed
+        newlimit = 7.5
+        original = 10.
+
+        chunk.upper_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.upper_energy_limit )
+
+        chunk.upper_energy_limit = original
 
         verify_chunk( self, chunk )
 

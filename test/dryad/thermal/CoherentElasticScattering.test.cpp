@@ -46,6 +46,34 @@ SCENARIO( "CoherentElasticScattering" ) {
           { BraggEdgeData( 600.0, { 5.219736e-3, 5. }, { 1e-2, 1. } ),
             BraggEdgeData( 293.6, { 5.219736e-3, 5. }, { 8.703783e-3, 9.484639e-1 } ) } );
 
+      THEN( "the lower energy limit can be changed" ) {
+
+        double newlimit = 1e-4;
+        double original = 1e-5;
+
+        chunk.lowerEnergyLimit( newlimit );
+
+        CHECK( newlimit == chunk.lowerEnergyLimit() );
+
+        chunk.lowerEnergyLimit( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the lower energy limit can be changed" ) {
+
+        double newlimit = 7.5;
+        double original = 10.;
+
+        chunk.upperEnergyLimit( newlimit );
+
+        CHECK( newlimit == chunk.upperEnergyLimit() );
+
+        chunk.upperEnergyLimit( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
       THEN( "the Bragg edge data can be changed" ) {
 
         std::vector< BraggEdgeData > newedges = {
