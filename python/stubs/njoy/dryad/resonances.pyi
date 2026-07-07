@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedResonanceTable']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedResonanceTable']
 class BoundaryCondition:
     """
     The boundary condition options for resonance reconstruction
@@ -2176,6 +2176,121 @@ class TabulatedWaveFunction:
     def values(self) -> list[float]:
         """
         The wave function values
+        """
+class UnresolvedChannel:
+    """
+    A resonance reaction channel for use in the unresolved resonance region
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> UnresolvedChannel:
+        ...
+    def __deepcopy__(self, arg0: dict) -> UnresolvedChannel:
+        ...
+    def __eq__(self, arg0: UnresolvedChannel) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ..., background: FrohnerBackground | SammyBackground | TabulatedBackground | None = None, reference_energy: float = 1.0) -> None:
+        """
+        Initialize the unresolved channel
+        
+        The underlying channel is constructed from its components.
+        
+        Arguments:
+            self               the unresolved channel
+            identifier         the channel identifier
+            incident           the current incident particle pair
+            outgoing           the outgoing particle pair
+            q_value            the Q value associated with the transition from
+                               the incident to the outgoing particle pair
+            boundary           the boundary condition
+            radii              the channel radii for the calculation of the
+                               wave functions
+            kinematics         the kinematics type applied to the channel (default
+                               is non-relativistic)
+            background         the background function (if defined)
+            reference_energy   the energy at which reduced widths are defined
+                               (default is 1 eV)
+        """
+    @typing.overload
+    def __init__(self, channel: Channel, reference_energy: float = 1.0) -> None:
+        """
+        Initialise the unresolved channel using an existing channel
+        
+        Arguments:
+            self               the unresolved channel
+            channel            the underlying channel
+            reference_energy   the energy at which reduced widths are defined
+                               (default is 1 eV)
+        """
+    def __ne__(self, arg0: UnresolvedChannel) -> bool:
+        ...
+    def wave_number(self, energy: float) -> float:
+        """
+        Calculate the channel wave number (given in fm^-1) at a given energy
+        
+        Arguments:
+            self     the unresolved channel
+            energy   the energy (given in eV)
+        """
+    def width_conversion_factor(self, energy: float) -> float:
+        """
+        Calculate the width conversion factor at a given energy
+        
+        The reduced width stored for a channel is converted to the physical
+        width at a given energy by multiplying it with this factor. For a
+        neutron channel the factor is ( P_l(E) / P_0(E) ) * sqrt( E / E_ref );
+        for any other channel the factor is 1.
+        
+        Arguments:
+            self     the unresolved channel
+            energy   the energy (given in eV)
+        """
+    @property
+    def channel_radii(self) -> ChannelRadii:
+        """
+        The channel radii
+        """
+    @channel_radii.setter
+    def channel_radii(self, arg1: ChannelRadii) -> None:
+        ...
+    @property
+    def conversion_factor(self) -> float | ...:
+        """
+        The width conversion strategy applied to the channel
+        """
+    @property
+    def identifier(self) -> njoy.dryad.id.ChannelID:
+        """
+        The channel identifier
+        """
+    @identifier.setter
+    def identifier(self, arg1: njoy.dryad.id.ChannelID) -> None:
+        ...
+    @property
+    def incident_particle_pair(self) -> ParticlePair:
+        """
+        The outgoing particle pair (if defined)
+        """
+    @incident_particle_pair.setter
+    def incident_particle_pair(self, arg1: ParticlePair) -> None:
+        ...
+    @property
+    def outgoing_particle_pair(self) -> ParticlePair | None:
+        """
+        The outgoing particle pair (if defined)
+        """
+    @outgoing_particle_pair.setter
+    def outgoing_particle_pair(self, arg1: ParticlePair | None) -> None:
+        ...
+    @property
+    def reaction(self) -> njoy.dryad.id.ReactionID:
+        """
+        The reaction this channel contributes to
+        """
+    @property
+    def reference_energy(self) -> float:
+        """
+        The reference energy at which the reduced widths are defined
         """
 class UnresolvedResonanceTable:
     """
