@@ -24,7 +24,19 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
 
     module,
     "TabulatedEnergyDistributionFunction",
-    "An energy distribution function using tabulated data"
+    "An energy distribution function using tabulated data\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "        the energy values\n"
+    "    values : list of float\n"
+    "        the probability values\n"
+    "    boundaries : list of int\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "        the interpolation type (default lin-lin)"
   );
 
   // wrap the component
@@ -36,14 +48,7 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the energy distribution function\n\n"
-    "Arguments:\n"
-    "    self           the energy distribution function\n"
-    "    energies       the energy values\n"
-    "    values         the cross section values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the energy distribution function with multiple interpolation zones"
   )
   .def(
 
@@ -51,13 +56,7 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
                   InterpolationType >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the energy distribution function\n\n"
-    "Arguments:\n"
-    "    self           the energy distribution function\n"
-    "    energies       the energy values\n"
-    "    values         the cross section values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the energy distribution function with a single interpolation zone"
   )
   .def_property_readonly(
 
@@ -89,22 +88,23 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     [] ( const Component& self, double energy ) -> decltype(auto)
        { return self( energy ); },
     python::arg( "energy" ),
-    "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
+    "Evaluate the distribution for a given energy value\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   )
   .def_property_readonly(
 
     "integral",
     [] ( const Component& self ) { return self.integral(); },
-    "The integral (zeroth order moment) of the distribution function over its domain"
+    "The integral of the distribution function over its domain"
   )
   .def_property_readonly(
 
     "mean",
     [] ( const Component& self ) { return self.mean(); },
-    "The mean (first order raw moment) of the distribution function over its domain"
+    "The mean value of the distribution function over its domain"
   )
   .def_property_readonly(
 

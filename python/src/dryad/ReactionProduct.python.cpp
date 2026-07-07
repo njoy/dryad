@@ -32,22 +32,22 @@ void wrapReactionProduct( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    product : njoy.dryad.id.ParticleID\n"
-    "         the reaction product identifier\n"
+    "        the reaction product identifier\n"
     "    multiplicity : int, njoy.dryad.TabulatedMultiplicity or njoy.dryad.PolynomialMultiplicity\n"
-    "         the reaction product multiplicity\n"
+    "        the reaction product multiplicity\n"
     "    distribution : default None\n"
-    "         the reaction product distribution data (default: None)\n"
+    "        the reaction product distribution data (default: None)\n"
     "    average_cosine : njoy.dryad.TabulatedAverageCosine, default None\n"
-    "         the average reaction product cosine (default: None)\n"
+    "        the average reaction product cosine (default: None)\n"
     "    average_energy : njoy.dryad.TabulatedAverageEnergy, default None\n"
-    "         the average reaction product energy (default: None)\n"
+    "        the average reaction product energy (default: None)\n"
     "    parent : njoy.dryad.id.ParticleID, default None\n"
-    "         the parent reaction product (default: None)\n"
+    "        the parent reaction product (default: None)\n"
     "    chain : int, default 0\n"
-    "         the chain index of the reaction product (default: 0)\n"
+    "        the chain index of the reaction product (default: 0)\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise all probability\n"
-    "         data (default: no normalisation)"
+    "        option to indicate whether or not to normalise all probability\n"
+    "        data (default: no normalisation)"
   );
 
   // wrap the component
@@ -69,7 +69,7 @@ void wrapReactionProduct( python::module& module ) {
     python::arg( "parent" ) = std::nullopt,
     python::arg( "chain" ) = 0,
     python::arg( "normalise" ) = false,
-    "Initialise the reaction"
+    "Initialise the reaction product"
   )
   .def_property(
 

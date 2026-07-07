@@ -1,6 +1,8 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <sstream>
+#include <iomanip>
 
 // local includes
 #include "dryad/definitions.hpp"
@@ -13,6 +15,10 @@ namespace psychic {
 namespace covariance {
 
 void wrapDiagonalCorrelations( python::module& module ) {
+
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 1 ) << njoy::constants::psychic::tolerance;
 
   // type aliases
   using Component = njoy::psychic::covariance::DiagonalCorrelations;
@@ -28,11 +34,11 @@ void wrapDiagonalCorrelations( python::module& module ) {
 
     module,
     "DiagonalCorrelations",
-    "Test to verify if all diagonal correlation values are equal to 1\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 1e-10\n"
-    "         the comparison tolerance"
+    ( "Test to verify if all diagonal correlation values are equal to 1\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the absolute comparison tolerance" ).c_str()
   );
   // wrap the component
   component
@@ -69,14 +75,14 @@ void wrapDiagonalCorrelations( python::module& module ) {
        { return self( covariance ); },
     python::arg( "covariance" ),
     "Verify if the provided covariance matrix has diagonal correlations equal to 1\n\n"
-    "The test returns the following status values:\n"
+    "The test returns the following status values:\n\n"
     "  - Success : all diagonal correlations are equal to 1\n"
     "  - Warning : all diagonal correlations are equal to 1, taking into account a tolerance\n"
     "  - Fail : not all diagonal correlations are equal to 1\n"
     "  - Skipped : the test was skipped\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

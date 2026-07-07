@@ -5,9 +5,9 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
-#include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
-#include "njoy/dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
-#include "njoy/dryad/format/gnds/createAtomicRelaxationFromFile.hpp"
+#include "njoy/format/endf/read/createAtomicRelaxationFromFile.hpp"
+#include "njoy/format/endf/write/createAtomicRelaxationFile.hpp"
+#include "njoy/format/gnds/read/createAtomicRelaxationFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -32,15 +32,15 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Atomic relaxation data for a given element\n\n"
     "Parameters\n"
     "----------\n"
-    "    documentation : njoy.dryad.Documentation \n"
-    "         the documentation \n"
-    "    element : njoy.dryad.id.ElementID \n"
-    "         the element identifier \n"
-    "    subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration \n"
-    "         the electron subshell configuration data \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
-    "        all probability data (default: no normalisation) \n\n"
+    "    documentation : njoy.dryad.Documentation\n"
+    "        the documentation\n"
+    "    element : njoy.dryad.id.ElementID\n"
+    "        the element identifier\n"
+    "    subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration\n"
+    "        the electron subshell configuration data\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -50,14 +50,14 @@ void wrapAtomicRelaxation( python::module& module ) {
     python::init< Documentation, ElementID, std::vector< ElectronSubshellConfiguration >, bool >(),
     python::arg( "documentation" ), python::arg( "element" ),
     python::arg( "subshells" ), python::arg( "normalise" ) = false,
-    "Initialise the atomic relaxation data with documentation\n"
+    "Initialise the atomic relaxation data with documentation"
   )
   .def(
 
     python::init< ElementID, std::vector< ElectronSubshellConfiguration >, bool >(),
     python::arg( "element" ), python::arg( "subshells" ),
     python::arg( "normalise" ) = false,
-    "Initialise the atomic relaxation data without documentation\n"
+    "Initialise the atomic relaxation data without documentation"
   )
   .def_property(
 
@@ -91,22 +91,22 @@ void wrapAtomicRelaxation( python::module& module ) {
     "has_subshell",
     &Component::hasSubshell,
     python::arg( "identifier" ),
-    "Return whether or not a subshell is present \n\n"
+    "Return whether or not a subshell is present\n\n"
     "Parameters\n"
     "----------\n"
-    "    identifier : njoy.dryad.id.ElectronSubshellID \n"
-    "         the electron subshell identifier \n"
+    "    identifier : njoy.dryad.id.ElectronSubshellID\n"
+    "        the electron subshell identifier"
   )
   .def(
 
     "subshell",
     &Component::subshell,
     python::arg( "identifier" ),
-    "Return the requested subshell \n\n"
+    "Return the requested subshell\n\n"
     "Parameters\n"
     "----------\n"
-    "    identifier : njoy.dryad.id.ElectronSubshellID \n"
-    "         the electron subshell identifier \n",
+    "    identifier : njoy.dryad.id.ElectronSubshellID\n"
+    "        the electron subshell identifier",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -126,7 +126,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "from_endf_file",
     [] ( const std::string& filename, bool normalise = false ) -> decltype(auto) {
 
-      return njoy::dryad::format::endf::createAtomicRelaxationFromFile( filename, normalise );
+      return njoy::format::endf::read::createAtomicRelaxationFromFile( filename, normalise );
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from an ENDF file\n\n"
@@ -134,44 +134,44 @@ void wrapAtomicRelaxation( python::module& module ) {
     "will be transformed into a AtomicRelaxation.\n\n"
     "Parameters\n"
     "----------\n"
-    "    filename : str \n"
-    "         the ENDF file name\n"
-    "    normalise : bool, default false \n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)\n\n"
+    "    filename : str\n"
+    "        the ENDF file name\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def_static(
 
     "from_gnds_file",
     [] ( const std::string& filename, bool normalise = false ) -> decltype(auto) {
 
-      return njoy::dryad::format::gnds::createAtomicRelaxationFromFile( filename, normalise );
+      return njoy::format::gnds::read::createAtomicRelaxationFromFile( filename, normalise );
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from a GNDS file\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    filename : str \n"
-    "         the GNDS file name\n"
-    "    normalise : bool, default false \n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str\n"
+    "        the GNDS file name\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def(
 
     "to_endf_file",
     [] ( const Component& self, int mat, const std::string& filename ) {
 
-      njoy::dryad::format::endf::createAtomicRelaxationEndfFile( self, mat, filename );
+      njoy::format::endf::write::createAtomicRelaxationFile( self, mat, filename );
     },
     python::arg( "mat" ), python::arg( "filename" ),
     "Write the AtomicRelaxation data to an ENDF file\n\n"
     "Parameters\n"
     "----------\n"
-    "    mat : int \n"
-    "         the ENDF mat number to be used \n"
-    "    filename : str \n"
-    "         the ENDF file name \n"
+    "    mat : int\n"
+    "        the ENDF mat number to be used\n"
+    "    filename : str\n"
+    "        the ENDF file name"
   );
 
   // add standard equality comparison definitions

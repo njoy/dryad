@@ -28,7 +28,17 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "The ChannelQuantumNumbers class contains the quantum numbers associated to\n"
     "a given reaction channel. Only channels that have the same Jpi contribute\n"
     "to the cross section for a spin group.\n\n"
-    "When using comparison on the quantum numbers, we use a Jpi,l,s ordering."
+    "When using comparison on the quantum numbers, we use a Jpi,l,s ordering.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    l : int\n"
+    "        the orbital angular momentum\n"
+    "    s : float\n"
+    "        the channel spin\n"
+    "    J : float\n"
+    "        the total angular momentum\n"
+    "    parity : int\n"
+    "        the parity (+1 or -1)"
    );
 
   // wrap the component
@@ -38,22 +48,13 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     python::init< unsigned int, double, double, short >(),
     python::arg( "l" ), python::arg( "s" ),
     python::arg( "J" ), python::arg( "parity" ),
-    "Initialise the channel quantum numbers\n\n"
-    "Arguments:\n"
-    "    self     the quantum numbers\n"
-    "    l        the orbital angular momentum\n"
-    "    s        the channel spin\n"
-    "    J        the total angular momentum\n"
-    "    parity   the parity"
+    "Initialise the channel quantum numbers"
   )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "symbol" ),
-    "Initialise the channel qunatum numbers\n\n"
-    "Arguments:\n"
-    "    self     the quantum numbers\n"
-    "    symbol   the quantum numbers symbol"
+    "Initialise the channel quantum numbers from a symbol string"
   )
   .def_property_readonly(
 
@@ -88,9 +89,12 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "The channel spin s can only have values between abs(i - I) and i + I\n"
     "where i is the spin of the incident particle (for a neutron that\n"
     "would be 0.5) and I is the spin of the target nucleus.\n\n"
-    "Arguments:\n"
-    "    i   the spin of the incident particle\n"
-    "    I   the spin of the target nucleus"
+    "Parameters\n"
+    "----------\n"
+    "    i : float\n"
+    "        the spin of the incident particle\n"
+    "    I : float\n"
+    "        the spin of the target nucleus"
 
   )
   .def_static(
@@ -99,10 +103,14 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     python::overload_cast< unsigned int, double, double >( &Component::allowedTotalAngularMomentumValues ),
     python::arg( "l" ), python::arg( "i" ), python::arg( "I" ),
     "Calculate possible values for the total angular momentum J\n\n"
-    "Arguments:\n"
-    "    l   the orbital angular momentum\n"
-    "    i   the spin of the incident particle\n"
-    "    I   the spin of the target nucleus"
+    "Parameters\n"
+    "----------\n"
+    "    l : int\n"
+    "        the orbital angular momentum\n"
+    "    i : float\n"
+    "        the spin of the incident particle\n"
+    "    I : float\n"
+    "        the spin of the target nucleus"
   )
   .def_static(
 
@@ -114,9 +122,12 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "abs(l - s) and l + s where l is the orbital momentum of the incoming wave\n"
     "and s is the channel spin (which in turn depends on the spin i of the\n"
     "incident particle and spin I of the target nucleus).\n\n"
-    "Arguments:\n"
-    "    l   the orbital angular momentum\n"
-    "    s   the channel spin"
+    "Parameters\n"
+    "----------\n"
+    "    l : int\n"
+    "        the orbital angular momentum\n"
+    "    s : float\n"
+    "        the channel spin"
 
   )
   .def_static(
@@ -125,10 +136,14 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     &Component::allowedChannelQuantumNumbers,
     python::arg( "i" ), python::arg( "I" ), python::arg( "lmax" ),
     "Calculate possible combinations of channel quantum numbers\n\n"
-    "Arguments:\n"
-    "    i      the spin of the incident particle\n"
-    "    I      the spin of the target nucleus\n"
-    "    lmax   the max value of the orbital angular momentum"
+    "Parameters\n"
+    "----------\n"
+    "    i : float\n"
+    "        the spin of the incident particle\n"
+    "    I : float\n"
+    "        the spin of the target nucleus\n"
+    "    lmax : int\n"
+    "        the max value of the orbital angular momentum"
 
   );
 

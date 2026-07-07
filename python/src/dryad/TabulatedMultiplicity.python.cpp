@@ -24,7 +24,19 @@ void wrapTabulatedMultiplicity( python::module& module ) {
 
     module,
     "TabulatedMultiplicity",
-    "A multiplicity table"
+    "A multiplicity table\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "        the energy values\n"
+    "    values : list of float\n"
+    "        the multiplicity values\n"
+    "    boundaries : list of int, optional\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of InterpolationType, optional\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : InterpolationType, default=LinearLinear\n"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -36,14 +48,7 @@ void wrapTabulatedMultiplicity( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the multiplicity table\n\n"
-    "Arguments:\n"
-    "    self           the multiplicity table\n"
-    "    energies       the energy values\n"
-    "    values         the multiplicity values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the multiplicity table with multiple interpolation regions"
   )
   .def(
 
@@ -51,13 +56,7 @@ void wrapTabulatedMultiplicity( python::module& module ) {
                   InterpolationType >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the multiplicity table\n\n"
-    "Arguments:\n"
-    "    self           the multiplicity table\n"
-    "    energies       the energy values\n"
-    "    values         the multiplicity values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the multiplicity table with single interpolation type"
   )
   .def_property_readonly(
 
@@ -90,9 +89,10 @@ void wrapTabulatedMultiplicity( python::module& module ) {
        { return self( energy ); },
     python::arg( "energy" ),
     "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions

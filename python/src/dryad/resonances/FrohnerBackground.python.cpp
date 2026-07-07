@@ -42,15 +42,15 @@ void wrapFrohnerBackground( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    distant_level_parameter : float\n"
-    "       the distant level parameter\n"
+    "        the distant level parameter\n"
     "    pole_strength : list of float\n"
-    "       the pole strength\n"
+    "        the pole strength\n"
     "    average_radiation_width : float\n"
-    "       the average radiation width\n"
+    "        the average radiation width\n"
     "    lower_singularity : float\n"
-    "       the lower logarithmic singularity values\n"
+    "        the lower logarithmic singularity values\n"
     "    upper_singularity : float\n"
-    "       the upper logarithmic singularity values\n"
+    "        the upper logarithmic singularity values\n"
   )
   .def_property_readonly(
 

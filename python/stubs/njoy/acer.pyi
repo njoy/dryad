@@ -11,19 +11,19 @@ def process_electron_photon_relaxation(photoatomic: njoy.dryad.ProjectileTarget,
     Parameters
     ----------
         z : int
-             the cosine values
+            the cosine values
         photoatomic : njoy.dryad.ProjectileTarget
-             the photoatomic projectile-target data
+            the photoatomic projectile-target data
         electroatomic : njoy.dryad.ProjectileTarget
-             the electroatomic projectile-target data
+            the electroatomic projectile-target data
         relaxation : njoy.dryad.AtomicRelaxation
-             the atomic relaxation data
+            the atomic relaxation data
         filename : str
-             the filename for the ace file
+            the filename for the ace file
         number : int
-             the extension number (above 0, less than 100)
+            the extension number (above 0, less than 100)
         date : str
-             the processing date
+            the processing date
         title : str
-             the ace file title
+            the ace file title
     """

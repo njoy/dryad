@@ -47,7 +47,7 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param target          the target identifier
  *  @param type            the interaction type
  *  @param reactions       the reaction data
- *  @param particles     the optional particle data (default: none)
+ *  @param particles       the optional particle data (default: none)
  *  @param resonances      the optional resonance parameters (default: none)
  *  @param covariances     the optional covariance data (default: none)
  *  @param normalise       option to indicate whether or not to normalise

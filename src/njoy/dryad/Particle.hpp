@@ -6,6 +6,9 @@
 
 // other includes
 #include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/external/ripl3/Levels.hpp"
+#include "njoy/dryad/external/ame/Masses.hpp"
+#include "njoy/constants.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -48,7 +51,185 @@ namespace dryad {
   public:
 
     /* constructor */
-    #include "njoy/dryad/Particle/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    Particle() = default;
+
+    Particle( const Particle& ) = default;
+    Particle( Particle&& ) = default;
+
+    Particle& operator=( const Particle& ) = default;
+    Particle& operator=( Particle&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] id                       the particle identifier
+     *  @param[in] mass                     the atomic mass (default is none)
+     *  @param[in] spin                     the particle spin (default is none)
+     *  @param[in] parity                   the parity (default is none)
+     *  @param[in] energy                   the excited state energy (default is none)
+     *  @param[in] nuclearMass              the nuclear mass (default is none)
+     *  @param[in] massUncertainty          the uncertainty on the atomic mass value (default is none)
+     *  @param[in] nuclearMassUncertainty   the uncertainty on the nuclear mass value (default is none)
+     *  @param[in] energyUncertainty        the uncertainty on the level energy value (default is none)
+     */
+    Particle( id::ParticleID id,
+              std::optional< double > mass = std::nullopt,
+              std::optional< double > spin = std::nullopt,
+              std::optional< short > parity = std::nullopt,
+              std::optional< double > energy = std::nullopt,
+              std::optional< double > nuclearMass = std::nullopt,
+              std::optional< double > massUncertainty = std::nullopt,
+              std::optional< double > nuclearMassUncertainty = std::nullopt,
+              std::optional< double > energyUncertainty = std::nullopt ) :
+      identifier_( std::move( id ) ),
+      mass_( std::move( mass ) ),
+      nuclear_mass_( std::move( nuclearMass ) ),
+      energy_( std::move( energy ) ),
+      mass_uncertainty_( std::move( massUncertainty ) ),
+      nuclear_mass_uncertainty_( std::move( nuclearMassUncertainty ) ),
+      energy_uncertainty_( std::move( energyUncertainty ) ),
+      spin_( std::move( spin ) ),
+      parity_( std::move( parity ) ) {}
+
+    /* predefined particles and static functions to create them */
+
+    /**
+     *  @brief The default particle instance for photons
+     */
+    static Particle photon() {
+
+      return Particle( id::ParticleID::photon(), 0., 1.0, +1,
+                       std::nullopt, std::nullopt, 0. );
+    };
+
+    /**
+     *  @brief The default particle instance for electrons
+     */
+    static Particle electron() {
+
+      return Particle( id::ParticleID::electron(), constants::electron_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::electron_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for positrons
+     */
+    static Particle positron() {
+
+      return Particle( id::ParticleID::positron(), constants::electron_mass, 0.5, -1,
+                       std::nullopt, std::nullopt, constants::electron_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for neutrons
+     */
+    static Particle neutron() {
+
+      return Particle( id::ParticleID::neutron(), constants::neutron_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::neutron_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for protons
+     */
+    static Particle proton() {
+
+      return Particle( id::ParticleID::proton(), constants::proton_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::proton_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for deuterons
+     */
+    static Particle deuteron() {
+
+      return Particle( id::ParticleID::deuteron(), constants::deuteron_mass, 1.0, +1,
+                       std::nullopt, std::nullopt, constants::deuteron_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for tritons
+     */
+    static Particle triton() {
+
+      return Particle( id::ParticleID::triton(), constants::triton_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::triton_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for helions
+     */
+    static Particle helion() {
+
+      return Particle( id::ParticleID::helion(), constants::helion_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::helion_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for alphas
+     */
+    static Particle alpha() {
+
+      return Particle( id::ParticleID::alpha(), constants::alpha_mass, 0.0, +1,
+                       std::nullopt, std::nullopt, constants::alpha_mass_uncertainty );
+    };
+
+    /**
+     *  @brief The default particle instance for a given particle identifier
+     *
+     *  This function creates a default particle instance for the given particle
+     *  identifier. When relevant, the discrete level energies and spins-parity pairs
+     *  from RIPL-3 and the atomic masses from AME-2020 are used.
+     *
+     *  When more sources for the particle data become available, this function will
+     *  provide options to select data from.
+     *
+     *  When an atomic identifier (either with or without vacancies) is used, the
+     *  elemental particle instance will be returned.
+     */
+    static Particle defaultParticle( const id::ParticleID& id ) {
+
+      if      ( id == id::ParticleID::photon() )   { return Particle::photon(); }
+      else if ( id == id::ParticleID::electron() ) { return Particle::electron(); }
+      else if ( id == id::ParticleID::positron() ) { return Particle::positron(); }
+      else if ( id == id::ParticleID::neutron() )  { return Particle::neutron(); }
+      else if ( id == id::ParticleID::proton() )   { return Particle::proton(); }
+      else if ( id == id::ParticleID::deuteron() ) { return Particle::deuteron(); }
+      else if ( id == id::ParticleID::triton() )   { return Particle::triton(); }
+      else if ( id == id::ParticleID::helion() )   { return Particle::helion(); }
+      else if ( id == id::ParticleID::alpha() )    { return Particle::alpha(); }
+      else {
+
+        if ( id.a() != 0 ) {
+
+          Particle particle( id );
+          if ( external::ripl3::Levels::hasEntry( id ) ) {
+
+            decltype(auto) entry = external::ripl3::Levels::entry( id );
+            particle.energy( entry.energy() );
+            particle.spin( entry.spin() );
+            particle.parity( entry.parity() );
+          }
+          if ( external::ame::Masses::hasEntry( id ) ) {
+
+            decltype(auto) entry = external::ame::Masses::entry( id );
+            particle.mass( entry.atomicMass() );
+            particle.massUncertainty( entry.atomicMassUncertainty() );
+          }
+
+          return particle;
+        }
+        else {
+
+          Particle particle( id::ParticleID( id.z(), 0, 0 ) );
+          return particle;
+        }
+      }
+    };
 
     /**
      *  @brief Return the particle identifier
@@ -230,10 +411,10 @@ namespace dryad {
      */
     friend bool operator==( const Particle& left, const Particle& right ) {
 
-      return std::tie( left.identifier(), left.mass_, left.nuclear_mass_, left.energy_,
+      return std::tie( left.identifier(), left.mass(), left.nuclearMass(), left.energy(),
                        left.massUncertainty(), left.nuclearMassUncertainty(),
                        left.energyUncertainty(), left.spin(), left.parity() ) ==
-             std::tie( right.identifier(), right.mass_, right.nuclear_mass_, right.energy_,
+             std::tie( right.identifier(), right.mass(), right.nuclearMass(), right.energy(),
                        right.massUncertainty(), right.nuclearMassUncertainty(),
                        right.energyUncertainty(), right.spin(), right.parity() );
     }

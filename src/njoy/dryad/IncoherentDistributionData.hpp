@@ -99,7 +99,7 @@ namespace dryad {
      *  @brief Calculate the average outgoing energy for a given energy
      *
      *  @param[in] energy      the incident energy
-     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
+     *  @param[in] tolerance   the integration tolerance
      */
     double averageEnergy( double energy,
                           double tolerance = constants::integration::tolerance ) const {

@@ -82,7 +82,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 1.    , WithinRel( cumulative[3] ) );
       } // THEN
 
-      THEN( "the first raw moment of a TabulatedAngularDistributionFunction can be calculated" ) {
+      THEN( "the mean of a TabulatedAngularDistributionFunction can be calculated" ) {
 
         CHECK_THAT( 1. / 3., WithinRel( chunk.mean() ) );
       } // THEN
@@ -713,7 +713,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 6.5 , WithinRel( cumulative[4] ) );
       } // THEN
 
-      THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
+      THEN( "the mean of an TabulatedAngularDistributionFunction can be calculated" ) {
 
         // region 1
         // f(x) = 3 - x
@@ -726,7 +726,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // primitive = 2 x^2 - 2 x^3 / 3
         // integral = 2 - 2 / 3 = 4 / 3
         // sum = - 11 / 6 + 4 / 3 = - 1 / 2
-        CHECK_THAT( -0.5, WithinRel( chunk.mean() ) );
+        CHECK_THAT( -0.5 / 6.5, WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "arithmetic operations can be performed" ) {
@@ -1430,7 +1430,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 0.99279536989483 , WithinRel( cumulative[3] ) );
       } // THEN
 
-      THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
+      THEN( "the mean of an TabulatedAngularDistributionFunction can be calculated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1438,7 +1438,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // std::cout << std::setprecision(15) << integrator( functor, -1.,  0. )
         //                                     + integrator( functor,  0.,  1. ) << std::endl;
         // std::cout << std::setprecision(15) << chunk.mean() << std::endl;
-        CHECK_THAT( 0.330014509000453, WithinRel( chunk.mean() ) );
+        CHECK_THAT( 0.330014509000453 / 0.99279536989483, WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "some arithmetic operations can be performed" ) {
@@ -1727,7 +1727,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 1.49577938318395 , WithinRel( cumulative[4] ) );
       } // THEN
 
-      THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
+      THEN( "the mean of an TabulatedAngularDistributionFunction can be calculated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1735,7 +1735,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // std::cout << std::setprecision(15) << integrator( functor, -1., 0. )
         //                                     + integrator( functor,  0., 1. ) << std::endl;
         // std::cout << std::setprecision(15) << chunk.mean() << std::endl;
-        CHECK_THAT( 0.581321912933929, WithinRel( chunk.mean() ) );
+        CHECK_THAT( 0.581321912933929 / 1.49577938318395, WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "some arithmetic operations can be performed" ) {

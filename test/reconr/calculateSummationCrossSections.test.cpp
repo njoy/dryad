@@ -99,12 +99,20 @@ void verifyChunk( const ProjectileTarget& chunk ) {
 
   // only the xs are changed, so products are not checked
 
+  // documentation
+  CHECK( std::nullopt == chunk.documentation().library() );
+  CHECK( std::nullopt == chunk.documentation().version() );
+  CHECK( std::nullopt == chunk.documentation().description() );
+
   // identifiers
   CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
   CHECK( id::ParticleID( "Fe56" ) == chunk.targetIdentifier() );
 
   // interaction type
   CHECK( InteractionType::Nuclear == chunk.interactionType() );
+
+  // particle database is not present
+  CHECK( std::nullopt == chunk.particleData() );
 
   // resonances are not present
   CHECK( std::nullopt == chunk.resonances() );

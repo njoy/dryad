@@ -24,7 +24,19 @@ void wrapTabulatedFormFactor( python::module& module ) {
 
     module,
     "TabulatedFormFactor",
-    "A form factor table"
+    "A form factor table\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "        the energy values\n"
+    "    values : list of float\n"
+    "        the form factor values\n"
+    "    boundaries : list of int, optional\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of InterpolationType, optional\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : InterpolationType, default=LinearLinear\n"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -36,14 +48,7 @@ void wrapTabulatedFormFactor( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the form factor table\n\n"
-    "Arguments:\n"
-    "    self           the form factor table\n"
-    "    energies       the energy values\n"
-    "    values         the form factor values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the form factor table with multiple interpolation regions"
   )
   .def(
 
@@ -51,13 +56,7 @@ void wrapTabulatedFormFactor( python::module& module ) {
                   InterpolationType >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the form factor table\n\n"
-    "Arguments:\n"
-    "    self           the form factor table\n"
-    "    energies       the energy values\n"
-    "    values         the form factor values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the form factor table with a single interpolation region"
   )
   .def_property_readonly(
 
@@ -90,9 +89,10 @@ void wrapTabulatedFormFactor( python::module& module ) {
        { return self( energy ); },
     python::arg( "energy" ),
     "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions

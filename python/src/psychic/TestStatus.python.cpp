@@ -22,16 +22,18 @@ void wrapTestStatus( python::module& module ) {
 
     module,
     "TestStatus",
-    "The test status",
+    "Test status enumeration\n\n"
+    "This enum is used to differentiate between various test states. Four different\n"
+    "states are distinguished: skipped, success, pass with warnings, and failed.",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "Success", Component::Success )
-  .value( "Warning", Component::Warning )
-  .value( "Fail",    Component::Fail )
-  .value( "Skipped", Component::Skipped );
+  .value( "Success", Component::Success, "The test passes successfully without issues" )
+  .value( "Warning", Component::Warning, "The test passed but there are issues" )
+  .value( "Fail",    Component::Fail,    "The test fails" )
+  .value( "Skipped", Component::Skipped, "The test has been skipped" );
 }
 
 } // psychic namespace

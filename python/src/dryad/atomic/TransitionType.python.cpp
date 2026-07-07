@@ -29,8 +29,20 @@ void wrapTransitionType( python::module& module ) {
 
   // wrap the component
   component
-  .value( "Radiative",    Component::Radiative )
-  .value( "NonRadiative", Component::NonRadiative );
+  .value(
+
+    "Radiative",
+    Component::Radiative,
+    "A radiative transition, an electron from another shell fills a vacancy in the current\n"
+    "shell while emitting a photon"
+  )
+  .value(
+
+    "NonRadiative",
+    Component::NonRadiative,
+    "An electron from another shell fills a vacancy in the current shell while another electron\n"
+    "is emitted"
+  );
 }
 
 } // namespace atomic

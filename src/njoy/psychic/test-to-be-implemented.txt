@@ -6,8 +6,23 @@ Photoatomic data
 Covariances
 
 - verify summation covariances (in the same way we resolve the partials in summation reactions)
+- check for cases where the entire covariance matrix is zero
+- cross-check cross section versus covariance energy ranges
 
 Fission Q values
 
 - check for unphysical values of the fission Q value data to avoid the issue of ENDF/B-VII.1 (values
   were given in MeV instead of eV)
+  maybe check against mass values now that we can read the AME2020 data
+
+Cross sections
+
+- verify energy range of elastic versus all other cross sections
+
+Distributions
+
+- check if the integral of each distribution is the same (within tolerance)
+
+Multiplicities
+
+- check weighted multiplicity (especially MT5)

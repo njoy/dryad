@@ -17,6 +17,9 @@ namespace covariance {
   /**
    *  @class
    *  @brief A cross section covariance matrix block
+   *
+   *  This covariance matrix uses 2 dimensions as follows (from outer to inner
+   *  dimension): the reactions and the energy groups.
    */
   class CrossSectionCovarianceMatrix :
     protected base::CovarianceMatrix< CrossSectionMetadata,

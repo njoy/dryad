@@ -14,6 +14,10 @@ namespace dryad {
 
 void wrapTabulatedComptonProfile( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   // type aliases
   using Component = njoy::dryad::TabulatedComptonProfile;
   using ElectronSubshellID = njoy::dryad::id::ElectronSubshellID;
@@ -33,17 +37,17 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    subshell_identifier : njoy.dryad.id.ElectronSubshellID\n"
-    "         the electron subshell identifier\n"
+    "        the electron subshell identifier\n"
     "    momentum : list of float\n"
-    "         the momentum values\n"
+    "        the momentum values\n"
     "    values : list of float\n"
-    "         the probability values\n"
+    "        the probability values\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)\n"
+    "        the interpolation type (default lin-lin)\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
@@ -153,14 +157,14 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
-    "Linearise the distribution \n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
-    "    normalise : bool, default false\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    std::string( "Linearise the distributions\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance\n"
+                 "    normalise : bool, default False\n"
+                 "        option to indicate whether or not to normalise\n"
+                 "        all probability data (default: no normalisation)" ).c_str()
   );
 
   // add standard equality comparison definitions

@@ -45,8 +45,8 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    coefficients : list of float\n"
-    "         the coefficients of the Legendre series (from\n"
-    "         lowest to highest order coefficient)\n"
+    "        the coefficients of the Legendre series (from\n"
+    "        lowest to highest order coefficient)"
   )
   .def_property_readonly(
 
@@ -78,13 +78,13 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
 
     "integral",
     [] ( const Component& self ) { return self.integral(); },
-    "The integral (zeroth order moment) of the distribution function over its domain"
+    "The integral of the distribution function over its domain"
   )
   .def_property_readonly(
 
     "mean",
     [] ( const Component& self ) { return self.mean(); },
-    "The mean (first order raw moment) of the distribution function over its domain"
+    "The mean value of the distribution function over its domain"
   )
   .def(
 

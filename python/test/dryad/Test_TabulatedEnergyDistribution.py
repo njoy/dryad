@@ -83,8 +83,8 @@ class Test_TabulatedEnergyDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 0.25  / normalisation, chunk( energy = 1.  ) )
             self.assertAlmostEqual( 0.875 / normalisation, chunk( energy = 3.5 ) )
 
-            # verify average cosine
-            self.assertAlmostEqual( 128. / 24. / normalisation, chunk.average_energy )
+            # verify average cosine - always the mean value even for unnormalised distributions
+            self.assertAlmostEqual( 128. / 24. / 2., chunk.average_energy )
 
             # verify linearisation
             linear = chunk.linearise()

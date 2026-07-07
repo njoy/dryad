@@ -20,12 +20,11 @@ namespace dryad {
   class TabulatedAngularDistribution {
 
     /* fields */
+
     TabulatedAngularDistributionFunction pdf_;
     TabulatedAngularDistributionFunction cdf_;
 
     /* auxiliary functions */
-
-    #include "njoy/dryad/TabulatedAngularDistribution/src/calculateCdf.hpp"
 
   public:
 
@@ -36,7 +35,87 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/TabulatedAngularDistribution/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    TabulatedAngularDistribution() = default;
+
+    TabulatedAngularDistribution( const TabulatedAngularDistribution& ) = default;
+    TabulatedAngularDistribution( TabulatedAngularDistribution&& ) = default;
+
+    TabulatedAngularDistribution& operator=( const TabulatedAngularDistribution& ) = default;
+    TabulatedAngularDistribution& operator=( TabulatedAngularDistribution&& ) = default;
+
+    /**
+     *  @brief Constructor using a pdf
+     *
+     *  @param pdf         the pdf of the distribution
+     *  @param normalise   option to indicate whether or not to normalise
+     *                     all probability data (default: no normalisation)
+     */
+    TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf,
+                                  bool normalise = false ) :
+      pdf_( std::move( pdf ) ), cdf_() {
+
+      if ( normalise ) {
+
+        this->normalise();
+      }
+      else {
+
+        this->cdf() = this->pdf().calculateCdf();
+      }
+    }
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param cosines        the cosine values
+     *  @param values         the probability values
+     *  @param boundaries     the boundaries of the interpolation regions
+     *  @param interpolants   the interpolation types of the interpolation regions
+     *  @param normalise      option to indicate whether or not to normalise
+     *                        all probability data (default: no normalisation)
+     */
+    TabulatedAngularDistribution(
+        std::vector< double > cosines,
+        std::vector< double > values,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants,
+        bool normalise = false ) :
+      TabulatedAngularDistribution(
+          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
+                                                std::move( boundaries ), std::move( interpolants ) ),
+          normalise ) {}
+
+    /**
+     *  @brief Constructor for a pdf using a single interpolation zone
+     *
+     *  @param cosines        the cosine values
+     *  @param values         the probability values
+     *  @param interpolant    the interpolation type of the data (default lin-lin)
+     *  @param normalise      option to indicate whether or not to normalise
+     *                        all probability data (default: no normalisation)
+     */
+    TabulatedAngularDistribution(
+        std::vector< double > cosines,
+        std::vector< double > values,
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool normalise = false ) :
+      TabulatedAngularDistribution(
+          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
+                                                std::move( interpolant ) ),
+          normalise ) {}
+
+    /**
+     *  @brief Constructor using a pdf and cdf
+     *
+     *  @param pdf   the pdf of the distribution
+     *  @param cdf   the cdf of the distribution
+     */
+    TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf,
+                                  TabulatedAngularDistributionFunction cdf ) :
+      pdf_( std::move( pdf ) ), cdf_( std::move( cdf ) ) {}
 
     /* methods */
 
@@ -81,9 +160,25 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the probability distribution function (pdf) of the distribution
+     */
+    TabulatedAngularDistributionFunction& pdf() {
+
+      return this->pdf_;
+    }
+
+    /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
     const TabulatedAngularDistributionFunction& cdf() const {
+
+      return this->cdf_;
+    }
+
+    /**
+     *  @brief Return the cumulative distribution function (cdf) of the distribution
+     */
+    TabulatedAngularDistributionFunction& cdf() {
 
       return this->cdf_;
     }
@@ -103,8 +198,8 @@ namespace dryad {
      */
     void normalise() {
 
-      this->pdf_.normalise();
-      this->calculateCdf( true );
+      this->pdf().normalise();
+      this->cdf() = this->pdf().calculateCdf( true );
     }
 
     /**

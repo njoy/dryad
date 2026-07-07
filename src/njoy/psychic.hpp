@@ -1,0 +1,9 @@
+// components
+#include "njoy/psychic/TestStatus.hpp"
+#include "njoy/psychic/base/Test.hpp"
+#include "njoy/psychic/covariance/PositiveVariances.hpp"
+#include "njoy/psychic/covariance/EigenvalueRatio.hpp"
+#include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
+#include "njoy/psychic/covariance/BoundedCorrelations.hpp"
+#include "njoy/psychic/covariance/DiagonalCorrelations.hpp"
+#include "njoy/psychic/covariance/TestSuite.hpp"

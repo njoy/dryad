@@ -43,12 +43,15 @@ namespace dryad {
 
   // declarations - components
   void wrapIsotropicAngularDistributions( python::module& );
+  void wrapIsotropicAngularDistributionFunction( python::module& );
   void wrapLegendreAngularDistributionFunction( python::module& );
   void wrapLegendreAngularDistribution( python::module& );
   void wrapLegendreAngularDistributions( python::module& );
   void wrapTabulatedAngularDistributionFunction( python::module& );
   void wrapTabulatedAngularDistribution( python::module& );
   void wrapTabulatedAngularDistributions( python::module& );
+  void wrapMixedAngularDistribution( python::module& );
+  void wrapMixedAngularDistributions( python::module& );
   void wrapTabulatedComptonProfileFunction( python::module& );
   void wrapTabulatedComptonProfile( python::module& );
   void wrapUniformAngularDistribution( python::module& );
@@ -121,9 +124,12 @@ void wrapDryad( python::module& module ) {
   dryad::wrapTabulatedAverageCosine( submodule );
   dryad::wrapTabulatedAverageEnergy( submodule );
   dryad::wrapIsotropicAngularDistributions( submodule );
+  dryad::wrapIsotropicAngularDistributionFunction( submodule );
   dryad::wrapTabulatedAngularDistributionFunction( submodule );
   dryad::wrapTabulatedAngularDistribution( submodule );
   dryad::wrapTabulatedAngularDistributions( submodule );
+  dryad::wrapMixedAngularDistribution( submodule );
+  dryad::wrapMixedAngularDistributions( submodule );
   dryad::wrapTabulatedComptonProfileFunction( submodule );
   dryad::wrapTabulatedComptonProfile( submodule );
   dryad::wrapLegendreAngularDistributionFunction( submodule );

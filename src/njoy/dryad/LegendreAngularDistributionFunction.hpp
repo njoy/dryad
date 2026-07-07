@@ -6,15 +6,15 @@
 
 // other includes
 #include "njoy/constants.hpp"
-#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "scion/math/LegendreSeries.hpp"
 
 namespace njoy {
 namespace dryad {
 
-  // forward declaration LegendreAngularDistribution
+  // forward declarations
   class LegendreAngularDistribution;
+  class MixedAngularDistribution;
 
   /**
    *  @class
@@ -36,40 +36,25 @@ namespace dryad {
 
     /* friend declarations */
 
-    // LegendreAngularDistribution needs access to protected functions
     friend LegendreAngularDistribution;
+    friend MixedAngularDistribution;
+
+    /**
+     *  @brief Private constructor
+     *
+     *  @param series   the series expansion
+     */
+    LegendreAngularDistributionFunction( LegendreSeries< double, double > table ) :
+      LegendreSeries( std::move( table ) ) {}
 
   protected:
 
     /**
-     *  @brief Calculate the roots of the function so that f(x) = a
-     *
-     *  @param[in] a   the value of a (default is zero)
+     *  @brief Calculate a cdf from the distribution function
      */
-    std::vector< double > roots( double a = 0. ) const {
+    LegendreAngularDistributionFunction calculateCdf() const {
 
-      std::vector< double > roots = LegendreSeries::roots( a );
-      roots.erase( roots.begin(), std::lower_bound( roots.begin(), roots.end(), -1. ) );
-      roots.erase( std::upper_bound( roots.begin(), roots.end(), +1. ), roots.end() );
-      return roots;
-    }
-
-    /**
-     *  @brief Return the derivative
-     */
-    LegendreAngularDistributionFunction derivative() const {
-
-      return LegendreSeries::derivative();
-    }
-
-    /**
-     *  @brief Return the primitive (or antiderivative)
-     *
-     *  @param[in] left    the left bound of the integral (default = 0)
-     */
-    LegendreAngularDistributionFunction primitive( double left = 0. ) const {
-
-      return LegendreSeries::primitive( left );
+      return LegendreSeries::primitive( -1. );
     }
 
   public:
@@ -80,7 +65,25 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/LegendreAngularDistributionFunction/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    LegendreAngularDistributionFunction() = default;
+
+    LegendreAngularDistributionFunction( const LegendreAngularDistributionFunction& ) = default;
+    LegendreAngularDistributionFunction( LegendreAngularDistributionFunction&& ) = default;
+
+    LegendreAngularDistributionFunction& operator=( const LegendreAngularDistributionFunction& ) = default;
+    LegendreAngularDistributionFunction& operator=( LegendreAngularDistributionFunction&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param coefficients   the coefficients of the Legendre series (from
+     *                        lowest to highest order coefficient)
+     */
+    LegendreAngularDistributionFunction( std::vector< double > coefficients ) :
+      LegendreSeries( std::move( coefficients ) ) {}
 
     /* methods */
 

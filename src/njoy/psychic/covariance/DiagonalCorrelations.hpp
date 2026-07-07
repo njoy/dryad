@@ -46,6 +46,11 @@ namespace covariance {
 
     /* constructor */
 
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] tolerance   the absolute comparison tolerance
+     */
     DiagonalCorrelations( double tolerance = constants::psychic::tolerance ) :
       Parent( "psychic.covariance.DiagonalCorrelations" ),
       tolerance_( tolerance ) {}
@@ -72,7 +77,7 @@ namespace covariance {
      *
      *  The test returns the following status values:
      *    - Success : all diagonal correlations are equal to 1
-     *    - Warning : all diagonal correlations are equal to 1, taking into account a tolerance
+     *    - Warning : all diagonal correlations are equal to 1,  +/- the tolerance
      *    - Fail : not all diagonal correlations are equal to 1
      *    - Skipped : the test was skipped
      *

@@ -10,7 +10,7 @@
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
 #include "njoy/dryad/external/ComptonProfiles.hpp"
-#include "njoy/dryad/format/ace.hpp"
+#include "njoy/format/ace.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
@@ -85,30 +85,31 @@ namespace acer {
     decltype(auto) photon = photoatomic.reaction( incoherent_id ).product( projectile ).distributionData().value();
     bool relativistic = std::visit( hasRelativisticSubshells, photon );
 
-    unsigned int z = photoatomic.targetIdentifier().z();
+    unsigned int z = target.z();
+    decltype(auto) particle = photoatomic.particleData()->particle( target );
+    double mass = particle.mass().has_value() ? particle.mass().value() / constants::neutron_mass : 0.;
     ACEtk::Table::Header header( std::to_string( z * 1000 ) + '.' + std::to_string( number ) + 'p',
-                                 photoatomic.documentation().awr().value(), 0.,
-                                 std::move( date ), std::move( title ), std::to_string( z * 100 ) );
+                                 mass, 0., std::move( date ), std::move( title ), std::to_string( z * 100 ) );
     std::vector< unsigned int > za = {};
     std::vector< double > awr = {};
 
-    auto eszg = dryad::format::ace::photoatomic::createAcePrincipalCrossSectionBlock( photoatomic );
-    auto jinc = dryad::format::ace::photoatomic::createAceIncoherentScatteringFunctionBlock( photoatomic );
-    auto jcoh = dryad::format::ace::photoatomic::createAceCoherentFormFactorBlock( photoatomic );
-    auto lhnm = dryad::format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, relaxation );
-    auto jflo = dryad::format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, relaxation );
-    auto eps = dryad::format::ace::atomic::createAceElectronShellBlock( relativistic, relaxation );
-    auto swd = dryad::format::ace::photoatomic::createAceComptonProfileBlock( photoatomic );
-    auto subsh = dryad::format::ace::atomic::createAceElectronSubshellBlock( relaxation );
-    auto sphel = dryad::format::ace::photoatomic::createAcePhotoelectricCrossSectionBlock( photoatomic );
-    auto xprob = dryad::format::ace::atomic::createAceSubshellTransitionDataBlock( relaxation );
-    auto esze = dryad::format::ace::electroatomic::createAcePrincipalCrossSectionBlock( electroatomic );
-    auto excit = dryad::format::ace::electroatomic::createAceExcitationBlock( electroatomic );
-    auto elas = dryad::format::ace::electroatomic::createAceElasticAngularDistributionBlock( electroatomic );
-    auto eion = dryad::format::ace::electroatomic::createAceIonisationDistributionBlocks( electroatomic );
-    auto breme = dryad::format::ace::electroatomic::createAceBremsstrahlungDistributionBlock( electroatomic );
-    auto breml = dryad::format::ace::electroatomic::createAceBremsstrahlungBlock( electroatomic );
-    auto selas = dryad::format::ace::electroatomic::createAceElasticCrossSectionBlock( electroatomic );
+    auto eszg = format::ace::write::photoatomic::createPrincipalCrossSectionBlock( photoatomic );
+    auto jinc = format::ace::write::photoatomic::createIncoherentScatteringFunctionBlock( photoatomic );
+    auto jcoh = format::ace::write::photoatomic::createCoherentFormFactorBlock( photoatomic );
+    auto lhnm = format::ace::write::photoatomic::createHeatingNumbersBlock( photoatomic, relaxation );
+    auto jflo = format::ace::write::photoatomic::createFluorescenceDataBlock( photoatomic, relaxation );
+    auto eps = format::ace::write::atomic::createElectronShellBlock( relativistic, relaxation );
+    auto swd = format::ace::write::photoatomic::createComptonProfileBlock( photoatomic );
+    auto subsh = format::ace::write::atomic::createElectronSubshellBlock( relaxation );
+    auto sphel = format::ace::write::photoatomic::createPhotoelectricCrossSectionBlock( photoatomic );
+    auto xprob = format::ace::write::atomic::createSubshellTransitionDataBlock( relaxation );
+    auto esze = format::ace::write::electroatomic::createPrincipalCrossSectionBlock( electroatomic );
+    auto excit = format::ace::write::electroatomic::createExcitationBlock( electroatomic );
+    auto elas = format::ace::write::electroatomic::createElasticAngularDistributionBlock( electroatomic );
+    auto eion = format::ace::write::electroatomic::createIonisationDistributionBlocks( electroatomic );
+    auto breme = format::ace::write::electroatomic::createBremsstrahlungDistributionBlock( electroatomic );
+    auto breml = format::ace::write::electroatomic::createBremsstrahlungBlock( electroatomic );
+    auto selas = format::ace::write::electroatomic::createElasticCrossSectionBlock( electroatomic );
 
     ACEtk::PhotoatomicTable table( z, std::move( header ), std::move( za ), std::move( awr ),
                                    std::move( eszg ), std::move( jinc ), std::move( jcoh ), std::move( lhnm ),

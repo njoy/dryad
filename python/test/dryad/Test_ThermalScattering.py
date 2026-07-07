@@ -13,7 +13,6 @@ from njoy.dryad import InterpolationType
 def verify_chunk( self, chunk ) :
 
     # documentation
-    self.assertIsNone( chunk.documentation.awr )
     self.assertIsNone( chunk.documentation.library )
     self.assertIsNone( chunk.documentation.version )
     self.assertIsNone( chunk.documentation.description )

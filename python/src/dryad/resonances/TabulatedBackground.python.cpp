@@ -25,20 +25,21 @@ void wrapTabulatedBackground( python::module& module ) {
 
     module,
     "TabulatedBackground",
-    "The energy values are given in eV and the background values are\n"
-    "dimensionless complex values.\n\n"
+    "A channel background using tabulated data\n\n"
+    "The energy values are given in eV and the background values\n"
+    "are dimensionless complex values.\n\n"
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the momentum values\n"
+    "        the energy values\n"
     "    values : list of complex\n"
-    "         the background values\n"
-    "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
-    "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
-    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)"
+    "        the background values\n"
+    "    boundaries : list of int, optional\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component

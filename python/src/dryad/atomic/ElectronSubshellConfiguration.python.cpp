@@ -41,17 +41,17 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ElectronSubshellID  \n"
-    "           the electron subshell identifier\n"
+    "          the electron subshell identifier\n"
     "    energy : float     \n"
-    "           the electron subshell binding energy\n"
+    "          the electron subshell binding energy\n"
     "    population : float  \n"
-    "           the electron subshell population when the atom is neutral\n"
+    "          the electron subshell population when the atom is neutral\n"
     "    radiative : list of RadiativeTransitionData, default [] \n"
-    "           the radiative transitions that are available (default: an empty list)\n"
+    "          the radiative transitions that are available (default: an empty list)\n"
     "    nonradiative : list of NonRadiativeTransitionData, default [] \n"
-    "           the non-radiative transitions that are available (default: an empty list)\n"
+    "          the non-radiative transitions that are available (default: an empty list)\n"
     "    normalise : bool, default false  \n"
-    "           option to indicate whether or not to normalise all probability data (default: no normalisation)\n\n"
+    "          option to indicate whether or not to normalise all probability data (default: no normalisation)\n\n"
   );
 
   // wrap the component
@@ -66,7 +66,7 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     python::arg( "radiative" ) = std::vector< RadiativeTransitionData >{},
     python::arg( "non_radiative" ) = std::vector< NonRadiativeTransitionData >{},
     python::arg( "normalise" ) = false,
-    ""
+    "Initialise the electron subshell configuration"
   )
   .def_property(
 
@@ -134,8 +134,8 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the subshell from which the\n"
-    "         vacancy filling electron originated\n"
+    "        the identifier of the subshell from which the\n"
+    "        vacancy filling electron originated\n"
   )
   .def(
 
@@ -147,10 +147,10 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the subshell from which the\n"
-    "         vacancy filling electron originated\n"
+    "        the identifier of the subshell from which the\n"
+    "        vacancy filling electron originated\n"
     "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the subshell from which the emitted electron originated\n"
+    "        the identifier of the subshell from which the emitted electron originated\n"
   )
   .def(
 
@@ -161,8 +161,8 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the subshell from which the\n"
-    "         vacancy filling electron originated\n"
+    "        the identifier of the subshell from which the\n"
+    "        vacancy filling electron originated\n"
   )
   .def(
 
@@ -174,10 +174,10 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the subshell from which the\n"
-    "         vacancy filling electron originated\n"
+    "        the identifier of the subshell from which the\n"
+    "        vacancy filling electron originated\n"
     "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the subshell from which the emitted electron originated\n"
+    "        the identifier of the subshell from which the emitted electron originated\n"
   )
   .def_property(
 
@@ -209,9 +209,9 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    first : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the first subshell in the range\n"
+    "        the identifier of the first subshell in the range\n"
     "    last : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the last subshell in the range (included)"
+    "        the identifier of the last subshell in the range (included)"
   )
   .def_property_readonly(
 
@@ -229,9 +229,9 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    first : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the first subshell in the range\n"
+    "        the identifier of the first subshell in the range\n"
     "    last : njoy.dryad.id.ElectronSubshellID\n"
-    "         the identifier of the last subshell in the range (included)"
+    "        the identifier of the last subshell in the range (included)"
   )
   .def_property_readonly(
 

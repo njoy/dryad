@@ -24,7 +24,19 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
 
     module,
     "TabulatedScatteringFunction",
-    "A scattering function table"
+    "A scattering function table\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    inverse_lengths : list of float\n"
+    "        the inverse length values\n"
+    "    values : list of float\n"
+    "        the scattering function values\n"
+    "    boundaries : list of int, optional\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of InterpolationType, optional\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : InterpolationType, default=LinearLinear\n"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -36,14 +48,7 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "inverse_lengths" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the scattering function table\n\n"
-    "Arguments:\n"
-    "    self              the scattering function table\n"
-    "    inverse_lengths   the inverse length values\n"
-    "    values            the scattering function values\n"
-    "    boundaries        the boundaries of the interpolation regions\n"
-    "    interpolants      the interpolation types of the interpolation regions,\n"
-    "                      see InterpolationType for all interpolation types"
+    "Initialise the scattering function table with multiple interpolation regions"
   )
   .def(
 
@@ -51,13 +56,7 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
                   InterpolationType >(),
     python::arg( "inverse_lengths" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the scattering function table\n\n"
-    "Arguments:\n"
-    "    self              the scattering function table\n"
-    "    inverse_lengths   the inverse length values\n"
-    "    values            the scattering function values\n"
-    "    interpolant       the interpolation type (default lin-lin),\n"
-    "                      see InterpolationType for all interpolation types"
+    "Initialise the scattering function table with single interpolation type"
   )
   .def_property_readonly(
 
@@ -83,15 +82,18 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
     &Component::upperInverseLengthLimit,
     "The upper inverse length limit"
   )
-  .def_property_readonly(
+  .def(
 
     "inverse_length",
     &Component::inverseLength,
-    "The inverse length value associated to an energy,cosine pair\n\n"
-    "Arguments:\n"
-    "    self     the table\n"
-    "    energy   the incident photon energy\n"
-    "    cosine   the outgoing photon cosine"
+    python::arg( "energy" ), python::arg( "cosine" ),
+    "Calculate the inverse length value associated to an energy,cosine pair\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the incident photon energy\n"
+    "    cosine : float\n"
+    "        the outgoing photon cosine"
   )
   .def(
 
@@ -100,9 +102,10 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
        { return self( inverse_length ); },
     python::arg( "inverse_length" ),
     "Evaluate the table for a given inverse length value\n\n"
-    "Arguments:\n"
-    "    self              the table\n"
-    "    inverse_length    the inverse length value"
+    "Parameters\n"
+    "----------\n"
+    "    inverse_length : float\n"
+    "        the inverse length value"
   )
   .def(
 
@@ -111,10 +114,12 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
        { return self( energy, cosine ); },
     python::arg( "energy" ), python::arg( "cosine" ),
     "Evaluate the table for a given energy,cosine pair\n\n"
-    "Arguments:\n"
-    "    self     the table\n"
-    "    energy   the incident photon energy\n"
-    "    cosine   the outgoing photon cosine"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the incident photon energy\n"
+    "    cosine : float\n"
+    "        the outgoing photon cosine"
   );
 
   // add standard equality comparison definitions

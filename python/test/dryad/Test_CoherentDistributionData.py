@@ -12,11 +12,11 @@ from njoy.dryad import InterpolationType
 from njoy.dryad import TabulatedScatteringFunction
 from njoy.dryad import TabulatedFormFactor
 
-def verify_chunk_without_anomolous_form_factor( self, chunk ) :
+def verify_chunk_without_anomalous_form_factor( self, chunk ) :
 
     self.assertEqual( DistributionDataType.Coherent, chunk.type )
     self.assertEqual( ReferenceFrame.CentreOfMass, chunk.frame )
-    self.assertEqual( False, chunk.has_anomolous_form_factor )
+    self.assertEqual( False, chunk.has_anomalous_form_factor )
 
     self.assertAlmostEqual( 1.  , chunk.scattering_function.lower_inverse_length_limit )
     self.assertAlmostEqual( 1e+6, chunk.scattering_function.upper_inverse_length_limit )
@@ -34,14 +34,14 @@ def verify_chunk_without_anomolous_form_factor( self, chunk ) :
     self.assertEqual( InterpolationType.LinearLinear, chunk.scattering_function.interpolants[0] )
     self.assertEqual( True, chunk.scattering_function.is_linearised )
 
-    self.assertAlmostEqual( None, chunk.real_anomolous_form_factor )
-    self.assertAlmostEqual( None, chunk.imaginary_anomolous_form_factor )
+    self.assertAlmostEqual( None, chunk.real_anomalous_form_factor )
+    self.assertAlmostEqual( None, chunk.imaginary_anomalous_form_factor )
 
-def verify_chunk_with_anomolous_form_factor( self, chunk ) :
+def verify_chunk_with_anomalous_form_factor( self, chunk ) :
 
     self.assertEqual( DistributionDataType.Coherent, chunk.type )
     self.assertEqual( ReferenceFrame.CentreOfMass, chunk.frame )
-    self.assertEqual( True, chunk.has_anomolous_form_factor )
+    self.assertEqual( True, chunk.has_anomalous_form_factor )
 
     self.assertAlmostEqual( 1.  , chunk.scattering_function.lower_inverse_length_limit )
     self.assertAlmostEqual( 1e+6, chunk.scattering_function.upper_inverse_length_limit )
@@ -59,7 +59,7 @@ def verify_chunk_with_anomolous_form_factor( self, chunk ) :
     self.assertEqual( InterpolationType.LinearLinear, chunk.scattering_function.interpolants[0] )
     self.assertEqual( True, chunk.scattering_function.is_linearised )
 
-    factor = chunk.real_anomolous_form_factor
+    factor = chunk.real_anomalous_form_factor
     self.assertAlmostEqual( 1., factor.lower_energy_limit )
     self.assertAlmostEqual( 2e+7, factor.upper_energy_limit )
     self.assertEqual( 2, factor.number_points )
@@ -76,7 +76,7 @@ def verify_chunk_with_anomolous_form_factor( self, chunk ) :
     self.assertEqual( InterpolationType.LinearLinear, factor.interpolants[0] )
     self.assertEqual( True, factor.is_linearised )
 
-    factor = chunk.imaginary_anomolous_form_factor
+    factor = chunk.imaginary_anomalous_form_factor
     self.assertAlmostEqual( 1., factor.lower_energy_limit )
     self.assertAlmostEqual( 2e+7, factor.upper_energy_limit )
     self.assertEqual( 2, factor.number_points )
@@ -98,19 +98,19 @@ class Test_CoherentDistributionData( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        # the data is given explicitly without an anomolous form factor
+        # the data is given explicitly without an anomalous form factor
         chunk = CoherentDistributionData( frame = ReferenceFrame.CentreOfMass,
                                           scattering = TabulatedScatteringFunction( [ 1., 1e+6 ], [ 2., 1. ] ) )
 
-        verify_chunk_without_anomolous_form_factor( self, chunk )
+        verify_chunk_without_anomalous_form_factor( self, chunk )
 
-        # the data is given explicitly with an anomolous form factor
+        # the data is given explicitly with an anomalous form factor
         chunk = CoherentDistributionData( frame = ReferenceFrame.CentreOfMass,
                                           scattering = TabulatedScatteringFunction( [ 1., 1e+6 ], [ 2., 1. ] ),
                                           real = TabulatedFormFactor( [ 1., 2e+7 ], [ 1., 2. ] ),
                                           imaginary = TabulatedFormFactor( [ 1., 2e+7 ], [ 0.5, 0.6 ] ) )
 
-        verify_chunk_with_anomolous_form_factor( self, chunk )
+        verify_chunk_with_anomalous_form_factor( self, chunk )
 
     def test_setter_functions( self ) :
 
@@ -127,7 +127,7 @@ class Test_CoherentDistributionData( unittest.TestCase ) :
 
         chunk.frame = original
 
-        verify_chunk_without_anomolous_form_factor( self, chunk )
+        verify_chunk_without_anomalous_form_factor( self, chunk )
 
         # the scattering function can be changed
         newfunction = TabulatedScatteringFunction( [ 1., 1e+6 ], [ 4., 2. ] )
@@ -139,22 +139,22 @@ class Test_CoherentDistributionData( unittest.TestCase ) :
 
         chunk.scattering_function = original
 
-        verify_chunk_without_anomolous_form_factor( self, chunk )
+        verify_chunk_without_anomalous_form_factor( self, chunk )
 
         # the form factor can be changed
         newrealfactor = TabulatedFormFactor( [ 1., 2e+7 ], [ 1., 2. ] )
         newimaginaryfactor = TabulatedFormFactor( [ 1., 2e+7 ], [ 0.5, 0.6 ] )
         original = None
 
-        chunk.real_anomolous_form_factor = newrealfactor
-        chunk.imaginary_anomolous_form_factor = newimaginaryfactor
+        chunk.real_anomalous_form_factor = newrealfactor
+        chunk.imaginary_anomalous_form_factor = newimaginaryfactor
 
-        verify_chunk_with_anomolous_form_factor( self, chunk )
+        verify_chunk_with_anomalous_form_factor( self, chunk )
 
-        chunk.real_anomolous_form_factor = original
-        chunk.imaginary_anomolous_form_factor = original
+        chunk.real_anomalous_form_factor = original
+        chunk.imaginary_anomalous_form_factor = original
 
-        verify_chunk_without_anomolous_form_factor( self, chunk )
+        verify_chunk_without_anomalous_form_factor( self, chunk )
 
     def test_comparison( self ) :
 

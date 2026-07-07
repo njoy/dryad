@@ -103,7 +103,6 @@ SCENARIO( "ThermalScattering" ) {
 void verifyChunk( const ThermalScattering& chunk ) {
 
   // documentation
-  CHECK( std::nullopt == chunk.documentation().awr() );
   CHECK( std::nullopt == chunk.documentation().library() );
   CHECK( std::nullopt == chunk.documentation().version() );
   CHECK( std::nullopt == chunk.documentation().description() );

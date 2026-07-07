@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_TABULATEDLEVELSPACINGS
-#define NJOY_DRYAD_RESONANCES_TABULATEDLEVELSPACINGS
+#ifndef NJOY_DRYAD_RESONANCES_TABULATEDLEVELSPACING
+#define NJOY_DRYAD_RESONANCES_TABULATEDLEVELSPACING
 
 // system includes
 #include <vector>
@@ -78,7 +78,7 @@ namespace resonances {
     /**
      *  @brief Return a linearised level spacing table
      *
-     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
+     *  @param[in] tolerance   the linearisation tolerance
      */
     TabulatedLevelSpacing linearise( double tolerance = constants::linearisation::tolerance ) const {
 

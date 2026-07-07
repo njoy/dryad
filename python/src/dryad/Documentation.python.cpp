@@ -23,47 +23,47 @@ void wrapDocumentation( python::module& module ) {
 
     module,
     "Documentation",
-    "Documentation associated to the dryad data"
+    "Documentation associated to the dryad data\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    library : int, optional\n"
+    "        the library number\n"
+    "    version : tuple of int, optional\n"
+    "        the version numbers (major and minor)\n"
+    "    description : str, optional\n"
+    "        the description"
    );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::optional< double >,
-                  std::optional< int >,
+    python::init<>(),
+    "Initialise the documentation with default values"
+  )
+  .def(
+
+    python::init< std::optional< int >,
                   std::optional< std::pair< int, int > >,
                   std::optional< std::string > >(),
-    python::arg( "awr" ), python::arg( "library" ),
-    python::arg( "version" ), python::arg( "description" ),
-    "Initialise the documentation\n\n"
-    "Arguments:\n"
-    "    self          the documentation\n"
-    "    awr           the atomic weight ratio\n"
-    "    library       the library number\n"
-    "    version       the version number\n"
-    "    description   the description"
-  )
-  .def_property(
-
-    "awr",
-    python::overload_cast<>( &Component::awr, python::const_ ),
-    python::overload_cast< std::optional< double > >( &Component::awr ),
-    "The atomic weight ratio"
+    python::arg( "library" ) = std::nullopt,
+    python::arg( "version" ) = std::nullopt,
+    python::arg( "description" ) = std::nullopt,
+    "Initialise the documentation"
   )
   .def_property(
 
     "library",
     python::overload_cast<>( &Component::library, python::const_ ),
     python::overload_cast< std::optional< int > >( &Component::library ),
-    "The library"
+    "The library number"
   )
   .def_property(
 
     "version",
     python::overload_cast<>( &Component::version, python::const_ ),
     python::overload_cast< std::optional< std::pair< int, int > > >( &Component::version ),
-    "The version"
+    "The version numbers (major and minor)"
   )
   .def_property(
 

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_COH3_COULOMB
-#define NJOY_DRYAD_RESONANCES_COH3_COULOMB
+#ifndef NJOY_DRYAD_RESONANCES_COULOMB_COH3_COULOMB
+#define NJOY_DRYAD_RESONANCES_COULOMB_COH3_COULOMB
 
 //const double HBAR       =  6.582119514e-22; /* Planck's constant/2pi [MeV sec]*/
 //const double VLIGHT     =  2.99792458e+23 ; /* light velocty [fm/sec]         */
