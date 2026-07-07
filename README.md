@@ -52,5 +52,57 @@ To clean the documentation, move into the `dryad/docs` directory and run:
 make clean
 ```
 
-## LICENSE
+# Third-party dependencies
+
+NJOY uses a number of third-party dependencies for various purposes such as floating point number parsing, matrix algebra, etc. The following is an overview of these third-party libraries with references and license information.
+
+## Eigen
+
+Eigen is a C++ template library for linear algebra and provides matrix and vector types, numerical solvers, and related algorithms. NJOY uses Eigen for matrix and vector representations used in resonance reconstruction and covariance data, eigenvalue decomposition algorithms, etc.
+
+The Eigen source repository can be found [here](https://gitlab.com/libeigen/eigen) and is mirrored in the njoy organisation on GitHub [here](https://github.com/njoy/eigen). This mirror is required due to the way we handle third-party dependencies in our CMake configuration.
+
+License: [Mozilla Public License (MPL 2.0)](https://gitlab.com/libeigen/eigen/-/blob/master/COPYING.MPL2)
+
+## Fast_float
+
+The fast_float library provides fast header-only implementations for the C++ std::from_chars functions which convert ASCII strings representing decimal values (e.g., 1.3e10) into binary types. It also provides an extension for fortran formatted strings. NJOY uses this library for the implementation of the std::from_chars functions since some standard library implementations do not provide them.
+
+The fast_float source repository can be found [here](https://github.com/fastfloat/fast_float).
+
+License: [Apache License, Version 2.0](https://github.com/fastfloat/fast_float/blob/main/LICENSE-APACHE) or [MIT license](https://github.com/fastfloat/fast_float/blob/main/LICENSE-MIT) or [BOOST software license](https://github.com/fastfloat/fast_float/blob/main/LICENSE-BOOST)
+
+## pugixml
+
+pugixml is a C++ library for XML file parsing and manipulation. NJOY uses this library for reading and writing GNDS XML files.
+
+The pugixml source repository can be found [here](https://github.com/zeux/pugixml).
+
+License: [MIT license](https://github.com/zeux/pugixml/blob/master/LICENSE.md)
+
+## pybind11
+
+pybind11 is a C++ library that exposes C++ types in Python and vice versa, mainly to create Python bindings of existing C++ code. NJOY uses this library for its' Python bindings
+
+The pybind11 source repository can be found [here](https://github.com/pybind/pybind11).
+
+License: [BSD 3-Clause License](https://github.com/pybind/pybind11/blob/master/LICENSE)
+
+## spdlog and fmt
+
+spdlog is a C++ logging library which uses the fmt library for string formatting.
+
+The spdlog source repository can be found [here](https://github.com/gabime/spdlog).
+
+License: [MIT license](https://github.com/gabime/spdlog/blob/v1.x/LICENSE) for spdlog and [MIT license](https://raw.githubusercontent.com/fmtlib/fmt/master/LICENSE) for fmt.
+
+## Catch-2
+
+Catch2 is a unit testing framework for C++ used by NJOY for our C++ unit tests.
+
+The Catch-2 source repository can be found [here](https://github.com/catchorg/Catch2).
+
+License: [BOOST software license](https://github.com/catchorg/Catch2/blob/devel/LICENSE.txt)
+
+# LICENSE
 The software contained in this repository is covered under the associated [LICENSE](LICENSE) file.
