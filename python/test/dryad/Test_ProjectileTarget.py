@@ -85,7 +85,6 @@ def make_projectile_target( normalise ) :
 def verify_chunk( self, chunk, normalise ) :
 
     # documentation
-    self.assertIsNone( chunk.documentation.awr )
     self.assertIsNone( chunk.documentation.library )
     self.assertIsNone( chunk.documentation.version )
     self.assertIsNone( chunk.documentation.description )
@@ -395,7 +394,6 @@ def verify_chunk( self, chunk, normalise ) :
 def verify_correct_unionisation( self, chunk, exclude ) :
 
     # documentation
-    self.assertIsNone( chunk.documentation.awr )
     self.assertIsNone( chunk.documentation.library )
     self.assertIsNone( chunk.documentation.version )
     self.assertIsNone( chunk.documentation.description )
@@ -406,6 +404,9 @@ def verify_correct_unionisation( self, chunk, exclude ) :
 
     # interaction type
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
+
+    # particle data is not present
+    self.assertIsNone( chunk.particle_data )
 
     # resonance parameters are not present
     self.assertIsNone( chunk.resonances )
@@ -756,7 +757,6 @@ def verify_correct_unionisation( self, chunk, exclude ) :
 def verify_correct_summation( self, chunk ) :
 
     # documentation
-    self.assertIsNone( chunk.documentation.awr )
     self.assertIsNone( chunk.documentation.library )
     self.assertIsNone( chunk.documentation.version )
     self.assertIsNone( chunk.documentation.description )
@@ -767,6 +767,9 @@ def verify_correct_summation( self, chunk ) :
 
     # interaction type
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
+
+    # particle database is not present
+    self.assertIsNone( chunk.resonances )
 
     # resonance parameters are not present
     self.assertIsNone( chunk.resonances )

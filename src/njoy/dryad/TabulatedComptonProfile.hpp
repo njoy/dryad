@@ -30,15 +30,105 @@ namespace dryad {
     TabulatedComptonProfileFunction pdf_;
     TabulatedComptonProfileFunction cdf_;
 
-    /* auxiliary functions */
-
-    #include "njoy/dryad/TabulatedComptonProfile/src/calculateCdf.hpp"
-
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/TabulatedComptonProfile/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    TabulatedComptonProfile() = default;
+
+    TabulatedComptonProfile( const TabulatedComptonProfile& ) = default;
+    TabulatedComptonProfile( TabulatedComptonProfile&& ) = default;
+
+    TabulatedComptonProfile& operator=( const TabulatedComptonProfile& ) = default;
+    TabulatedComptonProfile& operator=( TabulatedComptonProfile&& ) = default;
+
+    /**
+     *  @brief Constructor using a pdf
+     *
+     *  @param[in] identifier   the electron subshell identifier
+     *  @param[in] pdf          the pdf of the distribution
+     *  @param[in] normalise    option to indicate whether or not to normalise
+     *                          all probability data (default: no normalisation)
+     */
+    TabulatedComptonProfile(
+        id::ElectronSubshellID identifier,
+        TabulatedComptonProfileFunction pdf,
+        bool normalise = false ) :
+      id_( std::move( identifier ) ),
+      pdf_( std::move( pdf ) ), cdf_() {
+
+      if ( normalise ) {
+
+        this->normalise();
+      }
+      else {
+
+        this->cdf() = this->pdf().calculateCdf();
+      }
+    }
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] identifier     the electron subshell identifier
+     *  @param[in] momentum       the momentum values
+     *  @param[in] values         the probability values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
+     */
+    TabulatedComptonProfile(
+        id::ElectronSubshellID identifier,
+        std::vector< double > momentum,
+        std::vector< double > values,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants,
+        bool normalise = false ) :
+      TabulatedComptonProfile(
+          std::move( identifier ) ,
+          TabulatedComptonProfileFunction( std::move( momentum ), std::move( values ),
+                                           std::move( boundaries ), std::move( interpolants ) ),
+          normalise ) {}
+
+    /**
+     *  @brief Constructor for a pdf using a single interpolation zone
+     *
+     *  @param[in] identifier     the electron subshell identifier
+     *  @param[in] momentum       the momentum values
+     *  @param[in] values         the probability values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
+     */
+    TabulatedComptonProfile(
+        id::ElectronSubshellID identifier,
+        std::vector< double > momentum,
+        std::vector< double > values,
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool normalise = false ) :
+      TabulatedComptonProfile(
+          std::move( identifier ) ,
+          TabulatedComptonProfileFunction( std::move( momentum ), std::move( values ),
+                                           std::move( interpolant ) ),
+          normalise ) {}
+
+    /**
+     *  @brief Constructor using a pdf and cdf
+     *
+     *  @param[in] identifier   the electron subshell identifier
+     *  @param[in] pdf          the pdf of the distribution
+     *  @param[in] cdf          the cdf of the distribution
+     */
+    TabulatedComptonProfile(
+        id::ElectronSubshellID identifier,
+        TabulatedComptonProfileFunction pdf,
+        TabulatedComptonProfileFunction cdf ) :
+      id_( std::move( identifier ) ),
+      pdf_( std::move( pdf ) ), cdf_( std::move( cdf ) ) {}
 
     /* methods */
 
@@ -91,6 +181,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the probability distribution function (pdf) of the distribution
+     */
+    TabulatedComptonProfileFunction& pdf() {
+
+      return this->pdf_;
+    }
+
+    /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
     const TabulatedComptonProfileFunction& cdf() const {
@@ -99,9 +197,17 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the cumulative distribution function (cdf) of the distribution
+     */
+    TabulatedComptonProfileFunction& cdf() {
+
+      return this->cdf_;
+    }
+
+    /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param cosine   the value to be evaluated
+     *  @param[in] cosine   the value to be evaluated
      */
     double operator()( double cosine ) const {
 
@@ -113,14 +219,17 @@ namespace dryad {
      */
     void normalise() {
 
-      this->pdf_.normalise();
-      this->calculateCdf( true );
+      this->pdf().normalise();
+      this->cdf() = this->pdf().calculateCdf();
     }
 
     /**
      *  @brief Return the average momentum defined by the distribution
      */
-    double averageMomentum() const { return this->pdf().mean(); }
+    double averageMomentum() const {
+
+      return this->pdf().mean();
+    }
 
     /**
      *  @brief Return a linearised Compton profile table

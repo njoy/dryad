@@ -19,15 +19,62 @@ namespace dryad {
   class TabulatedAverageCosine :
       protected scion::math::InterpolationTable< double, double > {
 
+    /* constructor */
+
+    /**
+     *  @brief Private constructor
+     *
+     *  @param[in] table   the interpolation table
+     */
+    TabulatedAverageCosine( InterpolationTable< double, double > table ) :
+      InterpolationTable( std::move( table ) ) {}
+
   public:
 
     /* type aliases */
+
     using InterpolationTable::XType;
     using InterpolationTable::YType;
 
     /* constructor */
 
-    #include "njoy/dryad/TabulatedAverageCosine/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    TabulatedAverageCosine() = default;
+
+    TabulatedAverageCosine( const TabulatedAverageCosine& ) = default;
+    TabulatedAverageCosine( TabulatedAverageCosine&& ) = default;
+
+    TabulatedAverageCosine& operator=( const TabulatedAverageCosine& ) = default;
+    TabulatedAverageCosine& operator=( TabulatedAverageCosine&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the average cosine values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     */
+    TabulatedAverageCosine( std::vector< double > energies,
+                            std::vector< double > values,
+                            std::vector< std::size_t > boundaries,
+                            std::vector< InterpolationType > interpolants ) :
+      InterpolationTable( std::move( energies ), std::move( values ),
+                          std::move( boundaries ), std::move( interpolants ) ) {}
+
+    /**
+     *  @brief Constructor for a cross section using a single interpolation zone
+     *
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the average cosine values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     */
+    TabulatedAverageCosine( std::vector< double > energies,
+                            std::vector< double > values,
+                            InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
 
     /* methods */
 

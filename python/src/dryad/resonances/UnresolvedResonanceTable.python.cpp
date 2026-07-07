@@ -27,7 +27,15 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
 
     module,
     "UnresolvedResonanceTable",
-    "A table of unresolved average parameters for a set of channels"
+    "A table of unresolved average parameters for a set of channels\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    channels : list of njoy.dryad.id.ChannelID\n"
+    "        the channel identifiers (nc values)\n"
+    "    widths : list of njoy.dryad.resonances.TabulatedAverageWidths\n"
+    "        the tabulated average widths (nc values)\n"
+    "    spacings : njoy.dryad.id.TabulatedLevelSpacing\n"
+    "        the average level spacing"
   );
 
   // wrap the component
@@ -41,12 +49,7 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
     python::arg( "channels" ),
     python::arg( "average_widths" ),
     python::arg( "level_spacings" ),
-    "Initialise the table\n\n"
-    "Arguments:\n"
-    "    self       the table\n"
-    "    channels   the channel identifiers (nc values)\n"
-    "    widths     the tabulated average widths (nc values)\n"
-    "    spacings   the average level spacing"
+    "Initialise the table"
   )
   .def_property_readonly(
 
@@ -78,9 +81,10 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
     &Component::hasChannel,
     python::arg( "channel" ),
     "Return whether or not a channel is present\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    channel   the channel identifier"
+    "Parameters\n"
+    "----------\n"
+    "    channel : njoy.dryad.id.ChannelID\n"
+    "        the channel identifier"
   )
   .def(
 
@@ -88,9 +92,10 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
     python::overload_cast< const ChannelID& >( &Component::channelWidths, python::const_ ),
     python::arg( "channel" ),
     "Return the average widths for a given channel\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    channel   the channel identifier"
+    "Parameters\n"
+    "----------\n"
+    "    channel : njoy.dryad.id.ChannelID\n"
+    "        the channel identifier"
   );
 
   addStandardEqualityComparisonDefinitions< Component >( component );

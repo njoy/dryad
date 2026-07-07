@@ -71,7 +71,7 @@ class Test_LegendreAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 0.945 / normalisation, chunk( 2.5, -0.5 ) )
             self.assertAlmostEqual( 0.75  / normalisation, chunk( 3.5, -0.5 ) )
 
-            # verify average cosines
+            # verify average cosines - always the mean value even for unnormalised distributions
             cosines = chunk.average_cosines
             self.assertAlmostEqual( 1., cosines.lower_energy_limit )
             self.assertAlmostEqual( 4., cosines.upper_energy_limit )
@@ -85,10 +85,10 @@ class Test_LegendreAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., cosines.energies[1] )
             self.assertAlmostEqual( 3., cosines.energies[2] )
             self.assertAlmostEqual( 4., cosines.energies[3] )
-            self.assertAlmostEqual( 0.        / normalisation, cosines.values[0] )
-            self.assertAlmostEqual( 0.04 / 3. / normalisation, cosines.values[1] )
-            self.assertAlmostEqual( 0.4 / 3.  / normalisation, cosines.values[2] )
-            self.assertAlmostEqual( 1.6 / 3.  / normalisation, cosines.values[3] )
+            self.assertAlmostEqual( 0.        / 2., cosines.values[0] )
+            self.assertAlmostEqual( 0.04 / 3. / 2., cosines.values[1] )
+            self.assertAlmostEqual( 0.4 / 3.  / 2., cosines.values[2] )
+            self.assertAlmostEqual( 1.6 / 3.  / 2., cosines.values[3] )
             self.assertEqual( 3, cosines.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, cosines.interpolants[0] )
             self.assertEqual( True, cosines.is_linearised )

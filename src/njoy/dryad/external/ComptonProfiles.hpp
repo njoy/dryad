@@ -2,7 +2,7 @@
 #define NJOY_DRYAD_EXTERNAL_COMPTONPROFILES
 
 // system includes
-#include <vector>
+#include <unordered_map>
 #include <vector>
 
 // other includes

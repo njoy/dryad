@@ -13,7 +13,7 @@ namespace resonances {
   /**
    *  @class
    *  @brief Hard sphere penetrability functions
-
+   *
    *  @todo c++20 : use defaulted comparison operators
    */
   class HardSpherePenetrability :

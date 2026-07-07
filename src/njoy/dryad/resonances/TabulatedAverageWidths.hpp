@@ -125,7 +125,7 @@ namespace resonances {
     /**
      *  @brief Return a linearised average width table
      *
-     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
+     *  @param[in] tolerance   the linearisation tolerance
      */
     TabulatedAverageWidths linearise( double tolerance = constants::linearisation::tolerance ) const {
 

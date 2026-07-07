@@ -14,6 +14,10 @@ namespace dryad {
 
 void wrapTabulatedAngularDistributions( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   // type aliases
   using Component = njoy::dryad::TabulatedAngularDistributions;
   using TabulatedAngularDistribution = njoy::dryad::TabulatedAngularDistribution;
@@ -30,16 +34,16 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    grid : list of float\n"
-    "         the grid values\n"
+    "        the grid values\n"
     "    distributions : list of njoy.dryad.TabulatedAngularDistribution\n"
-    "         the grid values\n"
+    "        the angular distributions\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)\n"
-    "    normalise : bool, default false\n"
+    "        the interpolation type (default lin-lin)\n"
+    "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );
@@ -100,7 +104,11 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
 
     "normalise",
     &Component::normalise,
-    "Normalise the distributions"
+    "Normalise the distributions\n\n"
+    "Note: all distributions should have the same integral over their domain\n"
+    "      to avoid changing the full distribution (ie the normalisation moves\n"
+    "      every distribution up or down by the same amount to avoid changing\n"
+    "      the full distribution shape)."
   )
   .def_property_readonly(
 
@@ -114,14 +122,14 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
-    "Linearise the distributions\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
-    "    normalise : bool, default false\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    std::string( "Linearise the distributions\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance\n"
+                 "    normalise : bool, default False\n"
+                 "        option to indicate whether or not to normalise\n"
+                 "        all probability data (default: no normalisation)" ).c_str()
   );
 
   // add standard equality comparison definitions

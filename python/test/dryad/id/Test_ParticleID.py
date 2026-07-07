@@ -376,7 +376,7 @@ class Test_ParticleID( unittest.TestCase ) :
 
         self.assertEqual( size + 3, ParticleID.size() ) # H1[continuum] already registered
 
-        id = ParticleID( 'H1_e150' )
+        id = ParticleID( 'H1_e998' )
         self.assertEqual( 'H1[continuum]', id.symbol )
         self.assertEqual( 1, id.z )
         self.assertEqual( 1, id.a )
@@ -416,7 +416,7 @@ class Test_ParticleID( unittest.TestCase ) :
 
         self.assertEqual( size + 4, ParticleID.size() ) # H2[continuum] already registered
 
-        id = ParticleID( 'H2_e150' )
+        id = ParticleID( 'H2_e998' )
         self.assertEqual( 'H2[continuum]', id.symbol )
         self.assertEqual( 1, id.z )
         self.assertEqual( 2, id.a )
@@ -456,7 +456,7 @@ class Test_ParticleID( unittest.TestCase ) :
 
         self.assertEqual( size + 5, ParticleID.size() ) # H1[all] already registered
 
-        id = ParticleID( 'H1_e151' )
+        id = ParticleID( 'H1_e999' )
         self.assertEqual( 'H1[all]', id.symbol )
         self.assertEqual( 1, id.z )
         self.assertEqual( 1, id.a )
@@ -496,7 +496,7 @@ class Test_ParticleID( unittest.TestCase ) :
 
         self.assertEqual( size + 6, ParticleID.size() ) # H2[all] already registered
 
-        id = ParticleID( 'H2_e151' )
+        id = ParticleID( 'H2_e999' )
         self.assertEqual( 'H2[all]', id.symbol )
         self.assertEqual( 1, id.z )
         self.assertEqual( 2, id.a )
@@ -895,7 +895,7 @@ class Test_ParticleID( unittest.TestCase ) :
         with self.assertRaises( ValueError ) : id = ParticleID( 'not a valid particle identifier' )
         with self.assertRaises( ValueError ) : id = ParticleID( 'H_e0' )
         with self.assertRaises( ValueError ) : id = ParticleID( 'H_e1' )
-        with self.assertRaises( ValueError ) : id = ParticleID( 'H1_e152' )
+        with self.assertRaises( ValueError ) : id = ParticleID( 'H1_e1000' )
 
 if __name__ == '__main__' :
 

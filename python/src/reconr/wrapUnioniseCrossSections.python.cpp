@@ -27,13 +27,17 @@ namespace reconr {
       "instance and unionises the cross section grids. It does not linearise\n"
       "the data but reevaluates the data using the proper interpolation types\n"
       "of the cross section data.\n\n"
-      "By default, summation cross sections are included in the unionisation process.\n"
+      "By default, summation cross sections are included in the unionisation process\n"
       "unless explicitly excluded by the user. Switching on the exclusion of summation\n"
       "cross sections may be useful when the user is going to recalculate the summation\n"
       "cross sections after unionisation.\n\n"
-      "pt                  the projectile-target data to be modified\n"
-      "exclude_summation   option to exclude summation reactions in the\n"
-      "                    unionisation (default: false)"
+      "Parameters\n"
+      "----------\n"
+      "    pt : njoy.dryad.ProjectileTarget\n"
+      "        the projectile-target data to be modified\n"
+      "    exclude_summation : bool, default False\n"
+      "        option to exclude summation reactions in the unionisation"
     );
   }
+
 } // reconr namespace

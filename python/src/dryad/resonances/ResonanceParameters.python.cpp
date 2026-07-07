@@ -24,19 +24,26 @@ void wrapResonanceParameters( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "ResonanceParameters"
+    "ResonanceParameters",
+    "The resonance parameter data\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    resolved : list of njoy.dryad.resonances.CompoundSystem, optional\n"
+    "        the resolved resonance compound systems"
   );
 
   // wrap the component
   component
   .def(
 
+    python::init<>(),
+    "Initialise the resonance parameters with default values"
+  )
+  .def(
+
     python::init< std::vector< CompoundSystem > >(),
     python::arg( "resolved" ),
-    "Initialise the resonance parameters\n\n"
-    "Arguments:\n"
-    "    self       the resonance parameters\n"
-    "    resolved   the resolved resonance compound systems"
+    "Initialise the resonance parameters with resolved compound systems"
   )
   .def_property(
 

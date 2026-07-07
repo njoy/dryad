@@ -50,6 +50,11 @@ namespace covariance {
 
     /* constructor */
 
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] negative   the largest allowed negative eigenvalue
+     */
     PositiveSemiDefinite( double negative = constants::psychic::largest_allowed_negative_eigenvalue ) :
       Parent( "psychic.covariance.PositiveSemiDefinite" ),
       allowed_negative_eigenvalue_( negative ) {}

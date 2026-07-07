@@ -29,7 +29,9 @@ void wrapParticleDatabase( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    particles : list of njoy.dryad.Particle\n"
-    "         the particle information"
+    "        the particle information\n"
+    "    identifiers : list of njoy.dryad.id.ParticleID\n"
+    "        the particle identifiers"
   );
 
   // wrap the component
@@ -38,6 +40,12 @@ void wrapParticleDatabase( python::module& module ) {
 
     python::init< std::vector< Particle > >(),
     python::arg( "particles" ),
+    "Initialise the particle database"
+  )
+  .def(
+
+    python::init< std::vector< ParticleID > >(),
+    python::arg( "identifiers" ),
     "Initialise the particle database"
   )
   .def_property_readonly(
@@ -62,7 +70,7 @@ void wrapParticleDatabase( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier"
+    "        the particle identifier"
   )
   .def(
 
@@ -73,7 +81,7 @@ void wrapParticleDatabase( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier",
+    "        the particle identifier",
     python::return_value_policy::reference_internal
   );
 

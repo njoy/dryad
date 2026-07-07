@@ -1,9 +1,9 @@
-.. currentmodule:: njoy.dryad 
+.. currentmodule:: njoy.dryad
 
-CoherentDistributionData 
+CoherentDistributionData
 ========================
 
-General information about this distribution 
+General information about this distribution
 
 
 Constructor
@@ -21,8 +21,8 @@ Modifiable Attributes
 
     ~CoherentDistributionData.frame
     ~CoherentDistributionData.scattering_function
-    ~CoherentDistributionData.real_anomolous_form_factor
-    ~CoherentDistributionData.imaginary_anomolous_form_factor
+    ~CoherentDistributionData.real_anomalous_form_factor
+    ~CoherentDistributionData.imaginary_anomalous_form_factor
 
 
 
@@ -32,8 +32,8 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    ~CoherentDistributionData.type 
-    ~CoherentDistributionData.has_anomolous_form_factor
+    ~CoherentDistributionData.type
+    ~CoherentDistributionData.has_anomalous_form_factor
 
 
 

@@ -1,6 +1,8 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <sstream>
+#include <iomanip>
 
 // local includes
 #include "dryad/definitions.hpp"
@@ -13,6 +15,10 @@ namespace psychic {
 namespace covariance {
 
 void wrapEigenvalueRatio( python::module& module ) {
+
+  // constants
+  std::ostringstream ratio;
+  ratio << std::setprecision( 1 ) << njoy::constants::psychic::smallest_eigenvalue_ratio;
 
   // type aliases
   using Component = njoy::psychic::covariance::EigenvalueRatio;
@@ -28,11 +34,11 @@ void wrapEigenvalueRatio( python::module& module ) {
 
     module,
     "EigenvalueRatio",
-    "Test to verify if the positive eigenvalue ratio looks reasonable\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    ratio : float, default 1e-8\n"
-    "         the smallest allowable positive eigenvalue ratio"
+    ( "Test to verify if the positive eigenvalue ratio looks reasonable\n\n"
+      "Parameters\n"
+      "----------\n"
+      "    ratio : float, default " + ratio.str() + "\n"
+      "        the smallest allowable positive eigenvalue ratio" ).c_str()
   );
   // wrap the component
   component
@@ -90,14 +96,14 @@ void wrapEigenvalueRatio( python::module& module ) {
        { return self( covariance ); },
     python::arg( "covariance" ),
     "Verify if the provided covariance matrix has a reasonable eigenvalue ratio\n\n"
-    "The test returns the following status values:\n"
-    "  - Success : the eigenvalue ratio is larger than or equal to the tolerance\n"
-    "  - Fail    : the eigenvalue ratio is smaller than the tolerance\n"
+    "The test returns the following status values:\n\n"
+    "  - Success : the eigenvalue ratio is larger than or equal to the smallest allowed ratio\n"
+    "  - Fail    : the eigenvalue ratio is smaller than the smallest allowed ratio\n"
     "  - Skipped : the test was skipped\n\n"
     "The smallest and largest positive eigenvalue and their ratio is always available.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(

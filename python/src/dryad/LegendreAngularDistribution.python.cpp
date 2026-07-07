@@ -14,6 +14,10 @@ namespace dryad {
 
 void wrapLegendreAngularDistribution( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   // type aliases
   using Component = njoy::dryad::LegendreAngularDistribution;
 
@@ -24,8 +28,7 @@ void wrapLegendreAngularDistribution( python::module& module ) {
 
     module,
     "LegendreAngularDistribution",
-    "An angular distribution defined by a pdf and cdf using a Legendre series\n"
-    "expansion"
+    "An angular distribution defined by a pdf and cdf using a Legendre series expansion"
   );
 
   // wrap the component
@@ -38,9 +41,9 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    coefficients : list of float\n"
-    "         the coefficients of the Legendre series (from\n"
-    "         lowest to highest order coefficient)\n"
-    "    normalise : bool, default false\n"
+    "        the coefficients of the Legendre series (from\n"
+    "        lowest to highest order coefficient)\n"
+    "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   )
@@ -53,13 +56,13 @@ void wrapLegendreAngularDistribution( python::module& module ) {
   .def_property_readonly(
 
     "pdf",
-    &Component::pdf,
+    python::overload_cast<>( &Component::pdf, python::const_ ),
     "The probability distribution function (pdf) of the distribution"
   )
   .def_property_readonly(
 
     "cdf",
-    &Component::cdf,
+    python::overload_cast<>( &Component::cdf, python::const_ ),
     "The cumulative distribution function (cdf) of the distribution"
   )
   .def(
@@ -92,14 +95,14 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
-    "Linearise the distribution\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
-    "    normalise : bool, default false\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    std::string( "Linearise the distribution\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance\n"
+                 "    normalise : bool, default False\n"
+                 "        option to indicate whether or not to normalise\n"
+                 "        all probability data (default: no normalisation)" ).c_str()
   );
 
   // add standard equality comparison definitions

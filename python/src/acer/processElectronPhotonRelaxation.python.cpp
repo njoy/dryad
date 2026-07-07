@@ -31,21 +31,22 @@ namespace acer {
       "Parameters\n"
       "----------\n"
       "    z : int\n"
-      "         the cosine values\n"
+      "        the cosine values\n"
       "    photoatomic : njoy.dryad.ProjectileTarget\n"
-      "         the photoatomic projectile-target data\n"
+      "        the photoatomic projectile-target data\n"
       "    electroatomic : njoy.dryad.ProjectileTarget\n"
-      "         the electroatomic projectile-target data\n"
+      "        the electroatomic projectile-target data\n"
       "    relaxation : njoy.dryad.AtomicRelaxation\n"
-      "         the atomic relaxation data\n"
+      "        the atomic relaxation data\n"
       "    filename : str\n"
-      "         the filename for the ace file\n"
+      "        the filename for the ace file\n"
       "    number : int\n"
-      "         the extension number (above 0, less than 100)\n"
+      "        the extension number (above 0, less than 100)\n"
       "    date : str\n"
-      "         the processing date\n"
+      "        the processing date\n"
       "    title : str\n"
-      "         the ace file title"
+      "        the ace file title"
     );
   }
-} // medic namespace
+
+} // acer namespace

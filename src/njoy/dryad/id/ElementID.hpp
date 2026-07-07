@@ -1,5 +1,5 @@
-#ifndef NJOY_ELEMENTARY_ELEMENTID
-#define NJOY_ELEMENTARY_ELEMENTID
+#ifndef NJOY_DRYAD_ID_ELEMENTID
+#define NJOY_DRYAD_ID_ELEMENTID
 
 // system includes
 #include <string>

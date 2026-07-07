@@ -12,8 +12,8 @@ namespace python = pybind11;
 namespace dryad {
 namespace resonances {
 
-void wrapTabulatedLevelSpacing( python::module& module ) {  
-    
+void wrapTabulatedLevelSpacing( python::module& module ) {
+
   // type aliases
   using Component = njoy::dryad::resonances::TabulatedLevelSpacing;
   using InterpolationType = njoy::dryad::InterpolationType;
@@ -25,7 +25,20 @@ void wrapTabulatedLevelSpacing( python::module& module ) {
 
     module,
     "TabulatedLevelSpacing",
-    "A level spacing table"
+    "A tabulated average level spacing <D>(E) for one spin group\n\n"
+    "The energy values are in eV and the level spacings are in eV.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "        the energy values\n"
+    "    values : list of float\n"
+    "        the level spacing values\n"
+    "    boundaries : list of int, optional\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -38,14 +51,7 @@ void wrapTabulatedLevelSpacing( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the level spacing table\n\n"
-    "Arguments:\n"
-    "    self           the level spacing table\n"
-    "    energies       the energy values\n"
-    "    values         the level spacing values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the level spacing table with multiple interpolation regions"
   )
   .def(
 
@@ -54,13 +60,7 @@ void wrapTabulatedLevelSpacing( python::module& module ) {
                   InterpolationType >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the level spacing table\n\n"
-    "Arguments:\n"
-    "    self           the level spacing table\n"
-    "    energies       the energy values\n"
-    "    values         the level spacing values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the level spacing table with a single interpolation region"
   )
   .def_property_readonly(
 
@@ -93,9 +93,10 @@ void wrapTabulatedLevelSpacing( python::module& module ) {
        { return self( energy ); },
     python::arg( "energy" ),
     "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions

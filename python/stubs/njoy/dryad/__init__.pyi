@@ -9,23 +9,22 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
     
     Parameters
     ----------
-        documentation : njoy.dryad.Documentation 
-             the documentation 
-        element : njoy.dryad.id.ElementID 
-             the element identifier 
-        subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration 
-             the electron subshell configuration data 
-        normalise : bool, default false 
-            option to indicate whether or not to normalise 
-            all probability data (default: no normalisation) 
-    
+        documentation : njoy.dryad.Documentation
+            the documentation
+        element : njoy.dryad.id.ElementID
+            the element identifier
+        subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration
+            the electron subshell configuration data
+        normalise : bool, default false
+            option to indicate whether or not to normalise
+            all probability data (default: no normalisation)
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -38,24 +37,24 @@ class AtomicRelaxation:
         
         Parameters
         ----------
-            filename : str 
-                 the ENDF file name
-            normalise : bool, default false 
-                 option to indicate whether or not to normalise
-                 all probability data (default: no normalisation)
+            filename : str
+                the ENDF file name
+            normalise : bool, default false
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
         """
     @staticmethod
     def from_gnds_file(filename: str, normalise: bool = False) -> AtomicRelaxation:
         """
         Create AtomicRelaxation data from a GNDS file
         
-        Parameters 
-        ---------- 
-            filename : str 
-                 the GNDS file name
-            normalise : bool, default false 
-                 option to indicate whether or not to normalise
-                 all probability data (default: no normalisation)
+        Parameters
+        ----------
+            filename : str
+                the GNDS file name
+            normalise : bool, default false
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
         """
     def __copy__(self) -> AtomicRelaxation:
         ...
@@ -81,12 +80,12 @@ class AtomicRelaxation:
         """
     def has_subshell(self, identifier: id.ElectronSubshellID) -> bool:
         """
-        Return whether or not a subshell is present 
+        Return whether or not a subshell is present
         
         Parameters
         ----------
-            identifier : njoy.dryad.id.ElectronSubshellID 
-                 the electron subshell identifier 
+            identifier : njoy.dryad.id.ElectronSubshellID
+                the electron subshell identifier
         """
     def normalise(self) -> None:
         """
@@ -94,12 +93,12 @@ class AtomicRelaxation:
         """
     def subshell(self, identifier: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
-        Return the requested subshell 
+        Return the requested subshell
         
         Parameters
         ----------
-            identifier : njoy.dryad.id.ElectronSubshellID 
-                 the electron subshell identifier 
+            identifier : njoy.dryad.id.ElectronSubshellID
+                the electron subshell identifier
         """
     def to_endf_file(self, mat: int, filename: str) -> None:
         """
@@ -107,10 +106,10 @@ class AtomicRelaxation:
         
         Parameters
         ----------
-            mat : int 
-                 the ENDF mat number to be used 
-            filename : str 
-                 the ENDF file name 
+            mat : int
+                the ENDF mat number to be used
+            filename : str
+                the ENDF file name
         """
     @property
     def documentation(self) -> Documentation:
@@ -145,23 +144,28 @@ class CoherentDistributionData:
     """
     The distribution data for coherent scattering in photoatomic interactions
     
+    This representation is only available for a photoatomic ProjectileTarget.
+    
     In this representation, a scattering function S(x,Z) and two optional form factor
     functions are defined which together with the Thompson cross section determine the
-    double differential cross section.
+    double differential cross section. The optional form factors are the real and
+    complex part of the anomalous form factor. These are defined as optional because
+    photoatomic MCNP data files produced in 2024 or earlier do not contain these form
+    factors even though the photoatomic ENDF evaluations define them.
     
-    This corresponds with the coherent scattering function data given in MF27 MT502 and
-    the form factors in MF27 MT505 and MT506.
+    This corresponds with the coherent scattering function data given in
+    MF27 MT502 and the form factors in MF27 MT505 and MT506.
     
-    Parameters 
-    ---------- 
-        frame : njoy.dryad.ReferenceFrame 
-             the reference frame of the distribution data
-        scattering : njoy.dryad.TabulatedScatteringFunction 
-             the scatteirng function 
-        real : njoy.dryad.TabulatedFormFactor 
-              the real part of the anamolous form factor
-        imaginary : njoy.dryad.TabulatedFormFactor 
-             the imaginary part of the anamolous form factor
+    Parameters
+    ----------
+        frame : njoy.dryad.ReferenceFrame
+            the reference frame of the distribution data
+        scattering : njoy.dryad.TabulatedScatteringFunction
+            the scattering function
+        real : njoy.dryad.TabulatedFormFactor
+            the real part of the anomalous form factor
+        imaginary : njoy.dryad.TabulatedFormFactor
+            the imaginary part of the anomalous form factor
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CoherentDistributionData:
@@ -173,12 +177,12 @@ class CoherentDistributionData:
     @typing.overload
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction) -> None:
         """
-        Initialise the coherent distribution data without anomolous form factors
+        Initialise the coherent distribution data without anomalous form factors
         """
     @typing.overload
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction, real: TabulatedFormFactor, imaginary: TabulatedFormFactor) -> None:
         """
-        Initialise the coherent distribution data with anomolous form factors
+        Initialise the coherent distribution data with anomalous form factors
         """
     def __ne__(self, arg0: CoherentDistributionData) -> bool:
         ...
@@ -191,26 +195,25 @@ class CoherentDistributionData:
     def frame(self, arg1: ReferenceFrame) -> None:
         ...
     @property
-    def has_anomolous_form_factor(self) -> bool:
+    def has_anomalous_form_factor(self) -> bool:
         """
-        Flag indicating whether or not the coherent distribution data has an anomolous
-        form factor
+        Flag indicating whether or not the coherent distribution data has an anomalous form factor
         """
     @property
-    def imaginary_anomolous_form_factor(self) -> TabulatedFormFactor | None:
+    def imaginary_anomalous_form_factor(self) -> TabulatedFormFactor | None:
         """
-        The imaginary part of the anomolous form factor
+        The imaginary part of the anomalous form factor
         """
-    @imaginary_anomolous_form_factor.setter
-    def imaginary_anomolous_form_factor(self, arg1: TabulatedFormFactor | None) -> None:
+    @imaginary_anomalous_form_factor.setter
+    def imaginary_anomalous_form_factor(self, arg1: TabulatedFormFactor | None) -> None:
         ...
     @property
-    def real_anomolous_form_factor(self) -> TabulatedFormFactor | None:
+    def real_anomalous_form_factor(self) -> TabulatedFormFactor | None:
         """
-        The real part of the anomolous form factor
+        The real part of the anomalous form factor
         """
-    @real_anomolous_form_factor.setter
-    def real_anomolous_form_factor(self, arg1: TabulatedFormFactor | None) -> None:
+    @real_anomalous_form_factor.setter
+    def real_anomalous_form_factor(self, arg1: TabulatedFormFactor | None) -> None:
         ...
     @property
     def scattering_function(self) -> TabulatedScatteringFunction:
@@ -227,17 +230,20 @@ class CoherentDistributionData:
         """
 class DistributionDataType:
     """
-    The distribution data type for a reaction product
+    The distribution data type of a reaction product
+    
+    This enum is used to differentiate between the various distribution data
+    types that are available for a reaction product.
     
     Members:
     
-      TwoBody
+      TwoBody : The distribution data is given as two body scattering
     
-      Uncorrelated
+      Uncorrelated : The distribution data is uncorrelated
     
-      Coherent
+      Coherent : The distribution data is for coherent scattering for photoatomic interactions
     
-      Incoherent
+      Incoherent : The distribution data is for incoherent scattering for photoatomic interactions
     """
     Coherent: typing.ClassVar[DistributionDataType]  # value = <DistributionDataType.Coherent: 2>
     Incoherent: typing.ClassVar[DistributionDataType]  # value = <DistributionDataType.Incoherent: 3>
@@ -281,6 +287,15 @@ class DistributionDataType:
 class Documentation:
     """
     Documentation associated to the dryad data
+    
+    Parameters
+    ----------
+        library : int, optional
+            the library number
+        version : tuple of int, optional
+            the version numbers (major and minor)
+        description : str, optional
+            the description
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> Documentation:
@@ -289,26 +304,17 @@ class Documentation:
         ...
     def __eq__(self, arg0: Documentation) -> bool:
         ...
-    def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
+    @typing.overload
+    def __init__(self) -> None:
+        """
+        Initialise the documentation with default values
+        """
+    @typing.overload
+    def __init__(self, library: int | None = None, version: tuple[int, int] | None = None, description: str | None = None) -> None:
         """
         Initialise the documentation
-        
-        Arguments:
-            self          the documentation
-            awr           the atomic weight ratio
-            library       the library number
-            version       the version number
-            description   the description
         """
     def __ne__(self, arg0: Documentation) -> bool:
-        ...
-    @property
-    def awr(self) -> float | None:
-        """
-        The atomic weight ratio
-        """
-    @awr.setter
-    def awr(self, arg1: float | None) -> None:
         ...
     @property
     def description(self) -> str | None:
@@ -321,7 +327,7 @@ class Documentation:
     @property
     def library(self) -> int | None:
         """
-        The library
+        The library number
         """
     @library.setter
     def library(self, arg1: int | None) -> None:
@@ -329,7 +335,7 @@ class Documentation:
     @property
     def version(self) -> tuple[int, int] | None:
         """
-        The version
+        The version numbers (major and minor)
         """
     @version.setter
     def version(self, arg1: tuple[int, int] | None) -> None:
@@ -345,16 +351,16 @@ class IncoherentDistributionData:
     differential cross section.
     
     This corresponds with the incoherent scattering function data given in MF27 MT504,
-    supplemented with optional external Compton profile data. 
+    supplemented with optional external Compton profile data.
     
-    Parameters 
-    ---------- 
-        frame : njoy.dryad.ReferenceFrame 
-             the reference frame of the distribution data
-        scattering : njoy.dryad.TabulatedScatteringFunction 
-             the scatteirng function 
-        profiles : list of njoy.dryad.TabulatedCOmptonProfile 
-             the optional Compton profiles
+    Parameters
+    ----------
+        frame : njoy.dryad.ReferenceFrame
+            the reference frame of the distribution data
+        scattering : njoy.dryad.TabulatedScatteringFunction
+            the scattering function
+        profiles : list of njoy.dryad.TabulatedComptonProfile
+            the optional Compton profiles
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> IncoherentDistributionData:
@@ -364,7 +370,9 @@ class IncoherentDistributionData:
     def __eq__(self, arg0: IncoherentDistributionData) -> bool:
         ...
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction, profiles: list[TabulatedComptonProfile] | None = None) -> None:
-        ...
+        """
+        Initialise the incoherent distribution data
+        """
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
     @typing.overload
@@ -375,11 +383,11 @@ class IncoherentDistributionData:
         Parameters 
         ---------- 
             energy : float 
-                 the incident energy
+                the incident energy
             energies : list of float 
-                 the incident energies
-            tolerance : float 
-                 the integration tolerance (default: 1e-8)
+                the incident energies
+            tolerance : float, default 1e-08
+                the linearisation tolerance
         """
     @typing.overload
     def average_energy(self, energies: list[float], tolerance: float = 1e-08) -> list[float]:
@@ -393,7 +401,7 @@ class IncoherentDistributionData:
     @property
     def compton_profiles(self) -> list[TabulatedComptonProfile] | None:
         """
-        The compton profiles
+        The Compton profiles
         """
     @compton_profiles.setter
     def compton_profiles(self, arg1: list[TabulatedComptonProfile] | None) -> None:
@@ -428,15 +436,18 @@ class InteractionType:
     """
     The projectile-target interaction type
     
+    This enum is used to differentiate between how the projectile interacts with
+    the target. We currently distinguish nuclear and atomic interactions.
+    
     Members:
     
-      Atomic
+      Nuclear : The projectile-target interaction is nuclear
     
-      Nuclear
+      Atomic : The projectile-target interaction is atomic
     """
     Atomic: typing.ClassVar[InteractionType]  # value = <InteractionType.Atomic: 2>
     Nuclear: typing.ClassVar[InteractionType]  # value = <InteractionType.Nuclear: 1>
-    __members__: typing.ClassVar[dict[str, InteractionType]]  # value = {'Atomic': <InteractionType.Atomic: 2>, 'Nuclear': <InteractionType.Nuclear: 1>}
+    __members__: typing.ClassVar[dict[str, InteractionType]]  # value = {'Nuclear': <InteractionType.Nuclear: 1>, 'Atomic': <InteractionType.Atomic: 2>}
     def __eq__(self, other: typing.Any) -> bool:
         ...
     def __ge__(self, other: typing.Any) -> bool:
@@ -473,19 +484,19 @@ class InteractionType:
         ...
 class InterpolationType:
     """
-    The interpolation types
+    The interpolation type for tabulated data
     
     Members:
     
-      Histogram
+      Histogram : Constant or histogram interpolation
     
-      LinearLinear
+      LinearLinear : y is linear in x
     
-      LinearLog
+      LinearLog : y is linear in ln(x)
     
-      LogLinear
+      LogLinear : ln(y) is linear in x
     
-      LogLog
+      LogLog : ln(y) is linear in ln(x)
     """
     Histogram: typing.ClassVar[InterpolationType]  # value = <InterpolationType.Histogram: 1>
     LinearLinear: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LinearLinear: 2>
@@ -527,9 +538,93 @@ class InterpolationType:
     @property
     def value(self) -> int:
         ...
+class IsotropicAngularDistributionFunction:
+    """
+    An isotropic angular distribution function
+    
+    In this distribution, all cosines are equally probable. The equivalent
+    normalised tabulated distribution is 0.5 on the [-1, 1] domain and the
+    equivalent Legendre distribution uses 0.5 as the P0 coefficient.
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the distribution for a given cosine value
+        
+        Parameters
+        ----------
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> IsotropicAngularDistributionFunction:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IsotropicAngularDistributionFunction:
+        ...
+    def __eq__(self, arg0: IsotropicAngularDistributionFunction) -> bool:
+        ...
+    def __init__(self, value: float = 0.5) -> None:
+        """
+        Initialise the isotropic angular distribution
+        
+        Parameters
+        ----------
+            value : float, default 0.5
+                the value of the distribution (0.5 for a normalised distribution)
+        """
+    def __ne__(self, arg0: IsotropicAngularDistributionFunction) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> ...:
+        """
+        Linearise the distribution function
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution function
+        """
+    def to_legendre_distribution(self) -> ...:
+        """
+        Convert to the equivalent Legendre distribution
+        """
+    def to_tabulated_distribution(self) -> ...:
+        """
+        Convert to the equivalent tabulated distribution
+        """
+    @property
+    def integral(self) -> float:
+        """
+        The integral of the distribution function over its domain
+        """
+    @property
+    def lower_cosine_limit(self) -> float:
+        """
+        The lower cosine limit
+        """
+    @property
+    def mean(self) -> float:
+        """
+        The mean value of the distribution function over its domain
+        """
+    @property
+    def upper_cosine_limit(self) -> float:
+        """
+        The upper cosine limit
+        """
+    @property
+    def value(self) -> float:
+        """
+        The value of the distribution
+        """
 class IsotropicAngularDistributions:
     """
-    The angular distribution data is fully isotropic
+    All angular distributions are isotropic
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> IsotropicAngularDistributions:
@@ -540,17 +635,13 @@ class IsotropicAngularDistributions:
         ...
     def __init__(self) -> None:
         """
-        Initialise the component
-        
-        Arguments:
-            self   the component
+        Initialise the isotropic angular distributions
         """
     def __ne__(self, arg0: IsotropicAngularDistributions) -> bool:
         ...
 class LegendreAngularDistribution:
     """
-    An angular distribution defined by a pdf and cdf using a Legendre series
-    expansion
+    An angular distribution defined by a pdf and cdf using a Legendre series expansion
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
@@ -575,9 +666,9 @@ class LegendreAngularDistribution:
         Parameters
         ----------
             coefficients : list of float
-                 the coefficients of the Legendre series (from
-                 lowest to highest order coefficient)
-            normalise : bool, default false
+                the coefficients of the Legendre series (from
+                lowest to highest order coefficient)
+            normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
         """
@@ -590,8 +681,8 @@ class LegendreAngularDistribution:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
-            normalise : bool, default false
+                the linearisation tolerance
+            normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
         """
@@ -671,8 +762,8 @@ class LegendreAngularDistributionFunction:
         Parameters
         ----------
             coefficients : list of float
-                 the coefficients of the Legendre series (from
-                 lowest to highest order coefficient)
+                the coefficients of the Legendre series (from
+                lowest to highest order coefficient)
         """
     @typing.overload
     def __isub__(self, arg0: float) -> LegendreAngularDistributionFunction:
@@ -709,7 +800,7 @@ class LegendreAngularDistributionFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -723,7 +814,7 @@ class LegendreAngularDistributionFunction:
     @property
     def integral(self) -> float:
         """
-        The integral (zeroth order moment) of the distribution function over its domain
+        The integral of the distribution function over its domain
         """
     @property
     def lower_cosine_limit(self) -> float:
@@ -733,7 +824,7 @@ class LegendreAngularDistributionFunction:
     @property
     def mean(self) -> float:
         """
-        The mean (first order raw moment) of the distribution function over its domain
+        The mean value of the distribution function over its domain
         """
     @property
     def order(self) -> int:
@@ -752,16 +843,16 @@ class LegendreAngularDistributions:
     Parameters
     ----------
         grid : list of float
-             the grid values
-        distributions : list of njoy.dryad.TabulatedAngularDistribution
-             the grid values
+            the grid values
+        distributions : list of njoy.dryad.LegendreAngularDistribution
+            the angular distributions
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
-        normalise : bool, default false
+            the interpolation type (default lin-lin)
+        normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
     """
@@ -802,14 +893,19 @@ class LegendreAngularDistributions:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
-            normalise : bool, default false
+                the linearisation tolerance
+            normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
         Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
         """
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
@@ -846,6 +942,216 @@ class LegendreAngularDistributions:
         """
         The number of interpolation regions in the table
         """
+class MixedAngularDistribution:
+    """
+    An angular distribution defined by a pdf that is an isotropic, legendre or
+    tabulated distribution function
+    
+    Parameters
+    ----------
+        pdf : njoy.dryad.IsotropicAngularDistributionFunction, njoy.dryad.LegendreAngularDistributionFunction or njoy.dryad.TabulatedAngularDistributionFunction]
+            the distribution function
+        value : float
+            the value of the distribution (0.5 for a normalised distribution)
+        coefficients : list of float
+            the coefficients of the Legendre series (from
+            lowest to highest order coefficient)
+        cosines : list of float
+            the cosine values
+        values : list of float
+            the probability values
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
+        normalise : bool, default False
+            option to indicate whether or not to normalise
+            all probability data (default: no normalisation)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the pdf of the distribution for a given cosine value
+        
+        Parameters
+        ----------
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> MixedAngularDistribution:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MixedAngularDistribution:
+        ...
+    def __eq__(self, arg0: MixedAngularDistribution) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, pdf: IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction, normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution
+        """
+    @typing.overload
+    def __init__(self, value: float, normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution as isotropic
+        """
+    @typing.overload
+    def __init__(self, coefficients: list[float], normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution with Legendre coefficients
+        """
+    @typing.overload
+    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution with tabulated data with multiple
+        interpolation zones
+        """
+    @typing.overload
+    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution with tabulated data with a single
+        interpolation zone
+        """
+    def __ne__(self, arg0: MixedAngularDistribution) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
+        """
+        Linearise the distribution
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
+        """
+    @property
+    def average_cosine(self) -> float:
+        """
+        The average cosine defined by the distribution
+        """
+    @property
+    def cdf(self) -> IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction:
+        """
+        The cumulative distribution function (cdf) of the distribution
+        """
+    @property
+    def pdf(self) -> IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction:
+        """
+        The probability distribution function (pdf) of the distribution
+        """
+class MixedAngularDistributions:
+    """
+    Angular distribution data given using Legendre expansions
+    
+    Parameters
+    ----------
+        grid : list of float
+            the grid values
+        distributions : list of njoy.dryad.MixedAngularDistribution
+            the angular distributions
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
+        normalise : bool, default False
+            option to indicate whether or not to normalise
+            all probability data (default: no normalisation)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, value: float, cosine: float) -> float:
+        """
+        Evaluate the angular distribution for a given grid and cosine value
+        
+        Parameters
+        ----------
+            value : float
+                the grid value
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> MixedAngularDistributions:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MixedAngularDistributions:
+        ...
+    def __eq__(self, arg0: MixedAngularDistributions) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+        """
+        Initialise the angular distributions with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+        """
+        Initialise the angular distributions with a single interpolation zone
+        """
+    def __ne__(self, arg0: MixedAngularDistributions) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
+        """
+        Linearise the distributions
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
+        """
+    @property
+    def average_cosines(self) -> TabulatedAverageCosine:
+        """
+        The average cosine values
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def distributions(self) -> list[MixedAngularDistribution]:
+        """
+        The associated distributions
+        """
+    @property
+    def grid(self) -> list[float]:
+        """
+        The grid values for which distributions are given
+        """
+    @property
+    def interpolants(self) -> list[InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
+        """
 class MultiEnergyDistributions:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: MultiEnergyDistributions) -> bool:
@@ -857,6 +1163,7 @@ class Particle:
     Particle information
     
     The Particle class contains specific information for a particle:
+    
       - a particle identifier
       - an optional atomic mass value (always for the ground state) and an
         optional uncertainty
@@ -866,13 +1173,14 @@ class Particle:
       - an optional spin and parity (which is either + or -)
     
     The data is stored in the following units:
+    
       - atomic mass values are in atomic mass units
       - energy values are in eV
     
     Parameters
     ----------
         id : njoy.dryad.id.ParticleID
-             the particle identifier
+            the particle identifier
         mass : float, default None
             the atomic mass (default: None)
         nuclear_mass : float, default None
@@ -888,9 +1196,74 @@ class Particle:
         nuclear_mass_uncertainty : float, default None
             the uncertainty on the nuclear mass value (default: None)
         energy_uncertainty : float, default None
-            the uncertainty on the ecited level energy value (default: None)
+            the uncertainty on the excited level energy value (default: None)
     """
     __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def alpha() -> Particle:
+        """
+        The default particle instance for alphas
+        """
+    @staticmethod
+    def default_particle(id: id.ParticleID) -> Particle:
+        """
+        The default particle instance for a given particle identifier
+        
+        This function creates a default particle instance for the given particle
+        identifier. When relevant, the discrete level energies and spins-parity pairs
+        from RIPL-3 and the atomic masses from AME-2020 are used.
+        
+        When more sources for the particle data become available, this function will
+        provide options to select data from.
+        
+        When an atomic identifier (either with or without vacancies) is used, the
+        elemental particle instance will be returned.
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                the particle identifier
+        """
+    @staticmethod
+    def deuteron() -> Particle:
+        """
+        The default particle instance for deuterons
+        """
+    @staticmethod
+    def electron() -> Particle:
+        """
+        The default particle instance for electrons
+        """
+    @staticmethod
+    def helion() -> Particle:
+        """
+        The default particle instance for helions
+        """
+    @staticmethod
+    def neutron() -> Particle:
+        """
+        The default particle instance for neutrons
+        """
+    @staticmethod
+    def photon() -> Particle:
+        """
+        The default particle instance for photons
+        """
+    @staticmethod
+    def positron() -> Particle:
+        """
+        The default particle instance for positrons
+        """
+    @staticmethod
+    def proton() -> Particle:
+        """
+        The default particle instance for protons
+        """
+    @staticmethod
+    def triton() -> Particle:
+        """
+        The default particle instance for tritons
+        """
     def __copy__(self) -> Particle:
         ...
     def __deepcopy__(self, arg0: dict) -> Particle:
@@ -992,7 +1365,9 @@ class ParticleDatabase:
     Parameters
     ----------
         particles : list of njoy.dryad.Particle
-             the particle information
+            the particle information
+        identifiers : list of njoy.dryad.id.ParticleID
+            the particle identifiers
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ParticleDatabase:
@@ -1001,7 +1376,13 @@ class ParticleDatabase:
         ...
     def __eq__(self, arg0: ParticleDatabase) -> bool:
         ...
+    @typing.overload
     def __init__(self, particles: list[Particle]) -> None:
+        """
+        Initialise the particle database
+        """
+    @typing.overload
+    def __init__(self, identifiers: list[id.ParticleID]) -> None:
         """
         Initialise the particle database
         """
@@ -1014,7 +1395,7 @@ class ParticleDatabase:
         Parameters
         ----------
             id : njoy.dryad.id.ParticleID
-                 the particle identifier
+                the particle identifier
         """
     def particle(self, id: id.ParticleID) -> Particle:
         """
@@ -1023,7 +1404,7 @@ class ParticleDatabase:
         Parameters
         ----------
             id : njoy.dryad.id.ParticleID
-                 the particle identifier
+                the particle identifier
         """
     @property
     def number_particles(self) -> int:
@@ -1041,6 +1422,16 @@ class ParticleDatabase:
 class PolynomialMultiplicity:
     """
     A multiplicity given as a polynomial series
+    
+    Parameters
+    ----------
+        lower : float
+            the lower limit of the domain
+        upper : float
+            the upper limit of the domain
+        coefficients : list of float
+            the coefficients of the polynomial series (from
+            lowest to highest order coefficient)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1053,9 +1444,10 @@ class PolynomialMultiplicity:
         """
         Evaluate the multiplicity for a given energy value
         
-        Arguments:
-            self      the multiplicity
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> PolynomialMultiplicity:
         ...
@@ -1073,14 +1465,7 @@ class PolynomialMultiplicity:
         ...
     def __init__(self, lower: float, upper: float, coefficients: list[float]) -> None:
         """
-        Initialise the multiplicity table
-        
-        Arguments:
-            self           the multiplicity
-            lower          the lower limit of the domain
-            upper          the upper limit of the domain
-            coefficients   the coefficients of the polynomial series (from
-                           lowest to highest order coefficient)
+        Initialise the polynomial multiplicity
         """
     @typing.overload
     def __isub__(self, arg0: float) -> PolynomialMultiplicity:
@@ -1117,7 +1502,7 @@ class PolynomialMultiplicity:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def coefficients(self) -> list[float]:
@@ -1142,6 +1527,28 @@ class PolynomialMultiplicity:
 class ProjectileTarget:
     """
     Data associated to a given projectile and target
+    
+    Parameters
+    ----------
+        documentation : njoy.dryad.Documentation, optional
+            the documentation
+        projectile : njoy.dryad.id.ParticleID
+            the projectile identifier
+        target : njoy.dryad.id.ParticleID
+            the target identifier
+        type : njoy.dryad.InteractionType
+            the interaction type
+        reactions : list of njoy.dryad.Reaction
+            the reaction data
+        particles : njoy.dryad.ParticleDatabase, default None
+            the optional particle data
+        resonances : njoy.dryad.resonances.ResonanceParameters, default None
+            the optional resonance parameters
+        covariances : njoy.dryad.covariance.CovarianceData, default None
+            the optional covariance data
+        normalise : bool, default False
+            option to indicate whether or not to normalise
+            all probability data
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -1153,10 +1560,13 @@ class ProjectileTarget:
         photoatomic ACE file which may yield one ProjectileTarget (pre-eprdata) or two
         ProjectileTarget for eprdata files.
         
-        Arguments:
-            filename    the ACE file name
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Parameters
+        ----------
+            filename : str
+                the ACE file name
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data
         """
     @staticmethod
     def from_endf_file(filename: str, normalise: bool = False) -> ProjectileTarget:
@@ -1166,20 +1576,26 @@ class ProjectileTarget:
         If there are multiple materials in the ENDF file, only the first material
         will be transformed into a ProjectileTarget.
         
-        Arguments:
-            filename    the ENDF file name
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Parameters
+        ----------
+            filename : str
+                the ENDF file name
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data
         """
     @staticmethod
     def from_gnds_file(filename: str, normalise: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from a GNDS file
         
-        Arguments:
-            filename    the GNDS file name
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Parameters
+        ----------
+            filename : str
+                the GNDS file name
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data
         """
     def __copy__(self) -> ProjectileTarget:
         ...
@@ -1190,37 +1606,12 @@ class ProjectileTarget:
     @typing.overload
     def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
-        Initialise the ProjectileTarget
-        
-        Arguments:
-            self            the reaction
-            documentation   the documentation
-            projectile      the particle identifier
-            target          the target identifier
-            type            the interaction type
-            reactions       the reaction data
-            particles       the optional particle data (default: none)
-            resonances      the optional resonance parameters (default: none)
-            covariances     the optional covariance data (default: none)
-            normalise       option to indicate whether or not to normalise
-                            all probability data (default: no normalisation)
+        Initialise the ProjectileTarget with documentation
         """
     @typing.overload
     def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
-        Initialise the ProjectileTarget
-        
-        Arguments:
-            self          the reaction
-            projectile    the particle identifier
-            target        the target identifier
-            type          the interaction type
-            reactions     the reaction data
-            particles       the optional particle data (default: none)
-            resonances    the optional resonance parameters (default: none)
-            covariances   the optional covariance data (default: none)
-            normalise     option to indicate whether or not to normalise
-                          all probability data (default: no normalisation)
+        Initialise the ProjectileTarget without documentation
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
@@ -1228,25 +1619,28 @@ class ProjectileTarget:
         """
         Calculate average outgoing energies for all reaction products
         
-        Arguments:
-            self        the ProjectileTarget data
-            tolerance    the integration tolerance (default: 1e-8)
+        Parameters
+        ----------
+            tolerance : float, default 1e-08
+                the integration tolerance
         """
     def calculate_summation_cross_sections(self, tolerance: float = 0.001) -> None:
         """
         Calculate summation cross sections
         
-        Arguments:
-            self        the ProjectileTarget data
-            tolerance   the linearisation tolerance
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
         """
     def has_reaction(self, id: id.ReactionID) -> bool:
         """
         Return whether or not a reaction is present
         
-        Arguments:
-            self   the ProjectileTarget data
-            id     the reaction identifier
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                the reaction identifier
         """
     def normalise(self) -> None:
         """
@@ -1256,20 +1650,23 @@ class ProjectileTarget:
         """
         Return the requested reaction
         
-        Arguments:
-            self   the ProjectileTarget data
-            id     the reaction identifier
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                the reaction identifier
         """
     def to_endf_file(self, mat: int, filename: str, use_reduced_width_amplitudes: bool = True) -> None:
         """
         Write the ProjectileTarget data to an ENDF file
         
-        Arguments:
-            self                           the ProjectileTarget data
-            mat                            the ENDF mat number to be used
-            filename                       the ENDF file name
-            use_reduced_width_amplitudes   if there are resonances, use reduced width amplitudes
-                                           (default is true)
+        Parameters
+        ----------
+            mat : int
+                the ENDF mat number to be used
+            filename : str
+                the ENDF file name
+            use_reduced_width_amplitudes : bool, default True
+                if there are resonances, use reduced width amplitudes
         """
     def unionise_cross_sections(self, exclude_summation: bool = False) -> None:
         """
@@ -1279,15 +1676,15 @@ class ProjectileTarget:
         grids. It does not linearise the data but reevaluates the data using the
         proper interpolation types of the cross section data.
         
-        By default, summation cross sections are included in the unionisation process.
+        By default, summation cross sections are included in the unionisation process
         unless explicitly excluded by the user. Switching on the exclusion of summation
         cross sections may be useful when the user is going to recalculate the summation
         cross sections after unionisation.
         
-        Arguments:
-            self                the ProjectileTarget data
-            exclude_summation   option to exclude summation reactions in the
-                                unionisation (default: false)
+        Parameters
+        ----------
+            exclude_summation : bool, default False
+                option to exclude summation reactions in the unionisation
         """
     @property
     def covariance_data(self) -> covariance.CovarianceData | None:
@@ -1361,6 +1758,25 @@ class ProjectileTarget:
 class Reaction:
     """
     The data associated to a single reaction
+    
+    Parameters
+    ----------
+        id : njoy.dryad.id.ReactionID
+            the reaction identifier
+        xs : njoy.dryad.TabulatedCrossSection
+            the cross section of the reaction
+        products : list of njoy.dryad.ReactionProduct, default []
+            the reaction products
+        mass_q : float, default None
+            the mass difference Q value (default: None)
+        reaction_q : float, default None
+            the reaction Q value (default: None)
+        normalise : bool, default False
+            option to indicate whether or not to normalise
+            all probability data (default: no normalisation)
+    
+        partials : list of njoy.dryad.id.ReactionID
+            the identifiers of the partials of the reaction
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> Reaction:
@@ -1373,16 +1789,6 @@ class Reaction:
     def __init__(self, id: id.ReactionID, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None, normalise: bool = False) -> None:
         """
         Initialise a primary reaction
-        
-        Arguments:
-            self         the reaction
-            id           the reaction identifier
-            xs           the cross section of the reaction
-            products     the reaction products
-            mass_q       the mass difference Q value (optional)
-            reaction_q   the reaction Q value (optional)
-            normalise    option to indicate whether or not to normalise
-                         all probability data (default: no normalisation)
         """
     @typing.overload
     def __init__(self, id: id.ReactionID, partials: list[id.ReactionID], xs: TabulatedCrossSection, products: list[ReactionProduct] = [], normalise: bool = False) -> None:
@@ -1392,16 +1798,6 @@ class Reaction:
         Summation reactions do not have Q values associated to them. A cross section
         weighted Q value could be calculated using the partial reactions making
         up the summation reaction.
-        
-        Arguments:
-            self        the reaction
-            id          the reaction identifier
-            partials    the identifiers of the partials of the reaction
-            xs          the cross section of the reaction
-            products    the reaction products associated to the summation reaction
-                        (defaults to no reaction products)
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: Reaction) -> bool:
         ...
@@ -1409,28 +1805,32 @@ class Reaction:
         """
         Calculate average outgoing energies for all reaction products
         
-        Arguments:
-            self         the reaction
-            tolerance    the integration tolerance (default: 1e-8)
+        Parameters
+        ----------
+            tolerance : float, default 1e-08
+                the integration tolerance
         """
     @typing.overload
     def has_product(self, type: id.ParticleID) -> bool:
         """
         Return whether or not a reaction product type is present regardless of chain index
         
-        Arguments:
-            self   the reaction
-            type   the reaction product type
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
         """
     @typing.overload
     def has_product(self, type: id.ParticleID, chain: int) -> bool:
         """
         Return whether or not a reaction product type is present for a given chain index
         
-        Arguments:
-            self    the reaction
-            type    the reaction product type
-            chain   the reaction product chain index
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
+            chain : int
+                the reaction product chain index
         """
     def normalise(self) -> None:
         """
@@ -1456,21 +1856,26 @@ class Reaction:
         """
         Return a reaction product with a given type and index regardless of the chain index
         
-        Arguments:
-            self    the reaction
-            type    the reaction product type
-            index   the reaction product index (default is zero)
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
+            index : int, default 0
+                the reaction product index
         """
     @typing.overload
     def product(self, type: id.ParticleID, chain: int, index: int) -> ReactionProduct:
         """
         Return a reaction product with a given type, chain index and index
         
-        Arguments:
-            self    the reaction
-            type    the reaction product type
-            chain   the reaction product chain index
-            index   the reaction product index
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
+            chain : int
+                the reaction product chain index
+            index : int
+                the reaction product index
         """
     @property
     def category(self) -> ReactionCategory:
@@ -1550,11 +1955,14 @@ class ReactionCategory:
     """
     The reaction category
     
+    This enum is used to differentiate reaction categories in the ProjectileTarget.
+    We currently have two categories: primary and summation.
+    
     Members:
     
-      Primary
+      Primary : A primary independent reaction that contributes to the total cross section
     
-      Summation
+      Summation : A summation reaction with or without reaction products that does not count towards the total cross section
     """
     Primary: typing.ClassVar[ReactionCategory]  # value = <ReactionCategory.Primary: 1>
     Summation: typing.ClassVar[ReactionCategory]  # value = <ReactionCategory.Summation: 2>
@@ -1600,22 +2008,22 @@ class ReactionProduct:
     Parameters
     ----------
         product : njoy.dryad.id.ParticleID
-             the reaction product identifier
+            the reaction product identifier
         multiplicity : int, njoy.dryad.TabulatedMultiplicity or njoy.dryad.PolynomialMultiplicity
-             the reaction product multiplicity
+            the reaction product multiplicity
         distribution : default None
-             the reaction product distribution data (default: None)
+            the reaction product distribution data (default: None)
         average_cosine : njoy.dryad.TabulatedAverageCosine, default None
-             the average reaction product cosine (default: None)
+            the average reaction product cosine (default: None)
         average_energy : njoy.dryad.TabulatedAverageEnergy, default None
-             the average reaction product energy (default: None)
+            the average reaction product energy (default: None)
         parent : njoy.dryad.id.ParticleID, default None
-             the parent reaction product (default: None)
+            the parent reaction product (default: None)
         chain : int, default 0
-             the chain index of the reaction product (default: 0)
+            the chain index of the reaction product (default: 0)
         normalise : bool, default False
-             option to indicate whether or not to normalise all probability
-             data (default: no normalisation)
+            option to indicate whether or not to normalise all probability
+            data (default: no normalisation)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ReactionProduct:
@@ -1626,7 +2034,7 @@ class ReactionProduct:
         ...
     def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, parent: id.ParticleID | None = None, chain: int = 0, normalise: bool = False) -> None:
         """
-        Initialise the reaction
+        Initialise the reaction product
         """
     def __ne__(self, arg0: ReactionProduct) -> bool:
         ...
@@ -1707,13 +2115,17 @@ class ReactionProduct:
         ...
 class ReferenceFrame:
     """
-    The reference frame used to describe data
+    The reference frame type
+    
+    This enum is used to differentiate reference frames for distribution data
+    in the ProjectileTarget. We currently distinguish two different frames:
+    centre of mass or laboratory.
     
     Members:
     
-      Laboratory
+      Laboratory : The data is given in the laboratory frame of reference
     
-      CentreOfMass
+      CentreOfMass : The data is given in the centre of mass frame of reference
     """
     CentreOfMass: typing.ClassVar[ReferenceFrame]  # value = <ReferenceFrame.CentreOfMass: 1>
     Laboratory: typing.ClassVar[ReferenceFrame]  # value = <ReferenceFrame.Laboratory: 0>
@@ -1759,16 +2171,20 @@ class TabulatedAngularDistribution:
     Parameters
     ----------
         cosines : list of float
-             the cosine values
+            the cosine values
         values : list of float
-             the probability values
+            the probability values
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
-        normalise : bool, default false
+            the interpolation type (default lin-lin)
+        pdf : njoy.dryad.TabulatedAngularDistributionFunction
+            the probability distribution function
+        cdf : njoy.dryad.TabulatedAngularDistributionFunction
+            the cumulative distribution function
+        normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
     """
@@ -1798,6 +2214,16 @@ class TabulatedAngularDistribution:
         """
         Initialise the angular distribution with a single interpolation zone
         """
+    @typing.overload
+    def __init__(self, pdf: TabulatedAngularDistributionFunction, normalise: bool = False) -> None:
+        """
+        Initialise the angular distribution using a pdf
+        """
+    @typing.overload
+    def __init__(self, pdf: TabulatedAngularDistributionFunction, cdf: TabulatedAngularDistributionFunction) -> None:
+        """
+        Initialise the angular distribution using a pdf and cdf
+        """
     def __ne__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
@@ -1807,8 +2233,8 @@ class TabulatedAngularDistribution:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
-            normalise : bool, default false
+                the linearisation tolerance
+            normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
         """
@@ -1858,16 +2284,16 @@ class TabulatedAngularDistributionFunction:
     Parameters
     ----------
         cosines : list of float
-             the cosine values
+            the cosine values
         values : list of float
-             the probability values
+            the probability values
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
-        normalise : bool, default false
+            the interpolation type (default lin-lin)
+        normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
     """
@@ -1946,7 +2372,7 @@ class TabulatedAngularDistributionFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -1970,7 +2396,7 @@ class TabulatedAngularDistributionFunction:
     @property
     def integral(self) -> float:
         """
-        The integral (zeroth order moment) of the distribution function over its domain
+        The integral of the distribution function over its domain
         """
     @property
     def interpolants(self) -> list[InterpolationType]:
@@ -1990,7 +2416,7 @@ class TabulatedAngularDistributionFunction:
     @property
     def mean(self) -> float:
         """
-        The mean (first order raw moment) of the distribution function over its domain
+        The mean value of the distribution function over its domain
         """
     @property
     def number_points(self) -> int:
@@ -2019,16 +2445,16 @@ class TabulatedAngularDistributions:
     Parameters
     ----------
         grid : list of float
-             the grid values
+            the grid values
         distributions : list of njoy.dryad.TabulatedAngularDistribution
-             the grid values
+            the angular distributions
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
-        normalise : bool, default false
+            the interpolation type (default lin-lin)
+        normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
     """
@@ -2069,14 +2495,19 @@ class TabulatedAngularDistributions:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
-            normalise : bool, default false
+                the linearisation tolerance
+            normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
         Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
         """
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
@@ -2116,6 +2547,19 @@ class TabulatedAngularDistributions:
 class TabulatedAverageCosine:
     """
     An average cosine table
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        values : list of float
+            the average cosine values
+        boundaries : list of int, optional
+            the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+            the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2128,9 +2572,10 @@ class TabulatedAverageCosine:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedAverageCosine:
         ...
@@ -2149,27 +2594,12 @@ class TabulatedAverageCosine:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the average cosine table
-        
-        Arguments:
-            self           the average cosine table
-            energies       the energy values
-            values         the average cosine values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the average cosine table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the average cosine table
-        
-        Arguments:
-            self           the average cosine table
-            energies       the energy values
-            values         the average energy values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the average cosine table with single interpolation type
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAverageCosine:
@@ -2206,7 +2636,7 @@ class TabulatedAverageCosine:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2256,6 +2686,19 @@ class TabulatedAverageCosine:
 class TabulatedAverageEnergy:
     """
     An average reaction product energy table
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        values : list of float
+            the average energy values
+        boundaries : list of int, optional
+            the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+            the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2268,9 +2711,10 @@ class TabulatedAverageEnergy:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedAverageEnergy:
         ...
@@ -2289,27 +2733,12 @@ class TabulatedAverageEnergy:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the average reaction product energy table
-        
-        Arguments:
-            self           the average reaction product energy table
-            energies       the energy values
-            values         the average energy values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the average reaction product energy table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the average reaction product energy table
-        
-        Arguments:
-            self           the average reaction product energy table
-            energies       the energy values
-            values         the average energy values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the average reaction product energy table with a single interpolation region
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAverageEnergy:
@@ -2346,7 +2775,7 @@ class TabulatedAverageEnergy:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2404,17 +2833,17 @@ class TabulatedComptonProfile:
     Parameters
     ----------
         subshell_identifier : njoy.dryad.id.ElectronSubshellID
-             the electron subshell identifier
+            the electron subshell identifier
         momentum : list of float
-             the momentum values
+            the momentum values
         values : list of float
-             the probability values
+            the probability values
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
+            the interpolation type (default lin-lin)
         normalise : bool, default false
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
@@ -2449,13 +2878,13 @@ class TabulatedComptonProfile:
         ...
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedComptonProfile:
         """
-        Linearise the distribution 
+        Linearise the distributions
         
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
-            normalise : bool, default false
+                the linearisation tolerance
+            normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
         """
@@ -2510,15 +2939,15 @@ class TabulatedComptonProfileFunction:
     Parameters
     ----------
         momentum : list of float
-             the momentum values
+            the momentum values
         values : list of float
-             the probability values
+            the probability values
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
+            the interpolation type (default lin-lin)
         normalise : bool, default false
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
@@ -2598,7 +3027,7 @@ class TabulatedComptonProfileFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -2662,6 +3091,19 @@ class TabulatedComptonProfileFunction:
 class TabulatedCrossSection:
     """
     A cross section table
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        values : list of float
+            the cross section values
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2674,9 +3116,10 @@ class TabulatedCrossSection:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedCrossSection:
         ...
@@ -2695,27 +3138,12 @@ class TabulatedCrossSection:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the cross section table
-        
-        Arguments:
-            self           the cross section table
-            energies       the energy values
-            values         the cross section values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the cross section table with multiple interpolation zones
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the cross section table
-        
-        Arguments:
-            self           the cross section table
-            energies       the energy values
-            values         the cross section values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the cross section table with a single interpolation zone
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedCrossSection:
@@ -2752,7 +3180,7 @@ class TabulatedCrossSection:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2802,15 +3230,36 @@ class TabulatedCrossSection:
 class TabulatedEnergyDistribution:
     """
     An energy distribution defined by a pdf and cdf using tabulated data
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        values : list of float
+            the probability values
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
+        pdf : njoy.dryad.TabulatedEnergyDistributionFunction
+            the probability distribution function
+        cdf : njoy.dryad.TabulatedEnergyDistributionFunction
+            the cumulative distribution function
+        normalise : bool, default False
+            option to indicate whether or not to normalise
+            all probability data (default: no normalisation)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, energy: float) -> float:
         """
         Evaluate the pdf of the distribution for a given energy value
         
-        Arguments:
-            self      the distribution
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedEnergyDistribution:
         ...
@@ -2821,31 +3270,22 @@ class TabulatedEnergyDistribution:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
-        Initialise the energy distribution
-        
-        Arguments:
-            self           the energy distribution
-            energies       the energy values
-            values         the probability values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
-            normalise      option to indicate whether or not to normalise
-                           all probability data (default: no normalisation)
+        Initialise the energy distribution with multiple interpolation zones
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
-        Initialise the energy distribution
-        
-        Arguments:
-            self           the energy distribution
-            energies       the energy values
-            values         the probability values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
-            normalise      option to indicate whether or not to normalise
-                           all probability data (default: no normalisation)
+        Initialise the energy distribution with a single interpolation zone
+        """
+    @typing.overload
+    def __init__(self, pdf: TabulatedEnergyDistributionFunction, normalise: bool = False) -> None:
+        """
+        Initialise the energy distribution using a pdf
+        """
+    @typing.overload
+    def __init__(self, pdf: TabulatedEnergyDistributionFunction, cdf: TabulatedEnergyDistributionFunction) -> None:
+        """
+        Initialise the energy distribution using a pdf and cdf
         """
     def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
@@ -2853,11 +3293,13 @@ class TabulatedEnergyDistribution:
         """
         Linearise the distribution
         
-        Arguments:
-            self        the angular distribution
-            tolerance   the linearisation tolerance
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
@@ -2881,7 +3323,7 @@ class TabulatedEnergyDistribution:
     @property
     def energies(self) -> list[float]:
         """
-        The cosine values
+        The energy values
         """
     @property
     def interpolants(self) -> list[InterpolationType]:
@@ -2901,6 +3343,19 @@ class TabulatedEnergyDistribution:
 class TabulatedEnergyDistributionFunction:
     """
     An energy distribution function using tabulated data
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        values : list of float
+            the probability values
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2911,11 +3366,12 @@ class TabulatedEnergyDistributionFunction:
         ...
     def __call__(self, energy: float) -> float:
         """
-        Evaluate the table for a given energy value
+        Evaluate the distribution for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedEnergyDistributionFunction:
         ...
@@ -2934,27 +3390,12 @@ class TabulatedEnergyDistributionFunction:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the energy distribution function
-        
-        Arguments:
-            self           the energy distribution function
-            energies       the energy values
-            values         the cross section values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the energy distribution function with multiple interpolation zones
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the energy distribution function
-        
-        Arguments:
-            self           the energy distribution function
-            energies       the energy values
-            values         the cross section values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the energy distribution function with a single interpolation zone
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
@@ -2991,7 +3432,7 @@ class TabulatedEnergyDistributionFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -3015,7 +3456,7 @@ class TabulatedEnergyDistributionFunction:
     @property
     def integral(self) -> float:
         """
-        The integral (zeroth order moment) of the distribution function over its domain
+        The integral of the distribution function over its domain
         """
     @property
     def interpolants(self) -> list[InterpolationType]:
@@ -3035,7 +3476,7 @@ class TabulatedEnergyDistributionFunction:
     @property
     def mean(self) -> float:
         """
-        The mean (first order raw moment) of the distribution function over its domain
+        The mean value of the distribution function over its domain
         """
     @property
     def number_points(self) -> int:
@@ -3059,17 +3500,35 @@ class TabulatedEnergyDistributionFunction:
         """
 class TabulatedEnergyDistributions:
     """
-    Energy distribution data given as tables
+    Energy distribution data given as tabulated data
+    
+    Parameters
+    ----------
+        grid : list of float
+            the grid values
+        distributions : list of njoy.dryad.TabulatedEnergyDistribution
+            the energy distributions
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
+        normalise : bool, default False
+            option to indicate whether or not to normalise
+            all probability data (default: no normalisation)
     """
     __hash__: typing.ClassVar[None] = None
-    def __call__(self, value: float, cosine: float) -> float:
+    def __call__(self, value: float, energy: float) -> float:
         """
-        Evaluate the energy distributions
+        Evaluate the energy distribution for a given grid and energy value
         
-        Arguments:
-            self      the table
-            value     the grid value
-            energy    the energy value
+        Parameters
+        ----------
+            value : float
+                the grid value
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedEnergyDistributions:
         ...
@@ -3080,43 +3539,35 @@ class TabulatedEnergyDistributions:
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
-        Initialise the energy distributions
-        
-        Arguments:
-            self            the energy distribution table
-            grid            the grid values
-            distributions   the distributions
-            boundaries      the boundaries of the interpolation regions
-            interpolants    the interpolation types of the interpolation regions,
-                            see InterpolationType for all interpolation types
+        Initialise the energy distributions with multiple interpolation zones
         """
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
-        Initialise the energy distributions
-        
-        Arguments:
-            self            the multiplicity table
-            grid            the grid values
-            distributions   the distributions
-            interpolant     the interpolation type (default lin-lin),
-                            see InterpolationType for all interpolation types
+        Initialise the energy distributions with a single interpolation zone
         """
     def __ne__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedEnergyDistributions:
         """
-        Linearise the distribution
+        Linearise the distributions
         
-        Arguments:
-            self        the angular distribution
-            tolerance   the linearisation tolerance
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
         Normalise the distributions
+        
+        Note: all distributions should have the same integral over their domain
+              to avoid changing the full distribution (ie the normalisation moves
+              every distribution up or down by the same amount to avoid changing
+              the full distribution shape).
         """
     @property
     def average_energies(self) -> TabulatedAverageEnergy:
@@ -3156,6 +3607,19 @@ class TabulatedEnergyDistributions:
 class TabulatedFormFactor:
     """
     A form factor table
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        values : list of float
+            the form factor values
+        boundaries : list of int, optional
+            the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+            the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3168,9 +3632,10 @@ class TabulatedFormFactor:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedFormFactor:
         ...
@@ -3189,27 +3654,12 @@ class TabulatedFormFactor:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the form factor table
-        
-        Arguments:
-            self           the form factor table
-            energies       the energy values
-            values         the form factor values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the form factor table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the form factor table
-        
-        Arguments:
-            self           the form factor table
-            energies       the energy values
-            values         the form factor values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the form factor table with a single interpolation region
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedFormFactor:
@@ -3246,7 +3696,7 @@ class TabulatedFormFactor:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3296,6 +3746,19 @@ class TabulatedFormFactor:
 class TabulatedMultiplicity:
     """
     A multiplicity table
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        values : list of float
+            the multiplicity values
+        boundaries : list of int, optional
+            the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+            the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3308,9 +3771,10 @@ class TabulatedMultiplicity:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedMultiplicity:
         ...
@@ -3329,27 +3793,12 @@ class TabulatedMultiplicity:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the multiplicity table
-        
-        Arguments:
-            self           the multiplicity table
-            energies       the energy values
-            values         the multiplicity values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the multiplicity table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the multiplicity table
-        
-        Arguments:
-            self           the multiplicity table
-            energies       the energy values
-            values         the multiplicity values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the multiplicity table with single interpolation type
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedMultiplicity:
@@ -3386,7 +3835,7 @@ class TabulatedMultiplicity:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3436,6 +3885,19 @@ class TabulatedMultiplicity:
 class TabulatedScatteringFunction:
     """
     A scattering function table
+    
+    Parameters
+    ----------
+        inverse_lengths : list of float
+            the inverse length values
+        values : list of float
+            the scattering function values
+        boundaries : list of int, optional
+            the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+            the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3449,19 +3911,22 @@ class TabulatedScatteringFunction:
         """
         Evaluate the table for a given inverse length value
         
-        Arguments:
-            self              the table
-            inverse_length    the inverse length value
+        Parameters
+        ----------
+            inverse_length : float
+                the inverse length value
         """
     @typing.overload
     def __call__(self, energy: float, cosine: float) -> float:
         """
         Evaluate the table for a given energy,cosine pair
         
-        Arguments:
-            self     the table
-            energy   the incident photon energy
-            cosine   the outgoing photon cosine
+        Parameters
+        ----------
+            energy : float
+                the incident photon energy
+            cosine : float
+                the outgoing photon cosine
         """
     def __copy__(self) -> TabulatedScatteringFunction:
         ...
@@ -3480,27 +3945,12 @@ class TabulatedScatteringFunction:
     @typing.overload
     def __init__(self, inverse_lengths: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the scattering function table
-        
-        Arguments:
-            self              the scattering function table
-            inverse_lengths   the inverse length values
-            values            the scattering function values
-            boundaries        the boundaries of the interpolation regions
-            interpolants      the interpolation types of the interpolation regions,
-                              see InterpolationType for all interpolation types
+        Initialise the scattering function table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, inverse_lengths: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the scattering function table
-        
-        Arguments:
-            self              the scattering function table
-            inverse_lengths   the inverse length values
-            values            the scattering function values
-            interpolant       the interpolation type (default lin-lin),
-                              see InterpolationType for all interpolation types
+        Initialise the scattering function table with single interpolation type
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedScatteringFunction:
@@ -3530,6 +3980,17 @@ class TabulatedScatteringFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
+    def inverse_length(self, energy: float, cosine: float) -> float:
+        """
+        Calculate the inverse length value associated to an energy,cosine pair
+        
+        Parameters
+        ----------
+            energy : float
+                the incident photon energy
+            cosine : float
+                the outgoing photon cosine
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedScatteringFunction:
         """
         Linearise the table
@@ -3537,7 +3998,7 @@ class TabulatedScatteringFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3548,16 +4009,6 @@ class TabulatedScatteringFunction:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
-        """
-    @property
-    def inverse_length(self, arg1: float, arg2: float) -> float:
-        """
-        The inverse length value associated to an energy,cosine pair
-        
-        Arguments:
-            self     the table
-            energy   the incident photon energy
-            cosine   the outgoing photon cosine
         """
     @property
     def inverse_lengths(self) -> list[float]:
@@ -3601,10 +4052,10 @@ class ThermalScattering:
     Parameters
     ----------
         documentation : njoy.dryad.Documentation
-             the documentation associated to the thermal scattering data
+            the documentation associated to the thermal scattering data
         coherent : njoy.dryad.thermal.CoherentElasticScattering
-             coherent elastic scattering data (default: none)    incoherent : njoy.dryad.thermal.IncoherentElasticScattering
-             incoherent elastic scattering data (default: none)
+            coherent elastic scattering data (default: none)    incoherent : njoy.dryad.thermal.IncoherentElasticScattering
+            incoherent elastic scattering data (default: none)
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -3618,7 +4069,7 @@ class ThermalScattering:
         Parameters
         ----------
             filename : string
-                 the ENDF file name
+                the ENDF file name
         """
     @staticmethod
     def from_gnds_file(filename: str, style: str = 'eval') -> ThermalScattering:
@@ -3628,9 +4079,9 @@ class ThermalScattering:
         Parameters
         ----------
             filename : string
-                 the GNDS file name
+                the GNDS file name
             style : string
-                 the GNDS style to process (default is eval)
+                the GNDS style to process (default is eval)
         """
     def __copy__(self) -> ThermalScattering:
         ...
@@ -3657,11 +4108,11 @@ class ThermalScattering:
         Parameters
         ----------
             za : int
-                 the ENDF za number to be used
+                the ENDF za number to be used
             mat : int
-                 the ENDF mat number to be used
+                the ENDF mat number to be used
             filename : string
-                 the ENDF file name
+                the ENDF file name
         """
     @property
     def coherent_elastic_scattering(self) -> thermal.CoherentElasticScattering | None:
@@ -3720,6 +4171,15 @@ class TwoBodyDistributionData:
     data). In the more general MF6 representation, this corresponds with
     LAW = 2 (discrete two-body scattering). This is also the representation for
     elastic scattering data in MF26 for electro-atomic interactions.
+    
+    Parameters
+    ----------
+        frame : njoy.dryad.ReferenceFrame
+            the reference frame of the distribution data
+        angle : njoy.dryad.IsotropicAngularDistributions, njoy.dryad.LegendreAngularDistributions, or njoy.dryad.TabulatedAngularDistributions
+            the angular distributions
+        normalise : bool, default False
+            option to indicate whether or not to normalise all probability data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> TwoBodyDistributionData:
@@ -3728,16 +4188,9 @@ class TwoBodyDistributionData:
         ...
     def __eq__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, normalise: bool = False) -> None:
+    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions, normalise: bool = False) -> None:
         """
         Initialise the two-body distribution data
-        
-        Arguments:
-            self        the reaction product distribution data
-            frame       the reference frame of the distribution data
-            angle       the angular distributions
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
@@ -3746,12 +4199,12 @@ class TwoBodyDistributionData:
         Normalise the distribution data
         """
     @property
-    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
+    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions:
         """
         The angular distributions
         """
     @angle.setter
-    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
+    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions) -> None:
         ...
     @property
     def frame(self) -> ReferenceFrame:
@@ -3780,6 +4233,17 @@ class UncorrelatedDistributionData:
     energy-angle distributions) in which the angular dependence is fully isotropic.
     This is also the representation for Brehmstrahlung and excitation data in MF26
     for electro-atomic interactions.
+    
+    Parameters
+    ----------
+        frame : njoy.dryad.ReferenceFrame
+            the reference frame of the distribution data
+        angle : njoy.dryad.IsotropicAngularDistributions, njoy.dryad.LegendreAngularDistributions, or njoy.dryad.TabulatedAngularDistributions
+            the angular distributions
+        energy : njoy.dryad.MultiEnergyDistributions or njoy.dryad.TabulatedEnergyDistributions
+            the energy distributions
+        normalise : bool, default False
+            option to indicate whether or not to normalise all probability data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UncorrelatedDistributionData:
@@ -3788,17 +4252,9 @@ class UncorrelatedDistributionData:
         ...
     def __eq__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions, normalise: bool = False) -> None:
+    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions, normalise: bool = False) -> None:
         """
         Initialise the uncorrelated distribution data
-        
-        Arguments:
-            self        the reaction product distribution data
-            frame       the reference frame of the distribution data
-            angle       the angular distributions
-            energy      the energy distributions
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
@@ -3807,12 +4263,12 @@ class UncorrelatedDistributionData:
         Normalise the distribution data
         """
     @property
-    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
+    def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions:
         """
         The angular distributions
         """
     @angle.setter
-    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
+    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions | MixedAngularDistributions) -> None:
         ...
     @property
     def energy(self) -> MultiEnergyDistributions | TabulatedEnergyDistributions:
@@ -3838,6 +4294,18 @@ class UncorrelatedDistributionData:
 class UniformAngularDistribution:
     """
     A uniform or equally probable angular distribution
+    
+    The uniform distribution can be defined for discrete values
+    (e.g. as used in inelastic thermal scattering ACE files) or
+    cosine intervals (e.g. as used in older incident neutron ACE
+    files).
+    
+    Parameters
+    ----------
+        cosines : list of float
+            the cosine values
+        type : njoy.dryad.UniformDistributionType
+            the uniform distribution type
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UniformAngularDistribution:
@@ -3849,11 +4317,6 @@ class UniformAngularDistribution:
     def __init__(self, cosines: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the angular distribution
-        
-        Arguments:
-            self       the angular distribution
-            cosines    the cosine values
-            type       the uniform distribution type
         """
     def __ne__(self, arg0: UniformAngularDistribution) -> bool:
         ...
@@ -3880,6 +4343,19 @@ class UniformAngularDistribution:
 class UniformAngularDistributions:
     """
     Angular distribution data given as uniform distributions
+    
+    Parameters
+    ----------
+        grid : list of float
+            the grid values
+        distributions : list of njoy.dryad.UniformAngularDistribution
+            the associated distributions
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default LinearLinear
+            the interpolation type
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UniformAngularDistributions:
@@ -3891,27 +4367,12 @@ class UniformAngularDistributions:
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the angular distributions
-        
-        Arguments:
-            self            the angular distribution table
-            grid            the grid values
-            distributions   the distributions
-            boundaries      the boundaries of the interpolation regions
-            interpolants    the interpolation types of the interpolation regions,
-                            see InterpolationType for all interpolation types
+        Initialise the angular distributions with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the angular distributions
-        
-        Arguments:
-            self            the multiplicity table
-            grid            the grid values
-            distributions   the distributions
-            interpolant     the interpolation type (default lin-lin),
-                            see InterpolationType for all interpolation types
+        Initialise the angular distributions with a single interpolation region
         """
     def __ne__(self, arg0: UniformAngularDistributions) -> bool:
         ...
@@ -3954,11 +4415,14 @@ class UniformDistributionType:
     """
     The uniform distribution type
     
+    This enum is used to differentiate uniform distribution types, either discrete
+    values or intervals.
+    
     Members:
     
-      Discrete
+      Discrete : The uniform distribution is given for discrete values
     
-      Interval
+      Interval : The uniform distribution is given for intervals
     """
     Discrete: typing.ClassVar[UniformDistributionType]  # value = <UniformDistributionType.Discrete: 1>
     Interval: typing.ClassVar[UniformDistributionType]  # value = <UniformDistributionType.Interval: 2>
@@ -3999,7 +4463,14 @@ class UniformDistributionType:
         ...
 class UniformEnergyDistribution:
     """
-    A uniform or equally probably energy distribution
+    A uniform or equally probable energy distribution
+    
+    Parameters
+    ----------
+        energies : list of float
+            the energy values
+        type : njoy.dryad.UniformDistributionType
+            the uniform distribution type
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UniformEnergyDistribution:
@@ -4011,11 +4482,6 @@ class UniformEnergyDistribution:
     def __init__(self, energies: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the energy distribution
-        
-        Arguments:
-            self       the energy distribution
-            energies   the energy values
-            type       the uniform distribution type
         """
     def __ne__(self, arg0: UniformEnergyDistribution) -> bool:
         ...
@@ -4042,6 +4508,19 @@ class UniformEnergyDistribution:
 class UniformEnergyDistributions:
     """
     Energy distribution data given as uniform distributions
+    
+    Parameters
+    ----------
+        grid : list of float
+            the grid values
+        distributions : list of njoy.dryad.UniformEnergyDistribution
+            the associated distributions
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default LinearLinear
+            the interpolation type
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UniformEnergyDistributions:
@@ -4053,27 +4532,12 @@ class UniformEnergyDistributions:
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the energy distributions
-        
-        Arguments:
-            self            the energy distribution table
-            grid            the grid values
-            distributions   the distributions
-            boundaries      the boundaries of the interpolation regions
-            interpolants    the interpolation types of the interpolation regions,
-                            see InterpolationType for all interpolation types
+        Initialise the energy distributions with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the energy distributions
-        
-        Arguments:
-            self            the multiplicity table
-            grid            the grid values
-            distributions   the distributions
-            interpolant     the interpolation type (default lin-lin),
-                            see InterpolationType for all interpolation types
+        Initialise the energy distributions with a single interpolation region
         """
     def __ne__(self, arg0: UniformEnergyDistributions) -> bool:
         ...

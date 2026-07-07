@@ -23,7 +23,7 @@ void wrapIsotropicAngularDistributions( python::module& module ) {
 
     module,
     "IsotropicAngularDistributions",
-    "The angular distribution data is fully isotropic"
+    "All angular distributions are isotropic"
   );
 
   // wrap the component
@@ -31,9 +31,7 @@ void wrapIsotropicAngularDistributions( python::module& module ) {
   .def(
 
     python::init<>(),
-    "Initialise the component\n\n"
-    "Arguments:\n"
-    "    self   the component"
+    "Initialise the isotropic angular distributions"
   );
 
   // add standard equality comparison definitions

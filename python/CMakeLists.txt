@@ -83,6 +83,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAverageCosine.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAverageEnergy.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IsotropicAngularDistributions.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IsotropicAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/LegendreAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/LegendreAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/LegendreAngularDistributions.python.cpp
@@ -90,6 +91,8 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAngularDistributions.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MixedAngularDistribution.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MixedAngularDistributions.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedComptonProfileFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedComptonProfile.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/UniformAngularDistribution.python.cpp
@@ -112,6 +115,12 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ThermalScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ComptonProfiles.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ame.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ame/MassEntry.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ame/Masses.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ripl3.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ripl3/LevelEntry.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ripl3/Levels.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr/wrapUnioniseCrossSections.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr/wrapCalculateSummationCrossSections.python.cpp
@@ -133,12 +142,11 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/psychic/covariance/TestSuite.python.cpp
     )
 
-    target_link_libraries(njoy.python PRIVATE njoy)
+    target_link_libraries( njoy.python PRIVATE njoy )
     target_include_directories( njoy.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src )
     set_target_properties( njoy.python PROPERTIES CXX_VISIBILITY_PRESET hidden)
     set_target_properties( njoy.python PROPERTIES OUTPUT_NAME njoy )
-    set_target_properties( njoy.python PROPERTIES LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_CURRENT_BINARY_DIR})
-    set_target_properties( njoy.python PROPERTIES COMPILE_DEFINITIONS "PYBIND11" )
+    set_target_properties( njoy.python PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} )
     set_target_properties( njoy.python PROPERTIES POSITION_INDEPENDENT_CODE ON )
     # add all .so's that are installed with mcatk to the installed library rpath
     set_target_properties( njoy.python PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_ATOMIC_RADIATIVETRANSITION
-#define NJOY_DRYAD_ATOMIC_RADIATIVETRANSITION
+#ifndef NJOY_DRYAD_ATOMIC_RADIATIVETRANSITIONDATA
+#define NJOY_DRYAD_ATOMIC_RADIATIVETRANSITIONDATA
 
 // system includes
 #include <optional>
@@ -58,8 +58,8 @@ namespace atomic {
      *  @brief Set the identifier of the subshell from which the
      *         electron filling the vacancy originated
      *
-     *  @param originatingShell   the identifier of the subshell from which the
-     *                            vacancy filling electron originated
+     *  @param[in] originatingShell   the identifier of the subshell from which the
+     *                                vacancy filling electron originated
      */
     void originatingShell( id::ElectronSubshellID originatingShell ) {
 

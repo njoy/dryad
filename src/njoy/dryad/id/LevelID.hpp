@@ -1,5 +1,5 @@
-#ifndef NJOY_ELEMENTARY_LEVELID
-#define NJOY_ELEMENTARY_LEVELID
+#ifndef NJOY_DRYAD_ID_LEVELID
+#define NJOY_DRYAD_ID_LEVELID
 
 // system includes
 #include <string>
@@ -25,10 +25,10 @@ namespace id {
   public:
 
     // the value representing the continuum level
-    static constexpr unsigned char continuum = 150;
+    static constexpr short continuum = 998;
 
     // the value representing any level
-    static constexpr unsigned char all = continuum + 1;
+    static constexpr short all = continuum + 1;
 
   private:
 
@@ -40,7 +40,7 @@ namespace id {
 
       std::vector< Entry > entries;
       entries.emplace_back( 0, "" );
-      for ( unsigned char level = 1; level < continuum; ++level ) {
+      for ( short level = 1; level < continuum; ++level ) {
 
         entries.emplace_back( level, std::string( "_e" ) + std::to_string( level ) );
       }
@@ -84,7 +84,7 @@ namespace id {
     /**
      *  @brief Return the level number
      */
-    unsigned char number() const {
+    short number() const {
 
       return entries[ this->index_ ].number();
     }

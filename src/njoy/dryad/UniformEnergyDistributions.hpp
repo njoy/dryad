@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_UNIFORMANGULARDISTRIBUTIONS
-#define NJOY_DRYAD_UNIFORMANGULARDISTRIBUTIONS
+#ifndef NJOY_DRYAD_UNIFORMENERGYDISTRIBUTIONS
+#define NJOY_DRYAD_UNIFORMENERGYDISTRIBUTIONS
 
 // system includes
 
@@ -19,13 +19,50 @@ namespace dryad {
       protected base::GridDistributions< UniformEnergyDistribution > {
 
     /* type aliases */
+
     using Parent = base::GridDistributions< UniformEnergyDistribution >;
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/UniformEnergyDistributions/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    UniformEnergyDistributions() = default;
+
+    UniformEnergyDistributions( const UniformEnergyDistributions& ) = default;
+    UniformEnergyDistributions( UniformEnergyDistributions&& ) = default;
+
+    UniformEnergyDistributions& operator=( const UniformEnergyDistributions& ) = default;
+    UniformEnergyDistributions& operator=( UniformEnergyDistributions&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] boundaries      the boundaries of the interpolation regions
+     *  @param[in] interpolants    the interpolation types of the interpolation regions
+     */
+    UniformEnergyDistributions( std::vector< double > grid,
+                                std::vector< UniformEnergyDistribution > distributions,
+                                std::vector< std::size_t > boundaries,
+                                std::vector< InterpolationType > interpolants ) :
+      Parent( std::move( grid ), std::move( distributions ),
+              std::move( boundaries ), std::move( interpolants ) ) {}
+
+    /**
+     *  @brief Constructor for energy distributions using a single interpolation zone
+     *
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] interpolant     the interpolation type of the data (default lin-lin)
+     */
+    UniformEnergyDistributions( std::vector< double > grid,
+                                std::vector< UniformEnergyDistribution > distributions,
+                                InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      Parent( std::move( grid ), std::move( distributions ), interpolant ) {}
 
     /* methods */
 

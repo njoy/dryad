@@ -48,18 +48,18 @@ void wrapComptonProfiles( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    z : int\n"
-    "         the z number of the atom"
+    "        the z number of the atom"
   )
   .def_static(
 
     "biggs_mendelsohn_mann_profiles",
     &Component::biggsMendelsohnMannProfiles,
-    python::arg( "z" ), python::arg( "normalise" ),
+    python::arg( "z" ), python::arg( "normalise" ) = false,
     "Return Biggs, Mendelsohn and Mann Compton profiles for a given z number\n\n"
     "Parameters\n"
     "----------\n"
     "    z : int\n"
-    "         z number of the atom\n"
+    "        the z number of the atom\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
@@ -68,12 +68,12 @@ void wrapComptonProfiles( python::module& module ) {
 
     "apply",
     &Component::apply,
-    python::arg( "pt" ), python::arg( "normalise" ),
+    python::arg( "pt" ), python::arg( "normalise" ) = false,
     "Apply Compton profiles to a ProjectileTarget instance\n\n"
     "Parameters\n"
     "----------\n"
     "    pt : njoy.dryad.ProjectileTarget\n"
-    "         projectile-target data to be modified\n"
+    "        the projectile-target data to be modified\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"

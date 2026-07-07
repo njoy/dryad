@@ -28,12 +28,24 @@ void wrapReactionType( python::module& module ) {
 
     module,
     "ReactionType",
-    "The reaction type\n\n"
+    "The reaction types, with associated symbol, aliases, particles, etc.\n\n"
     "The ReactionType can be used to identify reaction types. For the moment, only\n"
     "registered types can be used. In the future, we will extend this so that users\n"
     "can create types other than the ones currently registered.\n\n"
     "For more information on how to create instances of ReactionType, see the\n"
-    "Jupyter notebook dryad-identifiers.ipynb under python/examples."
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    mt : int\n"
+    "        the mt number\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "        the projectile\n"
+    "    level : int, default=0\n"
+    "        the level number of the target or residual\n"
+    "    particles : dict\n"
+    "        the outgoing particles (excluding the residual)\n"
+    "    string : str\n"
+    "        the reaction type string"
   );
 
   // wrap the component
@@ -42,41 +54,26 @@ void wrapReactionType( python::module& module ) {
 
     python::init< int >(),
     python::arg( "mt" ),
-    "Initialise the reaction type\n\n"
-    "Arguments:\n"
-    "    self   the reaction type\n"
-    "    mt     the mt number"
+    "Initialise the reaction type using an mt number"
   )
   .def(
 
     python::init< ParticleID, int, int >(),
     python::arg( "projectile" ), python::arg( "mt" ),
     python::arg( "level" ) = 0,
-    "Initialise the reaction type\n\n"
-    "Arguments:\n"
-    "    self         the reaction type\n"
-    "    projectile   the projectile\n"
-    "    mt           the mt number\n"
-    "    level        the level number of the target (default = 0)"
+    "Initialise the reaction type using a projectile and level number"
   )
   .def(
 
     python::init< std::map< ParticleID, short >, int >(),
     python::arg( "particles" ), python::arg( "level" ),
-    "Initialise the reaction type\n\n"
-    "Arguments:\n"
-    "    self        the reaction type\n"
-    "    particles   the outgoing particles (excluding the residual)\n"
-    "    level       the level number of the residual"
+    "Initialise the reaction type using outgoing particles and a level"
   )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "string" ),
-    "Initialise the reaction type\n\n"
-    "Arguments:\n"
-    "    self     the reaction type\n"
-    "    string   the reaction type string"
+    "Initialise the reaction type from a string"
   )
   .def_static(
 
@@ -84,8 +81,10 @@ void wrapReactionType( python::module& module ) {
     &Component::total,
     python::arg( "type" ) = InteractionType::Nuclear,
     "The total reaction type\n\n"
-    "Arguments:\n"
-    "    type   the interaction type (nuclear or atomic)"
+    "Parameters\n"
+    "----------\n"
+    "    type : njoy.dryad.InteractionType, default=InteractionType.Nuclear\n"
+    "        the interaction type (nuclear or atomic)"
   )
   .def_static(
 
@@ -94,9 +93,12 @@ void wrapReactionType( python::module& module ) {
     python::arg( "projectile" ),
     python::arg( "level" ) = 0,
     "The elastic reaction type\n\n"
-    "Arguments:\n"
-    "    projectile   the projectile\n"
-    "    level.       the level number of the target (default = 0)"
+    "Parameters\n"
+    "----------\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "        the projectile\n"
+    "    level : int, default=0\n"
+    "        the level number of the target"
   )
   .def_static(
 
@@ -155,10 +157,12 @@ void wrapReactionType( python::module& module ) {
     &Component::resolve,
     python::arg( "projectile" ), python::arg( "target" ),
     "Return the residual produced by this reaction type\n\n"
-    "Arguments:\n"
-    "    self         the reaction type\n"
-    "    projectile   the projectile\n"
-    "    target       the target"
+    "Parameters\n"
+    "----------\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "        the projectile\n"
+    "    target : njoy.dryad.id.ParticleID\n"
+    "        the target"
   )
   .def(
 

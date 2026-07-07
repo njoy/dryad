@@ -104,7 +104,7 @@ namespace resonances {
     /**
      *  @brief Set the channel identifier
      *
-     *  @param id   the channel identifier
+     *  @param[in] id   the channel identifier
      */
     void identifier( id::ChannelID id ) {
 
@@ -139,7 +139,7 @@ namespace resonances {
     /**
      *  @brief Set the incident particle pair
      *
-     *  @param pair   the incident particle pair
+     *  @param[in] pair   the incident particle pair
      */
     void incidentParticlePair( ParticlePair pair ) {
 
@@ -157,7 +157,7 @@ namespace resonances {
     /**
      *  @brief Set the outgoing particle pair
      *
-     *  @param pair   the outgoing particle pair
+     *  @param[in] pair   the outgoing particle pair
      */
     void outgoingParticlePair( std::optional< ParticlePair > pair ) {
 
@@ -181,7 +181,7 @@ namespace resonances {
     /**
      *  @brief Set the q value of the transition
      *
-     *  @param q_value   the q value
+     *  @param[in] q_value   the q value
      */
     void qValue( double q_value ) {
 
@@ -199,7 +199,7 @@ namespace resonances {
     /**
      *  @brief Set the boundary condition value
      *
-     *  @param boundary   the boundary condition value
+     *  @param[in] boundary   the boundary condition value
      */
     void boundaryCondition( std::optional< double > boundary ) {
 
@@ -217,7 +217,7 @@ namespace resonances {
     /**
      *  @brief Set the background function
      *
-     *  @param background   the background function
+     *  @param[in] background   the background function
      */
     void background( std::optional< Background > background ) {
 
@@ -235,7 +235,7 @@ namespace resonances {
     /**
      *  @brief Set the channel radii
      *
-     *  @param radii   the channel radii
+     *  @param[in] radii   the channel radii
      */
     void channelRadii( ChannelRadii radii ) {
 
@@ -255,7 +255,7 @@ namespace resonances {
     /**
      *  @brief Set the kinematics type
      *
-     *  @param kinematics   the kinematics type
+     *  @param[in] kinematics   the kinematics type
      */
     void kinematicsType( Kinematics kinematics ) {
 

@@ -152,8 +152,8 @@ void verifyChunk( const TabulatedEnergyDistribution& chunk, bool normalise ) {
   CHECK_THAT( 0.25  / normalisation, WithinRel( chunk( 1.  ) ) );
   CHECK_THAT( 0.875 / normalisation, WithinRel( chunk( 3.5 ) ) );
 
-  // average cosine
-  CHECK_THAT( 128. / 24. / normalisation, WithinRel( chunk.averageEnergy() ) );
+  // average energy - always the mean value even for unnormalised distributions
+  CHECK_THAT( 128. / 24. / 2., WithinRel( chunk.averageEnergy() ) );
 
   // linearisation
   auto linear = chunk.linearise();

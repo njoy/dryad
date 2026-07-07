@@ -19,13 +19,50 @@ namespace dryad {
       protected base::GridDistributions< UniformAngularDistribution > {
 
     /* type aliases */
+
     using Parent = base::GridDistributions< UniformAngularDistribution >;
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/UniformAngularDistributions/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    UniformAngularDistributions() = default;
+
+    UniformAngularDistributions( const UniformAngularDistributions& ) = default;
+    UniformAngularDistributions( UniformAngularDistributions&& ) = default;
+
+    UniformAngularDistributions& operator=( const UniformAngularDistributions& ) = default;
+    UniformAngularDistributions& operator=( UniformAngularDistributions&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] boundaries      the boundaries of the interpolation regions
+     *  @param[in] interpolants    the interpolation types of the interpolation regions
+     */
+    UniformAngularDistributions( std::vector< double > grid,
+                                 std::vector< UniformAngularDistribution > distributions,
+                                 std::vector< std::size_t > boundaries,
+                                 std::vector< InterpolationType > interpolants ) :
+      Parent( std::move( grid ), std::move( distributions ),
+              std::move( boundaries ), std::move( interpolants ) ) {}
+
+    /**
+     *  @brief Constructor for angular distributions using a single interpolation zone
+     *
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] interpolant     the interpolation type of the data (default lin-lin)
+     */
+    UniformAngularDistributions( std::vector< double > grid,
+                                 std::vector< UniformAngularDistribution > distributions,
+                                 InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      Parent( std::move( grid ), std::move( distributions ), interpolant ) {}
 
     /* methods */
 

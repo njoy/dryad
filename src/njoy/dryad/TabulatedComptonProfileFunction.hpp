@@ -12,6 +12,9 @@
 namespace njoy {
 namespace dryad {
 
+  // forward declarations
+  class TabulatedComptonProfile;
+
   /**
    *  @class
    *  @brief A tabulated Compton profile distribution for photoatomic data
@@ -19,15 +22,86 @@ namespace dryad {
   class TabulatedComptonProfileFunction :
       protected scion::math::InterpolationTable< double, double > {
 
+    /* friend declaration */
+
+    friend TabulatedComptonProfile;
+
+    /* constructor */
+
+    /**
+     *  @brief Private constructor
+     *
+     *  @param[in] table   the interpolation table
+     */
+    TabulatedComptonProfileFunction( InterpolationTable< double, double > table ) :
+      InterpolationTable( std::move( table ) ) {}
+
+  protected:
+
+    /**
+     *  @brief Calculate a cdf from the distribution function
+     */
+    TabulatedComptonProfileFunction calculateCdf( bool set_cdf_to_one = false ) const {
+
+      std::vector< double > cdf = this->cumulativeIntegral();
+      if ( set_cdf_to_one ) {
+
+        cdf.back() = 1.;
+      }
+      return TabulatedComptonProfileFunction( this->momentum(),
+                                              std::move( cdf ),
+                                              this->boundaries(),
+                                              this->interpolants() );
+    }
+
   public:
 
     /* type aliases */
+
     using InterpolationTable::XType;
     using InterpolationTable::YType;
 
     /* constructor */
 
-    #include "njoy/dryad/TabulatedComptonProfileFunction/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    TabulatedComptonProfileFunction() = default;
+
+    TabulatedComptonProfileFunction( const TabulatedComptonProfileFunction& ) = default;
+    TabulatedComptonProfileFunction( TabulatedComptonProfileFunction&& ) = default;
+
+    TabulatedComptonProfileFunction& operator=( const TabulatedComptonProfileFunction& ) = default;
+    TabulatedComptonProfileFunction& operator=( TabulatedComptonProfileFunction&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] momentum       the momentum values
+     *  @param[in] values         the probability values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     */
+    TabulatedComptonProfileFunction(
+        std::vector< double > momentum,
+        std::vector< double > values,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants ) :
+      InterpolationTable( std::move( momentum ), std::move( values ),
+                          std::move( boundaries ), std::move( interpolants ) ) {}
+
+    /**
+     *  @brief Constructor for a probability using a single interpolation zone
+     *
+     *  @param[in] momentum       the momentum values
+     *  @param[in] values         the probability values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     */
+    TabulatedComptonProfileFunction(
+        std::vector< double > momentum,
+        std::vector< double > values,
+        InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      InterpolationTable( std::move( momentum ), std::move( values ), interpolant ) {}
 
     /* methods */
 

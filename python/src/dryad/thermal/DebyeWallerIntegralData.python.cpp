@@ -29,9 +29,9 @@ void wrapDebyeWallerIntegralData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperatures : list of float\n"
-    "         the temperature values\n"
+    "        the temperature values\n"
     "    values : list of float\n"
-    "         the intergal values"
+    "        the intergal values"
   );
 
   // wrap the component

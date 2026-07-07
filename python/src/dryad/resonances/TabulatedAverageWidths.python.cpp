@@ -26,7 +26,21 @@ void wrapTabulatedAverageWidths( python::module& module ) {
 
     module,
     "TabulatedAverageWidths",
-    "A table of average widths"
+    "A table of average widths\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    dof : int\n"
+    "        the degrees of freedom\n"
+    "    energies : list of float\n"
+    "        the energy values\n"
+    "    values : list of float\n"
+    "        the average width values\n"
+    "    boundaries : list of int, optional\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -38,17 +52,12 @@ void wrapTabulatedAverageWidths( python::module& module ) {
                   std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
-    python::arg("dof"), python::arg( "energies" ), python::arg( "values" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the average width table\n\n"
-    "Arguments:\n"
-    "    self           the average width table\n"
-    "    dof            the degrees of freedom\n"
-    "    energies       the energy values\n"
-    "    values         the average width values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    python::arg( "dof" ),
+    python::arg( "energies" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    "Initialise the average width table with multiple interpolation regions"
   )
   .def(
 
@@ -56,31 +65,33 @@ void wrapTabulatedAverageWidths( python::module& module ) {
                   std::vector< double >,
                   std::vector< double >,
                   InterpolationType >(),
-    python::arg("dof"), python::arg( "energies" ), python::arg( "values" ),
+    python::arg( "dof" ),
+    python::arg( "energies" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the average width table\n\n"
-    "Arguments:\n"
-    "    self           the average width table\n"
-    "    dof            the degrees of freedom\n"
-    "    energies       the energy values\n"
-    "    values         the average width values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the average width table with a single interpolation region"
+  )
+  .def(
+
+    python::init< std::vector< double >,
+                  std::vector< double >,
+                  std::vector< std::size_t >,
+                  std::vector< InterpolationType > >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    "Initialise the average width table with multiple interpolation regions"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< double >,
                   InterpolationType >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::arg( "energies" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the average width table\n\n"
-    "Arguments:\n"
-    "    self           the average width table\n"
-    "    energies       the energy values\n"
-    "    values         the average width  values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the average width table with a single interpolation region"
   )
   .def_property(
     "degrees_of_freedom",
@@ -119,9 +130,10 @@ void wrapTabulatedAverageWidths( python::module& module ) {
        { return self( energy ); },
     python::arg( "energy" ),
     "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the average width table\n"
-    "    energy    the energy value"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions

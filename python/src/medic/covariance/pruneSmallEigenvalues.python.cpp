@@ -32,7 +32,7 @@ namespace covariance {
       "----------\n"
       "    eigenvalue : float\n"
       "        the smallest allowed eigenvalue\n"
-      "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+      "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.AngularDistributionCovarianceMatrix or njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
       "        the covariance matrix to be modified"
     )
     .def(
@@ -54,5 +54,6 @@ namespace covariance {
       "Prune eigenvalues below a given value from the covariance matrix"
     );
   }
+
 } // covariance namespace
 } // medic namespace

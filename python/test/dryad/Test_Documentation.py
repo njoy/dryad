@@ -21,7 +21,6 @@ def verify_chunk( self, chunk ) :
       'to the ENDF-6 Format.                                             \n'
       '==================================================================\n' )
 
-    self.assertAlmostEqual( 15.8619530, chunk.awr )
     self.assertEqual( 0, chunk.library )
     self.assertEqual( 8, chunk.version[0] )
     self.assertEqual( 1, chunk.version[1] )
@@ -32,8 +31,7 @@ class Test_Documentation( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        chunk = Documentation( awr = 15.8619530,
-                               library = 0,
+        chunk = Documentation( library = 0,
                                version = [ 8, 1 ],
                                description = str(
                                  '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
@@ -51,8 +49,7 @@ class Test_Documentation( unittest.TestCase ) :
 
     def test_setter_functions( self ) :
 
-        chunk = Documentation( awr = 15.8619530,
-                               library = 0,
+        chunk = Documentation( library = 0,
                                version = [ 8, 1 ],
                                description = str(
                                  '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
@@ -65,18 +62,6 @@ class Test_Documentation( unittest.TestCase ) :
                                  'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
                                  'to the ENDF-6 Format.                                             \n'
                                  '==================================================================\n' ) )
-
-        # the awr can be changed
-        newawr = 25.
-        original = 15.8619530
-
-        chunk.awr = newawr
-
-        self.assertEqual( newawr, chunk.awr )
-
-        chunk.awr = original
-
-        verify_chunk( self, chunk )
 
         # the library can be changed
         newlibrary = 1
@@ -125,8 +110,7 @@ class Test_Documentation( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = Documentation( awr = 15.8619530,
-                              library = 0,
+        left = Documentation( library = 0,
                               version = [ 8, 1 ],
                               description = str(
                                 '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
@@ -139,8 +123,7 @@ class Test_Documentation( unittest.TestCase ) :
                                 'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
                                 'to the ENDF-6 Format.                                             \n'
                                 '==================================================================\n' ) )
-        equal = Documentation( awr = 15.8619530,
-                               library = 0,
+        equal = Documentation( library = 0,
                                version = [ 8, 1 ],
                                description = str(
                                  '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
@@ -153,8 +136,7 @@ class Test_Documentation( unittest.TestCase ) :
                                  'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
                                  'to the ENDF-6 Format.                                             \n'
                                  '==================================================================\n' ) )
-        different = Documentation( awr = 15.8619530,
-                                   library = 0,
+        different = Documentation( library = 0,
                                    version = [ 8, 1 ],
                                    description = str(
                                      'this is different                                                 \n' ) )
