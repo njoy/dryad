@@ -3,6 +3,7 @@
 
 //system includes
 #include <cmath>
+#include <tuple>
 
 //other includes
 #include "njoy/dryad/resonances/Channel.hpp"
@@ -14,75 +15,101 @@ namespace resonances {
 
   /**
    *  @class
-   *  @brief determines the factor used to convert reduced neutron width to full neutron width
+   *  @brief Hard sphere width conversion functions
    */
   class ReducedWidthConversion {
 
-    private:
+    /* fields */
 
-      /* fields */
-      HardSpherePenetrability penetrability_;
-      double reference_energy_;
-      unsigned int orbital_angular_momentum_;
+    HardSpherePenetrability penetrability_;
+    double reference_energy_;
 
-    public:
+  public:
 
-      #include "njoy/dryad/resonances/ReducedWidthConversion/src/ctor.hpp"
+    /* constructors */
 
-      /**
-       *  @brief Return the orbital angular momentum of the channel
-       */
-      unsigned int orbitalAngularMomentum() const {
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ReducedWidthConversion() = default;
 
-        return this->orbital_angular_momentum_;
-      }
+    ReducedWidthConversion( const ReducedWidthConversion& ) = default;
+    ReducedWidthConversion( ReducedWidthConversion&& ) = default;
 
-      /**
-       *  @brief Return the reference energy at which the reduced neutron width is defined
-       */
-      double referenceEnergy() const {
+    ReducedWidthConversion& operator=( const ReducedWidthConversion& ) = default;
+    ReducedWidthConversion& operator=( ReducedWidthConversion&& ) = default;
 
-        return this->reference_energy_;
-      }
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] orbitalAngularMomentum   the value of the orbital angular momentum
+     *  @param[in] reference_energy         the reference energy at which the reduced width is
+     *                                      defined (typically 1 eV)
+     */
+    ReducedWidthConversion( unsigned int orbitalAngularMomentum,
+                            double reference_energy ) :
+      penetrability_( orbitalAngularMomentum ),
+      reference_energy_( reference_energy ) {}
 
-      /**
-       *  @brief Calculate the width conversion factor
-       *
-       *  The factor is (P_l(E)/P_0(E)) * sqrt( E / E_ref), in which 
-       *  P_0(E) = rho.
-       *
-       *  @param[in] rho    the dimensionless quantity k * a at the given energy
-       *  @param[in] energy the energy in eV
-       */
-      double calculateConversionFactor( double rho, double energy ) const {
+    /* methods */
 
-        return ( this->penetrability_( rho ) / rho ) * std::sqrt( energy / this->reference_energy_ );
-      }
-      /**
-       *  @brief Equality comparison
-       *
-       *  @param[in] left    the object on the left hand side
-       *  @param[in] right   the object on the right hand side
-       */
-      friend bool operator==( const ReducedWidthConversion& left,
-                              const ReducedWidthConversion& right ) {
+    /**
+     *  @brief Return the underlying penetrability function
+     */
+    const HardSpherePenetrability& penetrability() const {
 
-        return ( left.penetrability_ == right.penetrability_ )
-          && ( left.reference_energy_ == right.reference_energy_ );
-      }
+      return this->penetrability_;
+    }
 
-      /**
-       *  @brief Inequality comparison
-       *
-       *  @param[in] left    the object on the left hand side
-       *  @param[in] right   the object on the right hand side
-       */
-      friend bool operator!=( const ReducedWidthConversion& left,
-                              const ReducedWidthConversion& right ) {
+    /**
+     *  @brief Return the value of the orbital angular momentum
+     */
+    unsigned int orbitalAngularMomentum() const {
 
-        return ! ( left == right );
-      }
+      return this->penetrability().orbitalAngularMomentum();
+    }
 
+    /**
+     *  @brief Return the reference energy at which the reduced neutron width is defined
+     */
+    double referenceEnergy() const {
+
+      return this->reference_energy_;
+    }
+
+    /**
+     *  @brief Evaluate the width conversion factor for a given ratio value
+     *
+     *  The factor is P_l(E) / P_0(E) * sqrt( E / E_ref), in which P_0(E) = rho.
+     *
+     *  @param[in] ratio    the ratio rho = k*a (wave number times channel radius)
+     *  @param[in] energy   the energy in eV
+     */
+    double calculateConversionFactor( double ratio, double energy ) const {
+
+      return ( this->penetrability()( ratio ) / ratio ) * std::sqrt( energy / this->referenceEnergy() );
+    }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ReducedWidthConversion& right ) const {
+
+      return std::tie( this->penetrability(), this->reference_energy_ ) ==
+             std::tie( right.penetrability(), right.reference_energy_ );
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ReducedWidthConversion& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // namespace resonances

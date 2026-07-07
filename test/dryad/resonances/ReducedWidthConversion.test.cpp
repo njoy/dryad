@@ -29,19 +29,16 @@ SCENARIO( "ReducedWidthConversion" ) {
       CHECK_THAT( 3.1622776601683794e-3, WithinRel( chunk.calculateConversionFactor( 1.0, 1e-5 ) ) );
       CHECK_THAT( 1.,                    WithinRel( chunk.calculateConversionFactor( 1.0, 1.   ) ) );
       CHECK_THAT( 10.,                   WithinRel( chunk.calculateConversionFactor( 1.0, 100. ) ) );
-
     } // THEN
   } // GIVEN
 
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of ReducedWidthConversion are given" ) {
-      unsigned int l = 0;
-      double ref_energy = 1.0;
 
-      ReducedWidthConversion left( l, ref_energy );
-      ReducedWidthConversion equal( l, ref_energy );
-      ReducedWidthConversion different( 1, ref_energy );
+      ReducedWidthConversion left( 0, 1. );
+      ReducedWidthConversion equal( 0, 1. );
+      ReducedWidthConversion different( 1, 1. );
 
       THEN( "they can be compared" ) {
 
