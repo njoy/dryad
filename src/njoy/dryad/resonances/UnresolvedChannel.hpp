@@ -9,12 +9,15 @@
 #include "tools/overload.hpp"
 #include "njoy/dryad/resonances/Channel.hpp"
 #include "njoy/dryad/resonances/HardSpherePenetrabilityRatio.hpp"
-#include "njoy/dryad/resonances/ReducedWidthConversion.hpp"
 
 namespace njoy {
 namespace dryad {
 namespace resonances {
 
+  /**
+   *  @class
+   *  @brief An unresolved resonance reaction channel
+   */
   class UnresolvedChannel : protected Channel {
 
   public:
