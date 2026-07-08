@@ -2225,6 +2225,24 @@ class TabulatedWaveFunction:
 class UnresolvedChannel:
     """
     A resonance reaction channel for use in the unresolved resonance region
+    
+    Parameters
+    ----------
+        identifier : njoy.dryad.id.ChannelID
+            the channel identifier
+        incident : njoy.dryad.resonances.ParticlePair
+            the current incident particle pair
+        outgoing : njoy.dryad.resonances.ParticlePair, optional
+            the outgoing particle pair
+        q_value : float
+            the Q value associated with the transition from the incident to
+            the outgoing particle pair
+        boundary : float, optional
+            the boundary condition
+        radii : njoy.dryad.resonances.ChannelRadii
+            the channel radii for the calculation of the wave functions
+        reference_energy : float
+            the energy at which reduced widths are defined (default is 1 eV)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UnresolvedChannel:
@@ -2236,21 +2254,6 @@ class UnresolvedChannel:
     def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, reference_energy: float = 1.0) -> None:
         """
         Initialize the unresolved channel
-        
-        The underlying channel is constructed from its components.
-        
-        Arguments:
-            self               the unresolved channel
-            identifier         the channel identifier
-            incident           the current incident particle pair
-            outgoing           the outgoing particle pair
-            q_value            the Q value associated with the transition from
-                               the incident to the outgoing particle pair
-            boundary           the boundary condition
-            radii              the channel radii for the calculation of the
-                               wave functions
-            reference_energy   the energy at which reduced widths are defined
-                               (default is 1 eV)
         """
     def __ne__(self, arg0: UnresolvedChannel) -> bool:
         ...
@@ -2258,22 +2261,22 @@ class UnresolvedChannel:
         """
         Calculate the channel wave number (given in fm^-1) at a given energy
         
-        Arguments:
-            self     the unresolved channel
-            energy   the energy (given in eV)
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
         """
     def width_conversion_factor(self, energy: float) -> float:
         """
         Calculate the width conversion factor at a given energy
         
         The reduced width stored for a channel is converted to the physical
-        width at a given energy by multiplying it with this factor. For a
-        neutron channel the factor is ( P_l(E) / P_0(E) ) * sqrt( E / E_ref );
-        for any other channel the factor is 1.
+        width at a given energy by multiplying it with this factor.
         
-        Arguments:
-            self     the unresolved channel
-            energy   the energy (given in eV)
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
         """
     @property
     def channel_radii(self) -> ChannelRadii:
@@ -2312,6 +2315,14 @@ class UnresolvedChannel:
         """
         The reaction this channel contributes to
         """
+    @property
+    def reference_energy(self) -> float:
+        """
+        The reference energy
+        """
+    @reference_energy.setter
+    def reference_energy(self, arg1: float) -> None:
+        ...
 class UnresolvedResonanceTable:
     """
     A table of unresolved average parameters for a set of channels
