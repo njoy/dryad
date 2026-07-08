@@ -30,6 +30,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/TabulatedRadius.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/ChannelRadii.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/HardSpherePenetrability.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/HardSpherePenetrabilityRatio.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/HardSphereShiftFactor.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/HardSpherePhaseShift.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/CoulombPenetrability.python.cpp
