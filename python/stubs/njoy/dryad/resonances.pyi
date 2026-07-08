@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedResonanceTable']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePenetrabilityRatio', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedResonanceTable']
 class BoundaryCondition:
     """
     The boundary condition options for resonance reconstruction
@@ -899,6 +899,51 @@ class HardSpherePenetrability:
     def orbital_angular_momentum(self) -> int:
         """
         The orbital angular momentum quantum number (l value)
+        """
+class HardSpherePenetrabilityRatio:
+    """
+    Hard sphere penetrability ratio functions
+    
+    Parameters
+    ----------
+        numerator_orbital_angular_momentum : int
+            the orbital angular momentum quantum number for the penetrability
+            in the numerator of the ratio (l = 0 to 5)
+        denominator_orbital_angular_momentum : int
+            the orbital angular momentum quantum number for the penetrability
+            in the denominator of the ratio (l = 0 to 5)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, ratio: float) -> float:
+        """
+        Evaluate the penetrability for a given ratio value
+        
+        Parameters
+        ----------
+            ratio : float
+                the ratio rho = k*a (wave number times channel radius)
+        """
+    def __copy__(self) -> HardSpherePenetrabilityRatio:
+        ...
+    def __deepcopy__(self, arg0: dict) -> HardSpherePenetrabilityRatio:
+        ...
+    def __eq__(self, arg0: HardSpherePenetrabilityRatio) -> bool:
+        ...
+    def __init__(self, numerator_orbital_angular_momentum: int, denominator_orbital_angular_momentum: int) -> None:
+        """
+        Initialise the hard sphere penetrability ratio function
+        """
+    def __ne__(self, arg0: HardSpherePenetrabilityRatio) -> bool:
+        ...
+    @property
+    def denominator_orbital_angular_momentum(self) -> int:
+        """
+        The orbital angular momentum quantum number of the denominator penetrability (l value)
+        """
+    @property
+    def numerator_orbital_angular_momentum(self) -> int:
+        """
+        The orbital angular momentum quantum number of the numerator penetrability (l value)
         """
 class HardSpherePhaseShift:
     """
@@ -2188,8 +2233,7 @@ class UnresolvedChannel:
         ...
     def __eq__(self, arg0: UnresolvedChannel) -> bool:
         ...
-    @typing.overload
-    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ..., background: FrohnerBackground | SammyBackground | TabulatedBackground | None = None, reference_energy: float = 1.0) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, reference_energy: float = 1.0) -> None:
         """
         Initialize the unresolved channel
         
@@ -2205,20 +2249,6 @@ class UnresolvedChannel:
             boundary           the boundary condition
             radii              the channel radii for the calculation of the
                                wave functions
-            kinematics         the kinematics type applied to the channel (default
-                               is non-relativistic)
-            background         the background function (if defined)
-            reference_energy   the energy at which reduced widths are defined
-                               (default is 1 eV)
-        """
-    @typing.overload
-    def __init__(self, channel: Channel, reference_energy: float = 1.0) -> None:
-        """
-        Initialise the unresolved channel using an existing channel
-        
-        Arguments:
-            self               the unresolved channel
-            channel            the underlying channel
             reference_energy   the energy at which reduced widths are defined
                                (default is 1 eV)
         """
@@ -2254,11 +2284,6 @@ class UnresolvedChannel:
     def channel_radii(self, arg1: ChannelRadii) -> None:
         ...
     @property
-    def conversion_factor(self) -> float | ...:
-        """
-        The width conversion strategy applied to the channel
-        """
-    @property
     def identifier(self) -> njoy.dryad.id.ChannelID:
         """
         The channel identifier
@@ -2286,11 +2311,6 @@ class UnresolvedChannel:
     def reaction(self) -> njoy.dryad.id.ReactionID:
         """
         The reaction this channel contributes to
-        """
-    @property
-    def reference_energy(self) -> float:
-        """
-        The reference energy at which the reduced widths are defined
         """
 class UnresolvedResonanceTable:
     """

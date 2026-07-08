@@ -68,6 +68,7 @@ add_cpp_test( dryad.resonances.TabulatedRadius                                  
 add_cpp_test( dryad.resonances.ChannelRadii                                            dryad/resonances/ChannelRadii.test.cpp )
 add_cpp_test( dryad.resonances.ChannelQuantumNumbers                                   dryad/resonances/ChannelQuantumNumbers.test.cpp )
 add_cpp_test( dryad.resonances.HardSpherePenetrability                                 dryad/resonances/HardSpherePenetrability.test.cpp )
+add_cpp_test( dryad.resonances.HardSpherePenetrabilityRatio                            dryad/resonances/HardSpherePenetrabilityRatio.test.cpp )
 add_cpp_test( dryad.resonances.HardSphereShiftFactor                                   dryad/resonances/HardSphereShiftFactor.test.cpp )
 add_cpp_test( dryad.resonances.HardSpherePhaseShift                                    dryad/resonances/HardSpherePhaseShift.test.cpp )
 add_cpp_test( dryad.resonances.CoulombPenetrability                                    dryad/resonances/CoulombPenetrability.test.cpp )

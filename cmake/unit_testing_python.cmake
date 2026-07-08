@@ -57,6 +57,7 @@ add_python_test( dryad.resonances.ChannelQuantumNumbers                dryad/res
 add_python_test( dryad.resonances.TabulatedRadius                      dryad/resonances/Test_TabulatedRadius.py )
 add_python_test( dryad.resonances.ChannelRadii                         dryad/resonances/Test_ChannelRadii.py )
 add_python_test( dryad.resonances.HardSpherePenetrability              dryad/resonances/Test_HardSpherePenetrability.py )
+add_python_test( dryad.resonances.HardSpherePenetrabilityRatio         dryad/resonances/Test_HardSpherePenetrabilityRatio.py )
 add_python_test( dryad.resonances.HardSphereShiftFactor                dryad/resonances/Test_HardSphereShiftFactor.py )
 add_python_test( dryad.resonances.HardSpherePhaseShift                 dryad/resonances/Test_HardSpherePhaseShift.py )
 add_python_test( dryad.resonances.CoulombPenetrability                 dryad/resonances/Test_CoulombPenetrability.py )
