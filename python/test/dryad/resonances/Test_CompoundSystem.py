@@ -91,8 +91,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel0.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel0.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel0.q_value )
+
+    # wave functions
+    self.assertEqual( False, channel0.has_penetrability )
+    self.assertEqual( False, channel0.has_shift_factor )
+    self.assertEqual( False, channel0.has_phase_shift )
+    self.assertEqual( False, channel0.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 0, channel 1: elastic
@@ -114,8 +123,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel1.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel1.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel1.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel1.has_penetrability )
+    self.assertEqual( True, channel1.has_shift_factor )
+    self.assertEqual( True, channel1.has_phase_shift )
+    self.assertEqual( False, channel1.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 0, resonance table
@@ -165,8 +183,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel0.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel0.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel0.q_value )
+
+    # wave functions
+    self.assertEqual( False, channel0.has_penetrability )
+    self.assertEqual( False, channel0.has_shift_factor )
+    self.assertEqual( False, channel0.has_phase_shift )
+    self.assertEqual( False, channel0.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 1, channel 1: elastic
@@ -188,8 +215,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel1.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel1.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel1.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel1.has_penetrability )
+    self.assertEqual( True, channel1.has_shift_factor )
+    self.assertEqual( True, channel1.has_phase_shift )
+    self.assertEqual( False, channel1.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 1, channel 2: elastic
@@ -211,8 +247,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel3.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel3.background )
+
     # Q value
     self.assertAlmostEqual( 0, channel3.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel3.has_penetrability )
+    self.assertEqual( True, channel3.has_shift_factor )
+    self.assertEqual( True, channel3.has_phase_shift )
+    self.assertEqual( False, channel3.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 1, channel 3: proton emission
@@ -234,8 +279,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel2.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel2.background )
+
     # Q value
     self.assertAlmostEqual( 615220, channel2.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel2.has_penetrability )
+    self.assertEqual( True, channel2.has_shift_factor )
+    self.assertEqual( True, channel2.has_phase_shift )
+    self.assertEqual( True, channel2.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 1, channel 4: proton emission
@@ -257,8 +311,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel4.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel4.background )
+
     # Q value
     self.assertAlmostEqual( 615220, channel4.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel4.has_penetrability )
+    self.assertEqual( True, channel4.has_shift_factor )
+    self.assertEqual( True, channel4.has_phase_shift )
+    self.assertEqual( True, channel4.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 1, resonance table
@@ -311,8 +374,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel0.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel0.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel0.q_value )
+
+    # wave functions
+    self.assertEqual( False, channel0.has_penetrability )
+    self.assertEqual( False, channel0.has_shift_factor )
+    self.assertEqual( False, channel0.has_phase_shift )
+    self.assertEqual( False, channel0.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 2, channel 1: elastic
@@ -334,8 +406,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel1.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel1.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel1.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel1.has_penetrability )
+    self.assertEqual( True, channel1.has_shift_factor )
+    self.assertEqual( True, channel1.has_phase_shift )
+    self.assertEqual( False, channel1.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 2, channel 2: proton emission
@@ -357,8 +438,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel2.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel2.background )
+
     # Q value
     self.assertAlmostEqual( 615220, channel2.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel2.has_penetrability )
+    self.assertEqual( True, channel2.has_shift_factor )
+    self.assertEqual( True, channel2.has_phase_shift )
+    self.assertEqual( True, channel2.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 2, resonance table
@@ -409,8 +499,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel0.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel0.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel0.q_value )
+
+    # wave functions
+    self.assertEqual( False, channel0.has_penetrability )
+    self.assertEqual( False, channel0.has_shift_factor )
+    self.assertEqual( False, channel0.has_phase_shift )
+    self.assertEqual( False, channel0.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 3, channel 1: elastic
@@ -432,8 +531,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel1.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel1.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel1.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel1.has_penetrability )
+    self.assertEqual( True, channel1.has_shift_factor )
+    self.assertEqual( True, channel1.has_phase_shift )
+    self.assertEqual( False, channel1.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 3, channel 2: elastic
@@ -455,8 +563,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel3.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel3.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel3.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel3.has_penetrability )
+    self.assertEqual( True, channel3.has_shift_factor )
+    self.assertEqual( True, channel3.has_phase_shift )
+    self.assertEqual( False, channel3.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 3, channel 3: proton emission
@@ -478,8 +595,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel2.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel2.background )
+
     # Q value
     self.assertAlmostEqual( 615220, channel2.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel2.has_penetrability )
+    self.assertEqual( True, channel2.has_shift_factor )
+    self.assertEqual( True, channel2.has_phase_shift )
+    self.assertEqual( True, channel2.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 3, channel 4: proton emission
@@ -501,8 +627,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel4.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel4.background )
+
     # Q value
     self.assertAlmostEqual( 615220, channel4.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel4.has_penetrability )
+    self.assertEqual( True, channel4.has_shift_factor )
+    self.assertEqual( True, channel4.has_phase_shift )
+    self.assertEqual( True, channel4.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 3, resonance table
@@ -555,8 +690,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel0.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel0.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel0.q_value )
+
+    # wave functions
+    self.assertEqual( False, channel0.has_penetrability )
+    self.assertEqual( False, channel0.has_shift_factor )
+    self.assertEqual( False, channel0.has_phase_shift )
+    self.assertEqual( False, channel0.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 4, channel 1: elastic
@@ -578,8 +722,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel1.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel1.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel1.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel1.has_penetrability )
+    self.assertEqual( True, channel1.has_shift_factor )
+    self.assertEqual( True, channel1.has_phase_shift )
+    self.assertEqual( False, channel1.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 4, channel 2: proton emission
@@ -601,8 +754,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel2.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel2.background )
+
     # Q value
     self.assertAlmostEqual( 615220, channel2.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel2.has_penetrability )
+    self.assertEqual( True, channel2.has_shift_factor )
+    self.assertEqual( True, channel2.has_phase_shift )
+    self.assertEqual( True, channel2.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 4, resonance table
@@ -653,8 +815,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel0.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel0.background )
+
     # Q value
     self.assertAlmostEqual( 0.0, channel0.q_value )
+
+    # wave functions
+    self.assertEqual( False, channel0.has_penetrability )
+    self.assertEqual( False, channel0.has_shift_factor )
+    self.assertEqual( False, channel0.has_phase_shift )
+    self.assertEqual( False, channel0.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 5, channel 1: elastic
@@ -676,8 +847,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel1.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel1.background )
+
     # Q value
     self.assertAlmostEqual( 0, channel1.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel1.has_penetrability )
+    self.assertEqual( True, channel1.has_shift_factor )
+    self.assertEqual( True, channel1.has_phase_shift )
+    self.assertEqual( False, channel1.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 5, channel 2: proton emission
@@ -699,8 +879,17 @@ def verify_chunk( self, chunk ) :
     # boundary conditions
     self.assertEqual( None, channel2.boundary_condition )
 
+    # background
+    self.assertEqual( None, channel2.background )
+
     # Q value
     self.assertAlmostEqual( 615220, channel2.q_value )
+
+    # wave functions
+    self.assertEqual( True, channel2.has_penetrability )
+    self.assertEqual( True, channel2.has_shift_factor )
+    self.assertEqual( True, channel2.has_phase_shift )
+    self.assertEqual( True, channel2.has_phase_shift_difference )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 5, resonance table
