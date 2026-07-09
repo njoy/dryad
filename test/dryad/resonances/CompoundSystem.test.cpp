@@ -42,7 +42,7 @@ SCENARIO( "CompoundSystem" ) {
 
     SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
                               neutron_pair, photon_pair, 0., std::nullopt,
-                              zero_radii },
+                              zero_radii, false },
                             { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
                               neutron_pair, neutron_pair, 0., std::nullopt,
                               radii1 } },
@@ -52,7 +52,7 @@ SCENARIO( "CompoundSystem" ) {
                           formalism, boundary );
     SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
                               neutron_pair, photon_pair, 0., std::nullopt,
-                              zero_radii },
+                              zero_radii, false },
                             { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
                               neutron_pair, neutron_pair, 0., std::nullopt,
                               radii1 },
@@ -74,7 +74,7 @@ SCENARIO( "CompoundSystem" ) {
                           formalism, boundary );
     SpinGroup spingroup2( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
                               neutron_pair, photon_pair, 0., std::nullopt,
-                              zero_radii },
+                              zero_radii, false },
                             { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
                               neutron_pair, neutron_pair, 0., std::nullopt,
                               radii2 },
@@ -88,7 +88,7 @@ SCENARIO( "CompoundSystem" ) {
                           formalism, boundary );
     SpinGroup spingroup3( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
                               neutron_pair, photon_pair, 0., std::nullopt,
-                              zero_radii },
+                              zero_radii, false },
                             { id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
                               neutron_pair, neutron_pair, 0., std::nullopt,
                               radii1 },
@@ -110,7 +110,7 @@ SCENARIO( "CompoundSystem" ) {
                           formalism, boundary );
     SpinGroup spingroup4( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
                               neutron_pair, photon_pair, 0., std::nullopt,
-                              zero_radii },
+                              zero_radii, false },
                             { id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ),
                               neutron_pair, neutron_pair, 0., std::nullopt,
                               radii2 },
@@ -124,7 +124,7 @@ SCENARIO( "CompoundSystem" ) {
                           formalism, boundary );
     SpinGroup spingroup5( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
                               neutron_pair, photon_pair, 0., std::nullopt,
-                              zero_radii },
+                              zero_radii, false },
                             { id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ),
                               neutron_pair, neutron_pair, 0., std::nullopt,
                               radii1 },
@@ -179,7 +179,7 @@ SCENARIO( "CompoundSystem" ) {
 
       SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
                                 neutron_pair, photon_pair, 0., std::nullopt,
-                                zero_radii },
+                                zero_radii, false },
                               { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
                                 neutron_pair, neutron_pair, 0., std::nullopt,
                                 radii1 } },
@@ -189,7 +189,7 @@ SCENARIO( "CompoundSystem" ) {
                             formalism, boundary );
       SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
                                 neutron_pair, photon_pair, 0., std::nullopt,
-                                zero_radii },
+                                zero_radii, false },
                               { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
                                 neutron_pair, neutron_pair, 0., std::nullopt,
                                 radii1 },

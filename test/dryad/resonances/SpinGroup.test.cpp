@@ -156,7 +156,7 @@ SCENARIO( "SpinGroup" ) {
 
       // channels
       Channel capture( captureID, elasticPair, capturePair,
-                       captureQ, captureBoundary, captureRadii );
+                       captureQ, captureBoundary, captureRadii, false );
       Channel elastic( elasticID, elasticPair, elasticPair,
                        elasticQ, elasticBoundary, elasticRadii );
       Channel inelastic( inelasticID, elasticPair, inelasticPair,
@@ -246,7 +246,7 @@ void verifyChunk( const SpinGroup& chunk ) {
 
   // channels
   Channel capture( captureID, elasticPair, capturePair,
-                   captureQ, captureBoundary, captureRadii );
+                   captureQ, captureBoundary, captureRadii, false );
   Channel elastic( elasticID, elasticPair, elasticPair,
                    elasticQ, elasticBoundary, elasticRadii );
   Channel inelastic( inelasticID, elasticPair, inelasticPair,

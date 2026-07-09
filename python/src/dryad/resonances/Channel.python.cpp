@@ -49,6 +49,12 @@ void wrapChannel( python::module& module ) {
     "        the boundary condition\n"
     "    radii : njoy.dryad.resonances.ChannelRadii\n"
     "        the channel radii for the calculation of the wave functions\n"
+    "    calculate_wave_functions : boolean, default=True\n"
+    "        the wave function calculation flag (when true will select the\n"
+    "        proper function or switch off calculation when appropriate,\n"
+    "        when false will switch off calculation regardless and set\n"
+    "        penetrability, shift factor, phase shift and phwse shift\n"
+    "        difference to 1, 0, 0, 0 respectively)\n"
     "    kinematics : njoy.dryad.resonances.Kinematics, default=Kinematics.NonRelativistic\n"
     "        the kinematics type applied to the channel\n"
     "    background : Channel.Background, optional\n"
@@ -95,11 +101,13 @@ void wrapChannel( python::module& module ) {
                   double,
                   std::optional< double >,
                   ChannelRadii,
+                  bool,
                   Kinematics,
                   std::optional< Background > >(),
     python::arg( "identifier" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "q_value" ),
     python::arg( "boundary" ), python::arg( "radii" ),
+    python::arg( "calculate_wave_functions" ) = true,
     python::arg( "kinematics" ) = Kinematics::NonRelativistic,
     python::arg( "background" ) = std::nullopt,
     "Initialise the channel"

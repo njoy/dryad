@@ -64,6 +64,12 @@ namespace lrf7 {
     // get the q values
     auto qvalues = format::createVector( endfPairs.Q() );
 
+    // get the pnt values (whether or not to calculate penetrability)
+    std::vector< bool > pnt( endfPairs.numberParticlePairs() );
+    std::transform( endfPairs.penetrabilityFlag().begin(), endfPairs.penetrabilityFlag().end(),
+                    pnt.begin(),
+                    [] ( int pnt ) { return pnt != -1; } );
+
     // go over the channel information
     for ( unsigned int i = 0; i < endfChannels.numberChannels(); ++i ) {
 
@@ -114,15 +120,16 @@ namespace lrf7 {
       }
 
       channels.emplace_back( dryad::id::ChannelID( dryad::id::ReactionID( projectile, target, endfPairs.MT()[index] ),
-                                            dryad::resonances::ChannelQuantumNumbers( endfChannels.orbitalMomentumValues()[i],
-                                                                                      endfChannels.channelSpinValues()[i],
-                                                                                      spin, parity ),
-                                            std::nullopt ),
+                                                   dryad::resonances::ChannelQuantumNumbers( endfChannels.orbitalMomentumValues()[i],
+                                                                                             endfChannels.channelSpinValues()[i],
+                                                                                             spin, parity ),
+                                                   std::nullopt ),
                              incident,
                              pairs[index],
                              qvalues[index],
                              std::move( boundary ),
                              std::move( radii ),
+                             pnt[index],
                              kinematics,
                              std::move( background ) );
     }

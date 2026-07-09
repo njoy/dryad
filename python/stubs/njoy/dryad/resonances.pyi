@@ -84,6 +84,12 @@ class Channel:
             the boundary condition
         radii : njoy.dryad.resonances.ChannelRadii
             the channel radii for the calculation of the wave functions
+        calculate_wave_functions : boolean, default=True
+            the wave function calculation flag (when true will select the
+            proper function or switch off calculation when appropriate,
+            when false will switch off calculation regardless and set
+            penetrability, shift factor, phase shift and phwse shift
+            difference to 1, 0, 0, 0 respectively)
         kinematics : njoy.dryad.resonances.Kinematics, default=Kinematics.NonRelativistic
             the kinematics type applied to the channel
         background : Channel.Background, optional
@@ -110,7 +116,7 @@ class Channel:
         Initialise the channel with explicit wave functions
         """
     @typing.overload
-    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ..., background: FrohnerBackground | SammyBackground | TabulatedBackground | None = None) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, calculate_wave_functions: bool = True, kinematics: Kinematics = ..., background: FrohnerBackground | SammyBackground | TabulatedBackground | None = None) -> None:
         """
         Initialise the channel
         """
@@ -2261,6 +2267,12 @@ class UnresolvedChannel:
             the boundary condition
         radii : njoy.dryad.resonances.ChannelRadii
             the channel radii for the calculation of the wave functions
+        calculate_wave_functions : boolean, default=True
+            the wave function calculation flag (when true will select the
+            proper function or switch off calculation when appropriate,
+            when false will switch off calculation regardless and set
+            penetrability, shift factor, phase shift and phwse shift
+            difference to 1, 0, 0, 0 respectively)
         reference_energy : float
             the energy at which reduced widths are defined (default is 1 eV)
     """
@@ -2271,7 +2283,7 @@ class UnresolvedChannel:
         ...
     def __eq__(self, arg0: UnresolvedChannel) -> bool:
         ...
-    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, reference_energy: float = 1.0) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, calculate_wave_functions: bool = True, reference_energy: float = 1.0) -> None:
         """
         Initialize the unresolved channel
         """

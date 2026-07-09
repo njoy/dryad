@@ -39,15 +39,16 @@ namespace resonances {
     /**
      *  @brief Return the conversion factor
      *
-     *  @param[in] l                 the orbital angular momentum
-     *  @param[in] referenceEnergy   the reference energy
-     *  @param[in] outgoing          the outgoing particle pair
+     *  @param[in] l           the orbital angular momentum
+     *  @param[in] outgoing    the outgoing particle pair
+     *  @param[in] calculate   the flag to calculate penetrability or not
      */
     static PenetrabilityRatio
     selectWidthPenetrabilityRatio( unsigned int l,
-                                 const std::optional< ParticlePair >& outgoing ) {
+                                   const std::optional< ParticlePair >& outgoing,
+                                   bool calculate ) {
 
-      if ( outgoing.has_value() ) {
+      if ( calculate && outgoing.has_value() ) {
 
         if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
 
@@ -76,15 +77,20 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param[in] identifier        the channel identifier
-     *  @param[in] incident          the current incident particle pair
-     *  @param[in] outgoing          the outgoing particle pair
-     *  @param[in] qValue            the Q value associated with the transition from
-     *                               the incident to the outgoing particle pair
-     *  @param[in] boundary          the boundary condition
-     *  @param[in] radii             the channel radii for the calculation of the
-     *                               wave functions
-     *  @param[in] referenceEnergy   the reference energy for the widths (default is 1 eV)
+     *  @param[in] identifier               the channel identifier
+     *  @param[in] incident                 the current incident particle pair
+     *  @param[in] outgoing                 the outgoing particle pair
+     *  @param[in] qValue                   the Q value associated with the transition from
+     *                                      the incident to the outgoing particle pair
+     *  @param[in] boundary                 the boundary condition
+     *  @param[in] radii                    the channel radii for the calculation of the
+     *                                      wave functions
+     *  @param[in] calculateWaveFunctions   the wave function calculation flag (when true will select the
+     *                                      proper function or switch off calculation when appropriate,
+     *                                      when false will switch off calculation regardless and set
+     *                                      penetrability, shift factor, phase shift and phase shift
+     *                                      difference to 1, 0, 0, 0 respectively)
+     *  @param[in] referenceEnergy          the reference energy for the widths (default is 1 eV)
      */
     UnresolvedChannel( id::ChannelID identifier,
                        ParticlePair incident,
@@ -92,15 +98,18 @@ namespace resonances {
                        double qValue,
                        std::optional< double > boundary,
                        ChannelRadii radii,
+                       bool calculateWaveFunctions = true,
                        double referenceEnergy = 1. ) :
         Channel( std::move( identifier ), std::move( incident ),
                  std::move( outgoing ), qValue,
                  std::move( boundary ), std::move( radii ),
+                 calculateWaveFunctions,
                  Kinematics::NonRelativistic, std::nullopt ),
         reference_energy_( referenceEnergy ),
         ratio_( selectWidthPenetrabilityRatio(
                   Channel::quantumNumbers().orbitalAngularMomentum(),
-                  Channel::outgoingParticlePair() ) ) {}
+                  Channel::outgoingParticlePair(),
+                  calculateWaveFunctions ) ) {}
 
     /* methods */
 
@@ -113,6 +122,9 @@ namespace resonances {
     using Channel::statisticalSpinFactor;
     using Channel::isBelowThreshold;
     using Channel::waveNumber;
+    using Channel::hasPenetrability;
+    using Channel::hasShiftFactor;
+    using Channel::hasPhaseShift;
     using Channel::penetrability;
     using Channel::shiftFactor;
     using Channel::phaseShift;

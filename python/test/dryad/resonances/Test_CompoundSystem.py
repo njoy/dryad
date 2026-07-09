@@ -937,7 +937,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
 
         spingroup0 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii1 ) ],
@@ -947,7 +947,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
                                 formalism, boundary )
         spingroup1 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,1-}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{1,1,1-}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii1 ),
@@ -969,7 +969,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
                                 formalism, boundary )
         spingroup2 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii2 ),
@@ -983,7 +983,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
                                 formalism, boundary )
         spingroup3 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,2-}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{1,1,2-}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii1 ),
@@ -1005,7 +1005,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
                                 formalism, boundary )
         spingroup4 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,2+}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{0,2,2+}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii2 ),
@@ -1019,7 +1019,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
                                 formalism, boundary )
         spingroup5 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,3-}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{1,2,3-}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii1 ),
@@ -1069,7 +1069,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
 
         spingroup0 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii1 ) ],
@@ -1079,7 +1079,7 @@ class Test_CompoundSystem( unittest.TestCase ) :
                                 formalism, boundary )
         spingroup1 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,1-}' ),
                                            neutron_pair, photon_pair, 0., None,
-                                           zero_radii ),
+                                           zero_radii, False ),
                                   Channel( ChannelID( 'n,Cl35->n,Cl35{1,1,1-}' ),
                                            neutron_pair, neutron_pair, 0., None,
                                            radii1 ),

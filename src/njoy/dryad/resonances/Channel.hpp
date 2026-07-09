@@ -105,7 +105,7 @@ namespace resonances {
      *
      *  @param[in] l           the orbital angular momentum of the channel
      *  @param[in] outgoing    the outgoing particle pair
-     *  @param[in] calculate   the flag to calculate pentrability or not
+     *  @param[in] calculate   the flag to calculate penetrability or not
      */
     static Penetrability
     selectPenetrabilityFunction( unsigned int l,
@@ -316,25 +316,21 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param[in] identifier                      the channel identifier
-     *  @param[in] incident                        the current incident particle pair
-     *  @param[in] outgoing                        the outgoing particle pair
-     *  @param[in] qValue                          the Q value associated with the transition from
-     *                                             the incident to the outgoing particle pair
-     *  @param[in] boundary                        the boundary condition
-     *  @param[in] radii                           the channel radii for the calculation of the
-     *                                             wave functions
-     *  @param[in] kinematics                      the kinematics type applied to the channel (default is
-     *                                             non-relativistic)
-     *  @param[in] background                      the optional background R-matrix element
-     *  @param[in] calculatePenetrability          penetrability calculation flag (when true will select the
-     *                                             proper function or switch off calculation when appropriate)
-     *  @param[in] calculateShiftFactor            shift factor calculation flag (when true will select the
-     *                                             proper function or switch off calculation when appropriate)
-     *  @param[in] calculatePhaseShift             phase shift calculation flag (when true will select the
-     *                                             proper function or switch off calculation when appropriate)
-     *  @param[in] calculatePhaseShiftDifference   phase shift difference calculation flag (when true will select the
-     *                                             proper function or switch off calculation when appropriate)
+     *  @param[in] identifier               the channel identifier
+     *  @param[in] incident                 the current incident particle pair
+     *  @param[in] outgoing                 the outgoing particle pair
+     *  @param[in] qValue                   the Q value associated with the transition from
+     *                                      the incident to the outgoing particle pair
+     *  @param[in] boundary                 the boundary condition
+     *  @param[in] radii                    the channel radii for the calculation of the ave functions
+     *  @param[in] calculateWaveFunctions   the wave function calculation flag (when true will select the
+     *                                      proper function or switch off calculation when appropriate,
+     *                                      when false will switch off calculation regardless and set
+     *                                      penetrability, shift factor, phase shift and phase shift
+     *                                      difference to 1, 0, 0, 0 respectively)
+     *  @param[in] kinematics               the kinematics type applied to the channel (default is
+     *                                      non-relativistic)
+     *  @param[in] background               the optional background R-matrix element
      */
     Channel( id::ChannelID identifier,
              ParticlePair incident,
@@ -342,25 +338,22 @@ namespace resonances {
              double qValue,
              std::optional< double > boundary,
              ChannelRadii radii,
+             bool calculateWaveFunctions = true,
              Kinematics kinematics = Kinematics::NonRelativistic,
-             std::optional< Background > background = std::nullopt,
-             bool calculatePenetrability = true,
-             bool calculateShiftFactor = true,
-             bool calculatePhaseShift = true,
-             bool calculatePhaseShiftDifference = true ) :
+             std::optional< Background > background = std::nullopt ) :
         Channel( std::move( identifier ), std::move( incident ),
                  std::move( outgoing ), qValue,
                  std::move( boundary ), std::move( radii ),
                  std::move( kinematics ),
                  std::move( background ),
                  selectPenetrabilityFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                              outgoing, calculatePenetrability ),
+                                              outgoing, calculateWaveFunctions ),
                  selectShiftFactorFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                            outgoing, calculateShiftFactor ),
+                                            outgoing, calculateWaveFunctions ),
                  selectPhaseShiftFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                           outgoing, calculatePhaseShift ),
+                                           outgoing, calculateWaveFunctions ),
                  selectPhaseShiftDifferenceFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                                     outgoing, calculatePhaseShiftDifference ) ) {}
+                                                     outgoing, calculateWaveFunctions ) ) {}
 
     /**
      *  @brief Return the channel identifier

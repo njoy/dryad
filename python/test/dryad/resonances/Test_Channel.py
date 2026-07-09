@@ -72,7 +72,7 @@ class Test_Channel( unittest.TestCase ) :
         energy = 1e-5
 
         capture = Channel( captureID, elasticPair, capturePair,
-                           captureQ, captureBoundary, captureRadii )
+                           captureQ, captureBoundary, captureRadii, False )
         elastic = Channel( elasticID, elasticPair, elasticPair,
                            elasticQ, elasticBoundary, elasticRadii )
         inelastic = Channel( inelasticID, elasticPair, inelasticPair,

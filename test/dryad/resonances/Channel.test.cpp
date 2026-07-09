@@ -70,7 +70,7 @@ SCENARIO( "Channel" ) {
       double energy = 1e-5;
 
       Channel capture( captureID, elasticPair, capturePair,
-                       captureQ, captureBoundary, captureRadii );
+                       captureQ, captureBoundary, captureRadii, false );
       Channel elastic( elasticID, elasticPair, elasticPair,
                        elasticQ, elasticBoundary, elasticRadii );
       Channel inelastic( inelasticID, elasticPair, inelasticPair,
