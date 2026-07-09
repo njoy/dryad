@@ -2257,6 +2257,47 @@ class UnresolvedChannel:
         """
     def __ne__(self, arg0: UnresolvedChannel) -> bool:
         ...
+    def is_below_threshold(self, energy: float) -> bool:
+        """
+        Return whether or not the energy is below the threshold for this channel
+        
+        The incident energy is below the threshold energy for the channel if
+            energy * ratio + q < 0.0
+        where energy is the incident energy, ratio is the mass ratio M / ( m + M )
+        for the incident particle pair and q is the Q value for this channel.
+        
+        Parameters
+        ----------
+            energy : float
+                the energy to be tested
+        """
+    def penetrability(self, energy: float) -> float:
+        """
+        Calculate the penetrability for the channel at a given energy
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
+    def phase_shift(self, energy: float) -> float:
+        """
+        Calculate the phase shift for the channel at a given energy
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
+    def shift_factor(self, energy: float) -> float:
+        """
+        Calculate the shift factor for the channel at a given energy
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
     def wave_number(self, energy: float) -> float:
         """
         Calculate the channel wave number (given in fm^-1) at a given energy
@@ -2311,6 +2352,11 @@ class UnresolvedChannel:
     def outgoing_particle_pair(self, arg1: ParticlePair | None) -> None:
         ...
     @property
+    def quantum_numbers(self) -> ChannelQuantumNumbers:
+        """
+        The quantum numbers of the channel
+        """
+    @property
     def reaction(self) -> njoy.dryad.id.ReactionID:
         """
         The reaction this channel contributes to
@@ -2323,6 +2369,16 @@ class UnresolvedChannel:
     @reference_energy.setter
     def reference_energy(self, arg1: float) -> None:
         ...
+    @property
+    def statistical_spin_factor(self) -> float:
+        """
+        The statistical spin factor
+        
+        The statistical spin factor g of a channel is defined as follows:
+           g = ( 2 * J + 1 ) / ( 2 * ia + 1 ) / ( 2 * ib + 1 )
+        in which J is the total angular momentum of the channel and ia and ib
+        are the spins of the particles in the outgoing particle pair.
+        """
 class UnresolvedResonanceTable:
     """
     A table of unresolved average parameters for a set of channels

@@ -83,6 +83,13 @@ void wrapUnresolvedChannel( python::module& module ) {
        { return self.reaction(); },
     "The reaction this channel contributes to"
   )
+  .def_property_readonly(
+
+    "quantum_numbers",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.quantumNumbers(); },
+    "The quantum numbers of the channel"
+  )
   .def_property(
 
     "incident_particle_pair",
@@ -110,6 +117,33 @@ void wrapUnresolvedChannel( python::module& module ) {
        { self.channelRadii( std::move( radii ) ); },
     "The channel radii"
   )
+  .def_property_readonly(
+
+    "statistical_spin_factor",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.statisticalSpinFactor(); },
+    "The statistical spin factor\n\n"
+    "The statistical spin factor g of a channel is defined as follows:\n"
+    "   g = ( 2 * J + 1 ) / ( 2 * ia + 1 ) / ( 2 * ib + 1 )\n"
+    "in which J is the total angular momentum of the channel and ia and ib\n"
+    "are the spins of the particles in the outgoing particle pair."
+  )
+  .def(
+
+    "is_below_threshold",
+    [] ( const Component& self, double energy ) -> decltype(auto)
+       { return self.isBelowThreshold( energy ); },
+    python::arg( "energy" ),
+    "Return whether or not the energy is below the threshold for this channel\n\n"
+    "The incident energy is below the threshold energy for the channel if\n"
+    "    energy * ratio + q < 0.0\n"
+    "where energy is the incident energy, ratio is the mass ratio M / ( m + M )\n"
+    "for the incident particle pair and q is the Q value for this channel.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy to be tested"
+  )
   .def_property(
 
     "reference_energy",
@@ -124,6 +158,42 @@ void wrapUnresolvedChannel( python::module& module ) {
        { return self.waveNumber( energy ); },
     python::arg( "energy" ),
     "Calculate the channel wave number (given in fm^-1) at a given energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy (given in eV)"
+  )
+  .def(
+
+    "penetrability",
+    [] ( const Component& self, double energy ) -> decltype(auto)
+       { return self.penetrability( energy ); },
+    python::arg( "energy" ),
+    "Calculate the penetrability for the channel at a given energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy (given in eV)"
+  )
+  .def(
+
+    "shift_factor",
+    [] ( const Component& self, double energy ) -> decltype(auto)
+       { return self.shiftFactor( energy ); },
+    python::arg( "energy" ),
+    "Calculate the shift factor for the channel at a given energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy (given in eV)"
+  )
+  .def(
+
+    "phase_shift",
+    [] ( const Component& self, double energy ) -> decltype(auto)
+       { return self.phaseShift( energy ); },
+    python::arg( "energy" ),
+    "Calculate the phase shift for the channel at a given energy\n\n"
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
