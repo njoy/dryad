@@ -316,17 +316,25 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param[in] identifier   the channel identifier
-     *  @param[in] incident     the current incident particle pair
-     *  @param[in] outgoing     the outgoing particle pair
-     *  @param[in] qValue       the Q value associated with the transition from
-     *                          the incident to the outgoing particle pair
-     *  @param[in] boundary     the boundary condition
-     *  @param[in] radii        the channel radii for the calculation of the
-     *                          wave functions
-     *  @param[in] kinematics   the kinematics type applied to the channel (default is
-     *                          non-relativistic)
-     *  @param[in] background   the optional background R-matrix element
+     *  @param[in] identifier                      the channel identifier
+     *  @param[in] incident                        the current incident particle pair
+     *  @param[in] outgoing                        the outgoing particle pair
+     *  @param[in] qValue                          the Q value associated with the transition from
+     *                                             the incident to the outgoing particle pair
+     *  @param[in] boundary                        the boundary condition
+     *  @param[in] radii                           the channel radii for the calculation of the
+     *                                             wave functions
+     *  @param[in] kinematics                      the kinematics type applied to the channel (default is
+     *                                             non-relativistic)
+     *  @param[in] background                      the optional background R-matrix element
+     *  @param[in] calculatePenetrability          penetrability calculation flag (when true will select the
+     *                                             proper function or switch off calculation when appropriate)
+     *  @param[in] calculateShiftFactor            shift factor calculation flag (when true will select the
+     *                                             proper function or switch off calculation when appropriate)
+     *  @param[in] calculatePhaseShift             phase shift calculation flag (when true will select the
+     *                                             proper function or switch off calculation when appropriate)
+     *  @param[in] calculatePhaseShiftDifference   phase shift difference calculation flag (when true will select the
+     *                                             proper function or switch off calculation when appropriate)
      */
     Channel( id::ChannelID identifier,
              ParticlePair incident,
@@ -335,20 +343,24 @@ namespace resonances {
              std::optional< double > boundary,
              ChannelRadii radii,
              Kinematics kinematics = Kinematics::NonRelativistic,
-             std::optional< Background > background = std::nullopt ) :
+             std::optional< Background > background = std::nullopt,
+             bool calculatePenetrability = true,
+             bool calculateShiftFactor = true,
+             bool calculatePhaseShift = true,
+             bool calculatePhaseShiftDifference = true ) :
         Channel( std::move( identifier ), std::move( incident ),
                  std::move( outgoing ), qValue,
                  std::move( boundary ), std::move( radii ),
                  std::move( kinematics ),
                  std::move( background ),
                  selectPenetrabilityFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                              outgoing, true ),
+                                              outgoing, calculatePenetrability ),
                  selectShiftFactorFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                            outgoing, true ),
+                                            outgoing, calculateShiftFactor ),
                  selectPhaseShiftFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                           outgoing, true ),
+                                           outgoing, calculatePhaseShift ),
                  selectPhaseShiftDifferenceFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                                     outgoing, true ) ) {}
+                                                     outgoing, calculatePhaseShiftDifference ) ) {}
 
     /**
      *  @brief Return the channel identifier
