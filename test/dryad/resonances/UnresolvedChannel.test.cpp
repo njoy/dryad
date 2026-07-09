@@ -39,51 +39,12 @@ SCENARIO( "UnresolvedChannel" ) {
     ChannelRadii elasticRadii( 4.822220, 3.667980 );
     ChannelRadii captureRadii( 0. );
 
-    Channel elastic( elasticID, elasticPair, elasticPair,
-                     elasticQ, elasticBoundary, elasticRadii );
-    Channel capture( captureID, elasticPair, capturePair,
-                     captureQ, captureBoundary, captureRadii );
-
     double reference = 1.;
 
-    THEN( "an UnresolvedChannel can be constructed for a neutron channel" ) {
-
-      UnresolvedChannel chunk( elastic, reference );
-
-      CHECK( elasticID == chunk.identifier() );
-      CHECK( elasticRID == chunk.reaction() );
-      CHECK( elasticPair == chunk.outgoingParticlePair() );
-      CHECK( elasticRadii == chunk.channelRadii() );
-      CHECK_THAT( reference, WithinRel( chunk.referenceEnergy() ) );
-
-      CHECK_THAT( 3.1622776601683794e-3, WithinRel( chunk.widthConversionFactor( 1e-5 ) ) );
-      CHECK_THAT( 1.,                    WithinRel( chunk.widthConversionFactor( 1.   ) ) );
-      CHECK_THAT( 10.,                   WithinRel( chunk.widthConversionFactor( 100. ) ) );
-    } // THEN
-
-    THEN( "an UnresolvedChannel can be constructed for a capture channel" ) {
-
-      UnresolvedChannel chunk( capture, reference );
-
-      CHECK( captureID == chunk.identifier() );
-      CHECK( captureRID == chunk.reaction() );
-      CHECK( capturePair == chunk.outgoingParticlePair() );
-      CHECK( captureRadii == chunk.channelRadii() );
-      CHECK_THAT( reference, WithinRel( chunk.referenceEnergy() ) );
-
-      // the capture channel is not a neutron channel, so a constant width
-      // conversion is applied: the conversion factor is 1 at every energy
-      CHECK_THAT( 1., WithinRel( chunk.widthConversionFactor( 1e-5 ) ) );
-      CHECK_THAT( 1., WithinRel( chunk.widthConversionFactor( 1.   ) ) );
-      CHECK_THAT( 1., WithinRel( chunk.widthConversionFactor( 100. ) ) );
-    } // THEN
-
-    THEN( "an UnresolvedChannel can be constructed by delegating to the channel constructor" ) {
+    THEN( "an UnresolvedChannel can be constructed with a default reference energy" ) {
 
       UnresolvedChannel chunk( elasticID, elasticPair, elasticPair,
                                elasticQ, elasticBoundary, elasticRadii );
-
-      CHECK( UnresolvedChannel( elastic, reference ) == chunk );
 
       CHECK( elasticID == chunk.identifier() );
       CHECK( elasticRID == chunk.reaction() );
@@ -97,13 +58,16 @@ SCENARIO( "UnresolvedChannel" ) {
       CHECK_THAT( 10.,                   WithinRel( chunk.widthConversionFactor( 100. ) ) );
     } // THEN
 
-    THEN( "the delegating constructor forwards kinematics, background and a non-default reference energy" ) {
+    THEN( "an UnresolvedChannel can be constructed without a default reference energy" ) {
 
       UnresolvedChannel chunk( elasticID, elasticPair, elasticPair,
                                elasticQ, elasticBoundary, elasticRadii,
-                               Kinematics::NonRelativistic, std::nullopt, 2. );
+                               2. );
 
-      CHECK( UnresolvedChannel( elastic, 2. ) == chunk );
+      CHECK( elasticID == chunk.identifier() );
+      CHECK( elasticRID == chunk.reaction() );
+      CHECK( elasticPair == chunk.outgoingParticlePair() );
+      CHECK( elasticRadii == chunk.channelRadii() );
 
       CHECK_THAT( 2., WithinRel( chunk.referenceEnergy() ) );
 
@@ -112,14 +76,17 @@ SCENARIO( "UnresolvedChannel" ) {
       CHECK_THAT( 7.0710678118654755,   WithinRel( chunk.widthConversionFactor( 100. ) ) );
     } // THEN
 
-    THEN( "the delegating constructor can build a capture channel" ) {
+    THEN( "an UnresolvedChannel can be build with a constant conversion factor" ) {
 
       UnresolvedChannel chunk( captureID, elasticPair, capturePair,
                                captureQ, captureBoundary, captureRadii );
 
-      CHECK( UnresolvedChannel( capture, reference ) == chunk );
-
+      CHECK( captureID == chunk.identifier() );
+      CHECK( captureRID == chunk.reaction() );
       CHECK( capturePair == chunk.outgoingParticlePair() );
+      CHECK( captureRadii == chunk.channelRadii() );
+
+      CHECK_THAT( 1., WithinRel( chunk.referenceEnergy() ) );
 
       // not a neutron channel : the conversion factor is 1 at every energy
       CHECK_THAT( 1., WithinRel( chunk.widthConversionFactor( 1e-5 ) ) );
@@ -156,10 +123,14 @@ SCENARIO( "UnresolvedChannel" ) {
       Channel capture( captureID, elasticPair, capturePair,
                        captureQ, captureBoundary, captureRadii );
 
-      UnresolvedChannel left( elastic, 1. );
-      UnresolvedChannel equal( elastic, 1. );
-      UnresolvedChannel differentChannel( capture, 1. );
-      UnresolvedChannel differentReference( elastic, 2. );
+      UnresolvedChannel left( elasticID, elasticPair, elasticPair,
+                              elasticQ, elasticBoundary, elasticRadii, 1. );
+      UnresolvedChannel equal( elasticID, elasticPair, elasticPair,
+                               elasticQ, elasticBoundary, elasticRadii, 1. );
+      UnresolvedChannel differentChannel( captureID, elasticPair, capturePair,
+                                          captureQ, captureBoundary, captureRadii, 1. );
+      UnresolvedChannel differentReference( elasticID, elasticPair, elasticPair,
+                                            elasticQ, elasticBoundary, elasticRadii, 2. );
 
       THEN( "they can be compared" ) {
 

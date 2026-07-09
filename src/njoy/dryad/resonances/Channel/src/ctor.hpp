@@ -10,7 +10,7 @@ Channel& operator=( const Channel& ) = default;
 Channel& operator=( Channel&& ) = default;
 
 /**
- *  @brief Constructor
+ *  @brief Constructor with wave functions
  *
  *  @param[in] identifier      the channel identifier
  *  @param[in] incident        the current incident particle pair
@@ -53,7 +53,7 @@ Channel( id::ChannelID identifier,
     spin_factor_( calculateSpinFactor( identifier.quantumNumbers(), outgoing ) ) {}
 
 /**
- *  @brief Constructor without wave functions
+ *  @brief Constructor
  *
  *  @param[in] identifier   the channel identifier
  *  @param[in] incident     the current incident particle pair
@@ -65,6 +65,7 @@ Channel( id::ChannelID identifier,
  *                          wave functions
  *  @param[in] kinematics   the kinematics type applied to the channel (default is
  *                          non-relativistic)
+ *  @param[in] background   the optional background R-matrix element
  */
 Channel( id::ChannelID identifier,
          ParticlePair incident,

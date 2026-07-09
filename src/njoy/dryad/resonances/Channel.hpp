@@ -473,18 +473,16 @@ namespace resonances {
     }
 
     /**
-     *  @brief Equality comparison
+     *  @brief Comparison operator: equal
      *
-     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    friend bool operator==( const Channel& left,
-                            const Channel& right ) {
+    bool operator==( const Channel& right ) const {
 
-      return std::tie( left.identifier(), left.incidentParticlePair(),
-                       left.outgoingParticlePair(), left.q_,
-                       left.boundaryCondition(), left.channelRadii(),
-                       left.background() ) ==
+      return std::tie( this->identifier(), this->incidentParticlePair(),
+                       this->outgoingParticlePair(), this->q_,
+                       this->boundaryCondition(), this->channelRadii(),
+                       this->background() ) ==
              std::tie( right.identifier(), right.incidentParticlePair(),
                        right.outgoingParticlePair(), right.q_,
                        right.boundaryCondition(), right.channelRadii(),
@@ -492,15 +490,13 @@ namespace resonances {
     }
 
     /**
-     *  @brief Inequality comparison
+     *  @brief Comparison operator: not equal
      *
-     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    friend bool operator!=( const Channel& left,
-                            const Channel& right ) {
+    bool operator!=( const Channel& right ) const {
 
-      return ! ( left == right );
+      return ! this->operator==( right );
     }
   };
 
