@@ -232,6 +232,12 @@ void wrapChannel( python::module& module ) {
     "    energy : float\n"
     "        the energy (given in eV)"
   )
+  .def_property_readonly(
+
+    "has_penetrability",
+    &Component::hasPenetrability,
+    "Flag indicating whether or not there is a penetrability implementation"
+  )
   .def(
 
     "penetrability",
@@ -242,6 +248,12 @@ void wrapChannel( python::module& module ) {
     "----------\n"
     "    energy : float\n"
     "        the energy (given in eV)"
+  )
+  .def_property_readonly(
+
+    "has_shift_factor",
+    &Component::hasShiftFactor,
+    "Flag indicating whether or not there is a shift factor implementation"
   )
   .def(
 
@@ -254,6 +266,12 @@ void wrapChannel( python::module& module ) {
     "    energy : float\n"
     "        the energy (given in eV)"
   )
+  .def_property_readonly(
+
+    "has_phase_shift",
+    &Component::hasPhaseShift,
+    "Flag indicating whether or not there is a phase shift implementation"
+  )
   .def(
 
     "phase_shift",
@@ -264,6 +282,12 @@ void wrapChannel( python::module& module ) {
     "----------\n"
     "    energy : float\n"
     "        the energy (given in eV)"
+  )
+  .def_property_readonly(
+
+    "has_phase_shift_difference",
+    &Component::hasPhaseShiftDifference,
+    "Flag indicating whether or not there is a phase shift difference implementation"
   )
   .def(
 

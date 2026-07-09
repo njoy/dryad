@@ -217,6 +217,26 @@ class Channel:
     def channel_radii(self, arg1: ChannelRadii) -> None:
         ...
     @property
+    def has_penetrability(self) -> bool:
+        """
+        Flag indicating whether or not there is a penetrability implementation
+        """
+    @property
+    def has_phase_shift(self) -> bool:
+        """
+        Flag indicating whether or not there is a phase shift implementation
+        """
+    @property
+    def has_phase_shift_difference(self) -> bool:
+        """
+        Flag indicating whether or not there is a phase shift difference implementation
+        """
+    @property
+    def has_shift_factor(self) -> bool:
+        """
+        Flag indicating whether or not there is a shift factor implementation
+        """
+    @property
     def identifier(self) -> njoy.dryad.id.ChannelID:
         """
         The channel identifier
