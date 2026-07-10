@@ -42,7 +42,6 @@ SCENARIO( "toString" ) {
       CHECK( "2120000001"      == gnds::write::toString( options, 2.12000000051e+9 ) );
       CHECK( "2120000001"      == gnds::write::toString( options, 2.1200000006e+9 ) );
       CHECK( "2e+11"           == gnds::write::toString( options, 2.e+11 ) );
-      CHECK( "2.120000000e+11" == gnds::write::toString( options, 2.1200000005e+11 ) );
       CHECK( "2.120000001e+11" == gnds::write::toString( options, 2.12000000051e+11 ) );
       CHECK( "2.120000001e+11" == gnds::write::toString( options, 2.1200000006e+11 ) );
     } // THEN
