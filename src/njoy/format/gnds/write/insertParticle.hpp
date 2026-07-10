@@ -21,11 +21,11 @@ namespace gnds {
 namespace write {
 
   /**
-   *  @brief Insert a particle xml current
+   *  @brief Insert a particle xml node
    *
-   *  @param[in,out] parent     the parent current
+   *  @param[in,out] parent     the parent node
    *  @param[in]     option     the gnds write options
-   *  @param[in]     name       the name of the particle current
+   *  @param[in]     name       the name of the particle node
    *  @param[in]     particle   the particle instance
    *  @param[in]     style      the optional gnds style
    */
