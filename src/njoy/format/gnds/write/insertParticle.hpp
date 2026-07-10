@@ -21,11 +21,11 @@ namespace gnds {
 namespace write {
 
   /**
-   *  @brief Insert a particle xml node
+   *  @brief Insert a particle xml current
    *
-   *  @param[in,out] parent     the parent node
+   *  @param[in,out] parent     the parent current
    *  @param[in]     option     the gnds write options
-   *  @param[in]     name       the name of the particle node
+   *  @param[in]     name       the name of the particle current
    *  @param[in]     particle   the particle instance
    *  @param[in]     style      the optional gnds style
    */
@@ -38,34 +38,35 @@ namespace write {
 
     if ( name != "nuclide" && name != "gaugeBoson" && name != "baryon" && name != "lepton" ) {
 
-      throw std::runtime_error( "Unknown GNDS node name requested for particle data: " + name );
+      throw std::runtime_error( "Unknown GNDS current name requested for particle data: " + name );
     }
 
     std::string id = particle.identifier().symbol();
 
     pugi::xml_node node = parent.append_child( name );
-    node.append_attribute( "id" ) = id;
+    pugi::xml_node current = node;
+    current.append_attribute( "id" ) = id;
 
     if ( particle.mass().has_value() ) {
 
-      auto mass = node.append_child( "mass" );
+      auto mass = current.append_child( "mass" );
       insertDouble( mass, options, particle.mass().value(), style, "amu" );
     }
 
     if ( name == "nuclide" ) {
 
-      auto charge = node.append_child( "charge" );
+      auto charge = current.append_child( "charge" );
       insertDouble( charge, options, 0., style, "e" );
 
-      node = node.append_child( "nucleus" );
+      current = current.append_child( "nucleus" );
       std::transform( id.begin(), id.end(), id.begin(),
                       [] ( auto&& character ) { return std::tolower( character ); } );
-      node.append_attribute( "id" ) = id;
+      current.append_attribute( "id" ) = id;
     }
 
     if ( particle.spin().has_value() ) {
 
-      auto spin = node.append_child( "spin" );
+      auto spin = current.append_child( "spin" );
       double half;
       if ( std::modf( particle.spin().value(), &half ) == 0. ) {
 
@@ -75,23 +76,23 @@ namespace write {
       else {
 
         // a is a half integer value
-        insertFraction( spin, options, 2 * static_cast< int >( std::round( half ) ) + 1, 2, style, std::nullopt );
+        insertFraction( spin, options, 2 * static_cast< int >( std::round( half ) ) + 1, 2, style, "hbar" );
       }
     }
 
     if ( particle.parity().has_value() ) {
 
-      auto parity = node.append_child( "parity" );
+      auto parity = current.append_child( "parity" );
       insertInteger( parity, options, particle.parity().value(), style, std::nullopt );
     }
 
-    auto charge = node.append_child( "charge" );
+    auto charge = current.append_child( "charge" );
     insertDouble( charge, options, particle.identifier().z(), style, "e" );
 
     if ( particle.energy().has_value() ) {
 
-      auto energy = node.append_child( "energy" );
-      insertInteger( energy, options, particle.energy().value(), style, "eV" );
+      auto energy = current.append_child( "energy" );
+      insertDouble( energy, options, particle.energy().value(), style, "eV" );
     }
 
     return node;
