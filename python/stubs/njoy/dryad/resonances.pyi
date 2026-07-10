@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedResonanceTable']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePenetrabilityRatio', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedResonanceTable']
 class BoundaryCondition:
     """
     The boundary condition options for resonance reconstruction
@@ -899,6 +899,51 @@ class HardSpherePenetrability:
     def orbital_angular_momentum(self) -> int:
         """
         The orbital angular momentum quantum number (l value)
+        """
+class HardSpherePenetrabilityRatio:
+    """
+    Hard sphere penetrability ratio functions
+    
+    Parameters
+    ----------
+        numerator_orbital_angular_momentum : int
+            the orbital angular momentum quantum number for the penetrability
+            in the numerator of the ratio (l = 0 to 5)
+        denominator_orbital_angular_momentum : int
+            the orbital angular momentum quantum number for the penetrability
+            in the denominator of the ratio (l = 0 to 5)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, ratio: float) -> float:
+        """
+        Evaluate the penetrability for a given ratio value
+        
+        Parameters
+        ----------
+            ratio : float
+                the ratio rho = k*a (wave number times channel radius)
+        """
+    def __copy__(self) -> HardSpherePenetrabilityRatio:
+        ...
+    def __deepcopy__(self, arg0: dict) -> HardSpherePenetrabilityRatio:
+        ...
+    def __eq__(self, arg0: HardSpherePenetrabilityRatio) -> bool:
+        ...
+    def __init__(self, numerator_orbital_angular_momentum: int, denominator_orbital_angular_momentum: int) -> None:
+        """
+        Initialise the hard sphere penetrability ratio function
+        """
+    def __ne__(self, arg0: HardSpherePenetrabilityRatio) -> bool:
+        ...
+    @property
+    def denominator_orbital_angular_momentum(self) -> int:
+        """
+        The orbital angular momentum quantum number of the denominator penetrability (l value)
+        """
+    @property
+    def numerator_orbital_angular_momentum(self) -> int:
+        """
+        The orbital angular momentum quantum number of the numerator penetrability (l value)
         """
 class HardSpherePhaseShift:
     """
@@ -2176,6 +2221,163 @@ class TabulatedWaveFunction:
     def values(self) -> list[float]:
         """
         The wave function values
+        """
+class UnresolvedChannel:
+    """
+    A resonance reaction channel for use in the unresolved resonance region
+    
+    Parameters
+    ----------
+        identifier : njoy.dryad.id.ChannelID
+            the channel identifier
+        incident : njoy.dryad.resonances.ParticlePair
+            the current incident particle pair
+        outgoing : njoy.dryad.resonances.ParticlePair, optional
+            the outgoing particle pair
+        q_value : float
+            the Q value associated with the transition from the incident to
+            the outgoing particle pair
+        boundary : float, optional
+            the boundary condition
+        radii : njoy.dryad.resonances.ChannelRadii
+            the channel radii for the calculation of the wave functions
+        reference_energy : float
+            the energy at which reduced widths are defined (default is 1 eV)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> UnresolvedChannel:
+        ...
+    def __deepcopy__(self, arg0: dict) -> UnresolvedChannel:
+        ...
+    def __eq__(self, arg0: UnresolvedChannel) -> bool:
+        ...
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, reference_energy: float = 1.0) -> None:
+        """
+        Initialize the unresolved channel
+        """
+    def __ne__(self, arg0: UnresolvedChannel) -> bool:
+        ...
+    def is_below_threshold(self, energy: float) -> bool:
+        """
+        Return whether or not the energy is below the threshold for this channel
+        
+        The incident energy is below the threshold energy for the channel if
+            energy * ratio + q < 0.0
+        where energy is the incident energy, ratio is the mass ratio M / ( m + M )
+        for the incident particle pair and q is the Q value for this channel.
+        
+        Parameters
+        ----------
+            energy : float
+                the energy to be tested
+        """
+    def penetrability(self, energy: float) -> float:
+        """
+        Calculate the penetrability for the channel at a given energy
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
+    def phase_shift(self, energy: float) -> float:
+        """
+        Calculate the phase shift for the channel at a given energy
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
+    def shift_factor(self, energy: float) -> float:
+        """
+        Calculate the shift factor for the channel at a given energy
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
+    def wave_number(self, energy: float) -> float:
+        """
+        Calculate the channel wave number (given in fm^-1) at a given energy
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
+    def width_conversion_factor(self, energy: float) -> float:
+        """
+        Calculate the width conversion factor at a given energy
+        
+        The reduced width stored for a channel is converted to the physical
+        width at a given energy by multiplying it with this factor.
+        
+        Parameters
+        ----------
+            energy : float
+                the energy (given in eV)
+        """
+    @property
+    def channel_radii(self) -> ChannelRadii:
+        """
+        The channel radii
+        """
+    @channel_radii.setter
+    def channel_radii(self, arg1: ChannelRadii) -> None:
+        ...
+    @property
+    def identifier(self) -> njoy.dryad.id.ChannelID:
+        """
+        The channel identifier
+        """
+    @identifier.setter
+    def identifier(self, arg1: njoy.dryad.id.ChannelID) -> None:
+        ...
+    @property
+    def incident_particle_pair(self) -> ParticlePair:
+        """
+        The outgoing particle pair (if defined)
+        """
+    @incident_particle_pair.setter
+    def incident_particle_pair(self, arg1: ParticlePair) -> None:
+        ...
+    @property
+    def outgoing_particle_pair(self) -> ParticlePair | None:
+        """
+        The outgoing particle pair (if defined)
+        """
+    @outgoing_particle_pair.setter
+    def outgoing_particle_pair(self, arg1: ParticlePair | None) -> None:
+        ...
+    @property
+    def quantum_numbers(self) -> ChannelQuantumNumbers:
+        """
+        The quantum numbers of the channel
+        """
+    @property
+    def reaction(self) -> njoy.dryad.id.ReactionID:
+        """
+        The reaction this channel contributes to
+        """
+    @property
+    def reference_energy(self) -> float:
+        """
+        The reference energy
+        """
+    @reference_energy.setter
+    def reference_energy(self, arg1: float) -> None:
+        ...
+    @property
+    def statistical_spin_factor(self) -> float:
+        """
+        The statistical spin factor
+        
+        The statistical spin factor g of a channel is defined as follows:
+           g = ( 2 * J + 1 ) / ( 2 * ia + 1 ) / ( 2 * ib + 1 )
+        in which J is the total angular momentum of the channel and ia and ib
+        are the spins of the particles in the outgoing particle pair.
         """
 class UnresolvedResonanceTable:
     """

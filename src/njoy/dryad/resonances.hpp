@@ -27,6 +27,7 @@
 
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
 #include "njoy/dryad/resonances/UnresolvedResonanceTable.hpp"
+#include "njoy/dryad/resonances/UnresolvedChannel.hpp"
 
 #include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"
 #include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"
