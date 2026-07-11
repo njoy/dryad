@@ -108,6 +108,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -136,6 +142,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, resonance table
@@ -196,6 +208,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -224,6 +242,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, resonance table
@@ -284,6 +308,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -313,6 +343,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -341,6 +377,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel2.hasPenetrability() );
+  CHECK( true == channel2.hasShiftFactor() );
+  CHECK( true == channel2.hasPhaseShift() );
+  CHECK( false == channel2.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, resonance table
@@ -403,6 +445,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -432,6 +480,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -460,6 +514,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel2.hasPenetrability() );
+  CHECK( true == channel2.hasShiftFactor() );
+  CHECK( true == channel2.hasPhaseShift() );
+  CHECK( false == channel2.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, resonance table
@@ -522,6 +582,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -553,6 +619,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -582,6 +654,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel2.hasPenetrability() );
+  CHECK( true == channel2.hasShiftFactor() );
+  CHECK( true == channel2.hasPhaseShift() );
+  CHECK( false == channel2.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 3: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -610,6 +688,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel3.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel3.hasPenetrability() );
+  CHECK( true == channel3.hasShiftFactor() );
+  CHECK( true == channel3.hasPhaseShift() );
+  CHECK( false == channel3.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, resonance table
@@ -674,6 +758,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -703,6 +793,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -731,6 +827,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel2.hasPenetrability() );
+  CHECK( true == channel2.hasShiftFactor() );
+  CHECK( true == channel2.hasPhaseShift() );
+  CHECK( false == channel2.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, resonance table
@@ -793,6 +895,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -824,6 +932,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -853,6 +967,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel2.hasPenetrability() );
+  CHECK( true == channel2.hasShiftFactor() );
+  CHECK( true == channel2.hasPhaseShift() );
+  CHECK( false == channel2.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, channel 3: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -881,6 +1001,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel3.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel3.hasPenetrability() );
+  CHECK( true == channel3.hasShiftFactor() );
+  CHECK( true == channel3.hasPhaseShift() );
+  CHECK( false == channel3.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, resonance table
@@ -945,6 +1071,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 7, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -973,6 +1105,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 7, resonance table
@@ -1033,6 +1171,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 8, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -1062,6 +1206,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 8, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -1090,6 +1240,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel2.hasPenetrability() );
+  CHECK( true == channel2.hasShiftFactor() );
+  CHECK( true == channel2.hasPhaseShift() );
+  CHECK( false == channel2.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 8, resonance table
@@ -1152,6 +1308,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
+  // wave functions
+  CHECK( false == channel0.hasPenetrability() );
+  CHECK( false == channel0.hasShiftFactor() );
+  CHECK( false == channel0.hasPhaseShift() );
+  CHECK( false == channel0.hasPhaseShiftDifference() );
+
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 9, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
@@ -1180,6 +1342,12 @@ void verifyChunkAl27( const std::vector< resonances::SpinGroup >& chunk ) {
 
   // kinematics type
   CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // wave functions
+  CHECK( true == channel1.hasPenetrability() );
+  CHECK( true == channel1.hasShiftFactor() );
+  CHECK( true == channel1.hasPhaseShift() );
+  CHECK( false == channel1.hasPhaseShiftDifference() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 9, resonance table

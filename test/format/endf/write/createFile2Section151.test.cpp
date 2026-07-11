@@ -44,7 +44,7 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::CompoundSystem compound( 1e-5, 1.3e+6,
                                { { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
-                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                      { id::ChannelID( "n,Si29->n,Si29{1,1,0-}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii } },
                                    { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
@@ -55,7 +55,7 @@ SCENARIO( "createFile2Section" ) {
                                    resonances::Formalism::ReichMoore,
                                    resonances::BoundaryCondition::ShiftFactor }, // 0- spin group
                                  { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0+}" ),
-                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                      { id::ChannelID( "n,Si29->n,Si29{0,0,0+}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii } },
                                    { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
@@ -66,7 +66,7 @@ SCENARIO( "createFile2Section" ) {
                                    resonances::Formalism::ReichMoore,
                                    resonances::BoundaryCondition::ShiftFactor }, // 0+ spin group
                                  { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1-}" ),
-                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                      { id::ChannelID( "n,Si29->n,Si29{1,0,1-}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii },
                                      { id::ChannelID( "n,Si29->n,Si29{1,1,1-}" ),
@@ -81,7 +81,7 @@ SCENARIO( "createFile2Section" ) {
                                    resonances::Formalism::ReichMoore,
                                    resonances::BoundaryCondition::ShiftFactor }, // 1- spin group
                                  { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1+}" ),
-                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                      { id::ChannelID( "n,Si29->n,Si29{0,1,1+}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii },
                                      { id::ChannelID( "n,Si29->n,Si29{2,1,1+}" ),
@@ -96,7 +96,7 @@ SCENARIO( "createFile2Section" ) {
                                    resonances::Formalism::ReichMoore,
                                    resonances::BoundaryCondition::ShiftFactor }, // 1+ spin group
                                  { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
-                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                      { id::ChannelID( "n,Si29->n,Si29{1,1,2-}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii } },
                                    { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
@@ -107,7 +107,7 @@ SCENARIO( "createFile2Section" ) {
                                    resonances::Formalism::ReichMoore,
                                    resonances::BoundaryCondition::ShiftFactor }, // 2- spin group
                                  { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2+}" ),
-                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                      { id::ChannelID( "n,Si29->n,Si29{2,0,2+}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii },
                                      { id::ChannelID( "n,Si29->n,Si29{2,1,2+}" ),
@@ -118,7 +118,7 @@ SCENARIO( "createFile2Section" ) {
                                    resonances::Formalism::ReichMoore,
                                    resonances::BoundaryCondition::ShiftFactor }, // 2+ spin group
                                  { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
-                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                      { id::ChannelID( "n,Si29->n,Si29{2,1,3+}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii } },
                                    { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
@@ -171,7 +171,7 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::CompoundSystem compound( 1e-5, 1e+5,
                                            { { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,0+}" ),
-                                                   neutron_pair, photon_pair, 0., 0, zero_radii },
+                                                   neutron_pair, photon_pair, 0., 0, zero_radii, false },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{1,1,0+}" ),
                                                    neutron_pair, neutron_pair, 0., -1, radii } },
                                                { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,0+}" ),
@@ -182,7 +182,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::Constant }, // 0+ spin group
                                              { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1-}" ),
-                                                   neutron_pair, photon_pair, 0., 0, zero_radii },
+                                                   neutron_pair, photon_pair, 0., 0, zero_radii, false },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{0,1,1-}" ),
                                                    neutron_pair, neutron_pair, 0., 0, radii } },
                                                { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1-}" ),
@@ -193,7 +193,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::Constant }, // 1- spin group
                                              { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1+}" ),
-                                                   neutron_pair, photon_pair, 0., 0, zero_radii },
+                                                   neutron_pair, photon_pair, 0., 0, zero_radii, false },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{1,1,1+}" ),
                                                    neutron_pair, neutron_pair, 0., -1, radii },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{1,2,1+}" ),
@@ -208,7 +208,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::Constant }, // 1+ spin group
                                              { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,2-}" ),
-                                                   neutron_pair, photon_pair, 0., 0, zero_radii },
+                                                   neutron_pair, photon_pair, 0., 0, zero_radii, false },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{0,2,2-}" ),
                                                    neutron_pair, neutron_pair, 0., 0, radii } },
                                                { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,2-}" ),
@@ -219,7 +219,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::Constant }, // 2- spin group
                                              { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,2+}" ),
-                                                   neutron_pair, photon_pair, 0., 0, zero_radii },
+                                                   neutron_pair, photon_pair, 0., 0, zero_radii, false },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{1,1,2+}" ),
                                                    neutron_pair, neutron_pair, 0., -1, radii },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{1,2,2+}" ),
@@ -234,7 +234,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::Constant }, // 2+ spin group
                                              { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,3+}" ),
-                                                   neutron_pair, photon_pair, 0., 0, zero_radii },
+                                                   neutron_pair, photon_pair, 0., 0, zero_radii, false },
                                                  { id::ChannelID( "n,Cu63->n,Cu63{1,2,3+}" ),
                                                    neutron_pair, neutron_pair, 0., -1, radii } },
                                                { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,3+}" ),
@@ -295,7 +295,7 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::CompoundSystem compound( 1e-5, 1.2e+6,
                                            { { { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
                                                    neutron_pair, neutron_pair, 0., std::nullopt, radii1 } },
                                                { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
@@ -306,7 +306,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 0- spin group
                                              { { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
                                                    neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
@@ -329,7 +329,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 1- spingroup
                                              { { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
                                                    neutron_pair, neutron_pair, 0., std::nullopt, radii2 },
                                                  { id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ),
@@ -344,7 +344,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 1+ spingroup
                                              { { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
                                                    neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
@@ -367,7 +367,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 2- spingroup
                                              { { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ),
                                                    neutron_pair, neutron_pair, 0., std::nullopt, radii2 },
                                                  { id::ChannelID( "n,Cl35->p,S35{0,2,2+}" ),
@@ -382,7 +382,7 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 2+ spin group
                                              { { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ),
                                                    neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
                                                  { id::ChannelID( "n,Cl35->p,S35{1,2,3-}" ),
@@ -440,9 +440,9 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::CompoundSystem compound( 1e-5, 9.5e+5,
                                            { { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ),
-                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii, true,
                                                    resonances::Kinematics::NonRelativistic,
                                                    resonances::SammyBackground( { 0.45, 3.2e-7, 0. }, { 0.075, 0. }, 0., 9.55e+5 ) } },
                                                { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
@@ -453,9 +453,9 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 1/2- spin group
                                              { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2+}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Sr88->n,Sr88{0,1/2,1/2+}" ),
-                                                   neutron_pair, neutron_pair, 0., std::nullopt, different_radii,
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, different_radii, true,
                                                    resonances::Kinematics::NonRelativistic,
                                                    resonances::SammyBackground( { -0.043, 2.8e-8, 0. }, { 0.01, 0. }, 0., 9.55e+5 ) } },
                                                { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2+}" ),
@@ -466,9 +466,9 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 1/2+ spin group
                                              { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Sr88->n,Sr88{1,1/2,3/2-}" ),
-                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii, true,
                                                    resonances::Kinematics::NonRelativistic,
                                                    resonances::SammyBackground( { 0.43, -1.8e-7, 0. }, { 0.22, 0. }, 0., 9.55e+5 ) } },
                                                { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2-}" ),
@@ -479,9 +479,9 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 3/2- spin group
                                              { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2+}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Sr88->n,Sr88{2,1/2,3/2+}" ),
-                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii, true,
                                                    resonances::Kinematics::NonRelativistic,
                                                    resonances::SammyBackground( { -0.7, 2.3e-6, 0. }, { 0.041, 0. }, 0., 9.55e+5 ) } },
                                                { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2+}" ),
@@ -492,9 +492,9 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 3/2+ spin group
                                              { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Sr88->n,Sr88{3,1/2,5/2-}" ),
-                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii, true,
                                                    resonances::Kinematics::NonRelativistic,
                                                    resonances::SammyBackground( { 0.001, 4.6e-7, 0. }, { 0.24, 0. }, 0., 9.55e+5 ) } },
                                                { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2-}" ),
@@ -505,9 +505,9 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 5/2- spin group
                                              { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2+}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Sr88->n,Sr88{2,1/2,5/2+}" ),
-                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii, true,
                                                    resonances::Kinematics::NonRelativistic,
                                                    resonances::SammyBackground( { -2.5, 3.3e-6, 0. }, { 0.0026, 0. }, 0., 9.55e+5 ) } },
                                                { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2+}" ),
@@ -518,9 +518,9 @@ SCENARIO( "createFile2Section" ) {
                                                resonances::Formalism::ReichMoore,
                                                resonances::BoundaryCondition::ShiftFactor }, // 5/2+ spin group
                                              { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,7/2-}" ),
-                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
                                                  { id::ChannelID( "n,Sr88->n,Sr88{3,1/2,7/2-}" ),
-                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, equal_radii, true,
                                                    resonances::Kinematics::NonRelativistic,
                                                    resonances::SammyBackground( { 0.001, 9e-8, 0. }, { 0.19, 0. }, 0., 9.55e+5 ) } },
                                                { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,7/2-}" ),

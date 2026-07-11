@@ -72,6 +72,7 @@ add_cpp_test( dryad.resonances.TabulatedRadius                                  
 add_cpp_test( dryad.resonances.ChannelRadii                                            dryad/resonances/ChannelRadii.test.cpp )
 add_cpp_test( dryad.resonances.ChannelQuantumNumbers                                   dryad/resonances/ChannelQuantumNumbers.test.cpp )
 add_cpp_test( dryad.resonances.HardSpherePenetrability                                 dryad/resonances/HardSpherePenetrability.test.cpp )
+add_cpp_test( dryad.resonances.HardSpherePenetrabilityRatio                            dryad/resonances/HardSpherePenetrabilityRatio.test.cpp )
 add_cpp_test( dryad.resonances.HardSphereShiftFactor                                   dryad/resonances/HardSphereShiftFactor.test.cpp )
 add_cpp_test( dryad.resonances.HardSpherePhaseShift                                    dryad/resonances/HardSpherePhaseShift.test.cpp )
 add_cpp_test( dryad.resonances.CoulombPenetrability                                    dryad/resonances/CoulombPenetrability.test.cpp )
@@ -92,6 +93,7 @@ add_cpp_test( dryad.resonances.CompoundSystem                                   
 add_cpp_test( dryad.resonances.TabulatedLevelSpacing                                   dryad/resonances/TabulatedLevelSpacing.test.cpp )
 add_cpp_test( dryad.resonances.TabulatedAverageWidths                                  dryad/resonances/TabulatedAverageWidths.test.cpp )
 add_cpp_test( dryad.resonances.UnresolvedResonanceTable                                dryad/resonances/UnresolvedResonanceTable.test.cpp )
+add_cpp_test( dryad.resonances.UnresolvedChannel                                       dryad/resonances/UnresolvedChannel.test.cpp )
 
 add_cpp_test( dryad.thermal.ShortCollisionTimeScatteringKernel                         dryad/thermal/ShortCollisionTimeScatteringKernel.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedScatteringKernelFunction                          dryad/thermal/TabulatedScatteringKernelFunction.test.cpp )
@@ -393,6 +395,14 @@ add_cpp_test( format.gnds.read.createAtomicRelaxation                           
 add_cpp_test( format.gnds.read.createAtomicRelaxationFromFile                          format/gnds/read/createAtomicRelaxationFromFile.test.cpp )
 add_cpp_test( format.gnds.read.createThermalScattering                                 format/gnds/read/createThermalScattering.test.cpp )
 add_cpp_test( format.gnds.read.createThermalScatteringFromFile                         format/gnds/read/createThermalScatteringFromFile.test.cpp )
+
+add_cpp_test( format.gnds.write.toString                                               format/gnds/write/toString.test.cpp )
+add_cpp_test( format.gnds.write.insertDouble                                           format/gnds/write/insertDouble.test.cpp )
+add_cpp_test( format.gnds.write.insertInteger                                          format/gnds/write/insertInteger.test.cpp )
+add_cpp_test( format.gnds.write.insertFraction                                         format/gnds/write/insertFraction.test.cpp )
+add_cpp_test( format.gnds.write.insertString                                           format/gnds/write/insertString.test.cpp )
+add_cpp_test( format.gnds.write.insertParticle                                         format/gnds/write/insertParticle.test.cpp )
+add_cpp_test( format.gnds.write.insertParticleDatabase                                 format/gnds/write/insertParticleDatabase.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )

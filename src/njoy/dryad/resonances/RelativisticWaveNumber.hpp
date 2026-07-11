@@ -74,6 +74,26 @@ namespace resonances {
       const auto mandelstam = pair * pair + 2. * residual * conversion * std::abs( energy ); // ev^2
       return 0.5 * sqrt( ( mandelstam - pair * pair ) * ( mandelstam - delta * delta ) / mandelstam ) / final;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const RelativisticWaveNumber& right ) const {
+
+      return true;
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const RelativisticWaveNumber& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // resonances namespace

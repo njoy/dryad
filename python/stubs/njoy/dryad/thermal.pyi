@@ -129,9 +129,6 @@ class CoherentElasticScattering:
         """
         The lower energy limit
         """
-    @lower_energy_limit.setter
-    def lower_energy_limit(self, arg1: float) -> None:
-        ...
     @property
     def moderator_temperatures(self) -> list[float]:
         """
@@ -147,9 +144,6 @@ class CoherentElasticScattering:
         """
         The upper energy limit
         """
-    @upper_energy_limit.setter
-    def upper_energy_limit(self, arg1: float) -> None:
-        ...
 class DebyeWallerIntegralData:
     """
     A Debye-Waller integral table

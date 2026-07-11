@@ -51,6 +51,11 @@ namespace rmatrix {
     unsigned int l = channel.attribute( "L" ).as_int();
     double s = readFractionFromString( channel.attribute( "channelSpin" ).as_string() );
 
+    // wave function calculation flag
+    bool calculateWaveFunctions = true;
+
+    //! @todo update wave function flag selection this when we add the EDA capability to GNDS
+
     // if it is an eliminated capture channel, set l and s to 0
     if ( std::get< 6 >( reaction ) &&
          std::get< 0 >( reaction ).particles().has_value() &&
@@ -58,6 +63,12 @@ namespace rmatrix {
 
       l = 0;
       s = 0;
+      calculateWaveFunctions = false;
+    }
+    else if ( ! std::get< 6 >( reaction ) &&
+              ! std::get< 0 >( reaction ).particles().has_value() ) {
+
+      calculateWaveFunctions = false;
     }
     else {
 
@@ -124,6 +135,7 @@ namespace rmatrix {
                                        std::move( std::get< 3 >( reaction ) ),
                                        std::move( std::get< 5 >( reaction ) ),
                                        std::move( std::get< 4 >( reaction ) ),
+                                       calculateWaveFunctions,
                                        kinematics,
                                        std::move( background ) );
   }

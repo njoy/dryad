@@ -1,0 +1,180 @@
+# standard imports
+import unittest
+import sys
+
+# third party imports
+
+# local imports
+from njoy.dryad.resonances import HardSpherePenetrabilityRatio
+from njoy.dryad.resonances import HardSpherePenetrability
+
+class Test_HardSpherePenetrability( unittest.TestCase ) :
+    """Unit test for the HardSpherePenetrability class."""
+
+    def test_component( self ) :
+
+        penetrability = HardSpherePenetrability( 0 )
+        ratio = HardSpherePenetrabilityRatio( 0, 0 )
+
+        self.assertEqual( 0, ratio.numerator_orbital_angular_momentum )
+        self.assertEqual( 0, ratio.denominator_orbital_angular_momentum )
+
+        self.assertAlmostEqual( penetrability( 0.25 ) / 0.25, ratio( 0.25 ) )
+        self.assertAlmostEqual( penetrability( 0.50 ) / 0.50, ratio( 0.50 ) )
+        self.assertAlmostEqual( penetrability( 0.75 ) / 0.75, ratio( 0.75 ) )
+        self.assertAlmostEqual( penetrability( 1.00 ) / 1.00, ratio( 1.00 ) )
+        self.assertAlmostEqual( penetrability( 1.25 ) / 1.25, ratio( 1.25 ) )
+        self.assertAlmostEqual( penetrability( 1.50 ) / 1.50, ratio( 1.50 ) )
+        self.assertAlmostEqual( penetrability( 1.75 ) / 1.75, ratio( 1.75 ) )
+        self.assertAlmostEqual( penetrability( 2.00 ) / 2.00, ratio( 2.00 ) )
+        self.assertAlmostEqual( penetrability( 2.25 ) / 2.25, ratio( 2.25 ) )
+        self.assertAlmostEqual( penetrability( 2.50 ) / 2.50, ratio( 2.50 ) )
+        self.assertAlmostEqual( penetrability( 2.75 ) / 2.75, ratio( 2.75 ) )
+        self.assertAlmostEqual( penetrability( 3.00 ) / 3.00, ratio( 3.00 ) )
+        self.assertAlmostEqual( penetrability( 3.25 ) / 3.25, ratio( 3.25 ) )
+        self.assertAlmostEqual( penetrability( 3.50 ) / 3.50, ratio( 3.50 ) )
+        self.assertAlmostEqual( penetrability( 3.75 ) / 3.75, ratio( 3.75 ) )
+        self.assertAlmostEqual( penetrability( 4.00 ) / 4.00, ratio( 4.00 ) )
+        self.assertAlmostEqual( penetrability( 4.25 ) / 4.25, ratio( 4.25 ) )
+        self.assertAlmostEqual( penetrability( 4.50 ) / 4.50, ratio( 4.50 ) )
+        self.assertAlmostEqual( penetrability( 4.75 ) / 4.75, ratio( 4.75 ) )
+        self.assertAlmostEqual( penetrability( 5.00 ) / 5.00, ratio( 5.00 ) )
+
+        penetrability = HardSpherePenetrability( 1 )
+        ratio = HardSpherePenetrabilityRatio( 1, 0 )
+
+        self.assertEqual( 1, ratio.numerator_orbital_angular_momentum )
+        self.assertEqual( 0, ratio.denominator_orbital_angular_momentum )
+
+        self.assertAlmostEqual( penetrability( 0.25 ) / 0.25, ratio( 0.25 ) )
+        self.assertAlmostEqual( penetrability( 0.50 ) / 0.50, ratio( 0.50 ) )
+        self.assertAlmostEqual( penetrability( 0.75 ) / 0.75, ratio( 0.75 ) )
+        self.assertAlmostEqual( penetrability( 1.00 ) / 1.00, ratio( 1.00 ) )
+        self.assertAlmostEqual( penetrability( 1.25 ) / 1.25, ratio( 1.25 ) )
+        self.assertAlmostEqual( penetrability( 1.50 ) / 1.50, ratio( 1.50 ) )
+        self.assertAlmostEqual( penetrability( 1.75 ) / 1.75, ratio( 1.75 ) )
+        self.assertAlmostEqual( penetrability( 2.00 ) / 2.00, ratio( 2.00 ) )
+        self.assertAlmostEqual( penetrability( 2.25 ) / 2.25, ratio( 2.25 ) )
+        self.assertAlmostEqual( penetrability( 2.50 ) / 2.50, ratio( 2.50 ) )
+        self.assertAlmostEqual( penetrability( 2.75 ) / 2.75, ratio( 2.75 ) )
+        self.assertAlmostEqual( penetrability( 3.00 ) / 3.00, ratio( 3.00 ) )
+        self.assertAlmostEqual( penetrability( 3.25 ) / 3.25, ratio( 3.25 ) )
+        self.assertAlmostEqual( penetrability( 3.50 ) / 3.50, ratio( 3.50 ) )
+        self.assertAlmostEqual( penetrability( 3.75 ) / 3.75, ratio( 3.75 ) )
+        self.assertAlmostEqual( penetrability( 4.00 ) / 4.00, ratio( 4.00 ) )
+        self.assertAlmostEqual( penetrability( 4.25 ) / 4.25, ratio( 4.25 ) )
+        self.assertAlmostEqual( penetrability( 4.50 ) / 4.50, ratio( 4.50 ) )
+        self.assertAlmostEqual( penetrability( 4.75 ) / 4.75, ratio( 4.75 ) )
+        self.assertAlmostEqual( penetrability( 5.00 ) / 5.00, ratio( 5.00 ) )
+
+        penetrability = HardSpherePenetrability( 2 )
+        ratio = HardSpherePenetrabilityRatio( 2, 0 )
+
+        self.assertEqual( 2, ratio.numerator_orbital_angular_momentum )
+        self.assertEqual( 0, ratio.denominator_orbital_angular_momentum )
+
+        self.assertAlmostEqual( penetrability( 0.25 ) / 0.25, ratio( 0.25 ) )
+        self.assertAlmostEqual( penetrability( 0.50 ) / 0.50, ratio( 0.50 ) )
+        self.assertAlmostEqual( penetrability( 0.75 ) / 0.75, ratio( 0.75 ) )
+        self.assertAlmostEqual( penetrability( 1.00 ) / 1.00, ratio( 1.00 ) )
+        self.assertAlmostEqual( penetrability( 1.25 ) / 1.25, ratio( 1.25 ) )
+        self.assertAlmostEqual( penetrability( 1.50 ) / 1.50, ratio( 1.50 ) )
+        self.assertAlmostEqual( penetrability( 1.75 ) / 1.75, ratio( 1.75 ) )
+        self.assertAlmostEqual( penetrability( 2.00 ) / 2.00, ratio( 2.00 ) )
+        self.assertAlmostEqual( penetrability( 2.25 ) / 2.25, ratio( 2.25 ) )
+        self.assertAlmostEqual( penetrability( 2.50 ) / 2.50, ratio( 2.50 ) )
+        self.assertAlmostEqual( penetrability( 2.75 ) / 2.75, ratio( 2.75 ) )
+        self.assertAlmostEqual( penetrability( 3.00 ) / 3.00, ratio( 3.00 ) )
+        self.assertAlmostEqual( penetrability( 3.25 ) / 3.25, ratio( 3.25 ) )
+        self.assertAlmostEqual( penetrability( 3.50 ) / 3.50, ratio( 3.50 ) )
+        self.assertAlmostEqual( penetrability( 3.75 ) / 3.75, ratio( 3.75 ) )
+        self.assertAlmostEqual( penetrability( 4.00 ) / 4.00, ratio( 4.00 ) )
+        self.assertAlmostEqual( penetrability( 4.25 ) / 4.25, ratio( 4.25 ) )
+        self.assertAlmostEqual( penetrability( 4.50 ) / 4.50, ratio( 4.50 ) )
+        self.assertAlmostEqual( penetrability( 4.75 ) / 4.75, ratio( 4.75 ) )
+        self.assertAlmostEqual( penetrability( 5.00 ) / 5.00, ratio( 5.00 ) )
+
+        penetrability = HardSpherePenetrability( 3 )
+        ratio = HardSpherePenetrabilityRatio( 3, 0 )
+
+        self.assertEqual( 3, ratio.numerator_orbital_angular_momentum )
+        self.assertEqual( 0, ratio.denominator_orbital_angular_momentum )
+
+        self.assertAlmostEqual( penetrability( 0.25 ) / 0.25, ratio( 0.25 ) )
+        self.assertAlmostEqual( penetrability( 0.50 ) / 0.50, ratio( 0.50 ) )
+        self.assertAlmostEqual( penetrability( 0.75 ) / 0.75, ratio( 0.75 ) )
+        self.assertAlmostEqual( penetrability( 1.00 ) / 1.00, ratio( 1.00 ) )
+        self.assertAlmostEqual( penetrability( 1.25 ) / 1.25, ratio( 1.25 ) )
+        self.assertAlmostEqual( penetrability( 1.50 ) / 1.50, ratio( 1.50 ) )
+        self.assertAlmostEqual( penetrability( 1.75 ) / 1.75, ratio( 1.75 ) )
+        self.assertAlmostEqual( penetrability( 2.00 ) / 2.00, ratio( 2.00 ) )
+        self.assertAlmostEqual( penetrability( 2.25 ) / 2.25, ratio( 2.25 ) )
+        self.assertAlmostEqual( penetrability( 2.50 ) / 2.50, ratio( 2.50 ) )
+        self.assertAlmostEqual( penetrability( 2.75 ) / 2.75, ratio( 2.75 ) )
+        self.assertAlmostEqual( penetrability( 3.00 ) / 3.00, ratio( 3.00 ) )
+        self.assertAlmostEqual( penetrability( 3.25 ) / 3.25, ratio( 3.25 ) )
+        self.assertAlmostEqual( penetrability( 3.50 ) / 3.50, ratio( 3.50 ) )
+        self.assertAlmostEqual( penetrability( 3.75 ) / 3.75, ratio( 3.75 ) )
+        self.assertAlmostEqual( penetrability( 4.00 ) / 4.00, ratio( 4.00 ) )
+        self.assertAlmostEqual( penetrability( 4.25 ) / 4.25, ratio( 4.25 ) )
+        self.assertAlmostEqual( penetrability( 4.50 ) / 4.50, ratio( 4.50 ) )
+        self.assertAlmostEqual( penetrability( 4.75 ) / 4.75, ratio( 4.75 ) )
+        self.assertAlmostEqual( penetrability( 5.00 ) / 5.00, ratio( 5.00 ) )
+
+        penetrability = HardSpherePenetrability( 4 )
+        ratio = HardSpherePenetrabilityRatio( 4, 0 )
+
+        self.assertEqual( 4, ratio.numerator_orbital_angular_momentum )
+        self.assertEqual( 0, ratio.denominator_orbital_angular_momentum )
+
+        self.assertAlmostEqual( penetrability( 0.25 ) / 0.25, ratio( 0.25 ) )
+        self.assertAlmostEqual( penetrability( 0.50 ) / 0.50, ratio( 0.50 ) )
+        self.assertAlmostEqual( penetrability( 0.75 ) / 0.75, ratio( 0.75 ) )
+        self.assertAlmostEqual( penetrability( 1.00 ) / 1.00, ratio( 1.00 ) )
+        self.assertAlmostEqual( penetrability( 1.25 ) / 1.25, ratio( 1.25 ) )
+        self.assertAlmostEqual( penetrability( 1.50 ) / 1.50, ratio( 1.50 ) )
+        self.assertAlmostEqual( penetrability( 1.75 ) / 1.75, ratio( 1.75 ) )
+        self.assertAlmostEqual( penetrability( 2.00 ) / 2.00, ratio( 2.00 ) )
+        self.assertAlmostEqual( penetrability( 2.25 ) / 2.25, ratio( 2.25 ) )
+        self.assertAlmostEqual( penetrability( 2.50 ) / 2.50, ratio( 2.50 ) )
+        self.assertAlmostEqual( penetrability( 2.75 ) / 2.75, ratio( 2.75 ) )
+        self.assertAlmostEqual( penetrability( 3.00 ) / 3.00, ratio( 3.00 ) )
+        self.assertAlmostEqual( penetrability( 3.25 ) / 3.25, ratio( 3.25 ) )
+        self.assertAlmostEqual( penetrability( 3.50 ) / 3.50, ratio( 3.50 ) )
+        self.assertAlmostEqual( penetrability( 3.75 ) / 3.75, ratio( 3.75 ) )
+        self.assertAlmostEqual( penetrability( 4.00 ) / 4.00, ratio( 4.00 ) )
+        self.assertAlmostEqual( penetrability( 4.25 ) / 4.25, ratio( 4.25 ) )
+        self.assertAlmostEqual( penetrability( 4.50 ) / 4.50, ratio( 4.50 ) )
+        self.assertAlmostEqual( penetrability( 4.75 ) / 4.75, ratio( 4.75 ) )
+        self.assertAlmostEqual( penetrability( 5.00 ) / 5.00, ratio( 5.00 ) )
+
+        penetrability = HardSpherePenetrability( 5 )
+        ratio = HardSpherePenetrabilityRatio( 5, 0 )
+
+        self.assertEqual( 5, ratio.numerator_orbital_angular_momentum )
+        self.assertEqual( 0, ratio.denominator_orbital_angular_momentum )
+
+        self.assertAlmostEqual( penetrability( 0.25 ) / 0.25, ratio( 0.25 ) )
+        self.assertAlmostEqual( penetrability( 0.50 ) / 0.50, ratio( 0.50 ) )
+        self.assertAlmostEqual( penetrability( 0.75 ) / 0.75, ratio( 0.75 ) )
+        self.assertAlmostEqual( penetrability( 1.00 ) / 1.00, ratio( 1.00 ) )
+        self.assertAlmostEqual( penetrability( 1.25 ) / 1.25, ratio( 1.25 ) )
+        self.assertAlmostEqual( penetrability( 1.50 ) / 1.50, ratio( 1.50 ) )
+        self.assertAlmostEqual( penetrability( 1.75 ) / 1.75, ratio( 1.75 ) )
+        self.assertAlmostEqual( penetrability( 2.00 ) / 2.00, ratio( 2.00 ) )
+        self.assertAlmostEqual( penetrability( 2.25 ) / 2.25, ratio( 2.25 ) )
+        self.assertAlmostEqual( penetrability( 2.50 ) / 2.50, ratio( 2.50 ) )
+        self.assertAlmostEqual( penetrability( 2.75 ) / 2.75, ratio( 2.75 ) )
+        self.assertAlmostEqual( penetrability( 3.00 ) / 3.00, ratio( 3.00 ) )
+        self.assertAlmostEqual( penetrability( 3.25 ) / 3.25, ratio( 3.25 ) )
+        self.assertAlmostEqual( penetrability( 3.50 ) / 3.50, ratio( 3.50 ) )
+        self.assertAlmostEqual( penetrability( 3.75 ) / 3.75, ratio( 3.75 ) )
+        self.assertAlmostEqual( penetrability( 4.00 ) / 4.00, ratio( 4.00 ) )
+        self.assertAlmostEqual( penetrability( 4.25 ) / 4.25, ratio( 4.25 ) )
+        self.assertAlmostEqual( penetrability( 4.50 ) / 4.50, ratio( 4.50 ) )
+        self.assertAlmostEqual( penetrability( 4.75 ) / 4.75, ratio( 4.75 ) )
+        self.assertAlmostEqual( penetrability( 5.00 ) / 5.00, ratio( 5.00 ) )
+
+if __name__ == '__main__' :
+
+    unittest.main()
