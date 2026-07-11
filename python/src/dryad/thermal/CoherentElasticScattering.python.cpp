@@ -60,18 +60,6 @@ void wrapCoherentElasticScattering( python::module& module ) {
   )
   .def_property_readonly(
 
-    "lower_energy_limit",
-    &Component::lowerEnergyLimit,
-    "The lower energy limit"
-  )
-  .def_property_readonly(
-
-    "upper_energy_limit",
-    &Component::upperEnergyLimit,
-    "The upper energy limit"
-  )
-  .def_property_readonly(
-
     "number_moderator_temperatures",
     &Component::numberModeratorTemperatures,
     "The moderator temperature values"
