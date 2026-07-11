@@ -7,3 +7,4 @@
 #include "njoy/format/gnds/write/insertString.hpp"
 
 #include "njoy/format/gnds/write/insertParticle.hpp"
+#include "njoy/format/gnds/write/insertParticleDatabase.hpp"

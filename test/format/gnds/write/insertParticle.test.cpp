@@ -10,7 +10,6 @@ using Catch::Matchers::WithinRel;
 #include <sstream>
 #include "pugixml.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
-#include <iostream>
 
 // convenience typedefs
 using namespace njoy::dryad;
