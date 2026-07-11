@@ -7,53 +7,82 @@ using Catch::Matchers::WithinRel;
 #include "njoy/format/gnds/write/insertString.hpp"
 
 // other includes
+#include <sstream>
 #include "pugixml.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
 
 // convenience typedefs
 using namespace njoy::format;
 
+std::string chunk1();
+std::string chunk2();
+std::string chunk3();
+std::string chunk4();
+
 SCENARIO( "insertString" ) {
 
   GIVEN( "a parent node" ) {
 
-    pugi::xml_document parent;
     gnds::write::Options options;
 
-    THEN( "a string node can be inserted" ) {
+    THEN( "a string node can be inserted - no label and unit" ) {
 
-      auto node1 = gnds::write::insertString( parent, options, "a", std::nullopt, std::nullopt );
-      auto node2 = gnds::write::insertString( parent, options, "a", "b", std::nullopt );
-      auto node3 = gnds::write::insertString( parent, options, "a", std::nullopt, "c" );
-      auto node4 = gnds::write::insertString( parent, options, "a", "b", "c" );
+      pugi::xml_document parent;
+      auto node = gnds::write::insertString( parent, options, "a", std::nullopt, std::nullopt );
 
-      CHECK( 0 == strcmp( "string", node1.name() ) );
-      CHECK( false == node1.attribute( "value" ).empty() );
-      CHECK(  true == node1.attribute( "label" ).empty() );
-      CHECK(  true == node1.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "a", node1.attribute( "value" ).as_string() ) );
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk1() );
+    } // THEN
 
-      CHECK( 0 == strcmp( "string", node2.name() ) );
-      CHECK( false == node2.attribute( "value" ).empty() );
-      CHECK( false == node2.attribute( "label" ).empty() );
-      CHECK(  true == node2.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "a", node2.attribute( "value" ).as_string() ) );
-      CHECK( 0 == strcmp( "b", node2.attribute( "label" ).as_string() ) );
+    THEN( "a string node can be inserted - no unit" ) {
 
-      CHECK( 0 == strcmp( "string", node3.name() ) );
-      CHECK( false == node3.attribute( "value" ).empty() );
-      CHECK(  true == node3.attribute( "label" ).empty() );
-      CHECK( false == node3.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "a", node3.attribute( "value" ).as_string() ) );
-      CHECK( 0 == strcmp( "c", node3.attribute( "unit" ).as_string() ) );
+      pugi::xml_document parent;
+      auto node = gnds::write::insertString( parent, options, "a", "b", std::nullopt );
 
-      CHECK( 0 == strcmp( "string", node4.name() ) );
-      CHECK( false == node4.attribute( "value" ).empty() );
-      CHECK( false == node4.attribute( "label" ).empty() );
-      CHECK( false == node4.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "a", node4.attribute( "value" ).as_string() ) );
-      CHECK( 0 == strcmp( "b", node4.attribute( "label" ).as_string() ) );
-      CHECK( 0 == strcmp( "c", node4.attribute( "unit" ).as_string() ) );
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk2() );
+    } // THEN
+
+    THEN( "a string node can be inserted - no label" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertString( parent, options, "a", std::nullopt, "c" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk3() );
+    } // THEN
+
+    THEN( "a string node can be inserted - label and unit" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertString( parent, options, "a", "b", "c" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk4() );
     } // THEN
   } // GIVEN
 } // SCENARIO
+
+std::string chunk1() {
+
+  return "<string value=\"a\" />\n";
+}
+
+std::string chunk2() {
+
+  return "<string label=\"b\" value=\"a\" />\n";
+}
+
+std::string chunk3() {
+
+  return "<string value=\"a\" unit=\"c\" />\n";
+}
+
+std::string chunk4() {
+
+  return "<string label=\"b\" value=\"a\" unit=\"c\" />\n";
+}

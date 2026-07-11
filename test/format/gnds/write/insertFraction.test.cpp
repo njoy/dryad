@@ -7,55 +7,98 @@ using Catch::Matchers::WithinRel;
 #include "njoy/format/gnds/write/insertFraction.hpp"
 
 // other includes
+#include <sstream>
 #include "pugixml.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
 
 // convenience typedefs
 using namespace njoy::format;
 
+std::string chunk1();
+std::string chunk2();
+std::string chunk3();
+std::string chunk4();
+std::string chunk5();
+
 SCENARIO( "insertFraction" ) {
 
   GIVEN( "a parent node" ) {
 
-    pugi::xml_document parent;
     gnds::write::Options options;
 
-    THEN( "a fraction node can be inserted" ) {
+    THEN( "a fraction node can be inserted - no label and unit" ) {
 
-      auto node1 = gnds::write::insertFraction( parent, options, 1, 2, std::nullopt, std::nullopt );
-      auto node2 = gnds::write::insertFraction( parent, options, 1, 2, "spin", std::nullopt );
-      auto node3 = gnds::write::insertFraction( parent, options, 1, 2, std::nullopt, "hbar" );
-      auto node4 = gnds::write::insertFraction( parent, options, 1, 2, "spin", "hbar" );
+      pugi::xml_document parent;
+      auto node = gnds::write::insertFraction( parent, options, 1, 2, std::nullopt, std::nullopt );
 
-      auto node5 = gnds::write::insertFraction( parent, options, 2, 1, std::nullopt, std::nullopt );
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk1() );
+    } // THEN
 
-      CHECK( 0 == strcmp( "fraction", node2.name() ) );
-      CHECK( false == node2.attribute( "value" ).empty() );
-      CHECK( false == node2.attribute( "label" ).empty() );
-      CHECK(  true == node2.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "1/2", node2.attribute( "value" ).as_string() ) );
-      CHECK( 0 == strcmp( "spin", node2.attribute( "label" ).as_string() ) );
+    THEN( "a fraction node can be inserted - no unit" ) {
 
-      CHECK( 0 == strcmp( "fraction", node3.name() ) );
-      CHECK( false == node3.attribute( "value" ).empty() );
-      CHECK(  true == node3.attribute( "label" ).empty() );
-      CHECK( false == node3.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "1/2", node3.attribute( "value" ).as_string() ) );
-      CHECK( 0 == strcmp( "hbar", node3.attribute( "unit" ).as_string() ) );
+      pugi::xml_document parent;
+      auto node = gnds::write::insertFraction( parent, options, 1, 2, "spin", std::nullopt );
 
-      CHECK( 0 == strcmp( "fraction", node4.name() ) );
-      CHECK( false == node4.attribute( "value" ).empty() );
-      CHECK( false == node4.attribute( "label" ).empty() );
-      CHECK( false == node4.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "1/2", node4.attribute( "value" ).as_string() ) );
-      CHECK( 0 == strcmp( "spin", node4.attribute( "label" ).as_string() ) );
-      CHECK( 0 == strcmp( "hbar", node4.attribute( "unit" ).as_string() ) );
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk2() );
+    } // THEN
 
-      CHECK( 0 == strcmp( "fraction", node5.name() ) );
-      CHECK( false == node5.attribute( "value" ).empty() );
-      CHECK(  true == node5.attribute( "label" ).empty() );
-      CHECK(  true == node5.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "2", node5.attribute( "value" ).as_string() ) );
+    THEN( "a fraction node can be inserted - no label" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertFraction( parent, options, 1, 2, std::nullopt, "hbar" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk3() );
+    } // THEN
+
+    THEN( "a fraction node can be inserted - label and unit" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertFraction( parent, options, 1, 2, "spin", "hbar" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk4() );
+    } // THEN
+
+    THEN( "a fraction node can be inserted - fraction logic" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertFraction( parent, options, 2, 1, std::nullopt, std::nullopt );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk5() );
     } // THEN
   } // GIVEN
 } // SCENARIO
+
+std::string chunk1() {
+
+  return "<fraction value=\"1/2\" />\n";
+}
+
+std::string chunk2() {
+
+  return "<fraction label=\"spin\" value=\"1/2\" />\n";
+}
+
+std::string chunk3() {
+
+  return "<fraction value=\"1/2\" unit=\"hbar\" />\n";
+}
+
+std::string chunk4() {
+
+  return "<fraction label=\"spin\" value=\"1/2\" unit=\"hbar\" />\n";
+}
+
+std::string chunk5() {
+
+  return "<fraction value=\"2\" />\n";
+}
