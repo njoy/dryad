@@ -28,7 +28,6 @@ Read-only Attributes
 
     ~CoherentElasticScattering.number_moderator_temperatures
     ~CoherentElasticScattering.moderator_temperatures
-    ~CoherentElasticScattering.bragg_edges
 
 Methods
 ~~~~~~~
