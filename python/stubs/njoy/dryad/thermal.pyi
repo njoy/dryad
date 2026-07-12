@@ -584,6 +584,8 @@ class IncoherentInelasticScattering:
             the lower energy limit
         upper : float
             the upper energy limit
+        xs : float
+            the bound atom cross section
         kernels : list of njoy.dryad.thermal.ScatteringKernel
             the scattering kernels
     """
@@ -594,7 +596,7 @@ class IncoherentInelasticScattering:
         ...
     def __eq__(self, arg0: IncoherentInelasticScattering) -> bool:
         ...
-    def __init__(self, lower: float, upper: float, kernels: list[ScatteringKernel]) -> None:
+    def __init__(self, lower: float, upper: float, xs: float, kernels: list[ScatteringKernel]) -> None:
         """
         Initialise the incoherent inelastic scattering data
         """
@@ -618,6 +620,14 @@ class IncoherentInelasticScattering:
             temperature : float
                 the moderator temperature
         """
+    @property
+    def bound_cross_section(self) -> float:
+        """
+        The bound atom cross section value
+        """
+    @bound_cross_section.setter
+    def bound_cross_section(self, arg1: float) -> None:
+        ...
     @property
     def lower_energy_limit(self) -> float:
         """

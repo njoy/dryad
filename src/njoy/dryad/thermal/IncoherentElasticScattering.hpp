@@ -140,6 +140,14 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the bound atom cross section value
+     */
+    double& boundCrossSection() {
+
+      return this->bound_xs_;
+    }
+
+    /**
      *  @brief Set the bound atom cross section value
      *
      *  @param[in] xs   the reaction product identifier
