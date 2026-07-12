@@ -100,19 +100,6 @@ class Test_CoherentElasticScattering( unittest.TestCase ) :
                   bragg_edges = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
                                   BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ] )
 
-        # the bragg edges can be changed
-        newedges = [ BraggEdgeData( 300.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ) ]
-        original = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
-                     BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ]
-
-        chunk.bragg_edges = newedges
-
-        self.assertEqual( newedges, chunk.bragg_edges )
-
-        chunk.bragg_edges = original
-
-        verify_chunk( self, chunk )
-
         # the lower energy limit can be changed
         newlimit = 1e-4
         original = 1e-5
@@ -134,6 +121,19 @@ class Test_CoherentElasticScattering( unittest.TestCase ) :
         self.assertEqual( newlimit, chunk.upper_energy_limit )
 
         chunk.upper_energy_limit = original
+
+        verify_chunk( self, chunk )
+
+        # the bragg edges can be changed
+        newedges = [ BraggEdgeData( 300.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ) ]
+        original = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
+                     BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ]
+
+        chunk.bragg_edges = newedges
+
+        self.assertEqual( newedges, chunk.bragg_edges )
+
+        chunk.bragg_edges = original
 
         verify_chunk( self, chunk )
 

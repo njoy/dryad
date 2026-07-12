@@ -60,7 +60,7 @@ SCENARIO( "CoherentElasticScattering" ) {
         verifyChunk( chunk );
       } // THEN
 
-      THEN( "the lower energy limit can be changed" ) {
+      THEN( "the upper energy limit can be changed" ) {
 
         double newlimit = 7.5;
         double original = 10.;

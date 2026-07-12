@@ -48,16 +48,18 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     python::arg( "xs" ), python::arg( "debye_waller_integral" ),
     "Initialise the incoherent elastic scattering data"
   )
-  .def_property_readonly(
+  .def_property(
 
     "lower_energy_limit",
-    &Component::lowerEnergyLimit,
+    python::overload_cast<>( &Component::lowerEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::lowerEnergyLimit ),
     "The lower energy limit"
   )
-  .def_property_readonly(
+  .def_property(
 
     "upper_energy_limit",
-    &Component::upperEnergyLimit,
+    python::overload_cast<>( &Component::upperEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::upperEnergyLimit ),
     "The upper energy limit"
   )
   .def_property_readonly(

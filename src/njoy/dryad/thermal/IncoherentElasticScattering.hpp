@@ -72,11 +72,47 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the lower energy limit
+     */
+    double& lowerEnergyLimit() {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Set the lower energy limit
+     *
+     *  @param[in] lower   the lower energy limit
+     */
+    void lowerEnergyLimit( double lower ) {
+
+      this->lower_ = lower;
+    }
+
+    /**
      *  @brief Return the upper energy limit
      */
     double upperEnergyLimit() const {
 
       return this->upper_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double& upperEnergyLimit() {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Set the upper energy limit
+     *
+     *  @param[in] upper   the upper energy limit
+     */
+    void upperEnergyLimit( double upper ) {
+
+      this->upper_ = upper;
     }
 
     /**

@@ -137,6 +137,30 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
                                             [ 2.013538, 2.677764, 3.323456, 3.972601,
                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) )
 
+        # the lower energy limit can be changed
+        newlimit = 1e-4
+        original = 1e-5
+
+        chunk.lower_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.lower_energy_limit )
+
+        chunk.lower_energy_limit = original
+
+        verify_chunk( self, chunk )
+
+        # the upper energy limit can be changed
+        newlimit = 7.5
+        original = 10.
+
+        chunk.upper_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.upper_energy_limit )
+
+        chunk.upper_energy_limit = original
+
+        verify_chunk( self, chunk )
+
         # the awr can be changed
         newxs = 25.
         original = 6.337872

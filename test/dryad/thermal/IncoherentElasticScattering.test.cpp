@@ -180,6 +180,34 @@ SCENARIO( "IncoherentElasticScattering" ) {
                                            { 2.013538, 2.677764, 3.323456, 3.972601,
                                              4.623738, 5.276127, 6.583171, 7.891981 } } );
 
+      THEN( "the lower energy limit can be changed" ) {
+
+        double newlimit = 1e-4;
+        double original = 1e-5;
+
+        chunk.lowerEnergyLimit( newlimit );
+
+        CHECK( newlimit == chunk.lowerEnergyLimit() );
+
+        chunk.lowerEnergyLimit( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the upper energy limit can be changed" ) {
+
+        double newlimit = 7.5;
+        double original = 10.;
+
+        chunk.upperEnergyLimit( newlimit );
+
+        CHECK( newlimit == chunk.upperEnergyLimit() );
+
+        chunk.upperEnergyLimit( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
       THEN( "the bound xs can be changed" ) {
 
         double newxs = 25.;
