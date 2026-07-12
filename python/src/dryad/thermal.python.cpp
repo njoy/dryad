@@ -24,6 +24,7 @@ namespace thermal {
   void wrapIncoherentElasticAngularCdf( python::module& );
   void wrapIncoherentElasticAngularDistribution( python::module& );
   void wrapIncoherentElasticScattering( python::module& );
+  void wrapIncoherentInelasticScattering( python::module& );
 }
 
 void wrapThermal( python::module& module ) {
@@ -49,6 +50,7 @@ void wrapThermal( python::module& module ) {
   thermal::wrapIncoherentElasticAngularCdf( submodule );
   thermal::wrapIncoherentElasticAngularDistribution( submodule );
   thermal::wrapIncoherentElasticScattering( submodule );
+  thermal::wrapIncoherentInelasticScattering( submodule );
 }
 
 } // dryad namespace
