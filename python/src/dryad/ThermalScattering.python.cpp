@@ -21,6 +21,7 @@ void wrapThermalScattering( python::module& module ) {
   using Documentation = njoy::dryad::Documentation;
   using CoherentElasticScattering = njoy::dryad::thermal::CoherentElasticScattering;
   using IncoherentElasticScattering = njoy::dryad::thermal::IncoherentElasticScattering;
+  using IncoherentInelasticScattering = njoy::dryad::thermal::IncoherentInelasticScattering;
 
   // wrap views created by this component
 
@@ -34,10 +35,12 @@ void wrapThermalScattering( python::module& module ) {
     "----------\n"
     "    documentation : njoy.dryad.Documentation\n"
     "        the documentation associated to the thermal scattering data\n"
-    "    coherent : njoy.dryad.thermal.CoherentElasticScattering\n"
-    "        coherent elastic scattering data (default: none)"
-    "    incoherent : njoy.dryad.thermal.IncoherentElasticScattering\n"
-    "        incoherent elastic scattering data (default: none)"
+    "    coherent_elastic : njoy.dryad.thermal.CoherentElasticScattering\n"
+    "        coherent elastic scattering data (default: none)\n"
+    "    incoherent_elastic : njoy.dryad.thermal.IncoherentElasticScattering\n"
+    "        incoherent elastic scattering data (default: none)\n"
+    "    incoherent_inelastic : njoy.dryad.thermal.IncoherentInelasticScattering\n"
+    "        incoherent inelastic scattering data (default: none)"
   );
 
   // wrap the component
@@ -46,18 +49,22 @@ void wrapThermalScattering( python::module& module ) {
 
     python::init< Documentation,
                   std::optional< CoherentElasticScattering >,
-                  std::optional< IncoherentElasticScattering > >(),
+                  std::optional< IncoherentElasticScattering >,
+                  std::optional< IncoherentInelasticScattering > >(),
     python::arg( "documentation" ),
-    python::arg( "coherent" ) = std::nullopt,
-    python::arg( "incoherent" ) = std::nullopt,
+    python::arg( "coherent_elastic" ) = std::nullopt,
+    python::arg( "incoherent_elastic" ) = std::nullopt,
+    python::arg( "incoherent_inelastic" ) = std::nullopt,
     "Initialise the thermal scattering data with documentation"
   )
   .def(
 
     python::init< std::optional< CoherentElasticScattering >,
-                  std::optional< IncoherentElasticScattering > >(),
-    python::arg( "coherent" ) = std::nullopt,
-    python::arg( "incoherent" ) = std::nullopt,
+                  std::optional< IncoherentElasticScattering >,
+                  std::optional< IncoherentInelasticScattering > >(),
+    python::arg( "coherent_elastic" ) = std::nullopt,
+    python::arg( "incoherent_elastic" ) = std::nullopt,
+    python::arg( "incoherent_inelastic" ) = std::nullopt,
     "Initialise the thermal scattering data without documentation"
   )
   .def_property(
@@ -81,6 +88,13 @@ void wrapThermalScattering( python::module& module ) {
     python::overload_cast< std::optional< IncoherentElasticScattering > >( &Component::incoherentElasticScattering ),
     "The incoherent elastic data"
   )
+  .def_property(
+
+    "incoherent_inelastic_scattering",
+    python::overload_cast<>( &Component::incoherentInelasticScattering, python::const_ ),
+    python::overload_cast< std::optional< IncoherentInelasticScattering > >( &Component::incoherentInelasticScattering ),
+    "The incoherent inelastic data"
+  )
   .def_property_readonly(
 
     "has_coherent_elastic_scattering",
@@ -98,6 +112,12 @@ void wrapThermalScattering( python::module& module ) {
     "has_elastic_scattering",
     &Component::hasElasticScattering,
     "Return whether or not there is elastic scattering (coherent and/or incoherent)"
+  )
+  .def_property_readonly(
+
+    "has_incoherent_inelastic_scattering",
+    &Component::hasIncoherentInelasticScattering,
+    "Return whether or not there is incoherent inelastic scattering"
   )
   .def_property_readonly(
 

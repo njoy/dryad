@@ -4231,9 +4231,12 @@ class ThermalScattering:
     ----------
         documentation : njoy.dryad.Documentation
             the documentation associated to the thermal scattering data
-        coherent : njoy.dryad.thermal.CoherentElasticScattering
-            coherent elastic scattering data (default: none)    incoherent : njoy.dryad.thermal.IncoherentElasticScattering
+        coherent_elastic : njoy.dryad.thermal.CoherentElasticScattering
+            coherent elastic scattering data (default: none)
+        incoherent_elastic : njoy.dryad.thermal.IncoherentElasticScattering
             incoherent elastic scattering data (default: none)
+        incoherent_inelastic : njoy.dryad.thermal.IncoherentInelasticScattering
+            incoherent inelastic scattering data (default: none)
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -4276,12 +4279,12 @@ class ThermalScattering:
     def __eq__(self, arg0: ThermalScattering) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, documentation: Documentation, coherent_elastic: thermal.CoherentElasticScattering | None = None, incoherent_elastic: thermal.IncoherentElasticScattering | None = None, incoherent_inelastic: thermal.IncoherentInelasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data with documentation
         """
     @typing.overload
-    def __init__(self, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, coherent_elastic: thermal.CoherentElasticScattering | None = None, incoherent_elastic: thermal.IncoherentElasticScattering | None = None, incoherent_inelastic: thermal.IncoherentInelasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data without documentation
         """
@@ -4332,6 +4335,11 @@ class ThermalScattering:
         Return whether or not there is incoherent elastic scattering
         """
     @property
+    def has_incoherent_inelastic_scattering(self) -> bool:
+        """
+        Return whether or not there is incoherent inelastic scattering
+        """
+    @property
     def has_inelastic_scattering(self) -> bool:
         """
         Return whether or not there is inelastic scattering
@@ -4343,6 +4351,14 @@ class ThermalScattering:
         """
     @incoherent_elastic_scattering.setter
     def incoherent_elastic_scattering(self, arg1: thermal.IncoherentElasticScattering | None) -> None:
+        ...
+    @property
+    def incoherent_inelastic_scattering(self) -> thermal.IncoherentInelasticScattering | None:
+        """
+        The incoherent inelastic data
+        """
+    @incoherent_inelastic_scattering.setter
+    def incoherent_inelastic_scattering(self, arg1: thermal.IncoherentInelasticScattering | None) -> None:
         ...
 class TwoBodyDistributionData:
     """

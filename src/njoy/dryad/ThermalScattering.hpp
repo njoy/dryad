@@ -10,6 +10,7 @@
 #include "njoy/dryad/Documentation.hpp"
 #include "njoy/dryad/thermal/CoherentElasticScattering.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
+#include "njoy/dryad/thermal/IncoherentInelasticScattering.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -26,6 +27,7 @@ namespace dryad {
 
     std::optional< thermal::CoherentElasticScattering > coherent_elastic_;
     std::optional< thermal::IncoherentElasticScattering > incoherent_elastic_;
+    std::optional< thermal::IncoherentInelasticScattering > incoherent_inelastic_;
 
     /* auxiliary functions */
 
@@ -47,26 +49,34 @@ namespace dryad {
     /**
      *  @brief Constructor with documentation
      *
-     *  @param[in] documentation   the documentation
-     *  @param[in] incoherent      the incoherent elastic scattering data (default: none)
+     *  @param[in] documentation         the documentation
+     *  @param[in] coherentElastic       the coherent elastic scattering data (default: none)
+     *  @param[in] incoherentElastic     the incoherent elastic scattering data (default: none)
+     *  @param[in] incoherentInelastic   the incoherent inelastic scattering data (default: none)
      */
     ThermalScattering( Documentation documentation,
-                       std::optional< thermal::CoherentElasticScattering > coherent = std::nullopt,
-                       std::optional< thermal::IncoherentElasticScattering > incoherent = std::nullopt ) :
+                       std::optional< thermal::CoherentElasticScattering > coherentElastic = std::nullopt,
+                       std::optional< thermal::IncoherentElasticScattering > incoherentElastic = std::nullopt,
+                       std::optional< thermal::IncoherentInelasticScattering > incoherentInelastic = std::nullopt ) :
         documentation_( std::move( documentation ) ),
-        coherent_elastic_( std::move( coherent ) ),
-        incoherent_elastic_( std::move( incoherent ) ) {}
+        coherent_elastic_( std::move( coherentElastic ) ),
+        incoherent_elastic_( std::move( incoherentElastic ) ),
+        incoherent_inelastic_( std::move( incoherentInelastic ) ) {}
 
     /**
      *  @brief Constructor without documentation
      *
-     *  @param[in] incoherent      the incoherent elastic scattering data (default: none)
+     *  @param[in] coherentElastic       the coherent elastic scattering data (default: none)
+     *  @param[in] incoherentElastic     the incoherent elastic scattering data (default: none)
+     *  @param[in] incoherentInelastic   the incoherent inelastic scattering data (default: none)
      */
-    ThermalScattering( std::optional< thermal::CoherentElasticScattering > coherent = std::nullopt,
-                       std::optional< thermal::IncoherentElasticScattering > incoherent = std::nullopt ) :
+    ThermalScattering( std::optional< thermal::CoherentElasticScattering > coherentElastic = std::nullopt,
+                       std::optional< thermal::IncoherentElasticScattering > incoherentElastic = std::nullopt,
+                       std::optional< thermal::IncoherentInelasticScattering > incoherentInelastic = std::nullopt ) :
         documentation_(),
-        coherent_elastic_( std::move( coherent ) ),
-        incoherent_elastic_( std::move( incoherent ) ) {}
+        coherent_elastic_( std::move( coherentElastic ) ),
+        incoherent_elastic_( std::move( incoherentElastic ) ),
+        incoherent_inelastic_( std::move( incoherentInelastic ) ) {}
 
     /* methods */
 
@@ -155,6 +165,35 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the incoherent inelastic data
+     */
+    const std::optional< thermal::IncoherentInelasticScattering >&
+    incoherentInelasticScattering() const {
+
+      return this->incoherent_inelastic_;
+    }
+
+    /**
+     *  @brief Return the incoherent inelastic data
+     */
+    std::optional< thermal::IncoherentInelasticScattering >&
+    incoherentInelasticScattering() {
+
+      return this->incoherent_inelastic_;
+    }
+
+    /**
+     *  @brief Set the incoherent inelastic data
+     *
+     *  @param[in] inelastic   the incoherent inelastic data
+     */
+    void incoherentInelasticScattering(
+           std::optional< thermal::IncoherentInelasticScattering > inelastic ) {
+
+      this->incoherent_inelastic_ = std::move( inelastic );
+    }
+
+    /**
      *  @brief Return whether or not there is coherent elastic scattering
      */
     bool hasCoherentElasticScattering() const {
@@ -179,11 +218,19 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not there is incoherent elastic scattering
+     */
+    bool hasIncoherentInelasticScattering() const {
+
+      return this->incoherentInelasticScattering().has_value();
+    }
+
+    /**
      *  @brief Return whether or not there is inelastic scattering
      */
     bool hasInelasticScattering() const {
 
-      return false;
+      return this->hasIncoherentInelasticScattering();
     }
 
     /**
@@ -193,8 +240,10 @@ namespace dryad {
      */
     bool operator==( const ThermalScattering& right ) const {
 
-      return std::tie( this->coherentElasticScattering(), this->incoherentElasticScattering() ) ==
-             std::tie( right.coherentElasticScattering(), right.incoherentElasticScattering() );
+      return std::tie( this->coherentElasticScattering(), this->incoherentElasticScattering(),
+                       this->incoherentInelasticScattering() ) ==
+             std::tie( right.coherentElasticScattering(), right.incoherentElasticScattering(),
+                       right.incoherentInelasticScattering() );
     }
 
     /**
