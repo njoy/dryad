@@ -123,7 +123,8 @@ namespace bemetal {
     CHECK( true == tsl.hasCoherentElasticScattering() );
     CHECK( false == tsl.hasIncoherentElasticScattering() );
     CHECK( true == tsl.hasElasticScattering() );
-    CHECK( false == tsl.hasInelasticScattering() );
+    CHECK( true == tsl.hasIncoherentInelasticScattering() );
+    CHECK( true == tsl.hasInelasticScattering() );
 
     verifyCoherentElastic( tsl.coherentElasticScattering() );
   }

@@ -93,7 +93,8 @@ namespace zrinzrh {
     CHECK( false == tsl.hasCoherentElasticScattering() );
     CHECK( true == tsl.hasIncoherentElasticScattering() );
     CHECK( true == tsl.hasElasticScattering() );
-    CHECK( false == tsl.hasInelasticScattering() );
+    CHECK( true == tsl.hasIncoherentInelasticScattering() );
+    CHECK( true == tsl.hasInelasticScattering() );
 
     verifyIncoherentElastic( tsl.incoherentElasticScattering() );
   }

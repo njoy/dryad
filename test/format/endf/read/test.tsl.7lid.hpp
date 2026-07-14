@@ -133,7 +133,8 @@ namespace li7inli7d {
     CHECK( true == tsl.hasCoherentElasticScattering() );
     CHECK( true == tsl.hasIncoherentElasticScattering() );
     CHECK( true == tsl.hasElasticScattering() );
-    CHECK( false == tsl.hasInelasticScattering() );
+    CHECK( true == tsl.hasIncoherentInelasticScattering() );
+    CHECK( true == tsl.hasInelasticScattering() );
 
     verifyCoherentElastic( tsl.coherentElasticScattering() );
     verifyIncoherentElastic( tsl.incoherentElasticScattering() );

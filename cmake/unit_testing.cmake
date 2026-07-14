@@ -238,6 +238,7 @@ add_cpp_test( format.endf.read.thermal.createBraggEdges                         
 add_cpp_test( format.endf.read.thermal.createDebyeWallerIntegralData                   format/endf/read/thermal/createDebyeWallerIntegralData.test.cpp )
 add_cpp_test( format.endf.read.thermal.createCoherentElasticScattering                 format/endf/read/thermal/createCoherentElasticScattering.test.cpp )
 add_cpp_test( format.endf.read.thermal.createIncoherentElasticScattering               format/endf/read/thermal/createIncoherentElasticScattering.test.cpp )
+add_cpp_test( format.endf.read.thermal.createIncoherentInelasticScattering             format/endf/read/thermal/createIncoherentInelasticScattering.test.cpp )
 add_cpp_test( format.endf.read.atomic.createElectronSubshellID                         format/endf/read/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.read.atomic.createElectronSubshellConfiguration              format/endf/read/atomic/createElectronSubshellConfiguration.test.cpp )
 add_cpp_test( format.endf.read.covariance.createMatrix                                 format/endf/read/covariance/createMatrix.test.cpp )
