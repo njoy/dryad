@@ -5,8 +5,12 @@
 #include <tuple>
 
 // other includes
+#include "scion/linearisation/Lineariser.hpp"
+#include "scion/integration/AdaptiveGaussLobatto.hpp"
 #include "njoy/dryad/thermal/ShortCollisionTimeScatteringKernel.hpp"
 #include "njoy/dryad/thermal/TabulatedScatteringKernel.hpp"
+#include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "njoy/constants.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -177,6 +181,45 @@ namespace thermal {
 
         return this->tabulatedScatteringKernel()( a, b );
       }
+    }
+
+    /**
+     *  @brief Return the incoherent inelastic scattering angular distribution for a
+     *         given incident and outgoing energy
+     *
+     *  @param[in] incident   the incident energy
+     *  @param[in] outgoing   the outgoing energy
+     *  @param[in] ratio      the atomic mass ratio of the target to the projectile
+     */
+    TabulatedAngularDistribution
+    angularDistribution( double incident, double outgoing, double ratio ) {
+
+      double kT = constants::k / constants::e * this->moderatorTemperature();
+      double b = ( outgoing - incident ) / kT;
+
+      auto function = [&] ( double cosine ) -> double {
+
+        double a = ( outgoing + incident - 2. * cosine * std::sqrt( outgoing * incident ) ) / ratio / kT;
+        return this->operator()( a, b );
+      };
+
+      //! @todo optimise the grid better?
+      std::vector< double > grid = { -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0 };
+
+      using MidpointSplit = scion::linearisation::MidpointSplit< double, double >;
+      using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
+      using Lineariser = scion::linearisation::Lineariser< std::vector< double >, std::vector< double > >;
+
+      std::vector< double > cosines;
+      std::vector< double > values;
+      Lineariser lineariser( cosines, values );
+      lineariser( grid,
+                  function,
+                  Tolerance( constants::linearisation::tolerance, constants::linearisation::threshold ),
+                  MidpointSplit() );
+
+      return TabulatedAngularDistribution( std::move( cosines ), std::move( values ),
+                                           InterpolationType::LinearLinear, true );
     }
 
     /**

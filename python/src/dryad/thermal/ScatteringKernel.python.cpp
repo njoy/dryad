@@ -134,6 +134,24 @@ void wrapScatteringKernel( python::module& module ) {
     "        the momentum transfer value\n"
     "    b : float\n"
     "        the energy transfer value"
+  )
+  .def(
+
+    "angular_distribution",
+    &Component::angularDistribution,
+    python::arg( "incident" ),
+    python::arg( "outgoing" ),
+    python::arg( "ratio" ),
+    "Return the incoherent inelastic scattering angular distribution for a\n"
+    "given incident and outgoing energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    incident : float\n"
+    "        the incident energy value\n"
+    "    outgoing : float\n"
+    "        the outgoing energy value\n"
+    "    ratio : float\n"
+    "        the atomic mass ratio of the target to the projectile"
   );
 
   // add standard equality comparison definitions

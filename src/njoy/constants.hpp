@@ -46,6 +46,11 @@ namespace constants {
   // CODATA 2022 - Planck constant in J s
   constexpr double h = 6.62607015e-34;
 
+  // CODATA 2018 - Boltzmann constant in J / K
+  // constexpr double k = 1.380649e-23;
+  // CODATA 2022 - Boltzmann constant in J / K
+  constexpr double k = 1.380649e-23;
+
   // CODATA 2018 - reduced Planck constant in ev s
   // constexpr double hbar = 6.582119569e-16;
   // CODATA 2022 - reduced Planck constant in ev s

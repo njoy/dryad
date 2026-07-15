@@ -720,6 +720,20 @@ class ScatteringKernel:
         """
     def __ne__(self, arg0: ScatteringKernel) -> bool:
         ...
+    def angular_distribution(self, incident: float, outgoing: float, ratio: float) -> ...:
+        """
+        Return the incoherent inelastic scattering angular distribution for a
+        given incident and outgoing energy
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            outgoing : float
+                the outgoing energy value
+            ratio : float
+                the atomic mass ratio of the target to the projectile
+        """
     @property
     def effective_temperature(self) -> float:
         """
