@@ -734,6 +734,18 @@ class ScatteringKernel:
             ratio : float
                 the atomic mass ratio of the target to the projectile
         """
+    def energy_distribution(self, incident: float, ratio: float) -> ...:
+        """
+        Return the incoherent inelastic scattering energy distribution for a
+        given incident energy
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            ratio : float
+                the atomic mass ratio of the target to the projectile
+        """
     @property
     def effective_temperature(self) -> float:
         """

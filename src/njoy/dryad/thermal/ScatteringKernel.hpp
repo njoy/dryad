@@ -10,6 +10,8 @@
 #include "njoy/dryad/thermal/ShortCollisionTimeScatteringKernel.hpp"
 #include "njoy/dryad/thermal/TabulatedScatteringKernel.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "njoy/dryad/TabulatedEnergyDistribution.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 #include "njoy/constants.hpp"
 
 namespace njoy {
@@ -26,6 +28,16 @@ namespace thermal {
 
     ShortCollisionTimeScatteringKernel sct_;
     TabulatedScatteringKernel sab_;
+
+    double kt_;
+
+    /**
+     *  @brief Return the moderator temperature as an energy value
+     */
+    double moderatorTemperatureAsEnergy() const {
+
+      return this->kt_;
+    }
 
   public:
 
@@ -52,7 +64,10 @@ namespace thermal {
     ScatteringKernel( double moderatorTemperature, double effectiveTemperature,
                       TabulatedScatteringKernel table ) :
         sct_( moderatorTemperature, effectiveTemperature ),
-        sab_( std::move( table ) ) {}
+        sab_( std::move( table ) ) {
+
+      this->kt_ = constants::k * this->moderatorTemperature() / constants::e;
+    }
 
     /**
      *  @brief Constructor
@@ -192,14 +207,14 @@ namespace thermal {
      *  @param[in] ratio      the atomic mass ratio of the target to the projectile
      */
     TabulatedAngularDistribution
-    angularDistribution( double incident, double outgoing, double ratio ) {
+    angularDistribution( double incident, double outgoing, double ratio ) const {
 
-      double kT = constants::k / constants::e * this->moderatorTemperature();
-      double b = ( outgoing - incident ) / kT;
+      double b = ( outgoing - incident ) / this->moderatorTemperatureAsEnergy();
 
       auto function = [&] ( double cosine ) -> double {
 
-        double a = ( outgoing + incident - 2. * cosine * std::sqrt( outgoing * incident ) ) / ratio / kT;
+        double a = ( outgoing + incident - 2. * cosine * std::sqrt( outgoing * incident ) )
+                   / ratio / this->moderatorTemperatureAsEnergy();
         return this->operator()( a, b );
       };
 
@@ -220,6 +235,52 @@ namespace thermal {
 
       return TabulatedAngularDistribution( std::move( cosines ), std::move( values ),
                                            InterpolationType::LinearLinear, true );
+    }
+
+    /**
+     *  @brief Return the incoherent inelastic scattering outgoing energy distribution for a
+     *         given incident energy
+     *
+     *  @param[in] incident   the incident energy
+     *  @param[in] ratio      the atomic mass ratio of the target to the projectile
+     */
+    TabulatedEnergyDistribution
+    energyDistribution( double incident, double ratio ) const {
+
+      scion::integration::AdaptiveGaussLobatto< double, double > integrator;
+
+      auto function = [&] ( double outgoing ) -> double {
+
+        double b = ( outgoing - incident ) / this->moderatorTemperatureAsEnergy();
+
+        auto angular_function = [&] ( double cosine ) -> double {
+
+          double a = ( outgoing + incident - 2. * cosine * std::sqrt( outgoing * incident ) )
+                     / ratio / this->moderatorTemperatureAsEnergy();
+          return this->operator()( a, b );
+        };
+
+        double integral = integrator( angular_function, -1., 1., 1e-10 );
+        return std::sqrt( outgoing / incident ) * std::exp( -0.5 * b ) * integral;
+      };
+
+      //! @todo optimise the grid better?
+      std::vector< double > grid = { 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 10. };
+
+      using MidpointSplit = scion::linearisation::MidpointSplit< double, double >;
+      using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
+      using Lineariser = scion::linearisation::Lineariser< std::vector< double >, std::vector< double > >;
+
+      std::vector< double > energies;
+      std::vector< double > values;
+      Lineariser lineariser( energies, values );
+      lineariser( grid,
+                  function,
+                  Tolerance( constants::linearisation::tolerance, constants::linearisation::threshold ),
+                  MidpointSplit() );
+
+      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ),
+                                          InterpolationType::LinearLinear, true );
     }
 
     /**

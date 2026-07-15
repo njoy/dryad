@@ -152,6 +152,21 @@ void wrapScatteringKernel( python::module& module ) {
     "        the outgoing energy value\n"
     "    ratio : float\n"
     "        the atomic mass ratio of the target to the projectile"
+  )
+  .def(
+
+    "energy_distribution",
+    &Component::energyDistribution,
+    python::arg( "incident" ),
+    python::arg( "ratio" ),
+    "Return the incoherent inelastic scattering energy distribution for a\n"
+    "given incident energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    incident : float\n"
+    "        the incident energy value\n"
+    "    ratio : float\n"
+    "        the atomic mass ratio of the target to the projectile"
   );
 
   // add standard equality comparison definitions
