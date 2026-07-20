@@ -3,6 +3,7 @@
 
 //system includes
 #include <vector>
+#include <tuple>
 
 //other includes
 #include "njoy/dryad/resonances/UnresolvedSpinGroup.hpp"
@@ -29,11 +30,12 @@ namespace resonances {
 
       /* auxiliary functions */
       #include "njoy/dryad/resonances/UnresolvedCompoundSystem/src/processSpinGroups.hpp"
+      #include "njoy/dryad/resonances/UnresolvedCompoundSystem/src/verifyCompoundSystem.hpp"
 
     public:
 
       /* constructor */
-      #include "njoy/dryad/resonances/CompoundSystem/src/ctor.hpp"
+      #include "njoy/dryad/resonances/UnresolvedCompoundSystem/src/ctor.hpp"
 
       /**
        * @brief Return the lower energy limit
@@ -140,7 +142,8 @@ namespace resonances {
        */
       friend bool operator==( const UnresolvedCompoundSystem& left, const UnresolvedCompoundSystem& right ) {
 
-        return left.spinGroups() == right.spinGroups();
+        return std::tie( left.lower_, left.upper_, left.unresolved_spin_groups_ ) == 
+               std::tie( right.lower_, right.upper_, right.unresolved_spin_groups_ );
       }
 
       /**
@@ -158,7 +161,6 @@ namespace resonances {
 
 
 
-  };
 }
 }
 }
