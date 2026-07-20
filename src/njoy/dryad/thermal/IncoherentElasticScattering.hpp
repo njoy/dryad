@@ -8,6 +8,7 @@
 #include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticAngularDistribution.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -134,7 +135,8 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return the incoherent elastic scattering cross section
+     *  @brief Return the incoherent elastic scattering cross section for a given
+     *         temperature
      *
      *  @param[in] temperature   the moderator temeprature for which the
      *                           cross section is requested
@@ -158,6 +160,35 @@ namespace thermal {
                  this->lowerEnergyLimit(),
                  this->upperEnergyLimit(),
                  this->boundCrossSection(),
+                 this->debyeWallerIntegral().values()[index] );
+    }
+
+    /**
+     *  @brief Return the incoherent elastic scattering angular distribution for a
+     *         given incident energy and temperature
+     *
+     *  @param[in] incident      the incident energy
+     *  @param[in] temperature   the moderator temeprature for which the
+     *                           angular distribution is requested
+     */
+    IncoherentElasticAngularDistribution
+    angularDistribution( double incident,
+                         double temperature ) {
+
+      // find the closest temperature, within 0.001 K
+      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
+                                         this->moderatorTemperatures().end(),
+                                         temperature, 0.001 );
+      if ( iter == this->moderatorTemperatures().end() ) {
+
+        throw std::runtime_error( "The requested temperature "
+                                  + std::to_string( temperature )
+                                  + " K is not present" );
+      }
+
+      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
+      return IncoherentElasticAngularDistribution(
+                 incident,
                  this->debyeWallerIntegral().values()[index] );
     }
 
