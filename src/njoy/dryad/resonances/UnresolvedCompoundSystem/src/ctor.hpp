@@ -7,7 +7,7 @@ UnresolvedCompoundSystem( const UnresolvedCompoundSystem& ) = default;
 UnresolvedCompoundSystem( UnresolvedCompoundSystem&& ) = default;
 
 UnresolvedCompoundSystem& operator=( const UnresolvedCompoundSystem& ) = default;
-UnresolvedCompoundSystem& operator=( const UnresolvedCompoundSystem&& ) = default;
+UnresolvedCompoundSystem& operator=( UnresolvedCompoundSystem&& ) = default;
 
 /**
  *  @brief Constructor
@@ -23,4 +23,5 @@ UnresolvedCompoundSystem( double lowerEnergy, double upperEnergy,
     unresolved_spin_groups_( std::move( spinGroups )) {
 
   this->processSpinGroups();
+  this->verifyCompoundSystem(this->lower_, this->upper_);
 }
