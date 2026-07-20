@@ -720,7 +720,7 @@ class ScatteringKernel:
         """
     def __ne__(self, arg0: ScatteringKernel) -> bool:
         ...
-    def angular_distribution(self, incident: float, outgoing: float, ratio: float) -> ...:
+    def angular_distribution(self, incident: float, outgoing: float, ratio: float, tolerance: float = 0.001) -> ...:
         """
         Return the incoherent inelastic scattering angular distribution for a
         given incident and outgoing energy
@@ -732,9 +732,37 @@ class ScatteringKernel:
             outgoing : float
                 the outgoing energy value
             ratio : float
-                the atomic mass ratio of the target to the projectile
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
         """
-    def energy_distribution(self, incident: float, ratio: float) -> ...:
+    def cross_section(self, bound: float, ratio: float, tolerance: float = 0.001) -> ...:
+        """
+        Return the incoherent inelastic scattering cross section
+        
+        Parameters
+        ----------
+            bound : float
+                the bound cross section value
+            ratio : float
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    def cross_section_value(self, incident: float, bound: float, ratio: float, tolerance: float = 0.001) -> float:
+        """
+        Return the incoherent inelastic scattering cross section for a
+        given incident energy
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            bound : float
+                the bound cross section value
+            ratio : float
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    def energy_distribution(self, incident: float, ratio: float, tolerance: float = 0.001) -> ...:
         """
         Return the incoherent inelastic scattering energy distribution for a
         given incident energy
@@ -744,7 +772,8 @@ class ScatteringKernel:
             incident : float
                 the incident energy value
             ratio : float
-                the atomic mass ratio of the target to the projectile
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
         """
     @property
     def effective_temperature(self) -> float:

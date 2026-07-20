@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/thermal/ScatteringKernel.hpp"
 
 // namespace aliases
@@ -13,6 +14,10 @@ namespace dryad {
 namespace thermal {
 
 void wrapScatteringKernel( python::module& module ) {
+
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
 
   // type aliases
   using Component = njoy::dryad::thermal::ScatteringKernel;
@@ -142,16 +147,19 @@ void wrapScatteringKernel( python::module& module ) {
     python::arg( "incident" ),
     python::arg( "outgoing" ),
     python::arg( "ratio" ),
-    "Return the incoherent inelastic scattering angular distribution for a\n"
-    "given incident and outgoing energy\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    incident : float\n"
-    "        the incident energy value\n"
-    "    outgoing : float\n"
-    "        the outgoing energy value\n"
-    "    ratio : float\n"
-    "        the atomic mass ratio of the target to the projectile"
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    std::string( "Return the incoherent inelastic scattering angular distribution for a\n"
+                 "given incident and outgoing energy\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    incident : float\n"
+                 "        the incident energy value\n"
+                 "    outgoing : float\n"
+                 "        the outgoing energy value\n"
+                 "    ratio : float\n"
+                 "        the atomic mass ratio of the target to the projectile"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
   )
   .def(
 
@@ -159,14 +167,55 @@ void wrapScatteringKernel( python::module& module ) {
     &Component::energyDistribution,
     python::arg( "incident" ),
     python::arg( "ratio" ),
-    "Return the incoherent inelastic scattering energy distribution for a\n"
-    "given incident energy\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    incident : float\n"
-    "        the incident energy value\n"
-    "    ratio : float\n"
-    "        the atomic mass ratio of the target to the projectile"
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    std::string( "Return the incoherent inelastic scattering energy distribution for a\n"
+                 "given incident energy\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    incident : float\n"
+                 "        the incident energy value\n"
+                 "    ratio : float\n"
+                 "        the atomic mass ratio of the target to the projectile"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
+  )
+  .def(
+
+    "cross_section_value",
+    &Component::crossSectionValue,
+    python::arg( "incident" ),
+    python::arg( "bound" ),
+    python::arg( "ratio" ),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    std::string( "Return the incoherent inelastic scattering cross section for a\n"
+                 "given incident energy\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    incident : float\n"
+                 "        the incident energy value\n"
+                 "    bound : float\n"
+                 "        the bound cross section value\n"
+                 "    ratio : float\n"
+                 "        the atomic mass ratio of the target to the projectile"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "bound" ),
+    python::arg( "ratio" ),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    std::string( "Return the incoherent inelastic scattering cross section\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    bound : float\n"
+                 "        the bound cross section value\n"
+                 "    ratio : float\n"
+                 "        the atomic mass ratio of the target to the projectile"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
   );
 
   // add standard equality comparison definitions
