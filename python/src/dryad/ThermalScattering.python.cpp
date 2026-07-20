@@ -108,30 +108,39 @@ void wrapThermalScattering( python::module& module ) {
   .def_static(
 
     "from_endf_file",
-    [] ( const std::string& filename ) -> decltype(auto) {
+    [] ( double lower, double upper, const std::string& filename ) -> decltype(auto) {
 
-      return njoy::format::endf::read::createThermalScatteringFromFile( filename );
+      return njoy::format::endf::read::createThermalScatteringFromFile( lower, upper, filename );
     },
-    python::arg( "filename" ),
+    python::arg( "lower" ), python::arg( "upper" ), python::arg( "filename" ),
     "Create ThermalScattering data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a ThermalScattering instance.\n\n"
     "Parameters\n"
     "----------\n"
+    "    lower : float\n"
+    "        the lower energy limit\n"
+    "    upper : float\n"
+    "        the upper energy limit\n"
     "    filename : string\n"
     "        the ENDF file name"
   )
   .def_static(
 
     "from_gnds_file",
-    [] ( const std::string& filename, const std::string& style ) -> decltype(auto) {
+    [] ( double lower, double upper, const std::string& filename, const std::string& style ) -> decltype(auto) {
 
-      return njoy::format::gnds::read::createThermalScatteringFromFile( filename, style );
+      return njoy::format::gnds::read::createThermalScatteringFromFile( lower, upper, filename, style );
     },
+    python::arg( "lower" ), python::arg( "upper" ),
     python::arg( "filename" ), python::arg( "style" ) = "eval",
     "Create ThermalScattering data from a GNDS file\n\n"
     "Parameters\n"
     "----------\n"
+    "    lower : float\n"
+    "        the lower energy limit\n"
+    "    upper : float\n"
+    "        the upper energy limit\n"
     "    filename : string\n"
     "        the GNDS file name\n"
     "    style : string\n"

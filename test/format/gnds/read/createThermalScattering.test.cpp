@@ -27,7 +27,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = gnds::read::createThermalScattering( document );
+        ThermalScattering chunk = gnds::read::createThermalScattering( 1e-5, 10., document );
 
         tsl::bemetal::verifyBeMetal( chunk );
       } // THEN
@@ -43,7 +43,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = gnds::read::createThermalScattering( document );
+        ThermalScattering chunk = gnds::read::createThermalScattering( 1e-5, 10., document );
 
         tsl::zrinzrh::verifyZrInZrH( chunk );
       } // THEN
@@ -59,7 +59,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = gnds::read::createThermalScattering( document );
+        ThermalScattering chunk = gnds::read::createThermalScattering( 1e-5, 10., document );
 
         tsl::li7inli7d::verifyLi7InLi7D( chunk );
       } // THEN

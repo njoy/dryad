@@ -76,8 +76,8 @@ add_python_test( dryad.resonances.ResonanceTable                       dryad/res
 add_python_test( dryad.resonances.SpinGroup                            dryad/resonances/Test_SpinGroup.py )
 add_python_test( dryad.resonances.CompoundSystem                       dryad/resonances/Test_CompoundSystem.py )
 
-add_python_test( dryad.resonances.UnresolvedResonanceTable                 dryad/resonances/Test_UnresolvedResonanceTable.py )
-add_python_test( dryad.resonances.UnresolvedChannel                        dryad/resonances/Test_UnresolvedChannel.py)
+add_python_test( dryad.resonances.UnresolvedResonanceTable             dryad/resonances/Test_UnresolvedResonanceTable.py )
+add_python_test( dryad.resonances.UnresolvedChannel                    dryad/resonances/Test_UnresolvedChannel.py)
 
 add_python_test( dryad.thermal.BraggEdgeData                           dryad/thermal/Test_BraggEdgeData.py )
 add_python_test( dryad.thermal.DebyeWallerIntegralData                 dryad/thermal/Test_DebyeWallerIntegralData.py )
@@ -85,12 +85,14 @@ add_python_test( dryad.thermal.TabulatedScatteringKernelFunction       dryad/the
 add_python_test( dryad.thermal.TabulatedScatteringFunctions            dryad/thermal/Test_TabulatedScatteringKernel.py )
 add_python_test( dryad.thermal.CoherentElasticScattering               dryad/thermal/Test_CoherentElasticScattering.py )
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
+add_python_test( dryad.thermal.IncoherentElasticCrossSection           dryad/thermal/Test_IncoherentElasticCrossSection.py )
 
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )
 
 add_python_test( dryad.Particle                                        dryad/Test_Particle.py )
 add_python_test( dryad.ParticleDatabase                                dryad/Test_ParticleDatabase.py )
 
+add_python_test( dryad.PolynomialMultiplicity                          dryad/Test_PolynomialMultiplicity.py )
 add_python_test( dryad.TabulatedMultiplicity                           dryad/Test_TabulatedMultiplicity.py )
 add_python_test( dryad.TabulatedAverageEnergy                          dryad/Test_TabulatedAverageEnergy.py )
 add_python_test( dryad.TabulatedAverageCosine                          dryad/Test_TabulatedAverageCosine.py )

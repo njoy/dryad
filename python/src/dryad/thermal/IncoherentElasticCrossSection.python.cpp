@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,11 +12,14 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapIncoherentElasticScattering( python::module& module ) {
+void wrapIncoherentElasticCrossSection( python::module& module ) {
+
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
 
   // type aliases
-  using Component = njoy::dryad::thermal::IncoherentElasticScattering;
-  using DebyeWallerIntegralData = njoy::dryad::thermal::DebyeWallerIntegralData;
+  using Component = njoy::dryad::thermal::IncoherentElasticCrossSection;
 
   // wrap views created by this component
 
@@ -24,8 +27,8 @@ void wrapIncoherentElasticScattering( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "IncoherentElasticScattering",
-    "Incoherent elastic thermal scattering data\n\n"
+    "IncoherentElasticCrossSection",
+    "Incoherent elastic thermal scattering cross section\n\n"
     "Parameters\n"
     "----------\n"
     "    lower : float\n"
@@ -34,16 +37,15 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     "        the upper energy limit\n"
     "    xs : float\n"
     "        the bound atom cross section\n"
-    "    debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData\n"
-    "        the Debye-Waller integral data"
+    "    debye_waller_integral : float\n"
+    "        the Debye-Waller integral value"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< double, double, double,
-                  DebyeWallerIntegralData >(),
+    python::init< double, double, double, double >(),
     python::arg( "lower" ), python::arg( "upper" ),
     python::arg( "xs" ), python::arg( "debye_waller_integral" ),
     "Initialise the incoherent elastic scattering data"
@@ -62,40 +64,38 @@ void wrapIncoherentElasticScattering( python::module& module ) {
   )
   .def_property_readonly(
 
-    "number_moderator_temperatures",
-    &Component::numberModeratorTemperatures,
-    "The moderator temperature values"
+    "bound_cross_section",
+    python::overload_cast<>( &Component::boundCrossSection, python::const_ ),
+    "The bound atom cross section value"
   )
   .def_property_readonly(
 
-    "moderator_temperatures",
-    python::overload_cast<>( &Component::moderatorTemperatures, python::const_ ),
-    "The moderator temperature values"
-  )
-  .def_property(
-
-    "bound_cross_section",
-    python::overload_cast<>( &Component::boundCrossSection, python::const_ ),
-    python::overload_cast< double >( &Component::boundCrossSection ),
-    "The bound atom cross section value"
-  )
-  .def_property(
-
     "debye_waller_integral",
     python::overload_cast<>( &Component::debyeWallerIntegral, python::const_ ),
-    python::overload_cast< DebyeWallerIntegralData >( &Component::debyeWallerIntegral ),
-    "The Debye-Waller integral data"
+    "The Debye-Waller integral value"
   )
   .def(
 
-    "cross_section",
-    &Component::crossSection,
-    python::arg( "temperature" ),
-    "Return the incoherent elastic scattering cross section\n\n"
+    "__call__",
+    [] ( const Component& self, double energy ) -> decltype(auto)
+       { return self( energy ); },
+    python::arg( "cosine" ),
+    "Evaluate the cross section for a given energy value\n\n"
     "Parameters\n"
     "----------\n"
-    "    temperature : float\n"
-    "        the moderator temeprature for which the cross section is requested\n"
+    "    energy : float\n"
+    "        the energy value"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    std::string( "Linearise the cross section\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
   );
 
   // add standard equality comparison definitions

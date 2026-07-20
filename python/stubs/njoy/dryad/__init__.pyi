@@ -1426,9 +1426,9 @@ class PolynomialMultiplicity:
     Parameters
     ----------
         lower : float
-            the lower limit of the domain
+            the lower energy limit
         upper : float
-            the upper limit of the domain
+            the upper energy limit
         coefficients : list of float
             the coefficients of the polynomial series (from
             lowest to highest order coefficient)
@@ -4059,7 +4059,7 @@ class ThermalScattering:
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
-    def from_endf_file(filename: str) -> ThermalScattering:
+    def from_endf_file(lower: float, upper: float, filename: str) -> ThermalScattering:
         """
         Create ThermalScattering data from an ENDF file
         
@@ -4068,16 +4068,24 @@ class ThermalScattering:
         
         Parameters
         ----------
+            lower : float
+                the lower energy limit
+            upper : float
+                the upper energy limit
             filename : string
                 the ENDF file name
         """
     @staticmethod
-    def from_gnds_file(filename: str, style: str = 'eval') -> ThermalScattering:
+    def from_gnds_file(lower: float, upper: float, filename: str, style: str = 'eval') -> ThermalScattering:
         """
         Create ThermalScattering data from a GNDS file
         
         Parameters
         ----------
+            lower : float
+                the lower energy limit
+            upper : float
+                the upper energy limit
             filename : string
                 the GNDS file name
             style : string

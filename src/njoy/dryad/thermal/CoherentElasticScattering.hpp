@@ -7,7 +7,9 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/BraggEdgeData.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -23,6 +25,8 @@ namespace thermal {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     std::vector< double > temperatures_;
     std::vector< BraggEdgeData > edges_;
 
@@ -77,15 +81,37 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
+     *  @param[in] lower        the lower energy limit
+     *  @param[in] upper        the upper energy limit
      *  @param[in] braggEdges   the Bragg edge data
      */
-    CoherentElasticScattering( std::vector< BraggEdgeData > braggEdges ) :
+    CoherentElasticScattering( double lower,
+                               double upper,
+                               std::vector< BraggEdgeData > braggEdges ) :
+        lower_( lower ),
+        upper_( upper ),
         edges_( std::move( braggEdges ) ) {
 
       this->sortAndExtractTemperatures();
     }
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
 
     /**
      *  @brief Return the number of moderator temperatures for which data is available
@@ -171,13 +197,38 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the incoherent elastic scattering cross section
+     *
+     *  @param[in] temperature   the moderator temeprature for which the
+     *                           cross section is requested
+     */
+    TabulatedCrossSection
+    crossSection( double temperature ) const {
+
+      // find the closest temperature, within 0.001 K
+      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
+                                         this->moderatorTemperatures().end(),
+                                         temperature, 0.001 );
+      if ( iter == this->moderatorTemperatures().end() ) {
+
+        throw std::runtime_error( "The requested temperature "
+                                  + std::to_string( temperature )
+                                  + " K is not present" );
+      }
+
+      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
+      return this->braggEdges()[index].crossSection( this->upperEnergyLimit() );
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
      */
     bool operator==( const CoherentElasticScattering& right ) const {
 
-      return std::tie( this->braggEdges() ) == std::tie( right.braggEdges() );
+      return std::tie( this->lower_, this->upper_, this->braggEdges() ) ==
+             std::tie( right.lower_, right.upper_, right.braggEdges() );
     }
 
     /**

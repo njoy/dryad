@@ -23,10 +23,13 @@ namespace thermal {
   /**
    *  @brief Create an CoherentElasticScattering from a GNDS tsl node
    *
-   *  @param[in] tsl   the GNDS tsl node
+   *  @param[in] lower   the lower energy limit
+   *  @param[in] upper   the upper energy limit
+   *  @param[in] tsl     the GNDS tsl node
    */
   inline dryad::thermal::CoherentElasticScattering
-  createCoherentElasticScattering( const pugi::xml_node& tsl ) {
+  createCoherentElasticScattering( double lower, double upper,
+                                   const pugi::xml_node& tsl ) {
 
     Log::info( "Reading coherent elastic scattering data" );
 
@@ -68,7 +71,7 @@ namespace thermal {
 
       }
 
-      return dryad::thermal::CoherentElasticScattering( std::move( edges ) );
+      return dryad::thermal::CoherentElasticScattering( lower, upper, std::move( edges ) );
     }
     else if ( strcmp( node.name(), "BraggEdges" ) == 0 ) {
 

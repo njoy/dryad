@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -60,6 +60,10 @@ class CoherentElasticScattering:
     
     Parameters
     ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
         bragg_edges : list of njoy.dryad.thermal.BraggEdgeData
             the Bragg edge data
     """
@@ -70,7 +74,7 @@ class CoherentElasticScattering:
         ...
     def __eq__(self, arg0: CoherentElasticScattering) -> bool:
         ...
-    def __init__(self, bragg_edges: list[BraggEdgeData]) -> None:
+    def __init__(self, lower: float, upper: float, bragg_edges: list[BraggEdgeData]) -> None:
         """
         Initialise the coherent elastic scattering data
         """
@@ -103,6 +107,11 @@ class CoherentElasticScattering:
     def bragg_edges(self, arg1: list[BraggEdgeData]) -> None:
         ...
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
     def moderator_temperatures(self) -> list[float]:
         """
         The moderator temperature values
@@ -111,6 +120,11 @@ class CoherentElasticScattering:
     def number_moderator_temperatures(self) -> int:
         """
         The moderator temperature values
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
         """
 class DebyeWallerIntegralData:
     """
@@ -148,12 +162,82 @@ class DebyeWallerIntegralData:
         """
         The integral values
         """
+class IncoherentElasticCrossSection:
+    """
+    Incoherent elastic thermal scattering cross section
+    
+    Parameters
+    ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
+        xs : float
+            the bound atom cross section
+        debye_waller_integral : float
+            the Debye-Waller integral value
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the cross section for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> IncoherentElasticCrossSection:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IncoherentElasticCrossSection:
+        ...
+    def __eq__(self, arg0: IncoherentElasticCrossSection) -> bool:
+        ...
+    def __init__(self, lower: float, upper: float, xs: float, debye_waller_integral: float) -> None:
+        """
+        Initialise the incoherent elastic scattering data
+        """
+    def __ne__(self, arg0: IncoherentElasticCrossSection) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> ...:
+        """
+        Linearise the cross section
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    @property
+    def bound_cross_section(self) -> float:
+        """
+        The bound atom cross section value
+        """
+    @property
+    def debye_waller_integral(self) -> float:
+        """
+        The Debye-Waller integral value
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
 class IncoherentElasticScattering:
     """
     Incoherent elastic thermal scattering data
     
     Parameters
     ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
         xs : float
             the bound atom cross section
         debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData
@@ -166,12 +250,21 @@ class IncoherentElasticScattering:
         ...
     def __eq__(self, arg0: IncoherentElasticScattering) -> bool:
         ...
-    def __init__(self, xs: float, debye_waller_integral: DebyeWallerIntegralData) -> None:
+    def __init__(self, lower: float, upper: float, xs: float, debye_waller_integral: DebyeWallerIntegralData) -> None:
         """
         Initialise the incoherent elastic scattering data
         """
     def __ne__(self, arg0: IncoherentElasticScattering) -> bool:
         ...
+    def cross_section(self, temperature: float) -> ...:
+        """
+        Return the incoherent elastic scattering cross section
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temeprature for which the cross section is requested
+        """
     @property
     def bound_cross_section(self) -> float:
         """
@@ -189,6 +282,11 @@ class IncoherentElasticScattering:
     def debye_waller_integral(self, arg1: DebyeWallerIntegralData) -> None:
         ...
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
     def moderator_temperatures(self) -> list[float]:
         """
         The moderator temperature values
@@ -197,6 +295,11 @@ class IncoherentElasticScattering:
     def number_moderator_temperatures(self) -> int:
         """
         The moderator temperature values
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
         """
 class TabulatedScatteringKernel:
     """

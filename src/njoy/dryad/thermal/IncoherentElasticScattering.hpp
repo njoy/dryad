@@ -2,11 +2,12 @@
 #define NJOY_DRYAD_THERMAL_INCOHERENTELASTICSCATTERING
 
 // system includes
-#include <optional>
-#include <variant>
 
 // other includes
+#include "scion/math/compare.hpp"
+#include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
+#include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -16,15 +17,19 @@ namespace thermal {
    *  @class
    *  @brief Incoherent elastic thermal scattering data
    *
-   *  @todo add a function to retrieve the cross section (interpolation type is 1/E)
+   *  @todo add a function to retrieve the cross section
    *        and the angular distribution or the discrete cosines
    */
   class IncoherentElasticScattering {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     double bound_xs_;
     DebyeWallerIntegralData debye_waller_;
+
+    //! @todo we may need to add natom (number of principle scatterers) for older evaluations
 
   public:
 
@@ -44,15 +49,37 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
+     *  @param[in] lower                 the lower energy limit
+     *  @param[in] upper                 the upper energy limit
      *  @param[in] xs                    the bound atom cross section
      *  @param[in] debyeWallerIntegral   the Debye-Waller integral data
      */
-    IncoherentElasticScattering( double xs,
+    IncoherentElasticScattering( double lower,
+                                 double upper,
+                                 double xs,
                                  DebyeWallerIntegralData debyeWallerIntegral ) :
+      lower_( lower ),
+      upper_( upper ),
       bound_xs_( xs ),
       debye_waller_( std::move( debyeWallerIntegral ) ) {}
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
 
     /**
      *  @brief Return the number of moderator temperatures for which data is available
@@ -107,14 +134,42 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the incoherent elastic scattering cross section
+     *
+     *  @param[in] temperature   the moderator temeprature for which the
+     *                           cross section is requested
+     */
+    IncoherentElasticCrossSection
+    crossSection( double temperature ) {
+
+      // find the closest temperature, within 0.001 K
+      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
+                                         this->moderatorTemperatures().end(),
+                                         temperature, 0.001 );
+      if ( iter == this->moderatorTemperatures().end() ) {
+
+        throw std::runtime_error( "The requested temperature "
+                                  + std::to_string( temperature )
+                                  + " K is not present" );
+      }
+
+      std::size_t index = std::distance( this->moderatorTemperatures().begin(), iter );
+      return IncoherentElasticCrossSection(
+                 this->lowerEnergyLimit(),
+                 this->upperEnergyLimit(),
+                 this->boundCrossSection(),
+                 this->debyeWallerIntegral().values()[index] );
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
      */
     bool operator==( const IncoherentElasticScattering& right ) const {
 
-      return std::tie( this->bound_xs_, this->debyeWallerIntegral() ) ==
-             std::tie( right.bound_xs_, right.debyeWallerIntegral() );
+      return std::tie( this->lower_, this->upper_, this->bound_xs_, this->debyeWallerIntegral() ) ==
+             std::tie( right.lower_, right.upper_, right.bound_xs_, right.debyeWallerIntegral() );
     }
 
     /**

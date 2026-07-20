@@ -32,6 +32,10 @@ message( STATUS "Adding njoy C++ unit testing" )
 add_cpp_test( configuration                                                            configuration.test.cpp )
 add_cpp_test( matrix                                                                   matrix.test.cpp )
 
+# utility tests
+
+add_cpp_test( utility.find_closest                                                     utility/find_closest.test.cpp )
+
 # dryad tests
 
 add_cpp_test( dryad.base.UniformDistribution                                           dryad/base/UniformDistribution.test.cpp )
@@ -96,6 +100,8 @@ add_cpp_test( dryad.thermal.TabulatedScatteringKernel                           
 add_cpp_test( dryad.thermal.BraggEdgeData                                              dryad/thermal/BraggEdgeData.test.cpp )
 add_cpp_test( dryad.thermal.DebyeWallerIntegralData                                    dryad/thermal/DebyeWallerIntegralData.test.cpp )
 add_cpp_test( dryad.thermal.CoherentElasticScattering                                  dryad/thermal/CoherentElasticScattering.test.cpp )
+add_cpp_test( dryad.thermal.IncoherentElasticCrossSection                              dryad/thermal/IncoherentElasticCrossSection.test.cpp )
+add_cpp_test( dryad.thermal.IncoherentElasticAngularPdf                                dryad/thermal/IncoherentElasticAngularPdf.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticScattering                                dryad/thermal/IncoherentElasticScattering.test.cpp )
 
 add_cpp_test( dryad.Documentation                                                      dryad/Documentation.test.cpp )
