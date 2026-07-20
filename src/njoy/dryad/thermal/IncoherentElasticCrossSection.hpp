@@ -172,7 +172,7 @@ namespace thermal {
     bool operator==( const IncoherentElasticCrossSection& right ) const {
 
       return std::tie( this->bound_xs_, this->debye_waller_, this->domain() ) ==
-             std::tie( right.bound_xs_, right.debye_waller_, this->domain() );
+             std::tie( right.bound_xs_, right.debye_waller_, right.domain() );
     }
 
     /**
