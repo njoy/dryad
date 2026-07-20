@@ -178,8 +178,24 @@ namespace resonances {
      *  @brief Return the resonance table
      */
     UnresolvedResonanceTable& resonanceTable() {
-
       return this->table_;
+    };
+
+    /**
+     *  @brief return the orbital angular momentum of the spin group
+     */
+    unsigned int orbitalAngularMomentum() const {
+
+      return this->channels().front().quantumNumbers().orbitalAngularMomentum();
+    }
+
+
+    /**
+     * @brief Return the parity of the spin group
+     */
+    short parity() const {
+
+      return this->channels().front().quantumNumbers().parity();
     }
 
     /**
