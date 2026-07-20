@@ -225,39 +225,6 @@ SCENARIO( "UnresolvedCompoundSystem" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-
-  GIVEN( "invalid data for an UnresolvedCompoundSystem" ) {
-
-    // particles
-    Particle g( id::ParticleID::photon(), 0, 1, +1 );
-    Particle n( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
-    Particle cl36( id::ParticleID( "Cl36" ), 35.9683050031, 0, +1 );
-    Particle cl35( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 );
-
-    // particle pairs
-    ParticlePair elasticPair( n, cl35 );
-    ParticlePair capturePair( g, cl36 );
-
-    // channel radii
-    ChannelRadii radii( 4.822220, 3.667980 );
-    ChannelRadii captureRadii( 0. );
-
-    UnresolvedChannel capture( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-                               elasticPair, capturePair,
-                               0., std::nullopt, captureRadii );
-    UnresolvedChannel elastic( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
-                               elasticPair, elasticPair,
-                               0., std::nullopt, radii );
-
-    UnresolvedResonanceTable table(
-        { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-          id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
-        { TabulatedAverageWidths( { 1., 4. }, { 0.1, 0.4 } ),
-          TabulatedAverageWidths( { 1., 4. }, { 1.1, 1.4 } ) },
-        TabulatedLevelSpacing( { 1., 4. }, { 10., 40. } ) );
-
-    UnresolvedSpinGroup spingroup( { capture, elastic }, table );
-  } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const UnresolvedCompoundSystem& chunk ) {
