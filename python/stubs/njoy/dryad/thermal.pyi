@@ -100,7 +100,7 @@ class CoherentElasticScattering:
         """
     def cross_section(self, temperature: float) -> ...:
         """
-        Return the incoherent elastic scattering cross section for a given temperature
+        Return the coherent elastic scattering cross section for a given temperature
         
         Parameters
         ----------

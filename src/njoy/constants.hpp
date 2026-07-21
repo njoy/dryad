@@ -29,6 +29,9 @@ namespace constants {
     constexpr double tolerance = 1e-8;
   }
 
+  // relative tolerance for comparing values
+  constexpr double temperature_tolerance = 1e-6;
+
   constexpr double pi = 3.141592653589793;
 
   // CODATA 2018 - atomic mass unit in kg

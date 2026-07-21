@@ -105,7 +105,7 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "cross_section",
     &Component::crossSection,
     python::arg( "temperature" ),
-    "Return the incoherent elastic scattering cross section for a given temperature\n\n"
+    "Return the coherent elastic scattering cross section for a given temperature\n\n"
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"

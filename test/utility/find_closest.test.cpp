@@ -17,9 +17,9 @@ SCENARIO( "find_closest" ) {
 
     std::vector< double > values = { 100., 200., 300., 400., 500. };
 
-    CHECK( std::next( values.begin(), 2 ) == find_closest( values.begin(), values.end(), 302., 5. ) );
-    CHECK( std::next( values.begin(), 2 ) == find_closest( values.begin(), values.end(), 302., 2. ) );
-    CHECK( values.end() == find_closest( values.begin(), values.end(), 302., 1. ) );
+    CHECK( std::next( values.begin(), 2 ) == find_closest( values.begin(), values.end(), 302., 0.01 ) );
+    CHECK( std::next( values.begin(), 2 ) == find_closest( values.begin(), values.end(), 302., 1. / 150. ) );
+    CHECK( values.end() == find_closest( values.begin(), values.end(), 302., 0.005 ) );
 
   } // GIVEN
 } // SCENARIO

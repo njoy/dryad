@@ -241,8 +241,8 @@ namespace thermal {
      */
     bool hasScatteringKernel( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       return iter != this->scatteringKernels().end();
     }
 
@@ -254,8 +254,8 @@ namespace thermal {
     const ScatteringKernel&
     scatteringKernel( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       if ( iter != this->scatteringKernels().end() ) {
 
         return *iter;
