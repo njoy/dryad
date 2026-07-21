@@ -255,4 +255,13 @@ void verifyChunk( const IncoherentInelasticScattering& chunk ) {
   CHECK_THAT( 0.9 , WithinRel( table2.functions()[1].values()[1] ) );
   CHECK( 1 == table2.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == table2.interpolants()[0] );
+
+  // temperature within 1e-6 does not throw
+  CHECK_NOTHROW( chunk.scatteringKernel( 293.6 * 0.9999999 ) );
+  CHECK_NOTHROW( chunk.scatteringKernel( 293.6 * 1.0000001 ) );
+
+  // check throw on temperature that are too far from the stored ones
+  CHECK_THROWS( chunk.scatteringKernel( 293.6 * 0.99999 ) );
+  CHECK_THROWS( chunk.scatteringKernel( 293.6 * 1.00001 ) );
+  CHECK_THROWS( chunk.scatteringKernel( 400 ) );
 }

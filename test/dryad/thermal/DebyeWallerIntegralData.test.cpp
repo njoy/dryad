@@ -81,4 +81,13 @@ void verifyChunk( const DebyeWallerIntegralData& chunk ) {
   CHECK_THAT( 1., WithinRel( chunk.value( 4. ) ) );
 
   CHECK_THROWS( chunk.value( 3.5 ) );
+
+  // temperature within 1e-6 does not throw
+  CHECK_NOTHROW( chunk.value( 2. * 0.9999999 ) );
+  CHECK_NOTHROW( chunk.value( 2. * 1.0000001 ) );
+
+  // check throw on temperature that are too far from the stored ones
+  CHECK_THROWS( chunk.value( 2. * 0.99999 ) );
+  CHECK_THROWS( chunk.value( 2. * 1.00001 ) );
+  CHECK_THROWS( chunk.value( 3.5 ) );
 }

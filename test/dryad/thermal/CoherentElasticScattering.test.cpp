@@ -202,6 +202,12 @@ void verifyChunk( const CoherentElasticScattering& chunk ) {
   CHECK_THAT( 9.484639e-1 / 10.        , WithinRel( xs.values()[3] ) );
   CHECK( false == xs.isLinearised() );
 
-  // check throw on temperature that is too far from the stored ones
+  // temperature within 1e-6 does not throw
+  CHECK_NOTHROW( chunk.crossSection( 293.6 * 0.9999999 ) );
+  CHECK_NOTHROW( chunk.crossSection( 293.6 * 1.0000001 ) );
+
+  // check throw on temperature that are too far from the stored ones
+  CHECK_THROWS( chunk.crossSection( 293.6 * 0.99999 ) );
+  CHECK_THROWS( chunk.crossSection( 293.6 * 1.00001 ) );
   CHECK_THROWS( chunk.crossSection( 400 ) );
 }
