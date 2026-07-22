@@ -97,6 +97,17 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "    temperature : float\n"
     "        the temperature",
     python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "temperature" ),
+    "Return the incoherent elastic scattering cross section for a given temperature\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the moderator temperature for which the cross section is requested"
   );
 
   // add standard equality comparison definitions
