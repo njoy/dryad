@@ -40,6 +40,36 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the initial outgoing energy grid for a given incident energy
+     *
+     *  @param[in] incident    the incident energy
+     */
+    std::vector< double > initialOutgoingEnergyGrid( double incident ) const {
+
+      //! @todo optimise the grid better?
+      std::vector< double > grid = { 0, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4,
+                                     1e-3, 1e-2, 1e-1, 1., 10., incident };
+      for ( double beta : this->tabulatedScatteringKernel().energyTransfers() ) {
+
+        if ( incident + this->moderatorTemperatureAsEnergy() * beta > 0. ) {
+
+          grid.emplace_back( incident + this->moderatorTemperatureAsEnergy() * beta );
+        }
+        if ( this->isEnergyTransferSymmetric() ) {
+
+          if ( incident - this->moderatorTemperatureAsEnergy() * beta > 0. ) {
+
+            grid.emplace_back( incident - this->moderatorTemperatureAsEnergy() * beta );
+          }
+        }
+      }
+      std::sort( grid.begin(), grid.end() );
+      grid.erase( std::unique( grid.begin(), grid.end() ), grid.end() );
+
+      return grid;
+    }
+
+    /**
      *  @brief Linearise the incoherent inelastic scattering angular distribution for a
      *         given incident and outgoing energy (unnormalised)
      *
@@ -83,17 +113,16 @@ namespace thermal {
     lineariseEnergyDistribution( double incident, double ratio,
                                  double tolerance = constants::linearisation::tolerance ) const {
 
+      scion::integration::AdaptiveGaussLobatto< double, double > integrator;
       auto function = [&] ( double outgoing ) -> double {
 
         double b = ( outgoing - incident ) / this->moderatorTemperatureAsEnergy();
 
-        auto angular = this->lineariseAngularDistribution( incident, outgoing, ratio, tolerance );
-        double integral = scion::integration::integral( angular.first, angular.second, scion::integration::linlin );
+        double integral = integrator( [&] ( double cosine )
+                                          { return this->operator()( incident, outgoing, cosine, ratio ); },
+                                      -1., 1., constants::integration::tolerance );
         return std::sqrt( outgoing / incident ) * std::exp( -0.5 * b ) * integral;
       };
-
-      //! @todo optimise the grid better?
-      std::vector< double > grid = { 0, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 10. };
 
       using MidpointSplit = scion::linearisation::MidpointSplit< double, double >;
       using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
@@ -102,7 +131,7 @@ namespace thermal {
       std::vector< double > energies;
       std::vector< double > values;
       Lineariser lineariser( energies, values );
-      lineariser( grid,
+      lineariser( this->initialOutgoingEnergyGrid( incident ),
                   function,
                   Tolerance( tolerance, constants::linearisation::threshold ),
                   MidpointSplit() );
@@ -283,7 +312,15 @@ namespace thermal {
       }
       else {
 
-        return this->tabulatedScatteringKernel()( a, b );
+        double sab = this->tabulatedScatteringKernel()( a, b );
+        if ( sab < 1e-100 ) {
+
+          return this->shortCollisionTime()( a, b );
+        }
+        else {
+
+          return sab;
+        }
       }
     }
 
@@ -350,7 +387,7 @@ namespace thermal {
                   double tolerance = constants::linearisation::tolerance ) const {
 
       //! @todo optimise the grid better?
-      std::vector< double > grid = { 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1. };
+      std::vector< double > grid = { 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 10. };
 
       using MidpointSplit = scion::linearisation::MidpointSplit< double, double >;
       using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
