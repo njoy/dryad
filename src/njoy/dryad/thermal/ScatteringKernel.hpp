@@ -85,6 +85,15 @@ namespace thermal {
       //! @todo optimise the grid better?
       std::vector< double > grid = { -1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0 };
 
+      // this version works well when using adaptive linearisation
+      // for the energy distribution
+      // std::vector< double > grid = { -1. };
+      // std::size_t number = 100;
+      // for ( std::size_t i = 0; i < number; ++i ) {
+      //
+      //   grid.emplace_back( grid.back() + 2. / number );
+      // }
+
       using MidpointSplit = scion::linearisation::MidpointSplit< double, double >;
       using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
       using Lineariser = scion::linearisation::Lineariser< std::vector< double >, std::vector< double > >;
@@ -117,6 +126,10 @@ namespace thermal {
       auto function = [&] ( double outgoing ) -> double {
 
         double b = ( outgoing - incident ) / this->moderatorTemperatureAsEnergy();
+
+        // this is the version using adaptive linearisation
+        // auto angular = this->lineariseAngularDistribution( incident, outgoing, ratio, tolerance );
+        // double integral = scion::integration::integral( angular.first, angular.second, scion::integration::linlin );
 
         double integral = integrator( [&] ( double cosine )
                                           { return this->operator()( incident, outgoing, cosine, ratio ); },
@@ -312,15 +325,7 @@ namespace thermal {
       }
       else {
 
-        double sab = this->tabulatedScatteringKernel()( a, b );
-        if ( sab < 1e-100 ) {
-
-          return this->shortCollisionTime()( a, b );
-        }
-        else {
-
-          return sab;
-        }
+        return this->tabulatedScatteringKernel()( a, b );
       }
     }
 

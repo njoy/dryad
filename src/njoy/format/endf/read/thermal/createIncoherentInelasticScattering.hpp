@@ -94,7 +94,7 @@ namespace thermal {
 
     if ( uses_log_interpolation ) {
 
-      Log::warning( "  S(a,b) uses logarithmic based interpolation, zero values will be set to "
+      Log::warning( "S(a,b) uses logarithmic based interpolation, zero values will be set to "
                     "a small non-zero value" );
     }
 
