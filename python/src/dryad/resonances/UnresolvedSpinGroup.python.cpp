@@ -20,7 +20,6 @@ namespace resonances {
     using UnresolvedResonanceTable = njoy::dryad::resonances::UnresolvedResonanceTable;
     using ReactionID = njoy::dryad::id::ReactionID;
     // wrap views created by this component
-
     // create the component
     python::class_< Component > component(
 
