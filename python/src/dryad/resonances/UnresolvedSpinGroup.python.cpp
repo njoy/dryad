@@ -19,7 +19,6 @@ namespace resonances {
     using UnresolvedChannel = njoy::dryad::resonances::UnresolvedChannel;
     using UnresolvedResonanceTable = njoy::dryad::resonances::UnresolvedResonanceTable;
     using ReactionID = njoy::dryad::id::ReactionID;
-
     // wrap views created by this component
 
     // create the component
