@@ -101,9 +101,15 @@ namespace thermal {
       std::vector< double > cosines;
       std::vector< double > values;
       Lineariser lineariser( cosines, values );
+      Tolerance converged( tolerance, constants::linearisation::threshold );
       lineariser( grid,
-                  [&] ( double cosine ) { return this->operator()( incident, outgoing, cosine, ratio ); },
-                  Tolerance( tolerance, constants::linearisation::threshold ),
+                  [&] ( auto&& cosine ) { return this->operator()( incident, outgoing, cosine, ratio ); },
+                  [&] ( auto&& trial , auto&& reference, auto&& xLeft,
+                        auto&& xRight, auto&& yLeft    , auto&& yRight ) {
+
+                    return converged( trial, reference, xLeft, xRight, yLeft, yRight ) ||
+                           std::abs( xRight - xLeft ) < ( 100. * std::numeric_limits< double >::epsilon() ) * xLeft;
+                  },
                   MidpointSplit() );
 
       return std::make_pair( std::move( cosines ), std::move( values ) );
@@ -123,9 +129,9 @@ namespace thermal {
                                  double tolerance = constants::linearisation::tolerance ) const {
 
       scion::integration::AdaptiveGaussLobatto< double, double > integrator;
-      auto function = [&] ( double outgoing ) -> double {
+      auto function = [&] ( auto&& outgoing ) -> double {
 
-        double b = ( outgoing - incident ) / this->moderatorTemperatureAsEnergy();
+        double b = this->energyTransfer( incident, outgoing );
 
         // this is the version using adaptive linearisation
         // auto angular = this->lineariseAngularDistribution( incident, outgoing, ratio, tolerance );
@@ -144,9 +150,15 @@ namespace thermal {
       std::vector< double > energies;
       std::vector< double > values;
       Lineariser lineariser( energies, values );
+      Tolerance converged( tolerance, constants::linearisation::threshold );
       lineariser( this->initialOutgoingEnergyGrid( incident ),
                   function,
-                  Tolerance( tolerance, constants::linearisation::threshold ),
+                  [&] ( auto&& trial , auto&& reference, auto&& xLeft,
+                        auto&& xRight, auto&& yLeft    , auto&& yRight ) {
+
+                    return converged( trial, reference, xLeft, xRight, yLeft, yRight ) ||
+                           std::abs( xRight - xLeft ) < ( 100. * std::numeric_limits< double >::epsilon() ) * xLeft;
+                  },
                   MidpointSplit() );
 
       return std::make_pair( std::move( energies ), std::move( values ) );
@@ -282,6 +294,29 @@ namespace thermal {
     }
 
     /**
+     *  @brief Evaluate the momentum transfer for a given incident and outgoing energy
+     *
+     *  @param[in] incident    the incident energy
+     *  @param[in] outgoing    the outgoing energy
+     */
+    double momentumTransfer( double incident, double outgoing, double cosine, double ratio ) const {
+
+      return ( outgoing + incident - 2. * cosine * std::sqrt( outgoing * incident ) )
+             / ratio / this->moderatorTemperatureAsEnergy();
+    }
+
+    /**
+     *  @brief Evaluate the energy transfer for a given incident and outgoing energy
+     *
+     *  @param[in] incident    the incident energy
+     *  @param[in] outgoing    the outgoing energy
+     */
+    double energyTransfer( double incident, double outgoing ) const {
+
+      return ( outgoing - incident ) / this->moderatorTemperatureAsEnergy();
+    }
+
+    /**
      *  @brief Evaluate the scattering kernel for a given incident energy, outgoing energy
      *         and cosine value
      *
@@ -292,11 +327,8 @@ namespace thermal {
      */
     double operator()( double incident, double outgoing, double cosine, double ratio ) const {
 
-      double b = ( outgoing - incident ) / this->moderatorTemperatureAsEnergy();
-      double a = ( outgoing + incident - 2. * cosine * std::sqrt( outgoing * incident ) )
-                 / ratio / this->moderatorTemperatureAsEnergy();
-
-      return this->operator()( a, b );
+      return this->operator()( this->momentumTransfer( incident, outgoing, cosine, ratio ),
+                               this->energyTransfer( incident, outgoing ) );
     }
 
     /**

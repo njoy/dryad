@@ -127,12 +127,71 @@ void wrapScatteringKernel( python::module& module ) {
   )
   .def(
 
+    "momentum_transfer",
+    &Component::momentumTransfer,
+    python::arg( "incident" ),
+    python::arg( "outgoing" ),
+    python::arg( "cosine" ),
+    python::arg( "ratio" ),
+    "Evaluate the momentum transfer for a given incident energy, outgoing energy\n"
+    "and cosine value\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    incident : float\n"
+    "        the incident energy value\n"
+    "    outgoing : float\n"
+    "        the outgoing energy value\n"
+    "    cosine : float\n"
+    "        the cosine value"
+    "    ratio : float\n"
+    "        the atomic mass ratio of the target to the projectile"
+  )
+  .def(
+
+    "energy_transfer",
+    &Component::energyTransfer,
+    python::arg( "incident" ),
+    python::arg( "outgoing" ),
+    "Evaluate the energy transfer for a given incident and outgoing energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    incident : float\n"
+    "        the incident energy value\n"
+    "    outgoing : float\n"
+    "        the outgoing energy value"
+  )
+  .def(
+
+    "__call__",
+    [] ( const Component& self,
+         double incident, double outgoing,
+         double cosine, double ratio ) -> decltype(auto)
+       { return self( incident, outgoing, cosine, ratio ); },
+    python::arg( "incident" ),
+    python::arg( "outgoing" ),
+    python::arg( "cosine" ),
+    python::arg( "ratio" ),
+    "Evaluate the scattering kernel for a given incident energy, outgoing energy\n"
+    "and cosine value\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    incident : float\n"
+    "        the incident energy value\n"
+    "    outgoing : float\n"
+    "        the outgoing energy value\n"
+    "    cosine : float\n"
+    "        the cosine value"
+    "    ratio : float\n"
+    "        the atomic mass ratio of the target to the projectile"
+  )
+  .def(
+
     "__call__",
     [] ( const Component& self, double a, double b ) -> decltype(auto)
        { return self( a, b ); },
     python::arg( "a" ),
     python::arg( "b" ),
-    "Evaluate the scattering kernel for a given energy value\n\n"
+    "Evaluate the scattering kernel for a given momentum and energy transfer value\n\n"
     "Parameters\n"
     "----------\n"
     "    a : float\n"
