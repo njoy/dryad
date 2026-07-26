@@ -129,10 +129,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 7.242787e-3         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 1.434476e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) ) );
+    CHECK_THAT( 7.242787e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 1.434476e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 400 );
     factor = 293.6 / 400.;
@@ -144,10 +144,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 1.321421e-2         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 1.835178e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) ) );
+    CHECK_THAT( 1.321421e-2         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 1.835178e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 500 );
     factor = 293.6 / 500.;
@@ -159,10 +159,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 2.062500e-2         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 2.170594e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( 2.13881e-24         , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) , 1e-12) );
+    CHECK_THAT( 2.062500e-2         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 2.170594e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 2.13881e-24         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 600 );
     factor = 293.6 / 600.;
@@ -174,10 +174,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 2.966493e-2         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 2.470634e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( 8.11991e-23         , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) ) );
+    CHECK_THAT( 2.966493e-2         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 2.470634e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 8.11991e-23         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 700 );
     factor = 293.6 / 700.;
@@ -189,10 +189,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 4.032669e-2         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 2.743558e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( 1.50711e-21         , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) ) );
+    CHECK_THAT( 4.032669e-2         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 2.743558e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 1.50711e-21         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 800 );
     factor = 293.6 / 800.;
@@ -204,10 +204,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 5.260275e-2         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 2.995066e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( 1.84277e-20         , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) ) );
+    CHECK_THAT( 5.260275e-2         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 2.995066e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 1.84277e-20         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 1000 );
     factor = 293.6 / 1000.;
@@ -219,10 +219,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 8.196668e-2         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 3.448984e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( 1.23757e-18         , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) ) );
+    CHECK_THAT( 8.196668e-2         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 3.448984e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 1.23757e-18         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 1200 );
     factor = 293.6 / 1200.;
@@ -234,10 +234,10 @@ namespace zrinzrh {
     CHECK_THAT( 39.5344     * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.569960e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.791430    * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 1.176925e-1         , WithinRel( table( 5.569960e-3 * factor, 0.      * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.569960e-3 * factor, 39.5344 * factor ) ) );
-    CHECK_THAT( 3.853824e-1         , WithinRel( table( 1.791430    * factor, 0.      * factor ) ) );
-    CHECK_THAT( 4.06882e-17         , WithinRel( table( 1.791430    * factor, 39.5344 * factor ) ) );
+    CHECK_THAT( 1.176925e-1         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 3.853824e-1         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 4.06882e-17         , WithinRel( table.functions().back().values().back() ) );
   }
 
   void verifyZrInZrH( const ThermalScattering& tsl ) {

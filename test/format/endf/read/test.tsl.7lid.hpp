@@ -165,10 +165,10 @@ namespace li7inli7d {
     CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 4.752472e-4         , WithinRel( table( 5.625091e-3 * factor, 0.          * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.625091e-3 * factor, 1.976285e+2 * factor ) ) );
-    CHECK_THAT( 5.97347e-14         , WithinRel( table( 1.136492e+2 * factor, 0.          * factor ) ) );
-    CHECK_THAT( 2.98622e-50         , WithinRel( table( 1.136492e+2 * factor, 1.976285e+2 * factor ) ) );
+    CHECK_THAT( 4.752472e-4         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 5.97347e-14         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 2.98622e-50         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 400 );
     factor = 293.6 / 400.;
@@ -180,10 +180,10 @@ namespace li7inli7d {
     CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 8.849429e-4         , WithinRel( table( 5.625091e-3 * factor, 0.          * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.625091e-3 * factor, 1.976285e+2 * factor ) ) );
-    CHECK_THAT( 5.27000e-11         , WithinRel( table( 1.136492e+2 * factor, 0.          * factor ) ) );
-    CHECK_THAT( 6.90772e-38         , WithinRel( table( 1.136492e+2 * factor, 1.976285e+2 * factor ) ) );
+    CHECK_THAT( 8.849429e-4         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 5.27000e-11         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 6.90772e-38         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 500 );
     factor = 293.6 / 500.;
@@ -195,10 +195,10 @@ namespace li7inli7d {
     CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 1.386550e-3         , WithinRel( table( 5.625091e-3 * factor, 0.          * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.625091e-3 * factor, 1.976285e+2 * factor ) ) );
-    CHECK_THAT( 2.787189e-9         , WithinRel( table( 1.136492e+2 * factor, 0.          * factor ) ) );
-    CHECK_THAT( 6.59121e-31         , WithinRel( table( 1.136492e+2 * factor, 1.976285e+2 * factor ) , 1e-12) );
+    CHECK_THAT( 1.386550e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 2.787189e-9         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 6.59121e-31         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 600 );
     factor = 293.6 / 600.;
@@ -210,10 +210,10 @@ namespace li7inli7d {
     CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 2.001883e-3         , WithinRel( table( 5.625091e-3 * factor, 0.          * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.625091e-3 * factor, 1.976285e+2 * factor ) ) );
-    CHECK_THAT( 4.266766e-8         , WithinRel( table( 1.136492e+2 * factor, 0.          * factor ) ) );
-    CHECK_THAT( 3.48425e-26         , WithinRel( table( 1.136492e+2 * factor, 1.976285e+2 * factor ) ) );
+    CHECK_THAT( 2.001883e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 4.266766e-8         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 3.48425e-26         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 700 );
     factor = 293.6 / 700.;
@@ -225,10 +225,10 @@ namespace li7inli7d {
     CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 2.731707e-3         , WithinRel( table( 5.625091e-3 * factor, 0.          * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.625091e-3 * factor, 1.976285e+2 * factor ) ) );
-    CHECK_THAT( 3.117374e-7         , WithinRel( table( 1.136492e+2 * factor, 0.          * factor ) ) );
-    CHECK_THAT( 8.94715e-23         , WithinRel( table( 1.136492e+2 * factor, 1.976285e+2 * factor ) ) );
+    CHECK_THAT( 2.731707e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 3.117374e-7         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 8.94715e-23         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 800 );
     factor = 293.6 / 800.;
@@ -240,10 +240,10 @@ namespace li7inli7d {
     CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
     CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
     CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 3.576777e-3         , WithinRel( table( 5.625091e-3 * factor, 0.          * factor ) ) );
-    CHECK_THAT( min                 , WithinRel( table( 5.625091e-3 * factor, 1.976285e+2 * factor ) ) );
-    CHECK_THAT( 1.416596e-6         , WithinRel( table( 1.136492e+2 * factor, 0.          * factor ) ) );
-    CHECK_THAT( 3.37956e-20         , WithinRel( table( 1.136492e+2 * factor, 1.976285e+2 * factor ) ) );
+    CHECK_THAT( 3.576777e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 1.416596e-6         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 3.37956e-20         , WithinRel( table.functions().back().values().back() ) );
   }
 
   void verifyLi7InLi7D( const ThermalScattering& tsl ) {
