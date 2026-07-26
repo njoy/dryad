@@ -3,7 +3,7 @@
 BraggEdgeData
 =============
 
-General information about this concept
+Bragg edge data for a single temperature, consisting of edge energies and structure factor values.
 
 Constructor
 ~~~~~~~~~~~
@@ -20,3 +20,12 @@ Read-only Attributes
     ~BraggEdgeData.temperature
     ~BraggEdgeData.energies
     ~BraggEdgeData.values
+    ~BraggEdgeData.number_bragg_edges
+
+Methods
+~~~~~~~
+
+.. autosummary::
+    :toctree: generated/
+
+    ~BraggEdgeData.cross_section

@@ -3,7 +3,7 @@
 ShortCollisionTimeScatteringKernel
 ==================================
 
-General information about this concept
+S(a,b) scattering kernel using the short collision time approximation.
 
 Constructor
 ~~~~~~~~~~~
@@ -26,4 +26,4 @@ Methods
 .. autosummary::
     :toctree: generated/
 
-    ~TabulatedScatteringKernel.__call__
+    ~ShortCollisionTimeScatteringKernel.__call__

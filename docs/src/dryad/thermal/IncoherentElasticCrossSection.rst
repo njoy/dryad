@@ -3,7 +3,7 @@
 IncoherentElasticCrossSection
 =============================
 
-General information about this concept
+An analytical incoherent elastic thermal scattering cross section as a function of energy.
 
 Constructor
 ~~~~~~~~~~~
@@ -17,8 +17,8 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    ~IncoherentElasticScattering.lower_energy_limit
-    ~IncoherentElasticScattering.upper_energy_limit
+    ~IncoherentElasticCrossSection.lower_energy_limit
+    ~IncoherentElasticCrossSection.upper_energy_limit
     ~IncoherentElasticCrossSection.bound_cross_section
     ~IncoherentElasticCrossSection.debye_waller_integral
 

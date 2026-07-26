@@ -3,7 +3,7 @@
 CoherentElasticScattering
 =========================
 
-General information about this concept
+Coherent elastic thermal scattering data including Bragg edge information for multiple temperatures.
 
 Constructor
 ~~~~~~~~~~~

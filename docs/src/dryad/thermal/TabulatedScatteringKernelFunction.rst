@@ -3,7 +3,7 @@
 TabulatedScatteringKernelFunction
 =================================
 
-General information about this concept
+A tabulated S(a) scattering function with support for arithmetic operations.
 
 Constructor
 ~~~~~~~~~~~

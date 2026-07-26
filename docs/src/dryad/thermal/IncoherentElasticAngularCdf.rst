@@ -3,7 +3,7 @@
 IncoherentElasticAngularCdf
 ===========================
 
-General information about this concept
+Cumulative distribution function for incoherent elastic thermal scattering angular distributions.
 
 Constructor
 ~~~~~~~~~~~
@@ -17,8 +17,8 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    ~IncoherentElasticScattering.lower_energy_limit
-    ~IncoherentElasticScattering.upper_energy_limit
+    ~IncoherentElasticAngularCdf.lower_cosine_limit
+    ~IncoherentElasticAngularCdf.upper_cosine_limit
     ~IncoherentElasticAngularCdf.incident_energy
     ~IncoherentElasticAngularCdf.debye_waller_integral
 

@@ -722,18 +722,15 @@ class ScatteringKernel:
             cosine : float
                 the cosine value    ratio : float
                 the atomic mass ratio of the target to the projectile
+            a : float
+                the momentum transfer value
+            b : float
+                the energy transfer value
         """
     @typing.overload
     def __call__(self, a: float, b: float) -> float:
         """
         Evaluate the scattering kernel for a given momentum and energy transfer value
-        
-        Parameters
-        ----------
-            a : float
-                the momentum transfer value
-            b : float
-                the energy transfer value
         """
     def __copy__(self) -> ScatteringKernel:
         ...

@@ -3,7 +3,7 @@
 IncoherentElasticAngularDistribution
 ====================================
 
-General information about this distribution
+Incoherent elastic thermal scattering angular distribution defined by an analytical pdf and cdf.
 
 Constructor
 ~~~~~~~~~~~

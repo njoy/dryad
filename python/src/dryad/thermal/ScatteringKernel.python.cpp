@@ -182,7 +182,11 @@ void wrapScatteringKernel( python::module& module ) {
     "    cosine : float\n"
     "        the cosine value"
     "    ratio : float\n"
-    "        the atomic mass ratio of the target to the projectile"
+    "        the atomic mass ratio of the target to the projectile\n"
+    "    a : float\n"
+    "        the momentum transfer value\n"
+    "    b : float\n"
+    "        the energy transfer value"
   )
   .def(
 
@@ -191,13 +195,7 @@ void wrapScatteringKernel( python::module& module ) {
        { return self( a, b ); },
     python::arg( "a" ),
     python::arg( "b" ),
-    "Evaluate the scattering kernel for a given momentum and energy transfer value\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    a : float\n"
-    "        the momentum transfer value\n"
-    "    b : float\n"
-    "        the energy transfer value"
+    "Evaluate the scattering kernel for a given momentum and energy transfer value"
   )
   .def(
 
