@@ -23,6 +23,7 @@ SCENARIO( "IncoherentInelasticScattering" ) {
       double lower = 1e-5;
       double upper = 10.;
       double xs = 6.337872;
+      double ratio = 1.;
       std::vector< ScatteringKernel > kernels = {
 
         { 293.6, 300.,
@@ -35,7 +36,7 @@ SCENARIO( "IncoherentInelasticScattering" ) {
             { { 0., 5. }, { 0.1, 0.9 } } } }
       };
 
-      IncoherentInelasticScattering chunk( lower, upper, xs, std::move( kernels ) );
+      IncoherentInelasticScattering chunk( lower, upper, xs, ratio, std::move( kernels ) );
 
       THEN( "IncoherentInelasticScattering can be constructed and members can be tested" ) {
 
@@ -48,7 +49,7 @@ SCENARIO( "IncoherentInelasticScattering" ) {
 
     WHEN( "an instance of IncoherentInelasticScattering is given" ) {
 
-      IncoherentInelasticScattering chunk( 1e-5, 10., 6.337872,
+      IncoherentInelasticScattering chunk( 1e-5, 10., 6.337872, 1.,
                                            { { 293.6, 300.,
                                                { 0., 4. },
                                                { { { 0., 4. }, { 0.8, 0.2 } },
@@ -100,6 +101,20 @@ SCENARIO( "IncoherentInelasticScattering" ) {
         verifyChunk( chunk );
       } // THEN
 
+      THEN( "the atomic weight ratio can be changed" ) {
+
+        double newratio = 2.;
+        double original = 1.;
+
+        chunk.atomicWeightRatio( newratio );
+
+        CHECK( newratio == chunk.atomicWeightRatio() );
+
+        chunk.atomicWeightRatio( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
       THEN( "the scattering kernels can be changed" ) {
 
         std::vector< ScatteringKernel > newkernels = { { 300., 305.,
@@ -134,7 +149,7 @@ SCENARIO( "IncoherentInelasticScattering" ) {
 
     WHEN( "two instances of IncoherentInelasticScattering are given" ) {
 
-      IncoherentInelasticScattering left( 1e-5, 10., 6.337872,
+      IncoherentInelasticScattering left( 1e-5, 10., 6.337872, 1.,
                                           { { 293.6, 300.,
                                               { 0., 4. },
                                               { { { 0., 4. }, { 0.8, 0.2 } },
@@ -143,7 +158,7 @@ SCENARIO( "IncoherentInelasticScattering" ) {
                                               { 0., 5. },
                                               { { { 0., 5. }, { 0.9, 0.1 } },
                                                 { { 0., 5. }, { 0.1, 0.9 } } } } } );
-      IncoherentInelasticScattering equal( 1e-5, 10., 6.337872,
+      IncoherentInelasticScattering equal( 1e-5, 10., 6.337872, 1.,
                                            { { 293.6, 300.,
                                                { 0., 4. },
                                                { { { 0., 4. }, { 0.8, 0.2 } },
@@ -152,7 +167,7 @@ SCENARIO( "IncoherentInelasticScattering" ) {
                                                { 0., 5. },
                                                { { { 0., 5. }, { 0.9, 0.1 } },
                                                  { { 0., 5. }, { 0.1, 0.9 } } } } } );
-      IncoherentInelasticScattering different( 1e-5, 10., 6.337872,
+      IncoherentInelasticScattering different( 1e-5, 10., 6.337872, 1.,
                                                { { 293.6, 300.,
                                                    { 0., 5. },
                                                    { { { 0., 5. }, { 0.8, 0.2 } },
@@ -182,6 +197,8 @@ void verifyChunk( const IncoherentInelasticScattering& chunk ) {
   CHECK_THAT( 10. , WithinRel( chunk.upperEnergyLimit() ) );
 
   CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
+
+  CHECK_THAT( 1., WithinRel( chunk.atomicWeightRatio() ) );
 
   CHECK( true == chunk.hasScatteringKernel( 293.6 ) );
   CHECK( true == chunk.hasScatteringKernel( 325 ) );

@@ -136,7 +136,7 @@ namespace thermal {
                             boundaries, interpolants );
     }
 
-    return dryad::thermal::IncoherentInelasticScattering( lower, upper, xs, std::move( kernels ) );
+    return dryad::thermal::IncoherentInelasticScattering( lower, upper, xs, awr, std::move( kernels ) );
   }
 
 } // thermal namespace

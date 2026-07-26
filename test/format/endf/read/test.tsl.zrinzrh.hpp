@@ -78,6 +78,9 @@ namespace zrinzrh {
 
     CHECK( std::nullopt != elastic );
 
+    CHECK_THAT( 1e-5   , WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 1.00022, WithinRel( elastic->upperEnergyLimit() ) );
+
     CHECK_THAT( 6.337872, WithinRel( elastic->boundCrossSection() ) );
     CHECK( 8 == elastic->debyeWallerIntegral().temperatures().size() );
     CHECK( 8 == elastic->debyeWallerIntegral().values().size() );
@@ -95,10 +98,11 @@ namespace zrinzrh {
 
     CHECK( std::nullopt != inelastic );
 
-    CHECK_THAT( 1e-5, WithinRel( inelastic->lowerEnergyLimit() ) );
-    CHECK_THAT( 10. , WithinRel( inelastic->upperEnergyLimit() ) );
+    CHECK_THAT( 1e-5   , WithinRel( inelastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 1.00022, WithinRel( inelastic->upperEnergyLimit() ) );
     CHECK_THAT( 6.2 * ( 90.436 + 1. ) * ( 90.436 + 1. ) / 90.436 / 90.436,
                 WithinRel( inelastic->boundCrossSection() ) );
+    CHECK_THAT( 90.436, WithinRel( inelastic->atomicWeightRatio() ) );
 
     CHECK( 8 == inelastic->numberModeratorTemperatures() );
     CHECK( 8 == inelastic->moderatorTemperatures().size() );

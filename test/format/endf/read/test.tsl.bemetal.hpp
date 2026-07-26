@@ -79,6 +79,9 @@ namespace bemetal {
 
     CHECK( std::nullopt != elastic );
 
+    CHECK_THAT( 1e-5    , WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.000001, WithinRel( elastic->upperEnergyLimit() ) );
+
     CHECK( 11 == elastic->numberModeratorTemperatures() );
     CHECK_THAT(   77, WithinRel( elastic->braggEdges()[0].temperature() ) );
     CHECK_THAT(  100, WithinRel( elastic->braggEdges()[1].temperature() ) );
@@ -125,10 +128,11 @@ namespace bemetal {
 
     CHECK( std::nullopt != inelastic );
 
-    CHECK_THAT( 1e-5, WithinRel( inelastic->lowerEnergyLimit() ) );
-    CHECK_THAT( 10. , WithinRel( inelastic->upperEnergyLimit() ) );
+    CHECK_THAT( 1e-5    , WithinRel( inelastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.000001, WithinRel( inelastic->upperEnergyLimit() ) );
     CHECK_THAT( 6.153875 * ( 8.93478 + 1. ) * ( 8.93478 + 1. ) / 8.93478 / 8.93478,
                 WithinRel( inelastic->boundCrossSection() ) );
+    CHECK_THAT( 8.93478, WithinRel( inelastic->atomicWeightRatio() ) );
 
     CHECK( 11 == inelastic->numberModeratorTemperatures() );
     CHECK( 11 == inelastic->moderatorTemperatures().size() );

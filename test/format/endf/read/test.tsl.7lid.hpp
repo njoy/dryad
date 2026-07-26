@@ -72,6 +72,9 @@ namespace li7inli7d {
 
     CHECK( std::nullopt != elastic );
 
+    CHECK_THAT( 1e-5, WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( elastic->upperEnergyLimit() ) );
+
     CHECK( 6 == elastic->numberModeratorTemperatures() );
     CHECK_THAT( 293.6, WithinRel( elastic->braggEdges()[0].temperature() ) );
     CHECK_THAT( 400. , WithinRel( elastic->braggEdges()[1].temperature() ) );
@@ -113,6 +116,9 @@ namespace li7inli7d {
 
     CHECK( std::nullopt != elastic );
 
+    CHECK_THAT( 1e-5, WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( elastic->upperEnergyLimit() ) );
+
     CHECK_THAT( 0.6017726, WithinRel( elastic->boundCrossSection() ) );
     CHECK( 6 == elastic->debyeWallerIntegral().temperatures().size() );
     CHECK( 6 == elastic->debyeWallerIntegral().values().size() );
@@ -131,9 +137,10 @@ namespace li7inli7d {
     CHECK( std::nullopt != inelastic );
 
     CHECK_THAT( 1e-5, WithinRel( inelastic->lowerEnergyLimit() ) );
-    CHECK_THAT( 10. , WithinRel( inelastic->upperEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( inelastic->upperEnergyLimit() ) );
     CHECK_THAT( 0.97 * ( 6.955734 + 1. ) * ( 6.955734 + 1. ) / 6.955734 / 6.955734,
                 WithinRel( inelastic->boundCrossSection() ) );
+    CHECK_THAT( 6.955734, WithinRel( inelastic->atomicWeightRatio() ) );
 
     CHECK( 6 == inelastic->numberModeratorTemperatures() );
     CHECK( 6 == inelastic->moderatorTemperatures().size() );
