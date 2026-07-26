@@ -24,6 +24,7 @@ namespace thermal {
     double lower_;
     double upper_;
     double bound_xs_;
+    double ratio_;
     std::vector< ScatteringKernel > scattering_kernels_;
 
     std::vector< double > temperatures_;
@@ -89,15 +90,18 @@ namespace thermal {
      *  @param[in] lower     the lower energy limit
      *  @param[in] upper     the upper energy limit
      *  @param[in] xs        the bound atom cross section
+     *  @param[in] ratio     the atomic mass ratio of the target to the projectile
      *  @param[in] kernels   the scattering kernels
      */
     IncoherentInelasticScattering( double lower,
                                    double upper,
                                    double xs,
+                                   double ratio,
                                    std::vector< ScatteringKernel > kernels ) :
         lower_( lower ),
         upper_( upper ),
         bound_xs_( xs ),
+        ratio_( ratio ),
         scattering_kernels_( std::move( kernels ) ) {
 
       this->sortAndExtractTemperatures();
@@ -181,6 +185,32 @@ namespace thermal {
     void boundCrossSection( double xs ) {
 
       this->bound_xs_ = xs;
+    }
+
+    /**
+     *  @brief Return the ratio of the target mass to the projectile mass
+     */
+    double atomicWeightRatio() const {
+
+      return this->ratio_;
+    }
+
+    /**
+     *  @brief Return the ratio of the target mass to the projectile mass
+     */
+    double& atomicWeightRatio() {
+
+      return this->ratio_;
+    }
+
+    /**
+     *  @brief Set the ratio of the target mass to the projectile mass
+     *
+     *  @param[in] ratio   the mass ratio
+     */
+    void atomicWeightRatio( double ratio ) {
+
+      this->ratio_ = ratio;
     }
 
     /**

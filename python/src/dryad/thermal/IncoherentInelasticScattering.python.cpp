@@ -34,6 +34,8 @@ void wrapIncoherentInelasticScattering( python::module& module ) {
     "        the upper energy limit\n"
     "    xs : float\n"
     "        the bound atom cross section\n"
+    "    ratio : float\n"
+    "        the atomic mass ratio of the target to the projectile\n"
     "    kernels : list of njoy.dryad.thermal.ScatteringKernel\n"
     "        the scattering kernels"
   );
@@ -42,10 +44,11 @@ void wrapIncoherentInelasticScattering( python::module& module ) {
   component
   .def(
 
-    python::init< double, double, double,
+    python::init< double, double, double, double,
                   std::vector< ScatteringKernel > >(),
     python::arg( "lower" ), python::arg( "upper" ),
-    python::arg( "xs" ), python::arg( "kernels" ),
+    python::arg( "xs" ), python::arg( "ratio" ),
+    python::arg( "kernels" ),
     "Initialise the incoherent inelastic scattering data"
   )
   .def_property(
@@ -68,6 +71,13 @@ void wrapIncoherentInelasticScattering( python::module& module ) {
     python::overload_cast<>( &Component::boundCrossSection, python::const_ ),
     python::overload_cast< double >( &Component::boundCrossSection ),
     "The bound atom cross section value"
+  )
+  .def_property(
+
+    "atomic_weight_ratio",
+    python::overload_cast<>( &Component::atomicWeightRatio, python::const_ ),
+    python::overload_cast< double >( &Component::atomicWeightRatio ),
+    "The ratio of the target mass to the projectile mass"
   )
   .def_property_readonly(
 

@@ -586,6 +586,8 @@ class IncoherentInelasticScattering:
             the upper energy limit
         xs : float
             the bound atom cross section
+        ratio : float
+            the atomic mass ratio of the target to the projectile
         kernels : list of njoy.dryad.thermal.ScatteringKernel
             the scattering kernels
     """
@@ -596,7 +598,7 @@ class IncoherentInelasticScattering:
         ...
     def __eq__(self, arg0: IncoherentInelasticScattering) -> bool:
         ...
-    def __init__(self, lower: float, upper: float, xs: float, kernels: list[ScatteringKernel]) -> None:
+    def __init__(self, lower: float, upper: float, xs: float, ratio: float, kernels: list[ScatteringKernel]) -> None:
         """
         Initialise the incoherent inelastic scattering data
         """
@@ -620,6 +622,14 @@ class IncoherentInelasticScattering:
             temperature : float
                 the moderator temperature
         """
+    @property
+    def atomic_weight_ratio(self) -> float:
+        """
+        The ratio of the target mass to the projectile mass
+        """
+    @atomic_weight_ratio.setter
+    def atomic_weight_ratio(self, arg1: float) -> None:
+        ...
     @property
     def bound_cross_section(self) -> float:
         """
@@ -752,19 +762,23 @@ class ScatteringKernel:
                 the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
                 the linearisation tolerance
         """
-    def cross_section(self, bound: float, ratio: float, tolerance: float = 0.001) -> ...:
+    def cross_section(self, lower: float, upper: float, xs: float, ratio: float, tolerance: float = 0.001) -> ...:
         """
         Return the incoherent inelastic scattering cross section
         
         Parameters
         ----------
-            bound : float
+            lower : float
+                the lower energy limit
+            upper : float
+                the upper energy limit
+            xs : float
                 the bound cross section value
             ratio : float
                 the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
                 the linearisation tolerance
         """
-    def cross_section_value(self, incident: float, bound: float, ratio: float, tolerance: float = 0.001) -> float:
+    def cross_section_value(self, incident: float, xs: float, ratio: float, tolerance: float = 0.001) -> float:
         """
         Return the incoherent inelastic scattering cross section for a
         given incident energy
@@ -773,7 +787,7 @@ class ScatteringKernel:
         ----------
             incident : float
                 the incident energy value
-            bound : float
+            xs : float
                 the bound cross section value
             ratio : float
                 the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001

@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_THERMAL_SCATTERINGKERNEL
 
 // system includes
+#include <algorithm>
 #include <tuple>
 
 // other includes
@@ -37,6 +38,28 @@ namespace thermal {
     double moderatorTemperatureAsEnergy() const {
 
       return this->kt_;
+    }
+
+    /**
+     *  @brief Return the initial incident energy grid for a given lower and upper energy
+     *
+     *  @param[in] lower   the lower energy limit
+     *  @param[in] upper   the upper energy limit
+     */
+    std::vector< double > initialIncidentEnergyGrid( double lower, double upper ) const {
+
+      //! @todo optimise the grid better?
+      std::vector< double > grid = { 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 10. };
+
+      auto iter = std::upper_bound( grid.begin(), grid.end(), lower );
+      iter = grid.insert( iter, lower );
+      grid.erase( grid.begin(), iter );
+
+      iter = std::lower_bound( grid.begin(), grid.end(), upper );
+      iter = grid.insert( iter, upper );
+      grid.erase( std::next( iter ), grid.end() );
+
+      return grid;
     }
 
     /**
@@ -137,7 +160,7 @@ namespace thermal {
         // auto angular = this->lineariseAngularDistribution( incident, outgoing, ratio, tolerance );
         // double integral = scion::integration::integral( angular.first, angular.second, scion::integration::linlin );
 
-        double integral = integrator( [&] ( double cosine )
+        double integral = integrator( [&] ( auto&& cosine )
                                           { return this->operator()( incident, outgoing, cosine, ratio ); },
                                       -1., 1., constants::integration::tolerance );
         return std::sqrt( outgoing / incident ) * std::exp( -0.5 * b ) * integral;
@@ -400,31 +423,34 @@ namespace thermal {
      *  @brief Return the incoherent inelastic cross section value for a given incident energy
      *
      *  @param[in] incident    the incident energy
+     *  @param[in] xs          the bound atom cross section
      *  @param[in] ratio       the atomic mass ratio of the target to the projectile
      *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
     double
-    crossSectionValue( double incident, double bound, double ratio,
+    crossSectionValue( double incident, double xs, double ratio,
                        double tolerance = constants::linearisation::tolerance ) const {
 
       auto energy = this->lineariseEnergyDistribution( incident, ratio, tolerance );
       double integral = scion::integration::integral( energy.first, energy.second, scion::integration::linlin );
-      return 0.5 * bound / this->moderatorTemperatureAsEnergy() * integral;
+      return 0.5 * xs / this->moderatorTemperatureAsEnergy() * integral;
     }
 
     /**
      *  @brief Return the incoherent inelastic cross section
      *
-     *  @param[in] incident    the incident energy
+     *  @param[in] lower       the lower energy limit
+     *  @param[in] upper       the upper energy limit
+     *  @param[in] xs          the bound atom cross section
      *  @param[in] ratio       the atomic mass ratio of the target to the projectile
      *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
     TabulatedCrossSection
-    crossSection( double bound, double ratio,
+    crossSection( double lower,
+                  double upper,
+                  double xs,
+                  double ratio,
                   double tolerance = constants::linearisation::tolerance ) const {
-
-      //! @todo optimise the grid better?
-      std::vector< double > grid = { 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 10. };
 
       using MidpointSplit = scion::linearisation::MidpointSplit< double, double >;
       using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
@@ -433,8 +459,8 @@ namespace thermal {
       std::vector< double > energies;
       std::vector< double > values;
       Lineariser lineariser( energies, values );
-      lineariser( grid,
-                  [&] ( double incident ) { return this->crossSectionValue( incident, bound, ratio, tolerance ); },
+      lineariser( this->initialIncidentEnergyGrid( lower, upper ),
+                  [&] ( auto&& incident ) { return this->crossSectionValue( incident, xs, ratio, tolerance ); },
                   Tolerance( tolerance, constants::linearisation::threshold ),
                   MidpointSplit() );
 

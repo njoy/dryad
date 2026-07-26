@@ -243,7 +243,7 @@ void wrapScatteringKernel( python::module& module ) {
     "cross_section_value",
     &Component::crossSectionValue,
     python::arg( "incident" ),
-    python::arg( "bound" ),
+    python::arg( "xs" ),
     python::arg( "ratio" ),
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     std::string( "Return the incoherent inelastic scattering cross section for a\n"
@@ -252,7 +252,7 @@ void wrapScatteringKernel( python::module& module ) {
                  "----------\n"
                  "    incident : float\n"
                  "        the incident energy value\n"
-                 "    bound : float\n"
+                 "    xs : float\n"
                  "        the bound cross section value\n"
                  "    ratio : float\n"
                  "        the atomic mass ratio of the target to the projectile"
@@ -263,13 +263,19 @@ void wrapScatteringKernel( python::module& module ) {
 
     "cross_section",
     &Component::crossSection,
-    python::arg( "bound" ),
+    python::arg( "lower" ),
+    python::arg( "upper" ),
+    python::arg( "xs" ),
     python::arg( "ratio" ),
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     std::string( "Return the incoherent inelastic scattering cross section\n\n"
                  "Parameters\n"
                  "----------\n"
-                 "    bound : float\n"
+                 "    lower : float\n"
+                 "        the lower energy limit\n"
+                 "    upper : float\n"
+                 "        the upper energy limit\n"
+                 "    xs : float\n"
                  "        the bound cross section value\n"
                  "    ratio : float\n"
                  "        the atomic mass ratio of the target to the projectile"
