@@ -604,6 +604,17 @@ class IncoherentInelasticScattering:
         """
     def __ne__(self, arg0: IncoherentInelasticScattering) -> bool:
         ...
+    def cross_section(self, temperature: float, tolerance: float = 0.001) -> ...:
+        """
+        Return the incoherent inelastic scattering cross section for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temperature for which the cross section is requested
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
     def has_scattering_kernel(self, temperature: float) -> bool:
         """
         Return whether or not there is a scattering kernel for a given temperature

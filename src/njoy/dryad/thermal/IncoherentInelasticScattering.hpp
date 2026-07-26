@@ -299,6 +299,25 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the incoherent inelastic scattering cross section
+     *
+     *  @param[in] temperature   the moderator temperature for which the
+     *                           cross section is requested
+     *  @param[in] tolerance     the linearisation tolerance
+     */
+    TabulatedCrossSection
+    crossSection( double temperature,
+                  double tolerance = constants::linearisation::tolerance ) const {
+
+      return this->scatteringKernel( temperature ).crossSection(
+                 this->lowerEnergyLimit(),
+                 this->upperEnergyLimit(),
+                 this->boundCrossSection(),
+                 this->atomicWeightRatio(),
+                 tolerance );
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

@@ -14,6 +14,10 @@ namespace thermal {
 
 void wrapIncoherentInelasticScattering( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   // type aliases
   using Component = njoy::dryad::thermal::IncoherentInelasticScattering;
   using ScatteringKernel = njoy::dryad::thermal::ScatteringKernel;
@@ -120,6 +124,20 @@ void wrapIncoherentInelasticScattering( python::module& module ) {
     "    temperature : float\n"
     "        the moderator temperature",
     python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "temperature" ),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    std::string( "Return the incoherent inelastic scattering cross section for a given temperature\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    temperature : float\n"
+                 "        the moderator temperature for which the cross section is requested\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
   );
 
   // add standard equality comparison definitions
