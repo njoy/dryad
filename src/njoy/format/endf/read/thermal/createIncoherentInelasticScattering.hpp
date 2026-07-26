@@ -8,6 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "scion/math/compare.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/thermal/IncoherentInelasticScattering.hpp"
 #include "njoy/format/createVector.hpp"
 #include "njoy/format/endf/read/createBoundaries.hpp"
@@ -60,6 +61,7 @@ namespace thermal {
     auto moderator = createVector( temperatures.moderatorTemperatures() );
     auto effective = createVector( temperatures.effectiveTemperatures() );
 
+    bool scale = inelastic.temperatureOption() != 0;
     double awr = inelastic.constants().atomicWeightRatios()[0];
     double xs = inelastic.constants().totalFreeCrossSections()[0] / inelastic.constants().numberAtoms()[0];
     xs *= ( awr + 1. ) * ( awr + 1. ) / awr / awr;
@@ -105,12 +107,27 @@ namespace thermal {
       std::vector< dryad::thermal::TabulatedScatteringKernelFunction > functions;
       functions.reserve( betas.size() );
 
+      std::vector< double > current_betas = betas;
+      if ( scale ) {
+
+        double factor = 293.6 / moderator[i];
+        std::transform( current_betas.begin(), current_betas.end(), current_betas.begin(),
+                        [&] ( auto&& value ) { return value * factor; } );
+      }
+
       for ( std::size_t j = 0; j < betas.size(); ++j ) {
 
         auto alphas = createVector( law.scatteringFunctions()[j].alphas() );
         auto values = createVector( law.scatteringFunctions()[j].thermalScatteringValues()[i] );
         auto boundaries = createBoundaries( law.scatteringFunctions()[j].boundaries() );
         auto interpolants = createInterpolants( law.scatteringFunctions()[j].interpolants() );
+
+        if ( scale ) {
+
+          double factor = 293.6 / moderator[i];
+          std::transform( alphas.begin(), alphas.end(), alphas.begin(),
+                          [&] ( auto&& value ) { return value * factor; } );
+        }
 
         if ( inelastic.constants().sabStorageType() == 1 ) {
 
@@ -132,7 +149,7 @@ namespace thermal {
                                 std::move( boundaries ), std::move( interpolants ) );
       }
 
-      kernels.emplace_back( moderator[i], effective[i], betas, std::move( functions ),
+      kernels.emplace_back( moderator[i], effective[i], std::move( current_betas ), std::move( functions ),
                             boundaries, interpolants );
     }
 
