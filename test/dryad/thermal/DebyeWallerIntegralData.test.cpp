@@ -69,4 +69,16 @@ void verifyChunk( const DebyeWallerIntegralData& chunk ) {
   CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
   CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
   CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+
+  CHECK( true == chunk.hasValue( 1. ) );
+  CHECK( true == chunk.hasValue( 2. ) );
+  CHECK( true == chunk.hasValue( 3. ) );
+  CHECK( true == chunk.hasValue( 4. ) );
+  CHECK( false == chunk.hasValue( 3.5 ) );
+  CHECK_THAT( 4., WithinRel( chunk.value( 1. ) ) );
+  CHECK_THAT( 3., WithinRel( chunk.value( 2. ) ) );
+  CHECK_THAT( 2., WithinRel( chunk.value( 3. ) ) );
+  CHECK_THAT( 1., WithinRel( chunk.value( 4. ) ) );
+
+  CHECK_THROWS( chunk.value( 3.5 ) );
 }

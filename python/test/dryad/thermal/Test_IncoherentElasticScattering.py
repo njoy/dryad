@@ -7,7 +7,6 @@ import sys
 # local imports
 from njoy.dryad.thermal import IncoherentElasticScattering
 from njoy.dryad.thermal import DebyeWallerIntegralData
-from njoy.dryad import InterpolationType
 
 def verify_chunk( self, chunk ) :
 

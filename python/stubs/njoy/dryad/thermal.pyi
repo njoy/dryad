@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'ScatteringKernel', 'ShortCollisionTimeScatteringKernel', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -96,7 +96,7 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                the temperature
+                the moderator temperature
         """
     def cross_section(self, temperature: float) -> ...:
         """
@@ -114,7 +114,7 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                the temperature
+                the moderator temperature
         """
     @property
     def bragg_edges(self) -> list[BraggEdgeData]:
@@ -170,6 +170,24 @@ class DebyeWallerIntegralData:
         """
     def __ne__(self, arg0: DebyeWallerIntegralData) -> bool:
         ...
+    def has_value(self, temperature: float) -> bool:
+        """
+        Return whether or not there is a Debye-Waller integral value for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the temperature
+        """
+    def value(self, temperature: float) -> float:
+        """
+        Return the Debye-Waller integral value for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the temperature
+        """
     @property
     def temperatures(self) -> list[float]:
         """
@@ -544,16 +562,140 @@ class IncoherentElasticScattering:
         """
         The upper energy limit
         """
-class TabulatedScatteringKernel:
+class ScatteringKernel:
     """
-    An S(a,b) scattering kernel using tabulated scattering kernel functions
+    An S(a,b) scattering kernel using the short collision time approximation
     
     Parameters
     ----------
         moderator_temperature : float
             the moderator temperature
         effective_temperature : float
-            the effective temperature used in the SCT approximation
+            the effective temperature
+        table : njoy.dryad.thermal.TabulatedScatteringKernel
+            the tabulated S(a,b) scattering kernel
+        energy_transfers : list of float
+            the energy transfer values
+        functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction
+            the tabulated S(a) scattering functions
+        boundaries : list of int
+            the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+            the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+            the interpolation type (default lin-lin)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, a: float, b: float) -> float:
+        """
+        Evaluate the scattering kernel for a given energy value
+        
+        Parameters
+        ----------
+            a : float
+                the momentum transfer value
+            b : float
+                the energy transfer value
+        """
+    def __copy__(self) -> ScatteringKernel:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ScatteringKernel:
+        ...
+    def __eq__(self, arg0: ScatteringKernel) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, moderator_temperature: float, effective_temperature: float, table: TabulatedScatteringKernel) -> None:
+        """
+        Initialise the scattering kernel with a tabulated scattering kernel
+        """
+    @typing.overload
+    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the scattering kernel with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the scattering kernel with a single interpolation zone
+        """
+    def __ne__(self, arg0: ScatteringKernel) -> bool:
+        ...
+    @property
+    def effective_temperature(self) -> float:
+        """
+        The effective temperature
+        """
+    @property
+    def is_energy_transfer_symmetric(self) -> bool:
+        """
+        Flag to indicate whether or not the scattering kernel is symmetric along the energy transfer axis
+        """
+    @property
+    def moderator_temperature(self) -> float:
+        """
+        The moderator temperature
+        """
+    @property
+    def short_collision_time(self) -> ShortCollisionTimeScatteringKernel:
+        """
+        The short collision time approximation
+        """
+    @property
+    def tabulated_scattering_kernel(self) -> TabulatedScatteringKernel:
+        """
+        The tabulated scattering kernel
+        """
+class ShortCollisionTimeScatteringKernel:
+    """
+    An S(a,b) scattering kernel using the short collision time approximation
+    
+    Parameters
+    ----------
+        moderator_temperature : float
+            the moderator temperature
+        effective_temperature : float
+            the effective temperature
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, a: float, b: float) -> float:
+        """
+        Evaluate the scattering kernel for a given energy value
+        
+        Parameters
+        ----------
+            a : float
+                the momentum transfer value
+            b : float
+                the energy transfer value
+        """
+    def __copy__(self) -> ShortCollisionTimeScatteringKernel:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ShortCollisionTimeScatteringKernel:
+        ...
+    def __eq__(self, arg0: ShortCollisionTimeScatteringKernel) -> bool:
+        ...
+    def __init__(self, moderator_temperature: float, effective_temperature: float) -> None:
+        """
+        Initialise the scattering kernel
+        """
+    def __ne__(self, arg0: ShortCollisionTimeScatteringKernel) -> bool:
+        ...
+    @property
+    def effective_temperature(self) -> float:
+        """
+        The effective temperature
+        """
+    @property
+    def moderator_temperature(self) -> float:
+        """
+        The moderator temperature
+        """
+class TabulatedScatteringKernel:
+    """
+    An S(a,b) scattering kernel using tabulated scattering kernel functions
+    
+    Parameters
+    ----------
         energy_transfers : list of float
             the energy transfer values
         functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction
@@ -572,10 +714,10 @@ class TabulatedScatteringKernel:
         
         Parameters
         ----------
-            b : float
-                the energy transfer value
             a : float
                 the momentum transfer value
+            b : float
+                the energy transfer value
         """
     def __copy__(self) -> TabulatedScatteringKernel:
         ...
@@ -584,14 +726,14 @@ class TabulatedScatteringKernel:
     def __eq__(self, arg0: TabulatedScatteringKernel) -> bool:
         ...
     @typing.overload
-    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
         """
-        Initialise the S(a,b) scattering kernel with multiple interpolation zones
+        Initialise the tabulated S(a,b) scattering kernel with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
-        Initialise the S(a,b) scattering kernel with a single interpolation zone
+        Initialise the tabulated S(a,b) scattering kernel with a single interpolation zone
         """
     def __ne__(self, arg0: TabulatedScatteringKernel) -> bool:
         ...
@@ -610,11 +752,6 @@ class TabulatedScatteringKernel:
         The boundaries of the interpolation regions
         """
     @property
-    def effective_temperature(self) -> float:
-        """
-        The effective temperature used for the short collision time approximation
-        """
-    @property
     def energy_transfers(self) -> list[float]:
         """
         The energy transfer values for which scattering functions are given
@@ -630,9 +767,14 @@ class TabulatedScatteringKernel:
         The interpolation types of the interpolation regions
         """
     @property
-    def moderator_temperature(self) -> float:
+    def lower_energy_transfer_limit(self) -> float:
         """
-        The moderator temperature
+        The lower energy transfer limit
+        """
+    @property
+    def lower_momentum_transfer_limit(self) -> float:
+        """
+        The lower momentum transfer limit
         """
     @property
     def number_points(self) -> int:
@@ -643,6 +785,16 @@ class TabulatedScatteringKernel:
     def number_regions(self) -> int:
         """
         The number of interpolation regions in the table
+        """
+    @property
+    def upper_energy_transfer_limit(self) -> float:
+        """
+        The upper energy transfer limit
+        """
+    @property
+    def upper_momentum_transfer_limit(self) -> float:
+        """
+        The upper momentum transfer limit
         """
 class TabulatedScatteringKernelFunction:
     """
