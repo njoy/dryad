@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'MultigroupCrossSection', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -1158,6 +1158,95 @@ class MultiEnergyDistributions:
         ...
     def __ne__(self, arg0: MultiEnergyDistributions) -> bool:
         ...
+class MultigroupCrossSection:
+    """
+    A multigroup cross section table
+    
+    Parameters
+    ----------
+        boundaries : list of float
+            the energy boundaries
+        values : list of float
+            the cross section values
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    @typing.overload
+    def __add__(self, arg0: MultigroupCrossSection) -> MultigroupCrossSection:
+        ...
+    def __copy__(self) -> MultigroupCrossSection:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MultigroupCrossSection:
+        ...
+    def __eq__(self, arg0: MultigroupCrossSection) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: MultigroupCrossSection) -> MultigroupCrossSection:
+        ...
+    def __imul__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    def __init__(self, boundaries: list[float], values: list[float]) -> None:
+        """
+        Initialise the multigroup cross section table
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: MultigroupCrossSection) -> MultigroupCrossSection:
+        ...
+    def __itruediv__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    def __mul__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    def __ne__(self, arg0: MultigroupCrossSection) -> bool:
+        ...
+    def __neg__(self) -> MultigroupCrossSection:
+        ...
+    def __radd__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    def __rmul__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    def __rsub__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: MultigroupCrossSection) -> MultigroupCrossSection:
+        ...
+    def __truediv__(self, arg0: float) -> MultigroupCrossSection:
+        ...
+    @property
+    def boundaries(self) -> list[float]:
+        """
+        The energy boundaries
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_groups(self) -> int:
+        """
+        The number of groups
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The cross section values
+        """
 class Particle:
     """
     Particle information
