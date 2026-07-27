@@ -19,10 +19,10 @@ namespace write {
    *
    *  @param[in,out] parent   the parent node
    *  @param[in]     option   the gnds write options
-   *  @param[in]     xLabel    the x label
-   *  @param[in]     yLabel    the y label
-   *  @param[in]     xUnit     the x optional unit
-   *  @param[in]     yUnit     the y optional unit
+   *  @param[in]     xLabel   the x label
+   *  @param[in]     yLabel   the y label
+   *  @param[in]     xUnit    the optional x unit
+   *  @param[in]     yUnit    the optional y unit
    */
   inline pugi::xml_node
   insertAxes( pugi::xml_node& parent,
@@ -44,12 +44,12 @@ namespace write {
    *
    *  @param[in,out] parent   the parent node
    *  @param[in]     option   the gnds write options
-   *  @param[in]     xLabel    the x label
-   *  @param[in]     yLabel    the y label
-   *  @param[in]     zLabel    the z label
-   *  @param[in]     xUnit     the x optional unit
-   *  @param[in]     yUnit     the y optional unit
-   *  @param[in]     zUnit     the z optional unit
+   *  @param[in]     xLabel   the x label
+   *  @param[in]     yLabel   the y label
+   *  @param[in]     zLabel   the z label
+   *  @param[in]     xUnit    the optional x unit
+   *  @param[in]     yUnit    the optional y unit
+   *  @param[in]     zUnit    the optional z unit
    */
   inline pugi::xml_node
   insertAxes( pugi::xml_node& parent,
