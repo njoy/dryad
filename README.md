@@ -82,7 +82,7 @@ License: [MIT license](https://github.com/zeux/pugixml/blob/master/LICENSE.md)
 
 ## pybind11
 
-pybind11 is a C++ library that exposes C++ types in Python and vice versa, mainly to create Python bindings of existing C++ code. NJOY uses this library for its' Python bindings
+pybind11 is a C++ library that exposes C++ types in Python and vice versa, mainly to create Python bindings of existing C++ code. NJOY uses this library for its Python bindings
 
 The pybind11 source repository can be found [here](https://github.com/pybind/pybind11).
 
