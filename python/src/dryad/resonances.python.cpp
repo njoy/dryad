@@ -21,6 +21,7 @@ namespace resonances {
   void wrapTabulatedRadius( python::module& );
   void wrapChannelRadii( python::module& );
   void wrapHardSpherePenetrability( python::module& );
+  void wrapHardSpherePenetrabilityRatio( python::module& );
   void wrapHardSphereShiftFactor( python::module& );
   void wrapHardSpherePhaseShift( python::module& );
   void wrapCoulombPenetrability( python::module& );
@@ -64,6 +65,7 @@ void wrapResonances( python::module& module ) {
   resonances::wrapTabulatedRadius( submodule );
   resonances::wrapChannelRadii( submodule );
   resonances::wrapHardSpherePenetrability( submodule );
+  resonances::wrapHardSpherePenetrabilityRatio( submodule );
   resonances::wrapHardSphereShiftFactor( submodule );
   resonances::wrapHardSpherePhaseShift( submodule );
   resonances::wrapCoulombPenetrability( submodule );

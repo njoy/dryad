@@ -13,6 +13,10 @@ namespace dryad {
 
 void wrapIncoherentDistributionData( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 1 ) << njoy::constants::integration::tolerance;
+
   // type aliases
   using Component = njoy::dryad::IncoherentDistributionData;
   using ReferenceFrame = njoy::dryad::ReferenceFrame;
@@ -32,15 +36,15 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "together with the Klein-Nishina cross section determines the double\n"
     "differential cross section.\n\n"
     "This corresponds with the incoherent scattering function data given in MF27 MT504,\n"
-    "supplemented with optional external Compton profile data. \n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    frame : njoy.dryad.ReferenceFrame \n"
-    "         the reference frame of the distribution data\n"
-    "    scattering : njoy.dryad.TabulatedScatteringFunction \n"
-    "         the scatteirng function \n"
-    "    profiles : list of njoy.dryad.TabulatedCOmptonProfile \n"
-    "         the optional Compton profiles"
+    "supplemented with optional external Compton profile data.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
+    "        the reference frame of the distribution data\n"
+    "    scattering : njoy.dryad.TabulatedScatteringFunction\n"
+    "        the scattering function\n"
+    "    profiles : list of njoy.dryad.TabulatedComptonProfile\n"
+    "        the optional Compton profiles"
   );
 
   // wrap the component
@@ -51,7 +55,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
                   std::optional< std::vector< TabulatedComptonProfile > > >(),
     python::arg( "frame" ), python::arg( "scattering" ),
     python::arg( "profiles" ) = std::nullopt,
-    ""
+    "Initialise the incoherent distribution data"
   )
   .def_property_readonly(
 
@@ -80,7 +84,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "compton_profiles",
     python::overload_cast<>( &Component::comptonProfiles, python::const_ ),
     python::overload_cast< std::optional< std::vector< TabulatedComptonProfile > > >( &Component::comptonProfiles ),
-    "The compton profiles"
+    "The Compton profiles"
   )
   .def_property_readonly(
 
@@ -100,15 +104,15 @@ void wrapIncoherentDistributionData( python::module& module ) {
     python::overload_cast< double, double >( &Component::averageEnergy, python::const_ ),
     python::arg( "energy" ),
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
-    "Calculate the average outgoing energy\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    energy : float \n"
-    "         the incident energy\n"
-    "    energies : list of float \n"
-    "         the incident energies\n"
-    "    tolerance : float \n"
-    "         the integration tolerance (default: 1e-8)"
+    std::string( "Calculate the average outgoing energy\n\n"
+                 "Parameters \n"
+                 "---------- \n"
+                 "    energy : float \n"
+                 "        the incident energy\n"
+                 "    energies : list of float \n"
+                 "        the incident energies\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the integration tolerance" ).c_str()
   )
   .def(
 

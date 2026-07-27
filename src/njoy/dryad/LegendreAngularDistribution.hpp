@@ -6,7 +6,6 @@
 #include <optional>
 
 // other includes
-#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
@@ -27,8 +26,6 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/LegendreAngularDistribution/src/calculateCdf.hpp"
-
   public:
 
     /* type aliases */
@@ -38,7 +35,48 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/LegendreAngularDistribution/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    LegendreAngularDistribution() = default;
+
+    LegendreAngularDistribution( const LegendreAngularDistribution& ) = default;
+    LegendreAngularDistribution( LegendreAngularDistribution&& ) = default;
+
+    LegendreAngularDistribution& operator=( const LegendreAngularDistribution& ) = default;
+    LegendreAngularDistribution& operator=( LegendreAngularDistribution&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] pdf         the pdf function
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
+     */
+    LegendreAngularDistribution( LegendreAngularDistributionFunction pdf,
+                                 bool normalise = false ) :
+        pdf_( std::move( pdf ) ), cdf_() {
+
+      if ( normalise ) {
+
+        this->pdf().normalise();
+      }
+      this->cdf() = this->pdf().calculateCdf();
+    }
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] coefficients   the coefficients of the distribution pdf represented by a
+     *                            Legendre series (from lowest to highest order coefficient)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
+     */
+    LegendreAngularDistribution( std::vector< double > coefficients,
+                                 bool normalise = false ) :
+        LegendreAngularDistribution(
+            LegendreAngularDistributionFunction( std::move( coefficients ) ),
+            normalise ) {}
 
     /* methods */
 
@@ -59,6 +97,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the probability distribution function (pdf) of the distribution
+     */
+    LegendreAngularDistributionFunction& pdf() {
+
+      return this->pdf_;
+    }
+
+    /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
     const LegendreAngularDistributionFunction& cdf() const {
@@ -67,9 +113,17 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the cumulative distribution function (cdf) of the distribution
+     */
+    LegendreAngularDistributionFunction& cdf() {
+
+      return this->cdf_;
+    }
+
+    /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param cosine   the value to be evaluated
+     *  @param[in] cosine   the value to be evaluated
      */
     double operator()( double cosine ) const {
 
@@ -81,8 +135,8 @@ namespace dryad {
      */
     void normalise() {
 
-      this->pdf_.normalise();
-      this->calculateCdf();
+      this->pdf().normalise();
+      this->cdf() = this->pdf().calculateCdf();
     }
 
     /**

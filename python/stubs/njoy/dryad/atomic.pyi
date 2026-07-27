@@ -24,17 +24,17 @@ class ElectronSubshellConfiguration:
     Parameters
     ----------
         id : njoy.dryad.id.ElectronSubshellID  
-               the electron subshell identifier
+              the electron subshell identifier
         energy : float     
-               the electron subshell binding energy
+              the electron subshell binding energy
         population : float  
-               the electron subshell population when the atom is neutral
+              the electron subshell population when the atom is neutral
         radiative : list of RadiativeTransitionData, default [] 
-               the radiative transitions that are available (default: an empty list)
+              the radiative transitions that are available (default: an empty list)
         nonradiative : list of NonRadiativeTransitionData, default [] 
-               the non-radiative transitions that are available (default: an empty list)
+              the non-radiative transitions that are available (default: an empty list)
         normalise : bool, default false  
-               option to indicate whether or not to normalise all probability data (default: no normalisation)
+              option to indicate whether or not to normalise all probability data (default: no normalisation)
     
     """
     __hash__: typing.ClassVar[None] = None
@@ -45,7 +45,9 @@ class ElectronSubshellConfiguration:
     def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
     def __init__(self, id: njoy.dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData] = [], non_radiative: list[NonRadiativeTransitionData] = [], normalise: bool = False) -> None:
-        ...
+        """
+        Initialise the electron subshell configuration
+        """
     def __ne__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
     def has_non_radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID) -> bool:
@@ -55,10 +57,10 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
             emitting_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the emitted electron originated
+                the identifier of the subshell from which the emitted electron originated
         """
     def has_radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID) -> bool:
         """
@@ -67,8 +69,8 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
         """
     def non_radiative_probability(self, first: njoy.dryad.id.ElectronSubshellID, last: njoy.dryad.id.ElectronSubshellID) -> float:
         """
@@ -77,9 +79,9 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             first : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the first subshell in the range
+                the identifier of the first subshell in the range
             last : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the last subshell in the range (included)
+                the identifier of the last subshell in the range (included)
         """
     def non_radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID) -> NonRadiativeTransitionData:
         """
@@ -88,10 +90,10 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
             emitting_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the emitted electron originated
+                the identifier of the subshell from which the emitted electron originated
         """
     def normalise(self) -> None:
         """
@@ -104,9 +106,9 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             first : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the first subshell in the range
+                the identifier of the first subshell in the range
             last : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the last subshell in the range (included)
+                the identifier of the last subshell in the range (included)
         """
     def radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID) -> RadiativeTransitionData:
         """
@@ -115,8 +117,8 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
         """
     @property
     def average_non_radiative_energy(self) -> float:
@@ -213,7 +215,7 @@ class NonRadiativeTransitionData:
     A non-radiative transition in atomic relaxation
     
     In a non-radiative transition, an electron from another shell fills a
-    vacancy in the current shell while another electron () is emitted. The
+    vacancy in the current shell while another electron is emitted. The
     energy of the emitted electron is equal to the binding energy of the
     subshell with the vacancy minus the binding energy of the subshell from
     which the electron filling the vacancy originated from and the subshell
@@ -239,7 +241,9 @@ class NonRadiativeTransitionData:
     def __eq__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
-        ...
+        """
+        Initialise the non-radiative transition data
+        """
     def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     @property
@@ -291,14 +295,13 @@ class RadiativeTransitionData:
     
     Parameters
     ----------
-        originating_shell : njoy.dryad.id.ElectronSubshellID 
-             the identifier of the subshell from which the
-             vacancy filling electron originated
+        originating_shell : njoy.dryad.id.ElectronSubshellID
+            the identifier of the subshell from which the
+            vacancy filling electron originated
         probability : float
-             the probability of the transition
+            the probability of the transition
         energy : float,  default None
-             the energy of the emitted photon (default: undefined)
-    
+            the energy of the emitted photon (default: undefined)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> RadiativeTransitionData:
@@ -308,7 +311,9 @@ class RadiativeTransitionData:
     def __eq__(self, arg0: RadiativeTransitionData) -> bool:
         ...
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
-        ...
+        """
+        Initialise the radiative transition data
+        """
     def __ne__(self, arg0: RadiativeTransitionData) -> bool:
         ...
     @property
@@ -346,9 +351,9 @@ class TransitionType:
     
     Members:
     
-      Radiative
+      Radiative : A radiative transition, an electron from another shell fills a vacancy in the current shell while emitting a photon
     
-      NonRadiative
+      NonRadiative : An electron from another shell fills a vacancy in the current shell while another electron is emitted
     """
     NonRadiative: typing.ClassVar[TransitionType]  # value = <TransitionType.NonRadiative: 1>
     Radiative: typing.ClassVar[TransitionType]  # value = <TransitionType.Radiative: 0>

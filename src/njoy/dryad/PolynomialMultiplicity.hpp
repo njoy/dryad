@@ -20,15 +20,48 @@ namespace dryad {
   class PolynomialMultiplicity :
       protected scion::math::PolynomialSeries< double, double > {
 
+    /* constructor */
+
+    private:
+
+    /**
+     *  @brief Private constructor
+     *
+     *  @param[in] series   the polynomial series
+     */
+    PolynomialMultiplicity( PolynomialSeries< double, double > series ) :
+      PolynomialSeries( std::move( series ) ) {}
+
   public:
 
     /* type aliases */
+
     using PolynomialSeries::XType;
     using PolynomialSeries::YType;
 
     /* constructor */
 
-    #include "njoy/dryad/PolynomialMultiplicity/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    PolynomialMultiplicity() = default;
+
+    PolynomialMultiplicity( const PolynomialMultiplicity& ) = default;
+    PolynomialMultiplicity( PolynomialMultiplicity&& ) = default;
+
+    PolynomialMultiplicity& operator=( const PolynomialMultiplicity& ) = default;
+    PolynomialMultiplicity& operator=( PolynomialMultiplicity&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] lower          the lower energy limit
+     *  @param[in] upper          the upper energy limit
+     *  @param[in] coefficients   the coefficients of the polynomial series (from
+     *                            lowest to highest order coefficient)
+     */
+    PolynomialMultiplicity( double lower, double upper, std::vector< double > coefficients ) :
+      PolynomialSeries( std::move( lower ), std::move( upper ), std::move( coefficients ) ) {}
 
     /* methods */
 

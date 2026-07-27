@@ -15,7 +15,7 @@ from njoy.dryad.atomic import NonRadiativeTransitionData
 
 def verify_chunk( self, chunk, normalise ) :
 
-    self.assertIsNone( chunk.documentation.awr )
+    # documentation
     self.assertIsNone( chunk.documentation.library )
     self.assertIsNone( chunk.documentation.version )
     self.assertIsNone( chunk.documentation.description )

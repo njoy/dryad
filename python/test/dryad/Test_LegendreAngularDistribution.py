@@ -45,8 +45,8 @@ class Test_LegendreAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 1.0 / normalisation, chunk( cosine =  0. ) )
             self.assertAlmostEqual( 1.5 / normalisation, chunk( cosine =  1. ) )
 
-            # verify average cosine
-            self.assertAlmostEqual( 1. / 3. / normalisation, chunk.average_cosine )
+            # verify average cosine - always the mean value even for unnormalised distributions
+            self.assertAlmostEqual( 1. / 3. / 2., chunk.average_cosine )
 
             # verify linearisation
             linear = chunk.linearise()

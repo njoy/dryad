@@ -25,13 +25,13 @@ void wrapElectronSubshellID( python::module& module ) {
 
     module,
     "ElectronSubshellID",
-    "The electron subshell identifier\n\n"
+    "The electron subshell identifier, with associated symbol and aliases\n\n"
     "Parameters\n"
     "----------\n"
     "    number : int \n"
-    "         the subshell number\n"
+    "        the subshell number\n"
     "    string : str \n"
-    "         the subshell symbol, name or alternative name\n\n"
+    "        the subshell symbol, name or alternative name\n\n"
   );
 
   // wrap the component

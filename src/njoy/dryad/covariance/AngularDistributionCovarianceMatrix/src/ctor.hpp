@@ -27,7 +27,7 @@ AngularDistributionCovarianceMatrix& operator=( AngularDistributionCovarianceMat
 AngularDistributionCovarianceMatrix( ReferenceFrame frame,
                                      AngularDistributionMetadata metadata,
                                      matrix::Matrix< double > covariances,
-                                     bool relative = true ) :
+                                     bool relative = true) :
   Parent( std::move( metadata ), std::move( covariances ), relative ),
   frame_( std::move( frame ) ) {}
 
@@ -94,7 +94,7 @@ AngularDistributionCovarianceMatrix( ReferenceFrame frame,
  *  @brief Constructor using eigenvalues and eigenvectors for an on-diagonal
  *         angular distribution covariance matrix
  *
- *  @param[in] frame         the reference frame of the covariance data
+ *  @param[in] frame          the reference frame of the covariance data
  *  @param[in] metadata       the row and column metadata
  *  @param[in] eigenvalues    the eigenvalues
  *  @param[in] eigenvectors   the associated eigenvectors

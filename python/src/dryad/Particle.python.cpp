@@ -25,7 +25,7 @@ void wrapParticle( python::module& module ) {
     module,
     "Particle",
     "Particle information\n\n"
-    "The Particle class contains specific information for a particle:\n"
+    "The Particle class contains specific information for a particle:\n\n"
     "  - a particle identifier\n"
     "  - an optional atomic mass value (always for the ground state) and an\n"
     "    optional uncertainty\n"
@@ -33,13 +33,13 @@ void wrapParticle( python::module& module ) {
     "    optional uncertainty\n"
     "  - an optional excited state energy value and an optional uncertainty\n"
     "  - an optional spin and parity (which is either + or -)\n\n"
-    "The data is stored in the following units:\n"
+    "The data is stored in the following units:\n\n"
     "  - atomic mass values are in atomic mass units\n"
     "  - energy values are in eV\n\n"
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier\n"
+    "        the particle identifier\n"
     "    mass : float, default None\n"
     "        the atomic mass (default: None)\n"
     "    nuclear_mass : float, default None\n"
@@ -55,7 +55,7 @@ void wrapParticle( python::module& module ) {
     "    nuclear_mass_uncertainty : float, default None\n"
     "        the uncertainty on the nuclear mass value (default: None)\n"
     "    energy_uncertainty : float, default None\n"
-    "        the uncertainty on the ecited level energy value (default: None)"
+    "        the uncertainty on the excited level energy value (default: None)"
   );
 
   // wrap the component
@@ -81,6 +81,78 @@ void wrapParticle( python::module& module ) {
     python::arg( "nuclear_mass_uncertainty" ) = std::nullopt,
     python::arg( "energy_uncertainty" ) = std::nullopt,
     "Initialise the particle information"
+  )
+  .def_static(
+
+    "photon",
+    &Component::photon,
+    "The default particle instance for photons"
+  )
+  .def_static(
+
+    "electron",
+    &Component::electron,
+    "The default particle instance for electrons"
+  )
+  .def_static(
+
+    "positron",
+    &Component::positron,
+    "The default particle instance for positrons"
+  )
+  .def_static(
+
+    "neutron",
+    &Component::neutron,
+    "The default particle instance for neutrons"
+  )
+  .def_static(
+
+    "proton",
+    &Component::proton,
+    "The default particle instance for protons"
+  )
+  .def_static(
+
+    "deuteron",
+    &Component::deuteron,
+    "The default particle instance for deuterons"
+  )
+  .def_static(
+
+    "triton",
+    &Component::triton,
+    "The default particle instance for tritons"
+  )
+  .def_static(
+
+    "helion",
+    &Component::helion,
+    "The default particle instance for helions"
+  )
+  .def_static(
+
+    "alpha",
+    &Component::alpha,
+    "The default particle instance for alphas"
+  )
+  .def_static(
+
+    "default_particle",
+    &Component::defaultParticle,
+    python::arg( "id" ),
+    "The default particle instance for a given particle identifier\n\n"
+    "This function creates a default particle instance for the given particle\n"
+    "identifier. When relevant, the discrete level energies and spins-parity pairs\n"
+    "from RIPL-3 and the atomic masses from AME-2020 are used.\n\n"
+    "When more sources for the particle data become available, this function will\n"
+    "provide options to select data from.\n\n"
+    "When an atomic identifier (either with or without vacancies) is used, the\n"
+    "elemental particle instance will be returned.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ParticleID\n"
+    "        the particle identifier"
   )
   .def_property(
 

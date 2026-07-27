@@ -51,6 +51,11 @@ namespace covariance {
 
     /* constructor */
 
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] tolerance   the absolute comparison tolerance
+     */
     BoundedCorrelations( double tolerance = constants::psychic::tolerance ) :
       Parent( "psychic.covariance.BoundedCorrelations" ),
       tolerance_( tolerance ) {}
@@ -113,7 +118,7 @@ namespace covariance {
      *
      *  The test returns the following status values:
      *    - Success : the correlations are between -1 and 1
-     *    - Warning : the correlations are between -1 and 1, taking into account a tolerance
+     *    - Warning : the correlations are between -1 and 1, +/- the tolerance
      *    - Fail : the correlations matrix are outside the -1 and 1 range
      *    - Skipped : the test was skipped
      *

@@ -14,12 +14,12 @@ shacl_FetchContent_Declare( eigen
 
 shacl_FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         9428024113dd96ffb3e2fe87e3bdfec9aa225a32  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         09733ce8feda44821eeaba3fd0bb24b4a9e6cfcd  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         6cdd1a5f4db38ead180849f3808dde161a30d07e  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         36a7d0ccf39a5544c6777b263bcda3cde3d2a3c5  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ACEtk
@@ -29,7 +29,7 @@ shacl_FetchContent_Declare( ACEtk
 
 shacl_FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         b57929d3230e21b019527ef657c808904a40182c  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         08c8adb4fcf10f495e46a520e5e2ee405943f41f  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

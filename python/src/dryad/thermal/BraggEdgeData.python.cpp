@@ -25,14 +25,16 @@ void wrapBraggEdgeData( python::module& module ) {
     module,
     "BraggEdgeData",
     "Bragg edge data for a single temperature\n\n"
+    "The Bragg edge data consists of edge energies and structure\n"
+    "factor values.\n\n"
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "         the temperature\n"
+    "        the temperature\n"
     "    energies : list of float\n"
-    "         the temperature\n"
+    "        the temperature\n"
     "    values : list of float\n"
-    "         the structure factor values"
+    "        the structure factor values"
   );
 
   // wrap the component
@@ -70,6 +72,17 @@ void wrapBraggEdgeData( python::module& module ) {
     "values",
     python::overload_cast<>( &Component::values, python::const_ ),
     "The structure factor values"
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "upper" ),
+    "Return the coherent elastic scattering cross section up to the given energy\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    upper : float\n"
+    "        the upper energy limit"
   );
 
   // add standard equality comparison definitions

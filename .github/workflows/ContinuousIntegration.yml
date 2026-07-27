@@ -38,10 +38,15 @@ jobs:
         which ${{matrix.cxx}}
         ${{matrix.cxx}} --version
     - uses: actions/checkout@v4
+    - name: Clone njoy-data
+      uses: actions/checkout@v4
+      with:
+        repository: 'njoy/njoy-data'
+        path: 'njoy-data'
     - name: mkdir bin
       run: mkdir bin
     - name: cmake
-      run: cmake -DPYTHON_EXECUTABLE=$(which python3) -D CMAKE_CXX_COMPILER=`which ${{matrix.cxx}}` -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D njoy.tests=ON ..
+      run: cmake -DNJOY_DATAPATH=${{ github.workspace }}/njoy-data -DPYTHON_EXECUTABLE=$(which python3) -D CMAKE_CXX_COMPILER=`which ${{matrix.cxx}}` -D CMAKE_BUILD_TYPE=${{matrix.build_type}} -D njoy.tests=ON ..
       working-directory: ./bin
     - name: make
       run: make -j2

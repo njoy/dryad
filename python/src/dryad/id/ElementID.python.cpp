@@ -25,7 +25,15 @@ void wrapElementID( python::module& module ) {
 
     module,
     "ElementID",
-    "The element identifier"
+    "The element identifier, with associated element symbol, name and aliases\n\n"
+    "Comparison operators are provided using the logical order given by the\n"
+    "element number.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    number : int\n"
+    "        the element number\n"
+    "    string : str\n"
+    "        the element symbol, name or alternative name"
   );
 
   // wrap the component
@@ -34,19 +42,13 @@ void wrapElementID( python::module& module ) {
 
     python::init< int >(),
     python::arg( "number" ),
-    "Initialise the element identifier\n\n"
-    "Arguments:\n"
-    "    self     the identifier\n"
-    "    number   the element number"
+    "Initialise the element identifier using an element number"
   )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "string" ),
-    "Initialise the element identifier\n\n"
-    "Arguments:\n"
-    "    self     the identifier\n"
-    "    string   the element symbol, name or alternative name"
+    "Initialise the element identifier using an element symbol, name or alternative name"
   )
   .def_property_readonly(
 

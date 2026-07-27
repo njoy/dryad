@@ -22,14 +22,26 @@ void wrapReactionCategory( python::module& module ) {
 
     module,
     "ReactionCategory",
-    "The reaction category",
+    "The reaction category\n\n"
+    "This enum is used to differentiate reaction categories in the ProjectileTarget.\n"
+    "We currently have two categories: primary and summation.",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "Primary",   Component::Primary )
-  .value( "Summation", Component::Summation );
+  .value(
+
+    "Primary",
+    Component::Primary,
+    "A primary independent reaction that contributes to the total cross section"
+  )
+  .value(
+
+    "Summation",
+    Component::Summation,
+    "A summation reaction with or without reaction products that does not count towards the total cross section"
+  );
 }
 
 } // dryad namespace

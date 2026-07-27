@@ -51,9 +51,9 @@ SCENARIO( "LegendreAngularDistributionFunction" ) {
         CHECK_THAT( -62./3., WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the first raw moment of a LegendreAngularDistributionFunction can be calculated" ) {
+      THEN( "the mean of a LegendreAngularDistributionFunction can be calculated" ) {
 
-        CHECK_THAT( 146./15., WithinRel( chunk.mean() ) );
+        CHECK_THAT( 146./15. / (-62./3.), WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "a LegendreAngularDistributionFunction can be linearised" ) {

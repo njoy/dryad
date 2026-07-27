@@ -1,0 +1,61 @@
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTIONFUNCTIONS
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTIONFUNCTIONS
+
+// system includes
+#include <optional>
+#include <vector>
+
+// other includes
+#include "pugixml.hpp"
+#include "tools/Log.hpp"
+#include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistributionFunction.hpp"
+
+namespace njoy {
+namespace format {
+namespace gnds {
+namespace read {
+
+  /**
+   *  @brief Create TabulatedAngularDistributionFunction instances from a GNDS function1ds node
+   *
+   *  @param[in] function1ds   the gnds function1ds node
+   *  @param[in] units         the unit information
+   */
+  inline std::pair< std::vector< std::optional< double > >,
+                    std::vector< dryad::TabulatedAngularDistributionFunction > >
+  createTabulatedAngularDistributionFunctions( pugi::xml_node function1ds, const Axes& units ) {
+
+    // check that this is a valid function1ds node
+    throwExceptionOnWrongNode( function1ds, "function1ds" );
+
+    // check if this is a collection of XYs1d nodes
+    if ( strcmp( function1ds.first_child().name(), "XYs1d" ) == 0 ) {
+
+      std::vector< std::optional< double > > grid;
+      std::vector< dryad::TabulatedAngularDistributionFunction > functions;
+
+      for ( pugi::xml_node function = function1ds.child( "XYs1d" );
+            function; function = function.next_sibling( "XYs1d" ) ) {
+
+        auto data = createTabulatedAngularDistributionFunction( function, units );
+        grid.emplace_back( std::move( data.first ) );
+        functions.emplace_back( std::move( data.second ) );
+      }
+
+      return { std::move( grid ), std::move( functions ) };
+    }
+    else {
+
+      Log::error( "The function1ds node does not contain XYs1d nodes, found \'{}\' nodes",
+                  function1ds.first_child().name() );
+      throw std::exception();
+    }
+  }
+
+} // read namespace
+} // gnds namespace
+} // format namespace
+} // njoy namespace
+
+#endif

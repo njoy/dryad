@@ -25,14 +25,20 @@ void wrapParticlePair( python::module& module ) {
 
     module,
     "ParticlePair",
-    "Particle information for resonance reconstruction\n\n"
-    "A ParticlePair represents the two particles involved in a entrance or exit\n"
+    "Particle pair information for resonance reconstruction\n\n"
+    "A ParticlePair represents the two particles involved in an entrance or exit\n"
     "reaction channel (we assume that the reaction is a two-body reaction). The\n"
     "pair consists of a \"light\" incident or outgoing particle (e.g. a neutron,\n"
     "photon, alpha, etc.) and a \"heavy\" target or residual nucleus (e.g. H1,\n"
     "He4, U235, etc.).\n\n"
-    "The ParticlePair class gives us access to information related to the\n"
-    "pair of particles such as the mass ratio and the reduced mass."
+    "The ParticlePair class gives access to information related to the\n"
+    "pair of particles such as the mass ratio and the reduced mass.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    light_particle : njoy.dryad.Particle\n"
+    "        the light particle\n"
+    "    heavy_particle : njoy.dryad.Particle\n"
+    "        the heavy particle"
    );
 
   // wrap the component
@@ -41,11 +47,7 @@ void wrapParticlePair( python::module& module ) {
 
     python::init< Particle, Particle >(),
     python::arg( "light_particle" ), python::arg( "heavy_particle" ),
-    "Initialise the particle pair information\n\n"
-    "Arguments:\n"
-    "    self             the particle pair information\n"
-    "    light_particle   the light particle\n"
-    "    heavy_particle   the heavy particle"
+    "Initialise the particle pair with two particles"
   )
   .def_property_readonly(
 

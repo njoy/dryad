@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_ATOMIC_ElECTRONSUBSHELLCONFIGURATION
-#define NJOY_DRYAD_ATOMIC_ElECTRONSUBSHELLCONFIGURATION
+#ifndef NJOY_DRYAD_ATOMIC_ELECTRONSUBSHELLCONFIGURATION
+#define NJOY_DRYAD_ATOMIC_ELECTRONSUBSHELLCONFIGURATION
 
 // system includes
 #include <algorithm>
@@ -216,8 +216,8 @@ namespace atomic {
     /**
      *  @brief Return whether or not a given radiative transition is present
      *
-     *  @param originating   the identifier of the subshell from which the
-     *                       vacancy filling electron originated
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
      */
     bool hasRadiativeTransition( const id::ElectronSubshellID& originating ) const {
 
@@ -229,10 +229,10 @@ namespace atomic {
     /**
      *  @brief Return whether or not a given non-radiative transition is present
      *
-     *  @param originating   the identifier of the subshell from which the
-     *                       vacancy filling electron originated
-     *  @param emitting      the identifier of the subshell from which the
-     *                       emitted electron originated
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
+     *  @param[in] emitting      the identifier of the subshell from which the
+     *                           emitted electron originated
      */
     bool hasNonRadiativeTransition( const id::ElectronSubshellID& originating,
                                     const id::ElectronSubshellID& emitting ) const {
@@ -246,8 +246,8 @@ namespace atomic {
     /**
      *  @brief Return the requested radiative transition
      *
-     *  @param originating   the identifier of the subshell from which the
-     *                       vacancy filling electron originated
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
      */
     const RadiativeTransitionData&
     radiativeTransition( const id::ElectronSubshellID& originating ) const {
@@ -269,10 +269,10 @@ namespace atomic {
     /**
      *  @brief Return the requested non-radiative transition
      *
-     *  @param originating   the identifier of the subshell from which the
-     *                       vacancy filling electron originated
-     *  @param emitting      the identifier of the subshell from which the
-     *                       emitted electron originated
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
+     *  @param[in] emitting      the identifier of the subshell from which the
+     *                           emitted electron originated
      */
     const NonRadiativeTransitionData&
     nonRadiativeTransition( const id::ElectronSubshellID& originating,
@@ -307,8 +307,8 @@ namespace atomic {
      *  @brief Return the radiative probability for transitions
      *         originating from a range of subshells
      *
-     *  @param first   the identifier of the first subshell in the range
-     *  @param last    the identifier of the last subshell in the range (included)
+     *  @param[in] first   the identifier of the first subshell in the range
+     *  @param[in] last    the identifier of the last subshell in the range (included)
      */
     double radiativeProbability( const id::ElectronSubshellID& first,
                                  const id::ElectronSubshellID& last ) const {
@@ -330,8 +330,8 @@ namespace atomic {
      *  @brief Return the non-radiative probability for transitions
      *         originating from a range of subshells
      *
-     *  @param first   the identifier of the first subshell
-     *  @param last    the identifier of the last subshell (included)
+     *  @param[in] first   the identifier of the first subshell
+     *  @param[in] last    the identifier of the last subshell (included)
      */
     double nonRadiativeProbability( const id::ElectronSubshellID& first,
                                     const id::ElectronSubshellID& last ) const {
@@ -357,8 +357,8 @@ namespace atomic {
      *
      *  This function assumes that the transition energies are present.
      *
-     *  @param first   the identifier of the first subshell
-     *  @param last    the identifier of the last subshell (included)
+     *  @param[in] first   the identifier of the first subshell
+     *  @param[in] last    the identifier of the last subshell (included)
      */
     double averageRadiativeEnergy( const id::ElectronSubshellID& first,
                                    const id::ElectronSubshellID& last ) const {
@@ -384,8 +384,8 @@ namespace atomic {
      *
      *  This function assumes that the transition energies are present.
      *
-     *  @param first   the identifier of the first subshell
-     *  @param last    the identifier of the last subshell (included)
+     *  @param[in] first   the identifier of the first subshell
+     *  @param[in] last    the identifier of the last subshell (included)
      */
     double averageNonRadiativeEnergy( const id::ElectronSubshellID& first,
                                       const id::ElectronSubshellID& last ) const {

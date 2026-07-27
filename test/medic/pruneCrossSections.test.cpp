@@ -98,7 +98,6 @@ ProjectileTarget makeProjectiletarget() {
 void verifyChunk( const ProjectileTarget& chunk ) {
 
   // documentation
-  CHECK( std::nullopt == chunk.documentation().awr() );
   CHECK( std::nullopt == chunk.documentation().library() );
   CHECK( std::nullopt == chunk.documentation().version() );
   CHECK( std::nullopt == chunk.documentation().description() );
@@ -109,6 +108,9 @@ void verifyChunk( const ProjectileTarget& chunk ) {
 
   // interaction type
   CHECK( InteractionType::Nuclear == chunk.interactionType() );
+
+  // particle database is not present
+  CHECK( std::nullopt == chunk.particleData() );
 
   // resonances are not present
   CHECK( std::nullopt == chunk.resonances() );

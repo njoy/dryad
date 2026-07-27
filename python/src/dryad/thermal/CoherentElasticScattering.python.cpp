@@ -28,17 +28,33 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Coherent elastic thermal scattering data\n\n"
     "Parameters\n"
     "----------\n"
+    "    lower : float\n"
+    "        the lower energy limit\n"
+    "    upper : float\n"
+    "        the upper energy limit\n"
     "    bragg_edges : list of njoy.dryad.thermal.BraggEdgeData\n"
-    "         the Bragg edge data"
+    "        the Bragg edge data"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< BraggEdgeData > >(),
-    python::arg( "bragg_edges" ),
+    python::init< double, double, std::vector< BraggEdgeData > >(),
+    python::arg( "lower" ), python::arg( "upper" ), python::arg( "bragg_edges" ),
     "Initialise the coherent elastic scattering data"
+  )
+  .def_property_readonly(
+
+    "lower_energy_limit",
+    &Component::lowerEnergyLimit,
+    "The lower energy limit"
+  )
+  .def_property_readonly(
+
+    "upper_energy_limit",
+    &Component::upperEnergyLimit,
+    "The upper energy limit"
   )
   .def_property_readonly(
 
@@ -68,7 +84,7 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "         the temperature"
+    "        the temperature"
   )
   .def(
 
@@ -79,8 +95,19 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "         the temperature",
+    "        the temperature",
     python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "temperature" ),
+    "Return the incoherent elastic scattering cross section for a given temperature\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the moderator temperature for which the cross section is requested"
   );
 
   // add standard equality comparison definitions

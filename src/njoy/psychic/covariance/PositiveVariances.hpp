@@ -45,6 +45,9 @@ namespace covariance {
 
     /* constructor */
 
+    /**
+     *  @brief Constructor
+     */
     PositiveVariances() :
       Parent( "psychic.covariance.PositiveVariances" ) {}
 

@@ -77,7 +77,7 @@ namespace resonances {
     /**
      *  @brief Return a linearised penetrability table
      *
-     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
+     *  @param[in] tolerance   the linearisation tolerance
      */
     TabulatedWaveFunction linearise( double tolerance = constants::linearisation::tolerance ) const {
 

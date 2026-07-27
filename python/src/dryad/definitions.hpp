@@ -3,6 +3,8 @@
 
 // system includes
 #include <complex>
+#include <sstream>
+#include <iomanip>
 
 // other includes
 #include <pybind11/pybind11.h>
@@ -197,17 +199,21 @@ void addStandardInterpolationTableDefinitions( PythonClass& component ) {
 template < typename Component, typename PythonClass >
 void addStandardTabulatedDefinitions( PythonClass& component ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   component
   .def(
 
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
-    "Linearise the table\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance"
+    std::string( "Linearise the table\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
   )
   .def_property_readonly(
 
@@ -235,6 +241,10 @@ void addStandardTabulatedDefinitions( PythonClass& component ) {
 template < typename Component, typename PythonClass >
 void addStandardSeriesDefinitions( PythonClass& component ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   component
   .def_property_readonly(
 
@@ -255,11 +265,48 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
-    "Linearise the series\n\n"
-    "Parameters\n"
-    "----------\n"
-    "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance"
+    std::string( "Linearise the series\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
+  );
+
+  // add math operators
+  addStandardMathOperatorDefinitions< Component >( component );
+}
+
+/**
+ *  @brief Add standard multigroup data definitions
+ *
+ *  This adds the following standard properties:
+ *    - boundaries, values
+ *    - number_groups
+ *    - arithmetic operators
+ *
+ *  @param[in] component   the component to which the definitions have to be added
+ */
+template < typename Component, typename PythonClass >
+void addStandardMultigroupDefinitions( PythonClass& component ) {
+
+  component
+  .def_property_readonly(
+
+    "number_groups",
+    [] ( const Component& self ) { return self.numberGroups(); },
+    "The number of groups"
+  )
+  .def_property_readonly(
+
+    "boundaries",
+    [] ( const Component& self ) { return self.boundaries(); },
+    "The energy boundaries"
+  )
+  .def_property_readonly(
+
+    "values",
+    [] ( const Component& self ) { return self.values(); },
+    "The cross section values"
   );
 
   // add math operators

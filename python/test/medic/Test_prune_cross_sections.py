@@ -85,7 +85,6 @@ def make_projectile_target() :
 def verify_chunk( self, chunk ) :
 
     # documentation
-    self.assertIsNone( chunk.documentation.awr )
     self.assertIsNone( chunk.documentation.library )
     self.assertIsNone( chunk.documentation.version )
     self.assertIsNone( chunk.documentation.description )
@@ -96,6 +95,9 @@ def verify_chunk( self, chunk ) :
 
     # interaction type
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
+
+    # particle database is not present
+    self.assertIsNone( chunk.particle_data )
 
     # resonance parameters are not present
     self.assertIsNone( chunk.resonances )

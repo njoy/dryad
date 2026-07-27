@@ -21,7 +21,7 @@ SCENARIO( "ThermalScattering" ) {
     WHEN( "the data is given explicitly" ) {
 
       IncoherentElasticScattering
-      incoherent( 6.337872,
+      incoherent( 1e-5, 10., 6.337872,
                   { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                     { 2.013538, 2.677764, 3.323456, 3.972601,
                       4.623738, 5.276127, 6.583171, 7.891981 } } );
@@ -38,17 +38,17 @@ SCENARIO( "ThermalScattering" ) {
 
       ThermalScattering chunk( std::nullopt,
                                IncoherentElasticScattering(
-                                 6.337872,
+                                 1e-5, 10., 6.337872,
                                  { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                    { 2.013538, 2.677764, 3.323456, 3.972601,
                                      4.623738, 5.276127, 6.583171, 7.891981 } } ) );
 
       THEN( "the projectile identifier can be changed" ) {
 
-        IncoherentElasticScattering newincoherent( 25.,
+        IncoherentElasticScattering newincoherent( 1e-5, 10., 25.,
                                                    { { 296, 1200 },
                                                      { 2.013538, 7.891981 } } );
-        IncoherentElasticScattering original( 6.337872,
+        IncoherentElasticScattering original( 1e-5, 10., 6.337872,
                                               { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                                 { 2.013538, 2.677764, 3.323456, 3.972601,
                                                   4.623738, 5.276127, 6.583171, 7.891981 } } );
@@ -70,19 +70,19 @@ SCENARIO( "ThermalScattering" ) {
 
       ThermalScattering left( std::nullopt,
                               IncoherentElasticScattering(
-                                6.337872,
+                                1e-5, 10., 6.337872,
                                 { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                   { 2.013538, 2.677764, 3.323456, 3.972601,
                                     4.623738, 5.276127, 6.583171, 7.891981 } } ) );
       ThermalScattering equal( std::nullopt,
                                IncoherentElasticScattering(
-                                 6.337872,
+                                 1e-5, 10., 6.337872,
                                  { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                    { 2.013538, 2.677764, 3.323456, 3.972601,
                                      4.623738, 5.276127, 6.583171, 7.891981 } } ) );
       ThermalScattering different( std::nullopt,
                                    IncoherentElasticScattering(
-                                     25.,
+                                     1e-5, 10., 25.,
                                      { { 296, 1200 },
                                        { 2.013538, 7.891981 } } ) );
 
@@ -103,7 +103,6 @@ SCENARIO( "ThermalScattering" ) {
 void verifyChunk( const ThermalScattering& chunk ) {
 
   // documentation
-  CHECK( std::nullopt == chunk.documentation().awr() );
   CHECK( std::nullopt == chunk.documentation().library() );
   CHECK( std::nullopt == chunk.documentation().version() );
   CHECK( std::nullopt == chunk.documentation().description() );
@@ -120,6 +119,8 @@ void verifyChunk( const ThermalScattering& chunk ) {
   // incoherent elastic
   CHECK( std::nullopt != chunk.incoherentElasticScattering() );
   auto incoherent = chunk.incoherentElasticScattering().value();
+  CHECK_THAT( 1e-5, WithinRel( incoherent.lowerEnergyLimit() ) );
+  CHECK_THAT( 10. , WithinRel( incoherent.upperEnergyLimit() ) );
   CHECK_THAT( 6.337872, WithinRel( incoherent.boundCrossSection() ) );
   CHECK( 8 == incoherent.debyeWallerIntegral().temperatures().size() );
   CHECK( 8 == incoherent.debyeWallerIntegral().values().size() );

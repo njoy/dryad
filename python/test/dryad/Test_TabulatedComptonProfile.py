@@ -88,8 +88,8 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertAlmostEqual( 0.5  / normalisation, chunk( momentum = 0.5 ) )
             self.assertAlmostEqual( 1.75 / normalisation, chunk( momentum = 1.75 ) )
 
-            # verify average momentum
-            self.assertAlmostEqual( 8. / 3. / normalisation, chunk.average_momentum )
+            # verify average momentum - always the mean value even for unnormalised distributions
+            self.assertAlmostEqual( 8. / 3. / 2., chunk.average_momentum )
 
             # verify linearisation
             linear = chunk.linearise()

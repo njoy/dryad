@@ -17,6 +17,10 @@ namespace thermal {
   void wrapTabulatedScatteringKernel( python::module& );
 
   void wrapCoherentElasticScattering( python::module& );
+  void wrapIncoherentElasticCrossSection( python::module& );
+  void wrapIncoherentElasticAngularPdf( python::module& );
+  void wrapIncoherentElasticAngularCdf( python::module& );
+  void wrapIncoherentElasticAngularDistribution( python::module& );
   void wrapIncoherentElasticScattering( python::module& );
 }
 
@@ -36,6 +40,10 @@ void wrapThermal( python::module& module ) {
   thermal::wrapTabulatedScatteringKernel( submodule );
 
   thermal::wrapCoherentElasticScattering( submodule );
+  thermal::wrapIncoherentElasticCrossSection( submodule );
+  thermal::wrapIncoherentElasticAngularPdf( submodule );
+  thermal::wrapIncoherentElasticAngularCdf( submodule );
+  thermal::wrapIncoherentElasticAngularDistribution( submodule );
   thermal::wrapIncoherentElasticScattering( submodule );
 }
 

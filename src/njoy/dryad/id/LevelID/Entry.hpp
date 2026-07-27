@@ -4,20 +4,20 @@
  */
 class Entry {
 
-  // unsigned char has a max value of 255
+  // we need at least 999 as the max value so short is sufficient
 
   /* fields */
-  unsigned char number_;
+  short number_;
 
   std::string symbol_;
 
 public:
 
   /* constructor */
-  Entry( unsigned char number, std::string symbol ) :
+  Entry( short number, std::string symbol ) :
     number_( number ), symbol_( std::move( symbol ) ) {}
 
   /* methods */
-  unsigned char number() const { return this->number_; }
+  short number() const { return this->number_; }
   const std::string& symbol() const { return this->symbol_; }
 };

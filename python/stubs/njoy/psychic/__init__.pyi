@@ -7,17 +7,20 @@ from . import covariance
 __all__: list[str] = ['TestStatus', 'covariance']
 class TestStatus:
     """
-    The test status
+    Test status enumeration
+    
+    This enum is used to differentiate between various test states. Four different
+    states are distinguished: skipped, success, pass with warnings, and failed.
     
     Members:
     
-      Success
+      Success : The test passes successfully without issues
     
-      Warning
+      Warning : The test passed but there are issues
     
-      Fail
+      Fail : The test fails
     
-      Skipped
+      Skipped : The test has been skipped
     """
     Fail: typing.ClassVar[TestStatus]  # value = <TestStatus.Fail: 2>
     Skipped: typing.ClassVar[TestStatus]  # value = <TestStatus.Skipped: -1>

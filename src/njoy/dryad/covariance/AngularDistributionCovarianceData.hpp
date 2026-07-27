@@ -14,7 +14,7 @@ namespace covariance {
 
   /**
    *  @class
-   *  @brief Cross section covariance data
+   *  @brief Angular distribution covariance data
    */
   class AngularDistributionCovarianceData :
       protected base::CovarianceData< AngularDistributionCovarianceMatrix, AngularDistributionCovarianceData > {

@@ -25,6 +25,10 @@
 // components - thermal
 #include "njoy/dryad/thermal.hpp"
 
+// components - multigroup data
+#include "njoy/dryad/MultigroupMultiplicity.hpp"
+#include "njoy/dryad/MultigroupCrossSection.hpp"
+
 // components - resonances
 #include "njoy/dryad/resonances.hpp"
 
@@ -34,8 +38,11 @@
 #include "njoy/dryad/IncoherentDistributionData.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 #include "njoy/dryad/TabulatedFormFactor.hpp"
+#include "njoy/dryad/TabulatedComptonProfileFunction.hpp"
+#include "njoy/dryad/TabulatedComptonProfile.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"
+#include "njoy/dryad/IsotropicAngularDistributionFunction.hpp"
 #include "njoy/dryad/IsotropicAngularDistributions.hpp"
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
@@ -43,6 +50,8 @@
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
+#include "njoy/dryad/MixedAngularDistribution.hpp"
+#include "njoy/dryad/MixedAngularDistributions.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedEnergyDistribution.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributions.hpp"
@@ -71,7 +80,3 @@
 #include "njoy/dryad/AtomicRelaxation.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
-
-// formats
-#include "njoy/dryad/format/endf.hpp"
-#include "njoy/dryad/format/gnds.hpp"

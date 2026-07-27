@@ -23,15 +23,62 @@ namespace dryad {
 
     friend PolynomialMultiplicity;
 
+    /* constructor */
+
+    /**
+     *  @brief Private constructor
+     *
+     *  @param[in] table   the interpolation table
+     */
+    TabulatedMultiplicity( InterpolationTable< double, double > table ) :
+      InterpolationTable( std::move( table ) ) {}
+
   public:
 
     /* type aliases */
+
     using InterpolationTable::XType;
     using InterpolationTable::YType;
 
     /* constructor */
 
-    #include "njoy/dryad/TabulatedMultiplicity/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    TabulatedMultiplicity() = default;
+
+    TabulatedMultiplicity( const TabulatedMultiplicity& ) = default;
+    TabulatedMultiplicity( TabulatedMultiplicity&& ) = default;
+
+    TabulatedMultiplicity& operator=( const TabulatedMultiplicity& ) = default;
+    TabulatedMultiplicity& operator=( TabulatedMultiplicity&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the multiplicity values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     */
+    TabulatedMultiplicity( std::vector< double > energies,
+                           std::vector< double > values,
+                           std::vector< std::size_t > boundaries,
+                           std::vector< InterpolationType > interpolants ) :
+      InterpolationTable( std::move( energies ), std::move( values ),
+                          std::move( boundaries ), std::move( interpolants ) ) {}
+
+    /**
+     *  @brief Constructor for a multiplicity using a single interpolation zone
+     *
+     *  @param[in] energies       the energy values
+     *  @param[in] values         the multiplicity values
+     *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     */
+    TabulatedMultiplicity( std::vector< double > energies,
+                           std::vector< double > values,
+                           InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
 
     /* methods */
 

@@ -7,7 +7,9 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/BraggEdgeData.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -23,21 +25,100 @@ namespace thermal {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     std::vector< double > temperatures_;
     std::vector< BraggEdgeData > edges_;
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/thermal/CoherentElasticScattering/src/sortAndExtractTemperatures.hpp"
-    #include "njoy/dryad/thermal/CoherentElasticScattering/src/iterator.hpp"
+    /**
+     *  @brief Process the Bragg edge data
+     *
+     *  This sorts the Bragg edges by temperature and extract temperatures
+     */
+    void sortAndExtractTemperatures() {
+
+      std::sort( this->braggEdges().begin(), this->braggEdges().end(),
+                 [] ( auto&& left, auto&& right )
+                    { return left.temperature() < right.temperature(); } );
+
+      this->moderatorTemperatures().resize( this->braggEdges().size() );
+      std::transform( this->braggEdges().begin(), this->braggEdges().end(),
+                      this->moderatorTemperatures().begin(),
+                      [] ( auto&& data )
+                         { return data.temperature(); } );
+    }
+
+    /**
+     *  @brief Return an iterator for a given temperature (within a given tolerance)
+     *
+     *  @param[in] temperature   the temperature
+     *  @param[in] tolerance     the tolerance
+     */
+    auto iterator( double temperature, double tolerance ) const {
+
+      auto iter = utility::find_closest( this->moderatorTemperatures().begin(),
+                                         this->moderatorTemperatures().end(),
+                                         temperature, tolerance );
+      if ( iter != this->moderatorTemperatures().end() ) {
+
+        return std::next( this->braggEdges().begin(),
+                          std::distance( this->moderatorTemperatures().begin(), iter ) );
+      }
+
+      return this->braggEdges().end();
+    }
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/thermal/CoherentElasticScattering/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    CoherentElasticScattering() = default;
+
+    CoherentElasticScattering( const CoherentElasticScattering& ) = default;
+    CoherentElasticScattering( CoherentElasticScattering&& ) = default;
+
+    CoherentElasticScattering& operator=( const CoherentElasticScattering& ) = default;
+    CoherentElasticScattering& operator=( CoherentElasticScattering&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] lower        the lower energy limit
+     *  @param[in] upper        the upper energy limit
+     *  @param[in] braggEdges   the Bragg edge data
+     */
+    CoherentElasticScattering( double lower,
+                               double upper,
+                               std::vector< BraggEdgeData > braggEdges ) :
+        lower_( lower ),
+        upper_( upper ),
+        edges_( std::move( braggEdges ) ) {
+
+      this->sortAndExtractTemperatures();
+    }
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
 
     /**
      *  @brief Return the number of moderator temperatures for which data is available
@@ -82,7 +163,7 @@ namespace thermal {
     /**
      *  @brief Set the Bragg edge data
      *
-     *  @param braggEdges   the Bragg edge data
+     *  @param[in] braggEdges   the Bragg edge data
      */
     void braggEdges( std::vector< BraggEdgeData > braggEdges ) {
 
@@ -97,8 +178,9 @@ namespace thermal {
      */
     bool hasBraggEdgeData( double temperature ) const {
 
-      auto iter = this->iterator( temperature );
-      return iter != this->braggEdges().end() && iter->temperature() == temperature;
+      // get the closest temperature within 0.001 K
+      auto iter = this->iterator( temperature, 0.001 );
+      return iter != this->braggEdges().end();
     }
 
     /**
@@ -109,10 +191,34 @@ namespace thermal {
     const BraggEdgeData&
     braggEdgeData( double temperature ) const {
 
-      auto iter = this->iterator( temperature );
-      if ( iter != this->braggEdges().end() && iter->temperature() == temperature ) {
+      // get the closest temperature within 0.001 K
+      auto iter = this->iterator( temperature, 0.001 );
+      if ( iter != this->braggEdges().end() ) {
 
         return *iter;
+      }
+      else {
+
+        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
+                    temperature );
+        throw std::exception();
+      }
+    }
+
+    /**
+     *  @brief Return the coherent elastic scattering cross section
+     *
+     *  @param[in] temperature   the moderator temeprature for which the
+     *                           cross section is requested
+     */
+    TabulatedCrossSection
+    crossSection( double temperature ) const {
+
+      // get the closest temperature within 0.001 K
+      auto iter = this->iterator( temperature, 0.001 );
+      if ( iter != this->braggEdges().end() ) {
+
+        return iter->crossSection( this->upperEnergyLimit() );
       }
       else {
 
@@ -129,7 +235,8 @@ namespace thermal {
      */
     bool operator==( const CoherentElasticScattering& right ) const {
 
-      return std::tie( this->braggEdges() ) == std::tie( right.braggEdges() );
+      return std::tie( this->lower_, this->upper_, this->braggEdges() ) ==
+             std::tie( right.lower_, right.upper_, right.braggEdges() );
     }
 
     /**

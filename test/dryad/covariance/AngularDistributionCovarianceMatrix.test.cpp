@@ -31,7 +31,7 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
     AngularDistributionCovarianceMatrix chunk( std::move( frame ),
                                                std::move( metadata ),
-                                               std::move( matrix ) );
+                                               std::move( matrix ));
 
     THEN( "a AngularDistributionCovarianceMatrix can be constructed and members can be tested" ) {
 

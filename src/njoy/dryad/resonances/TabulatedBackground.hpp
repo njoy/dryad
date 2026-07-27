@@ -81,7 +81,7 @@ namespace resonances {
     /**
      *  @brief Return a linearised radius table
      *
-     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
+     *  @param[in] tolerance   the linearisation tolerance
      */
     TabulatedBackground linearise( double tolerance = constants::linearisation::tolerance ) const {
 

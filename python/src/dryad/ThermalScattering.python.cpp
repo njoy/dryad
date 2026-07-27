@@ -5,9 +5,9 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
-#include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
-#include "njoy/dryad/format/endf/createThermalScatteringEndfFile.hpp"
-#include "njoy/dryad/format/gnds/createThermalScatteringFromFile.hpp"
+#include "njoy/format/endf/read/createThermalScatteringFromFile.hpp"
+#include "njoy/format/endf/write/createThermalScatteringFile.hpp"
+#include "njoy/format/gnds/read/createThermalScatteringFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -33,11 +33,11 @@ void wrapThermalScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    documentation : njoy.dryad.Documentation\n"
-    "         the documentation associated to the thermal scattering data\n"
+    "        the documentation associated to the thermal scattering data\n"
     "    coherent : njoy.dryad.thermal.CoherentElasticScattering\n"
-    "         coherent elastic scattering data (default: none)"
+    "        coherent elastic scattering data (default: none)"
     "    incoherent : njoy.dryad.thermal.IncoherentElasticScattering\n"
-    "         incoherent elastic scattering data (default: none)"
+    "        incoherent elastic scattering data (default: none)"
   );
 
   // wrap the component
@@ -108,52 +108,61 @@ void wrapThermalScattering( python::module& module ) {
   .def_static(
 
     "from_endf_file",
-    [] ( const std::string& filename ) -> decltype(auto) {
+    [] ( double lower, double upper, const std::string& filename ) -> decltype(auto) {
 
-      return njoy::dryad::format::endf::createThermalScatteringFromFile( filename );
+      return njoy::format::endf::read::createThermalScatteringFromFile( lower, upper, filename );
     },
-    python::arg( "filename" ),
+    python::arg( "lower" ), python::arg( "upper" ), python::arg( "filename" ),
     "Create ThermalScattering data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a ThermalScattering instance.\n\n"
     "Parameters\n"
     "----------\n"
+    "    lower : float\n"
+    "        the lower energy limit\n"
+    "    upper : float\n"
+    "        the upper energy limit\n"
     "    filename : string\n"
-    "         the ENDF file name"
+    "        the ENDF file name"
   )
   .def_static(
 
     "from_gnds_file",
-    [] ( const std::string& filename, const std::string& style ) -> decltype(auto) {
+    [] ( double lower, double upper, const std::string& filename, const std::string& style ) -> decltype(auto) {
 
-      return njoy::dryad::format::gnds::createThermalScatteringFromFile( filename, style );
+      return njoy::format::gnds::read::createThermalScatteringFromFile( lower, upper, filename, style );
     },
+    python::arg( "lower" ), python::arg( "upper" ),
     python::arg( "filename" ), python::arg( "style" ) = "eval",
     "Create ThermalScattering data from a GNDS file\n\n"
     "Parameters\n"
     "----------\n"
+    "    lower : float\n"
+    "        the lower energy limit\n"
+    "    upper : float\n"
+    "        the upper energy limit\n"
     "    filename : string\n"
-    "         the GNDS file name\n"
+    "        the GNDS file name\n"
     "    style : string\n"
-    "         the GNDS style to process (default is eval)"
+    "        the GNDS style to process (default is eval)"
   )
   .def(
 
     "to_endf_file",
     [] ( const Component& self, int za, int mat, const std::string& filename ) {
 
-      njoy::dryad::format::endf::createThermalScatteringEndfFile( self, za, mat, filename );
+      njoy::format::endf::write::createThermalScatteringFile( self, za, mat, filename );
     },
     python::arg( "za" ), python::arg( "mat" ), python::arg( "filename" ),
     "Write the ThermalScattering data to an ENDF file\n\n"
     "Parameters\n"
     "----------\n"
     "    za : int\n"
-    "         the ENDF za number to be used\n"
+    "        the ENDF za number to be used\n"
     "    mat : int\n"
-    "         the ENDF mat number to be used\n"
+    "        the ENDF mat number to be used\n"
     "    filename : string\n"
-    "         the ENDF file name\n"
+    "        the ENDF file name\n"
   );
 
   // add standard equality comparison definitions

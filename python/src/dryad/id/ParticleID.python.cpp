@@ -28,26 +28,25 @@ void wrapParticleID( python::module& module ) {
 
     module,
     "ParticleID",
-    "The particle identifier\n\n"
+    "The particle identifier, with associated symbol and aliases\n\n"
     "Comparison operators are provided using the logical order given by the\n"
-    "element number. A hash function and override for std::hash is also\n"
-    "provided.\n\n"
+    "element number.\n\n"
     "For more information on how to create instances of ParticleID, see the\n"
     "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
     "Parameters\n"
     "----------\n"
     "    element_identifier : njoy.dryad.id.ElementID \n "
-    "           the particle element \n"
+    "          the particle element \n"
     "    mass : int \n "
-    "           the particle mass number \n"
+    "          the particle mass number \n"
     "    level_identifier : njoy.dryad.id.LevelID \n "
-    "           he particle level \n"
+    "          he particle level \n"
     "    vacancy_identifier : njoy.dryad.id.ElectronSubshellID \n"
-    "         the identifier of the subshell with an electron vacancy \n"
+    "        the identifier of the subshell with an electron vacancy \n"
     "    vacancy_identifiers : list of njoy.dryad.id.ElectronSubshellID \n"
-    "         the identifiers of the subshells with electron vacancies \n"
+    "        the identifiers of the subshells with electron vacancies \n"
     "    string : str \n"
-    "         Initialise the particle identifier with the particle symbol, name or alternative \n\n"
+    "        Initialise the particle identifier with the particle symbol, name or alternative \n\n"
   );
 
   // wrap the component
@@ -100,9 +99,9 @@ void wrapParticleID( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    za : int \n"
-    "         the za number of the nuclide \n"
+    "        the za number of the nuclide \n"
     "    level : int, default 0 \n"
-    "         the level number of the nuclide. the default value 0 indicates the ground state\n"
+    "        the level number of the nuclide. the default value 0 indicates the ground state\n"
   )
   .def(
 

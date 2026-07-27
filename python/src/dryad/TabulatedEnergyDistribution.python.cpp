@@ -14,6 +14,10 @@ namespace dryad {
 
 void wrapTabulatedEnergyDistribution( python::module& module ) {
 
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
   // type aliases
   using Component = njoy::dryad::TabulatedEnergyDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
@@ -25,7 +29,26 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
 
     module,
     "TabulatedEnergyDistribution",
-    "An energy distribution defined by a pdf and cdf using tabulated data"
+    "An energy distribution defined by a pdf and cdf using tabulated data\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "        the energy values\n"
+    "    values : list of float\n"
+    "        the probability values\n"
+    "    boundaries : list of int\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "        the interpolation type (default lin-lin)\n"
+    "    pdf : njoy.dryad.TabulatedEnergyDistributionFunction\n"
+    "        the probability distribution function\n"
+    "    cdf : njoy.dryad.TabulatedEnergyDistributionFunction\n"
+    "        the cumulative distribution function\n"
+    "    normalise : bool, default False\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -39,16 +62,7 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
     python::arg( "normalise" ) = false,
-    "Initialise the energy distribution\n\n"
-    "Arguments:\n"
-    "    self           the energy distribution\n"
-    "    energies       the energy values\n"
-    "    values         the probability values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types\n"
-    "    normalise      option to indicate whether or not to normalise\n"
-    "                   all probability data (default: no normalisation)"
+    "Initialise the energy distribution with multiple interpolation zones"
   )
   .def(
 
@@ -57,21 +71,26 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
-    "Initialise the energy distribution\n\n"
-    "Arguments:\n"
-    "    self           the energy distribution\n"
-    "    energies       the energy values\n"
-    "    values         the probability values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types\n"
-    "    normalise      option to indicate whether or not to normalise\n"
-    "                   all probability data (default: no normalisation)"
+    "Initialise the energy distribution with a single interpolation zone"
+  )
+  .def(
+
+    python::init< njoy::dryad::TabulatedEnergyDistributionFunction, bool >(),
+    python::arg( "pdf" ), python::arg( "normalise" ) = false,
+    "Initialise the energy distribution using a pdf"
+  )
+  .def(
+
+    python::init< njoy::dryad::TabulatedEnergyDistributionFunction,
+                  njoy::dryad::TabulatedEnergyDistributionFunction >(),
+    python::arg( "pdf" ), python::arg( "cdf" ),
+    "Initialise the energy distribution using a pdf and cdf"
   )
   .def_property_readonly(
 
     "energies",
     &Component::energies,
-    "The cosine values"
+    "The energy values"
   )
   .def_property_readonly(
 
@@ -94,13 +113,13 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
   .def_property_readonly(
 
     "pdf",
-    &Component::pdf,
+    python::overload_cast<>( &Component::pdf, python::const_ ),
     "The probability distribution function (pdf) of the distribution"
   )
   .def_property_readonly(
 
     "cdf",
-    &Component::cdf,
+    python::overload_cast<>( &Component::cdf, python::const_ ),
     "The cumulative distribution function (cdf) of the distribution"
   )
   .def(
@@ -110,9 +129,10 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
        { return self( energy ); },
     python::arg( "energy" ),
     "Evaluate the pdf of the distribution for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the distribution\n"
-    "    energy    the energy value"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   )
   .def(
 
@@ -132,12 +152,14 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
-    "Linearise the distribution\n\n"
-    "Arguments:\n"
-    "    self        the angular distribution\n"
-    "    tolerance   the linearisation tolerance\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    std::string( "Linearise the distribution\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance\n"
+                 "    normalise : bool, default False\n"
+                 "        option to indicate whether or not to normalise\n"
+                 "        all probability data (default: no normalisation)" ).c_str()
   );
 
   // add standard equality comparison definitions

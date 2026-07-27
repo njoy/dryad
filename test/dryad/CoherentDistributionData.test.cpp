@@ -11,12 +11,12 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunkWithoutAnomolousFormFactor( const CoherentDistributionData& );
-void verifyChunkWithAnomolousFormFactor( const CoherentDistributionData& );
+void verifyChunkWithoutAnomalousFormFactor( const CoherentDistributionData& );
+void verifyChunkWithAnomalousFormFactor( const CoherentDistributionData& );
 
 SCENARIO( "CoherentDistributionData" ) {
 
-  GIVEN( "valid data for coherent distribution data without the anomolous form factor" ) {
+  GIVEN( "valid data for coherent distribution data without the anomalous form factor" ) {
 
     WHEN( "the data is given explicitly" ) {
 
@@ -27,12 +27,12 @@ SCENARIO( "CoherentDistributionData" ) {
 
       THEN( "a CoherentDistributionData can be constructed and members can be tested" ) {
 
-        verifyChunkWithoutAnomolousFormFactor( chunk );
+        verifyChunkWithoutAnomalousFormFactor( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
 
-  GIVEN( "valid data for coherent distribution data with the anomolous form factor" ) {
+  GIVEN( "valid data for coherent distribution data with the anomalous form factor" ) {
 
     WHEN( "the data is given explicitly" ) {
 
@@ -46,7 +46,7 @@ SCENARIO( "CoherentDistributionData" ) {
 
       THEN( "a CoherentDistributionData can be constructed and members can be tested" ) {
 
-        verifyChunkWithAnomolousFormFactor( chunk );
+        verifyChunkWithAnomalousFormFactor( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -69,7 +69,7 @@ SCENARIO( "CoherentDistributionData" ) {
 
         chunk.frame( original );
 
-        verifyChunkWithoutAnomolousFormFactor( chunk );
+        verifyChunkWithoutAnomalousFormFactor( chunk );
       } // THEN
 
       THEN( "the scattering function can be changed" ) {
@@ -83,7 +83,7 @@ SCENARIO( "CoherentDistributionData" ) {
 
         chunk.scatteringFunction( original );
 
-        verifyChunkWithoutAnomolousFormFactor( chunk );
+        verifyChunkWithoutAnomalousFormFactor( chunk );
       } // THEN
 
       THEN( "the form factor can be changed" ) {
@@ -92,15 +92,15 @@ SCENARIO( "CoherentDistributionData" ) {
         std::optional< TabulatedFormFactor > newimaginaryfactor( { { 1., 2e+7 }, { 0.5, 0.6 } } );
         std::optional< TabulatedFormFactor > original = std::nullopt;
 
-        chunk.realAnomolousFormFactor( newrealfactor );
-        chunk.imaginaryAnomolousFormFactor( newimaginaryfactor );
+        chunk.realAnomalousFormFactor( newrealfactor );
+        chunk.imaginaryAnomalousFormFactor( newimaginaryfactor );
 
-        verifyChunkWithAnomolousFormFactor( chunk );
+        verifyChunkWithAnomalousFormFactor( chunk );
 
-        chunk.realAnomolousFormFactor( original );
-        chunk.imaginaryAnomolousFormFactor( original );
+        chunk.realAnomalousFormFactor( original );
+        chunk.imaginaryAnomalousFormFactor( original );
 
-        verifyChunkWithoutAnomolousFormFactor( chunk );
+        verifyChunkWithoutAnomalousFormFactor( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -130,11 +130,11 @@ SCENARIO( "CoherentDistributionData" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkWithoutAnomolousFormFactor( const CoherentDistributionData& chunk ) {
+void verifyChunkWithoutAnomalousFormFactor( const CoherentDistributionData& chunk ) {
 
   CHECK( DistributionDataType::Coherent == chunk.type() );
   CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
-  CHECK( false == chunk.hasAnomolousFormFactor() );
+  CHECK( false == chunk.hasAnomalousFormFactor() );
 
   CHECK_THAT( 0.  , WithinRel( chunk.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+6, WithinRel( chunk.scatteringFunction().upperInverseLengthLimit() ) );
@@ -150,15 +150,15 @@ void verifyChunkWithoutAnomolousFormFactor( const CoherentDistributionData& chun
   CHECK( InterpolationType::LinearLinear == chunk.scatteringFunction().interpolants()[0] );
   CHECK( true == chunk.scatteringFunction().isLinearised() );
 
-  CHECK( std::nullopt == chunk.realAnomolousFormFactor() );
-  CHECK( std::nullopt == chunk.imaginaryAnomolousFormFactor() );
+  CHECK( std::nullopt == chunk.realAnomalousFormFactor() );
+  CHECK( std::nullopt == chunk.imaginaryAnomalousFormFactor() );
 }
 
-void verifyChunkWithAnomolousFormFactor( const CoherentDistributionData& chunk ) {
+void verifyChunkWithAnomalousFormFactor( const CoherentDistributionData& chunk ) {
 
   CHECK( DistributionDataType::Coherent == chunk.type() );
   CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
-  CHECK( true == chunk.hasAnomolousFormFactor() );
+  CHECK( true == chunk.hasAnomalousFormFactor() );
 
   CHECK_THAT( 0.  , WithinRel( chunk.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+6, WithinRel( chunk.scatteringFunction().upperInverseLengthLimit() ) );
@@ -174,8 +174,8 @@ void verifyChunkWithAnomolousFormFactor( const CoherentDistributionData& chunk )
   CHECK( InterpolationType::LinearLinear == chunk.scatteringFunction().interpolants()[0] );
   CHECK( true == chunk.scatteringFunction().isLinearised() );
 
-  CHECK( std::nullopt != chunk.realAnomolousFormFactor() );
-  auto factor = chunk.realAnomolousFormFactor().value();
+  CHECK( std::nullopt != chunk.realAnomalousFormFactor() );
+  auto factor = chunk.realAnomalousFormFactor().value();
   CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
   CHECK_THAT( 2e+7, WithinRel( factor.upperEnergyLimit() ) );
   CHECK( 2 == factor.energies().size() );
@@ -190,8 +190,8 @@ void verifyChunkWithAnomolousFormFactor( const CoherentDistributionData& chunk )
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
   CHECK( true == factor.isLinearised() );
 
-  CHECK( std::nullopt != chunk.imaginaryAnomolousFormFactor() );
-  factor = chunk.imaginaryAnomolousFormFactor().value();
+  CHECK( std::nullopt != chunk.imaginaryAnomalousFormFactor() );
+  factor = chunk.imaginaryAnomalousFormFactor().value();
   CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
   CHECK_THAT( 2e+7, WithinRel( factor.upperEnergyLimit() ) );
   CHECK( 2 == factor.energies().size() );

@@ -11,6 +11,17 @@ class ChannelID:
     
     When using comparison on the channel identifier, we use a Jpi,l,s,reaction,partial
     ordering.
+    
+    Parameters
+    ----------
+        reaction : njoy.dryad.id.ReactionID
+            the reaction
+        quantum_numbers : njoy.dryad.resonances.ChannelQuantumNumbers
+            the channel quantum numbers
+        partial : int, optional
+            the optional partial index
+        symbol : str
+            the channel symbol
     """
     def __copy__(self) -> ChannelID:
         ...
@@ -29,22 +40,12 @@ class ChannelID:
     @typing.overload
     def __init__(self, reaction: ReactionID, quantum_numbers: ..., partial: int | None = None) -> None:
         """
-        Initialise the channel identifier
-        
-        Arguments:
-            self              the channel identifier
-            reaction          the reaction
-            quantum_numbers   the channel quantum numbers
-            partial           the optional partial index
+        Initialise the channel identifier with a reaction and quantum numbers
         """
     @typing.overload
     def __init__(self, symbol: str) -> None:
         """
-        Initialise the channel identifier
-        
-        Arguments:
-            self     the channel identifier
-            symbol   the channel symbol
+        Initialise the channel identifier from a symbol string
         """
     def __le__(self, arg0: ChannelID) -> bool:
         ...
@@ -78,14 +79,14 @@ class ChannelID:
         """
 class ElectronSubshellID:
     """
-    The electron subshell identifier
+    The electron subshell identifier, with associated symbol and aliases
     
     Parameters
     ----------
         number : int 
-             the subshell number
+            the subshell number
         string : str 
-             the subshell symbol, name or alternative name
+            the subshell symbol, name or alternative name
     
     """
     K: typing.ClassVar[int] = 534
@@ -208,7 +209,17 @@ class ElectronSubshellID:
         """
 class ElementID:
     """
-    The element identifier
+    The element identifier, with associated element symbol, name and aliases
+    
+    Comparison operators are provided using the logical order given by the
+    element number.
+    
+    Parameters
+    ----------
+        number : int
+            the element number
+        string : str
+            the element symbol, name or alternative name
     """
     def __copy__(self) -> ElementID:
         ...
@@ -227,20 +238,12 @@ class ElementID:
     @typing.overload
     def __init__(self, number: int) -> None:
         """
-        Initialise the element identifier
-        
-        Arguments:
-            self     the identifier
-            number   the element number
+        Initialise the element identifier using an element number
         """
     @typing.overload
     def __init__(self, string: str) -> None:
         """
-        Initialise the element identifier
-        
-        Arguments:
-            self     the identifier
-            string   the element symbol, name or alternative name
+        Initialise the element identifier using an element symbol, name or alternative name
         """
     def __le__(self, arg0: ElementID) -> bool:
         ...
@@ -270,6 +273,13 @@ class ElementID:
 class EnergyGroup:
     """
     An energy group defined by two energy values
+    
+    Parameters
+    ----------
+        lower : float
+            the lower energy value of the group
+        upper : float
+            the upper energy value of the group
     """
     def __copy__(self) -> EnergyGroup:
         ...
@@ -287,12 +297,7 @@ class EnergyGroup:
         """
     def __init__(self, lower: float, upper: float) -> None:
         """
-        Initialise the energy
-        
-        Arguments:
-            self    the identifier
-            lower   the lower energy value of the group
-            upper   the upper energy value of the group
+        Initialise the energy group
         """
     def __le__(self, arg0: EnergyGroup) -> bool:
         ...
@@ -312,10 +317,20 @@ class EnergyGroup:
         """
 class LevelID:
     """
-    The level identifier
+    The excited state or level identifier
+    
+    Comparison operators are provided using the logical order given by the
+    level number.
+    
+    Parameters
+    ----------
+        number : int
+            the level number
+        string : str
+            the level symbol
     """
-    all: typing.ClassVar[int] = 151
-    continuum: typing.ClassVar[int] = 150
+    all: typing.ClassVar[int] = 999
+    continuum: typing.ClassVar[int] = 998
     def __copy__(self) -> LevelID:
         ...
     def __deepcopy__(self, arg0: dict) -> LevelID:
@@ -333,20 +348,12 @@ class LevelID:
     @typing.overload
     def __init__(self, number: int) -> None:
         """
-        Initialise the level identifier
-        
-        Arguments:
-            self     the identifier
-            number   the level number
+        Initialise the level identifier using a level number
         """
     @typing.overload
     def __init__(self, string: str) -> None:
         """
-        Initialise the level identifier
-        
-        Arguments:
-            self     the identifier
-            string   the level symbol
+        Initialise the level identifier using a level symbol
         """
     def __le__(self, arg0: LevelID) -> bool:
         ...
@@ -370,11 +377,10 @@ class LevelID:
         """
 class ParticleID:
     """
-    The particle identifier
+    The particle identifier, with associated symbol and aliases
     
     Comparison operators are provided using the logical order given by the
-    element number. A hash function and override for std::hash is also
-    provided.
+    element number.
     
     For more information on how to create instances of ParticleID, see the
     Jupyter notebook dryad-identifiers.ipynb under python/examples.
@@ -382,17 +388,17 @@ class ParticleID:
     Parameters
     ----------
         element_identifier : njoy.dryad.id.ElementID 
-                the particle element 
+               the particle element 
         mass : int 
-                the particle mass number 
+               the particle mass number 
         level_identifier : njoy.dryad.id.LevelID 
-                he particle level 
+               he particle level 
         vacancy_identifier : njoy.dryad.id.ElectronSubshellID 
-             the identifier of the subshell with an electron vacancy 
+            the identifier of the subshell with an electron vacancy 
         vacancy_identifiers : list of njoy.dryad.id.ElectronSubshellID 
-             the identifiers of the subshells with electron vacancies 
+            the identifiers of the subshells with electron vacancies 
         string : str 
-             Initialise the particle identifier with the particle symbol, name or alternative 
+            Initialise the particle identifier with the particle symbol, name or alternative 
     
     """
     @staticmethod
@@ -428,9 +434,9 @@ class ParticleID:
         Parameters
         ----------
             za : int 
-                 the za number of the nuclide 
+                the za number of the nuclide 
             level : int, default 0 
-                 the level number of the nuclide. the default value 0 indicates the ground state
+                the level number of the nuclide. the default value 0 indicates the ground state
         """
     @staticmethod
     def photon() -> ParticleID:
@@ -537,7 +543,18 @@ class ParticleID:
         """
 class ReactionID:
     """
-    The reaction identifier
+    The reaction identifier, with associated symbols, aliases, particles, etc.
+    
+    Parameters
+    ----------
+        projectile : njoy.dryad.id.ParticleID
+            the projectile
+        target : njoy.dryad.id.ParticleID
+            the target
+        type : njoy.dryad.id.ReactionType or int or str
+            the reaction type, mt number, or string representing the reaction type
+        symbol : str
+            the reaction symbol
     """
     def __copy__(self) -> ReactionID:
         ...
@@ -556,44 +573,22 @@ class ReactionID:
     @typing.overload
     def __init__(self, projectile: ParticleID, target: ParticleID, type: ReactionType) -> None:
         """
-        Initialise the reaction identifier
-        
-        Arguments:
-            self         the reaction identifier
-            projectile   the projectile
-            target       the target
-            type         the reaction type
+        Initialise the reaction identifier with a projectile, target and reaction type
         """
     @typing.overload
     def __init__(self, projectile: ParticleID, target: ParticleID, mt: int) -> None:
         """
-        Initialise the reaction identifier
-        
-        Arguments:
-            self         the reaction identifier
-            projectile   the projectile
-            target       the target
-            mt           the mt number
+        Initialise the reaction identifier with a projectile, target and mt number
         """
     @typing.overload
     def __init__(self, projectile: ParticleID, target: ParticleID, type: str) -> None:
         """
-        Initialise the reaction identifier
-        
-        Arguments:
-            self         the reaction identifier
-            projectile   the projectile
-            target       the target
-            type         the string representing the reaction type
+        Initialise the reaction identifier with an reaction type string
         """
     @typing.overload
     def __init__(self, symbol: str) -> None:
         """
-        Initialise the reaction identifier
-        
-        Arguments:
-            self     the reaction identifier
-            symbol   the reaction symbol
+        Initialise the reaction identifier from a symbol string
         """
     def __le__(self, arg0: ReactionID) -> bool:
         ...
@@ -652,7 +647,7 @@ class ReactionID:
         """
 class ReactionType:
     """
-    The reaction type
+    The reaction types, with associated symbol, aliases, particles, etc.
     
     The ReactionType can be used to identify reaction types. For the moment, only
     registered types can be used. In the future, we will extend this so that users
@@ -660,15 +655,31 @@ class ReactionType:
     
     For more information on how to create instances of ReactionType, see the
     Jupyter notebook dryad-identifiers.ipynb under python/examples.
+    
+    Parameters
+    ----------
+        mt : int
+            the mt number
+        projectile : njoy.dryad.id.ParticleID
+            the projectile
+        level : int, default=0
+            the level number of the target or residual
+        particles : dict
+            the outgoing particles (excluding the residual)
+        string : str
+            the reaction type string
     """
     @staticmethod
     def elastic(projectile: ParticleID, level: int = 0) -> ReactionType:
         """
         The elastic reaction type
         
-        Arguments:
-            projectile   the projectile
-            level.       the level number of the target (default = 0)
+        Parameters
+        ----------
+            projectile : njoy.dryad.id.ParticleID
+                the projectile
+            level : int, default=0
+                the level number of the target
         """
     @staticmethod
     def size() -> int:
@@ -680,8 +691,10 @@ class ReactionType:
         """
         The total reaction type
         
-        Arguments:
-            type   the interaction type (nuclear or atomic)
+        Parameters
+        ----------
+            type : njoy.dryad.InteractionType, default=InteractionType.Nuclear
+                the interaction type (nuclear or atomic)
         """
     def __copy__(self) -> ReactionType:
         ...
@@ -700,41 +713,22 @@ class ReactionType:
     @typing.overload
     def __init__(self, mt: int) -> None:
         """
-        Initialise the reaction type
-        
-        Arguments:
-            self   the reaction type
-            mt     the mt number
+        Initialise the reaction type using an mt number
         """
     @typing.overload
     def __init__(self, projectile: ParticleID, mt: int, level: int = 0) -> None:
         """
-        Initialise the reaction type
-        
-        Arguments:
-            self         the reaction type
-            projectile   the projectile
-            mt           the mt number
-            level        the level number of the target (default = 0)
+        Initialise the reaction type using a projectile and level number
         """
     @typing.overload
     def __init__(self, particles: dict[ParticleID, int], level: int) -> None:
         """
-        Initialise the reaction type
-        
-        Arguments:
-            self        the reaction type
-            particles   the outgoing particles (excluding the residual)
-            level       the level number of the residual
+        Initialise the reaction type using outgoing particles and a level
         """
     @typing.overload
     def __init__(self, string: str) -> None:
         """
-        Initialise the reaction type
-        
-        Arguments:
-            self     the reaction type
-            string   the reaction type string
+        Initialise the reaction type from a string
         """
     def __le__(self, arg0: ReactionType) -> bool:
         ...
@@ -750,10 +744,12 @@ class ReactionType:
         """
         Return the residual produced by this reaction type
         
-        Arguments:
-            self         the reaction type
-            projectile   the projectile
-            target       the target
+        Parameters
+        ----------
+            projectile : njoy.dryad.id.ParticleID
+                the projectile
+            target : njoy.dryad.id.ParticleID
+                the target
         """
     @property
     def interaction_type(self) -> njoy.dryad.InteractionType:

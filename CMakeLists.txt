@@ -39,6 +39,8 @@ cmake_dependent_option(
 
 option( njoy.installation "Install njoy" OFF )
 
+set( NJOY_DATAPATH "" CACHE STRING "Path to NJOY data directory" )
+
 ########################################################################
 # Dependencies
 ########################################################################
@@ -83,11 +85,22 @@ target_link_libraries( njoy
     njoy::ENDFtk
 )
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9)
+   target_link_libraries(njoy INTERFACE stdc++fs)
+endif()
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "IntelLLVM" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+   target_link_libraries(njoy INTERFACE stdc++fs)
+endif()
+
 if(MSVC)
   add_compile_options(/bigobj)
   target_link_options(njoy INTERFACE "/STACK:8388608")
 endif()
 
+if ( NJOY_DATAPATH )
+    target_compile_definitions( njoy INTERFACE NJOY_DATAPATH="${NJOY_DATAPATH}" )
+endif()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # njoy : python bindings

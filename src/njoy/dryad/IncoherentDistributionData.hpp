@@ -34,6 +34,7 @@ namespace dryad {
   class IncoherentDistributionData {
 
     /* fields */
+
     ReferenceFrame frame_;
     TabulatedScatteringFunction scattering_;
 
@@ -41,13 +42,49 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/IncoherentDistributionData/src/sort.hpp"
+    /**
+     *  @brief Sort the compton profiles
+     */
+    void sort() {
+
+      std::sort( this->profiles_->begin(), this->profiles_->end(),
+                 [] ( auto&& left, auto&& right )
+                    { return left.subshellIdentifier() < right.subshellIdentifier(); } );
+    }
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/IncoherentDistributionData/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    IncoherentDistributionData() = default;
+
+    IncoherentDistributionData( const IncoherentDistributionData& ) = default;
+    IncoherentDistributionData( IncoherentDistributionData&& ) = default;
+
+    IncoherentDistributionData& operator=( const IncoherentDistributionData& ) = default;
+    IncoherentDistributionData& operator=( IncoherentDistributionData&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] frame        the reference frame of the distribution data
+     *  @param[in] scattering   the scattering function
+     *  @param[in] profiles     the optional Compton profiles
+     */
+    IncoherentDistributionData( ReferenceFrame frame,
+                                TabulatedScatteringFunction scattering,
+                                std::optional< std::vector< TabulatedComptonProfile > > profiles = std::nullopt ) :
+        frame_( std::move( frame ) ), scattering_( std::move( scattering ) ),
+        profiles_( std::move( profiles ) ) {
+
+      if ( this->profiles_.has_value() ) {
+
+        this->sort();
+      }
+    }
 
     /* methods */
 
@@ -99,7 +136,7 @@ namespace dryad {
      *  @brief Calculate the average outgoing energy for a given energy
      *
      *  @param[in] energy      the incident energy
-     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
+     *  @param[in] tolerance   the integration tolerance
      */
     double averageEnergy( double energy,
                           double tolerance = constants::integration::tolerance ) const {

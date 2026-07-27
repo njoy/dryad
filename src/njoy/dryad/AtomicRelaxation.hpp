@@ -27,14 +27,81 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/AtomicRelaxation/src/sort.hpp"
-    #include "njoy/dryad/AtomicRelaxation/src/iterator.hpp"
+    /**
+     *  @brief Sort the subshells data
+     */
+    void sort() {
+
+      std::sort( this->subshells_.begin(), this->subshells_.end(),
+                 [] ( auto&& left, auto&& right )
+                    { return left.identifier() < right.identifier(); } );
+    }
+
+    /**
+     *  @brief Return an iterator for a given channel (using lower_bound)
+     *
+     *  @param[in] id   the subshell identifier
+     */
+    auto iterator( const id::ElectronSubshellID& id ) const {
+
+      return std::lower_bound( this->subshells().begin(), this->subshells().end(),
+                               id,
+                               [] ( auto&& subshell, auto&& right )
+                                  { return subshell.identifier() < right; } );
+    }
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/AtomicRelaxation/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    AtomicRelaxation() = default;
+
+    AtomicRelaxation( const AtomicRelaxation& ) = default;
+    AtomicRelaxation( AtomicRelaxation&& ) = default;
+
+    AtomicRelaxation& operator=( const AtomicRelaxation& ) = default;
+    AtomicRelaxation& operator=( AtomicRelaxation&& ) = default;
+
+    /**
+     *  @brief Constructor with documentation
+     *
+     *  @param[in] documentation   the documentation
+     *  @param[in] element         the element identifier
+     *  @param[in] subshells       the electron subshell configuration data
+     *  @param[in] normalise       option to indicate whether or not to normalise
+     *                             all probability data (default: no normalisation)
+     */
+    AtomicRelaxation( Documentation documentation,
+                      id::ElementID element,
+                      std::vector< atomic::ElectronSubshellConfiguration > subshells,
+                      bool normalise = false ) :
+        documentation_( std::move( documentation ) ),
+        element_id_( std::move( element ) ),
+        subshells_( std::move( subshells ) ) {
+
+      this->sort();
+      if ( normalise ) {
+
+        this->normalise();
+      }
+    }
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] element      the element identifier
+     *  @param[in] subshells    the electron subshell configuration data
+     *  @param[in] normalise    option to indicate whether or not to normalise
+     *                          all probability data (default: no normalisation)
+     */
+    AtomicRelaxation( id::ElementID element,
+                      std::vector< atomic::ElectronSubshellConfiguration > subshells,
+                      bool normalise = false ) :
+        AtomicRelaxation( {}, std::move( element ), std::move( subshells ),
+                          normalise ) {}
 
     /* methods */
 

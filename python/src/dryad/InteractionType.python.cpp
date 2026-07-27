@@ -22,14 +22,26 @@ void wrapInteractionType( python::module& module ) {
 
     module,
     "InteractionType",
-    "The projectile-target interaction type",
+    "The projectile-target interaction type\n\n"
+    "This enum is used to differentiate between how the projectile interacts with\n"
+    "the target. We currently distinguish nuclear and atomic interactions.",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "Atomic",  Component::Atomic )
-  .value( "Nuclear", Component::Nuclear );
+  .value(
+
+    "Nuclear",
+    Component::Nuclear,
+    "The projectile-target interaction is nuclear"
+  )
+  .value(
+
+    "Atomic",
+    Component::Atomic,
+    "The projectile-target interaction is atomic"
+  );
 }
 
 } // dryad namespace

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_THERMAL_TABULATEDSCATTERINGFUNCTION
-#define NJOY_DRYAD_THERMAL_TABULATEDSCATTERINGFUNCTION
+#ifndef NJOY_DRYAD_THERMAL_TABULATEDSCATTERINGKERNELFUNCTION
+#define NJOY_DRYAD_THERMAL_TABULATEDSCATTERINGKERNELFUNCTION
 
 // system includes
 #include <vector>
@@ -20,15 +20,62 @@ namespace thermal {
   class TabulatedScatteringKernelFunction  :
       protected scion::math::InterpolationTable< double, double > {
 
+    /* constructor */
+
+    /**
+     *  @brief Private constructor
+     *
+     *  @param[in] table   the interpolation table
+     */
+    TabulatedScatteringKernelFunction( InterpolationTable< double, double > table ) :
+      InterpolationTable( std::move( table ) ) {}
+
   public:
 
     /* type aliases */
+
     using InterpolationTable::XType;
     using InterpolationTable::YType;
 
     /* constructor */
 
-    #include "njoy/dryad/thermal/TabulatedScatteringKernelFunction/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    TabulatedScatteringKernelFunction() = default;
+
+    TabulatedScatteringKernelFunction( const TabulatedScatteringKernelFunction& ) = default;
+    TabulatedScatteringKernelFunction( TabulatedScatteringKernelFunction&& ) = default;
+
+    TabulatedScatteringKernelFunction& operator=( const TabulatedScatteringKernelFunction& ) = default;
+    TabulatedScatteringKernelFunction& operator=( TabulatedScatteringKernelFunction&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] momentumTransfers   the momentum transfer values
+     *  @param[in] values              the scattering function values
+     *  @param[in] boundaries          the boundaries of the interpolation regions
+     *  @param[in] interpolants        the interpolation types of the interpolation regions
+     */
+    TabulatedScatteringKernelFunction( std::vector< double > momentumTransfers,
+                                       std::vector< double > values,
+                                       std::vector< std::size_t > boundaries,
+                                       std::vector< InterpolationType > interpolants ) :
+      InterpolationTable( std::move( momentumTransfers ), std::move( values ),
+                          std::move( boundaries ), std::move( interpolants ) ) {}
+
+    /**
+     *  @brief Constructor for a scattering function table using a single interpolation zone
+     *
+     *  @param[in] momentumTransfers   the momentum transfer values
+     *  @param[in] values              the effective temperature values
+     *  @param[in] interpolant         the interpolation type of the data (default lin-lin)
+     */
+    TabulatedScatteringKernelFunction( std::vector< double > momentumTransfers,
+                                       std::vector< double > values,
+                                       InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      InterpolationTable( std::move( momentumTransfers ), std::move( values ), interpolant ) {}
 
     /* methods */
 

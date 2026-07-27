@@ -17,6 +17,8 @@ namespace thermal {
    *
    *  Temperature values are assumed to be in K and the integral values are
    *  assumed to be in 1/eV.
+   *
+   *  There currently is not possibility for interpolation on these values.
    */
   class DebyeWallerIntegralData {
 
@@ -28,7 +30,28 @@ namespace thermal {
   public:
 
     /* constructor */
-    #include "njoy/dryad/thermal/DebyeWallerIntegralData/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    DebyeWallerIntegralData() = default;
+
+    DebyeWallerIntegralData( const DebyeWallerIntegralData& ) = default;
+    DebyeWallerIntegralData( DebyeWallerIntegralData&& ) = default;
+
+    DebyeWallerIntegralData& operator=( const DebyeWallerIntegralData& ) = default;
+    DebyeWallerIntegralData& operator=( DebyeWallerIntegralData&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] temperatures   the temperatures values
+     *  @param[in] values         the integral values
+     */
+    DebyeWallerIntegralData( std::vector< double > temperatures,
+                             std::vector< double > values ) :
+      temperatures_( std::move( temperatures ) ),
+      integrals_( std::move( values ) ) {}
 
     /* methods */
 

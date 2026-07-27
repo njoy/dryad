@@ -32,6 +32,8 @@ namespace base {
 
     /**
      *  @brief Constructor
+     *
+     *  @param[in] name   the name of the test
      */
     Test( std::string name ) :
       name_( std::move( name ) ),

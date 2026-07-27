@@ -4,19 +4,22 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
     
+    The Bragg edge data consists of edge energies and structure
+    factor values.
+    
     Parameters
     ----------
         temperature : float
-             the temperature
+            the temperature
         energies : list of float
-             the temperature
+            the temperature
         values : list of float
-             the structure factor values
+            the structure factor values
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> BraggEdgeData:
@@ -31,6 +34,15 @@ class BraggEdgeData:
         """
     def __ne__(self, arg0: BraggEdgeData) -> bool:
         ...
+    def cross_section(self, upper: float) -> ...:
+        """
+        Return the coherent elastic scattering cross section up to the given energy
+        
+        Parameters
+        ----------
+            upper : float
+                the upper energy limit
+        """
     @property
     def energies(self) -> list[float]:
         """
@@ -57,8 +69,12 @@ class CoherentElasticScattering:
     
     Parameters
     ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
         bragg_edges : list of njoy.dryad.thermal.BraggEdgeData
-             the Bragg edge data
+            the Bragg edge data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CoherentElasticScattering:
@@ -67,7 +83,7 @@ class CoherentElasticScattering:
         ...
     def __eq__(self, arg0: CoherentElasticScattering) -> bool:
         ...
-    def __init__(self, bragg_edges: list[BraggEdgeData]) -> None:
+    def __init__(self, lower: float, upper: float, bragg_edges: list[BraggEdgeData]) -> None:
         """
         Initialise the coherent elastic scattering data
         """
@@ -80,7 +96,16 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                 the temperature
+                the temperature
+        """
+    def cross_section(self, temperature: float) -> ...:
+        """
+        Return the incoherent elastic scattering cross section for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temperature for which the cross section is requested
         """
     def has_bragg_edge_data(self, temperature: float) -> bool:
         """
@@ -89,7 +114,7 @@ class CoherentElasticScattering:
         Parameters
         ----------
             temperature : float
-                 the temperature
+                the temperature
         """
     @property
     def bragg_edges(self) -> list[BraggEdgeData]:
@@ -100,6 +125,11 @@ class CoherentElasticScattering:
     def bragg_edges(self, arg1: list[BraggEdgeData]) -> None:
         ...
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
     def moderator_temperatures(self) -> list[float]:
         """
         The moderator temperature values
@@ -108,6 +138,11 @@ class CoherentElasticScattering:
     def number_moderator_temperatures(self) -> int:
         """
         The moderator temperature values
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
         """
 class DebyeWallerIntegralData:
     """
@@ -118,9 +153,9 @@ class DebyeWallerIntegralData:
     Parameters
     ----------
         temperatures : list of float
-             the temperature values
+            the temperature values
         values : list of float
-             the intergal values
+            the intergal values
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> DebyeWallerIntegralData:
@@ -145,16 +180,299 @@ class DebyeWallerIntegralData:
         """
         The integral values
         """
+class IncoherentElasticAngularCdf:
+    """
+    Incoherent elastic thermal scattering angular distribution cdf
+    
+    Parameters
+    ----------
+        incident : float
+            the incident energy
+        debye_waller_integral : float
+            the Debye-Waller integral value
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the angular distribution for a given cosine value
+        
+        Parameters
+        ----------
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> IncoherentElasticAngularCdf:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IncoherentElasticAngularCdf:
+        ...
+    def __eq__(self, arg0: IncoherentElasticAngularCdf) -> bool:
+        ...
+    def __init__(self, incident: float, debye_waller_integral: float) -> None:
+        """
+        Initialise the incoherent elastic scattering angular distribution cdf
+        """
+    def __ne__(self, arg0: IncoherentElasticAngularCdf) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> ...:
+        """
+        Linearise the angular distribution
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    @property
+    def debye_waller_integral(self) -> float:
+        """
+        The Debye-Waller integral value
+        """
+    @property
+    def incident_energy(self) -> float:
+        """
+        The incident energy value
+        """
+    @property
+    def lower_cosine_limit(self) -> float:
+        """
+        The lower cosine limit
+        """
+    @property
+    def upper_cosine_limit(self) -> float:
+        """
+        The upper cosine limit
+        """
+class IncoherentElasticAngularDistribution:
+    """
+    Incoherent elastic thermal scattering angular distribution defined by an
+    analytical pdf and cdf
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the pdf of the distribution for a given cosine value
+        
+        Parameters
+        ----------
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> IncoherentElasticAngularDistribution:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IncoherentElasticAngularDistribution:
+        ...
+    def __eq__(self, arg0: IncoherentElasticAngularDistribution) -> bool:
+        ...
+    def __init__(self, incident: float, debye_waller_integral: float) -> None:
+        """
+        Initialise the angular distribution
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy
+            debye_waller_integral : float
+                the Debye-Waller integral value
+        """
+    def __ne__(self, arg0: IncoherentElasticAngularDistribution) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> ...:
+        """
+        Linearise the distribution
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+            normalise : bool, default False
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
+        """
+    @property
+    def average_cosine(self) -> float:
+        """
+        The average cosine defined by the distribution
+        """
+    @property
+    def cdf(self) -> IncoherentElasticAngularCdf:
+        """
+        The cumulative distribution function (cdf) of the distribution
+        """
+    @property
+    def debye_waller_integral(self) -> float:
+        """
+        The Debye-Waller integral value
+        """
+    @property
+    def incident_energy(self) -> float:
+        """
+        The incident energy value
+        """
+    @property
+    def pdf(self) -> IncoherentElasticAngularPdf:
+        """
+        The probability distribution function (pdf) of the distribution
+        """
+class IncoherentElasticAngularPdf:
+    """
+    Incoherent elastic thermal scattering angular distribution pdf
+    
+    Parameters
+    ----------
+        incident : float
+            the incident energy
+        debye_waller_integral : float
+            the Debye-Waller integral value
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the angular distribution for a given cosine value
+        
+        Parameters
+        ----------
+            cosine : float
+                the cosine value
+        """
+    def __copy__(self) -> IncoherentElasticAngularPdf:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IncoherentElasticAngularPdf:
+        ...
+    def __eq__(self, arg0: IncoherentElasticAngularPdf) -> bool:
+        ...
+    def __init__(self, incident: float, debye_waller_integral: float) -> None:
+        """
+        Initialise the incoherent elastic scattering angular distribution pdf
+        """
+    def __ne__(self, arg0: IncoherentElasticAngularPdf) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> ...:
+        """
+        Linearise the angular distribution
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
+        """
+    @property
+    def debye_waller_integral(self) -> float:
+        """
+        The Debye-Waller integral value
+        """
+    @property
+    def incident_energy(self) -> float:
+        """
+        The incident energy value
+        """
+    @property
+    def integral(self) -> float:
+        """
+        The integral of the distribution over its domain
+        """
+    @property
+    def lower_cosine_limit(self) -> float:
+        """
+        The lower cosine limit
+        """
+    @property
+    def mean(self) -> float:
+        """
+        The mean value of the distribution over its domain
+        """
+    @property
+    def upper_cosine_limit(self) -> float:
+        """
+        The upper cosine limit
+        """
+class IncoherentElasticCrossSection:
+    """
+    Incoherent elastic thermal scattering cross section
+    
+    Parameters
+    ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
+        xs : float
+            the bound atom cross section
+        debye_waller_integral : float
+            the Debye-Waller integral value
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the cross section for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> IncoherentElasticCrossSection:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IncoherentElasticCrossSection:
+        ...
+    def __eq__(self, arg0: IncoherentElasticCrossSection) -> bool:
+        ...
+    def __init__(self, lower: float, upper: float, xs: float, debye_waller_integral: float) -> None:
+        """
+        Initialise the incoherent elastic scattering cross section
+        """
+    def __ne__(self, arg0: IncoherentElasticCrossSection) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> ...:
+        """
+        Linearise the cross section
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    @property
+    def bound_cross_section(self) -> float:
+        """
+        The bound atom cross section value
+        """
+    @property
+    def debye_waller_integral(self) -> float:
+        """
+        The Debye-Waller integral value
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
 class IncoherentElasticScattering:
     """
     Incoherent elastic thermal scattering data
     
     Parameters
     ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
         xs : float
-             the bound atom cross section
+            the bound atom cross section
         debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData
-             the Debye-Waller integral data
+            the Debye-Waller integral data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> IncoherentElasticScattering:
@@ -163,12 +481,33 @@ class IncoherentElasticScattering:
         ...
     def __eq__(self, arg0: IncoherentElasticScattering) -> bool:
         ...
-    def __init__(self, xs: float, debye_waller_integral: DebyeWallerIntegralData) -> None:
+    def __init__(self, lower: float, upper: float, xs: float, debye_waller_integral: DebyeWallerIntegralData) -> None:
         """
         Initialise the incoherent elastic scattering data
         """
     def __ne__(self, arg0: IncoherentElasticScattering) -> bool:
         ...
+    def angular_distribution(self, incident: float, temperature: float) -> IncoherentElasticAngularDistribution:
+        """
+        Return the incoherent elastic scattering angular distribution for a given
+        incident energy and temperature
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy
+            temperature : float
+                the moderator temperature for which the angular distribution is requested
+        """
+    def cross_section(self, temperature: float) -> IncoherentElasticCrossSection:
+        """
+        Return the incoherent elastic scattering cross section for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temperature for which the cross section is requested
+        """
     @property
     def bound_cross_section(self) -> float:
         """
@@ -186,6 +525,11 @@ class IncoherentElasticScattering:
     def debye_waller_integral(self, arg1: DebyeWallerIntegralData) -> None:
         ...
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
     def moderator_temperatures(self) -> list[float]:
         """
         The moderator temperature values
@@ -195,6 +539,11 @@ class IncoherentElasticScattering:
         """
         The moderator temperature values
         """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
 class TabulatedScatteringKernel:
     """
     An S(a,b) scattering kernel using tabulated scattering kernel functions
@@ -202,19 +551,19 @@ class TabulatedScatteringKernel:
     Parameters
     ----------
         moderator_temperature : float
-             the moderator temperature
+            the moderator temperature
         effective_temperature : float
-             the effective temperature used in the SCT approximation
+            the effective temperature used in the SCT approximation
         energy_transfers : list of float
-             the energy transfer values
+            the energy transfer values
         functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction
-             the tabulated S(a) scattering functions
+            the tabulated S(a) scattering functions
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
+            the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
@@ -253,7 +602,7 @@ class TabulatedScatteringKernel:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -302,15 +651,15 @@ class TabulatedScatteringKernelFunction:
     Parameters
     ----------
         momentum_transfers : list of float
-             the momentum transfer values
+            the momentum transfer values
         values : list of float
-             the scattering function values
+            the scattering function values
         boundaries : list of int
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
+            the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -387,7 +736,7 @@ class TabulatedScatteringKernelFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:

@@ -30,7 +30,15 @@ void wrapVarianceScaling( python::module& module ) {
     "covariances. Each factor value for a given group characterises an uncorrelated\n"
     "contribution to the absolute variance of the cross section averaged over any\n"
     "energy subgroup that includes a portion of the energy interval over which the\n"
-    "factor is defined."
+    "factor is defined.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    type : njoy.dryad.covariance.ScalingType\n"
+    "        the scaling procedure type\n"
+    "    energies : list of float\n"
+    "        the energy boundary values\n"
+    "    factors : list of float\n"
+    "        the scaling factor values"
   );
 
   // wrap the component
@@ -39,12 +47,7 @@ void wrapVarianceScaling( python::module& module ) {
 
     python::init< ScalingType, std::vector< double >, std::vector< double > >(),
     python::arg( "type" ), python::arg( "energies" ), python::arg( "factors" ),
-    "Initialise the metadata\n\n"
-    "Arguments:\n"
-    "    self        the variance scaling information\n"
-    "    type        the scaling procedure type\n"
-    "    energies    the energy boundaries\n"
-    "    factors     the scaling factors"
+    "Initialise the variance scaling information"
   )
   .def_property_readonly(
 

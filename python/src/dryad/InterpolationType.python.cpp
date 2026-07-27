@@ -22,17 +22,42 @@ void wrapInterpolationType( python::module& module ) {
 
     module,
     "InterpolationType",
-    "The interpolation types",
+    "The interpolation type for tabulated data",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "Histogram", Component::Histogram )
-  .value( "LinearLinear", Component::LinearLinear )
-  .value( "LinearLog", Component::LinearLog )
-  .value( "LogLinear", Component::LogLinear )
-  .value( "LogLog", Component::LogLog );
+  .value(
+
+    "Histogram",
+    Component::Histogram,
+    "Constant or histogram interpolation"
+  )
+  .value(
+
+    "LinearLinear",
+    Component::LinearLinear,
+    "y is linear in x"
+  )
+  .value(
+
+    "LinearLog",
+    Component::LinearLog,
+    "y is linear in ln(x)"
+  )
+  .value(
+
+    "LogLinear",
+    Component::LogLinear,
+    "ln(y) is linear in x"
+  )
+  .value(
+
+    "LogLog",
+    Component::LogLog,
+    "ln(y) is linear in ln(x)"
+  );
 }
 
 } // dryad namespace

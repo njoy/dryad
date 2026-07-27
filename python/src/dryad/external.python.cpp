@@ -12,6 +12,12 @@ namespace external {
 
   // declarations - components
   void wrapComptonProfiles( python::module& );
+
+  // ripl3 data
+  void wrapRipl3( python::module& );
+
+  // ame data
+  void wrapAme( python::module& );
 }
 
 void wrapExternal( python::module& module ) {
@@ -25,6 +31,12 @@ void wrapExternal( python::module& module ) {
 
   // components
   external::wrapComptonProfiles( submodule );
+
+  // ripl3
+  external::wrapRipl3( submodule );
+
+  // Ame
+  external::wrapAme( submodule );
 }
 
 } // dryad namespace

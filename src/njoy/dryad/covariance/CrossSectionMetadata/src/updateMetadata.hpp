@@ -1,4 +1,13 @@
+/**
+ *  @brief Reconstruct metadata from keys
+ *
+ *  This method extracts the unique reactions and energy groups from the keys.
+ *  This function relies on the fact that tuple keys are lexographically sorted
+ *  (as implemented by the operator< on std::tuple).
+ */
 void updateMetadata() {
+
+  //! @todo once we move to c++23, use ranges instead of for loops
 
   // get all the energy groups in the metadata
   auto group = std::get< 1 >( this->keys().front() );
@@ -12,8 +21,9 @@ void updateMetadata() {
 
   // calculate stride on the reaction dimension and loop
   auto stride = this->energies_.size() - 1;
+  this->reactions_.resize( this->keys().size() / stride );
   for ( unsigned int i = 0; i < this->keys().size(); i = i + stride ) {
 
-    this->reactions_.emplace_back( std::get< 0 >( this->keys()[i] ) );
+    this->reactions_[ i / stride ] = std::get< 0 >( this->keys()[i] );
   }
 }

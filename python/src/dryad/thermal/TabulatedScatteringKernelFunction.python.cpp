@@ -29,15 +29,15 @@ void wrapTabulatedScatteringKernelFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    momentum_transfers : list of float\n"
-    "         the momentum transfer values\n"
+    "        the momentum transfer values\n"
     "    values : list of float\n"
-    "         the scattering function values\n"
+    "        the scattering function values\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)"
+    "        the interpolation type (default lin-lin)"
   );
 
   // wrap the component

@@ -25,7 +25,19 @@ void wrapUniformEnergyDistributions( python::module& module ) {
 
     module,
     "UniformEnergyDistributions",
-    "Energy distribution data given as uniform distributions"
+    "Energy distribution data given as uniform distributions\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    grid : list of float\n"
+    "        the grid values\n"
+    "    distributions : list of njoy.dryad.UniformEnergyDistribution\n"
+    "        the associated distributions\n"
+    "    boundaries : list of int\n"
+    "        the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "        the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default LinearLinear\n"
+    "        the interpolation type"
   );
 
   // wrap the component
@@ -38,14 +50,7 @@ void wrapUniformEnergyDistributions( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the energy distributions\n\n"
-    "Arguments:\n"
-    "    self            the energy distribution table\n"
-    "    grid            the grid values\n"
-    "    distributions   the distributions\n"
-    "    boundaries      the boundaries of the interpolation regions\n"
-    "    interpolants    the interpolation types of the interpolation regions,\n"
-    "                    see InterpolationType for all interpolation types"
+    "Initialise the energy distributions with multiple interpolation regions"
   )
   .def(
 
@@ -54,13 +59,7 @@ void wrapUniformEnergyDistributions( python::module& module ) {
                   InterpolationType >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the energy distributions\n\n"
-    "Arguments:\n"
-    "    self            the multiplicity table\n"
-    "    grid            the grid values\n"
-    "    distributions   the distributions\n"
-    "    interpolant     the interpolation type (default lin-lin),\n"
-    "                    see InterpolationType for all interpolation types"
+    "Initialise the energy distributions with a single interpolation region"
   )
   .def_property_readonly(
 

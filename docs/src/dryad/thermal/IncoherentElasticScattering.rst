@@ -19,5 +19,15 @@ Read-only Attributes
 
     ~IncoherentElasticScattering.number_moderator_temperatures
     ~IncoherentElasticScattering.moderator_temperatures
+    ~IncoherentElasticScattering.lower_energy_limit
+    ~IncoherentElasticScattering.upper_energy_limit
     ~IncoherentElasticScattering.bound_cross_section
     ~IncoherentElasticScattering.debye_waller_integral
+
+Methods
+~~~~~~~
+
+.. autosummary::
+    :toctree: generated/
+
+    ~IncoherentElasticScattering.cross_section

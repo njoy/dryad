@@ -5,6 +5,7 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/covariance/AngularDistributionCovarianceData.hpp"
+#include "njoy/format/gendf/read/covariance/createAngularDistributionCovarianceDataFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -16,7 +17,9 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::covariance::AngularDistributionCovarianceData;
+  using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionID = njoy::dryad::id::ReactionID;
+  using ReferenceFrame = njoy::dryad::ReferenceFrame;
   using AngularDistributionCovarianceMatrix = njoy::dryad::covariance::AngularDistributionCovarianceMatrix;
 
   // wrap views created by this component
@@ -29,8 +32,8 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "The angular distribution covariance data\n\n"
     "Parameters\n"
     "----------\n"
-    "    matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceData \n"
-    "         the covariance matrices"
+    "    matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceMatrix\n"
+    "        the covariance matrices"
   );
 
   // wrap the component
@@ -39,7 +42,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
 
     python::init< std::vector< AngularDistributionCovarianceMatrix > >(),
     python::arg( "matrices" ),
-    "Initialise the covariance data\n"
+    "Initialise the angular distribution covariance data"
   )
   .def_property_readonly(
 
@@ -79,9 +82,9 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row : njoy.dryad.id.ReactionID\n"
-    "         the row reaction identifier\n"
+    "        the row reaction identifier\n"
     "    column : njoy.dryad.id.ReactionID\n"
-    "         the column reaction identifier"
+    "        the column reaction identifier"
   )
   .def(
 
@@ -93,7 +96,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier"
+    "        the reaction identifier"
   )
   .def(
 
@@ -105,9 +108,9 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row : njoy.dryad.id.ReactionID\n"
-    "         the row reaction identifier\n"
+    "        the row reaction identifier\n"
     "    column : njoy.dryad.id.ReactionID\n"
-    "         the column reaction identifier",
+    "        the column reaction identifier",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -120,8 +123,33 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier",
+    "        the reaction identifier",
     python::return_value_policy::reference_internal
+  )
+  .def_static(
+
+    "from_gendf_file",
+    [] ( const ParticleID& projectile, const ParticleID& target, const ReferenceFrame& frame,
+         const std::string& filename ) -> decltype(auto) {
+
+      return njoy::format::gendf::read::covariance::createAngularDistributionCovarianceDataFromFile(
+                 projectile, target, frame, filename );
+    },
+    python::arg( "projectile" ), python::arg( "target" ),
+    python::arg( "frame"), python::arg( "filename" ),
+    "Create CrossSectionCovarianceData data from an ERRORR GENDF file\n\n"
+    "If there are multiple materials in the GENDF file, only the first material\n"
+    "will be transformed into a ProjectileTarget.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "        the projectile identifier\n"
+    "    target : njoy.dryad.id.ParticleID\n"
+    "        the target identifier\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
+    "        the reference frame of the projectile target\n"
+    "    filename : str\n"
+    "        the GENDF file name"
   );
 
   // add standard equality comparison definitions
