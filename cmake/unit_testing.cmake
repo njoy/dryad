@@ -409,6 +409,7 @@ add_cpp_test( format.gnds.write.insertAxis                                      
 add_cpp_test( format.gnds.write.insertAxes                                             format/gnds/write/insertAxes.test.cpp )
 add_cpp_test( format.gnds.write.insertConstant1d                                       format/gnds/write/insertConstant1d.test.cpp )
 add_cpp_test( format.gnds.write.insertValues                                           format/gnds/write/insertValues.test.cpp )
+add_cpp_test( format.gnds.write.insertXYs1d                                            format/gnds/write/insertXYs1d.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )

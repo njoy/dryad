@@ -64,7 +64,7 @@ namespace write {
 
       if ( i % 6 == 0 ) {
 
-        out << '\n';
+        out << "\n  ";
       }
       else if ( i != 0 ) {
 
@@ -83,7 +83,8 @@ namespace write {
    *
    *  @param[in,out] parent   the parent node
    *  @param[in]     option   the gnds write options
-   *  @param[in]     values   the values
+   *  @param[in]     x        the x values
+   *  @param[in]     y        the x values
    *  @param[in]     start    the optional starting index
    *  @param[in]     length   the optional length
    *  @param[in]     href     the optional href

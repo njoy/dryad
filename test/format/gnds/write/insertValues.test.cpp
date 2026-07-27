@@ -51,15 +51,15 @@ SCENARIO( "insertValues" ) {
 std::string chunk1() {
 
   return "<values>\n"
-         "1 2 3 4 5 6\n"
-         "7 8 9 10 11\n"
+         "  1 2 3 4 5 6\n"
+         "  7 8 9 10 11\n"
          "</values>\n";
 }
 
 std::string chunk2() {
 
   return "<values>\n"
-         "1 7 2 8 3 9\n"
-         "4 10 5 11 6 12\n"
+         "  1 7 2 8 3 9\n"
+         "  4 10 5 11 6 12\n"
          "</values>\n";
 }
