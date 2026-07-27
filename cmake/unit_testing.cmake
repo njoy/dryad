@@ -408,6 +408,7 @@ add_cpp_test( format.gnds.write.insertParticleDatabase                          
 add_cpp_test( format.gnds.write.insertAxis                                             format/gnds/write/insertAxis.test.cpp )
 add_cpp_test( format.gnds.write.insertAxes                                             format/gnds/write/insertAxes.test.cpp )
 add_cpp_test( format.gnds.write.insertConstant1d                                       format/gnds/write/insertConstant1d.test.cpp )
+add_cpp_test( format.gnds.write.insertValues                                           format/gnds/write/insertValues.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )
