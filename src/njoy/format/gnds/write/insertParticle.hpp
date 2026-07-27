@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cctype>
 #include <optional>
+#include <string>
 
 // other includes
 #include "pugixml.hpp"

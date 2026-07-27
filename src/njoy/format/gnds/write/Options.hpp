@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_WRITE_OPTIONS
 
 // system includes
+#include <string>
 
 // other includes
 

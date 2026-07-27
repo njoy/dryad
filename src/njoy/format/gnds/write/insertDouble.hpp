@@ -3,6 +3,7 @@
 
 // system includes
 #include <optional>
+#include <string>
 
 // other includes
 #include "pugixml.hpp"
