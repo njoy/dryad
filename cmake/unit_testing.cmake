@@ -399,6 +399,7 @@ add_cpp_test( format.gnds.read.createThermalScattering                          
 add_cpp_test( format.gnds.read.createThermalScatteringFromFile                         format/gnds/read/createThermalScatteringFromFile.test.cpp )
 
 add_cpp_test( format.gnds.write.determineDepth                                         format/gnds/write/determineDepth.test.cpp )
+add_cpp_test( format.gnds.write.createInterpolationType                                format/gnds/write/createInterpolationType.test.cpp )
 add_cpp_test( format.gnds.write.toString                                               format/gnds/write/toString.test.cpp )
 add_cpp_test( format.gnds.write.insertDouble                                           format/gnds/write/insertDouble.test.cpp )
 add_cpp_test( format.gnds.write.insertInteger                                          format/gnds/write/insertInteger.test.cpp )
