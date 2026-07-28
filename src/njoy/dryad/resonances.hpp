@@ -31,3 +31,5 @@
 
 #include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"
 #include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"
+
+#include "njoy/dryad/resonances/UnresolvedSpinGroup.hpp"

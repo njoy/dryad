@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePenetrabilityRatio', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedResonanceTable']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePenetrabilityRatio', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedResonanceTable', 'UnresolvedSpinGroup']
 class BoundaryCondition:
     """
     The boundary condition options for resonance reconstruction
@@ -2442,4 +2442,62 @@ class UnresolvedResonanceTable:
     def widths(self) -> list[TabulatedAverageWidths]:
         """
         The average widths
+        """
+class UnresolvedSpinGroup:
+    """
+    A spin group corresponding to a Jpi quantum number set in the
+    unresolved resonance region
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> UnresolvedSpinGroup:
+        ...
+    def __deepcopy__(self, arg0: dict) -> UnresolvedSpinGroup:
+        ...
+    def __eq__(self, arg0: UnresolvedSpinGroup) -> bool:
+        ...
+    def __init__(self, channels: list[UnresolvedChannel], resonances: UnresolvedResonanceTable) -> None:
+        """
+        Initialise the unresolved spin group
+        
+        If the channels are not sorted, they will get sorted through the order
+        of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+        sorting order).
+        
+        Arguments:
+            self         the spin group
+            channels     the channels in the spin group
+            resonances   the unresolved resonance table of the spin group
+        """
+    def __ne__(self, arg0: UnresolvedSpinGroup) -> bool:
+        ...
+    @property
+    def channels(self) -> list[UnresolvedChannel]:
+        """
+        The channels in the spin group
+        """
+    @channels.setter
+    def channels(self, arg1: list[UnresolvedChannel]) -> None:
+        ...
+    @property
+    def parity(self) -> int:
+        """
+        The parity
+        """
+    @property
+    def reactions(self) -> list[njoy.dryad.id.ReactionID]:
+        """
+        The reactions to which this spin group contributes
+        """
+    @property
+    def resonance_table(self) -> UnresolvedResonanceTable:
+        """
+        The unresolved resonance table of the spin group
+        """
+    @resonance_table.setter
+    def resonance_table(self, arg1: UnresolvedResonanceTable) -> None:
+        ...
+    @property
+    def total_angular_momentum(self) -> float:
+        """
+        The total angular momentum J of the channels
         """
