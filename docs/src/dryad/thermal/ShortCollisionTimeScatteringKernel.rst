@@ -1,7 +1,7 @@
 .. currentmodule:: njoy.dryad.thermal
 
-DebyeWallerIntegralData
-============================
+ShortCollisionTimeScatteringKernel
+==================================
 
 General information about this concept
 
@@ -10,15 +10,15 @@ Constructor
 .. autosummary::
     :toctree:  generated/
 
-    DebyeWallerIntegralData
+    ShortCollisionTimeScatteringKernel
 
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
     :toctree: generated/
 
-    ~DebyeWallerIntegralData.temperatures
-    ~DebyeWallerIntegralData.values
+    ~ShortCollisionTimeScatteringKernel.moderator_temperature
+    ~ShortCollisionTimeScatteringKernel.effective_temperature
 
 Methods
 ~~~~~~~
@@ -26,5 +26,4 @@ Methods
 .. autosummary::
     :toctree: generated/
 
-    ~DebyeWallerIntegralData.has_value
-    ~DebyeWallerIntegralData.value
+    ~TabulatedScatteringKernel.__call__

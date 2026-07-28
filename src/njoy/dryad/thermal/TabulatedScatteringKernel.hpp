@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_THERMAL_TABULATEDSCATTERINGKERNEL
 
 // system includes
+#include <algorithm>
 
 // other includes
 #include "scion/math/InterpolationTableFunction.hpp"
@@ -15,6 +16,10 @@ namespace thermal {
   /**
    *  @class
    *  @brief An S(a,b) scattering kernel using tabulated scattering kernel functions
+   *
+   *  @todo add a symmetry flag for tables that are symmetric in beta, or handle that at read time
+   *  @todo psychic test to verify the domain of the TabulatedScatteringKernel
+   *  @todo medic function to prune the TabulatedScatteringKernel to the domain
    */
   class TabulatedScatteringKernel :
       protected scion::math::InterpolationTableFunction< double, TabulatedScatteringKernelFunction > {
@@ -25,8 +30,33 @@ namespace thermal {
 
     /* fields */
 
-    double moderator_temperature_;
-    double effective_temperature_;
+    double lower_a_;
+    double upper_a_;
+
+    /* auxiliary functions */
+
+    /**
+     *  @brief Return the momentum transfer limits
+     *
+     *  All functions should have the same lower and upper momentum transfer limit,
+     *  but there can be an error or roundoff. We take the largest value of the lower
+     *  limit and the smallest value of the upper limit of each scattering function
+     *  to ensure we do not have any gaps in the table's alpha domain.
+     */
+    void retrieveMomentumTransferLimits() {
+
+      auto compare_lower = [] ( const auto& left, const auto& right )
+                              { return left.lowerMomentumTransferLimit()
+                                       < right.lowerMomentumTransferLimit(); };
+      auto compare_upper = [] ( const auto& left, const auto& right )
+                              { return left.upperMomentumTransferLimit()
+                                       < right.upperMomentumTransferLimit(); };
+
+      this->lower_a_ = std::max_element( this->functions().begin(), this->functions().end(),
+                                         compare_lower )->lowerMomentumTransferLimit();
+      this->upper_a_ = std::min_element( this->functions().begin(), this->functions().end(),
+                                         compare_upper )->upperMomentumTransferLimit();
+    }
 
   public:
 
@@ -46,59 +76,37 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param[in] moderatorTemperature   the moderator temperature
-     *  @param[in] effectiveTemperature   the effective temperature used in the SCT approximation
      *  @param[in] energyTransfers        the energy transfer values
      *  @param[in] functions              the associated scattering functions
      *  @param[in] boundaries             the boundaries of the interpolation regions
      *  @param[in] interpolants           the interpolation types of the interpolation regions
      */
-    TabulatedScatteringKernel( double moderatorTemperature,
-                               double effectiveTemperature,
-                               std::vector< double > energyTransfers,
+    TabulatedScatteringKernel( std::vector< double > energyTransfers,
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                std::vector< std::size_t > boundaries,
                                std::vector< InterpolationType > interpolants ) :
-      Parent( std::move( energyTransfers ), std::move( functions ),
-              std::move( boundaries ), std::move( interpolants ) ),
-      moderator_temperature_( moderatorTemperature ),
-      effective_temperature_( effectiveTemperature ) {}
+        Parent( std::move( energyTransfers ), std::move( functions ),
+                std::move( boundaries ), std::move( interpolants ) ) {
+
+      this->retrieveMomentumTransferLimits();
+    }
 
     /**
      *  @brief Constructor for scattering functions using a single interpolation zone
      *
-     *  @param[in] moderatorTemperature   the moderator temperature
-     *  @param[in] effectiveTemperature   the effective temperature used in the SCT approximation
      *  @param[in] energyTransfers        the energy transfer values
      *  @param[in] functions              the associated functions
      *  @param[in] interpolant            the interpolation type of the data (default lin-lin)
      */
-    TabulatedScatteringKernel( double moderatorTemperature,
-                               double effectiveTemperature,
-                               std::vector< double > energyTransfers,
+    TabulatedScatteringKernel( std::vector< double > energyTransfers,
                                std::vector< TabulatedScatteringKernelFunction > functions,
                                InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      Parent( std::move( energyTransfers ), std::move( functions ), interpolant ),
-      moderator_temperature_( moderatorTemperature ),
-      effective_temperature_( effectiveTemperature ) {}
+        Parent( std::move( energyTransfers ), std::move( functions ), interpolant ) {
+
+      this->retrieveMomentumTransferLimits();
+    }
 
     /* methods */
-
-    /**
-     *  @brief Return the moderator temperature
-     */
-    double moderatorTemperature() const {
-
-      return this->moderator_temperature_;
-    }
-
-    /**
-     *  @brief Return the effective temperature used for the short collision time approximation
-     */
-    double effectiveTemperature() const {
-
-      return this->effective_temperature_;
-    }
 
     /**
      *  @brief Return the energy transfer values
@@ -132,11 +140,53 @@ namespace thermal {
       return this->f();
     }
 
+    /**
+     *  @brief Return the lower energy transfer limit
+     */
+    double lowerEnergyTransferLimit() const {
+
+      return this->x().front();
+    }
+
+    /**
+     *  @brief Return the upper energy transfer limit
+     */
+    double upperEnergyTransferLimit() const {
+
+      return this->x().back();
+    }
+
+    /**
+     *  @brief Return the lower momentum transfer limit
+     */
+    double lowerMomentumTransferLimit() const {
+
+      return this->lower_a_;
+    }
+
+    /**
+     *  @brief Return the upper momentum transfer limit
+     */
+    double upperMomentumTransferLimit() const {
+
+      return this->upper_a_;
+    }
+
     using Parent::boundaries;
     using Parent::interpolants;
     using Parent::numberPoints;
     using Parent::numberRegions;
-    using Parent::operator();
+
+    /**
+     *  @brief Evaluate the scattering kernel for a given momentum and energy transfer value
+     *
+     *  @param[in] a   the momentum transfer value
+     *  @param[in] b   the energy transfer value
+     */
+    double operator()( double a, double b ) const {
+
+      return Parent::operator()( b, a );
+    }
 
     /**
      *  @brief Return linearised scattering functions
@@ -152,9 +202,7 @@ namespace thermal {
                       [tolerance]
                         ( auto&& function )
                         { return function.linearise( std::move( tolerance ) ); } );
-      return TabulatedScatteringKernel( this->moderatorTemperature(),
-                                        this->effectiveTemperature(),
-                                        this->energyTransfers(), std::move( functions ),
+      return TabulatedScatteringKernel( this->energyTransfers(), std::move( functions ),
                                         this->boundaries(), this->interpolants() );
     }
 
@@ -165,9 +213,7 @@ namespace thermal {
      */
     bool operator==( const TabulatedScatteringKernel& right ) const {
 
-      return std::tie( this->moderator_temperature_, this->effective_temperature_ ) ==
-             std::tie( right.moderator_temperature_, right.effective_temperature_ ) &&
-             Parent::operator==( right );
+      return Parent::operator==( right );
     }
 
     /**

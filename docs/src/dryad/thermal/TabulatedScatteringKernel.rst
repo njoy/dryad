@@ -19,8 +19,6 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    ~TabulatedScatteringKernel.moderator_temperature
-    ~TabulatedScatteringKernel.effective_temperature
     ~TabulatedScatteringKernel.energy_transfers
     ~TabulatedScatteringKernel.functions
     ~TabulatedScatteringKernel.interpolants
