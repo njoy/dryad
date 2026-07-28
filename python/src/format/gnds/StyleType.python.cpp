@@ -8,7 +8,8 @@
 // namespace aliases
 namespace python = pybind11;
 
-namespace dryad {
+namespace format {
+namespace gnds {
 
 void wrapStyleType( python::module& module ) {
 
@@ -36,4 +37,5 @@ void wrapStyleType( python::module& module ) {
   );
 }
 
-} // dryad namespace
+} // format namespace
+} // gnds namespace

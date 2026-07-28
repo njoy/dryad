@@ -14,7 +14,7 @@ namespace gnds {
   void wrapStyleType( python::module& );
 }
 
-void wrapResonances( python::module& module ) {
+void wrapGnds( python::module& module ) {
 
   // create the submodule
   python::module submodule = module.def_submodule(
