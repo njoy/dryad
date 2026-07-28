@@ -4,6 +4,7 @@
 // system includes
 #include <optional>
 #include <string>
+#include <vector>
 
 // other includes
 #include "pugixml.hpp"
