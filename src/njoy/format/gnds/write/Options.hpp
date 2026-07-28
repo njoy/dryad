@@ -30,6 +30,9 @@ namespace write {
     //            for floating point numbers: the number of digits after the
     //            decimal point is equal to precision - 1
     int precision = 10;
+
+    // indent: indentation per level in the xml structure
+    int indent = 2;
   };
 
 } // read namespace

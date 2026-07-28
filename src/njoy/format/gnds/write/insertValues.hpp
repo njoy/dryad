@@ -8,6 +8,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
+#include "njoy/format/gnds/write/determineDepth.hpp"
 #include "njoy/format/gnds/write/toString.hpp"
 
 namespace njoy {
@@ -59,12 +60,17 @@ namespace write {
       node.append_attribute( "count" ) = std::move( count.value() );
     }
 
+    // doing shenanigans to make sure we indent the bodytext properly
+    std::size_t depth = determineDepth( node );
+    std::string single( options.indent, ' ' );
+    std::string indent( options.indent * ( depth - 1 ), ' ' );
+
     std::ostringstream out;
     for ( std::size_t i = 0; i < values.size(); ++i ) {
 
       if ( i % 6 == 0 ) {
 
-        out << "\n  ";
+        out << '\n' << indent << single;
       }
       else if ( i != 0 ) {
 
@@ -72,7 +78,7 @@ namespace write {
       }
       out << toString( options, values[i] );
     }
-    out << '\n';
+    out << '\n' << indent;
     node.text().set( out.str() );
 
     return node;
