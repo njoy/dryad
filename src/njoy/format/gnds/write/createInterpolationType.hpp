@@ -5,7 +5,6 @@
 #include <vector>
 
 // other includes
-#include "tools/Log.hpp"
 #include "njoy/dryad/InterpolationType.hpp"
 
 namespace njoy {
