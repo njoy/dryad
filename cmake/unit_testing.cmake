@@ -414,6 +414,7 @@ add_cpp_test( format.gnds.write.insertConstant1d                                
 add_cpp_test( format.gnds.write.insertValues                                           format/gnds/write/insertValues.test.cpp )
 add_cpp_test( format.gnds.write.insertXYs1d                                            format/gnds/write/insertXYs1d.test.cpp )
 add_cpp_test( format.gnds.write.insertTabulatedFunction                                format/gnds/write/insertTabulatedFunction.test.cpp )
+add_cpp_test( format.gnds.write.insertProjectileEnergyDomain                           format/gnds/write/insertProjectileEnergyDomain.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )
