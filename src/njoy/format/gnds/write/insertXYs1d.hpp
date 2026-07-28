@@ -53,13 +53,13 @@ namespace write {
 
       node.append_attribute( "label" ) = label.value();
     }
-    if ( interpolation.has_value() ) {
-
-      node.append_attribute( "interpolation" ) = interpolation.value();
-    }
     if ( index.has_value() ) {
 
       node.append_attribute( "index" ) = index.value();
+    }
+    if ( interpolation.has_value() ) {
+
+      node.append_attribute( "interpolation" ) = interpolation.value();
     }
     if ( outer.has_value() ) {
 
