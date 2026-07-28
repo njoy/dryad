@@ -11,7 +11,6 @@ from njoy.dryad.resonances import ChannelRadii
 from njoy.dryad.resonances import UnresolvedChannel
 from njoy.dryad.resonances import UnresolvedResonanceTable
 from njoy.dryad.resonances import UnresolvedSpinGroup
-from njoy.dryad.resonances import Kinematics
 from njoy.dryad.resonances import TabulatedAverageWidths, TabulatedLevelSpacing
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
@@ -82,16 +81,12 @@ def verify_chunk( self, chunk ) :
               TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
               ]
 
-    table = UnresolvedResonanceTable(
-            channels = channels,
-            level_spacings = spacings, 
-            average_widths = widths )
-    # unresolved resonance table
+    table = UnresolvedResonanceTable( channels = channels,
+                                      level_spacings = spacings,
+                                      average_widths = widths )
 
     self.assertEqual( 1, chunk.total_angular_momentum )
     self.assertEqual( +1, chunk.parity )
-
-    self.assertEqual( False, chunk.has_channels_with_background )
 
     self.assertEqual( 4, len( chunk.reactions ) )
     self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
@@ -174,10 +169,9 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                    TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
                   ]
 
-        table = UnresolvedResonanceTable(
-                    channels = channels,
-                    level_spacings = spacings, 
-                    average_widths = widths )
+        table = UnresolvedResonanceTable( channels = channels,
+                                          level_spacings = spacings,
+                                          average_widths = widths )
 
         # sorted channels
         chunk = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table )
@@ -254,10 +248,9 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                    TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
                   ]
 
-        table1 = UnresolvedResonanceTable(
-                    channels = channels,
-                    level_spacings = spacings, 
-                    average_widths = widths )
+        table1 = UnresolvedResonanceTable( channels = channels,
+                                           level_spacings = spacings,
+                                           average_widths = widths )
 
         channels = [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
                      ChannelID( 'n,Cl35->n,Cl35_e1{0,1,1+}' ),
@@ -271,19 +264,18 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                    TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] ),
                   ]
 
-        table2 = UnresolvedResonanceTable(
-                    channels = channels,
-                    level_spacings = spacings, 
-                    average_widths = widths )
+        table2 = UnresolvedResonanceTable( channels = channels,
+                                           level_spacings = spacings,
+                                           average_widths = widths )
 
         left = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table1 )
         equal = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table1 )
-        
+
         print( "channels match:", left.channels == equal.channels )
         print( "table match:", left.resonance_table == equal.resonance_table )
         print( "left channels:", [ c for c in left.channels ] )
         print( "equal channels:", [ c for c in equal.channels ] )
-        
+
         different = UnresolvedSpinGroup( [ capture, elastic, inelastic ], table2 )
 
         self.assertEqual( True, ( left == left ) )
@@ -361,11 +353,9 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                    TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
                   ]
 
-        table  = UnresolvedResonanceTable(
-                    channels = channels,
-                    level_spacings = spacings, 
-                    average_widths = widths 
-                    )
+        table  = UnresolvedResonanceTable( channels = channels,
+                                           level_spacings = spacings,
+                                           average_widths = widths )
 
         # empty channel list
         with self.assertRaises( Exception ) :
@@ -386,11 +376,9 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                        TabulatedAverageWidths( energies, [ 0.31, 0.32, 0.33, 0.34 ] )
                       ]
 
-            shorter = UnresolvedResonanceTable(
-                                                channels = channels,
-                                                level_spacings = spacings, 
-                                                average_widths = widths 
-                                              )           
+            shorter = UnresolvedResonanceTable( channels = channels,
+                                                level_spacings = spacings,
+                                                average_widths = widths )
 
             chunk = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], shorter )
 
