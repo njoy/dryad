@@ -343,6 +343,7 @@ add_cpp_test( format.gnds.read.readColumn                                       
 add_cpp_test( format.gnds.read.readColumnHeaders                                       format/gnds/read/readColumnHeaders.test.cpp )
 add_cpp_test( format.gnds.read.readData                                                format/gnds/read/readData.test.cpp )
 add_cpp_test( format.gnds.read.readTable                                               format/gnds/read/readTable.test.cpp )
+add_cpp_test( format.gnds.read.createStyleLabel                                        format/gnds/read/createStyleLabel.test.cpp )
 add_cpp_test( format.gnds.read.pops.createMass                                         format/gnds/read/pops/createMass.test.cpp )
 add_cpp_test( format.gnds.read.pops.createEnergy                                       format/gnds/read/pops/createEnergy.test.cpp )
 add_cpp_test( format.gnds.read.pops.createSpin                                         format/gnds/read/pops/createSpin.test.cpp )
@@ -414,7 +415,6 @@ add_cpp_test( format.gnds.write.insertConstant1d                                
 add_cpp_test( format.gnds.write.insertValues                                           format/gnds/write/insertValues.test.cpp )
 add_cpp_test( format.gnds.write.insertXYs1d                                            format/gnds/write/insertXYs1d.test.cpp )
 add_cpp_test( format.gnds.write.insertTabulatedFunction                                format/gnds/write/insertTabulatedFunction.test.cpp )
-add_cpp_test( format.gnds.write.insertProjectileEnergyDomain                           format/gnds/write/insertProjectileEnergyDomain.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )
