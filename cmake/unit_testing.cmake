@@ -344,6 +344,7 @@ add_cpp_test( format.gnds.read.readColumnHeaders                                
 add_cpp_test( format.gnds.read.readData                                                format/gnds/read/readData.test.cpp )
 add_cpp_test( format.gnds.read.readTable                                               format/gnds/read/readTable.test.cpp )
 add_cpp_test( format.gnds.read.createStyleLabel                                        format/gnds/read/createStyleLabel.test.cpp )
+add_cpp_test( format.gnds.read.createDocumentation                                     format/gnds/read/createDocumentation.test.cpp )
 add_cpp_test( format.gnds.read.pops.createMass                                         format/gnds/read/pops/createMass.test.cpp )
 add_cpp_test( format.gnds.read.pops.createEnergy                                       format/gnds/read/pops/createEnergy.test.cpp )
 add_cpp_test( format.gnds.read.pops.createSpin                                         format/gnds/read/pops/createSpin.test.cpp )
