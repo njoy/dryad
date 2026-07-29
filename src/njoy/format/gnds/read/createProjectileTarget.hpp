@@ -17,6 +17,7 @@
 #include "njoy/format/gnds/read/createInteractionType.hpp"
 #include "njoy/format/gnds/read/pops/createParticleDatabase.hpp"
 #include "njoy/format/gnds/read/resonances/createResonanceParameters.hpp"
+#include "njoy/format/gnds/read/createDocumentation.hpp"
 #include "njoy/format/gnds/read/createReactions.hpp"
 #include "njoy/format/gnds/read/covariance/createCovarianceData.hpp"
 
@@ -52,9 +53,13 @@ namespace read {
 
       std::string style_label = createStyleLabel( suite.child( "styles" ), style );
 
+      auto documentation = styles.find_child_by_attribute( "label", style_label.c_str() ).child( "documentation" );
+
       dryad::id::ParticleID projectile = createParticleIdentifier( suite.attribute( "projectile" ).as_string() );
       dryad::id::ParticleID target( suite.attribute( "target" ).as_string() );
       dryad::InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
+
+      dryad::Documentation docs = createDocumentation( documentation, style_label );
 
       std::vector< dryad::Reaction > reactions = createReactions( projectile, target, suite, normalise, style_label );
 
@@ -74,7 +79,7 @@ namespace read {
         covariances = covariance::createCovarianceData( projectile, target, covsuite );
       }
 
-      return dryad::ProjectileTarget( std::move( projectile ), std::move( target ),
+      return dryad::ProjectileTarget( std::move( docs ), std::move( projectile ), std::move( target ),
                                       type, std::move( reactions ), std::move( particles ),
                                       std::move( parameters ), std::move( covariances ) );
     }
