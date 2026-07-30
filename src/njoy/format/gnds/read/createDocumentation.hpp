@@ -3,6 +3,7 @@
 
 // system includes
 #include <iomanip>
+#include <sstream>
 #include <variant>
 
 // other includes
