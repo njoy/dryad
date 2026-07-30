@@ -83,15 +83,255 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/resonances/Channel/src/selectWaveNumber.hpp"
-    #include "njoy/dryad/resonances/Channel/src/selectWaveFunctions.hpp"
-    #include "njoy/dryad/resonances/Channel/src/updateWaveFunctions.hpp"
-    #include "njoy/dryad/resonances/Channel/src/calculateSpinFactor.hpp"
+    /**
+     *  @brief Select the wave number implementation based on kinematics
+     *
+     *  @param[in] kinematics   the kinematics type applied to the channel
+     */
+    static WaveNumber selectWaveNumber( const Kinematics& kinematics ) {
+
+      if ( kinematics == Kinematics::NonRelativistic ) {
+
+        return NonRelativisticWaveNumber();
+      }
+      else {
+
+        return RelativisticWaveNumber();
+      }
+    }
+
+    /**
+     *  @brief Select the penetrability function based on l and particle pair
+     *
+     *  @param[in] l      the value of the orbital angular momentum
+     *  @param[in] pair   the optional particle pair of the channel
+     */
+    static Penetrability
+    selectPenetrabilityFunction( unsigned int l,
+                                 const std::optional< ParticlePair >& outgoing ) {
+
+      if ( outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
+
+          return HardSpherePenetrability( l );
+        }
+        else if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombPenetrability( l );
+        }
+      }
+      return 1.;
+    }
+
+    /**
+     *  @brief Select the shift factor function based on l and particle pair
+     *
+     *  @param[in] l      the value of the orbital angular momentum
+     *  @param[in] pair   the optional particle pair of the channel
+     */
+    static ShiftFactor
+    selectShiftFactorFunction( unsigned int l,
+                               const std::optional< ParticlePair >& outgoing ) {
+
+      if ( outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
+
+          return HardSphereShiftFactor( l );
+        }
+        else if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombShiftFactor( l );
+        }
+      }
+      return 0.;
+    }
+
+    /**
+     *  @brief Select the phase shift function based on l and particle pair
+     *
+     *  @param[in] l      the value of the orbital angular momentum
+     *  @param[in] pair   the optional particle pair of the channel
+     */
+    static PhaseShift
+    selectPhaseShiftFunction( unsigned int l,
+                              const std::optional< ParticlePair >& outgoing ) {
+
+      if ( outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
+
+          return HardSpherePhaseShift( l );
+        }
+        else if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombPhaseShift( l );
+        }
+      }
+      return 0.;
+    }
+
+    /**
+     *  @brief Select the phase shift difference function based on l and particle pair
+     *
+     *  @param[in] l      the value of the orbital angular momentum
+     *  @param[in] pair   the optional particle pair of the channel
+     */
+    static PhaseShiftDifference
+    selectPhaseShiftDifferenceFunction( unsigned int l,
+                                        const std::optional< ParticlePair >& outgoing ) {
+
+      if ( outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombPhaseShiftDifference( l );
+        }
+      }
+      return 0.;
+    }
+
+    /**
+     *  @brief Update all wave functions
+     */
+    void updateWaveFunctions() {
+
+      this->penetrability_ = selectPenetrabilityFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair() );
+      this->shift_factor_ = selectShiftFactorFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair() );
+      this->phase_shift_ = selectPhaseShiftFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair() );
+      this->phase_shift_difference_ = selectPhaseShiftDifferenceFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair() );
+    }
+
+    /**
+     *  @brief Calculate the value of the statistical spin factor
+     *
+     *  @param[in] numbers   the channel quantum numbers
+     *  @param[in] pair      the optional particle pair of the channel
+     */
+    static double calculateSpinFactor( const ChannelQuantumNumbers& numbers,
+                                       const std::optional< ParticlePair >& pair ) {
+
+      if ( pair.has_value() ) {
+
+        const auto J = numbers.totalAngularMomentum();
+        const auto ia = pair->lightParticle().spin().has_value()
+                        ? pair->lightParticle().spin().value()
+                        : 0.;
+        const auto ib = pair->heavyParticle().spin().has_value()
+                        ? pair->heavyParticle().spin().value()
+                        : 0.;
+        return  ( 2. * J + 1. ) / ( 2. * ia + 1. )
+                                / ( 2. * ib + 1. );
+      }
+      else {
+
+        return 0.;
+      }
+    }
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/resonances/Channel/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    Channel() = default;
+
+    Channel( const Channel& ) = default;
+    Channel( Channel&& ) = default;
+
+    Channel& operator=( const Channel& ) = default;
+    Channel& operator=( Channel&& ) = default;
+
+    /**
+     *  @brief Constructor with wave functions
+     *
+     *  @param[in] identifier      the channel identifier
+     *  @param[in] incident        the current incident particle pair
+     *  @param[in] outgoing        the outgoing particle pair
+     *  @param[in] qValue          the Q value associated with the transition from
+     *                             the incident to the outgoing particle pair
+     *  @param[in] boundary        the boundary condition
+     *  @param[in] radii           the channel radii for the calculation of the
+     *                             wave functions
+     *  @param[in] kinematics      the kinematics type applied to the channel
+     *  @param[in] penetrability   the penetrability of the channel
+     *  @param[in] shiftFactor     the shift factor of the channel
+     *  @param[in] phaseshift      the phase shift of the channel
+     *  @param[in] difference      the phase shift differenceof the channel
+     */
+    Channel( id::ChannelID identifier,
+             ParticlePair incident,
+             std::optional< ParticlePair > outgoing,
+             double qValue,
+             std::optional< double > boundary,
+             ChannelRadii radii,
+             Kinematics kinematics,
+             std::optional< Background > background,
+             Penetrability penetrability,
+             ShiftFactor shiftFactor,
+             PhaseShift phaseShift,
+             PhaseShiftDifference difference ) :
+        id_( std::move( identifier ) ),
+        incident_pair_( std::move( incident ) ),
+        outgoing_pair_( std::move( outgoing ) ),
+        q_( qValue ),
+        boundary_condition_( std::move( boundary ) ),
+        background_( std::move( background ) ),
+        radii_( std::move( radii ) ),
+        wave_number_( selectWaveNumber( kinematics ) ),
+        penetrability_( std::move( penetrability ) ),
+        shift_factor_( std::move( shiftFactor ) ),
+        phase_shift_( std::move( phaseShift ) ),
+        phase_shift_difference_( std::move( difference ) ),
+        spin_factor_( calculateSpinFactor( identifier.quantumNumbers(), outgoing ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] identifier   the channel identifier
+     *  @param[in] incident     the current incident particle pair
+     *  @param[in] outgoing     the outgoing particle pair
+     *  @param[in] qValue       the Q value associated with the transition from
+     *                          the incident to the outgoing particle pair
+     *  @param[in] boundary     the boundary condition
+     *  @param[in] radii        the channel radii for the calculation of the
+     *                          wave functions
+     *  @param[in] kinematics   the kinematics type applied to the channel (default is
+     *                          non-relativistic)
+     *  @param[in] background   the optional background R-matrix element
+     */
+    Channel( id::ChannelID identifier,
+             ParticlePair incident,
+             std::optional< ParticlePair > outgoing,
+             double qValue,
+             std::optional< double > boundary,
+             ChannelRadii radii,
+             Kinematics kinematics = Kinematics::NonRelativistic,
+             std::optional< Background > background = std::nullopt ) :
+        Channel( std::move( identifier ), std::move( incident ),
+                 std::move( outgoing ), qValue,
+                 std::move( boundary ), std::move( radii ),
+                 std::move( kinematics ),
+                 std::move( background ),
+                 selectPenetrabilityFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                              outgoing ),
+                 selectShiftFactorFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                            outgoing ),
+                 selectPhaseShiftFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                           outgoing ),
+                 selectPhaseShiftDifferenceFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                                     outgoing ) ) {}
 
     /**
      *  @brief Return the channel identifier

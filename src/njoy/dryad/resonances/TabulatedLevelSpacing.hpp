@@ -27,7 +27,7 @@ namespace resonances {
 
     /**
      *  @brief Private constructor
-     *  @param table    the interpolation table
+     *  @param[in] table    the interpolation table
      */
     TabulatedLevelSpacing( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}

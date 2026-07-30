@@ -28,7 +28,7 @@ namespace resonances {
     /**
      *  @brief Generate the polynomial ratio for a given l
      *
-     *  @param l   the value of the orbital angular momentum
+     *  @param[in] l   the value of the orbital angular momentum
      */
     static scion::math::PolynomialSeriesRatio< double, double >
     generateFunction( unsigned int l ) {
@@ -71,7 +71,7 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param orbitalAngularMomentum   the value of the orbital angular momentum
+     *  @param[in] orbitalAngularMomentum   the value of the orbital angular momentum
      */
     HardSpherePhaseShift( unsigned int orbitalAngularMomentum ) :
       ratio_( generateFunction( orbitalAngularMomentum ) ),

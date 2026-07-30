@@ -28,7 +28,7 @@ namespace resonances {
     /**
      *  @brief Generate the polynomial ratio for a given l
      *
-     *  @param l   the value of the orbital angular momentum
+     *  @param[in] l   the value of the orbital angular momentum
      */
     static PolynomialSeriesRatio generateFunction( unsigned int l ) {
 
@@ -57,7 +57,7 @@ namespace resonances {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     HardSpherePenetrability( PolynomialSeriesRatio< double, double > ratio ) :
       PolynomialSeriesRatio( std::move( ratio ) ) {}
@@ -80,7 +80,7 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param orbitalAngularMomentum   the value of the orbital angular momentum
+     *  @param[in] orbitalAngularMomentum   the value of the orbital angular momentum
      */
     HardSpherePenetrability( unsigned int orbitalAngularMomentum ) :
       PolynomialSeriesRatio( generateFunction( orbitalAngularMomentum ) ),

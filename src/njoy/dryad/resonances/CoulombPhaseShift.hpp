@@ -42,7 +42,7 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param orbitalAngularMomentum   the value of the orbital angular momentum
+     *  @param[in] orbitalAngularMomentum   the value of the orbital angular momentum
      */
     CoulombPhaseShift( unsigned int orbitalAngularMomentum ) :
       orbital_momentum_( orbitalAngularMomentum ) {}

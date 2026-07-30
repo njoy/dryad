@@ -65,8 +65,8 @@ namespace resonances {
     /**
      *  @brief  Private constructor
      *
-     *  @param  dof     the degrees of freedom
-     *  @param  table   the interpolation table
+     *  @param[in]  dof     the degrees of freedom
+     *  @param[in]  table   the interpolation table
      */
     TabulatedAverageWidths( std::optional< int > dof,
                             InterpolationTable< double, double > table ) :

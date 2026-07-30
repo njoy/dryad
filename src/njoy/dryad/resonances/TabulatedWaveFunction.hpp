@@ -27,7 +27,7 @@ namespace resonances {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     TabulatedWaveFunction( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}
@@ -54,10 +54,10 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param ratios         the ratio values
-     *  @param values         the wave function values
-     *  @param boundaries     the boundaries of the interpolation regions
-     *  @param interpolants   the interpolation types of the interpolation regions
+     *  @param[in] ratios         the ratio values
+     *  @param[in] values         the wave function values
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
      */
     TabulatedWaveFunction( std::vector< double > ratios,
                            std::vector< double > values,
@@ -69,9 +69,9 @@ namespace resonances {
     /**
      *  @brief Constructor for a wave function using a single interpolation zone
      *
-     *  @param ratios        the ratio values
-     *  @param values        the wave function values
-     *  @param interpolant   the interpolation type of the data (default lin-lin)
+     *  @param[in] ratios        the ratio values
+     *  @param[in] values        the wave function values
+     *  @param[in] interpolant   the interpolation type of the data (default lin-lin)
      */
     TabulatedWaveFunction( std::vector< double > ratios,
                            std::vector< double > values,
