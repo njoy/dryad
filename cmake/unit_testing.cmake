@@ -417,6 +417,7 @@ add_cpp_test( format.gnds.write.insertValues                                    
 add_cpp_test( format.gnds.write.insertXYs1d                                            format/gnds/write/insertXYs1d.test.cpp )
 add_cpp_test( format.gnds.write.insertTabulatedFunction                                format/gnds/write/insertTabulatedFunction.test.cpp )
 add_cpp_test( format.gnds.write.insertDocumentation                                    format/gnds/write/insertDocumentation.test.cpp )
+add_cpp_test( format.gnds.write.insertCrossSection                                     format/gnds/write/insertCrossSection.test.cpp )
 add_cpp_test( format.gnds.write.insertQ                                                format/gnds/write/insertQ.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )

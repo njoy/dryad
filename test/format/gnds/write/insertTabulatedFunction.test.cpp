@@ -98,7 +98,7 @@ SCENARIO( "insertTabulatedFunction" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "a parent node and data with multiple interpolation zone but no discontinuities" ) {
+  GIVEN( "a parent node and data with multiple interpolation zones but no discontinuities" ) {
 
     gnds::write::Options options;
 
@@ -382,6 +382,7 @@ std::string chunk8() {
          "  </function1ds>\n"
          "</regions1d>\n";
 }
+
 std::string chunk9() {
 
   return "<regions1d>\n"
