@@ -24,6 +24,7 @@ namespace resonances {
       protected scion::math::PolynomialSeriesRatio< double, double > {
 
     /* fields */
+
     unsigned int numerator_orbital_momentum_;
     unsigned int denominator_orbital_momentum_;
 
@@ -84,7 +85,7 @@ namespace resonances {
     /**
      *  @brief Private constructor
      *
-     *  @param table   the interpolation table
+     *  @param[in] table   the interpolation table
      */
     HardSpherePenetrabilityRatio( PolynomialSeriesRatio< double, double > ratio ) :
       PolynomialSeriesRatio( std::move( ratio ) ) {}
@@ -107,7 +108,7 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param orbitalAngularMomentum   the value of the orbital angular momentum
+     *  @param[in] orbitalAngularMomentum   the value of the orbital angular momentum
      */
     HardSpherePenetrabilityRatio( unsigned int numeratorOrbitalMomentum,
                                   unsigned int denominatorOrbitalMomentum ) :

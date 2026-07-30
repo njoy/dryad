@@ -26,9 +26,11 @@ namespace resonances {
   class ChannelRadii {
 
     /* alias */
+
     using Radius = std::variant< double, TabulatedRadius >;
 
     /* fields */
+
     Radius penetrability_;
     std::optional< Radius > shift_factor_;
     std::optional< Radius > phase_shift_;
@@ -48,7 +50,53 @@ namespace resonances {
   public:
 
     /* constructor */
-    #include "njoy/dryad/resonances/ChannelRadii/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ChannelRadii() = default;
+
+    ChannelRadii( const ChannelRadii& ) = default;
+    ChannelRadii( ChannelRadii&& ) = default;
+
+    ChannelRadii& operator=( const ChannelRadii& ) = default;
+    ChannelRadii& operator=( ChannelRadii&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] radius   the channel radius to be used for P, S and phi
+     */
+    ChannelRadii( Radius radius ) :
+        penetrability_( std::move( radius ) ),
+        shift_factor_( std::nullopt ),
+        phase_shift_( std::nullopt ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] trueRadius        the channel radius to be used for P and S
+     *  @param[in] effectiveRadius   the channel radius to be used for phi
+     */
+    ChannelRadii( Radius trueRadius,
+                  Radius effectiveRadius ) :
+        penetrability_( std::move( trueRadius ) ),
+        shift_factor_( std::nullopt ),
+        phase_shift_( std::move( effectiveRadius ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] penetrabilityRadius   the channel radius to be used for P
+     *  @param[in] shiftFactorRadius     the channel radius to be used for S
+     *  @param[in] phaseShiftRadius      the channel radius to be used for phi
+     */
+    ChannelRadii( Radius penetrabilityRadius,
+                  Radius shiftFactorRadius,
+                  Radius phaseShiftRadius ) :
+        penetrability_( std::move( penetrabilityRadius ) ),
+        shift_factor_( std::move( shiftFactorRadius ) ),
+        phase_shift_( std::move( phaseShiftRadius ) ) {}
 
     /**
      *  @brief Return whether or not a shift factor radius is defined

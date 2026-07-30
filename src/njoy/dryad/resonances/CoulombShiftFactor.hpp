@@ -19,6 +19,7 @@ namespace resonances {
   class CoulombShiftFactor {
 
     /* fields */
+
     unsigned int orbital_momentum_;
 
     /* auxiliary functions */
@@ -27,7 +28,24 @@ namespace resonances {
 
     /* constructor */
 
-    #include "njoy/dryad/resonances/CoulombShiftFactor/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    CoulombShiftFactor() = default;
+
+    CoulombShiftFactor( const CoulombShiftFactor& ) = default;
+    CoulombShiftFactor( CoulombShiftFactor&& ) = default;
+
+    CoulombShiftFactor& operator=( const CoulombShiftFactor& ) = default;
+    CoulombShiftFactor& operator=( CoulombShiftFactor&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] orbitalAngularMomentum   the value of the orbital angular momentum
+     */
+    CoulombShiftFactor( unsigned int orbitalAngularMomentum ) :
+      orbital_momentum_( orbitalAngularMomentum ) {}
 
     /* methods */
 
