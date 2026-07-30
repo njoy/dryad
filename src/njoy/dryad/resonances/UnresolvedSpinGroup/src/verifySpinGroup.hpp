@@ -22,6 +22,7 @@ static void verifySpinGroup( const std::vector< UnresolvedChannel >& channels,
                                return left.identifier() == right.identifier();
                              } );
   if ( iter != channels.end() ) {
+
     Log::error( " Each channel in a spin group must have a unique identifier." );
     Log::info( "Duplicate channel identifier: {}", iter->identifier().symbol() );
     throw std::exception();

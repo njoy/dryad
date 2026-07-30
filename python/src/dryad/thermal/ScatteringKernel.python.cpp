@@ -4,8 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/constants.hpp"
-#include "njoy/dryad/thermal/TabulatedScatteringKernel.hpp"
+#include "njoy/dryad/thermal/ScatteringKernel.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -13,14 +12,11 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapTabulatedScatteringKernel( python::module& module ) {
-
-  // constants
-  std::ostringstream tolerance;
-  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+void wrapScatteringKernel( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::thermal::TabulatedScatteringKernel;
+  using Component = njoy::dryad::thermal::ScatteringKernel;
+  using TabulatedScatteringKernel = njoy::dryad::thermal::TabulatedScatteringKernel;
   using TabulatedScatteringKernelFunction = njoy::dryad::thermal::TabulatedScatteringKernelFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
 
@@ -30,10 +26,16 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedScatteringKernel",
-    "An S(a,b) scattering kernel using tabulated scattering kernel functions\n\n"
+    "ScatteringKernel",
+    "An S(a,b) scattering kernel using the short collision time approximation\n\n"
     "Parameters\n"
     "----------\n"
+    "    moderator_temperature : float\n"
+    "        the moderator temperature\n"
+    "    effective_temperature : float\n"
+    "        the effective temperature\n"
+    "    table : njoy.dryad.thermal.TabulatedScatteringKernel\n"
+    "        the tabulated S(a,b) scattering kernel\n"
     "    energy_transfers : list of float\n"
     "        the energy transfer values\n"
     "    functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction\n"
@@ -50,93 +52,92 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
   component
   .def(
 
-    python::init< std::vector< double >,
+    python::init< double,
+                  double,
+                  TabulatedScatteringKernel >(),
+    python::arg( "moderator_temperature" ),
+    python::arg( "effective_temperature" ),
+    python::arg( "table" ),
+    "Initialise the scattering kernel with a tabulated scattering kernel"
+  )
+  .def(
+
+    python::init< double,
+                  double,
+                  std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
+    python::arg( "moderator_temperature" ),
+    python::arg( "effective_temperature" ),
     python::arg( "energy_transfers" ),
     python::arg( "functions" ),
     python::arg( "boundaries" ),
     python::arg( "interpolants" ),
-    "Initialise the tabulated S(a,b) scattering kernel with multiple interpolation zones"
+    "Initialise the scattering kernel with multiple interpolation zones"
   )
   .def(
 
-    python::init< std::vector< double >,
+    python::init< double,
+                  double,
+                  std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
                   InterpolationType >(),
+    python::arg( "moderator_temperature" ),
+    python::arg( "effective_temperature" ),
     python::arg( "energy_transfers" ),
     python::arg( "functions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the tabulated S(a,b) scattering kernel with a single interpolation zone"
+    "Initialise the scattering kernel with a single interpolation zone"
   )
   .def_property_readonly(
 
-    "energy_transfers",
-    python::overload_cast<>( &Component::energyTransfers, python::const_ ),
-    "The energy transfer values for which scattering functions are given"
+    "moderator_temperature",
+    &Component::moderatorTemperature,
+    "The moderator temperature"
   )
   .def_property_readonly(
 
-    "functions",
-    python::overload_cast<>( &Component::functions, python::const_ ),
-    "The associated scattering functions"
+    "effective_temperature",
+    &Component::effectiveTemperature,
+    "The effective temperature"
   )
   .def_property_readonly(
 
-    "lower_energy_transfer_limit",
-    &Component::lowerEnergyTransferLimit,
-    "The lower energy transfer limit"
+    "short_collision_time",
+    python::overload_cast<>( &Component::shortCollisionTime, python::const_ ),
+    "The short collision time approximation"
   )
   .def_property_readonly(
 
-    "upper_energy_transfer_limit",
-    &Component::upperEnergyTransferLimit,
-    "The upper energy transfer limit"
+    "tabulated_scattering_kernel",
+    python::overload_cast<>( &Component::tabulatedScatteringKernel, python::const_ ),
+    "The tabulated scattering kernel"
   )
   .def_property_readonly(
 
-    "lower_momentum_transfer_limit",
-    &Component::lowerMomentumTransferLimit,
-    "The lower momentum transfer limit"
-  )
-  .def_property_readonly(
-
-    "upper_momentum_transfer_limit",
-    &Component::upperMomentumTransferLimit,
-    "The upper momentum transfer limit"
+    "is_energy_transfer_symmetric",
+    &Component::isEnergyTransferSymmetric,
+    "Flag to indicate whether or not the scattering kernel is symmetric along the energy transfer axis"
   )
   .def(
 
     "__call__",
     [] ( const Component& self, double a, double b ) -> decltype(auto)
        { return self( a, b ); },
-    python::arg( "value" ), python::arg( "cosine" ),
-    "Evaluate the S(a,b) scattering kernel for a given energy and momentum transfer value\n\n"
+    python::arg( "a" ),
+    python::arg( "b" ),
+    "Evaluate the scattering kernel for a given energy value\n\n"
     "Parameters\n"
     "----------\n"
     "    a : float\n"
     "        the momentum transfer value\n"
     "    b : float\n"
     "        the energy transfer value"
-  )
-  .def(
-
-    "linearise",
-    &Component::linearise,
-    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
-    std::string( "Linearise the S(a,b) scattering kernel\n\n"
-                 "Parameters\n"
-                 "----------\n"
-                 "    tolerance : float, default " + tolerance.str() + "\n"
-                 "        the linearisation tolerance" ).c_str()
   );
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
-
-  // add standard tabulated data definitions
-  addStandardInterpolationTableDefinitions< Component >( component );
 
   // add standard copy definitions
   addStandardCopyDefinitions< Component >( component );

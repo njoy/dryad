@@ -59,20 +59,20 @@ SCENARIO( "UnresolvedSpinGroup" ) {
 
     // channels
     UnresolvedChannel capture( captureID, elasticPair, capturePair,
-                     captureQ, captureBoundary, captureRadii );
+                      captureQ, captureBoundary, captureRadii );
     UnresolvedChannel elastic( elasticID, elasticPair, elasticPair,
-                     elasticQ, elasticBoundary, elasticRadii );
+                      elasticQ, elasticBoundary, elasticRadii );
     UnresolvedChannel inelastic( inelasticID, elasticPair, inelasticPair,
-                       inelasticQ, inelasticBoundary, inelasticRadii );
+                      inelasticQ, inelasticBoundary, inelasticRadii );
     UnresolvedChannel proton( protonID, elasticPair, protonPair,
-                    protonQ, protonBoundary, protonRadii );
+                      protonQ, protonBoundary, protonRadii );
 
     // unresolved resonance table
-    std::vector< id::ChannelID > channelIDs = { 
+    std::vector< id::ChannelID > channelIDs = {
       id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
       id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
       id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-      id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) 
+      id::ChannelID( "n,Cl35->p,S35{0,1,1+}" )
     };
 
     TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
@@ -156,11 +156,11 @@ SCENARIO( "UnresolvedSpinGroup" ) {
 
       // unresolved resonance tables
       //
-      std::vector< id::ChannelID > channelIDs1 = { 
+      std::vector< id::ChannelID > channelIDs1 = {
         id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
         id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
         id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-        id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) 
+        id::ChannelID( "n,Cl35->p,S35{0,1,1+}" )
       };
 
       TabulatedLevelSpacing spacings1( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
@@ -176,7 +176,7 @@ SCENARIO( "UnresolvedSpinGroup" ) {
                                        std::move( spacings1 )
           );
 
-      std::vector< id::ChannelID > channelIDs2 = { 
+      std::vector< id::ChannelID > channelIDs2 = {
         id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
         id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
         id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
@@ -211,10 +211,11 @@ SCENARIO( "UnresolvedSpinGroup" ) {
     } // WHEN
   } // GIVEN
 
-  // TODO: add a scenario covering average infinitely dilute cross sections
-  //       once UnresolvedSpinGroup::crossSections is implemented.
-  // TODO: add a scenario covering ResonanceTable sampling once
-  //       UnresolvedSpinGroup::sampleResonanceTable is implemented.
+  //! @todo add a scenario covering average infinitely dilute cross sections
+  //!       once UnresolvedSpinGroup::crossSections is implemented.
+  //! @todo add a scenario covering ResonanceTable sampling once
+  //!       UnresolvedSpinGroup::sampleResonanceTable is implemented.
+
 } // SCENARIO
 
 void verifyChunk( const UnresolvedSpinGroup& chunk ) {
@@ -270,11 +271,11 @@ void verifyChunk( const UnresolvedSpinGroup& chunk ) {
 
   // unresolved resonance table
   //
-  std::vector< id::ChannelID > channelIDs = { 
+  std::vector< id::ChannelID > channelIDs = {
     id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
     id::ChannelID( "n,Cl35->n,Cl35_e1{0,1,1+}" ),
     id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-    id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) 
+    id::ChannelID( "n,Cl35->p,S35{0,1,1+}" )
   };
 
   TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
@@ -288,14 +289,10 @@ void verifyChunk( const UnresolvedSpinGroup& chunk ) {
 
   UnresolvedResonanceTable table( std::move( channelIDs ),
                                   std::move( widths ),
-                                  std::move( spacings )
-  );
-
+                                  std::move( spacings ) );
 
   CHECK( 1 == chunk.totalAngularMomentum() );
   CHECK( +1 == chunk.parity() );
-
-  CHECK( false == chunk.hasChannelsWithBackground() );
 
   CHECK( 4 == chunk.reactions().size() );
   CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );

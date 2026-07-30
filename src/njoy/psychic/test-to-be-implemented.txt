@@ -26,3 +26,7 @@ Distributions
 Multiplicities
 
 - check weighted multiplicity (especially MT5)
+
+Thermal scattering
+
+- check the domain of a TabulatedScatteringKernel (upper a must be the same)

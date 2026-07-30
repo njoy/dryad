@@ -15,5 +15,6 @@ thermal
    thermal/IncoherentElasticAngularPdf
    thermal/IncoherentElasticAngularCdf
    thermal/IncoherentElasticAngularDistribution
+   thermal/ShortCollisionTimeScatteringKernel
    thermal/TabulatedScatteringKernel
    thermal/TabulatedScatteringKernelFunction

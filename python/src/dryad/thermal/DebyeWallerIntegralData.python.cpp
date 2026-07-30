@@ -55,6 +55,28 @@ void wrapDebyeWallerIntegralData( python::module& module ) {
     "values",
     python::overload_cast<>( &Component::values, python::const_ ),
     "The integral values"
+  )
+  .def(
+
+    "has_value",
+    &Component::hasValue,
+    python::arg( "temperature" ),
+    "Return whether or not there is a Debye-Waller integral value for a given temperature\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the temperature"
+  )
+  .def(
+
+    "value",
+    &Component::value,
+    python::arg( "temperature" ),
+    "Return the Debye-Waller integral value for a given temperature\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the temperature"
   );
 
   // add standard equality comparison definitions
