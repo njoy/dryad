@@ -157,6 +157,7 @@ add_cpp_test( dryad.ThermalScattering                                           
 add_cpp_test( format.createIndex                                                       format/createIndex.test.cpp )
 add_cpp_test( format.createVector                                                      format/createVector.test.cpp )
 add_cpp_test( format.adjustScatterLevel                                                format/adjustScatterLevel.test.cpp )
+add_cpp_test( format.revertScatterLevel                                                format/revertScatterLevel.test.cpp )
 add_cpp_test( format.collectParticleIdentifiers                                        format/collectParticleIdentifiers.test.cpp )
 add_cpp_test( format.convertLegendreMoments                                            format/convertLegendreMoments.test.cpp )
 
@@ -419,6 +420,7 @@ add_cpp_test( format.gnds.write.insertTabulatedFunction                         
 add_cpp_test( format.gnds.write.insertDocumentation                                    format/gnds/write/insertDocumentation.test.cpp )
 add_cpp_test( format.gnds.write.insertCrossSection                                     format/gnds/write/insertCrossSection.test.cpp )
 add_cpp_test( format.gnds.write.insertQ                                                format/gnds/write/insertQ.test.cpp )
+add_cpp_test( format.gnds.write.insertReactions                                        format/gnds/write/insertReactions.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )
