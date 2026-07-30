@@ -67,8 +67,7 @@ namespace lrf7 {
     // get the pnt values (whether or not to calculate penetrability)
     std::vector< bool > pnt( endfPairs.numberParticlePairs() );
     std::transform( endfPairs.penetrabilityFlag().begin(), endfPairs.penetrabilityFlag().end(),
-                    pnt.begin(),
-                    [] ( int pnt ) { return pnt != -1; } );
+                    pnt.begin(), [] ( int value ) { return value != -1; } );
 
     // go over the channel information
     for ( unsigned int i = 0; i < endfChannels.numberChannels(); ++i ) {
