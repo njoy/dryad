@@ -47,16 +47,181 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/resonances/SpinGroup/src/createData.hpp"
-    #include "njoy/dryad/resonances/SpinGroup/src/processChannels.hpp"
-    #include "njoy/dryad/resonances/SpinGroup/src/verifySpinGroup.hpp"
-    #include "njoy/dryad/resonances/SpinGroup/src/selectCalculator.hpp"
+    /**
+     *  @brief Transform the channel data into a set of channels and a resonance parameter
+     *         table
+     *
+     *  @param[in] channels     the channel data in the spingroup
+     */
+    static auto createData( std::vector< ChannelData > channel_data ) {
+
+      std::vector< Channel > channels( channel_data.size() );
+      channels.reserve( channel_data.size() );
+      std::transform( channel_data.begin(), channel_data.end(), channels.begin(),
+                      [] ( auto&& channel ) { return std::move( channel.first ); } );
+
+      ResonanceTable table = channel_data.front().second;
+      for ( unsigned int i = 1; i < channel_data.size(); ++i ) {
+
+        table += channel_data[i].second;
+      }
+
+      return std::make_tuple( std::move( channels ), std::move( table ) );
+    }
+
+    /**
+     *  @brief Process the channel data
+     *
+     *  This function sorts the channels and initialises the reactions field with
+     *  all reactions the spin group contributes to.
+     */
+    void processChannels() {
+
+      std::sort( this->channels().begin(), this->channels().end(),
+                 [] ( auto&& left, auto&& right )
+                    { return left.identifier() < right.identifier(); } );
+
+      for ( const auto& channel : this->channels() ) {
+
+        auto id = channel.identifier().reaction();
+        auto iter = std::lower_bound( this->reactions().begin(),
+                                      this->reactions().end(), id );
+        if ( ! ( iter != this->reactions().end() && *iter == id ) ) {
+
+          this->reactions().insert( iter, id );
+        }
+      }
+    }
+
+    /**
+     *  @brief Select the calculator to be used
+     *
+     *  @param[in] formalism    the r matrix formalism option to be applied
+     *  @param[in] boundary     the boundary condition option to be applied
+     *  @param[in] channels     the channels in the spingroup
+     *  @param[in] resonances   the resonance table of the spingroup
+     */
+    static Calculator selectCalculator( const Formalism& formalism,
+                                        const BoundaryCondition& boundary,
+                                        const std::vector< Channel >& channels,
+                                        const ResonanceTable& table ) {
+
+      switch ( formalism ) {
+
+        case Formalism::ReichMoore : return calculator::ReichMoore( boundary, channels );
+        case Formalism::GeneralRMatrix : return calculator::GeneralRMatrix( boundary, channels, table );
+        default : {
+
+          throw std::runtime_error( "Unknown formalism type" );
+        }
+      }
+    }
+
+    /**
+     *  @brief Perform basic verification on the spin group
+     *
+     *  @param[in] channels   the channels in the spin group
+     *  @param[in] table      the resonance parameter table
+     */
+    static void verifySpinGroup( const std::vector< Channel >& channels,
+                                 const ResonanceTable& table ) {
+
+      std::size_t nc = channels.size();
+
+      if ( nc  == 0 ) {
+
+        Log::error( "At least one channel should be defined" );
+        Log::info( "Number channels: {}", nc );
+        throw std::exception();
+      }
+      if ( nc != table.numberChannels() ) {
+
+        Log::error( "The number of channels and the number of columns in the table are inconsistent" );
+        Log::info( "Number channels: {}", channels.size() );
+        Log::info( "Number columns in the table: {}", table.numberChannels() );
+        throw std::exception();
+      }
+
+      auto iter = std::adjacent_find( channels.begin(), channels.end(),
+                                      [] ( auto&& left, auto&& right )
+                                         { return left.identifier() == right.identifier(); } );
+      if ( iter != channels.end() ) {
+
+        Log::error( "Channels in the spin group do not seem to be unique." );
+        Log::info( "Channel \'{}\' is present at least twice", iter->identifier().symbol() );
+        throw std::exception();
+      }
+    }
+
+    /* constructor */
+
+    /**
+     *  @brief Private intermediate constructor
+     */
+    SpinGroup( std::tuple< std::vector< Channel >, ResonanceTable > data,
+               const Formalism& formalism,
+               const BoundaryCondition& boundary ) :
+        SpinGroup( std::move( std::get< 0 >( data ) ),
+                   std::move( std::get< 1 >( data ) ),
+                   formalism, boundary ) {}
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/resonances/SpinGroup/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    SpinGroup() = default;
+
+    SpinGroup( const SpinGroup& ) = default;
+    SpinGroup( SpinGroup&& ) = default;
+
+    SpinGroup& operator=( const SpinGroup& ) = default;
+    SpinGroup& operator=( SpinGroup&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  If the channels are not sorted, they will get sorted through the order
+     *  of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+     *  sorting order).
+     *
+     *  @param[in] channels     the channels in the spingroup
+     *  @param[in] resonances   the resonance table of the spingroup
+     *  @param[in] formalism    the r matrix formalism option to be applied
+     *  @param[in] boundary     the boundary condition option to be applied
+     */
+    SpinGroup( std::vector< Channel > channels,
+               ResonanceTable resonances,
+               const Formalism& formalism,
+               const BoundaryCondition& boundary ) :
+        channels_( std::move( channels ) ),
+        table_( std::move( resonances ) ),
+        formalism_( formalism ),
+        boundary_condition_( boundary ) {
+
+      this->processChannels();
+      this->calculator_ = selectCalculator( this->formalism(), this->boundaryCondition(),
+                                            this->channels(), this->resonanceTable() );
+      verifySpinGroup( this->channels(), this->resonanceTable() );
+    }
+
+    /**
+     *  @brief Constructor
+     *
+     *  If the channels are not sorted, they will get sorted through the order
+     *  of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+     *  sorting order).
+     *
+     *  @param[in] channels     the channel data in the spingroup
+     *  @param[in] formalism    the r matrix formalism option to be applied
+     *  @param[in] boundary     the boundary condition option to be applied
+     */
+    SpinGroup( std::vector< ChannelData > channels,
+               const Formalism& formalism,
+               const BoundaryCondition& boundary ) :
+        SpinGroup( createData( std::move( channels ) ), formalism, boundary ) {}
 
     /**
      *  @brief Return the channels in the spin group

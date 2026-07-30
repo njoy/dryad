@@ -35,7 +35,7 @@ namespace resonances {
     /* auxiliary functions */
 
     /**
-     *  @brief Perform basic verification on the spin groups
+     *  @brief Perform basic verification on the spin group
      *
      *  @param[in] channels   the channels in the spin group
      *  @param[in] table      the resonance parameter table
