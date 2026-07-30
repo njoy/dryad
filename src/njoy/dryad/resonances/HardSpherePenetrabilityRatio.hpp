@@ -24,6 +24,7 @@ namespace resonances {
       protected scion::math::PolynomialSeriesRatio< double, double > {
 
     /* fields */
+
     unsigned int numerator_orbital_momentum_;
     unsigned int denominator_orbital_momentum_;
 

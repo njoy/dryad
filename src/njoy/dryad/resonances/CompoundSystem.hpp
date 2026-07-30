@@ -27,13 +27,63 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/resonances/CompoundSystem/src/processSpinGroups.hpp"
+    /**
+     *  @brief Process the spin group data
+     *
+     *  This function sorts the spin groups and initialises the reactions field with
+     *  all reactions the spin group contributes to.
+     */
+    void processSpinGroups() {
+
+      std::sort( this->spinGroups().begin(), this->spinGroups().end(),
+                 [] ( auto&& left, auto&& right )
+                    { return std::make_tuple( left.totalAngularMomentum(), left.parity() ) <
+                             std::make_tuple( right.totalAngularMomentum(), right.parity() ); } );
+
+      for ( const auto& group : this->spinGroups() ) {
+
+        for ( const auto& reaction : group.reactions() ) {
+
+          auto iter = std::lower_bound( this->reactions().begin(),
+                                        this->reactions().end(), reaction );
+          if ( ! ( iter != this->reactions().end() && *iter == reaction ) ) {
+
+            this->reactions().insert( iter, reaction );
+          }
+        }
+      }
+    }
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/resonances/CompoundSystem/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    CompoundSystem() = default;
+
+    CompoundSystem( const CompoundSystem& ) = default;
+    CompoundSystem( CompoundSystem&& ) = default;
+
+    CompoundSystem& operator=( const CompoundSystem& ) = default;
+    CompoundSystem& operator=( CompoundSystem&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] lowerEnergy   the lower energy limit for the compound system
+     *  @param[in] upperEnergy   the upper energy limit for the compound system
+     *  @param[in] spinGroups    the spin groups that make up the compound system
+     */
+    CompoundSystem( double lowerEnergy, double upperEnergy,
+                    std::vector< SpinGroup > spinGroups ) :
+        lower_( lowerEnergy ),
+        upper_( upperEnergy ),
+        spin_groups_( std::move( spinGroups ) ) {
+
+      this->processSpinGroups();
+    }
 
     /**
      *  @brief Return the lower energy limit

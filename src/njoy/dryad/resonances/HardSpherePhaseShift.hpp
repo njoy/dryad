@@ -25,13 +25,57 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/resonances/HardSpherePhaseShift/src/generateFunction.hpp"
+    /**
+     *  @brief Generate the polynomial ratio for a given l
+     *
+     *  @param l   the value of the orbital angular momentum
+     */
+    static scion::math::PolynomialSeriesRatio< double, double >
+    generateFunction( unsigned int l ) {
+
+      // see Table D.1 from the ENDF manual
+      // ENDF-6 Formats Manual, CSEWG Document ENDF-102, NNDC, Brookhaven National Laboratory
+      // https://www.nndc.bnl.gov/endf
+      switch ( l ) {
+
+        case 0 : return { { 0 } };
+        case 1 : return { { 0, 1 } };
+        case 2 : return { { 0, 3 }, { 3, 0, -1 } };
+        case 3 : return { { 0, 15, 0, -1 }, { 15, 0, -6 } };
+        case 4 : return { { 0, 105, 0, -10 }, { 105, 0, -45, 0, 1 } };
+        case 5 : return { { 0, 945, 0, -105, 0, 1 }, { 945, 0, -420, 0, 15 } };
+        default : {
+
+          Log::error( "Cannot handle wave functions with l above 5, got \'{}\', "
+                      "contact dryad developers", l );
+          throw std::exception();
+        }
+      }
+    }
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/resonances/HardSpherePhaseShift/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    HardSpherePhaseShift() = default;
+
+    HardSpherePhaseShift( const HardSpherePhaseShift& ) = default;
+    HardSpherePhaseShift( HardSpherePhaseShift&& ) = default;
+
+    HardSpherePhaseShift& operator=( const HardSpherePhaseShift& ) = default;
+    HardSpherePhaseShift& operator=( HardSpherePhaseShift&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param orbitalAngularMomentum   the value of the orbital angular momentum
+     */
+    HardSpherePhaseShift( unsigned int orbitalAngularMomentum ) :
+      ratio_( generateFunction( orbitalAngularMomentum ) ),
+      orbital_momentum_( orbitalAngularMomentum ) {}
 
     /* methods */
 
