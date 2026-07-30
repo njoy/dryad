@@ -7,6 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/Reaction.hpp"
+#include "njoy/format/revertScatterLevel.hpp"
 #include "njoy/format/endf/write/createInterpolants.hpp"
 #include "njoy/format/endf/write/createBoundaries.hpp"
 #include "ENDFtk/section/3.hpp"
@@ -29,27 +30,7 @@ namespace write {
     auto projectile = reaction.identifier().projectile();
     auto target = reaction.identifier().target();
 
-    auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
-
-      int elastic = dryad::id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
-      if ( target.e() > 0 && projectile != dryad::id::ParticleID::photon() ) {
-
-        int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
-        if ( mt >= ground && mt < elastic ) {
-
-          return mt + 1;
-        }
-      }
-
-      if ( mt == elastic ) {
-
-        mt = 2;
-      }
-
-      return mt;
-    };
-
-    int mt = adjust_scatter_level( reaction.identifier().reactionType().mt().value() );
+    int mt = revertScatterLevel( projectile, target, reaction.identifier().mt().value() );
     double qm = reaction.massDifferenceQValue().has_value()
                 ? reaction.massDifferenceQValue().value()
                 : 0;

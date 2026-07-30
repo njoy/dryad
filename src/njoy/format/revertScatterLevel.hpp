@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_ADJUSTSCATTERLEVEL
-#define NJOY_FORMAT_ADJUSTSCATTERLEVEL
+#ifndef NJOY_FORMAT_READJUSTSCATTERLEVEL
+#define NJOY_FORMAT_READJUSTSCATTERLEVEL
 
 // system includes
 
@@ -11,28 +11,35 @@ namespace njoy {
 namespace format {
 
   /**
-   *  @brief Adjust the scatter level mt number for excited states
+   *  @brief Revert the scatter level mt number when required
    *
    *  Internally, we use MT50, MT600, etc. for the elastic reaction instead of MT2.
-   *  For excited states we need to downshift all levels below the excited state.
+   *  For excited states we need to upshift all levels below the excited state back to
+   *  their original MT number.
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] mt           the mt number to adjust
    */
-  inline int adjustScatterLevel( const dryad::id::ParticleID& projectile,
+  inline int revertScatterLevel( const dryad::id::ParticleID& projectile,
                                  const dryad::id::ParticleID& target,
                                  int mt ) {
 
+    int elastic = dryad::id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
     if ( target.e() > 0 && projectile != dryad::id::ParticleID::photon() ) {
 
-      int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).mt().value();
-      int elastic = dryad::id::ReactionID( projectile, target, 2 ).mt().value();
-      if ( mt > ground && mt <= elastic ) {
+      int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
+      if ( mt >= ground && mt < elastic ) {
 
-        return mt - 1;
+        return mt + 1;
       }
     }
+
+    if ( mt == elastic ) {
+
+      mt = 2;
+    }
+
     return mt;
   };
 
