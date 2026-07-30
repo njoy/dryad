@@ -46,6 +46,15 @@ namespace read {
         description = body.text().as_string();
       }
 
+      // remove trailing whitespace (just in case)
+      auto iter = std::find_if( description->rbegin(), description->rend(),
+                                [] ( unsigned char c ) { return ! std::isspace( c ); } ).base();
+
+      if ( iter != std::prev( description->end() ) ) {
+
+        description->erase( iter, description->end() );
+      }
+
       // set to 66 characters and add newline character
       // !@todo split lines that are over 66 characters
       std::istringstream in( description.value() );

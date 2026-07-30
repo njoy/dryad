@@ -129,5 +129,5 @@ void verifyChunk( const Documentation& chunk ) {
 
   CHECK( std::nullopt == chunk.library() );
   CHECK( std::nullopt == chunk.version() );
-  CHECK( description == chunk.description().value() );
+  CHECK( description == chunk.description() );
 }
