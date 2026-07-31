@@ -43,7 +43,34 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/resonances/TabulatedAverageWidths/src/combineDoF.hpp"
+    static std::optional< int > combineDoF( const std::optional< int >& left, const std::optional< int >& right ) {
+
+      if ( left.has_value() && right.has_value() ) {
+
+        if ( left != right ) {
+
+          Log::error( "TabulatedAverageWidths::combineDoF: conflicting degrees of freedom "
+                      "values: {} and {}", left.value(), right.value() );
+          throw std::exception();
+        }
+
+        return left;
+      }
+
+      return left.has_value() ? left : right;
+    }
+
+    /* constructor */
+
+    /**
+     *  @brief  Private constructor
+     *
+     *  @param[in]  dof     the degrees of freedom
+     *  @param[in]  table   the interpolation table
+     */
+    TabulatedAverageWidths( std::optional< int > dof,
+                            InterpolationTable< double, double > table ) :
+      InterpolationTable( std::move( table ) ), degrees_freedom_( dof ) {}
 
   public:
 
@@ -54,8 +81,86 @@ namespace resonances {
 
     /* constructor */
 
-    #include "njoy/dryad/resonances/TabulatedAverageWidths/src/ctor.hpp"
+    /**
+     *  @brief  Default constructor (for pybind11 purposes only)
+     */
+    TabulatedAverageWidths() = default;
 
+    TabulatedAverageWidths( const TabulatedAverageWidths& ) = default;
+    TabulatedAverageWidths( TabulatedAverageWidths&& ) = default;
+
+    TabulatedAverageWidths& operator=( const TabulatedAverageWidths& ) = default;
+    TabulatedAverageWidths& operator=( TabulatedAverageWidths&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in]  dof            the degrees of freedom
+     *  @param[in]  energies       the energy values (eV)
+     *  @param[in]  widths         the average width values (eV)
+     *  @param[in]  boundaries     the boundaries of the interpolation regions
+     *  @param[in]  interpolants   the interpolation types of the interpolation regions
+     */
+    TabulatedAverageWidths( int dof,
+                            std::vector< double > energies,
+                            std::vector< double > widths,
+                            std::vector< std::size_t > boundaries,
+                            std::vector< InterpolationType > interpolants ) :
+      TabulatedAverageWidths( std::optional< int >( dof ),
+                              InterpolationTable< double, double >( std::move( energies ),
+                                                                    std::move( widths ),
+                                                                    std::move( boundaries ),
+                                                                    std::move( interpolants ) ) ) {}
+
+    /**
+     *  @brief Constructor for a single interpolation zone
+     *
+     *  @param[in] dof           the degrees of freedom
+     *  @param[in] energies      the energy values (eV)
+     *  @param[in] widths        the average width values (eV)
+     *  @param[in] interpolant   the interpolation type (default lin-lin)
+     */
+    TabulatedAverageWidths( int dof,
+                            std::vector< double > energies,
+                            std::vector< double > widths,
+                            InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      TabulatedAverageWidths( std::optional< int >( dof ),
+                              InterpolationTable< double, double >( std::move( energies ),
+                                                                    std::move( widths ),
+                                                                    interpolant ) ) {}
+
+    /**
+     *  @brief Constructor without the degrees of freedom
+     *
+     *  @param[in] energies       the energy values (eV)
+     *  @param[in] widths         the average width values (eV)
+     *  @param[in] boundaries     the boundaries of the interpolation regions
+     *  @param[in] interpolants   the interpolation types of the interpolation regions
+     */
+    TabulatedAverageWidths( std::vector< double > energies,
+                            std::vector< double > widths,
+                            std::vector< std::size_t > boundaries,
+                            std::vector< InterpolationType > interpolants ) :
+      TabulatedAverageWidths( std::nullopt,
+                              InterpolationTable< double, double >( std::move( energies ),
+                                                                    std::move( widths ),
+                                                                    std::move( boundaries ),
+                                                                    std::move( interpolants ) ) ) {}
+
+    /**
+     *  @brief Constructor for a single interpolation zone without the degrees of freedom
+     *
+     *  @param[in] energies       the energy values (eV)
+     *  @param[in] widths         the average width values (eV)
+     *  @param[in] interpolant    the interpolation type (default lin-lin)
+     */
+    TabulatedAverageWidths( std::vector< double > energies,
+                            std::vector< double > widths,
+                            InterpolationType interpolant = InterpolationType::LinearLinear ) :
+      TabulatedAverageWidths( std::nullopt,
+                              InterpolationTable< double, double >( std::move( energies ),
+                                                                    std::move( widths ),
+                                                                    interpolant ) ) {}
     /* methods */
 
     /**
