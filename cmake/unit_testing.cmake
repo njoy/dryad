@@ -421,6 +421,8 @@ add_cpp_test( format.gnds.write.insertDocumentation                             
 add_cpp_test( format.gnds.write.insertCrossSection                                     format/gnds/write/insertCrossSection.test.cpp )
 add_cpp_test( format.gnds.write.insertQ                                                format/gnds/write/insertQ.test.cpp )
 add_cpp_test( format.gnds.write.insertReactions                                        format/gnds/write/insertReactions.test.cpp )
+add_cpp_test( format.gnds.write.insertCrossSectionSums                                 format/gnds/write/insertCrossSectionSums.test.cpp )
+add_cpp_test( format.gnds.write.insertSums                                             format/gnds/write/insertSums.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )
