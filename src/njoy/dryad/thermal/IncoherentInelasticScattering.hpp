@@ -15,7 +15,7 @@ namespace thermal {
 
   /**
    *  @class
-   *  @brief Incoherent elastic thermal scattering data
+   *  @brief Incoherent inelastic thermal scattering data
    */
   class IncoherentInelasticScattering {
 
@@ -201,6 +201,7 @@ namespace thermal {
     void scatteringKernels( std::vector< ScatteringKernel > kernels ) {
 
       this->scattering_kernels_ = std::move( kernels );
+      this->sortAndExtractTemperatures();
     }
 
     /**
