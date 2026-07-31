@@ -3,6 +3,7 @@
 
 // system includes
 #include <optional>
+#include <sstream>
 #include <string>
 
 // other includes

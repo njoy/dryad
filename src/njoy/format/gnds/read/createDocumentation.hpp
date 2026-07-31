@@ -2,8 +2,10 @@
 #define NJOY_FORMAT_GNDS_READ_CREATEDOCUMENTATION
 
 // system includes
+#include <algorithm>
 #include <iomanip>
 #include <sstream>
+#include <string>
 #include <variant>
 
 // other includes
