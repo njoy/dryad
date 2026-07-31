@@ -69,7 +69,7 @@ namespace write {
     std::ostringstream out;
     for ( std::size_t i = 0; i < values.size(); ++i ) {
 
-      if ( i % 6 == 0 ) {
+      if ( i % options.columns == 0 ) {
 
         out << '\n' << indent << single;
       }

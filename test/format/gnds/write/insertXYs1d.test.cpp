@@ -91,8 +91,7 @@ std::string chunk1() {
          "    <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
          "  </axes>\n"
          "  <values>\n"
-         "    1 7 2 8 3 9\n"
-         "    4 10 5 11 6 12\n"
+         "    1 7 2 8 3 9 4 10 5 11 6 12\n"
          "  </values>\n"
          "</XYs1d>\n";
 }
@@ -101,8 +100,7 @@ std::string chunk2() {
 
   return "<XYs1d index=\"0\">\n"
          "  <values>\n"
-         "    1 7 2 8 3 9\n"
-         "    4 10 5 11 6 12\n"
+         "    1 7 2 8 3 9 4 10 5 11 6 12\n"
          "  </values>\n"
          "</XYs1d>\n";
 }
@@ -115,8 +113,7 @@ std::string chunk3() {
          "    <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
          "  </axes>\n"
          "  <values>\n"
-         "    1 7 2 8 3 9\n"
-         "    4 10 5 11 6 12\n"
+         "    1 7 2 8 3 9 4 10 5 11 6 12\n"
          "  </values>\n"
          "</XYs1d>\n";
 }
@@ -129,8 +126,7 @@ std::string chunk4() {
          "    <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
          "  </axes>\n"
          "  <values>\n"
-         "    1 7 2 8 3 9\n"
-         "    4 10 5 11 6 12\n"
+         "    1 7 2 8 3 9 4 10 5 11 6 12\n"
          "  </values>\n"
          "</XYs1d>\n";
 }
