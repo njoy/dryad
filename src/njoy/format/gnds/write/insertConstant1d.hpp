@@ -39,10 +39,10 @@ namespace write {
                     double max,
                     const std::string& xLabel,
                     const std::string& yLabel,
-                    const std::optional< std::string >& xUnit,
-                    const std::optional< std::string >& yUnit,
-                    const std::optional< std::string >& label,
-                    const std::optional< double > outer ) {
+                    const std::optional< std::string >& xUnit = std::nullopt,
+                    const std::optional< std::string >& yUnit = std::nullopt,
+                    const std::optional< std::string >& label = std::nullopt,
+                    const std::optional< double > outer = std::nullopt ) {
 
     pugi::xml_node node = parent.append_child( "constant1d" );
     if ( label.has_value() ) {
