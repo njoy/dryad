@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/format/gnds/write/insertReactions.hpp"
+#include "njoy/format/gnds/write/insertCrossSectionSums.hpp"
 
 // other includes
 #include <sstream>
@@ -17,13 +17,13 @@ using namespace njoy::format;
 
 std::string chunk();
 
-SCENARIO( "insertReactions" ) {
+SCENARIO( "insertCrossSectionSums" ) {
 
   GIVEN( "a parent node, reactions and resonance parameters" ) {
 
     gnds::write::Options options;
 
-    THEN( "a reactions node can be inserted" ) {
+    THEN( "a crossSectionSums node can be inserted" ) {
 
       std::vector< Reaction > reactions = {
 
@@ -46,7 +46,7 @@ SCENARIO( "insertReactions" ) {
       std::optional< resonances::ResonanceParameters > resonances = std::nullopt;
 
       pugi::xml_document parent;
-      auto node = gnds::write::insertReactions( parent, options, reactions, resonances, "eval" );
+      auto node = gnds::write::insertCrossSectionSums( parent, options, reactions, resonances, "eval" );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -57,8 +57,12 @@ SCENARIO( "insertReactions" ) {
 
 std::string chunk() {
 
-  return "<reactions>\n"
-         "  <reaction label=\"n,U235->n,U235\" ENDF_MT=\"2\">\n"
+  return "<crossSectionSums>\n"
+         "  <crossSectionSum label=\"n,U235->total\" ENDF_MT=\"1\">\n"
+         "    <summands>\n"
+         "      <add href=\"/reactionSuite/reactions/reaction[@label=\'n,U235->n,U235\']/crossSection\" />\n"
+         "      <add href=\"/reactionSuite/reactions/reaction[@label=\'n,U235->2n,U234[all]\']/crossSection\" />\n"
+         "    </summands>\n"
          "    <crossSection>\n"
          "      <XYs1d label=\"eval\">\n"
          "        <axes>\n"
@@ -66,22 +70,15 @@ std::string chunk() {
          "          <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
          "        </axes>\n"
          "        <values>\n"
-         "          1 7 2 8 3 9 4 10 5 11 12 12\n"
+         "          1 8 12 18\n"
          "        </values>\n"
          "      </XYs1d>\n"
          "    </crossSection>\n"
-         "    <outputChannel>\n"
-         "      <Q>\n"
-         "        <constant1d label=\"eval\" value=\"0\" domainMin=\"1\" domainMax=\"12\">\n"
-         "          <axes>\n"
-         "            <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
-         "            <axis index=\"0\" label=\"Q\" unit=\"eV\" />\n"
-         "          </axes>\n"
-         "        </constant1d>\n"
-         "      </Q>\n"
-         "    </outputChannel>\n"
-         "  </reaction>\n"
-         "  <reaction label=\"n,U235->2n,U234[all]\" ENDF_MT=\"16\">\n"
+         "  </crossSectionSum>\n"
+         "  <crossSectionSum label=\"n,U235->non-elastic\" ENDF_MT=\"3\">\n"
+         "    <summands>\n"
+         "      <add href=\"/reactionSuite/reactions/reaction[@label=\'n,U235->2n,U234[all]\']/crossSection\" />\n"
+         "    </summands>\n"
          "    <crossSection>\n"
          "      <XYs1d label=\"eval\">\n"
          "        <axes>\n"
@@ -93,16 +90,6 @@ std::string chunk() {
          "        </values>\n"
          "      </XYs1d>\n"
          "    </crossSection>\n"
-         "    <outputChannel>\n"
-         "      <Q>\n"
-         "        <constant1d label=\"eval\" value=\"1000000\" domainMin=\"7\" domainMax=\"12\">\n"
-         "          <axes>\n"
-         "            <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
-         "            <axis index=\"0\" label=\"Q\" unit=\"eV\" />\n"
-         "          </axes>\n"
-         "        </constant1d>\n"
-         "      </Q>\n"
-         "    </outputChannel>\n"
-         "  </reaction>\n"
-         "</reactions>\n";
+         "  </crossSectionSum>\n"
+         "</crossSectionSums>\n";
 }

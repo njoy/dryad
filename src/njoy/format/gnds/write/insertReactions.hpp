@@ -20,10 +20,11 @@ namespace write {
   /**
    *  @brief Insert a gnds reactions node
    *
-   *  @param[in,out] parent      the parent node
-   *  @param[in]     option      the gnds write options
-   *  @param[in]     reactions   the reactions
-   *  @param[in]     label       the style label to be used
+   *  @param[in,out] parent       the parent node
+   *  @param[in]     option       the gnds write options
+   *  @param[in]     reactions    the reactions
+   *  @param[in]     resonances   the optional resonance parameters
+   *  @param[in]     label        the style label to be used
    */
   inline pugi::xml_node
   insertReactions( pugi::xml_node& parent,
