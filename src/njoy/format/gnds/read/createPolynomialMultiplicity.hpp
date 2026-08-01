@@ -40,12 +40,12 @@ namespace read {
       auto data = readPolynomial1d( node );
 
       // convert units - if necessary
-      convertEnergy( std::get< 2 >( data ), std::get< 5 >( data ) );
-      convertEnergy( std::get< 3 >( data ), std::get< 5 >( data ) );
+      convertEnergy( std::get< 2 >( data ), std::get< 5 >( data ).value() );
+      convertEnergy( std::get< 3 >( data ), std::get< 5 >( data ).value() );
       if ( std::get< 5 >( data ) != "eV" ) {
 
         double conversion = 1;
-        convertEnergy( conversion, std::get< 5 >( data ) );
+        convertEnergy( conversion, std::get< 5 >( data ).value() );
         for ( unsigned int i = 1; i < std::get< 4 >( data ).size(); ++i ) {
 
           std::get< 4 >( data )[i] /= conversion;

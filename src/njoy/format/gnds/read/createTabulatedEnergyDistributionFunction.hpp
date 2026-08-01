@@ -48,7 +48,7 @@ namespace read {
 
         convertEnergy( std::get< 0 >( data ).value(), std::get< 1 >( data ).value() );
       }
-      convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+      convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ).value() );
 
       // assign data
       outer = std::move( std::get< 0 >( data ) );
@@ -80,7 +80,7 @@ namespace read {
 
         // convert units - if necessary
         // probability data does not need to be converted
-        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ).value() );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;

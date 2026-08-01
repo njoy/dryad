@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_WRITE_INSERTQ
 
 // system includes
+#include <optional>
 #include <string>
 
 // other includes

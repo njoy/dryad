@@ -41,7 +41,7 @@ namespace resonances {
     if ( strcmp( child.name(), "constant1d" ) == 0 ) {
 
       auto data = readConstant1dAsDouble( child );
-      convertRadius( data.first, data.second );
+      convertRadius( data.first, data.second.value() );
       return data.first;
     }
     else {
