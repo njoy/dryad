@@ -36,11 +36,11 @@ SCENARIO( "insertSums" ) {
                   { ReactionProduct( id::ParticleID::photon(), 1 ) } ),
         Reaction( id::ReactionID( "n,U235->n,U235" ),
                   TabulatedCrossSection( {  1.,  2.,  3.,  4.,  5., 12. }, {  7.,  8.,  9., 10., 11., 12. } ),
-                  { ReactionProduct( id::ParticleID::neutron(), 1 ), ReactionProduct( id::ParticleID( "U235" ), 2 ) },
+                  { ReactionProduct( id::ParticleID::neutron(), 1 ), ReactionProduct( id::ParticleID( "U235" ), 1 ) },
                   std::nullopt, 0. ),
         Reaction( id::ReactionID( "n,U235->2n,U234[all]" ),
                   TabulatedCrossSection( {  7.,  8.,  9., 10., 11., 12. }, {  1.,  2.,  3.,  4.,  5.,  6. } ),
-                  { ReactionProduct( id::ParticleID::neutron(), 2 ), ReactionProduct( id::ParticleID( "U234" ), 2 ) },
+                  { ReactionProduct( id::ParticleID::neutron(), 2 ), ReactionProduct( id::ParticleID( "U234" ), 1 ) },
                   std::nullopt, 1e+6 )
       };
       std::optional< resonances::ResonanceParameters > resonances = std::nullopt;

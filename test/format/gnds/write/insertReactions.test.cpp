@@ -36,11 +36,11 @@ SCENARIO( "insertReactions" ) {
                   { ReactionProduct( id::ParticleID::photon(), 1 ) } ),
         Reaction( id::ReactionID( "n,U235->n,U235" ),
                   TabulatedCrossSection( {  1.,  2.,  3.,  4.,  5., 12. }, {  7.,  8.,  9., 10., 11., 12. } ),
-                  { ReactionProduct( id::ParticleID::neutron(), 1 ), ReactionProduct( id::ParticleID( "U235" ), 2 ) },
+                  { ReactionProduct( id::ParticleID::neutron(), 1 ), ReactionProduct( id::ParticleID( "U235" ), 1 ) },
                   std::nullopt, 0. ),
         Reaction( id::ReactionID( "n,U235->2n,U234[all]" ),
                   TabulatedCrossSection( {  7.,  8.,  9., 10., 11., 12. }, {  1.,  2.,  3.,  4.,  5.,  6. } ),
-                  { ReactionProduct( id::ParticleID::neutron(), 2 ), ReactionProduct( id::ParticleID( "U234" ), 2 ) },
+                  { ReactionProduct( id::ParticleID::neutron(), 2 ), ReactionProduct( id::ParticleID( "U234" ), 1 ) },
                   std::nullopt, 1e+6 )
       };
       std::optional< resonances::ResonanceParameters > resonances = std::nullopt;
@@ -79,6 +79,34 @@ std::string chunk() {
          "          </axes>\n"
          "        </constant1d>\n"
          "      </Q>\n"
+         "      <products>\n"
+         "        <product pid=\"n\" label=\"n\">\n"
+         "          <multiplicity>\n"
+         "            <constant1d label=\"eval\" value=\"1\" domainMin=\"1\" domainMax=\"12\">\n"
+         "              <axes>\n"
+         "                <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "                <axis index=\"0\" label=\"multiplicity\" />\n"
+         "              </axes>\n"
+         "            </constant1d>\n"
+         "          </multiplicity>\n"
+         "          <distribution>\n"
+         "            <unspecified label=\"eval\" productFrame=\"lab\" />\n"
+         "          </distribution>\n"
+         "        </product>\n"
+         "        <product pid=\"U235\" label=\"U235\">\n"
+         "          <multiplicity>\n"
+         "            <constant1d label=\"eval\" value=\"1\" domainMin=\"1\" domainMax=\"12\">\n"
+         "              <axes>\n"
+         "                <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "                <axis index=\"0\" label=\"multiplicity\" />\n"
+         "              </axes>\n"
+         "            </constant1d>\n"
+         "          </multiplicity>\n"
+         "          <distribution>\n"
+         "            <unspecified label=\"eval\" productFrame=\"lab\" />\n"
+         "          </distribution>\n"
+         "        </product>\n"
+         "      </products>\n"
          "    </outputChannel>\n"
          "  </reaction>\n"
          "  <reaction label=\"n,U235->2n,U234[all]\" ENDF_MT=\"16\">\n"
@@ -102,6 +130,34 @@ std::string chunk() {
          "          </axes>\n"
          "        </constant1d>\n"
          "      </Q>\n"
+         "      <products>\n"
+         "        <product pid=\"n\" label=\"n\">\n"
+         "          <multiplicity>\n"
+         "            <constant1d label=\"eval\" value=\"2\" domainMin=\"7\" domainMax=\"12\">\n"
+         "              <axes>\n"
+         "                <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "                <axis index=\"0\" label=\"multiplicity\" />\n"
+         "              </axes>\n"
+         "            </constant1d>\n"
+         "          </multiplicity>\n"
+         "          <distribution>\n"
+         "            <unspecified label=\"eval\" productFrame=\"lab\" />\n"
+         "          </distribution>\n"
+         "        </product>\n"
+         "        <product pid=\"U234\" label=\"U234\">\n"
+         "          <multiplicity>\n"
+         "            <constant1d label=\"eval\" value=\"1\" domainMin=\"7\" domainMax=\"12\">\n"
+         "              <axes>\n"
+         "                <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "                <axis index=\"0\" label=\"multiplicity\" />\n"
+         "              </axes>\n"
+         "            </constant1d>\n"
+         "          </multiplicity>\n"
+         "          <distribution>\n"
+         "            <unspecified label=\"eval\" productFrame=\"lab\" />\n"
+         "          </distribution>\n"
+         "        </product>\n"
+         "      </products>\n"
          "    </outputChannel>\n"
          "  </reaction>\n"
          "</reactions>\n";

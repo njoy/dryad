@@ -8,7 +8,7 @@
 #include "pugixml.hpp"
 #include "njoy/format/revertScatterLevel.hpp"
 #include "njoy/format/gnds/write/insertCrossSection.hpp"
-#include "njoy/format/gnds/write/insertQ.hpp"
+#include "njoy/format/gnds/write/insertOutputChannel.hpp"
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
 
@@ -59,12 +59,7 @@ namespace write {
           //! @todo check the resonance parameters to see if we need to use background elements
 
           insertCrossSection( reaction_node, options, reaction.crossSection(), label );
-
-          pugi::xml_node output_node = reaction_node.append_child( "outputChannel" );
-          insertQ( output_node, options, reaction.reactionQValue().value(),
-                   reaction.crossSection().lowerEnergyLimit(),
-                   reaction.crossSection().upperEnergyLimit(),
-                   label );
+          insertOutputChannel( reaction_node, options, reaction, label );
         }
       }
     }
