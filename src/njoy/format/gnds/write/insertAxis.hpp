@@ -33,12 +33,12 @@ namespace write {
     pugi::xml_node node = parent.append_child( "axis" );
     if ( index.has_value() ) {
 
-      node.append_attribute( "index" ) = std::move( index.value() );
+      node.append_attribute( "index" ) = index.value();
     }
     node.append_attribute( "label" ) = label;
     if ( unit.has_value() ) {
 
-      node.append_attribute( "unit" ) = std::move( unit.value() );
+      node.append_attribute( "unit" ) = unit.value();
     }
 
     return node;
