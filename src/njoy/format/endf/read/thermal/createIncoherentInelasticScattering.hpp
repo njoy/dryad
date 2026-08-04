@@ -110,7 +110,7 @@ namespace thermal {
       std::vector< double > current_betas = betas;
       if ( scale ) {
 
-        double factor = 293.6 / moderator[i];
+        double factor = constants::room_temperature / moderator[i];
         std::transform( current_betas.begin(), current_betas.end(), current_betas.begin(),
                         [&] ( auto&& value ) { return value * factor; } );
       }
@@ -124,7 +124,7 @@ namespace thermal {
 
         if ( scale ) {
 
-          double factor = 293.6 / moderator[i];
+          double factor = constants::room_temperature / moderator[i];
           std::transform( alphas.begin(), alphas.end(), alphas.begin(),
                           [&] ( auto&& value ) { return value * factor; } );
         }
