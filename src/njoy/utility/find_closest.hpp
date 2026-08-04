@@ -23,10 +23,10 @@ template < typename Iterator, typename X >
 Iterator find_closest( const Iterator& first, const Iterator& last,
                        const X& value, const X& tolerance ) {
 
-  auto iter = std::lower_bound( first, last, value - tolerance * value );
+  auto iter = std::lower_bound( first, last, value - tolerance * std::abs( value ) );
   if ( iter != last ) {
 
-    if ( std::abs( *iter - value ) <= tolerance * value ) {
+    if ( std::abs( *iter - value ) <= tolerance * std::abs( value ) ) {
 
       return iter;
     }

@@ -15,11 +15,12 @@ SCENARIO( "find_closest" ) {
 
   GIVEN( "a sequence of values" ) {
 
-    std::vector< double > values = { 100., 200., 300., 400., 500. };
+    std::vector< double > values = { -50, 100., 200., 300., 400., 500. };
 
-    CHECK( std::next( values.begin(), 2 ) == find_closest( values.begin(), values.end(), 302., 0.01 ) );
-    CHECK( std::next( values.begin(), 2 ) == find_closest( values.begin(), values.end(), 302., 1. / 150. ) );
+    CHECK( std::next( values.begin(), 3 ) == find_closest( values.begin(), values.end(), 302., 0.01 ) );
+    CHECK( std::next( values.begin(), 3 ) == find_closest( values.begin(), values.end(), 302., 1. / 150. ) );
     CHECK( values.end() == find_closest( values.begin(), values.end(), 302., 0.005 ) );
+    CHECK( values.begin() == find_closest( values.begin(), values.end(), -50.0001, 0.01 ) );
 
   } // GIVEN
 } // SCENARIO

@@ -324,8 +324,8 @@ namespace thermal {
      */
     bool operator==( const IncoherentInelasticScattering& right ) const {
 
-      return std::tie( this->lower_, this->upper_, this->scatteringKernels() ) ==
-             std::tie( right.lower_, right.upper_, right.scatteringKernels() );
+      return std::tie( this->lower_, this->upper_, this->bound_xs_, this->ratio_, this->scatteringKernels() ) ==
+             std::tie( right.lower_, right.upper_, right.bound_xs_, right.ratio_, right.scatteringKernels() );
     }
 
     /**
