@@ -105,7 +105,7 @@ namespace lrf3 {
       // elastic channel
       dryad::id::ChannelID elastic_id( dryad::id::ReactionID( projectile, target, 2 ),
                                 retrieveQuantumNumber( l, j, available ) );
-      dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii );
+      dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii, true );
 
       // collect level energies and widths
       std::vector< double > energies;
@@ -137,7 +137,7 @@ namespace lrf3 {
       dryad::id::ChannelID capture_id( dryad::id::ReactionID( projectile, target, 102 ), other );
       dryad::resonances::ParticlePair capture_pair( { dryad::id::ParticleID::photon(), 0., 0., +1 },
                                                     { capture_id.reaction().residual().value(), 0., 0., +1 } );
-      dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, zero_radii );
+      dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, zero_radii, false );
       channel_data.emplace_back( std::move( capture ), dryad::resonances::ResonanceTable{ { capture_id }, energies, std::move( capture_widths ) } );
 
       // check for fission
@@ -148,16 +148,15 @@ namespace lrf3 {
 
         dryad::id::ChannelID fission1_id( dryad::id::ReactionID( projectile, target, 18 ), other, 0 );
         dryad::id::ChannelID fission2_id( dryad::id::ReactionID( projectile, target, 18 ), other, 1 );
-        dryad::resonances::Channel fission1( fission1_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
-        dryad::resonances::Channel fission2( fission2_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
+        dryad::resonances::Channel fission1( fission1_id, incident, std::nullopt, 0., std::nullopt, zero_radii, false );
+        dryad::resonances::Channel fission2( fission2_id, incident, std::nullopt, 0., std::nullopt, zero_radii, false );
         channel_data.emplace_back( std::move( fission1 ), dryad::resonances::ResonanceTable{ { fission1_id }, energies, std::move( fission1_widths ) } );
         channel_data.emplace_back( std::move( fission2 ), dryad::resonances::ResonanceTable{ { fission2_id }, energies, std::move( fission2_widths ) } );
-
       }
       else if ( has_fission1 || has_fission2 ) {
 
         dryad::id::ChannelID fission_id( dryad::id::ReactionID( projectile, target, 18 ), other );
-        dryad::resonances::Channel fission( fission_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
+        dryad::resonances::Channel fission( fission_id, incident, std::nullopt, 0., std::nullopt, zero_radii, false );
         if ( has_fission1 ) {
 
           channel_data.emplace_back( std::move( fission ), dryad::resonances::ResonanceTable{ { fission_id }, energies, std::move( fission1_widths ) } );
