@@ -423,6 +423,7 @@ add_cpp_test( format.gnds.write.insertTabulatedFunction                         
 add_cpp_test( format.gnds.write.insertData                                             format/gnds/write/insertData.test.cpp )
 add_cpp_test( format.gnds.write.insertColumn                                           format/gnds/write/insertColumn.test.cpp )
 add_cpp_test( format.gnds.write.insertColumnHeaders                                    format/gnds/write/insertColumnHeaders.test.cpp )
+add_cpp_test( format.gnds.write.insertTable                                            format/gnds/write/insertTable.test.cpp )
 add_cpp_test( format.gnds.write.insertDocumentation                                    format/gnds/write/insertDocumentation.test.cpp )
 add_cpp_test( format.gnds.write.insertCrossSection                                     format/gnds/write/insertCrossSection.test.cpp )
 add_cpp_test( format.gnds.write.insertMultiplicity                                     format/gnds/write/insertMultiplicity.test.cpp )
