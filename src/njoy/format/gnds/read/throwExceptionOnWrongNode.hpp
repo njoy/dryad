@@ -31,7 +31,8 @@ namespace read {
     }
     else {
 
-      Log::error( "The XML element does not define a GNDS node, the node is undefined" );
+      Log::error( "The XML element does not define a GNDS {} node, the node is undefined",
+                  name );
       throw std::exception();
     }
   }

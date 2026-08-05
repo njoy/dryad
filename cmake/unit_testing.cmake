@@ -157,6 +157,7 @@ add_cpp_test( dryad.ThermalScattering                                           
 add_cpp_test( format.createIndex                                                       format/createIndex.test.cpp )
 add_cpp_test( format.createVector                                                      format/createVector.test.cpp )
 add_cpp_test( format.adjustScatterLevel                                                format/adjustScatterLevel.test.cpp )
+add_cpp_test( format.revertScatterLevel                                                format/revertScatterLevel.test.cpp )
 add_cpp_test( format.collectParticleIdentifiers                                        format/collectParticleIdentifiers.test.cpp )
 add_cpp_test( format.convertLegendreMoments                                            format/convertLegendreMoments.test.cpp )
 
@@ -343,6 +344,8 @@ add_cpp_test( format.gnds.read.readColumn                                       
 add_cpp_test( format.gnds.read.readColumnHeaders                                       format/gnds/read/readColumnHeaders.test.cpp )
 add_cpp_test( format.gnds.read.readData                                                format/gnds/read/readData.test.cpp )
 add_cpp_test( format.gnds.read.readTable                                               format/gnds/read/readTable.test.cpp )
+add_cpp_test( format.gnds.read.createStyleLabel                                        format/gnds/read/createStyleLabel.test.cpp )
+add_cpp_test( format.gnds.read.createDocumentation                                     format/gnds/read/createDocumentation.test.cpp )
 add_cpp_test( format.gnds.read.pops.createMass                                         format/gnds/read/pops/createMass.test.cpp )
 add_cpp_test( format.gnds.read.pops.createEnergy                                       format/gnds/read/pops/createEnergy.test.cpp )
 add_cpp_test( format.gnds.read.pops.createSpin                                         format/gnds/read/pops/createSpin.test.cpp )
@@ -399,6 +402,7 @@ add_cpp_test( format.gnds.read.createThermalScattering                          
 add_cpp_test( format.gnds.read.createThermalScatteringFromFile                         format/gnds/read/createThermalScatteringFromFile.test.cpp )
 
 add_cpp_test( format.gnds.write.determineDepth                                         format/gnds/write/determineDepth.test.cpp )
+add_cpp_test( format.gnds.write.createInteractionType                                  format/gnds/write/createInteractionType.test.cpp )
 add_cpp_test( format.gnds.write.createInterpolationType                                format/gnds/write/createInterpolationType.test.cpp )
 add_cpp_test( format.gnds.write.toString                                               format/gnds/write/toString.test.cpp )
 add_cpp_test( format.gnds.write.insertDouble                                           format/gnds/write/insertDouble.test.cpp )
@@ -413,6 +417,10 @@ add_cpp_test( format.gnds.write.insertConstant1d                                
 add_cpp_test( format.gnds.write.insertValues                                           format/gnds/write/insertValues.test.cpp )
 add_cpp_test( format.gnds.write.insertXYs1d                                            format/gnds/write/insertXYs1d.test.cpp )
 add_cpp_test( format.gnds.write.insertTabulatedFunction                                format/gnds/write/insertTabulatedFunction.test.cpp )
+add_cpp_test( format.gnds.write.insertDocumentation                                    format/gnds/write/insertDocumentation.test.cpp )
+add_cpp_test( format.gnds.write.insertCrossSection                                     format/gnds/write/insertCrossSection.test.cpp )
+add_cpp_test( format.gnds.write.insertQ                                                format/gnds/write/insertQ.test.cpp )
+add_cpp_test( format.gnds.write.insertReactions                                        format/gnds/write/insertReactions.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )

@@ -9,7 +9,9 @@
 #include "njoy/format/ace/read/createProjectileTargetFromFile.hpp"
 #include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 #include "njoy/format/endf/write/createProjectileTargetFile.hpp"
+#include "njoy/format/gnds/StyleType.hpp"
 #include "njoy/format/gnds/read/createProjectileTargetFromFile.hpp"
+#include "njoy/format/gnds/write/createProjectileTargetFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -34,6 +36,7 @@ void wrapProjectileTarget( python::module& module ) {
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
   using CovarianceData = njoy::dryad::covariance::CovarianceData;
   using InteractionType = njoy::dryad::InteractionType;
+  using StyleType = njoy::format::gnds::StyleType;
 
   // wrap views created by this component
 
@@ -246,7 +249,8 @@ void wrapProjectileTarget( python::module& module ) {
 
       return njoy::format::endf::read::createProjectileTargetFromFile( filename, normalise );
     },
-    python::arg( "filename" ), python::arg( "normalise" ) = false,
+    python::arg( "filename" ),
+    python::arg( "normalise" ) = false,
     "Create ProjectileTarget data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a ProjectileTarget.\n\n"
@@ -261,11 +265,13 @@ void wrapProjectileTarget( python::module& module ) {
   .def_static(
 
     "from_gnds_file",
-    [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
+    [] ( const std::string& filename, bool normalise, const StyleType& style ) -> decltype(auto) {
 
-      return njoy::format::gnds::read::createProjectileTargetFromFile( filename, normalise );
+      return njoy::format::gnds::read::createProjectileTargetFromFile( filename, normalise, style );
     },
-    python::arg( "filename" ), python::arg( "normalise" ) = false,
+    python::arg( "filename" ),
+    python::arg( "normalise" ) = false,
+    python::arg( "style" ) = StyleType::Evaluation,
     "Create ProjectileTarget data from a GNDS file\n\n"
     "Parameters\n"
     "----------\n"
@@ -298,7 +304,9 @@ void wrapProjectileTarget( python::module& module ) {
   .def(
 
     "to_endf_file",
-    [] ( const Component& self, int mat, const std::string& filename,
+    [] ( const Component& self,
+         int mat,
+         const std::string& filename,
          bool use_reduced_width_amplitudes ) {
 
       njoy::format::endf::write::createProjectileTargetFile( self, mat, filename,
@@ -313,6 +321,30 @@ void wrapProjectileTarget( python::module& module ) {
     "        the ENDF mat number to be used\n"
     "    filename : str\n"
     "        the ENDF file name\n"
+    "    use_reduced_width_amplitudes : bool, default True\n"
+    "        if there are resonances, use reduced width amplitudes"
+  )
+  .def(
+
+    "to_gnds_file",
+    [] ( const Component& self,
+         const std::string& filename,
+         const StyleType& style,
+         bool use_reduced_width_amplitudes ) {
+
+      njoy::format::gnds::write::createProjectileTargetFile( self, filename, style,
+                                                             use_reduced_width_amplitudes );
+    },
+    python::arg( "filename" ),
+    python::arg( "style" ) = StyleType::Evaluation,
+    python::arg( "use_reduced_width_amplitudes" ) = true,
+    "Write the ProjectileTarget data to an ENDF file\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str\n"
+    "        the ENDF file name\n"
+    "    style : str\n"
+    "        the GNDS style name\n"
     "    use_reduced_width_amplitudes : bool, default True\n"
     "        if there are resonances, use reduced width amplitudes"
   );

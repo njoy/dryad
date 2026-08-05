@@ -20,9 +20,12 @@ namespace read {
    *  @param[in] filename    the GNDS file name
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
+   *  @param[in] style       the gnds style to process (default is evaluation)
    */
   inline dryad::ProjectileTarget
-  createProjectileTargetFromFile( const std::string& filename, bool normalise ) {
+  createProjectileTargetFromFile( const std::string& filename,
+                                  bool normalise,
+                                  const StyleType& style = StyleType::Evaluation ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );
 
@@ -43,7 +46,7 @@ namespace read {
     document.load_file( filename.c_str() );
     if ( document ) {
 
-      return createProjectileTarget( document, path, normalise );
+      return createProjectileTarget( document, path, normalise, style );
     }
     else {
 

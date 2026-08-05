@@ -2,6 +2,7 @@
 Format agnostic nuclear data interface
 """
 from __future__ import annotations
+import njoy.format.gnds
 import typing
 from . import atomic
 from . import covariance
@@ -1763,7 +1764,7 @@ class ProjectileTarget:
                 all probability data
         """
     @staticmethod
-    def from_gnds_file(filename: str, normalise: bool = False) -> ProjectileTarget:
+    def from_gnds_file(filename: str, normalise: bool = False, style: njoy.format.gnds.StyleType = ...) -> ProjectileTarget:
         """
         Create ProjectileTarget data from a GNDS file
         
@@ -1843,6 +1844,19 @@ class ProjectileTarget:
                 the ENDF mat number to be used
             filename : str
                 the ENDF file name
+            use_reduced_width_amplitudes : bool, default True
+                if there are resonances, use reduced width amplitudes
+        """
+    def to_gnds_file(self, filename: str, style: njoy.format.gnds.StyleType = ..., use_reduced_width_amplitudes: bool = True) -> None:
+        """
+        Write the ProjectileTarget data to an ENDF file
+        
+        Parameters
+        ----------
+            filename : str
+                the ENDF file name
+            style : str
+                the GNDS style name
             use_reduced_width_amplitudes : bool, default True
                 if there are resonances, use reduced width amplitudes
         """
