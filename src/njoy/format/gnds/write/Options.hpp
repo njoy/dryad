@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_WRITE_OPTIONS
 
 // system includes
+#include <string>
 
 // other includes
 
@@ -29,6 +30,9 @@ namespace write {
     //            for floating point numbers: the number of digits after the
     //            decimal point is equal to precision - 1
     int precision = 10;
+
+    // indent: indentation per level in the xml structure
+    int indent = 2;
   };
 
 } // read namespace

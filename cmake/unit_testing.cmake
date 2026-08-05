@@ -398,6 +398,8 @@ add_cpp_test( format.gnds.read.createAtomicRelaxationFromFile                   
 add_cpp_test( format.gnds.read.createThermalScattering                                 format/gnds/read/createThermalScattering.test.cpp )
 add_cpp_test( format.gnds.read.createThermalScatteringFromFile                         format/gnds/read/createThermalScatteringFromFile.test.cpp )
 
+add_cpp_test( format.gnds.write.determineDepth                                         format/gnds/write/determineDepth.test.cpp )
+add_cpp_test( format.gnds.write.createInterpolationType                                format/gnds/write/createInterpolationType.test.cpp )
 add_cpp_test( format.gnds.write.toString                                               format/gnds/write/toString.test.cpp )
 add_cpp_test( format.gnds.write.insertDouble                                           format/gnds/write/insertDouble.test.cpp )
 add_cpp_test( format.gnds.write.insertInteger                                          format/gnds/write/insertInteger.test.cpp )
@@ -405,6 +407,12 @@ add_cpp_test( format.gnds.write.insertFraction                                  
 add_cpp_test( format.gnds.write.insertString                                           format/gnds/write/insertString.test.cpp )
 add_cpp_test( format.gnds.write.insertParticle                                         format/gnds/write/insertParticle.test.cpp )
 add_cpp_test( format.gnds.write.insertParticleDatabase                                 format/gnds/write/insertParticleDatabase.test.cpp )
+add_cpp_test( format.gnds.write.insertAxis                                             format/gnds/write/insertAxis.test.cpp )
+add_cpp_test( format.gnds.write.insertAxes                                             format/gnds/write/insertAxes.test.cpp )
+add_cpp_test( format.gnds.write.insertConstant1d                                       format/gnds/write/insertConstant1d.test.cpp )
+add_cpp_test( format.gnds.write.insertValues                                           format/gnds/write/insertValues.test.cpp )
+add_cpp_test( format.gnds.write.insertXYs1d                                            format/gnds/write/insertXYs1d.test.cpp )
+add_cpp_test( format.gnds.write.insertTabulatedFunction                                format/gnds/write/insertTabulatedFunction.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )
