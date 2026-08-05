@@ -46,16 +46,11 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
         elasticRadii = ChannelRadii( 4.822220, 3.667980 )
         captureRadii = ChannelRadii( 0. )
 
-        elastic = Channel( elasticID, elasticPair, elasticPair,
-                           elasticQ, elasticBoundary, elasticRadii )
-        capture = Channel( captureID, elasticPair, capturePair,
-                           captureQ, captureBoundary, captureRadii )
-
         reference_energy = 1.
 
         chunk = UnresolvedChannel( elasticID, elasticPair, elasticPair,
                                    elasticQ, elasticBoundary, elasticRadii,
-                                   reference_energy )
+                                   True, reference_energy )
 
         self.assertEqual( elasticID, chunk.identifier )
         self.assertEqual( elasticRID, chunk.reaction )
@@ -70,7 +65,7 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
 
         chunk = UnresolvedChannel( captureID, elasticPair, capturePair,
                                    captureQ, captureBoundary, captureRadii,
-                                   reference_energy )
+                                   False, reference_energy )
 
         self.assertEqual( captureID, chunk.identifier )
         self.assertEqual( captureRID, chunk.reaction )
@@ -104,19 +99,14 @@ class Test_UnresolvedChannel( unittest.TestCase ) :
         elasticRadii = ChannelRadii( 4.822220, 3.667980 )
         captureRadii = ChannelRadii( 0. )
 
-        elastic = Channel( elasticID, elasticPair, elasticPair,
-                           elasticQ, elasticBoundary, elasticRadii )
-        capture = Channel( captureID, elasticPair, capturePair,
-                           captureQ, captureBoundary, captureRadii )
-
         left = UnresolvedChannel( elasticID, elasticPair, elasticPair,
-                                  elasticQ, elasticBoundary, elasticRadii, 1. )
+                                  elasticQ, elasticBoundary, elasticRadii, True, 1. )
         equal = UnresolvedChannel( elasticID, elasticPair, elasticPair,
-                                   elasticQ, elasticBoundary, elasticRadii, 1. )
+                                   elasticQ, elasticBoundary, elasticRadii, True, 1. )
         differentChannel = UnresolvedChannel( captureID, elasticPair, capturePair,
-                                              captureQ, captureBoundary, captureRadii, 1. )
+                                              captureQ, captureBoundary, captureRadii, False, 1. )
         differentReference = UnresolvedChannel( elasticID, elasticPair, elasticPair,
-                                                elasticQ, elasticBoundary, elasticRadii, 2. )
+                                                elasticQ, elasticBoundary, elasticRadii, False, 2. )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

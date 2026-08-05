@@ -71,6 +71,26 @@ namespace resonances {
       return std::sqrt( 2. * mu * ( std::abs( energy * ratio + q ) ) )
              / constants::hbar * conversion;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const NonRelativisticWaveNumber& right ) const {
+
+      return true;
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const NonRelativisticWaveNumber& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // resonances namespace

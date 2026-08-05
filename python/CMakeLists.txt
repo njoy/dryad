@@ -5,6 +5,9 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/njoy.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/constants.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/matrix.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/format.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/format/gnds.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/format/gnds/StyleType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id/EnergyGroup.python.cpp
@@ -64,6 +67,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticAngularCdf.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticScattering.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentInelasticScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ScalingType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/VarianceScaling.python.cpp

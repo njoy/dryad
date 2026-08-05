@@ -25,6 +25,7 @@ SCENARIO( "createInterpolationType" ) {
         CHECK( InterpolationType::LogLog == gnds::read::createInterpolationType( "log-log" ) );
         CHECK( InterpolationType::LogLinear == gnds::read::createInterpolationType( "log-lin" ) );
         CHECK( InterpolationType::LinearLog == gnds::read::createInterpolationType( "lin-log" ) );
+        CHECK( InterpolationType::Histogram == gnds::read::createInterpolationType( "flat" ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported value" ) {

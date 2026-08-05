@@ -3,7 +3,7 @@
 IncoherentElasticScattering
 ===========================
 
-General information about this concept
+Incoherent elastic thermal scattering data.
 
 Constructor
 ~~~~~~~~~~~
@@ -12,6 +12,16 @@ Constructor
 
     IncoherentElasticScattering
 
+Modifiable Attributes
+~~~~~~~~~~~~~~~~~~~~~
+.. autosummary::
+    :toctree: generated/
+
+    ~IncoherentElasticScattering.lower_energy_limit
+    ~IncoherentElasticScattering.upper_energy_limit
+    ~IncoherentElasticScattering.bound_cross_section
+    ~IncoherentElasticScattering.debye_waller_integral
+
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
@@ -19,10 +29,6 @@ Read-only Attributes
 
     ~IncoherentElasticScattering.number_moderator_temperatures
     ~IncoherentElasticScattering.moderator_temperatures
-    ~IncoherentElasticScattering.lower_energy_limit
-    ~IncoherentElasticScattering.upper_energy_limit
-    ~IncoherentElasticScattering.bound_cross_section
-    ~IncoherentElasticScattering.debye_waller_integral
 
 Methods
 ~~~~~~~
@@ -31,3 +37,4 @@ Methods
     :toctree: generated/
 
     ~IncoherentElasticScattering.cross_section
+    ~IncoherentElasticScattering.angular_distribution

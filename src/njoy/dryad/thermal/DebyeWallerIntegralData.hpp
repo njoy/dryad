@@ -9,6 +9,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/utility/find_closest.hpp"
+#include "njoy/constants.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -120,8 +121,8 @@ namespace thermal {
      */
     bool hasValue( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       return iter != this->values().end();
     }
 
@@ -132,8 +133,8 @@ namespace thermal {
      */
     double value( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       if ( iter != this->values().end() ) {
 
         return *iter;

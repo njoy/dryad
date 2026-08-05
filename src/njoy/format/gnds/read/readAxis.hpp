@@ -29,8 +29,21 @@ namespace read {
     auto index = axis.attribute( "index" );
     auto unit = axis.attribute( "unit" );
 
-    return { index ? std::make_optional( index.as_int() ) : std::nullopt,
-             unit ? std::make_optional( unit.as_string() ) : std::nullopt };
+    Axis data;
+    if ( index ) {
+
+      data.first = index.as_int();
+    }
+    if ( unit ) {
+
+      std::string value = unit.as_string();
+      if ( value.size() != 0 ) {
+
+        data.second = std::move( value );
+      }
+    }
+
+    return data;
   }
 
 } // read namespace

@@ -3,7 +3,7 @@
 IncoherentElasticAngularPdf
 ===========================
 
-General information about this concept
+Probability distribution function for incoherent elastic thermal scattering angular distributions.
 
 Constructor
 ~~~~~~~~~~~
@@ -17,8 +17,8 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    ~IncoherentElasticScattering.lower_energy_limit
-    ~IncoherentElasticScattering.upper_energy_limit
+    ~IncoherentElasticAngularPdf.lower_cosine_limit
+    ~IncoherentElasticAngularPdf.upper_cosine_limit
     ~IncoherentElasticAngularPdf.incident_energy
     ~IncoherentElasticAngularPdf.debye_waller_integral
     ~IncoherentElasticAngularPdf.integral

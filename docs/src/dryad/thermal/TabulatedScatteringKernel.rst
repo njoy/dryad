@@ -3,7 +3,7 @@
 TabulatedScatteringKernel
 =========================
 
-General information about this distribution
+S(a,b) scattering kernel using tabulated scattering kernel functions.
 
 Constructor
 ~~~~~~~~~~~
@@ -25,6 +25,10 @@ Read-only Attributes
     ~TabulatedScatteringKernel.boundaries
     ~TabulatedScatteringKernel.number_points
     ~TabulatedScatteringKernel.number_regions
+    ~TabulatedScatteringKernel.lower_energy_transfer_limit
+    ~TabulatedScatteringKernel.lower_momentum_transfer_limit
+    ~TabulatedScatteringKernel.upper_energy_transfer_limit
+    ~TabulatedScatteringKernel.upper_momentum_transfer_limit
 
 Methods
 ~~~~~~~

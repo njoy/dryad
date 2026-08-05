@@ -318,7 +318,7 @@ namespace li7 {
 
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
-    CHECK( std::nullopt == documentation.description() );
+    CHECK( description == documentation.description() );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {

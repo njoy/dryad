@@ -79,7 +79,7 @@ SCENARIO( "readCovarianceMatrix" ) {
 
         CHECK( "eV" == std::get< 4 >( chunk ) );
         CHECK( "eV" == std::get< 5 >( chunk ) );
-        CHECK( "" == std::get< 6 >( chunk ) );
+        CHECK( std::nullopt == std::get< 6 >( chunk ) );
       } // THEN
     } // WHEN
 
@@ -154,7 +154,7 @@ SCENARIO( "readCovarianceMatrix" ) {
 
         CHECK( "eV" == std::get< 4 >( chunk ) );
         CHECK( "eV" == std::get< 5 >( chunk ) );
-        CHECK( "" == std::get< 6 >( chunk ) );
+        CHECK( std::nullopt == std::get< 6 >( chunk ) );
       } // THEN
     } // WHEN
 
@@ -228,7 +228,7 @@ SCENARIO( "readCovarianceMatrix" ) {
 
         CHECK( "eV" == std::get< 4 >( chunk ) );
         CHECK( "eV" == std::get< 5 >( chunk ) );
-        CHECK( "" == std::get< 6 >( chunk ) );
+        CHECK( std::nullopt == std::get< 6 >( chunk ) );
       } // THEN
     } // WHEN
 

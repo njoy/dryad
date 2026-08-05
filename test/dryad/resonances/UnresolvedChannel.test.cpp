@@ -44,7 +44,7 @@ SCENARIO( "UnresolvedChannel" ) {
     THEN( "an UnresolvedChannel can be constructed with a default reference energy" ) {
 
       UnresolvedChannel chunk( elasticID, elasticPair, elasticPair,
-                               elasticQ, elasticBoundary, elasticRadii );
+                               elasticQ, elasticBoundary, elasticRadii, true );
 
       CHECK( elasticID == chunk.identifier() );
       CHECK( elasticRID == chunk.reaction() );
@@ -61,7 +61,7 @@ SCENARIO( "UnresolvedChannel" ) {
     THEN( "an UnresolvedChannel can be constructed without a default reference energy" ) {
 
       UnresolvedChannel chunk( elasticID, elasticPair, elasticPair,
-                               elasticQ, elasticBoundary, elasticRadii,
+                               elasticQ, elasticBoundary, elasticRadii, true,
                                2. );
 
       CHECK( elasticID == chunk.identifier() );
@@ -79,7 +79,7 @@ SCENARIO( "UnresolvedChannel" ) {
     THEN( "an UnresolvedChannel can be build with a constant conversion factor" ) {
 
       UnresolvedChannel chunk( captureID, elasticPair, capturePair,
-                               captureQ, captureBoundary, captureRadii );
+                               captureQ, captureBoundary, captureRadii, false );
 
       CHECK( captureID == chunk.identifier() );
       CHECK( captureRID == chunk.reaction() );
@@ -124,13 +124,13 @@ SCENARIO( "UnresolvedChannel" ) {
                        captureQ, captureBoundary, captureRadii );
 
       UnresolvedChannel left( elasticID, elasticPair, elasticPair,
-                              elasticQ, elasticBoundary, elasticRadii, 1. );
+                              elasticQ, elasticBoundary, elasticRadii, true, 1. );
       UnresolvedChannel equal( elasticID, elasticPair, elasticPair,
-                               elasticQ, elasticBoundary, elasticRadii, 1. );
+                               elasticQ, elasticBoundary, elasticRadii, true, 1. );
       UnresolvedChannel differentChannel( captureID, elasticPair, capturePair,
-                                          captureQ, captureBoundary, captureRadii, 1. );
+                                          captureQ, captureBoundary, captureRadii, false, 1. );
       UnresolvedChannel differentReference( elasticID, elasticPair, elasticPair,
-                                            elasticQ, elasticBoundary, elasticRadii, 2. );
+                                            elasticQ, elasticBoundary, elasticRadii, true, 2. );
 
       THEN( "they can be compared" ) {
 

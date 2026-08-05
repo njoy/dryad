@@ -3,7 +3,7 @@
 DebyeWallerIntegralData
 ============================
 
-General information about this concept
+A Debye-Waller integral table with temperature values in K and integral values in 1/eV.
 
 Constructor
 ~~~~~~~~~~~

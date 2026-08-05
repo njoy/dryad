@@ -66,11 +66,7 @@ namespace lrf7 {
           pb.push_back( outgoing.has_value() ? ib.back() == 0. ? outgoing.value().heavyParticle().parity().value() : 0. : 0. );
 
           // if fission (no outgoing) or capture (photon in outgoing pp), then PNT=-1
-          pnt.push_back( outgoing.has_value()
-                           ? outgoing.value().lightParticle().identifier() == dryad::id::ParticleID::photon()
-                               ? -1
-                               : +1
-                           : -1 );
+          pnt.push_back( channel.hasPenetrability() ? +1 : -1 );
 
           // when the boundary condition elminates shift, set the SHF flag to 0
           shf.push_back( group.boundaryCondition() != dryad::resonances::BoundaryCondition::ShiftFactor );

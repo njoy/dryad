@@ -46,6 +46,34 @@ SCENARIO( "CoherentElasticScattering" ) {
           { BraggEdgeData( 600.0, { 5.219736e-3, 5. }, { 1e-2, 1. } ),
             BraggEdgeData( 293.6, { 5.219736e-3, 5. }, { 8.703783e-3, 9.484639e-1 } ) } );
 
+      THEN( "the lower energy limit can be changed" ) {
+
+        double newlimit = 1e-4;
+        double original = 1e-5;
+
+        chunk.lowerEnergyLimit( newlimit );
+
+        CHECK( newlimit == chunk.lowerEnergyLimit() );
+
+        chunk.lowerEnergyLimit( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the upper energy limit can be changed" ) {
+
+        double newlimit = 7.5;
+        double original = 10.;
+
+        chunk.upperEnergyLimit( newlimit );
+
+        CHECK( newlimit == chunk.upperEnergyLimit() );
+
+        chunk.upperEnergyLimit( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
       THEN( "the Bragg edge data can be changed" ) {
 
         std::vector< BraggEdgeData > newedges = {
@@ -174,6 +202,12 @@ void verifyChunk( const CoherentElasticScattering& chunk ) {
   CHECK_THAT( 9.484639e-1 / 10.        , WithinRel( xs.values()[3] ) );
   CHECK( false == xs.isLinearised() );
 
-  // check throw on temperature that is too far from the stored ones
+  // temperature within 1e-6 does not throw
+  CHECK_NOTHROW( chunk.crossSection( 293.6 * 0.9999999 ) );
+  CHECK_NOTHROW( chunk.crossSection( 293.6 * 1.0000001 ) );
+
+  // check throw on temperature that are too far from the stored ones
+  CHECK_THROWS( chunk.crossSection( 293.6 * 0.99999 ) );
+  CHECK_THROWS( chunk.crossSection( 293.6 * 1.00001 ) );
   CHECK_THROWS( chunk.crossSection( 400 ) );
 }

@@ -29,6 +29,12 @@ namespace constants {
     constexpr double tolerance = 1e-8;
   }
 
+  // relative tolerance for comparing values
+  constexpr double temperature_tolerance = 1e-6;
+
+  // room temperature (in K)
+  constexpr double room_temperature = 293.6;
+
   constexpr double pi = 3.141592653589793;
 
   // CODATA 2018 - atomic mass unit in kg
@@ -45,6 +51,11 @@ namespace constants {
   // constexpr double h = 6.62607015e-34;
   // CODATA 2022 - Planck constant in J s
   constexpr double h = 6.62607015e-34;
+
+  // CODATA 2018 - Boltzmann constant in J / K
+  // constexpr double k = 1.380649e-23;
+  // CODATA 2022 - Boltzmann constant in J / K
+  constexpr double k = 1.380649e-23;
 
   // CODATA 2018 - reduced Planck constant in ev s
   // constexpr double hbar = 6.582119569e-16;

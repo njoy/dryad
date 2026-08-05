@@ -110,8 +110,8 @@ void verifyChunkWithIndex2( const gnds::read::Axes& chunk ) {
   CHECK( 1  == std::get< 0 >( chunk[1] ).value() );
   CHECK( 0  == std::get< 0 >( chunk[2] ).value() );
   CHECK( "eV" == std::get< 1 >( chunk[0] ).value() );
-  CHECK( ""   == std::get< 1 >( chunk[1] ).value() );
-  CHECK( ""   == std::get< 1 >( chunk[2] ).value() );
+  CHECK( std::nullopt   == std::get< 1 >( chunk[1] ) );
+  CHECK( std::nullopt   == std::get< 1 >( chunk[2] ) );
   CHECK( std::nullopt == std::get< 2 >( chunk[0] ) );
   CHECK( std::nullopt == std::get< 2 >( chunk[1] ) );
   CHECK( std::nullopt == std::get< 2 >( chunk[2] ) );

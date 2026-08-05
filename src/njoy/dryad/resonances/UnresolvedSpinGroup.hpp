@@ -33,143 +33,238 @@ namespace resonances {
     // Sampler sampler_;
 
     /* auxiliary functions */
-    #include "njoy/dryad/resonances/UnresolvedSpinGroup/src/processChannels.hpp"
-    #include "njoy/dryad/resonances/UnresolvedSpinGroup/src/verifySpinGroup.hpp"
 
-    public:
+    /**
+     *  @brief Perform basic verification on the spin group
+     *
+     *  @param[in] channels   the channels in the spin group
+     *  @param[in] table      the resonance parameter table
+     */
+    static void verifySpinGroup( const std::vector< UnresolvedChannel >& channels,
+                                 const UnresolvedResonanceTable& table ) {
 
-      /* constructor */
-      #include "njoy/dryad/resonances/UnresolvedSpinGroup/src/ctor.hpp"
+      std::size_t nc = channels.size();
+      if ( nc == 0 ) {
 
-      /* methods */
+        Log::error( " At least one channel must be present in a spin group." );
+        Log::info( "Number of channels: {}", nc );
+        throw std::exception();
+      }
+      if ( nc != table.numberChannels() ) {
 
-      /**
-       *  @brief Return the channels in the spin group
-       */
-      const std::vector< UnresolvedChannel >& channels() const {
-
-        return this->channels_;
+        Log::error( " The number of channels in the resonance table must match the number of channels in the spin group." );
+        Log::info( "Number of channels in spin group: {}", nc );
+        Log::info( "Number of channels in resonance table: {}", table.numberChannels() );
+        throw std::exception();
       }
 
-      /**
-       *  @brief Return the channels in the spin group
-       */
-      std::vector< UnresolvedChannel >& channels() {
+      auto iter = std::adjacent_find( channels.begin(), channels.end(),
+                                 [] ( auto&& left, auto&& right ) {
 
-        return this->channels_;
+                                   return left.identifier() == right.identifier();
+                                 } );
+      if ( iter != channels.end() ) {
+
+        Log::error( " Each channel in a spin group must have a unique identifier." );
+        Log::info( "Duplicate channel identifier: {}", iter->identifier().symbol() );
+        throw std::exception();
       }
+    }
 
-      /**
-       *  @brief Set the channels in the spin group
-       *
-       *  @param[in] channels  the channels
-       */
-      void channels( std::vector< UnresolvedChannel > channels ) {
+    /**
+     *  @brief Process the channel data
+     *
+     *  This function sorts the channels and initialises the reactions field with
+     *  all reactions the spin group contributes to.
+     */
+    void processChannels() {
 
-        this->channels_ = std::move( channels );
-        this->processChannels();
+      std::sort( this->channels().begin(), this->channels().end(),
+                 [] ( auto&& left, auto&& right )
+                    { return left.identifier() < right.identifier(); }
+        );
+
+      for ( const auto& channel : this->channels() ) {
+
+        auto id = channel.identifier().reaction();
+        auto iter = std::lower_bound( this->reactions().begin(),
+                                      this->reactions().end(), id );
+        if ( ! ( iter != this->reactions().end() && *iter == id ) ) {
+
+          this->reactions().insert( iter, id );
+        }
       }
+    }
 
-      /**
-       *  @brief Return the resonance table
-       */
-      const UnresolvedResonanceTable& resonanceTable() const {
+  public:
 
-        return this->table_;
-      }
+    /* constructor */
 
-      /**
-       *  @brief Return the resonance table
-       */
-      UnresolvedResonanceTable& resonanceTable() {
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    UnresolvedSpinGroup() = default;
 
-        return this->table_;
-      }
+    UnresolvedSpinGroup( const UnresolvedSpinGroup& ) = default;
+    UnresolvedSpinGroup( UnresolvedSpinGroup&& ) = default;
 
-      /**
-       *  @brief Set the resonance table
-       *
-       *  @param[in] table  the resonance table
-       */
-      void resonanceTable( UnresolvedResonanceTable table ) {
+    UnresolvedSpinGroup& operator=( const UnresolvedSpinGroup& ) = default;
+    UnresolvedSpinGroup& operator=( UnresolvedSpinGroup&& ) = default;
 
-        this->table_ = std::move( table );
-      }
+    /**
+     *  @brief Constructor
+     *
+     *  If the channels are not sorted, they will get sorted through the order
+     *  of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+     *  sorting order).
+     *
+     * @todo a future overload may accept a calculator and/or sampler
+     *       configuration once those interfaces are decided on (mirroring
+     *       SpinGroup's ctor that takes a Formalism and BoundaryCondition and
+     *       calls selectCalculator). For now the spin group only stores the
+     *       channels and the average parameter table.
+     *
+     *  @param[in] channels     the channels in the spin group
+     *  @param[in] resonances   the unresolved resonance table of the spin group
+     */
+    UnresolvedSpinGroup( std::vector< UnresolvedChannel > channels,
+                         UnresolvedResonanceTable resonances ) :
+                      channels_( std::move( channels ) ),
+                      table_( std::move( resonances ) ) {
 
-      /**
-       *  @brief Return the reactions to which this spin group contributes
-       */
-      const std::vector< id::ReactionID >& reactions() const {
+      this->processChannels();
+      verifySpinGroup( this->channels(), this->resonanceTable() );
+    }
 
-        return this->reactions_;
-      }
+    /* methods */
 
-      /**
-       *  @brief Return the reactions to which this spin group contributes
-       */
-      std::vector< id::ReactionID >& reactions() {
+    /**
+     *  @brief Return the channels in the spin group
+     */
+    const std::vector< UnresolvedChannel >& channels() const {
 
-        return this->reactions_;
-      }
+      return this->channels_;
+    }
 
-      /**
-       *  @brief Return the total angular momentum of the spin group
-       */
-      double totalAngularMomentum() const {
+    /**
+     *  @brief Return the channels in the spin group
+     */
+    std::vector< UnresolvedChannel >& channels() {
 
-        return this->channels().front().quantumNumbers().totalAngularMomentum();
-      }
+      return this->channels_;
+    }
 
-      /**
-       *  @brief return the orbital angular momentum of the spin group
-       */
-      unsigned int orbitalAngularMomentum() const {
+    /**
+     *  @brief Set the channels in the spin group
+     *
+     *  @param[in] channels  the channels
+     */
+    void channels( std::vector< UnresolvedChannel > channels ) {
 
-        return this->channels().front().quantumNumbers().orbitalAngularMomentum();
-      }
+      this->channels_ = std::move( channels );
+      this->processChannels();
+    }
 
-      /**
-       *  @brief Return the parity of the spin group
-       */
-      short parity() const {
+    /**
+     *  @brief Return the resonance table
+     */
+    const UnresolvedResonanceTable& resonanceTable() const {
 
-        return this->channels().front().quantumNumbers().parity();
-      }
+      return this->table_;
+    }
 
-      //! @todo average infinitely dilute cross sections from the average parameters.
-      //        analog of SpinGroup::crossSections, but operating on the average
-      //        widths and level spacings rather than per-resonance parameters.
-      //        Will dispatch through the calculator variant once one exists.
-      //
-      // void crossSections( double energy,
-      //                     std::map< id::ReactionID, double >& xs );
-      //
-      // void crossSections( std::vector< double >& energies,
-      //                     std::map< id::ReactionID, std::vector< double > >& xs );
+    /**
+     *  @brief Return the resonance table
+     */
+    UnresolvedResonanceTable& resonanceTable() {
 
-      /**
-       *  @brief Equality comparison
-       *
-       *  @param[in] left   the object on the left-hand-side
-       *  @param[in] right  the object on the right-hand-side
-       */
-      friend bool operator==( const UnresolvedSpinGroup& left,
-                              const UnresolvedSpinGroup& right ) {
+      return this->table_;
+    }
 
-        return std::tie( left.channels(), left.resonanceTable() ) ==
-               std::tie( right.channels(), right.resonanceTable() );
-      }
+    /**
+     *  @brief Set the resonance table
+     *
+     *  @param[in] table  the resonance table
+     */
+    void resonanceTable( UnresolvedResonanceTable table ) {
 
-      /**
-       *  @brief Inequality comparison
-       *
-       *  @param[in] left   the object on the left-hand-side
-       *  @param[in] right  the object on the right-hand-side
-       */
-      friend bool operator!=( const UnresolvedSpinGroup& left,
-                              const UnresolvedSpinGroup& right ) {
-        return ! ( left == right );
-      }
+      this->table_ = std::move( table );
+    }
+
+    /**
+     *  @brief Return the reactions to which this spin group contributes
+     */
+    const std::vector< id::ReactionID >& reactions() const {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the reactions to which this spin group contributes
+     */
+    std::vector< id::ReactionID >& reactions() {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the total angular momentum of the spin group
+     */
+    double totalAngularMomentum() const {
+
+      return this->channels().front().quantumNumbers().totalAngularMomentum();
+    }
+
+    /**
+     *  @brief return the orbital angular momentum of the spin group
+     */
+    unsigned int orbitalAngularMomentum() const {
+
+      return this->channels().front().quantumNumbers().orbitalAngularMomentum();
+    }
+
+    /**
+     *  @brief Return the parity of the spin group
+     */
+    short parity() const {
+
+      return this->channels().front().quantumNumbers().parity();
+    }
+
+    //! @todo average infinitely dilute cross sections from the average parameters.
+    //        analog of SpinGroup::crossSections, but operating on the average
+    //        widths and level spacings rather than per-resonance parameters.
+    //        Will dispatch through the calculator variant once one exists.
+    //
+    // void crossSections( double energy,
+    //                     std::map< id::ReactionID, double >& xs );
+    //
+    // void crossSections( std::vector< double >& energies,
+    //                     std::map< id::ReactionID, std::vector< double > >& xs );
+
+    /**
+     *  @brief Equality comparison
+     *
+     *  @param[in] left   the object on the left-hand-side
+     *  @param[in] right  the object on the right-hand-side
+     */
+    friend bool operator==( const UnresolvedSpinGroup& left,
+                            const UnresolvedSpinGroup& right ) {
+
+      return std::tie( left.channels(), left.resonanceTable() ) ==
+             std::tie( right.channels(), right.resonanceTable() );
+    }
+
+    /**
+     *  @brief Inequality comparison
+     *
+     *  @param[in] left   the object on the left-hand-side
+     *  @param[in] right  the object on the right-hand-side
+     */
+    friend bool operator!=( const UnresolvedSpinGroup& left,
+                            const UnresolvedSpinGroup& right ) {
+      return ! ( left == right );
+    }
   };
 
 } // namespace resonances

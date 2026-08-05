@@ -110,6 +110,10 @@ void verifyChunk( const std::vector< resonances::Channel >& chunk ) {
   CHECK( std::nullopt == chunk[0].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 0., WithinRel( std::get<double>( chunk[0].channelRadii().phaseShiftRadius().value() ) ) );
   CHECK( resonances::Kinematics::NonRelativistic == chunk[0].kinematicsType() );
+  CHECK( false == chunk[0].hasPenetrability() );
+  CHECK( false == chunk[0].hasShiftFactor() );
+  CHECK( false == chunk[0].hasPhaseShift() );
+  CHECK( false == chunk[0].hasPhaseShiftDifference() );
 
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) == chunk[1].identifier() );
   incident = chunk[1].incidentParticlePair();
@@ -142,6 +146,10 @@ void verifyChunk( const std::vector< resonances::Channel >& chunk ) {
   CHECK( std::nullopt == chunk[1].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 3.66798, WithinRel( std::get<double>( chunk[1].channelRadii().phaseShiftRadius().value() ) ) );
   CHECK( resonances::Kinematics::NonRelativistic == chunk[1].kinematicsType() );
+  CHECK( true == chunk[1].hasPenetrability() );
+  CHECK( true == chunk[1].hasShiftFactor() );
+  CHECK( true == chunk[1].hasPhaseShift() );
+  CHECK( false == chunk[1].hasPhaseShiftDifference() );
 
   CHECK( id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) == chunk[2].identifier() );
   incident = chunk[2].incidentParticlePair();
@@ -174,6 +182,10 @@ void verifyChunk( const std::vector< resonances::Channel >& chunk ) {
   CHECK( std::nullopt == chunk[2].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 3.66798, WithinRel( std::get<double>( chunk[2].channelRadii().phaseShiftRadius().value() ) ) );
   CHECK( resonances::Kinematics::NonRelativistic == chunk[2].kinematicsType() );
+  CHECK( true == chunk[2].hasPenetrability() );
+  CHECK( true == chunk[2].hasShiftFactor() );
+  CHECK( true == chunk[2].hasPhaseShift() );
+  CHECK( true == chunk[2].hasPhaseShiftDifference() );
 }
 
 void verifyChunkWithBackground( const std::vector< resonances::Channel >& chunk ) {
@@ -211,6 +223,10 @@ void verifyChunkWithBackground( const std::vector< resonances::Channel >& chunk 
   CHECK( std::nullopt == chunk[0].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 0., WithinRel( std::get<double>( chunk[0].channelRadii().phaseShiftRadius().value() ) ) );
   CHECK( resonances::Kinematics::NonRelativistic == chunk[0].kinematicsType() );
+  CHECK( false == chunk[0].hasPenetrability() );
+  CHECK( false == chunk[0].hasShiftFactor() );
+  CHECK( false == chunk[0].hasPhaseShift() );
+  CHECK( false == chunk[0].hasPhaseShiftDifference() );
 
   CHECK( id::ChannelID( "n,Sr88->n,Sr88{0,1/2,1/2+}" ) == chunk[1].identifier() );
   incident = chunk[1].incidentParticlePair();
@@ -242,6 +258,10 @@ void verifyChunkWithBackground( const std::vector< resonances::Channel >& chunk 
   CHECK( std::nullopt == chunk[1].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 6.8, WithinRel( std::get<double>( chunk[1].channelRadii().phaseShiftRadius().value() ) ) );
   CHECK( resonances::Kinematics::NonRelativistic == chunk[1].kinematicsType() );
+  CHECK( true == chunk[1].hasPenetrability() );
+  CHECK( true == chunk[1].hasShiftFactor() );
+  CHECK( true == chunk[1].hasPhaseShift() );
+  CHECK( false == chunk[1].hasPhaseShiftDifference() );
   CHECK( std::nullopt != chunk[1].background() );
   auto background = std::get< resonances::SammyBackground >( chunk[1].background().value() );
   CHECK_THAT( -0.043, WithinRel( background.polynomialCoefficients()[0] ) );

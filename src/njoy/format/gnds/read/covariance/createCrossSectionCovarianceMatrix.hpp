@@ -128,8 +128,8 @@ namespace covariance {
         matrices.emplace_back( std::move( std::get< 3 >( data ) ) );
 
         // convert structures
-        convertEnergies( rowStructures.back(), std::get< 4 >( data ) );
-        convertEnergies( columnStructures.back(), std::get< 5 >( data ) );
+        convertEnergies( rowStructures.back(), std::get< 4 >( data ).value() );
+        convertEnergies( columnStructures.back(), std::get< 5 >( data ).value() );
       }
 
       // check for variance scaling

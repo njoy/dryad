@@ -19,6 +19,7 @@ namespace resonances {
   class CoulombPenetrability {
 
     /* fields */
+
     unsigned int orbital_momentum_;
 
     /* auxiliary functions */
@@ -27,7 +28,24 @@ namespace resonances {
 
     /* constructor */
 
-    #include "njoy/dryad/resonances/CoulombPenetrability/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    CoulombPenetrability() = default;
+
+    CoulombPenetrability( const CoulombPenetrability& ) = default;
+    CoulombPenetrability( CoulombPenetrability&& ) = default;
+
+    CoulombPenetrability& operator=( const CoulombPenetrability& ) = default;
+    CoulombPenetrability& operator=( CoulombPenetrability&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] orbitalAngularMomentum   the value of the orbital angular momentum
+     */
+    CoulombPenetrability( unsigned int orbitalAngularMomentum ) :
+      orbital_momentum_( orbitalAngularMomentum ) {}
 
     /* methods */
 

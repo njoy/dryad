@@ -113,11 +113,47 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the lower energy limit
+     */
+    double& lowerEnergyLimit() {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Set the lower energy limit
+     *
+     *  @param[in] lower   the lower energy limit
+     */
+    void lowerEnergyLimit( double lower ) {
+
+      this->lower_ = lower;
+    }
+
+    /**
      *  @brief Return the upper energy limit
      */
     double upperEnergyLimit() const {
 
       return this->upper_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double& upperEnergyLimit() {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Set the upper energy limit
+     *
+     *  @param[in] upper   the upper energy limit
+     */
+    void upperEnergyLimit( double upper ) {
+
+      this->upper_ = upper;
     }
 
     /**
@@ -178,8 +214,8 @@ namespace thermal {
      */
     bool hasBraggEdgeData( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       return iter != this->braggEdges().end();
     }
 
@@ -191,15 +227,15 @@ namespace thermal {
     const BraggEdgeData&
     braggEdgeData( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       if ( iter != this->braggEdges().end() ) {
 
         return *iter;
       }
       else {
 
-        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
+        Log::error( "No Bragg edge data with temperature equal to {} K could be found",
                     temperature );
         throw std::exception();
       }
@@ -214,18 +250,7 @@ namespace thermal {
     TabulatedCrossSection
     crossSection( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
-      if ( iter != this->braggEdges().end() ) {
-
-        return iter->crossSection( this->upperEnergyLimit() );
-      }
-      else {
-
-        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
-                    temperature );
-        throw std::exception();
-      }
+      return this->braggEdgeData( temperature ).crossSection( this->upperEnergyLimit() );
     }
 
     /**

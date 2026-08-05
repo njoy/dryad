@@ -141,7 +141,7 @@ namespace endf80 {
 
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
-    CHECK( std::nullopt == documentation.description() );
+    CHECK( description == documentation.description() );
   }
 
 } // namespace endf80
@@ -297,7 +297,7 @@ namespace endf81 {
 
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
-    CHECK( std::nullopt == documentation.description() );
+    CHECK( description == documentation.description() );
   }
 
 } // namespace endf81

@@ -5,7 +5,6 @@
 
 // other includes
 #include "scion/math/compare.hpp"
-#include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticAngularDistribution.hpp"
@@ -72,11 +71,47 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the lower energy limit
+     */
+    double& lowerEnergyLimit() {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Set the lower energy limit
+     *
+     *  @param[in] lower   the lower energy limit
+     */
+    void lowerEnergyLimit( double lower ) {
+
+      this->lower_ = lower;
+    }
+
+    /**
      *  @brief Return the upper energy limit
      */
     double upperEnergyLimit() const {
 
       return this->upper_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double& upperEnergyLimit() {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Set the upper energy limit
+     *
+     *  @param[in] upper   the upper energy limit
+     */
+    void upperEnergyLimit( double upper ) {
+
+      this->upper_ = upper;
     }
 
     /**
@@ -99,6 +134,14 @@ namespace thermal {
      *  @brief Return the bound atom cross section value
      */
     double boundCrossSection() const {
+
+      return this->bound_xs_;
+    }
+
+    /**
+     *  @brief Return the bound atom cross section value
+     */
+    double& boundCrossSection() {
 
       return this->bound_xs_;
     }

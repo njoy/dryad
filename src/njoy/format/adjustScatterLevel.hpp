@@ -13,6 +13,9 @@ namespace format {
   /**
    *  @brief Adjust the scatter level mt number for excited states
    *
+   *  Internally, we use MT50, MT600, etc. for the elastic reaction instead of MT2.
+   *  For excited states we need to downshift all levels below the excited state.
+   *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] mt           the mt number to adjust
@@ -23,8 +26,8 @@ namespace format {
 
     if ( target.e() > 0 && projectile != dryad::id::ParticleID::photon() ) {
 
-      int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
-      int elastic = dryad::id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+      int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).mt().value();
+      int elastic = dryad::id::ReactionID( projectile, target, 2 ).mt().value();
       if ( mt > ground && mt <= elastic ) {
 
         return mt - 1;

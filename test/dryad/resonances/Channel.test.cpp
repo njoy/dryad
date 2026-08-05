@@ -70,7 +70,7 @@ SCENARIO( "Channel" ) {
       double energy = 1e-5;
 
       Channel capture( captureID, elasticPair, capturePair,
-                       captureQ, captureBoundary, captureRadii );
+                       captureQ, captureBoundary, captureRadii, false );
       Channel elastic( elasticID, elasticPair, elasticPair,
                        elasticQ, elasticBoundary, elasticRadii );
       Channel inelastic( inelasticID, elasticPair, inelasticPair,
@@ -94,6 +94,10 @@ SCENARIO( "Channel" ) {
       CHECK( Kinematics::NonRelativistic == capture.kinematicsType() );
       CHECK_THAT( 0., WithinRel( capture.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( capture.sommerfeldParameter( energy ) ) );
+      CHECK( false == capture.hasPenetrability() );
+      CHECK( false == capture.hasShiftFactor() );
+      CHECK( false == capture.hasPhaseShift() );
+      CHECK( false == capture.hasPhaseShiftDifference() );
       CHECK_THAT( 1., WithinRel( capture.penetrability( energy ) ) );
       CHECK_THAT( 0., WithinRel( capture.shiftFactor( energy ) ) );
       CHECK_THAT( 0., WithinRel( capture.phaseShift( energy ) ) );
@@ -113,6 +117,10 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 0.375, WithinRel( elastic.statisticalSpinFactor() ) );
       CHECK( false == elastic.isBelowThreshold( energy ) );
       CHECK( Kinematics::NonRelativistic == elastic.kinematicsType() );
+      CHECK( true == elastic.hasPenetrability() );
+      CHECK( true == elastic.hasShiftFactor() );
+      CHECK( true == elastic.hasPhaseShift() );
+      CHECK( false == elastic.hasPhaseShiftDifference() );
       CHECK_THAT( 6.752152278684156e-7, WithinRel( elastic.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( elastic.sommerfeldParameter( energy ) ) );
       CHECK_THAT( 3.256036376131631e-6, WithinRel( elastic.penetrability( energy ) ) );
@@ -134,6 +142,10 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 0.375, WithinRel( inelastic.statisticalSpinFactor() ) );
       CHECK( true == inelastic.isBelowThreshold( energy ) );
       CHECK( Kinematics::NonRelativistic == inelastic.kinematicsType() );
+      CHECK( true == inelastic.hasPenetrability() );
+      CHECK( true == inelastic.hasShiftFactor() );
+      CHECK( true == inelastic.hasPhaseShift() );
+      CHECK( false == inelastic.hasPhaseShiftDifference() );
       CHECK_THAT( 0.2391648503730464, WithinRel( inelastic.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( inelastic.sommerfeldParameter( energy ) ) );
       CHECK_THAT( 1.153305524765912, WithinRel( inelastic.penetrability( energy ) ) );
@@ -155,6 +167,10 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 0.375, WithinRel( proton.statisticalSpinFactor() ) );
       CHECK( false == proton.isBelowThreshold( energy ) );
       CHECK( Kinematics::NonRelativistic == proton.kinematicsType() );
+      CHECK( true == proton.hasPenetrability() );
+      CHECK( true == proton.hasShiftFactor() );
+      CHECK( true == proton.hasPhaseShift() );
+      CHECK( true == proton.hasPhaseShiftDifference() );
       CHECK_THAT( 0.1697421616532552, WithinRel( proton.waveNumber( energy ) ) );
       CHECK_THAT( 3.179105369595768, WithinRel( proton.sommerfeldParameter( energy ) ) );
       CHECK_THAT( 2.896705590727021e-5, WithinRel( proton.penetrability( energy ) ) );

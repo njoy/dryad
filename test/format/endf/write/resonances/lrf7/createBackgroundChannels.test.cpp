@@ -37,9 +37,9 @@ SCENARIO( "createBackgroundChannels" ) {
       resonances::ChannelRadii equal_radii( 7.1, 7.1 );
 
       resonances::SpinGroup group( { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
-                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                       neutron_pair, photon_pair, 0., 0, zero_radii, false },
                                      { id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ),
-                                       neutron_pair, neutron_pair, 0., -1, equal_radii,
+                                       neutron_pair, neutron_pair, 0., -1, equal_radii, true,
                                        resonances::Kinematics::NonRelativistic,
                                        resonances::SammyBackground( { 0.45, 3.2e-7, 0. }, { 0.075, 0. }, 0., 9.55e+5 ) } },
                                    { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),

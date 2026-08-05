@@ -51,8 +51,31 @@ namespace calculator {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/resonances/calculator/ReichMoore/src/selectLMatrix.hpp"
-    #include "njoy/dryad/resonances/calculator/ReichMoore/src/verifyEliminatedChannel.hpp"
+    static LMatrix selectLMatrix( unsigned int size, const BoundaryCondition& boundary ) {
+
+      switch ( boundary ) {
+
+        case BoundaryCondition::Constant : return Constant( size );
+        case BoundaryCondition::ShiftFactor : return ShiftFactor( size );
+        default : {
+
+          throw std::runtime_error( "Unknown boundary condition type" );
+        }
+      }
+    }
+
+    static void verifyEliminatedChannel( const std::vector< Channel >& channels ) {
+
+      if ( channels.front().outgoingParticlePair().has_value() ) {
+
+        if ( channels.front().outgoingParticlePair()->lightParticle().identifier()
+             == id::ParticleID::photon() ) {
+
+          return;
+        }
+      }
+      throw std::runtime_error( "The eliminated capture channel is not the first channel" );
+    }
 
     std::vector< bool >&
     belowThreshold( double energy, const std::vector< Channel >& channels ) {
@@ -89,7 +112,56 @@ namespace calculator {
 
     /* constructor */
 
-    #include "njoy/dryad/resonances/calculator/ReichMoore/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ReichMoore() = default;
+
+    ReichMoore( const ReichMoore& ) = default;
+    ReichMoore( ReichMoore&& ) = default;
+
+    ReichMoore& operator=( const ReichMoore& ) = default;
+    ReichMoore& operator=( ReichMoore&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] boundary   the boundary condition
+     *  @param[in] channels   the channels of the spingroup
+     */
+    ReichMoore( const BoundaryCondition& boundary,
+                const std::vector< Channel >& channels ) :
+        l_matrix_( selectLMatrix( channels.size() - 1, boundary ) ),
+        r_matrix_( channels.size() - 1, channels.size() - 1 ),
+        r_l_matrix_( channels.size() - 1, channels.size() - 1 ),
+        t_matrix_( channels.size() - 1, channels.size() - 1 ),
+        w_matrix_( channels.size() - 1, channels.size() - 1 ),
+        u_matrix_( channels.size() - 1, channels.size() - 1 ),
+        sqrt_p_matrix_( channels.size() - 1 ),
+        omega_matrix_( channels.size() - 1 ),
+        penetrabilities_( channels.size() - 1 ),
+        shift_factors_( channels.size() - 1 ),
+        phase_shifts_( channels.size() - 1 ),
+        coulomb_phase_shifts_( channels.size() - 1 ),
+        boundaries_( channels.size() - 1 ),
+        below_threshold_( channels.size() - 1 ) {
+
+      // set the matrices to zero
+      this->r_matrix_.setZero();
+      this->r_l_matrix_.setZero();
+      this->t_matrix_.setZero();
+      this->w_matrix_.setZero();
+      this->u_matrix_.setZero();
+
+      // verify that the first channel is an eliminated capture channel
+      verifyEliminatedChannel( channels );
+
+      // precalculate stuff
+      if ( boundary == BoundaryCondition::Constant ) {
+
+        this->boundaryConditions( channels );
+      }
+    }
 
     /* methods */
 

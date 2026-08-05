@@ -2,6 +2,7 @@
 Format agnostic nuclear data interface
 """
 from __future__ import annotations
+import njoy.format.gnds
 import typing
 from . import atomic
 from . import covariance
@@ -1763,7 +1764,7 @@ class ProjectileTarget:
                 all probability data
         """
     @staticmethod
-    def from_gnds_file(filename: str, normalise: bool = False) -> ProjectileTarget:
+    def from_gnds_file(filename: str, normalise: bool = False, style: njoy.format.gnds.StyleType = ...) -> ProjectileTarget:
         """
         Create ProjectileTarget data from a GNDS file
         
@@ -1843,6 +1844,19 @@ class ProjectileTarget:
                 the ENDF mat number to be used
             filename : str
                 the ENDF file name
+            use_reduced_width_amplitudes : bool, default True
+                if there are resonances, use reduced width amplitudes
+        """
+    def to_gnds_file(self, filename: str, style: njoy.format.gnds.StyleType = ..., use_reduced_width_amplitudes: bool = True) -> None:
+        """
+        Write the ProjectileTarget data to an ENDF file
+        
+        Parameters
+        ----------
+            filename : str
+                the ENDF file name
+            style : str
+                the GNDS style name
             use_reduced_width_amplitudes : bool, default True
                 if there are resonances, use reduced width amplitudes
         """
@@ -4231,13 +4245,16 @@ class ThermalScattering:
     ----------
         documentation : njoy.dryad.Documentation
             the documentation associated to the thermal scattering data
-        coherent : njoy.dryad.thermal.CoherentElasticScattering
-            coherent elastic scattering data (default: none)    incoherent : njoy.dryad.thermal.IncoherentElasticScattering
+        coherent_elastic : njoy.dryad.thermal.CoherentElasticScattering
+            coherent elastic scattering data (default: none)
+        incoherent_elastic : njoy.dryad.thermal.IncoherentElasticScattering
             incoherent elastic scattering data (default: none)
+        incoherent_inelastic : njoy.dryad.thermal.IncoherentInelasticScattering
+            incoherent inelastic scattering data (default: none)
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
-    def from_endf_file(lower: float, upper: float, filename: str) -> ThermalScattering:
+    def from_endf_file(filename: str, upper: float | None = None) -> ThermalScattering:
         """
         Create ThermalScattering data from an ENDF file
         
@@ -4246,12 +4263,11 @@ class ThermalScattering:
         
         Parameters
         ----------
-            lower : float
-                the lower energy limit
-            upper : float
-                the upper energy limit
             filename : string
                 the ENDF file name
+            upper : float, default None
+                the upper energy limit, the upper energy limit of the evaluation is used
+                if no value is defined
         """
     @staticmethod
     def from_gnds_file(lower: float, upper: float, filename: str, style: str = 'eval') -> ThermalScattering:
@@ -4276,12 +4292,12 @@ class ThermalScattering:
     def __eq__(self, arg0: ThermalScattering) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, documentation: Documentation, coherent_elastic: thermal.CoherentElasticScattering | None = None, incoherent_elastic: thermal.IncoherentElasticScattering | None = None, incoherent_inelastic: thermal.IncoherentInelasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data with documentation
         """
     @typing.overload
-    def __init__(self, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, coherent_elastic: thermal.CoherentElasticScattering | None = None, incoherent_elastic: thermal.IncoherentElasticScattering | None = None, incoherent_inelastic: thermal.IncoherentInelasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data without documentation
         """
@@ -4332,6 +4348,11 @@ class ThermalScattering:
         Return whether or not there is incoherent elastic scattering
         """
     @property
+    def has_incoherent_inelastic_scattering(self) -> bool:
+        """
+        Return whether or not there is incoherent inelastic scattering
+        """
+    @property
     def has_inelastic_scattering(self) -> bool:
         """
         Return whether or not there is inelastic scattering
@@ -4343,6 +4364,14 @@ class ThermalScattering:
         """
     @incoherent_elastic_scattering.setter
     def incoherent_elastic_scattering(self, arg1: thermal.IncoherentElasticScattering | None) -> None:
+        ...
+    @property
+    def incoherent_inelastic_scattering(self) -> thermal.IncoherentInelasticScattering | None:
+        """
+        The incoherent inelastic data
+        """
+    @incoherent_inelastic_scattering.setter
+    def incoherent_inelastic_scattering(self, arg1: thermal.IncoherentInelasticScattering | None) -> None:
         ...
 class TwoBodyDistributionData:
     """

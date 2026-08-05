@@ -18,7 +18,8 @@ namespace read {
 
   using CovarianceMatrix = std::tuple< bool, std::vector< double >, std::vector< double >,
                                        matrix::Matrix< double >,
-                                       std::string, std::string, std::string >;
+                                       std::optional< std::string >, std::optional< std::string >,
+                                       std::optional< std::string > >;
 
   /**
    *  @brief Read data from a GNDS covarianceMatrix node
@@ -47,9 +48,9 @@ namespace read {
     std::get< 1 >( data ) = std::move( std::get< 2 >( axes[0] ).value() );
     std::get< 2 >( data ) = std::move( std::get< 2 >( axes[1] ).value() );
     std::get< 3 >( data ) = readArray( covariance.child( "gridded2d" ).child( "array" ) );
-    std::get< 4 >( data ) = std::move( std::get< 1 >( axes[0] ).value() );
-    std::get< 5 >( data ) = std::move( std::get< 1 >( axes[1] ).value() );
-    std::get< 6 >( data ) = std::move( std::get< 1 >( axes[2] ).value() );
+    std::get< 4 >( data ) = std::move( std::get< 1 >( axes[0] ) );
+    std::get< 5 >( data ) = std::move( std::get< 1 >( axes[1] ) );
+    std::get< 6 >( data ) = std::move( std::get< 1 >( axes[2] ) );
 
     return data;
   }

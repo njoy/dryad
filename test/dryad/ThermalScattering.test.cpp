@@ -111,6 +111,7 @@ void verifyChunk( const ThermalScattering& chunk ) {
   CHECK( false == chunk.hasCoherentElasticScattering() );
   CHECK( true == chunk.hasIncoherentElasticScattering() );
   CHECK( true == chunk.hasElasticScattering() );
+  CHECK( false == chunk.hasIncoherentInelasticScattering() );
   CHECK( false == chunk.hasInelasticScattering() );
 
   // coherent elastic
@@ -132,4 +133,7 @@ void verifyChunk( const ThermalScattering& chunk ) {
   CHECK_THAT( 2.677764, WithinRel( incoherent.debyeWallerIntegral().values()[1] ) );
   CHECK_THAT( 6.583171, WithinRel( incoherent.debyeWallerIntegral().values()[6] ) );
   CHECK_THAT( 7.891981, WithinRel( incoherent.debyeWallerIntegral().values()[7] ) );
+
+  // incoherent inelastic
+  CHECK( std::nullopt == chunk.incoherentInelasticScattering() );
 }

@@ -21,6 +21,10 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual(  293.6, chunk.moderator_temperatures[0] )
     self.assertAlmostEqual(  600. , chunk.moderator_temperatures[1] )
 
+    self.assertEqual( True, chunk.has_bragg_edge_data( 293.6 ) )
+    self.assertEqual( True, chunk.has_bragg_edge_data( 600 ) )
+    self.assertEqual( False, chunk.has_bragg_edge_data( 900 ) )
+
     edge0 = chunk.bragg_edges[0]
     self.assertEqual( 2, edge0.number_bragg_edges )
     self.assertEqual( 2, len( edge0.energies ) )
@@ -81,7 +85,6 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( InterpolationType.LogLog, xs.interpolants[0] )
     self.assertEqual( InterpolationType.LogLog, xs.interpolants[0] )
 
-
 class Test_CoherentElasticScattering( unittest.TestCase ) :
     """Unit test for the CoherentElasticScattering class."""
 
@@ -100,6 +103,30 @@ class Test_CoherentElasticScattering( unittest.TestCase ) :
                   lower = 1e-5, upper = 10,
                   bragg_edges = [ BraggEdgeData( 600.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ),
                                   BraggEdgeData( 293.6, [ 5.219736e-3, 5. ], [ 8.703783e-3, 9.484639e-1 ] ) ] )
+
+        # the lower energy limit can be changed
+        newlimit = 1e-4
+        original = 1e-5
+
+        chunk.lower_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.lower_energy_limit )
+
+        chunk.lower_energy_limit = original
+
+        verify_chunk( self, chunk )
+
+        # the upper energy limit can be changed
+        newlimit = 7.5
+        original = 10.
+
+        chunk.upper_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.upper_energy_limit )
+
+        chunk.upper_energy_limit = original
+
+        verify_chunk( self, chunk )
 
         # the bragg edges can be changed
         newedges = [ BraggEdgeData( 300.0, [ 5.219736e-3, 5. ], [ 1e-2, 1. ] ) ]

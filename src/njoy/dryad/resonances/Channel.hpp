@@ -83,15 +83,277 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/resonances/Channel/src/selectWaveNumber.hpp"
-    #include "njoy/dryad/resonances/Channel/src/selectWaveFunctions.hpp"
-    #include "njoy/dryad/resonances/Channel/src/updateWaveFunctions.hpp"
-    #include "njoy/dryad/resonances/Channel/src/calculateSpinFactor.hpp"
+    /**
+     *  @brief Select the wave number implementation
+     *
+     *  @param[in] kinematics      the kinematics type applied to the channel
+     */
+    static WaveNumber selectWaveNumber( const Kinematics& kinematics ) {
+
+      if ( kinematics == Kinematics::NonRelativistic ) {
+
+        return NonRelativisticWaveNumber();
+      }
+      else {
+
+        return RelativisticWaveNumber();
+      }
+    }
+
+    /**
+     *  @brief Select the penetrability implementation
+     *
+     *  @param[in] l           the orbital angular momentum of the channel
+     *  @param[in] outgoing    the outgoing particle pair
+     *  @param[in] calculate   the flag to calculate penetrability or not
+     */
+    static Penetrability
+    selectPenetrabilityFunction( unsigned int l,
+                                 const std::optional< ParticlePair >& outgoing,
+                                 bool calculate ) {
+
+      if ( calculate && outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
+
+          return HardSpherePenetrability( l );
+        }
+        else if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombPenetrability( l );
+        }
+      }
+
+      return 1.;
+    }
+
+    /**
+     *  @brief Select the shift factor implementation
+     *
+     *  @param[in] l          the orbital angular momentum of the channel
+     *  @param[in] outgoing   the outgoing particle pair
+     *  @param[in] calculate   the flag to calculate pentrability or not
+     */
+    static ShiftFactor
+    selectShiftFactorFunction( unsigned int l,
+                               const std::optional< ParticlePair >& outgoing,
+                               bool calculate ) {
+
+      if ( calculate && outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
+
+          return HardSphereShiftFactor( l );
+        }
+        else if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombShiftFactor( l );
+        }
+      }
+
+      return 0.;
+    }
+
+    /**
+     *  @brief Select the phase shift implementation
+     *
+     *  @param[in] l          the orbital angular momentum of the channel
+     *  @param[in] outgoing   the outgoing particle pair
+     *  @param[in] calculate   the flag to calculate pentrability or not
+     */
+    static PhaseShift
+    selectPhaseShiftFunction( unsigned int l,
+                              const std::optional< ParticlePair >& outgoing,
+                              bool calculate ) {
+
+      if ( calculate && outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
+
+          return HardSpherePhaseShift( l );
+        }
+        else if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombPhaseShift( l );
+        }
+      }
+
+      return 0.;
+    }
+
+    /**
+     *  @brief Select the phase shift difference implementation
+     *
+     *  @param[in] l          the orbital angular momentum of the channel
+     *  @param[in] outgoing   the outgoing particle pair
+     *  @param[in] calculate   the flag to calculate pentrability or not
+     */
+    static PhaseShiftDifference
+    selectPhaseShiftDifferenceFunction( unsigned int l,
+                                        const std::optional< ParticlePair >& outgoing,
+                                        bool calculate ) {
+
+      if ( calculate && outgoing.has_value() ) {
+
+        if ( outgoing->lightParticle().charge() > 0 ) {
+
+          return CoulombPhaseShiftDifference( l );
+        }
+      }
+
+      return 0.;
+    }
+
+    /**
+     *  @brief Update the wave functions following an update of the outgoing particle
+     *         pair or the channel identifier
+     */
+    void updateWaveFunctions() {
+
+      this->penetrability_ = selectPenetrabilityFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair(),
+                              this->hasPenetrability() );
+      this->shift_factor_ = selectShiftFactorFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair(),
+                              this->hasShiftFactor() );
+      this->phase_shift_ = selectPhaseShiftFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair(),
+                              this->hasPhaseShift() );
+      this->phase_shift_difference_ = selectPhaseShiftDifferenceFunction(
+                              this->identifier().quantumNumbers().orbitalAngularMomentum(),
+                              this->outgoingParticlePair(),
+                              this->hasPhaseShiftDifference() );
+    }
+
+    /**
+     *  @brief Calculate the statistical spin factor
+     *
+     *  @param[in] numbers    the channel quantum number
+     *  @param[in] outgoing   the outgoing particle pair
+     */
+    static double calculateSpinFactor( const ChannelQuantumNumbers& numbers,
+                                       const std::optional< ParticlePair >& outgoing ) {
+
+      if ( outgoing.has_value() ) {
+
+        const auto J = numbers.totalAngularMomentum();
+        const auto ia = outgoing->lightParticle().spin().has_value()
+                        ? outgoing->lightParticle().spin().value()
+                        : 0.;
+        const auto ib = outgoing->heavyParticle().spin().has_value()
+                        ? outgoing->heavyParticle().spin().value()
+                        : 0.;
+        return  ( 2. * J + 1. ) / ( 2. * ia + 1. )
+                                / ( 2. * ib + 1. );
+      }
+      else {
+
+        return 0.;
+      }
+    }
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/resonances/Channel/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    Channel() = default;
+
+    Channel( const Channel& ) = default;
+    Channel( Channel&& ) = default;
+
+    Channel& operator=( const Channel& ) = default;
+    Channel& operator=( Channel&& ) = default;
+
+    /**
+     *  @brief Constructor with wave functions
+     *
+     *  @param[in] identifier      the channel identifier
+     *  @param[in] incident        the current incident particle pair
+     *  @param[in] outgoing        the outgoing particle pair
+     *  @param[in] qValue          the Q value associated with the transition from
+     *                             the incident to the outgoing particle pair
+     *  @param[in] boundary        the boundary condition
+     *  @param[in] radii           the channel radii for the calculation of the
+     *                             wave functions
+     *  @param[in] kinematics      the kinematics type applied to the channel
+     *  @param[in] penetrability   the penetrability of the channel
+     *  @param[in] shiftFactor     the shift factor of the channel
+     *  @param[in] phaseshift      the phase shift of the channel
+     *  @param[in] difference      the phase shift differenceof the channel
+     */
+    Channel( id::ChannelID identifier,
+             ParticlePair incident,
+             std::optional< ParticlePair > outgoing,
+             double qValue,
+             std::optional< double > boundary,
+             ChannelRadii radii,
+             Kinematics kinematics,
+             std::optional< Background > background,
+             Penetrability penetrability,
+             ShiftFactor shiftFactor,
+             PhaseShift phaseShift,
+             PhaseShiftDifference difference ) :
+        id_( std::move( identifier ) ),
+        incident_pair_( std::move( incident ) ),
+        outgoing_pair_( std::move( outgoing ) ),
+        q_( qValue ),
+        boundary_condition_( std::move( boundary ) ),
+        background_( std::move( background ) ),
+        radii_( std::move( radii ) ),
+        wave_number_( selectWaveNumber( kinematics ) ),
+        penetrability_( std::move( penetrability ) ),
+        shift_factor_( std::move( shiftFactor ) ),
+        phase_shift_( std::move( phaseShift ) ),
+        phase_shift_difference_( std::move( difference ) ),
+        spin_factor_( calculateSpinFactor( identifier.quantumNumbers(), outgoing ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] identifier               the channel identifier
+     *  @param[in] incident                 the current incident particle pair
+     *  @param[in] outgoing                 the outgoing particle pair
+     *  @param[in] qValue                   the Q value associated with the transition from
+     *                                      the incident to the outgoing particle pair
+     *  @param[in] boundary                 the boundary condition
+     *  @param[in] radii                    the channel radii for the calculation of the ave functions
+     *  @param[in] calculateWaveFunctions   the wave function calculation flag (when true will select the
+     *                                      proper function or switch off calculation when appropriate,
+     *                                      when false will switch off calculation regardless and set
+     *                                      penetrability, shift factor, phase shift and phase shift
+     *                                      difference to 1, 0, 0, 0 respectively)
+     *  @param[in] kinematics               the kinematics type applied to the channel (default is
+     *                                      non-relativistic)
+     *  @param[in] background               the optional background R-matrix element
+     */
+    Channel( id::ChannelID identifier,
+             ParticlePair incident,
+             std::optional< ParticlePair > outgoing,
+             double qValue,
+             std::optional< double > boundary,
+             ChannelRadii radii,
+             bool calculateWaveFunctions = true,
+             Kinematics kinematics = Kinematics::NonRelativistic,
+             std::optional< Background > background = std::nullopt ) :
+        Channel( std::move( identifier ), std::move( incident ),
+                 std::move( outgoing ), qValue,
+                 std::move( boundary ), std::move( radii ),
+                 std::move( kinematics ),
+                 std::move( background ),
+                 selectPenetrabilityFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                              outgoing, calculateWaveFunctions ),
+                 selectShiftFactorFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                            outgoing, calculateWaveFunctions ),
+                 selectPhaseShiftFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                           outgoing, calculateWaveFunctions ),
+                 selectPhaseShiftDifferenceFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                                     outgoing, calculateWaveFunctions ) ) {}
 
     /**
      *  @brief Return the channel identifier
@@ -351,6 +613,20 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return whether or not the channel has a penetrability implementation
+     */
+    bool hasPenetrability() const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> bool { return false; },
+        [] ( const auto& function ) -> bool { return true; }
+      };
+
+      return std::visit( visitor, this->penetrability_ );
+    }
+
+    /**
      *  @brief Calculate the penetrability for the channel at a given energy
      *
      *  @param[in] energy   the energy (given in eV)
@@ -382,6 +658,20 @@ namespace resonances {
       };
 
       return std::visit( visitor, this->penetrability_ );
+    }
+
+    /**
+     *  @brief Return whether or not the channel has a shift factor implementation
+     */
+    bool hasShiftFactor() const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> bool { return false; },
+        [] ( const auto& function ) -> bool { return true; }
+      };
+
+      return std::visit( visitor, this->shift_factor_ );
     }
 
     /**
@@ -419,6 +709,20 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return whether or not the channel has a phase shift implementation
+     */
+    bool hasPhaseShift() const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> bool { return false; },
+        [] ( const auto& function ) -> bool { return true; }
+      };
+
+      return std::visit( visitor, this->phase_shift_ );
+    }
+
+    /**
      *  @brief Calculate the phase shift for the channel at a given energy
      *
      *  @param[in] energy   the energy (given in eV)
@@ -453,6 +757,20 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return whether or not the channel has a phase shift difference implementation
+     */
+    bool hasPhaseShiftDifference() const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> bool { return false; },
+        [] ( const auto& function ) -> bool { return true; }
+      };
+
+      return std::visit( visitor, this->phase_shift_difference_ );
+    }
+
+    /**
      *  @brief Calculate the phase shift difference for the channel at a given energy
      *
      *  @param[in] energy   the energy (given in eV)
@@ -482,11 +800,15 @@ namespace resonances {
       return std::tie( this->identifier(), this->incidentParticlePair(),
                        this->outgoingParticlePair(), this->q_,
                        this->boundaryCondition(), this->channelRadii(),
-                       this->background() ) ==
+                       this->background(), this->wave_number_,
+                       this->penetrability_, this->shift_factor_,
+                       this->phase_shift_, this->phase_shift_difference_ ) ==
              std::tie( right.identifier(), right.incidentParticlePair(),
                        right.outgoingParticlePair(), right.q_,
                        right.boundaryCondition(), right.channelRadii(),
-                       right.background() );
+                       right.background(), right.wave_number_,
+                       right.penetrability_, right.shift_factor_,
+                       right.phase_shift_, right.phase_shift_difference_ );
     }
 
     /**

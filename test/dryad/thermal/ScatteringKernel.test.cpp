@@ -107,6 +107,9 @@ SCENARIO( "ScatteringKernel" ) {
 
 void verifySymmetricChunk( const ScatteringKernel& chunk ) {
 
+  CHECK_THAT( 293.6, WithinRel( chunk.moderatorTemperature() ) );
+  CHECK_THAT( 300. , WithinRel( chunk.effectiveTemperature() ) );
+
   CHECK( true == chunk.isEnergyTransferSymmetric() );
 
   decltype(auto) sab = chunk.tabulatedScatteringKernel();

@@ -7,10 +7,10 @@ namespace h1 {
 
     std::string description =
       "  1-H -  1 LANL       EVAL-JUL16 G.M.Hale                         \n"
-      " NDS 148, 1 (2018)    DIST-FEB18                       20170124   \n"
-      "----ENDF/B-VIII.0     MATERIAL  125                               \n"
-      "-----INCIDENT NEUTRON DATA                                        \n"
-      "------ENDF-6 FORMAT                                               \n"
+      " NDS 148, 1 (2018)    DIST-AUG24 REV1-NOV23            20240830   \n"
+      "---- ENDF/B-VIII.1    MATERIAL  125         REVISION 1            \n"
+      "----- INCIDENT-NEUTRON DATA                                       \n"
+      "------ ENDF-6                                                     \n"
       "                                                                  \n"
       " **************************************************************** \n"
       "The new R-matrix analysis of the N-N system on which the ENDF/B-  \n"
@@ -96,7 +96,7 @@ namespace h1 {
 
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
-    CHECK( std::nullopt == documentation.description() );
+    CHECK( description == documentation.description() );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {

@@ -1,0 +1,151 @@
+// system includes
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+// local includes
+#include "dryad/definitions.hpp"
+#include "njoy/dryad/thermal/IncoherentInelasticScattering.hpp"
+
+// namespace aliases
+namespace python = pybind11;
+
+namespace dryad {
+namespace thermal {
+
+void wrapIncoherentInelasticScattering( python::module& module ) {
+
+  // constants
+  std::ostringstream tolerance;
+  tolerance << std::setprecision( 4 ) << njoy::constants::linearisation::tolerance;
+
+  // type aliases
+  using Component = njoy::dryad::thermal::IncoherentInelasticScattering;
+  using ScatteringKernel = njoy::dryad::thermal::ScatteringKernel;
+
+  // wrap views created by this component
+
+  // create the component
+  python::class_< Component > component(
+
+    module,
+    "IncoherentInelasticScattering",
+    "Incoherent inelastic thermal scattering data\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    lower : float\n"
+    "        the lower energy limit\n"
+    "    upper : float\n"
+    "        the upper energy limit\n"
+    "    xs : float\n"
+    "        the bound atom cross section\n"
+    "    ratio : float\n"
+    "        the atomic mass ratio of the target to the projectile\n"
+    "    kernels : list of njoy.dryad.thermal.ScatteringKernel\n"
+    "        the scattering kernels"
+  );
+
+  // wrap the component
+  component
+  .def(
+
+    python::init< double, double, double, double,
+                  std::vector< ScatteringKernel > >(),
+    python::arg( "lower" ), python::arg( "upper" ),
+    python::arg( "xs" ), python::arg( "ratio" ),
+    python::arg( "kernels" ),
+    "Initialise the incoherent inelastic scattering data"
+  )
+  .def_property(
+
+    "lower_energy_limit",
+    python::overload_cast<>( &Component::lowerEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::lowerEnergyLimit ),
+    "The lower energy limit"
+  )
+  .def_property(
+
+    "upper_energy_limit",
+    python::overload_cast<>( &Component::upperEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::upperEnergyLimit ),
+    "The upper energy limit"
+  )
+  .def_property(
+
+    "bound_cross_section",
+    python::overload_cast<>( &Component::boundCrossSection, python::const_ ),
+    python::overload_cast< double >( &Component::boundCrossSection ),
+    "The bound atom cross section value"
+  )
+  .def_property(
+
+    "atomic_weight_ratio",
+    python::overload_cast<>( &Component::atomicWeightRatio, python::const_ ),
+    python::overload_cast< double >( &Component::atomicWeightRatio ),
+    "The ratio of the target mass to the projectile mass"
+  )
+  .def_property_readonly(
+
+    "number_moderator_temperatures",
+    &Component::numberModeratorTemperatures,
+    "The moderator temperature values"
+  )
+  .def_property_readonly(
+
+    "moderator_temperatures",
+    python::overload_cast<>( &Component::moderatorTemperatures, python::const_ ),
+    "The moderator temperature values"
+  )
+  .def_property(
+
+    "scattering_kernels",
+    python::overload_cast<>( &Component::scatteringKernels, python::const_ ),
+    python::overload_cast< std::vector< ScatteringKernel > >( &Component::scatteringKernels ),
+    "The scattering kernels"
+  )
+  .def(
+
+    "has_scattering_kernel",
+    &Component::hasScatteringKernel,
+    python::arg( "temperature" ),
+    "Return whether or not there is a scattering kernel for a given temperature\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the moderator temperature"
+  )
+  .def(
+
+    "scattering_kernel",
+    &Component::scatteringKernel,
+    python::arg( "temperature" ),
+    "Return the scattering kernel for a given temperature\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the moderator temperature",
+    python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "cross_section",
+    &Component::crossSection,
+    python::arg( "temperature" ),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    std::string( "Return the incoherent inelastic scattering cross section for a given temperature\n\n"
+                 "Parameters\n"
+                 "----------\n"
+                 "    temperature : float\n"
+                 "        the moderator temperature for which the cross section is requested\n"
+                 "    tolerance : float, default " + tolerance.str() + "\n"
+                 "        the linearisation tolerance" ).c_str()
+  );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
+}
+
+} // thermal namespace
+} // dryad namespace

@@ -2,7 +2,7 @@
 #define NJOY_FORMAT_GNDS_READ_CREATEINTERACTIONTYPE
 
 // system includes
-#include <vector>
+#include <string>
 
 // other includes
 #include "tools/Log.hpp"

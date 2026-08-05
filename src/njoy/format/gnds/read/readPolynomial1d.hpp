@@ -18,7 +18,7 @@ namespace read {
 
   using Polynomial1d = std::tuple< std::optional< double >, std::optional< std::string >,
                                    double, double, std::vector< double >,
-                                   std::string, std::string >;
+                                   std::optional< std::string >, std::optional< std::string > >;
 
   /**
    *  @brief Read data from a GNDS polynomial1d node
@@ -43,14 +43,14 @@ namespace read {
       auto units = readAxes( axes );
       if ( units.size() == 2 ) {
 
-        std::get< 5 >( data ) = std::get< 1 >( units[0] ).value();
-        std::get< 6 >( data ) = std::get< 1 >( units[1] ).value();
+        std::get< 5 >( data ) = std::get< 1 >( units[0] );
+        std::get< 6 >( data ) = std::get< 1 >( units[1] );
       }
       else {
 
-        std::get< 1 >( data ) = std::get< 1 >( units[0] ).value();
-        std::get< 5 >( data ) = std::get< 1 >( units[1] ).value();
-        std::get< 6 >( data ) = std::get< 1 >( units[2] ).value();
+        std::get< 1 >( data ) = std::get< 1 >( units[0] );
+        std::get< 5 >( data ) = std::get< 1 >( units[1] );
+        std::get< 6 >( data ) = std::get< 1 >( units[2] );
       }
     }
 

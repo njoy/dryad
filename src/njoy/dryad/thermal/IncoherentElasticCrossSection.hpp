@@ -99,9 +99,9 @@ namespace thermal {
      *  @param[in] debyeWallerIntegral   the Debye-Waller integral value
      */
     IncoherentElasticCrossSection( double lower,
-                                             double upper,
-                                             double xs,
-                                             double debyeWallerIntegral ) :
+                                   double upper,
+                                   double xs,
+                                   double debyeWallerIntegral ) :
       Parent( scion::math::IntervalDomain< double >( lower, upper ) ),
       bound_xs_( std::move( xs ) ),
       debye_waller_( std::move( debyeWallerIntegral ) ) {}
@@ -172,7 +172,7 @@ namespace thermal {
     bool operator==( const IncoherentElasticCrossSection& right ) const {
 
       return std::tie( this->bound_xs_, this->debye_waller_, this->domain() ) ==
-             std::tie( right.bound_xs_, right.debye_waller_, this->domain() );
+             std::tie( right.bound_xs_, right.debye_waller_, right.domain() );
     }
 
     /**

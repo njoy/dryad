@@ -68,62 +68,182 @@ namespace li7inli7d {
     CHECK( description == documentation.description() );
   }
 
-  void verifyCoherentElastic( const std::optional< njoy::dryad::thermal::CoherentElasticScattering >& coherent ) {
+  void verifyCoherentElastic( const std::optional< njoy::dryad::thermal::CoherentElasticScattering >& elastic ) {
 
-    CHECK( std::nullopt != coherent );
+    CHECK( std::nullopt != elastic );
 
-    CHECK( 6 == coherent->numberModeratorTemperatures() );
-    CHECK_THAT( 293.6, WithinRel( coherent->braggEdges()[0].temperature() ) );
-    CHECK_THAT( 400. , WithinRel( coherent->braggEdges()[1].temperature() ) );
-    CHECK_THAT( 700. , WithinRel( coherent->braggEdges()[4].temperature() ) );
-    CHECK_THAT( 800. , WithinRel( coherent->braggEdges()[5].temperature() ) );
-    CHECK( 112 == coherent->braggEdges()[0].numberBraggEdges() );
-    CHECK( 112 == coherent->braggEdges()[1].numberBraggEdges() );
-    CHECK( 112 == coherent->braggEdges()[4].numberBraggEdges() );
-    CHECK( 112 == coherent->braggEdges()[5].numberBraggEdges() );
-    CHECK( 112 == coherent->braggEdges()[0].energies().size() );
-    CHECK( 112 == coherent->braggEdges()[1].energies().size() );
-    CHECK( 112 == coherent->braggEdges()[4].energies().size() );
-    CHECK( 112 == coherent->braggEdges()[5].energies().size() );
-    CHECK( 112 == coherent->braggEdges()[0].values().size() );
-    CHECK( 112 == coherent->braggEdges()[1].values().size() );
-    CHECK( 112 == coherent->braggEdges()[4].values().size() );
-    CHECK( 112 == coherent->braggEdges()[5].values().size() );
+    CHECK_THAT( 1e-5, WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( elastic->upperEnergyLimit() ) );
 
-    CHECK_THAT( 3.706719e-3, WithinRel( coherent->braggEdges()[0].energies().front() ) );
-    CHECK_THAT( 3.706719e-3, WithinRel( coherent->braggEdges()[1].energies().front() ) );
-    CHECK_THAT( 3.706719e-3, WithinRel( coherent->braggEdges()[4].energies().front() ) );
-    CHECK_THAT( 3.706719e-3, WithinRel( coherent->braggEdges()[5].energies().front() ) );
-    CHECK_THAT( 5., WithinRel( coherent->braggEdges()[0].energies().back() ) );
-    CHECK_THAT( 5., WithinRel( coherent->braggEdges()[1].energies().back() ) );
-    CHECK_THAT( 5., WithinRel( coherent->braggEdges()[4].energies().back() ) );
-    CHECK_THAT( 5., WithinRel( coherent->braggEdges()[5].energies().back() ) );
+    CHECK( 6 == elastic->numberModeratorTemperatures() );
+    CHECK_THAT( 293.6, WithinRel( elastic->braggEdges()[0].temperature() ) );
+    CHECK_THAT( 400. , WithinRel( elastic->braggEdges()[1].temperature() ) );
+    CHECK_THAT( 700. , WithinRel( elastic->braggEdges()[4].temperature() ) );
+    CHECK_THAT( 800. , WithinRel( elastic->braggEdges()[5].temperature() ) );
+    CHECK( 112 == elastic->braggEdges()[0].numberBraggEdges() );
+    CHECK( 112 == elastic->braggEdges()[1].numberBraggEdges() );
+    CHECK( 112 == elastic->braggEdges()[4].numberBraggEdges() );
+    CHECK( 112 == elastic->braggEdges()[5].numberBraggEdges() );
+    CHECK( 112 == elastic->braggEdges()[0].energies().size() );
+    CHECK( 112 == elastic->braggEdges()[1].energies().size() );
+    CHECK( 112 == elastic->braggEdges()[4].energies().size() );
+    CHECK( 112 == elastic->braggEdges()[5].energies().size() );
+    CHECK( 112 == elastic->braggEdges()[0].values().size() );
+    CHECK( 112 == elastic->braggEdges()[1].values().size() );
+    CHECK( 112 == elastic->braggEdges()[4].values().size() );
+    CHECK( 112 == elastic->braggEdges()[5].values().size() );
 
-    CHECK_THAT( 3.757353e-3, WithinRel( coherent->braggEdges()[0].values().front() ) );
-    CHECK_THAT( 3.686081e-3, WithinRel( coherent->braggEdges()[1].values().front() ) );
-    CHECK_THAT( 3.428755e-3, WithinRel( coherent->braggEdges()[4].values().front() ) );
-    CHECK_THAT( 3.337757e-3, WithinRel( coherent->braggEdges()[5].values().front() ) );
-    CHECK_THAT( 8.406348e-2, WithinRel( coherent->braggEdges()[0].values().back() ) );
-    CHECK_THAT( 6.996602e-2, WithinRel( coherent->braggEdges()[1].values().back() ) );
-    CHECK_THAT( 4.402291e-2, WithinRel( coherent->braggEdges()[4].values().back() ) );
-    CHECK_THAT( 3.861519e-2, WithinRel( coherent->braggEdges()[5].values().back() ) );
+    CHECK_THAT( 3.706719e-3, WithinRel( elastic->braggEdges()[0].energies().front() ) );
+    CHECK_THAT( 3.706719e-3, WithinRel( elastic->braggEdges()[1].energies().front() ) );
+    CHECK_THAT( 3.706719e-3, WithinRel( elastic->braggEdges()[4].energies().front() ) );
+    CHECK_THAT( 3.706719e-3, WithinRel( elastic->braggEdges()[5].energies().front() ) );
+    CHECK_THAT( 5., WithinRel( elastic->braggEdges()[0].energies().back() ) );
+    CHECK_THAT( 5., WithinRel( elastic->braggEdges()[1].energies().back() ) );
+    CHECK_THAT( 5., WithinRel( elastic->braggEdges()[4].energies().back() ) );
+    CHECK_THAT( 5., WithinRel( elastic->braggEdges()[5].energies().back() ) );
+
+    CHECK_THAT( 3.757353e-3, WithinRel( elastic->braggEdges()[0].values().front() ) );
+    CHECK_THAT( 3.686081e-3, WithinRel( elastic->braggEdges()[1].values().front() ) );
+    CHECK_THAT( 3.428755e-3, WithinRel( elastic->braggEdges()[4].values().front() ) );
+    CHECK_THAT( 3.337757e-3, WithinRel( elastic->braggEdges()[5].values().front() ) );
+    CHECK_THAT( 8.406348e-2, WithinRel( elastic->braggEdges()[0].values().back() ) );
+    CHECK_THAT( 6.996602e-2, WithinRel( elastic->braggEdges()[1].values().back() ) );
+    CHECK_THAT( 4.402291e-2, WithinRel( elastic->braggEdges()[4].values().back() ) );
+    CHECK_THAT( 3.861519e-2, WithinRel( elastic->braggEdges()[5].values().back() ) );
   }
 
-  void verifyIncoherentElastic( const std::optional< njoy::dryad::thermal::IncoherentElasticScattering >& incoherent ) {
+  void verifyIncoherentElastic( const std::optional< njoy::dryad::thermal::IncoherentElasticScattering >& elastic ) {
 
-    CHECK( std::nullopt != incoherent );
+    CHECK( std::nullopt != elastic );
 
-    CHECK_THAT( 0.6017726, WithinRel( incoherent->boundCrossSection() ) );
-    CHECK( 6 == incoherent->debyeWallerIntegral().temperatures().size() );
-    CHECK( 6 == incoherent->debyeWallerIntegral().values().size() );
-    CHECK_THAT( 293.6, WithinRel( incoherent->debyeWallerIntegral().temperatures()[0] ) );
-    CHECK_THAT( 400. , WithinRel( incoherent->debyeWallerIntegral().temperatures()[1] ) );
-    CHECK_THAT( 700. , WithinRel( incoherent->debyeWallerIntegral().temperatures()[4] ) );
-    CHECK_THAT( 800. , WithinRel( incoherent->debyeWallerIntegral().temperatures()[5] ) );
-    CHECK_THAT( 7.074031, WithinRel( incoherent->debyeWallerIntegral().values()[0] ) );
-    CHECK_THAT( 9.081680, WithinRel( incoherent->debyeWallerIntegral().values()[1] ) );
-    CHECK_THAT( 15.10002, WithinRel( incoherent->debyeWallerIntegral().values()[4] ) );
-    CHECK_THAT( 17.15230, WithinRel( incoherent->debyeWallerIntegral().values()[5] ) );
+    CHECK_THAT( 1e-5, WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( elastic->upperEnergyLimit() ) );
+
+    CHECK_THAT( 0.6017726, WithinRel( elastic->boundCrossSection() ) );
+    CHECK( 6 == elastic->debyeWallerIntegral().temperatures().size() );
+    CHECK( 6 == elastic->debyeWallerIntegral().values().size() );
+    CHECK_THAT( 293.6, WithinRel( elastic->debyeWallerIntegral().temperatures()[0] ) );
+    CHECK_THAT( 400. , WithinRel( elastic->debyeWallerIntegral().temperatures()[1] ) );
+    CHECK_THAT( 700. , WithinRel( elastic->debyeWallerIntegral().temperatures()[4] ) );
+    CHECK_THAT( 800. , WithinRel( elastic->debyeWallerIntegral().temperatures()[5] ) );
+    CHECK_THAT( 7.074031, WithinRel( elastic->debyeWallerIntegral().values()[0] ) );
+    CHECK_THAT( 9.081680, WithinRel( elastic->debyeWallerIntegral().values()[1] ) );
+    CHECK_THAT( 15.10002, WithinRel( elastic->debyeWallerIntegral().values()[4] ) );
+    CHECK_THAT( 17.15230, WithinRel( elastic->debyeWallerIntegral().values()[5] ) );
+  }
+
+  void verifyIncoherentInelastic( const std::optional< njoy::dryad::thermal::IncoherentInelasticScattering >& inelastic ) {
+
+    CHECK( std::nullopt != inelastic );
+
+    CHECK_THAT( 1e-5, WithinRel( inelastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( inelastic->upperEnergyLimit() ) );
+    CHECK_THAT( 0.97 * ( 6.955734 + 1. ) * ( 6.955734 + 1. ) / 6.955734 / 6.955734,
+                WithinRel( inelastic->boundCrossSection() ) );
+    CHECK_THAT( 6.955734, WithinRel( inelastic->atomicWeightRatio() ) );
+
+    CHECK( 6 == inelastic->numberModeratorTemperatures() );
+    CHECK( 6 == inelastic->moderatorTemperatures().size() );
+    CHECK_THAT(  293.6, WithinRel( inelastic->moderatorTemperatures()[0] ) );
+    CHECK_THAT(  400  , WithinRel( inelastic->moderatorTemperatures()[1] ) );
+    CHECK_THAT(  500  , WithinRel( inelastic->moderatorTemperatures()[2] ) );
+    CHECK_THAT(  600  , WithinRel( inelastic->moderatorTemperatures()[3] ) );
+    CHECK_THAT(  700  , WithinRel( inelastic->moderatorTemperatures()[4] ) );
+    CHECK_THAT(  800  , WithinRel( inelastic->moderatorTemperatures()[5] ) );
+
+    double min = std::numeric_limits< double >::min();
+
+    double factor;
+
+    auto sab = inelastic->scatteringKernel( 293.6 );
+    factor = 1.;
+    CHECK_THAT( 293.6     , WithinRel( sab.moderatorTemperature() ) );
+    CHECK_THAT( 359.1459, WithinRel( sab.effectiveTemperature() ) );
+    CHECK( true == sab.isEnergyTransferSymmetric() );
+    auto table = sab.tabulatedScatteringKernel();
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 4.752472e-4         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 5.97347e-14         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 2.98622e-50         , WithinRel( table.functions().back().values().back() ) );
+
+    sab = inelastic->scatteringKernel( 400 );
+    factor = 293.6 / 400.;
+    CHECK_THAT( 400     , WithinRel( sab.moderatorTemperature() ) );
+    CHECK_THAT( 449.4184, WithinRel( sab.effectiveTemperature() ) );
+    CHECK( true == sab.isEnergyTransferSymmetric() );
+    table = sab.tabulatedScatteringKernel();
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 8.849429e-4         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 5.27000e-11         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 6.90772e-38         , WithinRel( table.functions().back().values().back() ) );
+
+    sab = inelastic->scatteringKernel( 500 );
+    factor = 293.6 / 500.;
+    CHECK_THAT( 500     , WithinRel( sab.moderatorTemperature() ) );
+    CHECK_THAT( 540.0094, WithinRel( sab.effectiveTemperature() ) );
+    CHECK( true == sab.isEnergyTransferSymmetric() );
+    table = sab.tabulatedScatteringKernel();
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 1.386550e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 2.787189e-9         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 6.59121e-31         , WithinRel( table.functions().back().values().back() ) );
+
+    sab = inelastic->scatteringKernel( 600 );
+    factor = 293.6 / 600.;
+    CHECK_THAT( 600     , WithinRel( sab.moderatorTemperature() ) );
+    CHECK_THAT( 633.5643, WithinRel( sab.effectiveTemperature() ) );
+    CHECK( true == sab.isEnergyTransferSymmetric() );
+    table = sab.tabulatedScatteringKernel();
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 2.001883e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 4.266766e-8         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 3.48425e-26         , WithinRel( table.functions().back().values().back() ) );
+
+    sab = inelastic->scatteringKernel( 700 );
+    factor = 293.6 / 700.;
+    CHECK_THAT( 700     , WithinRel( sab.moderatorTemperature() ) );
+    CHECK_THAT( 728.8872, WithinRel( sab.effectiveTemperature() ) );
+    CHECK( true == sab.isEnergyTransferSymmetric() );
+    table = sab.tabulatedScatteringKernel();
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 2.731707e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 3.117374e-7         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 8.94715e-23         , WithinRel( table.functions().back().values().back() ) );
+
+    sab = inelastic->scatteringKernel( 800 );
+    factor = 293.6 / 800.;
+    CHECK_THAT( 800     , WithinRel( sab.moderatorTemperature() ) );
+    CHECK_THAT( 825.3442, WithinRel( sab.effectiveTemperature() ) );
+    CHECK( true == sab.isEnergyTransferSymmetric() );
+    table = sab.tabulatedScatteringKernel();
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 3.576777e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 1.416596e-6         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 3.37956e-20         , WithinRel( table.functions().back().values().back() ) );
   }
 
   void verifyLi7InLi7D( const ThermalScattering& tsl ) {
@@ -133,7 +253,8 @@ namespace li7inli7d {
     CHECK( true == tsl.hasCoherentElasticScattering() );
     CHECK( true == tsl.hasIncoherentElasticScattering() );
     CHECK( true == tsl.hasElasticScattering() );
-    CHECK( false == tsl.hasInelasticScattering() );
+    CHECK( true == tsl.hasIncoherentInelasticScattering() );
+    CHECK( true == tsl.hasInelasticScattering() );
 
     verifyCoherentElastic( tsl.coherentElasticScattering() );
     verifyIncoherentElastic( tsl.incoherentElasticScattering() );
