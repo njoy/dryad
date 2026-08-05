@@ -14,7 +14,7 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief Convert an cross section value from GNDS into b
+   *  @brief Convert a cross section value from GNDS into b
    *
    *  @param[in] value   the value to convert
    *  @param[in] unit    the unit of the value

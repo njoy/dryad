@@ -20,7 +20,8 @@ namespace write {
    *  @brief Insert a values xml node
    *
    *  Note: The table can technically store different types by columns. We'll
-   *        assume it's just doubles
+   *        assume it's just doubles. While there are different ways of storing
+   *        a table, we're going to take row major and whitespace separators.
    *
    *  @param[in,out] parent      the parent node
    *  @param[in]     option      the gnds write options
