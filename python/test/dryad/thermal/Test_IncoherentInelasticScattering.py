@@ -14,6 +14,7 @@ def verify_chunk( self, chunk ) :
 
     self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
     self.assertAlmostEqual( 10. , chunk.upper_energy_limit )
+    self.assertAlmostEqual( 6.337872, chunk.bound_cross_section )
 
     self.assertEqual( 2, chunk.number_moderator_temperatures )
     self.assertEqual( 2, len( chunk.moderator_temperatures ) )
@@ -96,6 +97,7 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
         chunk = IncoherentInelasticScattering(
                   lower = 1e-5,
                   upper = 10.,
+                  xs = 6.337872,
                   kernels = [ ScatteringKernel( 293.6, 300.,
                                                 [ 0., 4. ],
                                                 [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
@@ -110,16 +112,15 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
     def test_setter_functions( self ) :
 
         chunk = IncoherentInelasticScattering(
-                  lower = 1e-5,
-                  upper = 10.,
-                  kernels = [ ScatteringKernel( 293.6, 300.,
-                                                [ 0., 4. ],
-                                                [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
-                                                  TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ),
-                              ScatteringKernel( 325, 350.,
-                                                [ 0., 5. ],
-                                                [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
-                                                  TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
+                  1e-5, 10., 6.337872,
+                  [ ScatteringKernel( 293.6, 300.,
+                                      [ 0., 4. ],
+                                      [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ),
+                    ScatteringKernel( 325, 350.,
+                                      [ 0., 5. ],
+                                      [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
 
         # the lower energy limit can be changed
         newlimit = 1e-4
@@ -142,6 +143,18 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
         self.assertEqual( newlimit, chunk.upper_energy_limit )
 
         chunk.upper_energy_limit = original
+
+        verify_chunk( self, chunk )
+
+        # the bound xs can be changed
+        newxs = 25.
+        original = 6.337872
+
+        chunk.bound_cross_section = newxs
+
+        self.assertEqual( newxs, chunk.bound_cross_section )
+
+        chunk.bound_cross_section = original
 
         verify_chunk( self, chunk )
 
@@ -174,38 +187,35 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
     def test_comparison( self ) :
 
         left = IncoherentInelasticScattering(
-                   lower = 1e-5,
-                   upper = 10.,
-                   kernels = [ ScatteringKernel( 293.6, 300.,
-                                                 [ 0., 4. ],
-                                                 [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
-                                                   TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ),
-                               ScatteringKernel( 325, 350.,
-                                                 [ 0., 5. ],
-                                                 [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
-                                                   TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
+                   1e-5, 10., 6.337872,
+                   [ ScatteringKernel( 293.6, 300.,
+                                       [ 0., 4. ],
+                                       [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
+                                         TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ),
+                     ScatteringKernel( 325, 350.,
+                                       [ 0., 5. ],
+                                       [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
+                                         TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
         equal = IncoherentInelasticScattering(
-                    lower = 1e-5,
-                    upper = 10.,
-                    kernels = [ ScatteringKernel( 293.6, 300.,
-                                                  [ 0., 4. ],
-                                                  [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
-                                                    TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ),
-                                ScatteringKernel( 325, 350.,
-                                                  [ 0., 5. ],
-                                                  [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
-                                                    TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
+                   1e-5, 10., 6.337872,
+                   [ ScatteringKernel( 293.6, 300.,
+                                        [ 0., 4. ],
+                                        [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
+                                          TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ),
+                      ScatteringKernel( 325, 350.,
+                                        [ 0., 5. ],
+                                        [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
+                                          TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
         different = IncoherentInelasticScattering(
-                        lower = 1e-5,
-                        upper = 10.,
-                        kernels = [ ScatteringKernel( 293.6, 300.,
-                                                      [ 0., 5. ],
-                                                      [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.8, 0.2 ] ),
-                                                        TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.2, 0.8 ] ) ] ),
-                                    ScatteringKernel( 325, 350.,
-                                                      [ 0., 4. ],
-                                                      [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.9, 0.1 ] ),
-                                                        TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ] ) ] )
+                        1e-5, 10., 6.337872,
+                        [ ScatteringKernel( 293.6, 300.,
+                                            [ 0., 5. ],
+                                            [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.8, 0.2 ] ),
+                                              TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.2, 0.8 ] ) ] ),
+                          ScatteringKernel( 325, 350.,
+                                            [ 0., 4. ],
+                                            [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.9, 0.1 ] ),
+                                              TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ] ) ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

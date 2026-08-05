@@ -9,6 +9,7 @@
 #include "njoy/dryad/ThermalScattering.hpp"
 #include "njoy/format/endf/read/thermal/createCoherentElasticScattering.hpp"
 #include "njoy/format/endf/read/thermal/createIncoherentElasticScattering.hpp"
+#include "njoy/format/endf/read/thermal/createIncoherentInelasticScattering.hpp"
 #include "njoy/format/endf/read/createDocumentation.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -36,6 +37,8 @@ namespace read {
 
       std::optional< dryad::thermal::CoherentElasticScattering > coherent = std::nullopt;
       std::optional< dryad::thermal::IncoherentElasticScattering > incoherent = std::nullopt;
+      std::optional< dryad::thermal::IncoherentInelasticScattering > inelastic = std::nullopt;
+
       if ( material.hasSection( 7, 2 ) ) {
 
         using CoherentElasticScatteringType = std::optional< dryad::thermal::CoherentElasticScattering >;
@@ -81,9 +84,16 @@ namespace read {
         incoherent = std::visit( createIncoherentElastic, section.scatteringLaw() );
       }
 
+      if ( material.hasSection( 7, 4 ) ) {
+
+        auto section = material.section( 7, 4 ).parse< 7, 4 >();
+        inelastic = thermal::createIncoherentInelasticScattering( lower, upper, section );
+      }
+
       return dryad::ThermalScattering( std::move( documentation ),
                                        std::move( coherent ),
-                                       std::move( incoherent ) );
+                                       std::move( incoherent ),
+                                       std::move( inelastic ) );
     }
     else {
 

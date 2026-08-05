@@ -280,10 +280,10 @@ SCENARIO( "IncoherentElasticScattering" ) {
 
 void verifyChunk( const IncoherentElasticScattering& chunk ) {
 
-  CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
-
   CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 10. , WithinRel( chunk.upperEnergyLimit() ) );
+
+  CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
 
   CHECK( 8 == chunk.numberModeratorTemperatures() );
   CHECK( 8 == chunk.moderatorTemperatures().size() );

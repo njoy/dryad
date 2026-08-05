@@ -17,6 +17,13 @@ def verify_chunk( self, chunk ) :
     self.assertIsNone( chunk.documentation.version )
     self.assertIsNone( chunk.documentation.description )
 
+    # content
+    self.assertEqual( False, chunk.has_coherent_elastic_scattering )
+    self.assertEqual( True, chunk.has_incoherent_elastic_scattering )
+    self.assertEqual( True, chunk.has_elastic_scattering )
+    self.assertEqual( False, chunk.has_incoherent_inelastic_scattering )
+    self.assertEqual( False, chunk.has_inelastic_scattering )
+
     # incoherent elastic scattering
     incoherent = chunk.incoherent_elastic_scattering
     self.assertAlmostEqual( 1e-5, incoherent.lower_energy_limit )
@@ -33,30 +40,36 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 6.583171, incoherent.debye_waller_integral.values[6] )
     self.assertAlmostEqual( 7.891981, incoherent.debye_waller_integral.values[7] )
 
+    # coherent elastic scattering
+    self.assertIsNone( chunk.coherent_elastic_scattering )
+
+    # incoherent inelastic scattering
+    self.assertIsNone( chunk.incoherent_inelastic_scattering )
+
 class Test_ThermalScattering( unittest.TestCase ) :
     """Unit test for the ThermalScattering class."""
 
     def test_component( self ) :
 
         chunk = ThermalScattering(
-                    incoherent = IncoherentElasticScattering(
-                                   1e-5, 10., 6.337872,
-                                   DebyeWallerIntegralData(
-                                     [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
-                                     [ 2.013538, 2.677764, 3.323456, 3.972601,
-                                       4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
+                    incoherent_elastic = IncoherentElasticScattering(
+                                           1e-5, 10., 6.337872,
+                                           DebyeWallerIntegralData(
+                                             [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
+                                             [ 2.013538, 2.677764, 3.323456, 3.972601,
+                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
 
         verify_chunk( self, chunk )
 
     def test_setter_functions( self ) :
 
         chunk = ThermalScattering(
-                    incoherent = IncoherentElasticScattering(
-                                   1e-5, 10., 6.337872,
-                                   DebyeWallerIntegralData(
-                                     [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
-                                     [ 2.013538, 2.677764, 3.323456, 3.972601,
-                                       4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
+                    incoherent_elastic = IncoherentElasticScattering(
+                                           1e-5, 10., 6.337872,
+                                           DebyeWallerIntegralData(
+                                             [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
+                                             [ 2.013538, 2.677764, 3.323456, 3.972601,
+                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
 
         # the incoherent data can be changed
         newincoherent = IncoherentElasticScattering(
@@ -82,25 +95,25 @@ class Test_ThermalScattering( unittest.TestCase ) :
     def test_comparison( self ) :
 
         left = ThermalScattering(
-                   incoherent = IncoherentElasticScattering(
-                                  1e-5, 10., 6.337872,
-                                  DebyeWallerIntegralData(
-                                    [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
-                                    [ 2.013538, 2.677764, 3.323456, 3.972601,
-                                      4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
+                   incoherent_elastic = IncoherentElasticScattering(
+                                          1e-5, 10., 6.337872,
+                                          DebyeWallerIntegralData(
+                                            [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
+                                            [ 2.013538, 2.677764, 3.323456, 3.972601,
+                                              4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
         equal = ThermalScattering(
-                    incoherent = IncoherentElasticScattering(
-                                   1e-5, 10., 6.337872,
-                                   DebyeWallerIntegralData(
-                                     [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
-                                     [ 2.013538, 2.677764, 3.323456, 3.972601,
-                                       4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
+                    incoherent_elastic = IncoherentElasticScattering(
+                                           1e-5, 10., 6.337872,
+                                           DebyeWallerIntegralData(
+                                             [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
+                                             [ 2.013538, 2.677764, 3.323456, 3.972601,
+                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
         different = ThermalScattering(
-                        incoherent = IncoherentElasticScattering(
-                                       1e-5, 10., 25.,
-                                       DebyeWallerIntegralData(
-                                         [ 296, 1200 ],
-                                         [ 2.013538, 7.891981 ] ) ) )
+                        incoherent_elastic = IncoherentElasticScattering(
+                                               1e-5, 10., 25.,
+                                               DebyeWallerIntegralData(
+                                                 [ 296, 1200 ],
+                                                 [ 2.013538, 7.891981 ] ) ) )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

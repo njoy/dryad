@@ -23,6 +23,7 @@ namespace thermal {
 
     double lower_;
     double upper_;
+    double bound_xs_;
     std::vector< ScatteringKernel > scattering_kernels_;
 
     std::vector< double > temperatures_;
@@ -87,13 +88,16 @@ namespace thermal {
      *
      *  @param[in] lower     the lower energy limit
      *  @param[in] upper     the upper energy limit
+     *  @param[in] xs        the bound atom cross section
      *  @param[in] kernels   the scattering kernels
      */
     IncoherentInelasticScattering( double lower,
                                    double upper,
+                                   double xs,
                                    std::vector< ScatteringKernel > kernels ) :
         lower_( lower ),
         upper_( upper ),
+        bound_xs_( xs ),
         scattering_kernels_( std::move( kernels ) ) {
 
       this->sortAndExtractTemperatures();
@@ -151,6 +155,32 @@ namespace thermal {
     void upperEnergyLimit( double upper ) {
 
       this->upper_ = upper;
+    }
+
+    /**
+     *  @brief Return the bound atom cross section value
+     */
+    double boundCrossSection() const {
+
+      return this->bound_xs_;
+    }
+
+    /**
+     *  @brief Return the bound atom cross section value
+     */
+    double& boundCrossSection() {
+
+      return this->bound_xs_;
+    }
+
+    /**
+     *  @brief Set the bound atom cross section value
+     *
+     *  @param[in] xs   the reaction product identifier
+     */
+    void boundCrossSection( double xs ) {
+
+      this->bound_xs_ = xs;
     }
 
     /**
