@@ -10,11 +10,13 @@ thermal
    thermal/BraggEdgeData
    thermal/DebyeWallerIntegralData
    thermal/CoherentElasticScattering
-   thermal/IncoherentElasticScattering
    thermal/IncoherentElasticCrossSection
    thermal/IncoherentElasticAngularPdf
    thermal/IncoherentElasticAngularCdf
    thermal/IncoherentElasticAngularDistribution
+   thermal/IncoherentElasticScattering
    thermal/ShortCollisionTimeScatteringKernel
    thermal/TabulatedScatteringKernel
    thermal/TabulatedScatteringKernelFunction
+   thermal/ScatteringKernel
+   thermal/IncoherentInelasticScattering

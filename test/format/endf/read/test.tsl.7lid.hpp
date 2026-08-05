@@ -72,6 +72,9 @@ namespace li7inli7d {
 
     CHECK( std::nullopt != elastic );
 
+    CHECK_THAT( 1e-5, WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( elastic->upperEnergyLimit() ) );
+
     CHECK( 6 == elastic->numberModeratorTemperatures() );
     CHECK_THAT( 293.6, WithinRel( elastic->braggEdges()[0].temperature() ) );
     CHECK_THAT( 400. , WithinRel( elastic->braggEdges()[1].temperature() ) );
@@ -113,6 +116,9 @@ namespace li7inli7d {
 
     CHECK( std::nullopt != elastic );
 
+    CHECK_THAT( 1e-5, WithinRel( elastic->lowerEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( elastic->upperEnergyLimit() ) );
+
     CHECK_THAT( 0.6017726, WithinRel( elastic->boundCrossSection() ) );
     CHECK( 6 == elastic->debyeWallerIntegral().temperatures().size() );
     CHECK( 6 == elastic->debyeWallerIntegral().values().size() );
@@ -131,9 +137,10 @@ namespace li7inli7d {
     CHECK( std::nullopt != inelastic );
 
     CHECK_THAT( 1e-5, WithinRel( inelastic->lowerEnergyLimit() ) );
-    CHECK_THAT( 10. , WithinRel( inelastic->upperEnergyLimit() ) );
+    CHECK_THAT( 5.  , WithinRel( inelastic->upperEnergyLimit() ) );
     CHECK_THAT( 0.97 * ( 6.955734 + 1. ) * ( 6.955734 + 1. ) / 6.955734 / 6.955734,
                 WithinRel( inelastic->boundCrossSection() ) );
+    CHECK_THAT( 6.955734, WithinRel( inelastic->atomicWeightRatio() ) );
 
     CHECK( 6 == inelastic->numberModeratorTemperatures() );
     CHECK( 6 == inelastic->moderatorTemperatures().size() );
@@ -146,89 +153,97 @@ namespace li7inli7d {
 
     double min = std::numeric_limits< double >::min();
 
+    double factor;
+
     auto sab = inelastic->scatteringKernel( 293.6 );
+    factor = 1.;
     CHECK_THAT( 293.6     , WithinRel( sab.moderatorTemperature() ) );
     CHECK_THAT( 359.1459, WithinRel( sab.effectiveTemperature() ) );
     CHECK( true == sab.isEnergyTransferSymmetric() );
     auto table = sab.tabulatedScatteringKernel();
-    CHECK_THAT( 0.         , WithinRel( table.lowerEnergyTransferLimit() ) );
-    CHECK_THAT( 1.976285e+2, WithinRel( table.upperEnergyTransferLimit() ) );
-    CHECK_THAT( 5.625091e-3, WithinRel( table.lowerMomentumTransferLimit() ) );
-    CHECK_THAT( 1.136492e+2, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 4.752472e-4, WithinRel( table( 5.625091e-3, 0. ) ) );
-    CHECK_THAT( min        , WithinRel( table( 5.625091e-3, 1.976285e+2 ) ) );
-    CHECK_THAT( 5.97347e-14, WithinRel( table( 1.136492e+2, 0. ) ) );
-    CHECK_THAT( 2.98622e-50, WithinRel( table( 1.136492e+2, 1.976285e+2 ) ) );
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 4.752472e-4         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 5.97347e-14         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 2.98622e-50         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 400 );
+    factor = 293.6 / 400.;
     CHECK_THAT( 400     , WithinRel( sab.moderatorTemperature() ) );
     CHECK_THAT( 449.4184, WithinRel( sab.effectiveTemperature() ) );
     CHECK( true == sab.isEnergyTransferSymmetric() );
     table = sab.tabulatedScatteringKernel();
-    CHECK_THAT( 0.         , WithinRel( table.lowerEnergyTransferLimit() ) );
-    CHECK_THAT( 1.976285e+2, WithinRel( table.upperEnergyTransferLimit() ) );
-    CHECK_THAT( 5.625091e-3, WithinRel( table.lowerMomentumTransferLimit() ) );
-    CHECK_THAT( 1.136492e+2, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 8.849429e-4, WithinRel( table( 5.625091e-3, 0. ) ) );
-    CHECK_THAT( min        , WithinRel( table( 5.625091e-3, 1.976285e+2 ) ) );
-    CHECK_THAT( 5.27000e-11, WithinRel( table( 1.136492e+2, 0. ) ) );
-    CHECK_THAT( 6.90772e-38, WithinRel( table( 1.136492e+2, 1.976285e+2 ) ) );
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 8.849429e-4         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 5.27000e-11         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 6.90772e-38         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 500 );
+    factor = 293.6 / 500.;
     CHECK_THAT( 500     , WithinRel( sab.moderatorTemperature() ) );
     CHECK_THAT( 540.0094, WithinRel( sab.effectiveTemperature() ) );
     CHECK( true == sab.isEnergyTransferSymmetric() );
     table = sab.tabulatedScatteringKernel();
-    CHECK_THAT( 0.         , WithinRel( table.lowerEnergyTransferLimit() ) );
-    CHECK_THAT( 1.976285e+2, WithinRel( table.upperEnergyTransferLimit() ) );
-    CHECK_THAT( 5.625091e-3, WithinRel( table.lowerMomentumTransferLimit() ) );
-    CHECK_THAT( 1.136492e+2, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 1.386550e-3, WithinRel( table( 5.625091e-3, 0. ) ) );
-    CHECK_THAT( min        , WithinRel( table( 5.625091e-3, 1.976285e+2 ) ) );
-    CHECK_THAT( 2.787189e-9, WithinRel( table( 1.136492e+2, 0. ) ) );
-    CHECK_THAT( 6.59121e-31, WithinRel( table( 1.136492e+2, 1.976285e+2 ) , 1e-12) );
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 1.386550e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 2.787189e-9         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 6.59121e-31         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 600 );
+    factor = 293.6 / 600.;
     CHECK_THAT( 600     , WithinRel( sab.moderatorTemperature() ) );
     CHECK_THAT( 633.5643, WithinRel( sab.effectiveTemperature() ) );
     CHECK( true == sab.isEnergyTransferSymmetric() );
     table = sab.tabulatedScatteringKernel();
-    CHECK_THAT( 0.         , WithinRel( table.lowerEnergyTransferLimit() ) );
-    CHECK_THAT( 1.976285e+2, WithinRel( table.upperEnergyTransferLimit() ) );
-    CHECK_THAT( 5.625091e-3, WithinRel( table.lowerMomentumTransferLimit() ) );
-    CHECK_THAT( 1.136492e+2, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 2.001883e-3, WithinRel( table( 5.625091e-3, 0. ) ) );
-    CHECK_THAT( min        , WithinRel( table( 5.625091e-3, 1.976285e+2 ) ) );
-    CHECK_THAT( 4.266766e-8, WithinRel( table( 1.136492e+2, 0. ) ) );
-    CHECK_THAT( 3.48425e-26, WithinRel( table( 1.136492e+2, 1.976285e+2 ) ) );
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 2.001883e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 4.266766e-8         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 3.48425e-26         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 700 );
+    factor = 293.6 / 700.;
     CHECK_THAT( 700     , WithinRel( sab.moderatorTemperature() ) );
     CHECK_THAT( 728.8872, WithinRel( sab.effectiveTemperature() ) );
     CHECK( true == sab.isEnergyTransferSymmetric() );
     table = sab.tabulatedScatteringKernel();
-    CHECK_THAT( 0.         , WithinRel( table.lowerEnergyTransferLimit() ) );
-    CHECK_THAT( 1.976285e+2, WithinRel( table.upperEnergyTransferLimit() ) );
-    CHECK_THAT( 5.625091e-3, WithinRel( table.lowerMomentumTransferLimit() ) );
-    CHECK_THAT( 1.136492e+2, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 2.731707e-3, WithinRel( table( 5.625091e-3, 0. ) ) );
-    CHECK_THAT( min        , WithinRel( table( 5.625091e-3, 1.976285e+2 ) ) );
-    CHECK_THAT( 3.117374e-7, WithinRel( table( 1.136492e+2, 0. ) ) );
-    CHECK_THAT( 8.94715e-23, WithinRel( table( 1.136492e+2, 1.976285e+2 ) ) );
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 2.731707e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 3.117374e-7         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 8.94715e-23         , WithinRel( table.functions().back().values().back() ) );
 
     sab = inelastic->scatteringKernel( 800 );
+    factor = 293.6 / 800.;
     CHECK_THAT( 800     , WithinRel( sab.moderatorTemperature() ) );
     CHECK_THAT( 825.3442, WithinRel( sab.effectiveTemperature() ) );
     CHECK( true == sab.isEnergyTransferSymmetric() );
     table = sab.tabulatedScatteringKernel();
-    CHECK_THAT( 0.         , WithinRel( table.lowerEnergyTransferLimit() ) );
-    CHECK_THAT( 1.976285e+2, WithinRel( table.upperEnergyTransferLimit() ) );
-    CHECK_THAT( 5.625091e-3, WithinRel( table.lowerMomentumTransferLimit() ) );
-    CHECK_THAT( 1.136492e+2, WithinRel( table.upperMomentumTransferLimit() ) );
-    CHECK_THAT( 3.576777e-3, WithinRel( table( 5.625091e-3, 0. ) ) );
-    CHECK_THAT( min        , WithinRel( table( 5.625091e-3, 1.976285e+2 ) ) );
-    CHECK_THAT( 1.416596e-6, WithinRel( table( 1.136492e+2, 0. ) ) );
-    CHECK_THAT( 3.37956e-20, WithinRel( table( 1.136492e+2, 1.976285e+2 ) ) );
+    CHECK_THAT( 0.          * factor, WithinRel( table.lowerEnergyTransferLimit() ) );
+    CHECK_THAT( 1.976285e+2 * factor, WithinRel( table.upperEnergyTransferLimit() ) );
+    CHECK_THAT( 5.625091e-3 * factor, WithinRel( table.lowerMomentumTransferLimit() ) );
+    CHECK_THAT( 1.136492e+2 * factor, WithinRel( table.upperMomentumTransferLimit() ) );
+    CHECK_THAT( 3.576777e-3         , WithinRel( table.functions().front().values().front() ) );
+    CHECK_THAT( min                 , WithinRel( table.functions().back().values().front() ) );
+    CHECK_THAT( 1.416596e-6         , WithinRel( table.functions().front().values().back() ) );
+    CHECK_THAT( 3.37956e-20         , WithinRel( table.functions().back().values().back() ) );
   }
 
   void verifyLi7InLi7D( const ThermalScattering& tsl ) {

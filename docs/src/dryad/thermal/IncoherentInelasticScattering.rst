@@ -3,7 +3,7 @@
 IncoherentInelasticScattering
 =============================
 
-General information about this concept
+Incoherent inelastic thermal scattering data.
 
 Constructor
 ~~~~~~~~~~~
@@ -20,6 +20,7 @@ Modifiable Attributes
     ~IncoherentInelasticScattering.lower_energy_limit
     ~IncoherentInelasticScattering.upper_energy_limit
     ~IncoherentInelasticScattering.bound_cross_section
+    ~IncoherentInelasticScattering.atomic_weight_ratio
     ~IncoherentInelasticScattering.scattering_kernels
 
 Read-only Attributes
@@ -27,8 +28,8 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    ~IncoherentInelasticScattering.number_moderator_temperatures
     ~IncoherentInelasticScattering.moderator_temperatures
+    ~IncoherentInelasticScattering.number_moderator_temperatures
 
 Methods
 ~~~~~~~
@@ -38,3 +39,4 @@ Methods
 
     ~IncoherentInelasticScattering.has_scattering_kernel
     ~IncoherentInelasticScattering.scattering_kernel
+    ~IncoherentInelasticScattering.cross_section

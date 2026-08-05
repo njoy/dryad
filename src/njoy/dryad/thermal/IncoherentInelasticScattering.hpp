@@ -24,6 +24,7 @@ namespace thermal {
     double lower_;
     double upper_;
     double bound_xs_;
+    double ratio_;
     std::vector< ScatteringKernel > scattering_kernels_;
 
     std::vector< double > temperatures_;
@@ -89,15 +90,18 @@ namespace thermal {
      *  @param[in] lower     the lower energy limit
      *  @param[in] upper     the upper energy limit
      *  @param[in] xs        the bound atom cross section
+     *  @param[in] ratio     the atomic mass ratio of the target to the projectile
      *  @param[in] kernels   the scattering kernels
      */
     IncoherentInelasticScattering( double lower,
                                    double upper,
                                    double xs,
+                                   double ratio,
                                    std::vector< ScatteringKernel > kernels ) :
         lower_( lower ),
         upper_( upper ),
         bound_xs_( xs ),
+        ratio_( ratio ),
         scattering_kernels_( std::move( kernels ) ) {
 
       this->sortAndExtractTemperatures();
@@ -184,6 +188,32 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the ratio of the target mass to the projectile mass
+     */
+    double atomicWeightRatio() const {
+
+      return this->ratio_;
+    }
+
+    /**
+     *  @brief Return the ratio of the target mass to the projectile mass
+     */
+    double& atomicWeightRatio() {
+
+      return this->ratio_;
+    }
+
+    /**
+     *  @brief Set the ratio of the target mass to the projectile mass
+     *
+     *  @param[in] ratio   the mass ratio
+     */
+    void atomicWeightRatio( double ratio ) {
+
+      this->ratio_ = ratio;
+    }
+
+    /**
      *  @brief Return the number of moderator temperatures for which data is available
      */
     std::size_t numberModeratorTemperatures() const {
@@ -242,8 +272,8 @@ namespace thermal {
      */
     bool hasScatteringKernel( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       return iter != this->scatteringKernels().end();
     }
 
@@ -255,8 +285,8 @@ namespace thermal {
     const ScatteringKernel&
     scatteringKernel( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       if ( iter != this->scatteringKernels().end() ) {
 
         return *iter;
@@ -270,14 +300,33 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the incoherent inelastic scattering cross section
+     *
+     *  @param[in] temperature   the moderator temperature for which the
+     *                           cross section is requested
+     *  @param[in] tolerance     the linearisation tolerance
+     */
+    TabulatedCrossSection
+    crossSection( double temperature,
+                  double tolerance = constants::linearisation::tolerance ) const {
+
+      return this->scatteringKernel( temperature ).crossSection(
+                 this->lowerEnergyLimit(),
+                 this->upperEnergyLimit(),
+                 this->boundCrossSection(),
+                 this->atomicWeightRatio(),
+                 tolerance );
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
      */
     bool operator==( const IncoherentInelasticScattering& right ) const {
 
-      return std::tie( this->lower_, this->upper_, this->scatteringKernels() ) ==
-             std::tie( right.lower_, right.upper_, right.scatteringKernels() );
+      return std::tie( this->lower_, this->upper_, this->bound_xs_, this->ratio_, this->scatteringKernels() ) ==
+             std::tie( right.lower_, right.upper_, right.bound_xs_, right.ratio_, right.scatteringKernels() );
     }
 
     /**

@@ -89,7 +89,7 @@ namespace acer {
     decltype(auto) particle = photoatomic.particleData()->particle( target );
     double mass = particle.mass().has_value() ? particle.mass().value() / constants::neutron_mass : 0.;
     ACEtk::Table::Header header( std::to_string( z * 1000 ) + '.' + std::to_string( number ) + 'p',
-                                 mass, 0., std::move( date ), std::move( title ), std::to_string( z * 100 ) );
+                                 mass, 0., std::move( date ), std::move( title ), "mat" + std::to_string( z * 100 ) );
     std::vector< unsigned int > za = {};
     std::vector< double > awr = {};
 

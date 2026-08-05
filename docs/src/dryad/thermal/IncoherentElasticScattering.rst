@@ -3,7 +3,7 @@
 IncoherentElasticScattering
 ===========================
 
-General information about this concept
+Incoherent elastic thermal scattering data.
 
 Constructor
 ~~~~~~~~~~~

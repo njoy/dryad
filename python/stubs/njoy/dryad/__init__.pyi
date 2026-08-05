@@ -4240,7 +4240,7 @@ class ThermalScattering:
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
-    def from_endf_file(lower: float, upper: float, filename: str) -> ThermalScattering:
+    def from_endf_file(filename: str, upper: float | None = None) -> ThermalScattering:
         """
         Create ThermalScattering data from an ENDF file
         
@@ -4249,12 +4249,11 @@ class ThermalScattering:
         
         Parameters
         ----------
-            lower : float
-                the lower energy limit
-            upper : float
-                the upper energy limit
             filename : string
                 the ENDF file name
+            upper : float, default None
+                the upper energy limit, the upper energy limit of the evaluation is used
+                if no value is defined
         """
     @staticmethod
     def from_gnds_file(lower: float, upper: float, filename: str, style: str = 'eval') -> ThermalScattering:

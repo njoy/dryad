@@ -28,7 +28,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = endf::read::createThermalScattering( 1e-5, 10., material );
+        ThermalScattering chunk = endf::read::createThermalScattering( material );
 
         tsl::bemetal::verifyBeMetal( chunk );
       } // THEN
@@ -45,7 +45,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = endf::read::createThermalScattering( 1e-5, 10., material );
+        ThermalScattering chunk = endf::read::createThermalScattering( material );
 
         tsl::zrinzrh::verifyZrInZrH( chunk );
       } // THEN
@@ -62,7 +62,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = endf::read::createThermalScattering( 1e-5, 10., material );
+        ThermalScattering chunk = endf::read::createThermalScattering( material );
 
         tsl::li7inli7d::verifyLi7InLi7D( chunk );
       } // THEN

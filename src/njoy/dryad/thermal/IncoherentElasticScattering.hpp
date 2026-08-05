@@ -5,7 +5,6 @@
 
 // other includes
 #include "scion/math/compare.hpp"
-#include "njoy/utility/find_closest.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticAngularDistribution.hpp"

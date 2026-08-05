@@ -214,8 +214,8 @@ namespace thermal {
      */
     bool hasBraggEdgeData( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       return iter != this->braggEdges().end();
     }
 
@@ -227,15 +227,15 @@ namespace thermal {
     const BraggEdgeData&
     braggEdgeData( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
+      // get the closest temperature
+      auto iter = this->iterator( temperature, constants::temperature_tolerance );
       if ( iter != this->braggEdges().end() ) {
 
         return *iter;
       }
       else {
 
-        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
+        Log::error( "No Bragg edge data with temperature equal to {} K could be found",
                     temperature );
         throw std::exception();
       }
@@ -250,18 +250,7 @@ namespace thermal {
     TabulatedCrossSection
     crossSection( double temperature ) const {
 
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
-      if ( iter != this->braggEdges().end() ) {
-
-        return iter->crossSection( this->upperEnergyLimit() );
-      }
-      else {
-
-        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
-                    temperature );
-        throw std::exception();
-      }
+      return this->braggEdgeData( temperature ).crossSection( this->upperEnergyLimit() );
     }
 
     /**

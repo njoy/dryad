@@ -100,7 +100,7 @@ class CoherentElasticScattering:
         """
     def cross_section(self, temperature: float) -> ...:
         """
-        Return the incoherent elastic scattering cross section for a given temperature
+        Return the coherent elastic scattering cross section for a given temperature
         
         Parameters
         ----------
@@ -586,6 +586,8 @@ class IncoherentInelasticScattering:
             the upper energy limit
         xs : float
             the bound atom cross section
+        ratio : float
+            the atomic mass ratio of the target to the projectile
         kernels : list of njoy.dryad.thermal.ScatteringKernel
             the scattering kernels
     """
@@ -596,12 +598,23 @@ class IncoherentInelasticScattering:
         ...
     def __eq__(self, arg0: IncoherentInelasticScattering) -> bool:
         ...
-    def __init__(self, lower: float, upper: float, xs: float, kernels: list[ScatteringKernel]) -> None:
+    def __init__(self, lower: float, upper: float, xs: float, ratio: float, kernels: list[ScatteringKernel]) -> None:
         """
         Initialise the incoherent inelastic scattering data
         """
     def __ne__(self, arg0: IncoherentInelasticScattering) -> bool:
         ...
+    def cross_section(self, temperature: float, tolerance: float = 0.001) -> ...:
+        """
+        Return the incoherent inelastic scattering cross section for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temperature for which the cross section is requested
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
     def has_scattering_kernel(self, temperature: float) -> bool:
         """
         Return whether or not there is a scattering kernel for a given temperature
@@ -620,6 +633,14 @@ class IncoherentInelasticScattering:
             temperature : float
                 the moderator temperature
         """
+    @property
+    def atomic_weight_ratio(self) -> float:
+        """
+        The ratio of the target mass to the projectile mass
+        """
+    @atomic_weight_ratio.setter
+    def atomic_weight_ratio(self, arg1: float) -> None:
+        ...
     @property
     def bound_cross_section(self) -> float:
         """
@@ -686,16 +707,30 @@ class ScatteringKernel:
             the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
-    def __call__(self, a: float, b: float) -> float:
+    @typing.overload
+    def __call__(self, incident: float, outgoing: float, cosine: float, ratio: float) -> float:
         """
-        Evaluate the scattering kernel for a given energy value
+        Evaluate the scattering kernel for a given incident energy, outgoing energy
+        and cosine value
         
         Parameters
         ----------
+            incident : float
+                the incident energy value
+            outgoing : float
+                the outgoing energy value
+            cosine : float
+                the cosine value    ratio : float
+                the atomic mass ratio of the target to the projectile
             a : float
                 the momentum transfer value
             b : float
                 the energy transfer value
+        """
+    @typing.overload
+    def __call__(self, a: float, b: float) -> float:
+        """
+        Evaluate the scattering kernel for a given momentum and energy transfer value
         """
     def __copy__(self) -> ScatteringKernel:
         ...
@@ -720,6 +755,91 @@ class ScatteringKernel:
         """
     def __ne__(self, arg0: ScatteringKernel) -> bool:
         ...
+    def angular_distribution(self, incident: float, outgoing: float, ratio: float, tolerance: float = 0.001) -> ...:
+        """
+        Return the incoherent inelastic scattering angular distribution for a
+        given incident and outgoing energy
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            outgoing : float
+                the outgoing energy value
+            ratio : float
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    def cross_section(self, lower: float, upper: float, xs: float, ratio: float, tolerance: float = 0.001) -> ...:
+        """
+        Return the incoherent inelastic scattering cross section
+        
+        Parameters
+        ----------
+            lower : float
+                the lower energy limit
+            upper : float
+                the upper energy limit
+            xs : float
+                the bound cross section value
+            ratio : float
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    def cross_section_value(self, incident: float, xs: float, ratio: float, tolerance: float = 0.001) -> float:
+        """
+        Return the incoherent inelastic scattering cross section for a
+        given incident energy
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            xs : float
+                the bound cross section value
+            ratio : float
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    def energy_distribution(self, incident: float, ratio: float, tolerance: float = 0.001) -> ...:
+        """
+        Return the incoherent inelastic scattering energy distribution for a
+        given incident energy
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            ratio : float
+                the atomic mass ratio of the target to the projectile    tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    def energy_transfer(self, incident: float, outgoing: float) -> float:
+        """
+        Evaluate the energy transfer for a given incident and outgoing energy
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            outgoing : float
+                the outgoing energy value
+        """
+    def momentum_transfer(self, incident: float, outgoing: float, cosine: float, ratio: float) -> float:
+        """
+        Evaluate the momentum transfer for a given incident energy, outgoing energy
+        and cosine value
+        
+        Parameters
+        ----------
+            incident : float
+                the incident energy value
+            outgoing : float
+                the outgoing energy value
+            cosine : float
+                the cosine value    ratio : float
+                the atomic mass ratio of the target to the projectile
+        """
     @property
     def effective_temperature(self) -> float:
         """

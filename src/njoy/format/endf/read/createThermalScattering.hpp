@@ -22,22 +22,36 @@ namespace read {
   /**
    *  @brief Create a ThermalScattering instance from an unparsed ENDF material
    *
-   *  @param[in] lower      the lower energy limit
-   *  @param[in] upper      the upper energy limit
    *  @param[in] material   the unparsed ENDF material
+   *  @param[in] upper      the optional upper energy limit (default: use the upper
+   *                        energy limit of the evaluation)
    */
   inline dryad::ThermalScattering
-  createThermalScattering( double lower, double upper,
-                           const ENDFtk::tree::Material& material ) {
+  createThermalScattering( const ENDFtk::tree::Material& material,
+                           std::optional< double > upper = std::nullopt ) {
 
     if ( material.hasSection( 7, 2 ) || material.hasSection( 7, 4 ) ) {
 
       auto information = material.section( 1, 451 ).parse< 1, 451 >();
       dryad::Documentation documentation = createDocumentation( information );
 
+      double lower_limit = 1e-5;
+      double upper_limit = upper.has_value() ? upper.value() : 10.;
+
       std::optional< dryad::thermal::CoherentElasticScattering > coherent = std::nullopt;
       std::optional< dryad::thermal::IncoherentElasticScattering > incoherent = std::nullopt;
       std::optional< dryad::thermal::IncoherentInelasticScattering > inelastic = std::nullopt;
+
+      if ( material.hasSection( 7, 4 ) ) {
+
+        auto section = material.section( 7, 4 ).parse< 7, 4 >();
+
+        if ( ! upper.has_value() ) {
+
+          upper_limit = section.constants().upperEnergyLimit();
+        }
+        inelastic = thermal::createIncoherentInelasticScattering( lower_limit, upper_limit, section );
+      }
 
       if ( material.hasSection( 7, 2 ) ) {
 
@@ -51,7 +65,7 @@ namespace read {
 
           [&] ( const CoherentElastic& law ) -> CoherentElasticScatteringType {
 
-            return thermal::createCoherentElasticScattering( lower, upper, law );
+            return thermal::createCoherentElasticScattering( lower_limit, upper_limit, law );
           },
           [&] ( const IncoherentElastic& ) -> CoherentElasticScatteringType {
 
@@ -59,7 +73,7 @@ namespace read {
           },
           [&] ( const MixedElastic& law ) -> CoherentElasticScatteringType {
 
-            return thermal::createCoherentElasticScattering( lower, upper, law.coherent() );
+            return thermal::createCoherentElasticScattering( lower_limit, upper_limit, law.coherent() );
           }
         };
 
@@ -71,23 +85,17 @@ namespace read {
           },
           [&] ( const IncoherentElastic& law ) -> IncoherentElasticScatteringType {
 
-            return thermal::createIncoherentElasticScattering( lower, upper, law );
+            return thermal::createIncoherentElasticScattering( lower_limit, upper_limit, law );
           },
           [&] ( const MixedElastic& law ) -> IncoherentElasticScatteringType {
 
-            return thermal::createIncoherentElasticScattering( lower, upper, law.incoherent() );
+            return thermal::createIncoherentElasticScattering( lower_limit, upper_limit, law.incoherent() );
           }
         };
 
         auto section = material.section( 7, 2 ).parse< 7, 2 >();
         coherent = std::visit( createCoherentElastic, section.scatteringLaw() );
         incoherent = std::visit( createIncoherentElastic, section.scatteringLaw() );
-      }
-
-      if ( material.hasSection( 7, 4 ) ) {
-
-        auto section = material.section( 7, 4 ).parse< 7, 4 >();
-        inelastic = thermal::createIncoherentInelasticScattering( lower, upper, section );
       }
 
       return dryad::ThermalScattering( std::move( documentation ),

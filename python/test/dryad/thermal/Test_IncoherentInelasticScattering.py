@@ -15,6 +15,7 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
     self.assertAlmostEqual( 10. , chunk.upper_energy_limit )
     self.assertAlmostEqual( 6.337872, chunk.bound_cross_section )
+    self.assertAlmostEqual( 1., chunk.atomic_weight_ratio )
 
     self.assertEqual( 2, chunk.number_moderator_temperatures )
     self.assertEqual( 2, len( chunk.moderator_temperatures ) )
@@ -98,6 +99,7 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
                   lower = 1e-5,
                   upper = 10.,
                   xs = 6.337872,
+                  ratio = 1.,
                   kernels = [ ScatteringKernel( 293.6, 300.,
                                                 [ 0., 4. ],
                                                 [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
@@ -112,7 +114,7 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
     def test_setter_functions( self ) :
 
         chunk = IncoherentInelasticScattering(
-                  1e-5, 10., 6.337872,
+                  1e-5, 10., 6.337872, 1.,
                   [ ScatteringKernel( 293.6, 300.,
                                       [ 0., 4. ],
                                       [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
@@ -158,6 +160,18 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+        # the atomic weight ratio can be changed
+        newratio = 2.
+        original = 1.
+
+        chunk.atomic_weight_ratio = newratio
+
+        self.assertEqual( newratio, chunk.atomic_weight_ratio )
+
+        chunk.atomic_weight_ratio = original
+
+        verify_chunk( self, chunk )
+
         # the scattering kernels can be changed
         newkernels = [ ScatteringKernel( 300., 305.,
                                          [ 0., 4. ],
@@ -187,7 +201,7 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
     def test_comparison( self ) :
 
         left = IncoherentInelasticScattering(
-                   1e-5, 10., 6.337872,
+                   1e-5, 10., 6.337872, 1.,
                    [ ScatteringKernel( 293.6, 300.,
                                        [ 0., 4. ],
                                        [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
@@ -197,7 +211,7 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
                                        [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
                                          TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
         equal = IncoherentInelasticScattering(
-                   1e-5, 10., 6.337872,
+                   1e-5, 10., 6.337872, 1.,
                    [ ScatteringKernel( 293.6, 300.,
                                         [ 0., 4. ],
                                         [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
@@ -207,7 +221,7 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
                                         [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
                                           TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
         different = IncoherentInelasticScattering(
-                        1e-5, 10., 6.337872,
+                        1e-5, 10., 6.337872, 1.,
                         [ ScatteringKernel( 293.6, 300.,
                                             [ 0., 5. ],
                                             [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.8, 0.2 ] ),
