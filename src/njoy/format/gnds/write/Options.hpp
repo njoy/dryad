@@ -33,6 +33,9 @@ namespace write {
 
     // indent: indentation per level in the xml structure
     int indent = 2;
+
+    // columns: number of columns in the values node
+    int columns = 12;
   };
 
 } // read namespace

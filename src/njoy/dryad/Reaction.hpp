@@ -37,35 +37,99 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    template < typename Functor >
-    auto iterator( Functor&& functor, std::size_t index ) const {
+    auto lower_iterator( const id::ParticleID& type ) const {
 
-      auto iter = std::find_if( this->products().begin(), this->products().end(), functor );
-      std::size_t current = index;
-      while ( current != 0 && iter != this->products().end() ) {
-
-        iter = std::find_if( iter + 1, this->products().end(), functor );
-        --current;
-      }
-
-      return iter;
+      auto compare = [] ( auto&& left, auto&& right ) { return left.productIdentifier() < right; };
+      return std::lower_bound( this->products().begin(), this->products().end(), type, compare );
     }
 
-    auto iterator( const id::ParticleID& type, std::size_t index = 0 ) const {
+    auto lower_iterator( const id::ParticleID& type, std::size_t chain ) const {
 
-      auto functor = [&] ( auto&& product )
-                         { return product.productIdentifier() == type; };
+      auto compare = [] ( auto&& left, auto&& right ) {
 
-      return this->iterator( functor, index );
+        std::size_t leftChain = left.chainIndex();
+        return std::tie( left.productIdentifier(), leftChain ) < right;
+      };
+      return std::lower_bound( this->products().begin(), this->products().end(),
+                               std::tie( type, chain ), compare );
+    }
+
+    auto upper_iterator( const id::ParticleID& type ) const {
+
+      auto compare = [] ( auto&& left, auto&& right ) { return left < right.productIdentifier(); };
+      return std::upper_bound( this->products().begin(), this->products().end(), type, compare );
+    }
+
+    auto upper_iterator( const id::ParticleID& type, std::size_t chain ) const {
+
+      auto compare = [] ( auto&& left, auto&& right ) {
+
+        std::size_t rightChain = right.chainIndex();
+        return left < std::tie( right.productIdentifier(), rightChain );
+      };
+      return std::upper_bound( this->products().begin(), this->products().end(),
+                               std::tie( type, chain ), compare );
+    }
+
+    auto iterator( const id::ParticleID& type, std::size_t index ) const {
+
+      auto iter = lower_iterator( type );
+      if ( iter != this->products().end() && iter->productIdentifier() == type ) {
+
+        if ( index != 0 ) {
+
+          auto upper = this->upper_iterator( type );
+          if ( index < std::distance( iter, upper ) ) {
+
+            return std::next( iter, index );
+          }
+        }
+        else {
+
+          return iter;
+        }
+      }
+
+      return this->products().end();
     }
 
     auto iterator( const id::ParticleID& type, std::size_t chain, std::size_t index ) const {
 
-      auto functor = [&] ( auto&& product )
-                         { return product.productIdentifier() == type &&
-                                  product.chainIndex() == chain; };
+      auto iter = lower_iterator( type, chain );
+      if ( iter != this->products().end()
+           && iter->productIdentifier() == type && iter->chainIndex() == chain ) {
 
-      return this->iterator( functor, index );
+        if ( index != 0 ) {
+
+          auto upper = this->upper_iterator( type, chain );
+          if ( index < std::distance( iter, upper ) ) {
+
+            return std::next( iter, index );
+          }
+        }
+        else {
+
+          return iter;
+        }
+      }
+
+      return this->products().end();
+    }
+
+    /**
+     *  @brief Sort the reaction products
+     */
+    void sortProducts() {
+
+      auto compare = [] ( auto&& left, auto&& right ) {
+
+        std::size_t leftChain = left.chainIndex();
+        std::size_t rightChain = right.chainIndex();
+        return std::tie( left.productIdentifier(), leftChain ) <
+               std::tie( right.productIdentifier(), rightChain );
+      };
+
+      std::sort( this->products().begin(), this->products().end(), compare );
     }
 
     /* constructor */
@@ -88,6 +152,7 @@ namespace dryad {
         xs_( std::move( xs ) ),
         products_( std::move( products ) ) {
 
+      this->sortProducts();
       if ( normalise ) {
 
         this->normalise();
@@ -371,6 +436,7 @@ namespace dryad {
     void products( std::vector< ReactionProduct > products ) {
 
       this->products_ = std::move( products );
+      this->sortProducts();
     }
 
     /**
@@ -381,7 +447,7 @@ namespace dryad {
      */
     bool hasProduct( const id::ParticleID& type ) const {
 
-      auto iter = this->iterator( type );
+      auto iter = this->iterator( type, 0 );
       return iter != this->products().end();
     }
 
@@ -407,12 +473,7 @@ namespace dryad {
      */
     std::size_t numberProducts( const id::ParticleID& type ) const {
 
-      auto functor = [&] ( auto&& product )
-                         { return product.productIdentifier() == type; };
-
-      return std::count_if( this->products().begin(),
-                            this->products().end(),
-                            functor );
+      return std::distance( this->lower_iterator( type ), this->upper_iterator( type ) );
     }
 
     /**
@@ -425,13 +486,7 @@ namespace dryad {
     std::size_t numberProducts( const id::ParticleID& type,
                                 std::size_t chain ) const {
 
-      auto functor = [&] ( auto&& product )
-                         { return product.productIdentifier() == type &&
-                                  product.chainIndex() == chain; };
-
-      return std::count_if( this->products().begin(),
-                            this->products().end(),
-                            functor );
+      return std::distance( this->lower_iterator( type, chain ), this->upper_iterator( type, chain ) );
     }
 
     /**

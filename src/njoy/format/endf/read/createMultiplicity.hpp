@@ -68,7 +68,15 @@ namespace read {
 
     if ( scion::verification::isAllSameElement( multiplicity.multiplicities() ) ) {
 
-      return static_cast< int >( std::round( multiplicity.multiplicities().front() ) );
+      int value = static_cast< int >( std::round( multiplicity.multiplicities().front() ) );
+      if ( multiplicity.multiplicities().front() == value ) {
+
+        return value;
+      }
+      else {
+
+        return createTabulatedMultiplicity( multiplicity );
+      }
     }
     else {
 

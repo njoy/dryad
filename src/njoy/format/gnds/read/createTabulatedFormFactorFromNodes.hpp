@@ -39,7 +39,7 @@ namespace read {
       auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
       // convert units - if necessary
-      convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+      convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ).value() );
 
       // assign data
       energies = std::move( std::get< 2 >( data ) );
@@ -64,7 +64,7 @@ namespace read {
         auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
         // convert units - if necessary
-        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ).value() );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;

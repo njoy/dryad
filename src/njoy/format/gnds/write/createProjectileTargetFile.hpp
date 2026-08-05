@@ -14,6 +14,7 @@
 #include "njoy/format/gnds/write/insertDocumentation.hpp"
 #include "njoy/format/gnds/write/insertParticleDatabase.hpp"
 #include "njoy/format/gnds/write/insertReactions.hpp"
+#include "njoy/format/gnds/write/insertSums.hpp"
 #include "njoy/format/gnds/StyleType.hpp"
 
 namespace njoy {
@@ -71,6 +72,8 @@ namespace write {
 
     pugi::xml_node reactions_node = insertReactions( suite, options, transport.reactions(),
                                                      transport.resonances(), style_label );
+    pugi::xml_node sums_node = insertSums( suite, options, transport.reactions(),
+                                           transport.resonances(), style_label );
 
     gnds.save_file( filename.c_str(), "  " );
   }

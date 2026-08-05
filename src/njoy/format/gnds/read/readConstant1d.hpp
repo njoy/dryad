@@ -15,8 +15,8 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using RealConstant1d = std::pair< double, std::string >;
-  using IntegerConstant1d = std::pair< int, std::string >;
+  using RealConstant1d = std::pair< double, std::optional< std::string > >;
+  using IntegerConstant1d = std::pair< int, std::optional< std::string > >;
 
   /**
    *  @brief Read data from a GNDS constant1d node as a double
@@ -36,7 +36,7 @@ namespace read {
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = std::get< 1 >( units[1] ).value();
+      data.second = std::get< 1 >( units[1] );
     }
 
     return data;
@@ -60,7 +60,7 @@ namespace read {
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = std::get< 1 >( units[1] ).value();
+      data.second = std::get< 1 >( units[1] );
     }
 
     return data;

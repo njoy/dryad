@@ -40,8 +40,8 @@ namespace thermal {
       auto data = readXYs1D( node );
 
       // convert units - if necessary
-      convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ) );
-      convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
+      convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ).value() );
+      convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ).value() );
 
       // assign data
       temperatures = std::move( std::get< 2 >( data ) );
@@ -61,8 +61,8 @@ namespace thermal {
         auto data = readXYs1D( xys1d, units );
 
         // convert units - if necessary
-        convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ) );
-        convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
+        convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ).value() );
+        convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ).value() );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;

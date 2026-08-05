@@ -58,8 +58,8 @@ void verifyChunk( const gnds::read::Polynomial1d& chunk ) {
   CHECK( 2e+7  == std::get< 3 >( chunk ) );
 
   // x and y units
-  CHECK( "eV" == std::get< 5 >( chunk ) );
-  CHECK( ""  == std::get< 6 >( chunk ) );
+  CHECK( "eV" == std::get< 5 >( chunk ).value() );
+  CHECK( std::nullopt  == std::get< 6 >( chunk ) );
 
   // values
   CHECK( 2 == std::get< 4 >( chunk ).size() );
