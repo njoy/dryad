@@ -99,7 +99,6 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
   );
 
   addStandardEqualityComparisonDefinitions< Component >( component );
-
   addStandardCopyDefinitions< Component >( component );
 }
 

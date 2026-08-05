@@ -52,7 +52,7 @@ namespace write {
       case StyleType::Evaluation : { style_label = "eval"; break; }
       default : {
 
-        std::runtime_error( "Only the evaluated style is currently supported for GNDS files" );
+        throw std::runtime_error( "Only the evaluated style is currently supported for GNDS files" );
       }
     }
 

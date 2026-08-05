@@ -43,23 +43,23 @@ namespace write {
     pugi::xml_node node = parent.append_child( "values" );
     if ( start.has_value() ) {
 
-      node.append_attribute( "start" ) = std::move( start.value() );
+      node.append_attribute( "start" ) = start.value();
     }
     if ( length.has_value() ) {
 
-      node.append_attribute( "length" ) = std::move( length.value() );
+      node.append_attribute( "length" ) = length.value();
     }
     if ( href.has_value() ) {
 
-      node.append_attribute( "href" ) = std::move( href.value() );
+      node.append_attribute( "href" ) = href.value();
     }
     if ( index.has_value() ) {
 
-      node.append_attribute( "startIndex" ) = std::move( index.value() );
+      node.append_attribute( "startIndex" ) = index.value();
     }
     if ( count.has_value() ) {
 
-      node.append_attribute( "count" ) = std::move( count.value() );
+      node.append_attribute( "count" ) = count.value();
     }
 
     // doing shenanigans to make sure we indent the bodytext properly

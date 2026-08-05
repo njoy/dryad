@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_WRITE_INSERTTABULATEDFUNCTION
 
 // system includes
+#include <iterator>
 #include <optional>
 #include <string>
 #include <vector>
@@ -10,6 +11,7 @@
 #include "pugixml.hpp"
 #include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
+#include "njoy/format/gnds/write/toString.hpp"
 #include "njoy/format/gnds/write/createInterpolationType.hpp"
 #include "njoy/format/gnds/write/insertAxes.hpp"
 #include "njoy/format/gnds/write/insertXYs1d.hpp"
@@ -96,7 +98,7 @@ namespace write {
 
           // this should never happen, but our AI overlords tend to complain about missing checks
           throw std::runtime_error( "You have somehow reached unreachable code, contact an njoy developer\n"
-                                    "Function: format::gnds::write::insertXYs1d" );
+                                    "Function: format::gnds::write::insertTabulatedFunction" );
         }
 
         insertAxes( node, options, xLabel.value(), yLabel.value(), xUnit, yUnit );

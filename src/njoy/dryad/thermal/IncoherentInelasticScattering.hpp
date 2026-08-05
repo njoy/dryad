@@ -15,7 +15,7 @@ namespace thermal {
 
   /**
    *  @class
-   *  @brief Incoherent elastic thermal scattering data
+   *  @brief Incoherent inelastic thermal scattering data
    */
   class IncoherentInelasticScattering {
 
@@ -261,6 +261,7 @@ namespace thermal {
     void scatteringKernels( std::vector< ScatteringKernel > kernels ) {
 
       this->scattering_kernels_ = std::move( kernels );
+      this->sortAndExtractTemperatures();
     }
 
     /**
@@ -324,8 +325,8 @@ namespace thermal {
      */
     bool operator==( const IncoherentInelasticScattering& right ) const {
 
-      return std::tie( this->lower_, this->upper_, this->scatteringKernels() ) ==
-             std::tie( right.lower_, right.upper_, right.scatteringKernels() );
+      return std::tie( this->lower_, this->upper_, this->bound_xs_, this->ratio_, this->scatteringKernels() ) ==
+             std::tie( right.lower_, right.upper_, right.bound_xs_, right.ratio_, right.scatteringKernels() );
     }
 
     /**

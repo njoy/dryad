@@ -127,7 +127,7 @@ namespace lrf3 {
         dryad::id::ChannelID capture_id( dryad::id::ReactionID( projectile, target, 102 ), other );
         dryad::resonances::ParticlePair capture_pair( { dryad::id::ParticleID::photon(), 0., 0., +1 },
                                                       { capture_id.reaction().residual().value(), 0., 0., +1 } );
-        dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, radii );
+        dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, radii, false );
         channel_data.emplace( iter, std::move( capture ), dryad::resonances::ResonanceTable{ { capture_id }, {}, {} } );
       }
     }

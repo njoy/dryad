@@ -68,8 +68,8 @@ namespace write {
             if ( label.has_value() ) {
 
               distribution_node.append_attribute( "label" ) = label.value();
-              distribution_node.append_attribute( "productFrame" ) = "lab";
             }
+            distribution_node.append_attribute( "productFrame" ) = "lab";
           }
         }
       }

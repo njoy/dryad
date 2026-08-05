@@ -10,5 +10,5 @@
 #include "njoy/dryad/thermal/IncoherentElasticAngularCdf.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticAngularDistribution.hpp"
 #include "njoy/dryad/thermal/CoherentElasticScattering.hpp"
-#include "njoy/dryad/thermal/IncoherentElasticCrossSection.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
+#include "njoy/dryad/thermal/IncoherentInelasticScattering.hpp"

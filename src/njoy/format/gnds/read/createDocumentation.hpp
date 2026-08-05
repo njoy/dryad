@@ -50,12 +50,15 @@ namespace read {
       }
 
       // remove trailing whitespace (just in case)
-      auto iter = std::find_if( description->rbegin(), description->rend(),
-                                [] ( unsigned char c ) { return ! std::isspace( c ); } ).base();
+      if ( description->size() > 0 ) {
 
-      if ( iter != std::prev( description->end() ) ) {
+        auto iter = std::find_if( description->rbegin(), description->rend(),
+                                  [] ( unsigned char c ) { return ! std::isspace( c ); } ).base();
 
-        description->erase( iter, description->end() );
+        if ( iter != std::prev( description->end() ) ) {
+
+          description->erase( iter, description->end() );
+        }
       }
 
       // set to 66 characters and add newline character

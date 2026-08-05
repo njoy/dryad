@@ -61,7 +61,7 @@ namespace write {
 
       current = current.append_child( "nucleus" );
       std::transform( id.begin(), id.end(), id.begin(),
-                      [] ( auto&& character ) { return std::tolower( character ); } );
+                      [] ( unsigned char character ) { return std::tolower( character ); } );
       current.append_attribute( "id" ) = id;
     }
 

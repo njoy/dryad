@@ -66,7 +66,21 @@ namespace thermal {
     double xs = inelastic.constants().totalFreeCrossSections()[0] / inelastic.constants().numberAtoms()[0];
     xs *= ( awr + 1. ) * ( awr + 1. ) / awr / awr;
 
-    decltype(auto) law = std::get< ENDFtk::section::Type< 7, 4 >::TabulatedFunctions >( inelastic.scatteringLaw() );
+    using TabulatedFunctions = ENDFtk::section::Type< 7, 4 >::TabulatedFunctions;
+    if ( ! std::holds_alternative< TabulatedFunctions >( inelastic.scatteringLaw() ) ) {
+
+      throw std::runtime_error( "The S(a,b) is not defined as a tabulated function, "
+                                "contact an njoy developer." );
+    }
+
+    decltype(auto) law = std::get< TabulatedFunctions >( inelastic.scatteringLaw() );
+    auto sab_temperatures = createVector( law.scatteringFunctions().front().temperatures() );
+    if ( sab_temperatures != moderator ) {
+
+      Log::error( "Tabulated S(a,b) temperatures are not the same as those given in the "
+                  "effective temperature data." );
+      throw std::exception();
+    }
 
     bool uses_log_interpolation = false;
 
@@ -110,7 +124,7 @@ namespace thermal {
       std::vector< double > current_betas = betas;
       if ( scale ) {
 
-        double factor = 293.6 / moderator[i];
+        double factor = constants::room_temperature / moderator[i];
         std::transform( current_betas.begin(), current_betas.end(), current_betas.begin(),
                         [&] ( auto&& value ) { return value * factor; } );
       }
@@ -124,7 +138,7 @@ namespace thermal {
 
         if ( scale ) {
 
-          double factor = 293.6 / moderator[i];
+          double factor = constants::room_temperature / moderator[i];
           std::transform( alphas.begin(), alphas.end(), alphas.begin(),
                           [&] ( auto&& value ) { return value * factor; } );
         }

@@ -25,10 +25,10 @@ namespace format {
                                  const dryad::id::ParticleID& target,
                                  int mt ) {
 
-    int elastic = dryad::id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+    int elastic = dryad::id::ReactionID( projectile, target, 2 ).mt().value();
     if ( target.e() > 0 && projectile != dryad::id::ParticleID::photon() ) {
 
-      int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
+      int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).mt().value();
       if ( mt >= ground && mt < elastic ) {
 
         return mt + 1;

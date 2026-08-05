@@ -131,7 +131,7 @@ namespace thermal {
                         auto&& xRight, auto&& yLeft    , auto&& yRight ) {
 
                     return converged( trial, reference, xLeft, xRight, yLeft, yRight ) ||
-                           std::abs( xRight - xLeft ) < ( 100. * std::numeric_limits< double >::epsilon() ) * xLeft;
+                           std::abs( xRight - xLeft ) <= ( 100. * std::numeric_limits< double >::epsilon() ) * std::abs( xLeft );
                   },
                   MidpointSplit() );
 
@@ -180,7 +180,7 @@ namespace thermal {
                         auto&& xRight, auto&& yLeft    , auto&& yRight ) {
 
                     return converged( trial, reference, xLeft, xRight, yLeft, yRight ) ||
-                           std::abs( xRight - xLeft ) < ( 100. * std::numeric_limits< double >::epsilon() ) * xLeft;
+                           std::abs( xRight - xLeft ) <= ( 100. * std::numeric_limits< double >::epsilon() ) * std::abs( xLeft );
                   },
                   MidpointSplit() );
 
