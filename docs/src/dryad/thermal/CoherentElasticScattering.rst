@@ -12,6 +12,15 @@ Constructor
 
     CoherentElasticScattering
 
+Modifiable Attributes
+~~~~~~~~~~~~~~~~~~~~~
+.. autosummary::
+    :toctree: generated/
+
+    ~CoherentElasticScattering.lower_energy_limit
+    ~CoherentElasticScattering.upper_energy_limit
+    ~CoherentElasticScattering.bragg_edges
+
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
@@ -29,3 +38,4 @@ Methods
 
     ~CoherentElasticScattering.has_bragg_edge_data
     ~CoherentElasticScattering.bragg_edge_data
+    ~CoherentElasticScattering.cross_section

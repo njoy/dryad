@@ -92,6 +92,7 @@ add_python_test( dryad.thermal.IncoherentElasticAngularPdf             dryad/the
 add_python_test( dryad.thermal.IncoherentElasticAngularCdf             dryad/thermal/Test_IncoherentElasticAngularCdf.py )
 add_python_test( dryad.thermal.IncoherentElasticAngularDistribution    dryad/thermal/Test_IncoherentElasticAngularDistribution.py )
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
+add_python_test( dryad.thermal.IncoherentInelasticScattering           dryad/thermal/Test_IncoherentInelasticScattering.py )
 
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )
 

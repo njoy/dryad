@@ -1,15 +1,13 @@
-#ifndef NJOY_DRYAD_THERMAL_COHERENTELASTICSCATTERING
-#define NJOY_DRYAD_THERMAL_COHERENTELASTICSCATTERING
+#ifndef NJOY_DRYAD_THERMAL_INCOHERENTINELASTICSCATTERING
+#define NJOY_DRYAD_THERMAL_INCOHERENTINELASTICSCATTERING
 
 // system includes
-#include <algorithm>
-#include <vector>
 
 // other includes
-#include "tools/Log.hpp"
+#include "scion/math/compare.hpp"
 #include "njoy/utility/find_closest.hpp"
-#include "njoy/dryad/thermal/BraggEdgeData.hpp"
-#include "njoy/dryad/TabulatedCrossSection.hpp"
+#include "njoy/dryad/thermal/ShortCollisionTimeScatteringKernel.hpp"
+#include "njoy/dryad/thermal/ScatteringKernel.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -17,37 +15,36 @@ namespace thermal {
 
   /**
    *  @class
-   *  @brief Coherent elastic thermal scattering data
-   *
-   *  @todo add an operator()?
+   *  @brief Incoherent inelastic thermal scattering data
    */
-  class CoherentElasticScattering {
+  class IncoherentInelasticScattering {
 
     /* fields */
 
     double lower_;
     double upper_;
+    std::vector< ScatteringKernel > scattering_kernels_;
+
     std::vector< double > temperatures_;
-    std::vector< BraggEdgeData > edges_;
 
     /* auxiliary functions */
 
     /**
-     *  @brief Process the Bragg edge data
+     *  @brief Process the kernels
      *
-     *  This sorts the Bragg edges by temperature and extract temperatures
+     *  This sorts the kernels by temperature and extracts temperatures
      */
     void sortAndExtractTemperatures() {
 
-      std::sort( this->braggEdges().begin(), this->braggEdges().end(),
+      std::sort( this->scatteringKernels().begin(), this->scatteringKernels().end(),
                  [] ( auto&& left, auto&& right )
-                    { return left.temperature() < right.temperature(); } );
+                    { return left.moderatorTemperature() < right.moderatorTemperature(); } );
 
-      this->moderatorTemperatures().resize( this->braggEdges().size() );
-      std::transform( this->braggEdges().begin(), this->braggEdges().end(),
+      this->moderatorTemperatures().resize( this->scatteringKernels().size() );
+      std::transform( this->scatteringKernels().begin(), this->scatteringKernels().end(),
                       this->moderatorTemperatures().begin(),
                       [] ( auto&& data )
-                         { return data.temperature(); } );
+                         { return data.moderatorTemperature(); } );
     }
 
     /**
@@ -63,11 +60,11 @@ namespace thermal {
                                          temperature, tolerance );
       if ( iter != this->moderatorTemperatures().end() ) {
 
-        return std::next( this->braggEdges().begin(),
+        return std::next( this->scatteringKernels().begin(),
                           std::distance( this->moderatorTemperatures().begin(), iter ) );
       }
 
-      return this->braggEdges().end();
+      return this->scatteringKernels().end();
     }
 
   public:
@@ -77,27 +74,27 @@ namespace thermal {
     /**
      *  @brief Default constructor (for pybind11 purposes only)
      */
-    CoherentElasticScattering() = default;
+    IncoherentInelasticScattering() = default;
 
-    CoherentElasticScattering( const CoherentElasticScattering& ) = default;
-    CoherentElasticScattering( CoherentElasticScattering&& ) = default;
+    IncoherentInelasticScattering( const IncoherentInelasticScattering& ) = default;
+    IncoherentInelasticScattering( IncoherentInelasticScattering&& ) = default;
 
-    CoherentElasticScattering& operator=( const CoherentElasticScattering& ) = default;
-    CoherentElasticScattering& operator=( CoherentElasticScattering&& ) = default;
+    IncoherentInelasticScattering& operator=( const IncoherentInelasticScattering& ) = default;
+    IncoherentInelasticScattering& operator=( IncoherentInelasticScattering&& ) = default;
 
     /**
      *  @brief Constructor
      *
-     *  @param[in] lower        the lower energy limit
-     *  @param[in] upper        the upper energy limit
-     *  @param[in] braggEdges   the Bragg edge data
+     *  @param[in] lower     the lower energy limit
+     *  @param[in] upper     the upper energy limit
+     *  @param[in] kernels   the scattering kernels
      */
-    CoherentElasticScattering( double lower,
-                               double upper,
-                               std::vector< BraggEdgeData > braggEdges ) :
+    IncoherentInelasticScattering( double lower,
+                                   double upper,
+                                   std::vector< ScatteringKernel > kernels ) :
         lower_( lower ),
         upper_( upper ),
-        edges_( std::move( braggEdges ) ) {
+        scattering_kernels_( std::move( kernels ) ) {
 
       this->sortAndExtractTemperatures();
     }
@@ -181,84 +178,62 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return the Bragg edge data
+     *  @brief Return the scattering kernels
      */
-    const std::vector< BraggEdgeData >& braggEdges() const {
+    const std::vector< ScatteringKernel >& scatteringKernels() const {
 
-      return this->edges_;
+      return this->scattering_kernels_;
     }
 
     /**
-     *  @brief Return the Bragg edge data
+     *  @brief Return the moderator temperature values
      */
-    std::vector< BraggEdgeData >& braggEdges() {
+    std::vector< ScatteringKernel >& scatteringKernels() {
 
-      return this->edges_;
+      return this->scattering_kernels_;
     }
 
     /**
-     *  @brief Set the Bragg edge data
+     *  @brief Set the moderator temperature values
      *
-     *  @param[in] braggEdges   the Bragg edge data
+     *  @param[in] kernels   the scattering kernels
      */
-    void braggEdges( std::vector< BraggEdgeData > braggEdges ) {
+    void scatteringKernels( std::vector< ScatteringKernel > kernels ) {
 
-      this->edges_ = std::move( braggEdges );
+      this->scattering_kernels_ = std::move( kernels );
       this->sortAndExtractTemperatures();
     }
 
     /**
-     *  @brief Return whether or not there is Bragg edge data for a given temperature
+     *  @brief Return whether or not there is a scattering kernel for a given
+     *         moderator temperature
      *
      *  @param[in] temperature   the moderator temperature
      */
-    bool hasBraggEdgeData( double temperature ) const {
+    bool hasScatteringKernel( double temperature ) const {
 
       // get the closest temperature within 0.001 K
       auto iter = this->iterator( temperature, 0.001 );
-      return iter != this->braggEdges().end();
+      return iter != this->scatteringKernels().end();
     }
 
     /**
-     *  @brief Return the Bragg edge data for a given temperature
+     *  @brief Return the scattering kernel for a given moderator temperature
      *
      *  @param[in] temperature   the moderator temperature
      */
-    const BraggEdgeData&
-    braggEdgeData( double temperature ) const {
+    const ScatteringKernel&
+    scatteringKernel( double temperature ) const {
 
       // get the closest temperature within 0.001 K
       auto iter = this->iterator( temperature, 0.001 );
-      if ( iter != this->braggEdges().end() ) {
+      if ( iter != this->scatteringKernels().end() ) {
 
         return *iter;
       }
       else {
 
-        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
-                    temperature );
-        throw std::exception();
-      }
-    }
-
-    /**
-     *  @brief Return the coherent elastic scattering cross section
-     *
-     *  @param[in] temperature   the moderator temperature for which the
-     *                           cross section is requested
-     */
-    TabulatedCrossSection
-    crossSection( double temperature ) const {
-
-      // get the closest temperature within 0.001 K
-      auto iter = this->iterator( temperature, 0.001 );
-      if ( iter != this->braggEdges().end() ) {
-
-        return iter->crossSection( this->upperEnergyLimit() );
-      }
-      else {
-
-        Log::error( "No Bragg edge data with temperature equal to {} K could not be found",
+        Log::error( "No scattering kernel with moderator temperature equal to {} K could be found",
                     temperature );
         throw std::exception();
       }
@@ -269,10 +244,10 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const CoherentElasticScattering& right ) const {
+    bool operator==( const IncoherentInelasticScattering& right ) const {
 
-      return std::tie( this->lower_, this->upper_, this->braggEdges() ) ==
-             std::tie( right.lower_, right.upper_, right.braggEdges() );
+      return std::tie( this->lower_, this->upper_, this->scatteringKernels() ) ==
+             std::tie( right.lower_, right.upper_, right.scatteringKernels() );
     }
 
     /**
@@ -280,7 +255,7 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const CoherentElasticScattering& right ) const {
+    bool operator!=( const IncoherentInelasticScattering& right ) const {
 
       return ! this->operator==( right );
     }

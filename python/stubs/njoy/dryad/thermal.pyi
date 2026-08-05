@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'ScatteringKernel', 'ShortCollisionTimeScatteringKernel', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticAngularCdf', 'IncoherentElasticAngularDistribution', 'IncoherentElasticAngularPdf', 'IncoherentElasticCrossSection', 'IncoherentElasticScattering', 'IncoherentInelasticScattering', 'ScatteringKernel', 'ShortCollisionTimeScatteringKernel', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -129,6 +129,9 @@ class CoherentElasticScattering:
         """
         The lower energy limit
         """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
+        ...
     @property
     def moderator_temperatures(self) -> list[float]:
         """
@@ -144,6 +147,9 @@ class CoherentElasticScattering:
         """
         The upper energy limit
         """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
+        ...
 class DebyeWallerIntegralData:
     """
     A Debye-Waller integral table
@@ -547,6 +553,9 @@ class IncoherentElasticScattering:
         """
         The lower energy limit
         """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
+        ...
     @property
     def moderator_temperatures(self) -> list[float]:
         """
@@ -562,6 +571,87 @@ class IncoherentElasticScattering:
         """
         The upper energy limit
         """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
+        ...
+class IncoherentInelasticScattering:
+    """
+    Incoherent inelastic thermal scattering data
+    
+    Parameters
+    ----------
+        lower : float
+            the lower energy limit
+        upper : float
+            the upper energy limit
+        kernels : list of njoy.dryad.thermal.ScatteringKernel
+            the scattering kernels
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> IncoherentInelasticScattering:
+        ...
+    def __deepcopy__(self, arg0: dict) -> IncoherentInelasticScattering:
+        ...
+    def __eq__(self, arg0: IncoherentInelasticScattering) -> bool:
+        ...
+    def __init__(self, lower: float, upper: float, kernels: list[ScatteringKernel]) -> None:
+        """
+        Initialise the incoherent inelastic scattering data
+        """
+    def __ne__(self, arg0: IncoherentInelasticScattering) -> bool:
+        ...
+    def has_scattering_kernel(self, temperature: float) -> bool:
+        """
+        Return whether or not there is a scattering kernel for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temperature
+        """
+    def scattering_kernel(self, temperature: float) -> ScatteringKernel:
+        """
+        Return the scattering kernel for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                the moderator temperature
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
+        ...
+    @property
+    def moderator_temperatures(self) -> list[float]:
+        """
+        The moderator temperature values
+        """
+    @property
+    def number_moderator_temperatures(self) -> int:
+        """
+        The moderator temperature values
+        """
+    @property
+    def scattering_kernels(self) -> list[ScatteringKernel]:
+        """
+        The scattering kernels
+        """
+    @scattering_kernels.setter
+    def scattering_kernels(self, arg1: list[ScatteringKernel]) -> None:
+        ...
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
+        ...
 class ScatteringKernel:
     """
     An S(a,b) scattering kernel using the short collision time approximation

@@ -107,6 +107,7 @@ add_cpp_test( dryad.thermal.IncoherentElasticAngularPdf                         
 add_cpp_test( dryad.thermal.IncoherentElasticAngularCdf                                dryad/thermal/IncoherentElasticAngularCdf.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticAngularDistribution                       dryad/thermal/IncoherentElasticAngularDistribution.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticScattering                                dryad/thermal/IncoherentElasticScattering.test.cpp )
+add_cpp_test( dryad.thermal.IncoherentInelasticScattering                              dryad/thermal/IncoherentInelasticScattering.test.cpp )
 
 add_cpp_test( dryad.Documentation                                                      dryad/Documentation.test.cpp )
 

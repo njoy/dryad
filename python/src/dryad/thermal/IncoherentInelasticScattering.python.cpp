@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
+#include "njoy/dryad/thermal/IncoherentInelasticScattering.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,11 +12,11 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapIncoherentElasticScattering( python::module& module ) {
+void wrapIncoherentInelasticScattering( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::thermal::IncoherentElasticScattering;
-  using DebyeWallerIntegralData = njoy::dryad::thermal::DebyeWallerIntegralData;
+  using Component = njoy::dryad::thermal::IncoherentInelasticScattering;
+  using ScatteringKernel = njoy::dryad::thermal::ScatteringKernel;
 
   // wrap views created by this component
 
@@ -24,29 +24,27 @@ void wrapIncoherentElasticScattering( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "IncoherentElasticScattering",
-    "Incoherent elastic thermal scattering data\n\n"
+    "IncoherentInelasticScattering",
+    "Incoherent inelastic thermal scattering data\n\n"
     "Parameters\n"
     "----------\n"
     "    lower : float\n"
     "        the lower energy limit\n"
     "    upper : float\n"
     "        the upper energy limit\n"
-    "    xs : float\n"
-    "        the bound atom cross section\n"
-    "    debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData\n"
-    "        the Debye-Waller integral data"
+    "    kernels : list of njoy.dryad.thermal.ScatteringKernel\n"
+    "        the scattering kernels"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< double, double, double,
-                  DebyeWallerIntegralData >(),
+    python::init< double, double,
+                  std::vector< ScatteringKernel > >(),
     python::arg( "lower" ), python::arg( "upper" ),
-    python::arg( "xs" ), python::arg( "debye_waller_integral" ),
-    "Initialise the incoherent elastic scattering data"
+    python::arg( "kernels" ),
+    "Initialise the incoherent inelastic scattering data"
   )
   .def_property(
 
@@ -76,43 +74,33 @@ void wrapIncoherentElasticScattering( python::module& module ) {
   )
   .def_property(
 
-    "bound_cross_section",
-    python::overload_cast<>( &Component::boundCrossSection, python::const_ ),
-    python::overload_cast< double >( &Component::boundCrossSection ),
-    "The bound atom cross section value"
-  )
-  .def_property(
-
-    "debye_waller_integral",
-    python::overload_cast<>( &Component::debyeWallerIntegral, python::const_ ),
-    python::overload_cast< DebyeWallerIntegralData >( &Component::debyeWallerIntegral ),
-    "The Debye-Waller integral data"
+    "scattering_kernels",
+    python::overload_cast<>( &Component::scatteringKernels, python::const_ ),
+    python::overload_cast< std::vector< ScatteringKernel > >( &Component::scatteringKernels ),
+    "The scattering kernels"
   )
   .def(
 
-    "cross_section",
-    &Component::crossSection,
+    "has_scattering_kernel",
+    &Component::hasScatteringKernel,
     python::arg( "temperature" ),
-    "Return the incoherent elastic scattering cross section for a given temperature\n\n"
+    "Return whether or not there is a scattering kernel for a given temperature\n\n"
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "        the moderator temperature for which the cross section is requested"
+    "        the moderator temperature"
   )
   .def(
 
-    "angular_distribution",
-    &Component::angularDistribution,
-    python::arg( "incident" ),
+    "scattering_kernel",
+    &Component::scatteringKernel,
     python::arg( "temperature" ),
-    "Return the incoherent elastic scattering angular distribution for a given\n"
-    "incident energy and temperature\n\n"
+    "Return the scattering kernel for a given temperature\n\n"
     "Parameters\n"
     "----------\n"
-    "    incident : float\n"
-    "        the incident energy\n"
     "    temperature : float\n"
-    "        the moderator temperature for which the angular distribution is requested"
+    "        the moderator temperature",
+    python::return_value_policy::reference_internal
   );
 
   // add standard equality comparison definitions

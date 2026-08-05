@@ -83,31 +83,31 @@ def verify_distribution( self, chunk ) :
 
     distribution = chunk.angular_distribution( incident = 1e-5, temperature = 400 )
     self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
-    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+    self.assertAlmostEqual( 2.677764, distribution.debye_waller_integral )
 
     distribution = chunk.angular_distribution( incident = 1e-5, temperature = 500 )
     self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
-    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+    self.assertAlmostEqual( 3.323456, distribution.debye_waller_integral )
 
     distribution = chunk.angular_distribution( incident = 1e-5, temperature = 600 )
     self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
-    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+    self.assertAlmostEqual( 3.972601, distribution.debye_waller_integral )
 
     distribution = chunk.angular_distribution( incident = 1e-5, temperature = 700 )
     self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
-    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+    self.assertAlmostEqual( 4.623738, distribution.debye_waller_integral )
 
     distribution = chunk.angular_distribution( incident = 1e-5, temperature = 800 )
     self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
-    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+    self.assertAlmostEqual( 5.276127, distribution.debye_waller_integral )
 
     distribution = chunk.angular_distribution( incident = 1e-5, temperature = 1000 )
     self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
-    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+    self.assertAlmostEqual( 6.583171, distribution.debye_waller_integral )
 
     distribution = chunk.angular_distribution( incident = 1e-5, temperature = 1200 )
     self.assertAlmostEqual( 1e-5    , distribution.incident_energy )
-    self.assertAlmostEqual( 2.013538, distribution.debye_waller_integral )
+    self.assertAlmostEqual( 7.891981, distribution.debye_waller_integral )
 
 class Test_IncoherentElasticScattering( unittest.TestCase ) :
     """Unit test for the IncoherentElasticScattering class."""
@@ -125,6 +125,7 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
         verify_xs( self, chunk )
+        verify_distribution( self, chunk )
 
     def test_setter_functions( self ) :
 
@@ -137,7 +138,31 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
                                             [ 2.013538, 2.677764, 3.323456, 3.972601,
                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) )
 
-        # the awr can be changed
+        # the lower energy limit can be changed
+        newlimit = 1e-4
+        original = 1e-5
+
+        chunk.lower_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.lower_energy_limit )
+
+        chunk.lower_energy_limit = original
+
+        verify_chunk( self, chunk )
+
+        # the upper energy limit can be changed
+        newlimit = 7.5
+        original = 10.
+
+        chunk.upper_energy_limit = newlimit
+
+        self.assertEqual( newlimit, chunk.upper_energy_limit )
+
+        chunk.upper_energy_limit = original
+
+        verify_chunk( self, chunk )
+
+        # the bound xs can be changed
         newxs = 25.
         original = 6.337872
 
@@ -149,7 +174,7 @@ class Test_IncoherentElasticScattering( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
-        # the library can be changed
+        # the integral values can be changed
         newintegral = DebyeWallerIntegralData(
                        [ 296, 1200 ],
                        [ 2.013538, 7.891981 ] )
