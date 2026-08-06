@@ -22,9 +22,10 @@ namespace resonances {
   /**
    *  @brief Insert resonance parameters into a gnds node
    *
-   *  @param[in,out] parent      the parent node
-   *  @param[in]     option      the gnds write options
-   *  @param[in]     spingroup   the spin group with the parameters to be written out
+   *  @param[in,out] parent                   the parent node
+   *  @param[in]     option                   the gnds write options
+   *  @param[in]     spingroup                the spin group with the parameters to be written out
+   *  @param[in]     reducedWidthAmplitudes   use reduced width amplitudes
    */
   inline pugi::xml_node
   insertResonanceParameters( pugi::xml_node& parent,
