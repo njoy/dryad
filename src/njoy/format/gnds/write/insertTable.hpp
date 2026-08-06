@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_WRITE_INSERTTABLE
 
 // system includes
+#include <algorithm>
 #include <optional>
 #include <string>
 #include <vector>
