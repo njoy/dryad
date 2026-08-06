@@ -21,7 +21,7 @@ namespace write {
 namespace resonances {
 
   /**
-   *  @brief Insert a multiplicity into a gnds node
+   *  @brief Insert a radius into a gnds node
    *
    *  @param[in,out] parent   the parent node
    *  @param[in]     option   the gnds write options
