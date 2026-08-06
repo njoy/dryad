@@ -422,6 +422,9 @@ add_cpp_test( format.gnds.write.insertData                                      
 add_cpp_test( format.gnds.write.insertColumn                                           format/gnds/write/insertColumn.test.cpp )
 add_cpp_test( format.gnds.write.insertColumnHeaders                                    format/gnds/write/insertColumnHeaders.test.cpp )
 add_cpp_test( format.gnds.write.insertTable                                            format/gnds/write/insertTable.test.cpp )
+
+add_cpp_test( format.gnds.write.resonances.insertScatteringRadius                      format/gnds/write/resonances/insertScatteringRadius.test.cpp )
+add_cpp_test( format.gnds.write.resonances.insertHardSphereRadius                      format/gnds/write/resonances/insertHardSphereRadius.test.cpp )
 add_cpp_test( format.gnds.write.insertDocumentation                                    format/gnds/write/insertDocumentation.test.cpp )
 add_cpp_test( format.gnds.write.insertCrossSection                                     format/gnds/write/insertCrossSection.test.cpp )
 add_cpp_test( format.gnds.write.insertMultiplicity                                     format/gnds/write/insertMultiplicity.test.cpp )
