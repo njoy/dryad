@@ -67,6 +67,11 @@ void verifyChunkAl27( const resonances::CompoundSystem& chunk ) {
   CHECK_THAT( 1e-5  , WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 845000, WithinRel( chunk.upperEnergyLimit() ) );
 
+  // options
+  CHECK( resonances::Formalism::ReichMoore == chunk.formalism() );
+  CHECK( resonances::BoundaryCondition::ShiftFactor == chunk.boundaryCondition() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk.kinematicsType() );
+
   // spin groups
   auto groups = chunk.spinGroups();
   CHECK( 10 == groups.size() );

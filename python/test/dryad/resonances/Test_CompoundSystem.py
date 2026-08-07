@@ -48,6 +48,10 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
     self.assertAlmostEqual( 2e+3, chunk.upper_energy_limit )
 
+    self.assertEqual( Formalism.ReichMoore, chunk.formalism )
+    self.assertEqual( BoundaryCondition.ShiftFactor, chunk.boundary_condition )
+    self.assertEqual( Kinematics.NonRelativistic, chunk.kinematics_type )
+
     self.assertEqual( 3, len( chunk.reactions ) )
     self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
     self.assertEqual( ReactionID( 'n,Cl35->n,Cl35'      ), chunk.reactions[1] )
