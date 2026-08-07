@@ -57,7 +57,7 @@ SCENARIO( "insertResonanceParameters" ) {
     THEN( "a resonanceParameters node can be inserted" ) {
 
       pugi::xml_document parent;
-      auto node = gnds::write::resonances::insertResonanceParameters( parent, options, group, true );
+      auto node = gnds::write::resonances::rmatrix::insertResonanceParameters( parent, options, group, true );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -72,7 +72,7 @@ SCENARIO( "insertResonanceParameters" ) {
     THEN( "a resonanceParameters node can be inserted" ) {
 
       pugi::xml_document parent;
-      auto node = gnds::write::resonances::insertResonanceParameters( parent, options, group, false );
+      auto node = gnds::write::resonances::rmatrix::insertResonanceParameters( parent, options, group, false );
 
       std::ostringstream out;
       node.print( out, "  " );
