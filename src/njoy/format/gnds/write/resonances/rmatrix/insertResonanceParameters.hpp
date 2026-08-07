@@ -18,6 +18,7 @@ namespace format {
 namespace gnds {
 namespace write {
 namespace resonances {
+namespace rmatrix {
 
   /**
    *  @brief Insert resonance parameters into a gnds node
@@ -75,6 +76,7 @@ namespace resonances {
     return node;
   }
 
+} // rmatrix namespace
 } // resonances namespace
 } // read namespace
 } // gnds namespace

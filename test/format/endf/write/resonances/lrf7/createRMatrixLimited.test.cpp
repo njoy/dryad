@@ -29,105 +29,105 @@ SCENARIO( "createRMatrixLimited" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-    auto photon = id::ParticleID::photon();
-    auto neutron = id::ParticleID::neutron();
-    auto si29 = id::ParticleID( "Si29" );
-    auto si30 = id::ParticleID( "Si30[all]" );
+      auto photon = id::ParticleID::photon();
+      auto neutron = id::ParticleID::neutron();
+      auto si29 = id::ParticleID( "Si29" );
+      auto si30 = id::ParticleID( "Si30[all]" );
 
-    resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                                          Particle( si30, 29.728 * njoy::constants::neutron_mass, 0, +1 ) );
-    resonances::ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
-                                           Particle( si29, 28.728 * njoy::constants::neutron_mass, 0.5, +1 ) );
+      resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                            Particle( si30, 29.728 * njoy::constants::neutron_mass, 0, +1 ) );
+      resonances::ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
+                                             Particle( si29, 28.728 * njoy::constants::neutron_mass, 0.5, +1 ) );
 
-    resonances::ChannelRadii zero_radii( 0., 0. );
-    resonances::ChannelRadii radii( 4.221, 4.221 );
+      resonances::ChannelRadii zero_radii( 0., 0. );
+      resonances::ChannelRadii radii( 4.221, 4.221 );
 
-    resonances::CompoundSystem compound( 1e-5, 1.3e+6,
-                                         { { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
-                                                 neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
-                                               { id::ChannelID( "n,Si29->n,Si29{1,1,0-}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii } },
-                                             { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{1,1,0-}" ) },
-                                               { 3.740320e+5, 6.007182e+5 },
-                                               { { 1., 2. },
-                                                 { 1.1, 2.1 } } },
-                                             resonances::Formalism::ReichMoore,
-                                             resonances::BoundaryCondition::ShiftFactor }, // 0- spin group
-                                           { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0+}" ),
-                                                 neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
-                                               { id::ChannelID( "n,Si29->n,Si29{0,0,0+}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii } },
-                                             { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{0,0,0+}" ) },
-                                               { -2.041700e+6, 2.248487e+6 },
-                                               { { 3., 4. },
-                                                 { 3.1, 4.1 } } },
-                                             resonances::Formalism::ReichMoore,
-                                             resonances::BoundaryCondition::ShiftFactor }, // 0+ spin group
-                                           { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1-}" ),
-                                                 neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
-                                               { id::ChannelID( "n,Si29->n,Si29{1,0,1-}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii },
-                                               { id::ChannelID( "n,Si29->n,Si29{1,1,1-}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii } },
-                                             { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1-}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{1,0,1-}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{1,1,1-}" ) },
-                                               { 1.529411e+4, 1.240000e+6 },
-                                               { { 5., 6. },
-                                                 { 5.1, 6.1 },
-                                                 { 5.2, 6.2 } } },
-                                             resonances::Formalism::ReichMoore,
-                                             resonances::BoundaryCondition::ShiftFactor }, // 1- spin group
-                                           { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1+}" ),
-                                                 neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
-                                               { id::ChannelID( "n,Si29->n,Si29{0,1,1+}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii },
-                                               { id::ChannelID( "n,Si29->n,Si29{2,1,1+}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii } },
-                                             { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1+}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{0,1,1+}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{2,1,1+}" ) },
-                                               { 3.842219e+5, 1.388859e+6 },
-                                               { { 7., 8. },
-                                                 { 7.1, 8.1 },
-                                                 { 7.2, 8.2 } } },
-                                             resonances::Formalism::ReichMoore,
-                                             resonances::BoundaryCondition::ShiftFactor }, // 1+ spin group
-                                           { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
-                                                 neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
-                                               { id::ChannelID( "n,Si29->n,Si29{1,1,2-}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii } },
-                                             { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{1,1,2-}" ) },
-                                               { 3.883377e+4, 1.207629e+6 },
-                                               { { 9., 10. },
-                                                 { 9.1, 10.1 } } },
-                                             resonances::Formalism::ReichMoore,
-                                             resonances::BoundaryCondition::ShiftFactor }, // 2- spin group
-                                           { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2+}" ),
-                                                 neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
-                                               { id::ChannelID( "n,Si29->n,Si29{2,0,2+}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii },
-                                               { id::ChannelID( "n,Si29->n,Si29{2,1,2+}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii } },
-                                             { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2+}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{2,0,2+}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{2,1,2+}" ) } }, // empty table
-                                             resonances::Formalism::ReichMoore,
-                                             resonances::BoundaryCondition::ShiftFactor }, // 2+ spin group
-                                           { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
-                                                 neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
-                                               { id::ChannelID( "n,Si29->n,Si29{2,1,3+}" ),
-                                                 neutron_pair, neutron_pair, 0., std::nullopt, radii } },
-                                             { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
-                                                 id::ChannelID( "n,Si29->n,Si29{2,1,3+}" ) },
-                                               { 6.203529e+5 },
-                                               { { 11. },
-                                                 { 11.1 } } },
-                                             resonances::Formalism::ReichMoore,
-                                             resonances::BoundaryCondition::ShiftFactor } } ); // 3+ spin group
+      resonances::CompoundSystem compound( 1e-5, 1.3e+6,
+                                           { { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
+                                                 { id::ChannelID( "n,Si29->n,Si29{1,1,0-}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                               { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{1,1,0-}" ) },
+                                                 { 3.740320e+5, 6.007182e+5 },
+                                                 { { 1., 2. },
+                                                   { 1.1, 2.1 } } },
+                                               resonances::Formalism::ReichMoore,
+                                               resonances::BoundaryCondition::ShiftFactor }, // 0- spin group
+                                             { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0+}" ),
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
+                                                 { id::ChannelID( "n,Si29->n,Si29{0,0,0+}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                               { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{0,0,0+}" ) },
+                                                 { -2.041700e+6, 2.248487e+6 },
+                                                 { { 3., 4. },
+                                                   { 3.1, 4.1 } } },
+                                               resonances::Formalism::ReichMoore,
+                                               resonances::BoundaryCondition::ShiftFactor }, // 0+ spin group
+                                             { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1-}" ),
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
+                                                 { id::ChannelID( "n,Si29->n,Si29{1,0,1-}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii },
+                                                 { id::ChannelID( "n,Si29->n,Si29{1,1,1-}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                               { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1-}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{1,0,1-}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{1,1,1-}" ) },
+                                                 { 1.529411e+4, 1.240000e+6 },
+                                                 { { 5., 6. },
+                                                   { 5.1, 6.1 },
+                                                   { 5.2, 6.2 } } },
+                                               resonances::Formalism::ReichMoore,
+                                               resonances::BoundaryCondition::ShiftFactor }, // 1- spin group
+                                             { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1+}" ),
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
+                                                 { id::ChannelID( "n,Si29->n,Si29{0,1,1+}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii },
+                                                 { id::ChannelID( "n,Si29->n,Si29{2,1,1+}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                               { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1+}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{0,1,1+}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{2,1,1+}" ) },
+                                                 { 3.842219e+5, 1.388859e+6 },
+                                                 { { 7., 8. },
+                                                   { 7.1, 8.1 },
+                                                   { 7.2, 8.2 } } },
+                                               resonances::Formalism::ReichMoore,
+                                               resonances::BoundaryCondition::ShiftFactor }, // 1+ spin group
+                                             { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
+                                                 { id::ChannelID( "n,Si29->n,Si29{1,1,2-}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                               { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{1,1,2-}" ) },
+                                                 { 3.883377e+4, 1.207629e+6 },
+                                                 { { 9., 10. },
+                                                   { 9.1, 10.1 } } },
+                                               resonances::Formalism::ReichMoore,
+                                               resonances::BoundaryCondition::ShiftFactor }, // 2- spin group
+                                             { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2+}" ),
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
+                                                 { id::ChannelID( "n,Si29->n,Si29{2,0,2+}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii },
+                                                 { id::ChannelID( "n,Si29->n,Si29{2,1,2+}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                               { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2+}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{2,0,2+}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{2,1,2+}" ) } }, // empty table
+                                               resonances::Formalism::ReichMoore,
+                                               resonances::BoundaryCondition::ShiftFactor }, // 2+ spin group
+                                             { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
+                                                   neutron_pair, photon_pair, 0., std::nullopt, zero_radii, false },
+                                                 { id::ChannelID( "n,Si29->n,Si29{2,1,3+}" ),
+                                                   neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                               { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
+                                                   id::ChannelID( "n,Si29->n,Si29{2,1,3+}" ) },
+                                                 { 6.203529e+5 },
+                                                 { { 11. },
+                                                   { 11.1 } } },
+                                               resonances::Formalism::ReichMoore,
+                                               resonances::BoundaryCondition::ShiftFactor } } ); // 3+ spin group
 
       THEN( "it can be converted to ENDF" ) {
 
