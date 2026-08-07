@@ -30,3 +30,8 @@ Multiplicities
 Thermal scattering
 
 - check the domain of a TabulatedScatteringKernel (upper a must be the same)
+
+Resoance data
+
+- verify that the Q values for each channel accross spin groups are the same for a
+  given reaction.
