@@ -15,7 +15,7 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief Convert an inverse energy range from GNDS into 1/eV
+   *  @brief Convert an inverse energy value from GNDS into 1/eV
    *
    *  @param[in] value   the value to convert
    *  @param[in] unit    the unit of the value

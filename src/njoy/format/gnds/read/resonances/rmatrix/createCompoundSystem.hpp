@@ -50,6 +50,8 @@ namespace rmatrix {
     auto kinematics = dryad::resonances::Kinematics::NonRelativistic;
     auto boundary = createBoundaryCondition( rmatrix.attribute( "boundaryCondition" ).as_string() );
 
+    auto reduced_amplitudes = rmatrix.attribute( "reducedWidthAmplitudes" ).as_bool( false );
+
     auto identifiers = createParticleIdentifiers( projectile, target, rmatrix.child( "resonanceReactions" ) );
     dryad::ParticleDatabase local;
     auto node = rmatrix.child( "PoPs" );
@@ -62,8 +64,8 @@ namespace rmatrix {
     auto reactions = createResonanceReactions( projectile, target, rmatrix.child( "resonanceReactions" ),
                                                particles, radii, style );
 
-    auto groups = createSpinGroups( formalism, boundary, kinematics, reactions,
-                                    rmatrix.child( "spinGroups" ) );
+    auto groups = createSpinGroups( formalism, boundary, kinematics, reduced_amplitudes,
+                                    reactions, rmatrix.child( "spinGroups" ) );
 
     return dryad::resonances::CompoundSystem( lower, upper, std::move( groups ) );
   }

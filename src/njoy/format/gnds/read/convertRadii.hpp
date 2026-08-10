@@ -15,7 +15,7 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief Convert a range of radii from GNDS into fm
+   *  @brief Convert a radius range from GNDS into fm
    *
    *  @param[in] values   the values to convert
    *  @param[in] unit     the unit of the values

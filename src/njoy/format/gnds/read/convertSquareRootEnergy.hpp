@@ -15,22 +15,22 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief Convert an inverse energy value from GNDS into 1/eV
+   *  @brief Convert a square root energy from GNDS into eV^1/2
    *
    *  @param[in] value   the value to convert
    *  @param[in] unit    the unit of the value
    */
-  inline void convertInverseEnergy( double& value, const std::string& unit ) {
+  inline void convertSquareRootEnergy( double& value, const std::string& unit ) {
 
-    if ( unit != "1/eV" ) {
+    if ( unit != "eV**(1/2)" ) {
 
-      if ( unit == "1/MeV" ) {
+      if ( unit == "MeV**(1/2)" ) {
 
-        value *= constants::micro;
+        value *= constants::mili;
       }
       else {
 
-        Log::error( "Cannot convert inverse energy with unit \'{}\' to 1/eV, "
+        Log::error( "Cannot convert square root energy with unit \'{}\' to eV**(1/2), "
                     "contact njoy developers", unit );
         throw std::exception();
       }

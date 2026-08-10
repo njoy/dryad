@@ -11,6 +11,7 @@
 #include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/convertSquareRootEnergies.hpp"
 #include "njoy/format/gnds/read/readTable.hpp"
 #include "njoy/format/gnds/read/readFractionFromString.hpp"
 #include "njoy/format/gnds/read/resonances/rmatrix/createChannels.hpp"
@@ -27,12 +28,14 @@ namespace rmatrix {
    *
    *  @param[in] boundary_condition   the gnds boundary condition option
    *  @param[in] kinematics           the kinematics type to be applied
+   *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
    *  @param[in] reactions            the resonance reaction information from the GNDS file
    *  @param[in] group                the GNDS spin group xml node
    */
   inline auto createChannelData(
                   const BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
+                  bool reduced_amplitudes,
                   const ResonanceReactions& reactions,
                   const pugi::xml_node& group ) {
 
@@ -53,12 +56,16 @@ namespace rmatrix {
     auto parameters = readTable( group.child( "resonanceParameters" ).child( "table" ) );
     convertEnergies( std::get< 1 >( parameters[0] ), std::get< 2 >( parameters[0] ).value() );
 
-    bool reduced_amplitudes = false;
     for ( std::size_t i = 1; i < parameters.size(); ++i ) {
 
-      //! @todo check for reduced amplitude widths
+      if ( reduced_amplitudes ) {
 
-      convertEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+        convertSquareRootEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+      }
+      else {
+
+        convertEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+      }
     }
 
     // loop over the channels
