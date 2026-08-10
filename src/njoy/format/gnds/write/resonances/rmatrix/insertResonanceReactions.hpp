@@ -30,7 +30,8 @@ namespace rmatrix {
    *  @param[in]     compound            the compound system to be written out
    *  @param[in]     qvalues             the default reaction q values
    *  @param[in]     label               the optional label for the node
-   *  @param[in]     fullResonanceData   include all resonance data even if it is duplicated (default is true)
+   *  @param[in]     fullResonanceData   include all resonance data even if it is optional
+   *                                     or duplicated (default is true)
    */
   inline pugi::xml_node
   insertResonanceReactions( pugi::xml_node& parent,
