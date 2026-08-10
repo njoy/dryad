@@ -27,7 +27,7 @@ namespace rmatrix {
       case dryad::resonances::BoundaryCondition::Constant    : return "Given";
       default : {
 
-        throw std::runtime_error( "You have somehow reached unreachable code, "
+        throw std::runtime_error( "You have somehow reached unreachable code for createBoundaryCondition, "
                                   "contact an njoy developer." );
       }
     }

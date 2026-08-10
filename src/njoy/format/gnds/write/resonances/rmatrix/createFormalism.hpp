@@ -27,7 +27,7 @@ namespace rmatrix {
       case dryad::resonances::Formalism::GeneralRMatrix  : return "FullRMatrix";
       default : {
 
-        throw std::runtime_error( "You have somehow reached unreachable code, "
+        throw std::runtime_error( "You have somehow reached unreachable code for createFormalism, "
                                   "contact an njoy developer." );
       }
     }
