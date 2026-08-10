@@ -65,7 +65,7 @@ SCENARIO( "insertResonanceParameters" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "a parent node and a spin group, using reduced widths" ) {
+  GIVEN( "a parent node and a spin group, using full widths" ) {
 
     gnds::write::Options options;
 

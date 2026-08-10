@@ -165,6 +165,12 @@ void wrapChannel( python::module& module ) {
     python::overload_cast< std::optional< double > >( &Component::boundaryCondition ),
     "The boundary condition value (if defined)"
   )
+  .def_property_readonly(
+
+    "has_background",
+    &Component::hasBackground,
+    "Flag indicating whether or not a background function is defined"
+  )
   .def_property(
 
     "background",

@@ -83,6 +83,9 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 1, chunk.total_angular_momentum )
     self.assertEqual( +1, chunk.parity )
 
+    self.assertEqual( 4, chunk.number_channels )
+    self.assertEqual( 4, chunk.number_energies )
+
     self.assertEqual( Kinematics.NonRelativistic, chunk.kinematics_type )
     self.assertEqual( False, chunk.has_channels_with_background )
 
