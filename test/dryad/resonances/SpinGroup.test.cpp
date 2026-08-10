@@ -268,6 +268,9 @@ void verifyChunk( const SpinGroup& chunk ) {
   CHECK( 1 == chunk.totalAngularMomentum() );
   CHECK( +1 == chunk.parity() );
 
+  CHECK( 4 == chunk.numberChannels() );
+  CHECK( 4 == chunk.numberEnergies() );
+
   CHECK( Kinematics::NonRelativistic == chunk.kinematicsType() );
   CHECK( false == chunk.hasChannelsWithBackground() );
 

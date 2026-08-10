@@ -224,6 +224,16 @@ namespace resonances {
         SpinGroup( createData( std::move( channels ) ), formalism, boundary ) {}
 
     /**
+     *  @brief Return the number of channels
+     */
+    std::size_t numberChannels() const { return this->channels().size(); }
+
+    /**
+     *  @brief Return the number of level energies
+     */
+    std::size_t numberEnergies() const { return this->resonanceTable().numberEnergies(); }
+
+    /**
      *  @brief Return the channels in the spin group
      */
     const std::vector< Channel >& channels() const {

@@ -12,75 +12,81 @@ namespace python = pybind11;
 namespace dryad {
 namespace resonances {
 
-  void wrapUnresolvedSpinGroup( python::module& module ) {
+void wrapUnresolvedSpinGroup( python::module& module ) {
 
-    // type aliases
-    using Component = njoy::dryad::resonances::UnresolvedSpinGroup;
-    using UnresolvedChannel = njoy::dryad::resonances::UnresolvedChannel;
-    using UnresolvedResonanceTable = njoy::dryad::resonances::UnresolvedResonanceTable;
-    using ReactionID = njoy::dryad::id::ReactionID;
+  // type aliases
+  using Component = njoy::dryad::resonances::UnresolvedSpinGroup;
+  using UnresolvedChannel = njoy::dryad::resonances::UnresolvedChannel;
+  using UnresolvedResonanceTable = njoy::dryad::resonances::UnresolvedResonanceTable;
+  using ReactionID = njoy::dryad::id::ReactionID;
 
-    // wrap views created by this component
+  // wrap views created by this component
 
-    // create the component
-    python::class_< Component > component(
+  // create the component
+  python::class_< Component > component(
 
-      module,
-      "UnresolvedSpinGroup",
-      "A spin group corresponding to a Jpi quantum number set in the\n"
-      "unresolved resonance region"
-     );
-    // wrap the component
-    component
-    .def(
+    module,
+    "UnresolvedSpinGroup",
+    "A spin group corresponding to a Jpi quantum number set in the\n"
+    "unresolved resonance region"
+   );
+  // wrap the component
+  component
+  .def(
 
-      python::init< std::vector< UnresolvedChannel >, UnresolvedResonanceTable >(),
-      python::arg( "channels" ), python::arg( "resonances" ),
-      "Initialise the unresolved spin group\n\n"
-      "If the channels are not sorted, they will get sorted through the order\n"
-      "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
-      "sorting order).\n\n"
-      "Arguments:\n"
-      "    self         the spin group\n"
-      "    channels     the channels in the spin group\n"
-      "    resonances   the unresolved resonance table of the spin group"
-    )
-    .def_property(
+    python::init< std::vector< UnresolvedChannel >, UnresolvedResonanceTable >(),
+    python::arg( "channels" ), python::arg( "resonances" ),
+    "Initialise the unresolved spin group\n\n"
+    "If the channels are not sorted, they will get sorted through the order\n"
+    "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
+    "sorting order).\n\n"
+    "Arguments:\n"
+    "    self         the spin group\n"
+    "    channels     the channels in the spin group\n"
+    "    resonances   the unresolved resonance table of the spin group"
+  )
+  .def_property_readonly(
 
-      "channels",
-      python::overload_cast<>( &Component::channels, python::const_ ),
-      python::overload_cast< std::vector< UnresolvedChannel > >( &Component::channels ),
-      "The channels in the spin group"
-    )
-    .def_property(
+    "number_channels",
+    &Component::numberChannels,
+    "The number of channels"
+  )
+  .def_property(
 
-      "resonance_table",
-      python::overload_cast<>( &Component::resonanceTable, python::const_ ),
-      python::overload_cast< UnresolvedResonanceTable >( &Component::resonanceTable ),
-      "The unresolved resonance table of the spin group"
-    )
-    .def_property_readonly(
+    "channels",
+    python::overload_cast<>( &Component::channels, python::const_ ),
+    python::overload_cast< std::vector< UnresolvedChannel > >( &Component::channels ),
+    "The channels in the spin group"
+  )
+  .def_property(
 
-      "total_angular_momentum",
-      &Component::totalAngularMomentum,
-      "The total angular momentum J of the channels"
-    )
-    .def_property_readonly(
+    "resonance_table",
+    python::overload_cast<>( &Component::resonanceTable, python::const_ ),
+    python::overload_cast< UnresolvedResonanceTable >( &Component::resonanceTable ),
+    "The unresolved resonance table of the spin group"
+  )
+  .def_property_readonly(
 
-      "parity",
-      &Component::parity,
-      "The parity"
-    )
-    .def_property_readonly(
+    "total_angular_momentum",
+    &Component::totalAngularMomentum,
+    "The total angular momentum J of the channels"
+  )
+  .def_property_readonly(
 
-      "reactions",
-      python::overload_cast<>( &Component::reactions, python::const_ ),
-      "The reactions to which this spin group contributes"
-    );
+    "parity",
+    &Component::parity,
+    "The parity"
+  )
+  .def_property_readonly(
 
-    addStandardEqualityComparisonDefinitions< Component >( component );
-    addStandardCopyDefinitions< Component >( component );
-  }
+    "reactions",
+    python::overload_cast<>( &Component::reactions, python::const_ ),
+    "The reactions to which this spin group contributes"
+  );
+
+  addStandardEqualityComparisonDefinitions< Component >( component );
+  addStandardCopyDefinitions< Component >( component );
+}
 
 } // resonances namespace
 } // dryad namespace

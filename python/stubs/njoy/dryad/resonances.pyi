@@ -223,6 +223,11 @@ class Channel:
     def channel_radii(self, arg1: ChannelRadii) -> None:
         ...
     @property
+    def has_background(self) -> bool:
+        """
+        Flag indicating whether or not a background function is defined
+        """
+    @property
     def has_penetrability(self) -> bool:
         """
         Flag indicating whether or not there is a penetrability implementation
@@ -1519,6 +1524,16 @@ class SpinGroup:
         The kinematics type applied to the spin group
         """
     @property
+    def number_channels(self) -> int:
+        """
+        The number of channels
+        """
+    @property
+    def number_energies(self) -> int:
+        """
+        The number of level energies in the table
+        """
+    @property
     def parity(self) -> int:
         """
         The parity
@@ -2525,6 +2540,11 @@ class UnresolvedSpinGroup:
     @channels.setter
     def channels(self, arg1: list[UnresolvedChannel]) -> None:
         ...
+    @property
+    def number_channels(self) -> int:
+        """
+        The number of channels
+        """
     @property
     def parity(self) -> int:
         """
