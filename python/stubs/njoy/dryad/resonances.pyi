@@ -593,6 +593,21 @@ class CompoundSystem:
                 the energy values
         """
     @property
+    def boundary_condition(self) -> BoundaryCondition:
+        """
+        The boundary condition option
+        """
+    @property
+    def formalism(self) -> Formalism:
+        """
+        The formalism
+        """
+    @property
+    def kinematics_type(self) -> Kinematics:
+        """
+        The kinematics type applied to the spin group
+        """
+    @property
     def lower_energy_limit(self) -> float:
         """
         The lower energy limit

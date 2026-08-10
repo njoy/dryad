@@ -255,6 +255,10 @@ void verifyChunk( const CompoundSystem& chunk ) {
   CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 2e+3, WithinRel( chunk.upperEnergyLimit() ) );
 
+  CHECK( Formalism::ReichMoore == chunk.formalism() );
+  CHECK( BoundaryCondition::ShiftFactor == chunk.boundaryCondition() );
+  CHECK( Kinematics::NonRelativistic == chunk.kinematicsType() );
+
   auto reactions = chunk.reactions();
 
   CHECK( 3 == reactions.size() );

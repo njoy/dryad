@@ -35,7 +35,7 @@ SCENARIO( "insertAxis" ) {
       CHECK( out.str() == chunk1() );
     } // THEN
 
-    THEN( "a double node can be inserted - no unit" ) {
+    THEN( "an axis node can be inserted - no unit" ) {
 
       pugi::xml_document parent;
       auto node = gnds::write::insertAxis( parent, options, "energy", 0, std::nullopt );
@@ -45,7 +45,7 @@ SCENARIO( "insertAxis" ) {
       CHECK( out.str() == chunk2() );
     } // THEN
 
-    THEN( "a double node can be inserted - no index" ) {
+    THEN( "an axis node can be inserted - no index" ) {
 
       pugi::xml_document parent;
       auto node = gnds::write::insertAxis( parent, options, "energy", std::nullopt, "eV" );
@@ -55,7 +55,7 @@ SCENARIO( "insertAxis" ) {
       CHECK( out.str() == chunk3() );
     } // THEN
 
-    THEN( "a double node can be inserted - index and unit" ) {
+    THEN( "an axis node can be inserted - index and unit" ) {
 
       pugi::xml_document parent;
       auto node = gnds::write::insertAxis( parent, options, "energy", 0, "eV" );

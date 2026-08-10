@@ -61,6 +61,24 @@ void wrapCompoundSystem( python::module& module ) {
     python::overload_cast< double >( &Component::upperEnergyLimit ),
     "The upper energy limit"
   )
+  .def_property_readonly(
+
+    "formalism",
+    python::overload_cast<>( &Component::formalism, python::const_ ),
+    "The formalism"
+  )
+  .def_property_readonly(
+
+    "boundary_condition",
+    python::overload_cast<>( &Component::boundaryCondition, python::const_ ),
+    "The boundary condition option"
+  )
+  .def_property_readonly(
+
+    "kinematics_type",
+    python::overload_cast<>( &Component::kinematicsType, python::const_ ),
+    "The kinematics type applied to the spin group"
+  )
   .def_property(
 
     "spin_groups",

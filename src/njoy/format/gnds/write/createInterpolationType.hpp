@@ -29,8 +29,7 @@ namespace write {
       default : {
 
         throw std::runtime_error( "You have somehow reached unreachable code, "
-                                  "contact an njoy developer to claim your prize - "
-                                  "no prizes are guaranteed." );
+                                  "contact an njoy developer." );
       }
     }
   }

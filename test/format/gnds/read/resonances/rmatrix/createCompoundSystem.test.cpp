@@ -210,6 +210,11 @@ void verifyChunkSi29( const resonances::CompoundSystem& chunk ) {
   CHECK_THAT( 1e-5  , WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 1.3e+6, WithinRel( chunk.upperEnergyLimit() ) );
 
+  // options
+  CHECK( resonances::Formalism::ReichMoore == chunk.formalism() );
+  CHECK( resonances::BoundaryCondition::ShiftFactor == chunk.boundaryCondition() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk.kinematicsType() );
+
   // spin groups
   auto groups = chunk.spinGroups();
   CHECK( 7 == groups.size() );
@@ -1048,6 +1053,11 @@ void verifyChunkCu63( const resonances::CompoundSystem& chunk ) {
   CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 1e+5, WithinRel( chunk.upperEnergyLimit() ) );
 
+  // options
+  CHECK( resonances::Formalism::ReichMoore == chunk.formalism() );
+  CHECK( resonances::BoundaryCondition::Constant == chunk.boundaryCondition() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk.kinematicsType() );
+
   // spin groups
   auto groups = chunk.spinGroups();
   CHECK( 6 == groups.size() );
@@ -1766,6 +1776,11 @@ void verifyChunkCl35( const resonances::CompoundSystem& chunk ) {
   // energies
   CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 1.2e+6, WithinRel( chunk.upperEnergyLimit() ) );
+
+  // options
+  CHECK( resonances::Formalism::ReichMoore == chunk.formalism() );
+  CHECK( resonances::BoundaryCondition::ShiftFactor == chunk.boundaryCondition() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk.kinematicsType() );
 
   // spin groups
   auto groups = chunk.spinGroups();
@@ -2728,6 +2743,11 @@ void verifyChunkSr88( const resonances::CompoundSystem& chunk ) {
   CHECK_THAT( 1e-5  , WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 9.5e+5, WithinRel( chunk.upperEnergyLimit() ) );
 
+  // options
+  CHECK( resonances::Formalism::ReichMoore == chunk.formalism() );
+  CHECK( resonances::BoundaryCondition::ShiftFactor == chunk.boundaryCondition() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk.kinematicsType() );
+
   // spin groups
   auto groups = chunk.spinGroups();
   CHECK( 7 == groups.size() );
@@ -3481,6 +3501,11 @@ void verifyChunkAl27( const resonances::CompoundSystem& chunk ) {
   // energies
   CHECK_THAT( 1e-5  , WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 845000, WithinRel( chunk.upperEnergyLimit() ) );
+
+  // options
+  CHECK( resonances::Formalism::ReichMoore == chunk.formalism() );
+  CHECK( resonances::BoundaryCondition::ShiftFactor == chunk.boundaryCondition() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk.kinematicsType() );
 
   // spin groups
   auto groups = chunk.spinGroups();
