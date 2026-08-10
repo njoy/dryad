@@ -88,7 +88,7 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
-} // read namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace

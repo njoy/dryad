@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTRESONANCEREACTIONS
-#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTRESONANCEREACTIONS
+#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTCHANNELS
+#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTCHANNELS
 
 // system includes
 #include <map>
@@ -76,7 +76,7 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
-} // read namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace
