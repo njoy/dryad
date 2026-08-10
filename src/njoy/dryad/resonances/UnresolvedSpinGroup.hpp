@@ -178,7 +178,6 @@ namespace resonances {
       return this->table_;
     }
 
-<<<<<<< HEAD
     /**
      *  @brief Return the resonance table
      */
