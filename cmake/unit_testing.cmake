@@ -431,6 +431,7 @@ add_cpp_test( format.gnds.write.resonances.rmatrix.insertResonanceParameters    
 add_cpp_test( format.gnds.write.resonances.rmatrix.insertResonanceReactions            format/gnds/write/resonances/rmatrix/insertResonanceReactions.test.cpp )
 add_cpp_test( format.gnds.write.resonances.rmatrix.insertExternalRMatrix               format/gnds/write/resonances/rmatrix/insertExternalRMatrix.test.cpp )
 add_cpp_test( format.gnds.write.resonances.rmatrix.insertChannels                      format/gnds/write/resonances/rmatrix/insertChannels.test.cpp )
+add_cpp_test( format.gnds.write.resonances.rmatrix.insertSpinGroup                     format/gnds/write/resonances/rmatrix/insertSpinGroup.test.cpp )
 add_cpp_test( format.gnds.write.insertDocumentation                                    format/gnds/write/insertDocumentation.test.cpp )
 add_cpp_test( format.gnds.write.insertCrossSection                                     format/gnds/write/insertCrossSection.test.cpp )
 add_cpp_test( format.gnds.write.insertMultiplicity                                     format/gnds/write/insertMultiplicity.test.cpp )
