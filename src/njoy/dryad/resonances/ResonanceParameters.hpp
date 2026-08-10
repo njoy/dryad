@@ -50,7 +50,7 @@ namespace resonances {
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved,
                          std::optional< UnresolvedCompoundSystem > unresolved=std::nullopt ) :
-        resolved_( std::move( resolved ) ) 
+        resolved_( std::move( resolved ) ),
         unresolved_( std::move( unresolved ) ) {}
 
 

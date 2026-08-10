@@ -173,7 +173,6 @@ namespace resonances {
       return this->table_;
     }
 
-<<<<<<< HEAD
     /**
      *  @brief Return the resonance table
      */
@@ -232,13 +231,6 @@ namespace resonances {
       return this->channels().front().quantumNumbers().totalAngularMomentum();
     }
 
-    /**
-     *  @brief Return the parity of the spin group
-     */
-    short parity() const {
-
-      return this->channels().front().quantumNumbers().parity();
-    }
 
     //! @todo average infinitely dilute cross sections from the average parameters.
     //        analog of SpinGroup::crossSections, but operating on the average
