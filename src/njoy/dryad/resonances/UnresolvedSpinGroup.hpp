@@ -139,6 +139,11 @@ namespace resonances {
     /* methods */
 
     /**
+     *  @brief Return the number of channels
+     */
+    std::size_t numberChannels() const { return this->channels().size(); }
+
+    /**
      *  @brief Return the channels in the spin group
      */
     const std::vector< UnresolvedChannel >& channels() const {

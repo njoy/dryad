@@ -469,6 +469,14 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return whether or not a background function is defined
+     */
+    bool hasBackground() const {
+
+      return this->background().has_value();
+    }
+
+    /**
      *  @brief Return the background function (if defined)
      */
     const std::optional< Background >& background() const {

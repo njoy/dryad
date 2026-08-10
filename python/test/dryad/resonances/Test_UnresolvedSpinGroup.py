@@ -88,6 +88,8 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 1, chunk.total_angular_momentum )
     self.assertEqual( +1, chunk.parity )
 
+    self.assertEqual( 4, chunk.number_channels )
+
     self.assertEqual( 4, len( chunk.reactions ) )
     self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
     self.assertEqual( ReactionID( 'n,Cl35->n,Cl35' ), chunk.reactions[1] )

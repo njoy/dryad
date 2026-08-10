@@ -69,6 +69,18 @@ void wrapSpinGroup( python::module& module ) {
     "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
     "sorting order)."
   )
+  .def_property_readonly(
+
+    "number_channels",
+    &Component::numberChannels,
+    "The number of channels"
+  )
+  .def_property_readonly(
+
+    "number_energies",
+    &Component::numberEnergies,
+    "The number of level energies in the table"
+  )
   .def_property(
 
     "channels",
