@@ -39,7 +39,7 @@ namespace write {
     return node;
   }
 
-} // read namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace

@@ -45,7 +45,7 @@ namespace write {
     }
     std::size_t number_rows = columns.front().size();
     if ( std::any_of( columns.begin(), columns.end(),
-                      [&] ( auto&& column ) { return number_rows == columns.size(); } ) ) {
+                      [&] ( auto&& column ) { return number_rows != column.size(); } ) ) {
 
       throw std::runtime_error( "Not every column has the same number of values" );
     }
@@ -60,7 +60,7 @@ namespace write {
     return node;
   }
 
-} // read namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace

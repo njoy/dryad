@@ -46,6 +46,8 @@ namespace rmatrix {
     std::vector< std::vector< double > > columns( nch + 1,
                                                   std::vector< double >( nrs ) );
 
+    std::string width_unit = reducedWidthAmplitudes ? "eV^1/2" : "eV";
+
     names[0] = "incidentEnergy";
     units[0] = "eV";
     columns[0] = table.energies();
@@ -54,7 +56,7 @@ namespace rmatrix {
     for ( std::size_t i = 0; i < nch; ++i ) {
 
       names[i+1] = table.channels()[i].symbol() + " width";
-      units[i+1] = reducedWidthAmplitudes ? "eV^1/2" : "eV";
+      units[i+1] = width_unit;
 
       for ( std::size_t j = 0; j < nrs; ++j ) {
 
@@ -78,7 +80,7 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
-} // read namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace
