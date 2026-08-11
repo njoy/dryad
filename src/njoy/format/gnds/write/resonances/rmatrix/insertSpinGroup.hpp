@@ -4,7 +4,6 @@
 // system includes
 #include <cmath>
 #include <map>
-#include <optional>
 #include <string>
 
 // other includes
