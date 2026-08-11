@@ -47,10 +47,7 @@ namespace resonances {
 
         for ( const dryad::id::ReactionID& id : region.reactions() ) {
 
-          if ( qvalues.find( id ) == qvalues.end() ) {
-
-            qvalues[id] = pt.reaction( id ).reactionQValue().value();
-          }
+          qvalues.try_emplace( id, pt.reaction( id ).reactionQValue().value() );
         }
 
         pugi::xml_node resolved = node.append_child( "resolved" );
