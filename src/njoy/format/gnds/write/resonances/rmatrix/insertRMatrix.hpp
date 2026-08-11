@@ -2,7 +2,6 @@
 #define NJOY_FORMAT_GNDS_WRITE_RESONANCES_RMATRIX_INSERTRMATRIX
 
 // system includes
-#include <optional>
 #include <string>
 #include <vector>
 
