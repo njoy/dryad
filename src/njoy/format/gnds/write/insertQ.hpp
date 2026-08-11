@@ -23,7 +23,7 @@ namespace write {
    *  @param[in]     q_value   the q value
    *  @param[in]     min       the lower domain limit
    *  @param[in]     max       the upper domain limit
-   *  @param[in]     label     the optional label for the node
+   *  @param[in]     style     the style label to be used
    */
   inline pugi::xml_node
   insertQ( pugi::xml_node& parent,
@@ -31,7 +31,7 @@ namespace write {
            double q_value,
            double min,
            double max,
-           const std::optional< std::string >& label = std::nullopt ) {
+           const std::string& style ) {
 
     pugi::xml_node node = parent.append_child( "Q" );
 
@@ -41,7 +41,7 @@ namespace write {
 
     insertConstant1d( node, options, q_value, min, max,
                       "incidentEnergy", "Q", "eV", "eV",
-                      label, std::nullopt );
+                      style, std::nullopt );
 
     return node;
   }

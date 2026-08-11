@@ -28,7 +28,7 @@ namespace resonances {
    *  @param[in]     radius   the scattering radius
    *  @param[in]     min      the lower domain limit
    *  @param[in]     max      the upper domain limit
-   *  @param[in]     label    the optional label for the node
+   *  @param[in]     style    the style label to be used
    */
   inline pugi::xml_node
   insertScatteringRadius( pugi::xml_node& parent,
@@ -36,7 +36,7 @@ namespace resonances {
                           const std::variant< double, dryad::resonances::TabulatedRadius >& radius,
                           double min,
                           double max,
-                          const std::optional< std::string >& label = std::nullopt ) {
+                          const std::string& style ) {
 
     pugi::xml_node node = parent.append_child( "scatteringRadius" );
 
@@ -47,13 +47,13 @@ namespace resonances {
       [&] ( double value ) -> pugi::xml_node {
 
         return insertConstant1d( node, options, value, min, max,
-                                 "incidentEnergy", "radius", "eV", "fm", label );
+                                 "incidentEnergy", "radius", "eV", "fm", style );
       },
       [&] ( const dryad::resonances::TabulatedRadius& table ) -> pugi::xml_node {
 
         return insertTabulatedFunction( node, options, table.energies(), table.values(),
                                         table.boundaries(), table.interpolants(),
-                                        "incidentEnergy", "radius", "eV", "fm", label );
+                                        "incidentEnergy", "radius", "eV", "fm", style );
       }
     };
 
