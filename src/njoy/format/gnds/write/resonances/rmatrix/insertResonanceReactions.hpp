@@ -29,7 +29,7 @@ namespace rmatrix {
    *  @param[in]     option              the gnds write options
    *  @param[in]     compound            the compound system to be written out
    *  @param[in]     qvalues             the default reaction q values
-   *  @param[in]     label               the optional label for the node
+   *  @param[in]     style               the style label to be used
    *  @param[in]     fullResonanceData   include all resonance data even if it is optional
    *                                     or duplicated (default is true)
    */
@@ -38,7 +38,7 @@ namespace rmatrix {
                             const Options& options,
                             const dryad::resonances::CompoundSystem& compound,
                             const std::map< dryad::id::ReactionID, double >& qvalues,
-                            const std::optional< std::string >& label = std::nullopt,
+                            const std::string& style,
                             bool fullResonanceData = true ) {
 
     pugi::xml_node node = parent.append_child( "resonanceReactions" );
@@ -68,7 +68,7 @@ namespace rmatrix {
 
             if ( fullResonanceData || channel.qValue() != qvalues.at( id ) ) {
 
-              insertQ( reaction, options, channel.qValue(), compound.lowerEnergyLimit(), compound.upperEnergyLimit(), label );
+              insertQ( reaction, options, channel.qValue(), compound.lowerEnergyLimit(), compound.upperEnergyLimit(), style );
             }
 
             found_q = true;

@@ -25,13 +25,13 @@ namespace write {
    *  @param[in,out] parent     the parent node
    *  @param[in]     option     the gnds write options
    *  @param[in]     reaction   the reaction
-   *  @param[in]     label     the optional label for the node
+   *  @param[in]     style      the style label to be used
    */
   inline pugi::xml_node
   insertOutputChannel( pugi::xml_node& parent,
                        const Options& options,
                        const dryad::Reaction& reaction,
-                       const std::optional< std::string >& label = std::nullopt ) {
+                       const std::string& style ) {
 
     pugi::xml_node node;
 
@@ -44,7 +44,7 @@ namespace write {
         insertQ( node, options, reaction.reactionQValue().value(),
                  reaction.crossSection().lowerEnergyLimit(),
                  reaction.crossSection().upperEnergyLimit(),
-                 label );
+                 style );
       }
 
       if ( reaction.hasProducts() ) {
@@ -61,14 +61,11 @@ namespace write {
             product_node.append_attribute( "pid" ) = product.productIdentifier().symbol();
             product_node.append_attribute( "label" ) = product.productIdentifier().symbol();
 
-            insertMultiplicity( product_node, options, product.multiplicity(), min, max, label );
+            insertMultiplicity( product_node, options, product.multiplicity(), min, max, style );
 
             auto distribution_node = product_node.append_child( "distribution" );
             distribution_node = distribution_node.append_child( "unspecified" );
-            if ( label.has_value() ) {
-
-              distribution_node.append_attribute( "label" ) = label.value();
-            }
+            distribution_node.append_attribute( "label" ) = style;
             distribution_node.append_attribute( "productFrame" ) = "lab";
           }
         }
