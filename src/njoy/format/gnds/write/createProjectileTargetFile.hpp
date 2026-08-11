@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
+#include "njoy/format/gnds/write/resonances/insertResonances.hpp"
 #include "njoy/format/gnds/write/createInteractionType.hpp"
 #include "njoy/format/gnds/write/insertProjectileEnergyDomain.hpp"
 #include "njoy/format/gnds/write/insertDocumentation.hpp"
@@ -70,6 +71,8 @@ namespace write {
       insertParticleDatabase( suite, options, transport.particleData().value(), style_label );
     }
 
+    pugi::xml_node resonances_node = resonances::insertResonances( suite, options, transport,
+                                                                   style_label, reducedWidthAmplitudes );
     pugi::xml_node reactions_node = insertReactions( suite, options, transport.reactions(),
                                                      transport.resonances(), style_label );
     pugi::xml_node sums_node = insertSums( suite, options, transport.reactions(),
