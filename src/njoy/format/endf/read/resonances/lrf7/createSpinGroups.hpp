@@ -50,7 +50,8 @@ namespace lrf7 {
     for ( const auto& group : endf.spinGroups() ) {
 
       // get the channel data in this spin group
-      auto data = lrf7::createChannelData( projectile, target, boundary_condition,
+      auto data = lrf7::createChannelData( projectile, target,
+                                           formalism, boundary_condition,
                                            kinematics, reduced_amplitudes,
                                            endf.particlePairs(), group );
 

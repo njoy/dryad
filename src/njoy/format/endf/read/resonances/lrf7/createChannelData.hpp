@@ -24,6 +24,7 @@ namespace lrf7 {
    *
    *  @param[in] projectile           the projectile identifier
    *  @param[in] target               the target identifier
+   *  @param[in] formalism            the formalism to be applied
    *  @param[in] boundary_condition   the boundary condition option
    *  @param[in] kinematics           the kinematics type to be applied
    *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
@@ -33,6 +34,7 @@ namespace lrf7 {
   inline auto createChannelData(
                   const dryad::id::ParticleID& projectile,
                   const dryad::id::ParticleID& target,
+                  const dryad::resonances::Formalism& formalism,
                   const dryad::resonances::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   bool reduced_amplitudes,
@@ -59,7 +61,7 @@ namespace lrf7 {
         amplitudes = format::createVector( endfSpinGroup.parameters().GAM(i) );
 
         // remove zero widths
-        auto is_zero= [] ( auto&& value ) { return value == 0.; };
+        auto is_zero = [] ( auto&& value ) { return value == 0.; };
         auto amplitude = std::find_if( amplitudes.begin(), amplitudes.end(), is_zero );
         while ( amplitude != amplitudes.end() ) {
 
@@ -91,8 +93,9 @@ namespace lrf7 {
       auto id = channels[i].identifier();
       auto is_elastic = id.reaction().target() == id.reaction().residual();
       auto is_capture = id.reaction().reactionType() == dryad::id::ReactionType( "capture" );
+      auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;
 
-      if ( amplitudes.size() > 0 || is_elastic || is_capture ) {
+      if ( amplitudes.size() > 0 || is_elastic || ( is_capture && is_reichmoore ) ) {
 
         dryad::resonances::ResonanceTable table( id, std::move( energies ), std::move( amplitudes ) );
         channel_data.emplace_back( std::move( channels[i] ), std::move( table ) );
