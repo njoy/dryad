@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_READ_CONVERTINVERSEENERGY
-#define NJOY_FORMAT_GNDS_READ_CONVERTINVERSEENERGY
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTSQUAREROOTENERGY
+#define NJOY_FORMAT_GNDS_READ_CONVERTSQUAREROOTENERGY
 
 // system includes
 #include <algorithm>
@@ -26,7 +26,7 @@ namespace read {
 
       if ( unit == "MeV**(1/2)" ) {
 
-        value *= constants::mili;
+        value *= constants::kilo;
       }
       else {
 

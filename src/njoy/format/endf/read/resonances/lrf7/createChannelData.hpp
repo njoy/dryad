@@ -49,6 +49,7 @@ namespace lrf7 {
                                           endfSpinGroup.background() );
 
     // go over all channels
+    auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;
     for ( unsigned int i = 0; i < channels.size(); ++i ) {
 
       // get the energies and amplitudes
@@ -93,7 +94,6 @@ namespace lrf7 {
       auto id = channels[i].identifier();
       auto is_elastic = id.reaction().target() == id.reaction().residual();
       auto is_capture = id.reaction().reactionType() == dryad::id::ReactionType( "capture" );
-      auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;
 
       if ( amplitudes.size() > 0 || is_elastic || ( is_capture && is_reichmoore ) ) {
 

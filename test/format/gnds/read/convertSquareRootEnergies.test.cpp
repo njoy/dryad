@@ -28,8 +28,8 @@ SCENARIO( "convertSquareRootEnergies" ) {
         values = { 1., 1000. };
         gnds::read::convertSquareRootEnergies( values, "MeV**(1/2)" );
         CHECK( 2 == values.size() );
-        CHECK( 1e-3 == values[0] );
-        CHECK( 1.   == values[1] );
+        CHECK( 1e+3 == values[0] );
+        CHECK( 1e+6 == values[1] );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {

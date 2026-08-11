@@ -71,6 +71,7 @@ namespace rmatrix {
     }
 
     // loop over the channels
+    auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;
     std::size_t current = 0;
     for ( pugi::xml_node channel = group.child( "channels" ).child( "channel" );
           channel; channel = channel.next_sibling( "channel" ) ) {
@@ -114,7 +115,6 @@ namespace rmatrix {
       auto id = channels[current].identifier();
       auto is_elastic = id.reaction().target() == id.reaction().residual();
       auto is_capture = id.reaction().reactionType() == dryad::id::ReactionType( "capture" );
-      auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;
 
       if ( amplitudes.size() > 0 || is_elastic || ( is_capture && is_reichmoore ) ) {
 

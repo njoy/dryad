@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_READ_CONVERTINVERSEENERGIES
-#define NJOY_FORMAT_GNDS_READ_CONVERTINVERSEENERGIES
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTSQUAREROOTENERGIES
+#define NJOY_FORMAT_GNDS_READ_CONVERTSQUAREROOTENERGIES
 
 // system includes
 #include <algorithm>
@@ -27,11 +27,11 @@ namespace read {
       if ( unit == "MeV**(1/2)" ) {
 
         std::for_each( values.begin(), values.end(),
-                       [] ( double& value ) { value *= constants::mili; } );
+                       [] ( double& value ) { value *= constants::kilo; } );
       }
       else {
 
-        Log::error( "Cannot convert inverse energy with unit \'{}\' to eV**(1/2), "
+        Log::error( "Cannot convert square root energy with unit \'{}\' to eV**(1/2), "
                     "contact njoy developers", unit );
         throw std::exception();
       }

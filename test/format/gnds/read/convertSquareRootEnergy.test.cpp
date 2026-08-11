@@ -25,7 +25,7 @@ SCENARIO( "convertSquareRootEnergy" ) {
 
         sqrt_energy = 1000.;
         gnds::read::convertSquareRootEnergy( sqrt_energy, "MeV**(1/2)" );
-        CHECK( 1. == sqrt_energy );
+        CHECK( 1e+6 == sqrt_energy );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
