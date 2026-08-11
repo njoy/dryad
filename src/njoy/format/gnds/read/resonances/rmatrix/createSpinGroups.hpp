@@ -56,7 +56,8 @@ namespace rmatrix {
           group; group = group.next_sibling( "spinGroup" ) ) {
 
       // get the channel data in this spin group
-      auto data = createChannelData( boundary_condition, kinematics, reduced_amplitudes, reactions, group );
+      auto data = createChannelData( formalism, boundary_condition, kinematics,
+                                     reduced_amplitudes, reactions, group );
 
       // add each to the final channel data, keep it sorted and consolidate duplicate channels
       for ( auto&& channel : data ) {

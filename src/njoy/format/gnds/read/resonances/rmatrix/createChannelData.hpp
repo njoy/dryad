@@ -26,6 +26,7 @@ namespace rmatrix {
   /**
    *  @brief Create the channel data for a spin group
    *
+   *  @param[in] formalism            the formalism to be applied
    *  @param[in] boundary_condition   the gnds boundary condition option
    *  @param[in] kinematics           the kinematics type to be applied
    *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
@@ -33,6 +34,7 @@ namespace rmatrix {
    *  @param[in] group                the GNDS spin group xml node
    */
   inline auto createChannelData(
+                  const dryad::resonances::Formalism& formalism,
                   const BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   bool reduced_amplitudes,
@@ -81,7 +83,7 @@ namespace rmatrix {
       std::vector< double > amplitudes = std::move( std::get< 1 >( parameters[column] ) );
 
       // remove zero widths
-      auto is_zero= [] ( auto&& value ) { return value == 0.; };
+      auto is_zero = [] ( auto&& value ) { return value == 0.; };
       auto amplitude = std::find_if( amplitudes.begin(), amplitudes.end(), is_zero );
       while ( amplitude != amplitudes.end() ) {
 
@@ -112,8 +114,9 @@ namespace rmatrix {
       auto id = channels[current].identifier();
       auto is_elastic = id.reaction().target() == id.reaction().residual();
       auto is_capture = id.reaction().reactionType() == dryad::id::ReactionType( "capture" );
+      auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;
 
-      if ( amplitudes.size() > 0 || is_elastic || is_capture ) {
+      if ( amplitudes.size() > 0 || is_elastic || ( is_capture && is_reichmoore ) ) {
 
         dryad::resonances::ResonanceTable table( id, std::move( energies ), std::move( amplitudes ) );
         channel_data.emplace_back( std::move( channels[current] ), std::move( table ) );
