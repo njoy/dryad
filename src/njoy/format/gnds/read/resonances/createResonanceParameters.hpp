@@ -55,10 +55,20 @@ namespace resonances {
     for ( pugi::xml_node region = resonances.child( "resolved" );
           region; region = region.next_sibling( "resolved" ) ) {
 
+      // get required attributes
+      auto domain_min = region.attribute( "domainMin" );
+      auto domain_max = region.attribute( "domainMax" );
+      auto domain_unit = region.attribute( "domainUnit" );
+      if (  domain_min.empty() || domain_max.empty() || domain_unit.empty() ) {
+
+        Log::error( "  One or more required attributes are missing on the resolved node" );
+        throw std::exception();
+      }
+
       // get the lower and upper energy
-      double lower = region.attribute( "domainMin" ).as_double();
-      double upper = region.attribute( "domainMax" ).as_double();
-      std::string unit = region.attribute( "domainUnit" ).as_string();
+      double lower = domain_min.as_double();
+      double upper = domain_max.as_double();
+      std::string unit = domain_unit.as_string();
       convertEnergy( lower, unit );
       convertEnergy( upper, unit );
 
