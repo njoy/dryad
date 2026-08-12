@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePenetrabilityRatio', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedResonanceTable', 'UnresolvedSpinGroup']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePenetrabilityRatio', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedAverageWidths', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction', 'UnresolvedChannel', 'UnresolvedCompoundSystem', 'UnresolvedResonanceTable', 'UnresolvedSpinGroup']
 class BoundaryCondition:
     """
     The boundary condition options for resonance reconstruction
@@ -2441,6 +2441,61 @@ class UnresolvedChannel:
         in which J is the total angular momentum of the channel and ia and ib
         are the spins of the particles in the outgoing particle pair.
         """
+class UnresolvedCompoundSystem:
+    """
+    The compound nucleus system for the unresolved resonance region
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> UnresolvedCompoundSystem:
+        ...
+    def __deepcopy__(self, arg0: dict) -> UnresolvedCompoundSystem:
+        ...
+    def __eq__(self, arg0: UnresolvedCompoundSystem) -> bool:
+        ...
+    def __init__(self, lower_energy: float, upper_energy: float, spin_groups: list[UnresolvedSpinGroup]) -> None:
+        """
+        Initialise the unresolved compound system
+        
+        If the spin groups are not sorted, they will get sorted using a J,parity,l
+        ordering.
+        
+        Arguments:
+            self           the unresolved compound system
+            lower_energy   the lower energy limit for the unresolved compound system
+            upper_energy   the upper energy limit for the unresolved compound system
+            spin_groups    the unresolved spin groups that make up the compound system
+        """
+    def __ne__(self, arg0: UnresolvedCompoundSystem) -> bool:
+        ...
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
+        ...
+    @property
+    def reactions(self) -> list[njoy.dryad.id.ReactionID]:
+        """
+        The reactions to which this compound system contributes
+        """
+    @property
+    def spin_groups(self) -> list[UnresolvedSpinGroup]:
+        """
+        The unresolved spin groups that make up the compound system
+        """
+    @spin_groups.setter
+    def spin_groups(self, arg1: list[UnresolvedSpinGroup]) -> None:
+        ...
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
+        ...
 class UnresolvedResonanceTable:
     """
     A table of unresolved average parameters for a set of channels
@@ -2544,6 +2599,11 @@ class UnresolvedSpinGroup:
     def number_channels(self) -> int:
         """
         The number of channels
+        """
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The orbital angular momentum l of the channels
         """
     @property
     def parity(self) -> int:

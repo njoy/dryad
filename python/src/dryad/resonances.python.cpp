@@ -41,6 +41,7 @@ namespace resonances {
   void wrapSpinGroup( python::module& );
   void wrapUnresolvedSpinGroup( python::module& );
   void wrapCompoundSystem( python::module& );
+  void wrapUnresolvedCompoundSystem( python::module& );
 
   void wrapResonanceParameters( python::module& );
 }
@@ -85,6 +86,7 @@ void wrapResonances( python::module& module ) {
   resonances::wrapSpinGroup( submodule );
   resonances::wrapUnresolvedSpinGroup( submodule );
   resonances::wrapCompoundSystem( submodule );
+  resonances::wrapUnresolvedCompoundSystem( submodule );
 
   resonances::wrapResonanceParameters( submodule );
 }

@@ -33,3 +33,4 @@
 #include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"
 
 #include "njoy/dryad/resonances/UnresolvedSpinGroup.hpp"
+#include "njoy/dryad/resonances/UnresolvedCompoundSystem.hpp"

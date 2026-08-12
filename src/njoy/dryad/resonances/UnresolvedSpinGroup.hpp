@@ -221,6 +221,14 @@ namespace resonances {
     }
 
     /**
+     *  @brief return the orbital angular momentum of the spin group
+     */
+    unsigned int orbitalAngularMomentum() const {
+
+      return this->channels().front().quantumNumbers().orbitalAngularMomentum();
+    }
+
+    /**
      *  @brief Return the parity of the spin group
      */
     short parity() const {

@@ -79,6 +79,12 @@ void wrapUnresolvedSpinGroup( python::module& module ) {
   )
   .def_property_readonly(
 
+    "orbital_angular_momentum",
+    &Component::orbitalAngularMomentum,
+    "The orbital angular momentum l of the channels"
+  )
+  .def_property_readonly(
+
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions to which this spin group contributes"
