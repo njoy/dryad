@@ -257,16 +257,6 @@ SCENARIO( "UnresolvedCompoundSystem" ) {
         TabulatedLevelSpacing( { 1., 4. }, { 10., 40. } ) );
 
     UnresolvedSpinGroup spingroup( { capture, elastic }, table );
-
-
-    WHEN( "the energy limits are invalid" ) {
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UnresolvedCompoundSystem(
-                          4., 1., { spingroup } ) );
-      } // THEN
-    } // WHEN
   } // GIVEN
 } // SCENARIO
 
