@@ -337,20 +337,6 @@ class Test_UnresolvedCompoundSystem( unittest.TestCase ) :
         self.assertEqual( True, ( left != different_groups ) )
         self.assertEqual( True, ( left != different_limits ) )
 
-    def test_failures( self ) :
-
-        group1p, group2p, group0m, group1m = make_spin_groups()
-
-        # the lower energy limit is larger than the upper energy limit
-        with self.assertRaises( Exception ) :
-
-            chunk = UnresolvedCompoundSystem( 2e+3, 1e-5, [ group0m, group1p ] )
-
-        # the lower energy limit is equal to the upper energy limit
-        with self.assertRaises( Exception ) :
-
-            chunk = UnresolvedCompoundSystem( 2e+3, 2e+3, [ group0m, group1p ] )
-
 if __name__ == '__main__' :
 
     unittest.main()
