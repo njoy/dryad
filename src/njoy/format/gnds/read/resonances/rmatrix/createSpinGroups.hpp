@@ -25,6 +25,7 @@ namespace rmatrix {
    *  @param[in] formalism            the r-matrix formalism
    *  @param[in] boundary_condition   the boundary condition option read from the RMatrix node
    *  @param[in] kinematics           the kinematics type
+   *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
    *  @param[in] reactions            the resonance reaction information read from the resonanceReactions node
    *  @param[in] spin_groups          the GNDS spinGroups node
    */
@@ -32,6 +33,7 @@ namespace rmatrix {
                   const dryad::resonances::Formalism& formalism,
                   const read::resonances::rmatrix::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
+                  bool reduced_amplitudes,
                   const read::resonances::rmatrix::ResonanceReactions& reactions,
                   const pugi::xml_node& spin_groups ) {
 
@@ -54,7 +56,8 @@ namespace rmatrix {
           group; group = group.next_sibling( "spinGroup" ) ) {
 
       // get the channel data in this spin group
-      auto data = createChannelData( boundary_condition, kinematics, reactions, group );
+      auto data = createChannelData( formalism, boundary_condition, kinematics,
+                                     reduced_amplitudes, reactions, group );
 
       // add each to the final channel data, keep it sorted and consolidate duplicate channels
       for ( auto&& channel : data ) {

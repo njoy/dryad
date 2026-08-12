@@ -1,9 +1,8 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTCHANNELS
-#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTCHANNELS
+#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_RMATRIX_INSERTCHANNELS
+#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_RMATRIX_INSERTCHANNELS
 
 // system includes
 #include <map>
-#include <optional>
 #include <string>
 
 // other includes
@@ -30,7 +29,7 @@ namespace rmatrix {
    *  @param[in]     group               the spin group
    *  @param[in]     min                 the lower domain limit
    *  @param[in]     max                 the upper domain limit
-   *  @param[in]     label               the optional label for the node
+   *  @param[in]     style               the style label to be used
    *  @param[in]     fullResonanceData   include all resonance data even if it is duplicated (default is true)
    */
   inline pugi::xml_node
@@ -39,7 +38,7 @@ namespace rmatrix {
                   const dryad::resonances::SpinGroup& group,
                   double min,
                   double max,
-                  const std::optional< std::string >& label = std::nullopt,
+                  const std::string& style,
                   bool /*fullResonanceData*/ = true ) {
 
     pugi::xml_node node = parent.append_child( "channels" );
@@ -58,11 +57,11 @@ namespace rmatrix {
       }
       channel_node.append_attribute( "columnIndex" ) = i + 1;
 
-      insertScatteringRadius( channel_node, options, channel.channelRadii().penetrabilityRadius(), min, max, label );
+      insertScatteringRadius( channel_node, options, channel.channelRadii().penetrabilityRadius(), min, max, style );
       if ( channel.channelRadii().hasPhaseShiftRadius() &&
            channel.channelRadii().phaseShiftRadius() != channel.channelRadii().penetrabilityRadius() ) {
 
-        insertHardSphereRadius( channel_node, options, channel.channelRadii().phaseShiftRadius().value(), min, max, label );
+        insertHardSphereRadius( channel_node, options, channel.channelRadii().phaseShiftRadius().value(), min, max, style );
       }
 
       if ( channel.hasBackground() ) {

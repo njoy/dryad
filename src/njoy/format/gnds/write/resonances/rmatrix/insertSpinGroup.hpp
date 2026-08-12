@@ -1,10 +1,9 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTSPINGROUP
-#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTSPINGROUP
+#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_RMATRIX_INSERTSPINGROUP
+#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_RMATRIX_INSERTSPINGROUP
 
 // system includes
 #include <cmath>
 #include <map>
-#include <optional>
 #include <string>
 
 // other includes
@@ -30,7 +29,7 @@ namespace rmatrix {
    *  @param[in]     group                    the spin group
    *  @param[in]     min                      the lower domain limit
    *  @param[in]     max                      the upper domain limit
-   *  @param[in]     label                    the optional label for the node
+   *  @param[in]     style                    the style label to be used
    *  @param[in]     reducedWidthAmplitudes   use reduced width amplitudes (default is true)
    */
   inline pugi::xml_node
@@ -39,7 +38,7 @@ namespace rmatrix {
                    const dryad::resonances::SpinGroup& group,
                    double min,
                    double max,
-                   const std::optional< std::string >& label = std::nullopt,
+                   const std::string& style,
                    bool reducedWidthAmplitudes = true ) {
 
     auto toHalfIntegerString = [] ( const double a ) {
@@ -58,7 +57,7 @@ namespace rmatrix {
     node.append_attribute( "spin" ) = group.totalAngularMomentum();
     node.append_attribute( "parity" ) = group.parity() > 0 ? "+1" : "-1";
 
-    insertChannels( node, options, group, min, max, label );
+    insertChannels( node, options, group, min, max, style );
     insertResonanceParameters( node, options, group, reducedWidthAmplitudes );
 
     return node;

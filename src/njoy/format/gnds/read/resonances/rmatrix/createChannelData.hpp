@@ -11,6 +11,7 @@
 #include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/convertSquareRootEnergies.hpp"
 #include "njoy/format/gnds/read/readTable.hpp"
 #include "njoy/format/gnds/read/readFractionFromString.hpp"
 #include "njoy/format/gnds/read/resonances/rmatrix/createChannels.hpp"
@@ -25,14 +26,18 @@ namespace rmatrix {
   /**
    *  @brief Create the channel data for a spin group
    *
+   *  @param[in] formalism            the formalism to be applied
    *  @param[in] boundary_condition   the gnds boundary condition option
    *  @param[in] kinematics           the kinematics type to be applied
+   *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
    *  @param[in] reactions            the resonance reaction information from the GNDS file
    *  @param[in] group                the GNDS spin group xml node
    */
   inline auto createChannelData(
+                  const dryad::resonances::Formalism& formalism,
                   const BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
+                  bool reduced_amplitudes,
                   const ResonanceReactions& reactions,
                   const pugi::xml_node& group ) {
 
@@ -53,15 +58,20 @@ namespace rmatrix {
     auto parameters = readTable( group.child( "resonanceParameters" ).child( "table" ) );
     convertEnergies( std::get< 1 >( parameters[0] ), std::get< 2 >( parameters[0] ).value() );
 
-    bool reduced_amplitudes = false;
     for ( std::size_t i = 1; i < parameters.size(); ++i ) {
 
-      //! @todo check for reduced amplitude widths
+      if ( reduced_amplitudes ) {
 
-      convertEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+        convertSquareRootEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+      }
+      else {
+
+        convertEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+      }
     }
 
     // loop over the channels
+    auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;
     std::size_t current = 0;
     for ( pugi::xml_node channel = group.child( "channels" ).child( "channel" );
           channel; channel = channel.next_sibling( "channel" ) ) {
@@ -74,7 +84,7 @@ namespace rmatrix {
       std::vector< double > amplitudes = std::move( std::get< 1 >( parameters[column] ) );
 
       // remove zero widths
-      auto is_zero= [] ( auto&& value ) { return value == 0.; };
+      auto is_zero = [] ( auto&& value ) { return value == 0.; };
       auto amplitude = std::find_if( amplitudes.begin(), amplitudes.end(), is_zero );
       while ( amplitude != amplitudes.end() ) {
 
@@ -106,7 +116,7 @@ namespace rmatrix {
       auto is_elastic = id.reaction().target() == id.reaction().residual();
       auto is_capture = id.reaction().reactionType() == dryad::id::ReactionType( "capture" );
 
-      if ( amplitudes.size() > 0 || is_elastic || is_capture ) {
+      if ( amplitudes.size() > 0 || is_elastic || ( is_capture && is_reichmoore ) ) {
 
         dryad::resonances::ResonanceTable table( id, std::move( energies ), std::move( amplitudes ) );
         channel_data.emplace_back( std::move( channels[current] ), std::move( table ) );

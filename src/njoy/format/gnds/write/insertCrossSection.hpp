@@ -20,16 +20,16 @@ namespace write {
   /**
    *  @brief Insert a tabulated cross section into a gnds node
    *
-   *  @param[in,out] parent         the parent node
-   *  @param[in]     option         the gnds write options
-   *  @param[in]     table          the tabulated data
-   *  @param[in]     label          the optional label for the node
+   *  @param[in,out] parent   the parent node
+   *  @param[in]     option   the gnds write options
+   *  @param[in]     table    the tabulated data
+   *  @param[in]     style    the style label to be used
    */
   inline pugi::xml_node
   insertCrossSection( pugi::xml_node& parent,
                       const Options& options,
                       const dryad::TabulatedCrossSection& table,
-                      const std::optional< std::string >& label = std::nullopt ) {
+                      const std::string& style ) {
 
     pugi::xml_node node = parent.append_child( "crossSection" );
 
@@ -38,7 +38,7 @@ namespace write {
     insertTabulatedFunction( node, options, table.energies(), table.values(),
                              table.boundaries(), table.interpolants(),
                              "incidentEnergy", "crossSection", "eV", "b",
-                             label );
+                             style );
 
     return node;
   }

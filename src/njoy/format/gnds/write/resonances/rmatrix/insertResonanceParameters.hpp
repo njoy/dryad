@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTRESONANCEPARAMETERS
-#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_INSERTRESONANCEPARAMETERS
+#ifndef NJOY_FORMAT_GNDS_WRITE_RESONANCES_RMATRIX_INSERTRESONANCEPARAMETERS
+#define NJOY_FORMAT_GNDS_WRITE_RESONANCES_RMATRIX_INSERTRESONANCEPARAMETERS
 
 // system includes
 #include <optional>
@@ -46,7 +46,7 @@ namespace rmatrix {
     std::vector< std::vector< double > > columns( nch + 1,
                                                   std::vector< double >( nrs ) );
 
-    std::string width_unit = reducedWidthAmplitudes ? "eV^1/2" : "eV";
+    std::string width_unit = reducedWidthAmplitudes ? "eV**(1/2)" : "eV";
 
     names[0] = "incidentEnergy";
     units[0] = "eV";
