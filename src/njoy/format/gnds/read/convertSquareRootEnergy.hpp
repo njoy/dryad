@@ -1,0 +1,45 @@
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTSQUAREROOTENERGY
+#define NJOY_FORMAT_GNDS_READ_CONVERTSQUAREROOTENERGY
+
+// system includes
+#include <algorithm>
+#include <vector>
+
+// other includes
+#include "tools/Log.hpp"
+#include "njoy/constants.hpp"
+
+namespace njoy {
+namespace format {
+namespace gnds {
+namespace read {
+
+  /**
+   *  @brief Convert a square root energy from GNDS into eV^1/2
+   *
+   *  @param[in] value   the value to convert
+   *  @param[in] unit    the unit of the value
+   */
+  inline void convertSquareRootEnergy( double& value, const std::string& unit ) {
+
+    if ( unit != "eV**(1/2)" ) {
+
+      if ( unit == "MeV**(1/2)" ) {
+
+        value *= constants::kilo;
+      }
+      else {
+
+        Log::error( "Cannot convert square root energy with unit \'{}\' to eV**(1/2), "
+                    "contact njoy developers", unit );
+        throw std::exception();
+      }
+    }
+  }
+
+} // read namespace
+} // gnds namespace
+} // format namespace
+} // njoy namespace
+
+#endif

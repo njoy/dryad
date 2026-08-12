@@ -29,7 +29,7 @@ namespace write {
    *  @param[in]     multiplicity   the multiplicity
    *  @param[in]     min            the lower domain limit
    *  @param[in]     max            the upper domain limit
-   *  @param[in]     label          the optional label for the node
+   *  @param[in]     style          the style label to be used
    */
   inline pugi::xml_node
   insertMultiplicity( pugi::xml_node& parent,
@@ -37,7 +37,7 @@ namespace write {
                       const std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity >& multiplicity,
                       double min,
                       double max,
-                      const std::optional< std::string >& label = std::nullopt ) {
+                      const std::string& style ) {
 
     pugi::xml_node node = parent.append_child( "multiplicity" );
 
@@ -49,21 +49,21 @@ namespace write {
 
         return insertConstant1d( node, options, value, min, max,
                                  "incidentEnergy", "multiplicity", "eV", std::nullopt,
-                                 label );
+                                 style );
       },
       [&] ( const dryad::TabulatedMultiplicity& table ) -> pugi::xml_node {
 
         return insertTabulatedFunction( node, options, table.energies(), table.values(),
                                         table.boundaries(), table.interpolants(),
                                         "incidentEnergy", "multiplicity", "eV", std::nullopt,
-                                        label );
+                                        style );
       },
       [&] ( const dryad::PolynomialMultiplicity& series ) -> pugi::xml_node {
 
         return insertPolynomial1d( node, options, series.coefficients(),
                                    series.lowerEnergyLimit(), series.upperEnergyLimit(),
                                    "incidentEnergy", "multiplicity", "eV", std::nullopt,
-                                   label );
+                                   style );
       }
     };
 

@@ -122,6 +122,30 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the formalism
+     */
+    const Formalism& formalism() const {
+
+      return this->spinGroups().front().formalism();
+    }
+
+    /**
+     *  @brief Return the boundary condition option
+     */
+    const BoundaryCondition& boundaryCondition() const {
+
+      return this->spinGroups().front().boundaryCondition();
+    }
+
+    /**
+     *  @brief Return the kinematics type applied to the spin group
+     */
+    Kinematics kinematicsType() const {
+
+      return this->spinGroups().front().kinematicsType();
+    }
+
+    /**
      *  @brief Return the spin groups that make up the compound system
      */
     const std::vector< SpinGroup >& spinGroups() const {

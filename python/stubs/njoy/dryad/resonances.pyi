@@ -223,6 +223,11 @@ class Channel:
     def channel_radii(self, arg1: ChannelRadii) -> None:
         ...
     @property
+    def has_background(self) -> bool:
+        """
+        Flag indicating whether or not a background function is defined
+        """
+    @property
     def has_penetrability(self) -> bool:
         """
         Flag indicating whether or not there is a penetrability implementation
@@ -591,6 +596,21 @@ class CompoundSystem:
         ----------
             energies : list of float
                 the energy values
+        """
+    @property
+    def boundary_condition(self) -> BoundaryCondition:
+        """
+        The boundary condition option
+        """
+    @property
+    def formalism(self) -> Formalism:
+        """
+        The formalism
+        """
+    @property
+    def kinematics_type(self) -> Kinematics:
+        """
+        The kinematics type applied to the spin group
         """
     @property
     def lower_energy_limit(self) -> float:
@@ -1502,6 +1522,16 @@ class SpinGroup:
     def kinematics_type(self) -> Kinematics:
         """
         The kinematics type applied to the spin group
+        """
+    @property
+    def number_channels(self) -> int:
+        """
+        The number of channels
+        """
+    @property
+    def number_energies(self) -> int:
+        """
+        The number of level energies in the table
         """
     @property
     def parity(self) -> int:
@@ -2565,6 +2595,11 @@ class UnresolvedSpinGroup:
     @channels.setter
     def channels(self, arg1: list[UnresolvedChannel]) -> None:
         ...
+    @property
+    def number_channels(self) -> int:
+        """
+        The number of channels
+        """
     @property
     def orbital_angular_momentum(self) -> int:
         """

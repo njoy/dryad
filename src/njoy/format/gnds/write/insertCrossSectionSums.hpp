@@ -24,14 +24,14 @@ namespace write {
    *  @param[in]     option       the gnds write options
    *  @param[in]     reactions    the reactions
    *  @param[in]     resonances   the optional resonance parameters
-   *  @param[in]     label        the style label to be used
+   *  @param[in]     style        the style label to be used
    */
   inline pugi::xml_node
   insertCrossSectionSums( pugi::xml_node& parent,
                           const Options& options,
                           const std::vector< dryad::Reaction >& reactions,
                           const std::optional< dryad::resonances::ResonanceParameters > resonances,
-                          const std::string& label ) {
+                          const std::string& style ) {
 
     pugi::xml_node sums_node;
 
@@ -65,7 +65,7 @@ namespace write {
 
           //! @todo check the resonance parameters to see if we need to use background elements
 
-          insertCrossSection( sum_node, options, reaction.crossSection(), label );
+          insertCrossSection( sum_node, options, reaction.crossSection(), style );
         }
       }
     }
