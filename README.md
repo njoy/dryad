@@ -28,6 +28,25 @@ ame2020 = ame/2020/mass_1.mas20.txt
 ripl3_levels = ripl-3/levels
 ```
 
+# Building the Python bindings
+
+NJOY provides Python bindings for `dryad` and all other modules. These bindings are built by default unless
+explicitly switched off during the CMake configuration (the CMake `njoy.python` option is `ON` by default). To
+build the bindings, create a build directory and execute the following in that directory:
+
+```bash
+cmake -D CMAKE_BUILD_TYPE=Release ..
+make -j8
+```
+
+The resulting Python module can then be used directly from the build/python directory, or installed as usual.
+
+To also build and run the C++ and Python unit test suite alongside the bindings, add `-D njoy.tests=ON` to the
+CMake configuration step above.
+
+Some tests and bindings rely on external RIPL-3 and AME2020 data, so make sure the `NJOY_DATAPATH` environment
+variable is set as described in the [Configuration and external data](#configuration-and-external-data) section above.
+
 # Documentation
 
 Documentation is provided using [Sphinx](https://www.sphinx-doc.org/). The following Python packages need to be installed:
