@@ -10,7 +10,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'MultigroupCrossSection', 'MultigroupMultiplicity', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'MultigroupAverageCosine', 'MultigroupAverageEnergy', 'MultigroupCrossSection', 'MultigroupMultiplicity', 'MultigroupProjectileTarget', 'MultigroupReaction', 'MultigroupReactionProduct', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -1159,6 +1159,184 @@ class MultiEnergyDistributions:
         ...
     def __ne__(self, arg0: MultiEnergyDistributions) -> bool:
         ...
+class MultigroupAverageCosine:
+    """
+    A multigroup average cosine table
+    
+    Parameters
+    ----------
+        boundaries : list of float
+            the energy boundaries
+        values : list of float
+            the average cosine values
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    @typing.overload
+    def __add__(self, arg0: MultigroupAverageCosine) -> MultigroupAverageCosine:
+        ...
+    def __copy__(self) -> MultigroupAverageCosine:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MultigroupAverageCosine:
+        ...
+    def __eq__(self, arg0: MultigroupAverageCosine) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: MultigroupAverageCosine) -> MultigroupAverageCosine:
+        ...
+    def __imul__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    def __init__(self, boundaries: list[float], values: list[float]) -> None:
+        """
+        Initialise the multigroup average cosine table
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: MultigroupAverageCosine) -> MultigroupAverageCosine:
+        ...
+    def __itruediv__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    def __mul__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    def __ne__(self, arg0: MultigroupAverageCosine) -> bool:
+        ...
+    def __neg__(self) -> MultigroupAverageCosine:
+        ...
+    def __radd__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    def __rmul__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    def __rsub__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: MultigroupAverageCosine) -> MultigroupAverageCosine:
+        ...
+    def __truediv__(self, arg0: float) -> MultigroupAverageCosine:
+        ...
+    @property
+    def boundaries(self) -> list[float]:
+        """
+        The energy boundaries
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_groups(self) -> int:
+        """
+        The number of groups
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The cross section values
+        """
+class MultigroupAverageEnergy:
+    """
+    A multigroup average energy table
+    
+    Parameters
+    ----------
+        boundaries : list of float
+            the energy boundaries
+        values : list of float
+            the average energy values
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    @typing.overload
+    def __add__(self, arg0: MultigroupAverageEnergy) -> MultigroupAverageEnergy:
+        ...
+    def __copy__(self) -> MultigroupAverageEnergy:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MultigroupAverageEnergy:
+        ...
+    def __eq__(self, arg0: MultigroupAverageEnergy) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: MultigroupAverageEnergy) -> MultigroupAverageEnergy:
+        ...
+    def __imul__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    def __init__(self, boundaries: list[float], values: list[float]) -> None:
+        """
+        Initialise the multigroup average energy table
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: MultigroupAverageEnergy) -> MultigroupAverageEnergy:
+        ...
+    def __itruediv__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    def __mul__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    def __ne__(self, arg0: MultigroupAverageEnergy) -> bool:
+        ...
+    def __neg__(self) -> MultigroupAverageEnergy:
+        ...
+    def __radd__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    def __rmul__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    def __rsub__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: MultigroupAverageEnergy) -> MultigroupAverageEnergy:
+        ...
+    def __truediv__(self, arg0: float) -> MultigroupAverageEnergy:
+        ...
+    @property
+    def boundaries(self) -> list[float]:
+        """
+        The energy boundaries
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_groups(self) -> int:
+        """
+        The number of groups
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The cross section values
+        """
 class MultigroupCrossSection:
     """
     A multigroup cross section table
@@ -1337,6 +1515,393 @@ class MultigroupMultiplicity:
         """
         The cross section values
         """
+class MultigroupProjectileTarget:
+    """
+    The multigroup data associated to a given projectile and target
+    
+    Parameters
+    ----------
+        documentation : njoy.dryad.Documentation, optional
+            the documentation
+        projectile : njoy.dryad.id.ParticleID
+            the projectile identifier
+        target : njoy.dryad.id.ParticleID
+            the target identifier
+        type : njoy.dryad.InteractionType
+            the interaction type
+        reactions : list of njoy.dryad.MultigroupReaction
+            the reaction data
+        covariances : njoy.dryad.covariance.CovarianceData, default None
+            the optional covariance data
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> MultigroupProjectileTarget:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MultigroupProjectileTarget:
+        ...
+    def __eq__(self, arg0: MultigroupProjectileTarget) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[MultigroupReaction], covariances: covariance.CovarianceData | None = None) -> None:
+        """
+        Initialise the MultigroupProjectileTarget with documentation
+        """
+    @typing.overload
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[MultigroupReaction], covariances: covariance.CovarianceData | None = None) -> None:
+        """
+        Initialise the MultigroupProjectileTarget without documentation
+        """
+    def __ne__(self, arg0: MultigroupProjectileTarget) -> bool:
+        ...
+    def calculate_summation_cross_sections(self) -> None:
+        """
+        Calculate summation cross sections
+        
+        This function recalculates the cross section of all summation reactions
+        by summing the cross sections of the partials together. The partials are
+        assumed to share the same group structure as the summation reaction.
+        """
+    def has_reaction(self, id: id.ReactionID) -> bool:
+        """
+        Return whether or not a reaction is present
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                the reaction identifier
+        """
+    def reaction(self, id: id.ReactionID) -> MultigroupReaction:
+        """
+        Return the requested reaction
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                the reaction identifier
+        """
+    @property
+    def covariance_data(self) -> covariance.CovarianceData | None:
+        """
+        The covariance data
+        """
+    @covariance_data.setter
+    def covariance_data(self, arg1: covariance.CovarianceData | None) -> None:
+        ...
+    @property
+    def documentation(self) -> Documentation:
+        """
+        The documentation
+        """
+    @documentation.setter
+    def documentation(self, arg1: Documentation) -> None:
+        ...
+    @property
+    def interaction_type(self) -> InteractionType:
+        """
+        The interaction type (atomic or nuclear)
+        """
+    @interaction_type.setter
+    def interaction_type(self, arg1: InteractionType) -> None:
+        ...
+    @property
+    def number_reactions(self) -> int:
+        """
+        The number of reactions
+        """
+    @property
+    def projectile_identifier(self) -> id.ParticleID:
+        """
+        The projectile identifier
+        """
+    @projectile_identifier.setter
+    def projectile_identifier(self, arg1: id.ParticleID) -> None:
+        ...
+    @property
+    def reactions(self) -> list[MultigroupReaction]:
+        """
+        The reactions
+        """
+    @reactions.setter
+    def reactions(self, arg1: list[MultigroupReaction]) -> None:
+        ...
+    @property
+    def target_identifier(self) -> id.ParticleID:
+        """
+        The target identifier
+        """
+    @target_identifier.setter
+    def target_identifier(self, arg1: id.ParticleID) -> None:
+        ...
+class MultigroupReaction:
+    """
+    The multigroup data associated to a single reaction
+    
+    Parameters
+    ----------
+        id : njoy.dryad.id.ReactionID
+            the reaction identifier
+        xs : njoy.dryad.MultigroupCrossSection
+            the cross section of the reaction
+        products : list of njoy.dryad.MultigroupReactionProduct, default []
+            the reaction products
+        mass_q : float, default None
+            the mass difference Q value (default: None)
+        reaction_q : float, default None
+            the reaction Q value (default: None)
+    
+        partials : list of njoy.dryad.id.ReactionID
+            the identifiers of the partials of the reaction
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> MultigroupReaction:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MultigroupReaction:
+        ...
+    def __eq__(self, arg0: MultigroupReaction) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, id: id.ReactionID, xs: MultigroupCrossSection, products: list[MultigroupReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None) -> None:
+        """
+        Initialise a primary reaction
+        """
+    @typing.overload
+    def __init__(self, id: id.ReactionID, partials: list[id.ReactionID], xs: MultigroupCrossSection, products: list[MultigroupReactionProduct] = []) -> None:
+        """
+        Initialise a summation reaction
+        
+        Summation reactions do not have Q values associated to them. A cross section
+        weighted Q value could be calculated using the partial reactions making
+        up the summation reaction.
+        """
+    def __ne__(self, arg0: MultigroupReaction) -> bool:
+        ...
+    @typing.overload
+    def has_product(self, type: id.ParticleID) -> bool:
+        """
+        Return whether or not a reaction product type is present regardless of chain index
+        
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
+        """
+    @typing.overload
+    def has_product(self, type: id.ParticleID, chain: int) -> bool:
+        """
+        Return whether or not a reaction product type is present for a given chain index
+        
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
+            chain : int
+                the reaction product chain index
+        """
+    @typing.overload
+    def number_products(self) -> int:
+        """
+        The total number of reaction products
+        """
+    @typing.overload
+    def number_products(self, type: id.ParticleID) -> int:
+        """
+        The number of reaction products of a given type regardless of the chain index
+        """
+    @typing.overload
+    def number_products(self, type: id.ParticleID, chain: int) -> int:
+        """
+        The number of reaction products of a given type for a given chain index
+        """
+    @typing.overload
+    def product(self, type: id.ParticleID, index: int = 0) -> MultigroupReactionProduct:
+        """
+        Return a reaction product with a given type and index regardless of the chain index
+        
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
+            index : int, default 0
+                the reaction product index
+        """
+    @typing.overload
+    def product(self, type: id.ParticleID, chain: int, index: int) -> MultigroupReactionProduct:
+        """
+        Return a reaction product with a given type, chain index and index
+        
+        Parameters
+        ----------
+            type : njoy.dryad.id.ParticleID
+                the reaction product type
+            chain : int
+                the reaction product chain index
+            index : int
+                the reaction product index
+        """
+    @property
+    def category(self) -> ReactionCategory:
+        """
+        The reaction category
+        """
+    @property
+    def cross_section(self) -> MultigroupCrossSection:
+        """
+        The cross section
+        """
+    @cross_section.setter
+    def cross_section(self, arg1: MultigroupCrossSection) -> None:
+        ...
+    @property
+    def has_products(self) -> bool:
+        """
+        Flag indicating whether or not there are reaction products defined
+        """
+    @property
+    def identifier(self) -> id.ReactionID:
+        """
+        The reaction identifier
+        """
+    @identifier.setter
+    def identifier(self, arg1: id.ReactionID) -> None:
+        ...
+    @property
+    def is_primary_reaction(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction is a primary reaction
+        """
+    @property
+    def is_summation_reaction(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction is a summation reaction
+        """
+    @property
+    def mass_difference_qvalue(self) -> float | None:
+        """
+        The mass difference Q value
+        """
+    @mass_difference_qvalue.setter
+    def mass_difference_qvalue(self, arg1: float | None) -> None:
+        ...
+    @property
+    def number_partial_reactions(self) -> int:
+        """
+        The number of partial reactions that make up this reaction
+        """
+    @property
+    def partial_reaction_identifiers(self) -> list[id.ReactionID] | None:
+        """
+        The summation reaction identifiers (not defined if this is a primary
+        reaction)
+        """
+    @partial_reaction_identifiers.setter
+    def partial_reaction_identifiers(self, arg1: list[id.ReactionID] | None) -> None:
+        ...
+    @property
+    def products(self) -> list[MultigroupReactionProduct]:
+        """
+        The reaction products
+        """
+    @products.setter
+    def products(self, arg1: list[MultigroupReactionProduct]) -> None:
+        ...
+    @property
+    def reaction_qvalue(self) -> float | None:
+        """
+        The reaction Q value
+        """
+    @reaction_qvalue.setter
+    def reaction_qvalue(self, arg1: float | None) -> None:
+        ...
+class MultigroupReactionProduct:
+    """
+    The multigroup data associated to a single reaction product
+    
+    Parameters
+    ----------
+        product : njoy.dryad.id.ParticleID
+            the reaction product identifier
+        multiplicity : int or njoy.dryad.MultigroupMultiplicity
+            the reaction product multiplicity
+        average_cosine : njoy.dryad.MultigroupAverageCosine, default None
+            the average reaction product cosine (default: None)
+        average_energy : njoy.dryad.MultigroupAverageEnergy, default None
+            the average reaction product energy (default: None)
+        parent : njoy.dryad.id.ParticleID, default None
+            the parent reaction product (default: None)
+        chain : int, default 0
+            the chain index of the reaction product (default: 0)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> MultigroupReactionProduct:
+        ...
+    def __deepcopy__(self, arg0: dict) -> MultigroupReactionProduct:
+        ...
+    def __eq__(self, arg0: MultigroupReactionProduct) -> bool:
+        ...
+    def __init__(self, product: id.ParticleID, multiplicity: int | MultigroupMultiplicity, average_cosine: MultigroupAverageCosine | None = None, average_energy: MultigroupAverageEnergy | None = None, parent: id.ParticleID | None = None, chain: int = 0) -> None:
+        """
+        Initialise the multigroup reaction product
+        """
+    def __ne__(self, arg0: MultigroupReactionProduct) -> bool:
+        ...
+    @property
+    def average_cosine(self) -> MultigroupAverageCosine | None:
+        """
+        The average reaction product cosine
+        """
+    @average_cosine.setter
+    def average_cosine(self, arg1: MultigroupAverageCosine | None) -> None:
+        ...
+    @property
+    def average_energy(self) -> MultigroupAverageEnergy | None:
+        """
+        The average reaction product energy
+        """
+    @average_energy.setter
+    def average_energy(self, arg1: MultigroupAverageEnergy | None) -> None:
+        ...
+    @property
+    def chain_index(self) -> int:
+        """
+        The chain index of the reaction product
+        """
+    @chain_index.setter
+    def chain_index(self, arg1: int) -> None:
+        ...
+    @property
+    def has_average_cosine(self) -> bool:
+        """
+        Flag indicating whether or not the reaction product has average reaction product cosine data
+        """
+    @property
+    def has_average_energy(self) -> bool:
+        """
+        Flag indicating whether or not the reaction product has average reaction product energy data
+        """
+    @property
+    def multiplicity(self) -> int | MultigroupMultiplicity:
+        """
+        The multiplicity
+        """
+    @multiplicity.setter
+    def multiplicity(self, arg1: int | MultigroupMultiplicity) -> None:
+        ...
+    @property
+    def parent_identifier(self) -> id.ParticleID | None:
+        """
+        The parent product identifier
+        """
+    @parent_identifier.setter
+    def parent_identifier(self, arg1: id.ParticleID | None) -> None:
+        ...
+    @property
+    def product_identifier(self) -> id.ParticleID:
+        """
+        The reaction product identifier
+        """
+    @product_identifier.setter
+    def product_identifier(self, arg1: id.ParticleID) -> None:
+        ...
 class Particle:
     """
     Particle information
