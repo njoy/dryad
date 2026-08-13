@@ -104,6 +104,8 @@ add_python_test( dryad.ParticleDatabase                                dryad/Tes
 
 add_python_test( dryad.MultigroupMultiplicity                          dryad/Test_MultigroupMultiplicity.py )
 add_python_test( dryad.MultigroupCrossSection                          dryad/Test_MultigroupCrossSection.py )
+add_python_test( dryad.MultigroupAverageCosine                         dryad/Test_MultigroupAverageCosine.py )
+add_python_test( dryad.MultigroupAverageEnergy                         dryad/Test_MultigroupAverageEnergy.py )
 
 add_python_test( dryad.PolynomialMultiplicity                          dryad/Test_PolynomialMultiplicity.py )
 add_python_test( dryad.TabulatedMultiplicity                           dryad/Test_TabulatedMultiplicity.py )
@@ -134,11 +136,14 @@ add_python_test( dryad.UncorrelatedDistributionData                    dryad/Tes
 add_python_test( dryad.CoherentDistributionData                        dryad/Test_CoherentDistributionData.py )
 add_python_test( dryad.IncoherentDistributionData                      dryad/Test_IncoherentDistributionData.py )
 add_python_test( dryad.ReactionProduct                                 dryad/Test_ReactionProduct.py )
+add_python_test( dryad.MultigroupReactionProduct                       dryad/Test_MultigroupReactionProduct.py )
 
 add_python_test( dryad.TabulatedCrossSection                           dryad/Test_TabulatedCrossSection.py )
 add_python_test( dryad.Reaction                                        dryad/Test_Reaction.py )
+add_python_test( dryad.MultigroupReaction                              dryad/Test_MultigroupReaction.py )
 
 add_python_test( dryad.ProjectileTarget                                dryad/Test_ProjectileTarget.py )
+add_python_test( dryad.MultigroupProjectileTarget                      dryad/Test_MultigroupProjectileTarget.py )
 add_python_test( dryad.AtomicRelaxation                                dryad/Test_AtomicRelaxation.py )
 add_python_test( dryad.ThermalScattering                               dryad/Test_ThermalScattering.py )
 

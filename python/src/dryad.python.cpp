@@ -67,6 +67,8 @@ namespace dryad {
   void wrapMultigroupMultiplicity( python::module& );
   void wrapPolynomialMultiplicity( python::module& );
   void wrapTabulatedMultiplicity( python::module& );
+  void wrapMultigroupAverageCosine( python::module& );
+  void wrapMultigroupAverageEnergy( python::module& );
   void wrapTabulatedAverageCosine( python::module& );
   void wrapTabulatedAverageEnergy( python::module& );
   void wrapTabulatedFormFactor( python::module& );
@@ -76,8 +78,11 @@ namespace dryad {
   void wrapCoherentDistributionData( python::module& );
   void wrapIncoherentDistributionData( python::module& );
   void wrapReactionProduct( python::module& );
+  void wrapMultigroupReactionProduct( python::module& );
+  void wrapMultigroupReaction( python::module& );
   void wrapReaction( python::module& );
   void wrapProjectileTarget( python::module& );
+  void wrapMultigroupProjectileTarget( python::module& );
 
   // declarations - external
   void wrapExternal( python::module& );
@@ -124,6 +129,8 @@ void wrapDryad( python::module& module ) {
   dryad::wrapMultigroupMultiplicity( submodule );
   dryad::wrapTabulatedMultiplicity( submodule );
   dryad::wrapPolynomialMultiplicity( submodule );
+  dryad::wrapMultigroupAverageCosine( submodule );
+  dryad::wrapMultigroupAverageEnergy( submodule );
   dryad::wrapTabulatedAverageCosine( submodule );
   dryad::wrapTabulatedAverageEnergy( submodule );
   dryad::wrapIsotropicAngularDistributions( submodule );
@@ -153,6 +160,7 @@ void wrapDryad( python::module& module ) {
   dryad::wrapCoherentDistributionData( submodule );
   dryad::wrapIncoherentDistributionData( submodule );
   dryad::wrapReactionProduct( submodule );
+  dryad::wrapMultigroupReactionProduct( submodule );
 
   // wrap components - covariance data
   dryad::wrapCovariance( submodule );
@@ -161,9 +169,11 @@ void wrapDryad( python::module& module ) {
   dryad::wrapMultigroupCrossSection( submodule );
   dryad::wrapTabulatedCrossSection( submodule );
   dryad::wrapReaction( submodule );
+  dryad::wrapMultigroupReaction( submodule );
 
   // wrap components - top level
   dryad::wrapProjectileTarget( submodule );
+  dryad::wrapMultigroupProjectileTarget( submodule );
   dryad::wrapAtomicRelaxation( submodule );
   dryad::wrapThermalScattering( submodule );
 

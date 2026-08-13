@@ -121,6 +121,10 @@ add_cpp_test( dryad.IncoherentDistributionData                                  
 
 add_cpp_test( dryad.MultigroupMultiplicity                                             dryad/MultigroupMultiplicity.test.cpp )
 add_cpp_test( dryad.MultigroupCrossSection                                             dryad/MultigroupCrossSection.test.cpp )
+add_cpp_test( dryad.MultigroupAverageCosine                                            dryad/MultigroupAverageCosine.test.cpp )
+add_cpp_test( dryad.MultigroupAverageEnergy                                            dryad/MultigroupAverageEnergy.test.cpp )
+add_cpp_test( dryad.MultigroupReactionProduct                                          dryad/MultigroupReactionProduct.test.cpp )
+add_cpp_test( dryad.MultigroupReaction                                                 dryad/MultigroupReaction.test.cpp )
 
 add_cpp_test( dryad.TabulatedFormFactor                                                dryad/TabulatedFormFactor.test.cpp )
 add_cpp_test( dryad.TabulatedScatteringFunction                                        dryad/TabulatedScatteringFunction.test.cpp )
@@ -153,6 +157,7 @@ add_cpp_test( dryad.TabulatedCrossSection                                       
 add_cpp_test( dryad.Reaction                                                           dryad/Reaction.test.cpp )
 
 add_cpp_test( dryad.ProjectileTarget                                                   dryad/ProjectileTarget.test.cpp )
+add_cpp_test( dryad.MultigroupProjectileTarget                                         dryad/MultigroupProjectileTarget.test.cpp )
 add_cpp_test( dryad.AtomicRelaxation                                                   dryad/AtomicRelaxation.test.cpp )
 add_cpp_test( dryad.ThermalScattering                                                  dryad/ThermalScattering.test.cpp )
 

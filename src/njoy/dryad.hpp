@@ -29,6 +29,14 @@
 #include "njoy/dryad/MultigroupMultiplicity.hpp"
 #include "njoy/dryad/MultigroupCrossSection.hpp"
 
+// components - multigroup reaction products
+#include "njoy/dryad/MultigroupAverageCosine.hpp"
+#include "njoy/dryad/MultigroupAverageEnergy.hpp"
+#include "njoy/dryad/MultigroupReactionProduct.hpp"
+
+// components - multigroup reactions
+#include "njoy/dryad/MultigroupReaction.hpp"
+
 // components - resonances
 #include "njoy/dryad/resonances.hpp"
 
@@ -79,4 +87,5 @@
 // components - top level
 #include "njoy/dryad/AtomicRelaxation.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/MultigroupProjectileTarget.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
