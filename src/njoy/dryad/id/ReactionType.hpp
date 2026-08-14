@@ -35,7 +35,142 @@ namespace id {
   class ReactionType {
 
     /* helper class */
-    #include "njoy/dryad/id/ReactionType/Entry.hpp"
+    /**
+     *  @class
+     *  @brief Private helper class
+     */
+    class Entry {
+
+      /* fields */
+
+      std::int64_t number_;
+      InteractionType interaction_;
+      std::optional< short > mt_;
+      std::optional< std::map< ParticleID, short > > ejectiles_;
+      std::vector< std::string > symbols_;
+      std::optional< std::string > designator_;
+      std::optional< short > level_;
+      std::optional< int > dza_;
+
+      std::size_t hash_;
+
+      static std::optional< std::string >
+      getDesignator( const InteractionType& type,
+                     const std::vector< std::string >& symbols ) {
+
+        if ( ( type == InteractionType::Atomic ) &&
+             ( symbols.size() > 1 ) ){
+
+          return symbols.front();
+        }
+        else {
+
+          return std::nullopt;
+        }
+      }
+
+      static std::optional< int >
+      calculateDZA( const InteractionType& type,
+                    const std::optional< std::map< ParticleID, short > >& ejectiles ) {
+
+        if ( ( type == InteractionType::Nuclear ) && ( ejectiles.has_value() ) ){
+
+          return std::accumulate( ejectiles->begin(), ejectiles->end(), 0,
+                                  [] ( int result, const auto& pair )
+                                     { return result + pair.second * pair.first.za(); } );
+        }
+        else {
+
+          return std::nullopt;
+        }
+      }
+
+      /* constructor */
+      Entry( std::int64_t number, std::optional< short > mt,
+             std::optional< std::map< ParticleID, short > > ejectiles,
+             std::vector< std::string > symbols,
+             InteractionType interaction, std::optional< short > level ) :
+        number_( number ),
+        interaction_( std::move( interaction ) ),
+        mt_( std::move( mt ) ),
+        ejectiles_( std::move( ejectiles ) ),
+        symbols_( std::move( symbols ) ),
+        designator_( std::nullopt ),
+        level_( std::move( level ) ),
+        dza_( std::nullopt ) {
+
+        this->dza_ = calculateDZA( this->type(), this->particles() );
+        this->designator_ = getDesignator( this->type(), this->symbols() );
+
+        this->hash_ = std::hash< std::string >{}( this->symbol() );
+      }
+
+    public:
+
+      /* constructor */
+
+      // special reaction with an mt number
+      Entry( std::int64_t number, short mt, InteractionType interaction,
+             std::vector< std::string > symbols ) :
+        Entry( std::move( number ), std::move( mt ), std::nullopt,
+               std::move( symbols ),
+               std::move( interaction ), std::nullopt ) {}
+
+      // normal reaction with an mt number but no defined level/subshell
+      Entry( std::int64_t number, short mt, InteractionType interaction,
+             std::vector< std::string > symbols,
+             std::map< ParticleID, short > ejectiles ) :
+        Entry( std::move( number ), std::move( mt ),
+               std::make_optional( std::move( ejectiles ) ),
+               std::move( symbols ),
+               std::move( interaction ), std::nullopt ) {}
+
+      // normal reaction with an mt number and level/subshell
+      Entry( std::int64_t number, short mt, InteractionType interaction,
+             std::vector< std::string > symbols,
+             std::map< ParticleID, short > ejectiles,
+             short level ) :
+        Entry( std::move( number ), std::move( mt ),
+               std::make_optional( std::move( ejectiles ) ),
+               std::move( symbols ),
+               std::move( interaction ), std::move( level ) ) {}
+
+      // normal reaction without an mt number and no defined level/subshell
+      Entry( std::int64_t number, InteractionType interaction,
+             std::vector< std::string > symbols,
+             std::map< ParticleID, short > ejectiles ) :
+        Entry( std::move( number ), std::nullopt,
+               std::make_optional( std::move( ejectiles ) ),
+               std::move( symbols ),
+               std::move( interaction ), std::nullopt ) {}
+
+      // normal reaction without an mt number and a level/subshell
+      Entry( std::int64_t number, InteractionType interaction,
+             std::vector< std::string > symbols,
+             std::map< ParticleID, short > ejectiles,
+             short level ) :
+        Entry( std::move( number ), std::nullopt,
+               std::make_optional( std::move( ejectiles ) ),
+               std::move( symbols ),
+               std::move( interaction ), std::move( level ) ) {}
+
+      /* methods */
+      const std::int64_t& number() const { return this->number_; }
+      const InteractionType& type() const { return this->interaction_; }
+
+      const std::optional< short >& mt() const { return this->mt_; }
+      const std::string& symbol() const { return this->symbols().front(); }
+      const std::vector< std::string >& symbols() const { return this->symbols_; }
+      const std::optional< std::map< ParticleID, short > >& particles() const {
+
+        return this->ejectiles_;
+      }
+      const std::optional< short >& level() const { return this->level_; }
+      const std::optional< int >& dza() const { return this->dza_; }
+      const std::optional< std::string >& partialDesignator() const { return this->designator_; }
+
+      std::size_t hash() const { return this->hash_; }
+    };
 
     static inline std::vector< Entry > entries{
 
@@ -1067,12 +1202,214 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "njoy/dryad/id/ReactionType/src/getIndex.hpp"
+
+    /**
+     *  @brief Retrieve the index to the reaction type information entry
+     *
+     *  This function does not recognise any of the ionisation mt numbers
+     *  (522 for total ionisation and 534 through 572 for subshell ionisation)
+     *  because electro- and photoinionisation cannot be distinguished by the
+     *  mt number alone.
+     *
+     *  @param mt   the mt number
+     */
+    static std::size_t getIndex( int mt ) {
+
+      try {
+
+        return mt_conversion_dictionary.at( mt );
+      }
+      catch ( ... ) {
+
+        throw std::invalid_argument( "\'" + std::to_string( mt ) + "\' does not define a "
+                                     "registered mt number" );
+      }
+    }
+
+    /**
+     *  @brief Retrieve the index to the reaction type information entry
+     *
+     *  @param projectile   the projectile
+     *  @param mt           the mt number
+     *  @param level        the level number of the target (default is zero)
+     */
+    static std::size_t getIndex( const ParticleID& projectile, int mt, int level ) {
+
+      // Yes, magic numbers. Sue me.
+
+      if ( mt == 2 ) {
+
+        if ( level >= 0 && level < 100 ) {
+
+          if      ( projectile == ParticleID::neutron() )  { return 132 + level; }
+          else if ( projectile == ParticleID::photon() )   { return 30 + level; }
+          else if ( projectile == ParticleID::proton() )   { return 258 + level; }
+          else if ( projectile == ParticleID::deuteron() ) { return 375 + level; }
+          else if ( projectile == ParticleID::triton() )   { return 485 + level; }
+          else if ( projectile == ParticleID::helion() )   { return 597 + level; }
+          else if ( projectile == ParticleID::alpha() )    { return 708 + level; }
+        }
+
+        throw std::invalid_argument( "Elastic scattering using mt = 2 for \'" + projectile.symbol() + "\' "
+                                     "to level \'" + std::to_string( level ) + "\' is not defined" );
+      }
+      else if ( ( ( mt < 534 ) || ( mt > 572 ) ) && ( mt != 522 ) ) {
+
+        // for anything but ionisation use the previous getIndex function
+        return getIndex( mt );
+      }
+      else {
+
+        std::size_t offset = 0;
+        if      ( projectile == ParticleID::electron() ) { offset = 900; }
+        else if ( projectile == ParticleID::photon() )   { offset = 850; }
+        else {
+
+          throw std::invalid_argument( "Ionisation is not defined for \'" + projectile.symbol() + "\'" );
+        }
+
+        if ( mt == 522 ) {
+
+          return offset + 49;
+        }
+        else {
+
+          return offset + mt - 534;
+        }
+      }
+    }
+
+    /**
+     *  @brief Retrieve the index to the reaction type information entry
+     *
+     *  Note: this constructor only works for nuclear interactions
+     *
+     *  @param particles   the outgoing particles
+     *  @param level       the level number of the residual
+     */
+    static std::size_t getIndex( const std::map< ParticleID, short >& particles, int level ) {
+
+      // generate the symbol for the reaction entry
+      std::int64_t number = 0;
+
+      // generate number based on outgoing particles
+      if ( ( particles.size() == 0 ) ||
+           ( particles.size() == 1 && particles.find( ParticleID::photon() ) != particles.end() ) ) {
+
+        number = 1000;
+      }
+      else {
+
+        // note: this can probably be optimised
+        auto iter = particles.find( ParticleID::alpha() );
+        number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+        iter = particles.find( ParticleID::helion() );
+        number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+        iter = particles.find( ParticleID::triton() );
+        number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+        iter = particles.find( ParticleID::deuteron() );
+        number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+        iter = particles.find( ParticleID::proton() );
+        number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+        iter = particles.find( ParticleID::neutron() );
+        number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+        number *= 10000;
+      }
+
+      // add the level
+      if ( ( level >= 0 ) && ( level <= LevelID::all ) ) {
+
+        number += level;
+      }
+      else {
+
+        throw std::invalid_argument( "Not a level number: \'" + std::to_string( level ) + "\'" );
+      }
+
+      try {
+
+        return particles_conversion_dictionary.at( number );
+      }
+      catch ( ... ) {
+
+        throw std::invalid_argument( "The set of outgoing particles does not define a registered reaction type" );
+      }
+    }
+
+    /**
+     *  @brief Retrieve the index to the reaction type information entry
+     *
+     *  @param string   the reaction type string
+     */
+    static std::size_t getIndex( const std::string& string ) {
+
+      //! @todo add the possibility of parsing a string of particles
+
+      try {
+
+        return string_conversion_dictionary.at( string );
+      }
+      catch ( ... ) {
+
+        throw std::invalid_argument( "\'" + string + "\' does not define a "
+                                     "registered reaction type string" );
+      }
+    }
+
+    /* constructor */
+
+    /**
+     *  @brief Private constructor taking an index
+     */
+    constexpr ReactionType( std::size_t index ) : index_( index ) {};
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/id/ReactionType/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ReactionType() = default;
+
+    ReactionType( const ReactionType& ) = default;
+    ReactionType( ReactionType&& ) = default;
+
+    ReactionType& operator=( const ReactionType& ) = default;
+    ReactionType& operator=( ReactionType&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param mt   the mt number
+     */
+    ReactionType( int mt ) : index_( getIndex( mt ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param projectile   the projectile
+     *  @param mt           the mt number
+     *  @param level        the level number of the target (default is zero)
+     */
+    ReactionType( const ParticleID& projectile, int mt, int level = 0 ) :
+      index_( getIndex( projectile, mt, level ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param particles   the outgoing particles (excluding the residual)
+     *  @param level       the level number of the residual
+     */
+    ReactionType( const std::map< ParticleID, short >& particles, int level ) :
+      index_( getIndex( particles, level ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param string   the reaction type string
+     */
+    ReactionType( const std::string& string ) : index_( getIndex( string ) ) {}
 
     /* predefined identifiers */
 
