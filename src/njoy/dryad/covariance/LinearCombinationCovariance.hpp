@@ -26,12 +26,57 @@ namespace covariance {
     std::vector< double > coefficients_;
 
     /* auxiliary function */
-    #include "njoy/dryad/covariance/LinearCombinationCovariance/src/verifySize.hpp"
+
+    static void verifySize( std::size_t reactions, std::size_t coefficients ) {
+
+      if ( reactions != coefficients ) {
+
+        Log::error( "The number of reactions and number of coefficients provided are not consistent" );
+        Log::info( "Number reactions: {}", reactions );
+        Log::info( "Number coefficients: {}", coefficients );
+        throw std::exception();
+      }
+      if ( reactions < 1 ) {
+
+        Log::error( "Expected at least one reaction involved in the linear combination" );
+        Log::info( "Number reactions: {}", reactions );
+        Log::info( "Number coefficients: {}", coefficients );
+        throw std::exception();
+      }
+    }
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/covariance/LinearCombinationCovariance/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    LinearCombinationCovariance() = default;
+
+    LinearCombinationCovariance( const LinearCombinationCovariance& ) = default;
+    LinearCombinationCovariance( LinearCombinationCovariance&& ) = default;
+
+    LinearCombinationCovariance& operator=( const LinearCombinationCovariance& ) = default;
+    LinearCombinationCovariance& operator=( LinearCombinationCovariance&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] lower          the lower energy limit
+     *  @param[in] upper          the upper energy limit
+     *  @param[in] reactions      the reactions in the linear combination
+     *  @param[in] coefficients   the coefficients of the linear combination
+     */
+    LinearCombinationCovariance( double lower, double upper,
+                                 std::vector< id::ReactionID > reactions,
+                                 std::vector< double > coefficients ) :
+      lower_( std::move( lower ) ), upper_( std::move( upper ) ),
+      reactions_( std::move( reactions ) ),
+      coefficients_( std::move( coefficients ) ) {
+
+      verifySize( this->reactions().size(), this->coefficients().size() );
+    }
 
     /* methods */
 
