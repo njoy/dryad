@@ -75,9 +75,62 @@ namespace id {
   private:
 
     /* helper class */
-    #include "njoy/dryad/id/ElectronSubshellID/Entry.hpp"
+
+    /**
+     *  @class
+     *  @brief Private helper class
+     */
+    class Entry {
+
+      /* fields */
+
+      // tuple for logical ordering:
+      // - principal quantum number
+      // - azimuthal quantum number
+      // - total angular momentum = l +/- 1/2
+      std::tuple< short, short, std::optional< double > > numbers_;
+
+      std::optional< short > mt_;
+      std::string symbol_;
+      std::vector< std::string > alternatives_;
+
+      std::size_t hash_;
+
+    public:
+
+      /* constructor */
+      Entry( short n, short l, double j, short mt,
+             std::string symbol,
+             std::vector< std::string > alternatives = {} ) :
+          numbers_( n, l, j ), mt_( mt ),
+          symbol_( std::move( symbol ) ),
+          alternatives_( std::move( alternatives ) ) {
+
+        this->hash_ = std::hash< std::string >{}( this->symbol() );
+      }
+
+      Entry( short n, short l, std::string symbol ) :
+          numbers_( n, l, std::nullopt ), mt_( std::nullopt ),
+          symbol_( std::move( symbol ) ) {
+
+        this->hash_ = std::hash< std::string >{}( this->symbol() );
+      }
+
+      /* methods */
+      const std::tuple< short, short, std::optional< double > >& quantumNumbers() const { return this->numbers_; }
+      short principalQuantumNumber() const { return std::get<0>( this->quantumNumbers() ); }
+      short azimuthalQuantumNumber() const { return std::get<1>( this->quantumNumbers() ); }
+      const std::optional< double >& totalAngularMomentum() const { return std::get<2>( this->quantumNumbers() ); }
+
+      const std::optional< short >& mt() const { return this->mt_; }
+      const std::string& symbol() const { return this->symbol_; }
+      const std::vector< std::string >& alternatives() const { return this->alternatives_; }
+
+      std::size_t hash() const { return this->hash_; }
+    };
 
     /* static fields */
+
     static inline const std::vector< Entry > entries{
 
       Entry{ 1, 0, 0.5,  K , "1s1/2" , { "1s", "1s+", "K" } },
@@ -180,15 +233,73 @@ namespace id {
     }( entries );
 
     /* fields */
+
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "njoy/dryad/id/ElectronSubshellID/src/getIndex.hpp"
+
+    /**
+     *  @brief Retrieve the index to the subshell information entry
+     *
+     *  @param number    the subshell number
+     */
+    static std::size_t getIndex( int number ) {
+
+      try {
+
+        return number_conversion_dictionary.at( number );
+      }
+      catch ( ... ) {
+
+        throw std::invalid_argument( "Not a subshell number: \'" + std::to_string( number ) + "\'" );
+      }
+    }
+
+    /**
+     *  @brief Retrieve the index to the subshell information entry
+     *
+     *  @param string    the subshell symbol or alternatives
+     */
+    static std::size_t getIndex( const std::string& string ) {
+
+      try {
+
+        return string_conversion_dictionary.at( string );
+      }
+      catch ( ... ) {
+
+        throw std::invalid_argument( "Not a subshell symbol or name: \'" + string + "\'" );
+      }
+    }
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/id/ElectronSubshellID/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ElectronSubshellID() = default;
+
+    ElectronSubshellID( const ElectronSubshellID& ) = default;
+    ElectronSubshellID( ElectronSubshellID&& ) = default;
+
+    ElectronSubshellID& operator=( const ElectronSubshellID& ) = default;
+    ElectronSubshellID& operator=( ElectronSubshellID&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param number   the subshell number
+     */
+    ElectronSubshellID( int number ) : index_( getIndex( number ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param string   the subshell identifier
+     */
+    ElectronSubshellID( const std::string& string ) : index_( getIndex( string ) ) {}
 
     /* methods */
 

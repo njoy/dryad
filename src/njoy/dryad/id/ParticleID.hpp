@@ -33,9 +33,105 @@ namespace id {
   class ParticleID {
 
     /* helper class */
-    #include "njoy/dryad/id/ParticleID/Entry.hpp"
+
+    /**
+     *  @class
+     *  @brief Private helper class
+     */
+    class Entry {
+
+      /* fields */
+
+      // tuple for logical ordering:
+      // - za or order number for fundamental particles
+      // - optional level number
+      // - vector of vacancies
+      std::tuple< int, std::optional< std::vector< ElectronSubshellID > > > tuple_;
+
+      short z_;
+      short a_;
+      short e_;
+      int za_;
+
+      std::string symbol_;
+      std::vector< std::string > alternatives_;
+
+      std::size_t hash_;
+
+    public:
+
+      /* constructor */
+
+      // elements
+      Entry( ElementID element, std::string symbol, std::vector< std::string > alternatives ) :
+          tuple_( element.number() * 1000000, std::nullopt ),
+          z_( element.number() ),
+          a_( 0 ),
+          e_( 0 ),
+          za_( element.number() * 1000 ),
+          symbol_( std::move( symbol ) ),
+          alternatives_( std::move( alternatives ) ) {
+
+        this->hash_ = std::hash< std::string >{}( this->symbol() );
+      }
+
+      // ions
+      Entry( ElementID element, std::vector< ElectronSubshellID > vacancies,
+             std::string symbol, std::vector< std::string > alternatives ) :
+          tuple_( element.number() * 1000000, std::move( vacancies ) ),
+          z_( element.number() ),
+          a_( 0 ),
+          e_( 0 ),
+          za_( element.number() * 1000 ),
+          symbol_( std::move( symbol ) ),
+          alternatives_( std::move( alternatives ) ) {
+
+        this->hash_ = std::hash< std::string >{}( this->symbol() );
+      }
+
+      // nuclides
+      Entry( ElementID element, short mass, LevelID level,
+             std::string symbol, std::vector< std::string > alternatives ) :
+          tuple_( ( element.number() * 1000 + mass ) * 1000 + level.number(), std::nullopt ),
+          z_( element.number() ),
+          a_( mass ),
+          e_( level.number() ),
+          za_( element.number() * 1000 + mass ),
+          symbol_( std::move( symbol ) ),
+          alternatives_( std::move( alternatives ) ) {
+
+        this->hash_ = std::hash< std::string >{}( this->symbol() );
+      }
+
+      // fundamental particles
+      Entry( int number, short z, short a,
+             std::string symbol, std::vector< std::string > alternatives ) :
+          tuple_( number, std::nullopt ),
+          z_( z ),
+          a_( a ),
+          e_( 0 ),
+          za_( z * 1000 + a ),
+          symbol_( std::move( symbol ) ),
+          alternatives_( std::move( alternatives ) ) {
+
+        this->hash_ = std::hash< std::string >{}( this->symbol() );
+      }
+
+      /* methods */
+      const std::tuple< int, std::optional< std::vector< ElectronSubshellID > > >& tuple() const { return this->tuple_; }
+      short z() const { return this->z_; }
+      short a() const { return this->a_; }
+      short e() const { return this->e_; }
+      int za() const { return this->za_; }
+      const std::optional< std::vector< ElectronSubshellID > >& vacancies() const { return std::get< 1 >( this->tuple() ); }
+      const std::string& symbol() const { return this->symbol_; }
+      const std::vector< std::string >& alternatives() const { return this->alternatives_; }
+
+      std::size_t hash() const { return this->hash_; }
+    };
 
     /* static fields */
+
     static inline const std::regex nuclide_id_regex{ "^(([A-Z][a-z]?)(\\d{1,3}))((_e(\\d+))|(\\[all\\])|(\\[continuum\\]))?$" };
     static inline const std::regex ion_id_regex{ "^([A-Z][a-z]?)\\{(.+)\\}$" };
     static inline std::vector< Entry > entries{
@@ -198,15 +294,304 @@ namespace id {
     }( entries );
 
     /* fields */
+
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "njoy/dryad/id/ParticleID/src/getIndex.hpp"
+
+    /**
+     *  @brief Generate the symbol for an atom with subshell vacancies
+     *
+     *  @param element     the particle element
+     *  @param vacancies   the subshells with vacancies
+     */
+    static std::string
+    generateIonSymbol( const ElementID element, const std::vector< ElectronSubshellID >& vacancies ) {
+
+      std::string symbol = element.symbol() + '{';
+      for ( unsigned int i =0; i < vacancies.size(); ++i ) {
+
+        if ( vacancies[i].isNonRelativistic() ) {
+
+          throw std::invalid_argument( "Electron subshell identifiers used for particle identifiers must be relativistic" );
+        }
+
+        if ( i != 0 ) {
+
+          symbol += ',';
+        }
+        symbol += vacancies[i].symbol();
+      }
+      symbol += '}';
+      return symbol;
+    }
+
+    /**
+     *  @brief Generate the alternative symbols for an atom with subshell vacancies
+     *
+     *  @param element     the particle element
+     *  @param vacancies   the subshells with vacancies
+     */
+    static std::vector< std::string >
+    generateIonAlternatives( const std::string& symbol, const ElementID element, const std::vector< ElectronSubshellID >& vacancies ) {
+
+      //! @todo use a proper cartesian product in the future, for now: only do this for size() < 3
+
+      std::vector< std::string > alternatives;
+      std::string prefix = element.symbol() +'{';
+
+      if ( vacancies.size() > 2 ) {
+
+        throw std::runtime_error( "Atoms can currently only have 2 or less vacancies, contact a developer" );
+      }
+
+      alternatives.emplace_back( vacancies.front().symbol() );
+      alternatives.insert( alternatives.end(), vacancies.front().alternatives().begin(), vacancies.front().alternatives().end() );
+
+      std::vector< std::string > temp;
+      for ( unsigned int i = 1; i < vacancies.size(); ++i ) {
+
+        for ( unsigned int j = 0; j < alternatives.size(); ++j ) {
+
+          temp.emplace_back( alternatives[j] + ',' + vacancies[i].symbol() );
+          for ( unsigned int k = 0; k < vacancies[i].alternatives().size(); ++k ) {
+
+            temp.emplace_back( alternatives[j] + ',' + vacancies[i].alternatives()[k] );
+          }
+        }
+        std::swap( alternatives, temp );
+        temp.clear();
+      }
+
+      for ( unsigned int i = 0; i < alternatives.size(); ++i ) {
+
+        alternatives[i].insert( 0, prefix );
+        alternatives[i] += '}';
+      }
+
+      auto iter = std::find( alternatives.begin(), alternatives.end(), symbol );
+      if ( iter != alternatives.end() ) {
+
+        alternatives.erase( iter );
+      }
+
+      return alternatives;
+    }
+
+    /**
+     *  @brief Update registry
+     *
+     *  @param element   the particle element
+     *  @param mass      the particle mass number
+     *  @param level     the particle level
+     */
+    static std::size_t updateRegistry( ElementID element, int mass, LevelID level ) {
+
+      // the index for the new identifier
+      std::size_t index = entries.size();
+
+      int number = element.number() * 1000000 + mass * 1000 + level.number();
+      std::vector< std::string > alternatives = {};
+      std::string symbol = element.symbol() + std::to_string( mass );
+      if ( level.number() != 0 ) {
+
+        if ( ( level.number() == LevelID::continuum ) || ( level.number() == LevelID::all ) ) {
+
+          alternatives.emplace_back( symbol + std::string( "_e" ) +
+                                     std::to_string( level.number() ) );
+        }
+        symbol += level.symbol();
+      }
+      else {
+
+        alternatives.emplace_back( symbol + std::string( "_e0" ) );
+      }
+
+      // create the data entry and set conversion
+      entries.emplace_back( element, mass, level,
+                            std::move( symbol ), std::move( alternatives ) );
+
+      number_conversion_dictionary[ number ] = index;
+      string_conversion_dictionary[ entries[ index ].symbol() ] = index;
+      for ( const auto& alternative : entries[ index ].alternatives() ) {
+
+        string_conversion_dictionary[ alternative ] = index;
+      }
+
+      // return the index
+      return index;
+    }
+
+    /**
+     *  @brief Update registry
+     *
+     *  @param element     the particle element
+     *  @param vacancies   the subshells with vacancies
+     */
+    static std::size_t updateRegistry( ElementID element,
+                                       std::vector< ElectronSubshellID > vacancies ) {
+
+      // the index for the new identifier
+      std::size_t index = entries.size();
+
+      std::string symbol = generateIonSymbol( element, vacancies );
+      std::vector< std::string > alternatives = generateIonAlternatives( symbol, element, vacancies );
+
+      // create the data entry and set conversion
+      entries.emplace_back( element, std::move( vacancies ),
+                            std::move( symbol ),
+                            std::move( alternatives ) );
+
+      string_conversion_dictionary[ entries[ index ].symbol() ] = index;
+      for ( const auto& alternative : entries[ index ].alternatives() ) {
+
+        string_conversion_dictionary[ alternative ] = index;
+      }
+
+      // return the index
+      return index;
+    }
+
+    /**
+     *  @brief Retrieve the index to the particle information entry
+     *
+     *  @param element   the particle element
+     *  @param mass      the particle mass number
+     *  @param level     the particle level
+     */
+    static std::size_t getIndex( ElementID element, int mass, LevelID level ) {
+
+      try {
+
+        return number_conversion_dictionary.at( ( element.number() * 1000 + mass ) * 1000 + level.number() );
+      }
+      catch ( ... ) {
+
+        // update registry and return the index
+        return updateRegistry( std::move( element ), std::move( mass ), std::move( level ) );
+      }
+    }
+
+    /**
+     *  @brief Retrieve the index to the particle information entry
+     *
+     *  @param element     the particle element
+     *  @param vacancies   the subshells with vacancies
+     */
+    static std::size_t getIndex( ElementID element, std::vector< ElectronSubshellID > vacancies ) {
+
+      try {
+
+        return string_conversion_dictionary.at( generateIonSymbol( element, vacancies ) );
+      }
+      catch ( const std::out_of_range& ) {
+
+        // update registry and return the index
+        return updateRegistry( std::move( element ), std::move( vacancies ) );
+      }
+    }
+
+    /**
+     *  @brief Retrieve the index to the particle information entry
+     *
+     *  @param string    the particle id as a string
+     */
+    static std::size_t getIndex( const std::string& string ) {
+
+      try {
+
+        return string_conversion_dictionary.at( string );
+      }
+      catch ( ... ) {
+
+        std::smatch match;
+        if ( std::regex_match( string, match, nuclide_id_regex ) ) {
+
+          // data entries
+          ElementID element( match[2] );
+          int mass = std::stoi( match[3] );
+          LevelID level( match[4] != ""
+                         ? match[5] != "" ? std::stoi( match[6] )
+                                          : match[7] != "" ? LevelID::all
+                                                           : LevelID::continuum
+                         : 0 );
+
+          // update registry and return the index
+          return updateRegistry( std::move( element ), std::move( mass ), std::move( level ) );
+        }
+        else if ( std::regex_match( string, match, ion_id_regex ) ) {
+
+          // data entries
+          ElementID element( match[1] );
+          auto shells = tools::split( match[2], ',' );
+          std::vector< ElectronSubshellID > vacancies( shells.size() );
+          std::transform( shells.begin(), shells.end(), vacancies.begin(),
+                          [] ( auto&& vacancy ) { return ElectronSubshellID( vacancy ); } );
+
+          // update registry and return the index
+          return updateRegistry( std::move( element ), std::move( vacancies ) );
+        }
+
+        throw std::invalid_argument( "Not a particle symbol or name: \'" + string + "\'" );
+      }
+    }
+
+    /* constructor */
+
+    /**
+     *  @brief Private constructor taking an index
+     */
+    constexpr ParticleID( std::size_t index ) : index_( index ) {};
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/id/ParticleID/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ParticleID() = default;
+
+    ParticleID( const ParticleID& ) = default;
+    ParticleID( ParticleID&& ) = default;
+
+    ParticleID& operator=( const ParticleID& ) = default;
+    ParticleID& operator=( ParticleID&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param element   the particle element
+     *  @param mass      the particle mass number
+     *  @param level     the particle level
+     */
+    ParticleID( ElementID element, int mass, LevelID level ) :
+        index_( getIndex( std::move( element ), mass, std::move( level ) ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param element     the particle element
+     *  @param vacancies   the subshells with a vacancy
+     */
+    ParticleID( ElementID element, std::vector< ElectronSubshellID > vacancies ) :
+        index_( getIndex( std::move( element ), std::move( vacancies ) ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param element   the particle element
+     *  @param vacancy   the subshell with a vacancy
+     */
+    ParticleID( ElementID element, ElectronSubshellID vacancy ) :
+        ParticleID( std::move( element ), std::vector< ElectronSubshellID >{ std::move( vacancy ) } ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param string   the particle symbol, name or alternative
+     */
+    ParticleID( const std::string& string ) : index_( getIndex( string ) ) {}
 
     /* static methods for testing purposes only */
 
