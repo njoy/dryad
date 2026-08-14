@@ -27,6 +27,7 @@ namespace atomic {
   class NonRadiativeTransitionData {
 
     /* fields */
+
     id::ElectronSubshellID originating_shell_;
     id::ElectronSubshellID emitting_shell_;
     double probability_;

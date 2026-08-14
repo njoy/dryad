@@ -35,6 +35,7 @@ namespace atomic {
   class ElectronSubshellConfiguration {
 
     /* fields */
+
     id::ElectronSubshellID id_;
 
     double binding_energy_;
