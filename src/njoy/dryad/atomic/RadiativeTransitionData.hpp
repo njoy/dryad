@@ -25,6 +25,7 @@ namespace atomic {
   class RadiativeTransitionData {
 
     /* fields */
+
     id::ElectronSubshellID originating_shell_;
     double probability_;
     std::optional< double > energy_;

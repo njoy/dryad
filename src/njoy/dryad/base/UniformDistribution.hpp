@@ -27,19 +27,65 @@ namespace base {
   class UniformDistribution {
 
     /* fields */
+
     UniformDistributionType type_;
     std::vector< double > values_;
 
     /* auxiliary functions */
-    #include "njoy/dryad/base/UniformDistribution/src/verifySize.hpp"
+
+    /**
+     *  @brief Verify the size of the data
+     *
+     *  @param[in] size   the number of cosine values
+     *  @param[in] type   the uniform distribution type
+     */
+    static void verifySize( std::size_t size, const UniformDistributionType& type ) {
+
+      if ( type == UniformDistributionType::Discrete ) {
+
+        if ( size == 0 ) {
+
+          Log::error( "Expected at least 1 discrete value, found {}", size );
+          throw std::exception();
+        }
+      }
+      else {
+
+        if ( size < 2 ) {
+
+          Log::error( "Expected at least 2 values for an interval, found {}", size );
+          throw std::exception();
+        }
+      }
+    }
 
   public:
 
-    /* type aliases */
-
     /* constructor */
 
-    #include "njoy/dryad/base/UniformDistribution/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    UniformDistribution() = default;
+
+    UniformDistribution( const UniformDistribution& ) = default;
+    UniformDistribution( UniformDistribution&& ) = default;
+
+    UniformDistribution& operator=( const UniformDistribution& ) = default;
+    UniformDistribution& operator=( UniformDistribution&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param values   the values
+     *  @param type     the uniform distribution type
+     */
+    UniformDistribution( std::vector< double > values,
+                         UniformDistributionType type ) :
+      type_( std::move( type ) ), values_( std::move( values ) ) {
+
+      verifySize( this->values_.size(), this->type() );
+    }
 
     /* methods */
 
