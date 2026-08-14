@@ -44,16 +44,166 @@ namespace atomic {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/sort.hpp"
-    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/iterator.hpp"
-    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateProbability.hpp"
-    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateAverageEnergy.hpp"
+    /**
+     *  @brief Sort the transition data
+     *
+     *  This sorts the radiative transition by order of the originating shell. The non-radiative
+     *  transition are sorted by lexigraphical sorting of the origination and emitting shells.
+     */
+    void sort() {
+
+      std::sort( this->radiative_.begin(), this->radiative_.end(),
+                 [] ( auto&& left, auto&& right )
+                    { return left.originatingShell() < right.originatingShell(); } );
+      std::sort( this->nonradiative_.begin(), this->nonradiative_.end(),
+                 [] ( auto&& left, auto&& right )
+                    { return std::tie( left.originatingShell(), left.emittingShell() ) <
+                             std::tie( right.originatingShell(), right.emittingShell() ); } );
+    }
+
+    /**
+     *  @brief Return the lower bound iterator for a given originating shell
+     *
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
+     */
+    template < typename Range >
+    static auto lower_iterator( const id::ElectronSubshellID& originating,
+                                Range&& range ) {
+
+      return std::lower_bound( std::begin( range ), std::end( range ),
+                               originating,
+                               [] ( auto&& transition, auto&& right )
+                                  { return transition.originatingShell() < right; } );
+    }
+
+    /**
+     *  @brief Return the upper bound iterator for a given originating shell
+     *
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
+     */
+    template < typename Range >
+    static auto upper_iterator( const id::ElectronSubshellID& originating,
+                                Range&& range ) {
+
+      return std::upper_bound( std::begin( range ), std::end( range ),
+                               originating,
+                               [] ( auto&& left, auto&& transition )
+                                  { return left < transition.originatingShell(); } );
+    }
+
+    /**
+     *  @brief Return the iterator for a given originating shell
+     *
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
+     */
+    auto iterator( const id::ElectronSubshellID& originating ) const {
+
+      return lower_iterator( originating, this->radiativeTransitions() );
+    }
+
+    /**
+     *  @brief Return the iterator for a given originating and emitting shell
+     *
+     *  @param[in] originating   the identifier of the subshell from which the
+     *                           vacancy filling electron originated
+     *  @param[in] emitting      the identifier of the subshell from which the
+     *                           emitted electron originated
+     */
+    auto iterator( const id::ElectronSubshellID& originating,
+                   const id::ElectronSubshellID& emitting ) const {
+
+      return std::lower_bound( this->nonRadiativeTransitions().begin(), this->nonRadiativeTransitions().end(),
+                               std::tie( originating, emitting ),
+                               [] ( auto&& transition, auto&& right )
+                                  { return std::tie( transition.originatingShell(),
+                                                     transition.emittingShell() ) < right; } );
+    }
+
+    /**
+     *  @brief Calculate the probability for a set of transitions
+     *
+     *  @param[in] first   the iterator to the first transition
+     *  @param[in] last    the iterator to the element past the last transition
+     */
+    template < typename Iterator >
+    static double calculateProbability(  Iterator begin, Iterator end  ) {
+
+      return std::accumulate( begin, end, 0.,
+                              [] ( double value, auto&& transition )
+                                 { return value + transition.probability(); } );
+    }
+
+    /**
+     *  @brief Calculate the average energy for a set of transitions
+     *
+     *  @param[in] first   the iterator to the first transition
+     *  @param[in] last    the iterator to the element past the last transition
+     */
+    template < typename Iterator >
+    static double calculateAverageEnergy( Iterator begin, Iterator end ) {
+
+      if ( std::distance( begin, end ) > 0 ) {
+
+        double average = 0.;
+        double probability = 0.;
+        while ( begin != end ) {
+
+          average += begin->energy().value() * begin->probability();
+          probability += begin->probability();
+          ++begin;
+        }
+        return average / probability;
+      }
+      else {
+
+        return 0.;
+      }
+    }
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ElectronSubshellConfiguration() = default;
+
+    ElectronSubshellConfiguration( const ElectronSubshellConfiguration& ) = default;
+    ElectronSubshellConfiguration( ElectronSubshellConfiguration&& ) = default;
+
+    ElectronSubshellConfiguration& operator=( const ElectronSubshellConfiguration& ) = default;
+    ElectronSubshellConfiguration& operator=( ElectronSubshellConfiguration&& ) = default;
+
+    /**
+     *  @brief Constructor with transition data
+     *
+     *  @param[in] id             the electron subshell identifier
+     *  @param[in] energy         the electron subshell binding energy
+     *  @param[in] population     the electron subshell population when the atom is neutral
+     *  @param[in] radiative      the radiative transitions that are available (default is an empty vector)
+     *  @param[in] nonradiative   the non-radiative transitions that are available (default is an empty vector)
+     *  @param[in] normalise      option to indicate whether or not to normalise
+     *                            all probability data (default: no normalisation)
+     */
+    ElectronSubshellConfiguration( id::ElectronSubshellID id,
+                                   double energy,
+                                   double population,
+                                   std::vector< RadiativeTransitionData > radiative = {},
+                                   std::vector< NonRadiativeTransitionData > nonradiative = {},
+                                   bool normalise = false ) :
+      id_( std::move( id ) ), binding_energy_( energy ), population_( population ),
+      radiative_( std::move( radiative ) ), nonradiative_( std::move( nonradiative ) ) {
+
+      this->sort();
+      if ( normalise ) {
+
+        this->normalise();
+      }
+    }
 
     /* methods */
 
