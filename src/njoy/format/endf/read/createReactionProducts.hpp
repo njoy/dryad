@@ -24,7 +24,7 @@ namespace read {
    *  @brief Add a placeholder reaction product if it is not present yet
    *
    *  @param[in] particle        the particle identifier
-   *  @param[in] multiplicity    the multiplicity of the target
+   *  @param[in] multiplicity    the multiplicity of the reaction product
    *  @param[in, out] products   the current set of reaction products
    */
   inline void addProduct( const dryad::id::ParticleID& particle,
