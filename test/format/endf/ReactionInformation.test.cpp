@@ -5,6 +5,7 @@
 #include "njoy/format/endf/ReactionInformation.hpp"
 
 // other includes
+#include "ENDFtk/tree/GTape.hpp"
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
@@ -748,6 +749,115 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( 24 == partials[1].reactionType().mt() );
     } // THEN
   } // GIVEN
+
+  GIVEN( "an GENDF material, mf and mt number" ) {
+
+    using GTape = njoy::ENDFtk::tree::GTape;
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.gendf" );
+    auto material = tape.materials().front();
+    auto n = njoy::dryad::id::ParticleID::neutron();
+    auto u235 = njoy::dryad::id::ParticleID( "U235" );
+
+    THEN( "partial mt numbers can be obtained for the total reaction" ) {
+
+      auto partials = ReactionInformation::partials( n, u235, material, 3, 1 );
+
+      CHECK(  93 == partials.size() );
+      CHECK(  50 == partials[0].reactionType().mt() );
+      CHECK(   5 == partials[1].reactionType().mt() );
+      CHECK(  16 == partials[2].reactionType().mt() );
+      CHECK(  17 == partials[3].reactionType().mt() );
+      CHECK(  18 == partials[4].reactionType().mt() );
+      CHECK(  51 == partials[5].reactionType().mt() );
+      CHECK(  52 == partials[6].reactionType().mt() );
+      CHECK(  53 == partials[7].reactionType().mt() );
+      CHECK(  54 == partials[8].reactionType().mt() );
+      CHECK(  55 == partials[9].reactionType().mt() );
+      CHECK(  56 == partials[10].reactionType().mt() );
+      CHECK(  57 == partials[11].reactionType().mt() );
+      CHECK(  58 == partials[12].reactionType().mt() );
+      CHECK(  59 == partials[13].reactionType().mt() );
+      CHECK(  60 == partials[14].reactionType().mt() );
+      CHECK(  61 == partials[15].reactionType().mt() );
+      CHECK(  62 == partials[16].reactionType().mt() );
+      CHECK(  63 == partials[17].reactionType().mt() );
+      CHECK(  64 == partials[18].reactionType().mt() );
+      CHECK(  65 == partials[19].reactionType().mt() );
+      CHECK(  66 == partials[20].reactionType().mt() );
+      CHECK(  67 == partials[21].reactionType().mt() );
+      CHECK(  68 == partials[22].reactionType().mt() );
+      CHECK(  69 == partials[23].reactionType().mt() );
+      CHECK(  70 == partials[24].reactionType().mt() );
+      CHECK(  71 == partials[25].reactionType().mt() );
+      CHECK(  72 == partials[26].reactionType().mt() );
+      CHECK(  73 == partials[27].reactionType().mt() );
+      CHECK(  74 == partials[28].reactionType().mt() );
+      CHECK(  75 == partials[29].reactionType().mt() );
+      CHECK(  76 == partials[30].reactionType().mt() );
+      CHECK(  77 == partials[31].reactionType().mt() );
+      CHECK(  78 == partials[32].reactionType().mt() );
+      CHECK(  79 == partials[33].reactionType().mt() );
+      CHECK(  80 == partials[34].reactionType().mt() );
+      CHECK(  81 == partials[35].reactionType().mt() );
+      CHECK(  82 == partials[36].reactionType().mt() );
+      CHECK(  83 == partials[37].reactionType().mt() );
+      CHECK(  84 == partials[38].reactionType().mt() );
+      CHECK(  85 == partials[39].reactionType().mt() );
+      CHECK(  86 == partials[40].reactionType().mt() );
+      CHECK(  87 == partials[41].reactionType().mt() );
+      CHECK(  88 == partials[42].reactionType().mt() );
+      CHECK(  89 == partials[43].reactionType().mt() );
+      CHECK(  91 == partials[44].reactionType().mt() );
+      CHECK( 102 == partials[45].reactionType().mt() );
+      CHECK( 600 == partials[46].reactionType().mt() );
+      CHECK( 601 == partials[47].reactionType().mt() );
+      CHECK( 602 == partials[48].reactionType().mt() );
+      CHECK( 603 == partials[49].reactionType().mt() );
+      CHECK( 604 == partials[50].reactionType().mt() );
+      CHECK( 605 == partials[51].reactionType().mt() );
+      CHECK( 606 == partials[52].reactionType().mt() );
+      CHECK( 607 == partials[53].reactionType().mt() );
+      CHECK( 608 == partials[54].reactionType().mt() );
+      CHECK( 609 == partials[55].reactionType().mt() );
+      CHECK( 649 == partials[56].reactionType().mt() );
+      CHECK( 800 == partials[57].reactionType().mt() );
+      CHECK( 801 == partials[58].reactionType().mt() );
+      CHECK( 802 == partials[59].reactionType().mt() );
+      CHECK( 803 == partials[60].reactionType().mt() );
+      CHECK( 804 == partials[61].reactionType().mt() );
+      CHECK( 805 == partials[62].reactionType().mt() );
+      CHECK( 806 == partials[63].reactionType().mt() );
+      CHECK( 807 == partials[64].reactionType().mt() );
+      CHECK( 808 == partials[65].reactionType().mt() );
+      CHECK( 809 == partials[66].reactionType().mt() );
+      CHECK( 810 == partials[67].reactionType().mt() );
+      CHECK( 811 == partials[68].reactionType().mt() );
+      CHECK( 812 == partials[69].reactionType().mt() );
+      CHECK( 813 == partials[70].reactionType().mt() );
+      CHECK( 814 == partials[71].reactionType().mt() );
+      CHECK( 815 == partials[72].reactionType().mt() );
+      CHECK( 816 == partials[73].reactionType().mt() );
+      CHECK( 817 == partials[74].reactionType().mt() );
+      CHECK( 818 == partials[75].reactionType().mt() );
+      CHECK( 819 == partials[76].reactionType().mt() );
+      CHECK( 820 == partials[77].reactionType().mt() );
+      CHECK( 821 == partials[78].reactionType().mt() );
+      CHECK( 822 == partials[79].reactionType().mt() );
+      CHECK( 823 == partials[80].reactionType().mt() );
+      CHECK( 824 == partials[81].reactionType().mt() );
+      CHECK( 825 == partials[82].reactionType().mt() );
+      CHECK( 826 == partials[83].reactionType().mt() );
+      CHECK( 827 == partials[84].reactionType().mt() );
+      CHECK( 828 == partials[85].reactionType().mt() );
+      CHECK( 829 == partials[86].reactionType().mt() );
+      CHECK( 830 == partials[87].reactionType().mt() );
+      CHECK( 831 == partials[88].reactionType().mt() );
+      CHECK( 832 == partials[89].reactionType().mt() );
+      CHECK( 833 == partials[90].reactionType().mt() );
+      CHECK( 834 == partials[91].reactionType().mt() );
+      CHECK( 835 == partials[92].reactionType().mt() );
+    }
+  }
 
   GIVEN( "an ENDF material for a metastable state target, mf and mt number" ) {
 
