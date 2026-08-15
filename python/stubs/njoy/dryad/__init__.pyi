@@ -1540,6 +1540,9 @@ class MultigroupProjectileTarget:
         """
         Create a MultigroupProjectileTarget from a GENDF file
         
+        If there are multiple materials in the GENDF file, only the first material
+        will be transformed into a MultigroupProjectileTarget.
+        
         Parameters
         ----------
             projectile : njoy.dryad.id.ParticleID
