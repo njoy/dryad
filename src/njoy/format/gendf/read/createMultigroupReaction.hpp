@@ -62,6 +62,13 @@ namespace read {
                                           endf::ReactionInformation::partials( projectile, target, material, 3, mt ),
                                           std::move( xs ) );
       }
+      else if ( endf::ReactionInformation::isLumpedCovariance( mt ) ) {
+
+        // return the reaction data
+        return dryad::MultigroupReaction( std::move( id ),
+                                          endf::ReactionInformation::partials( projectile, target, material, 33, mt ),
+                                          std::move( xs ) );
+      }
       else {
 
         Log::error( "{} is not an MT number that designates a valid reaction", mt );
