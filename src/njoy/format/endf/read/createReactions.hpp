@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_ENDF_READ_CREATEREACTIONS
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes

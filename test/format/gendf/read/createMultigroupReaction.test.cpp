@@ -47,7 +47,7 @@ SCENARIO( "createMultigroupReaction" ) {
 
       THEN( "a summation MultigroupReaction with partials is created" ) {
 
-        neutron::u235::verifyTotalReaction( total );
+        neutron::u235::verifyTotalReaction( total, true );
       } // THEN
     } // WHEN
 
