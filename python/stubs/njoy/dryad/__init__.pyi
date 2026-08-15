@@ -1535,6 +1535,24 @@ class MultigroupProjectileTarget:
             the optional covariance data
     """
     __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def from_gendf_file(projectile: id.ParticleID, target: id.ParticleID, filename: str, relative: bool = True, frame: ReferenceFrame = ...) -> MultigroupProjectileTarget:
+        """
+        Create a MultigroupProjectileTarget from a GENDF file
+        
+        Parameters
+        ----------
+            projectile : njoy.dryad.id.ParticleID
+                the projectile identifier
+            target : njoy.dryad.id.ParticleID
+                the target identifier
+            filename : str
+                the GENDF file name
+            relative : bool, default True
+                the flag to indicate whether or not the covariance data is relative
+            frame : njoy.dryad.ReferenceFrame, default CentreOfMass
+                the reference frame
+        """
     def __copy__(self) -> MultigroupProjectileTarget:
         ...
     def __deepcopy__(self, arg0: dict) -> MultigroupProjectileTarget:

@@ -26,10 +26,6 @@ namespace read {
   /**
    *  @brief Create a MultigroupProjectileTarget from an unparsed GENDF material
    *
-   *  Only the infinite dilution (sigma0 = 1e+10) cross sections are read. For a
-   *  GROUPR formatted file the dilution list is searched for the infinite dilution
-   *  value, for an ERRORR formatted file the single available dilution is used.
-   *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] relative     the flag to indicate whether or not the covariance data is relative

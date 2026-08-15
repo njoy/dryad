@@ -5,6 +5,8 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/MultigroupProjectileTarget.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
+#include "njoy/format/gendf/read/createMultigroupProjectileTargetFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -21,6 +23,7 @@ void wrapMultigroupProjectileTarget( python::module& module ) {
   using MultigroupReaction = njoy::dryad::MultigroupReaction;
   using CovarianceData = njoy::dryad::covariance::CovarianceData;
   using InteractionType = njoy::dryad::InteractionType;
+  using ReferenceFrame = njoy::dryad::ReferenceFrame;
 
   // wrap views created by this component
 
@@ -155,6 +158,35 @@ void wrapMultigroupProjectileTarget( python::module& module ) {
     "This function recalculates the cross section of all summation reactions\n"
     "by summing the cross sections of the partials together. The partials are\n"
     "assumed to share the same group structure as the summation reaction."
+  )
+  .def_static(
+
+    "from_gendf_file",
+    [] ( const ParticleID& projectile, const ParticleID& target,
+         const std::string& filename, bool relative,
+         const ReferenceFrame& frame ) -> decltype(auto) {
+
+      return njoy::format::gendf::read::createMultigroupProjectileTargetFromFile(
+                 projectile, target, filename, relative, frame );
+    },
+    python::arg( "projectile" ), python::arg( "target" ),
+    python::arg( "filename" ), python::arg( "relative" ) = true,
+    python::arg( "frame" ) = ReferenceFrame::CentreOfMass,
+    "Create a MultigroupProjectileTarget from a GENDF file\n\n"
+    "If there are multiple materials in the GENDF file, only the first material\n"
+    "will be transformed into a MultigroupProjectileTarget.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "        the projectile identifier\n"
+    "    target : njoy.dryad.id.ParticleID\n"
+    "        the target identifier\n"
+    "    filename : str\n"
+    "        the GENDF file name\n"
+    "    relative : bool, default True\n"
+    "        the flag to indicate whether or not the covariance data is relative\n"
+    "    frame : njoy.dryad.ReferenceFrame, default CentreOfMass\n"
+    "        the reference frame"
   );
 
   // add standard equality comparison definitions
