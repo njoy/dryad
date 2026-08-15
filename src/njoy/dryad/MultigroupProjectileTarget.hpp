@@ -347,12 +347,19 @@ namespace dryad {
           auto iter = partials.begin();
           while ( iter != partials.end() ) {
 
-            decltype(auto) partial = this->reaction( *iter );
-            if ( partial.isSummationReaction() ) {
+            if ( this->hasReaction( *iter ) ) {
 
-              iter = partials.erase( iter );
-              iter = partials.insert( iter, partial.partialReactionIdentifiers()->begin(),
-                                            partial.partialReactionIdentifiers()->end() );
+              decltype(auto) partial = this->reaction( *iter );
+              if ( partial.isSummationReaction() ) {
+
+                iter = partials.erase( iter );
+                iter = partials.insert( iter, partial.partialReactionIdentifiers()->begin(),
+                                              partial.partialReactionIdentifiers()->end() );
+              }
+              else {
+
+                ++iter;
+              }
             }
             else {
 
