@@ -2,7 +2,6 @@
 #define NJOY_FORMAT_ENDF_READ_CREATEREACTION
 
 // system includes
-#include <algorithm>
 #include <vector>
 
 // other includes
@@ -40,7 +39,7 @@ namespace read {
                   bool normalise,
                   std::map< dryad::id::ParticleID, double >& masses ) {
 
-                            // metadata and miscellaneous information
+    // metadata and miscellaneous information
     dryad::id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
     Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
