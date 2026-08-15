@@ -3,6 +3,7 @@
 
 // system includes
 #include <map>
+#include <type_traits>
 #include <unordered_set>
 
 // other includes
@@ -239,10 +240,11 @@ namespace endf {
     /**
      *  @brief Return whether or not the MT number is for a summation reaction
      *
-     *  @param[in] material   the ENDF material
+     *  @param[in] material   the ENDF or GENDF material
      *  @param[in] mt         the MT number
      */
-    static bool isSummation( const ENDFtk::tree::Material& material, int mt ) {
+    template < typename Material >
+    static bool isSummation( const Material& material, int mt ) {
 
       switch ( mt ) {
 
@@ -264,10 +266,11 @@ namespace endf {
     /**
      *  @brief Return whether or not the MT number is for a primary reaction
      *
-     *  @param[in] material   the ENDF material
+     *  @param[in] material   the ENDF or GENDF material
      *  @param[in] mt         the MT number
      */
-    static bool isPrimary( const ENDFtk::tree::Material& material, int mt ) {
+    template < typename Material >
+    static bool isPrimary( const Material& material, int mt ) {
 
       switch ( mt ) {
 
@@ -287,18 +290,46 @@ namespace endf {
     }
 
     /**
+     *  @brief Return the partial reaction identifiers for a lumped covariance mt number
+     *
+     *  @param[in] projectile   the projectile identifier
+     *  @param[in] target       the target identifier
+     *  @param[in] material     the ENDF material
+     *  @param[in] mt           the lumped covariance mt number
+     */
+    static std::vector< dryad::id::ReactionID >
+    lumpedCovariancePartials( const dryad::id::ParticleID& projectile,
+                              const dryad::id::ParticleID& target,
+                              const ENDFtk::tree::Material& material,
+                              int mt ) {
+
+      std::vector< dryad::id::ReactionID > partials;
+      auto covariances = material.file( 33 ).parse< 33 >();
+      for ( const auto& section : covariances ) {
+
+        if ( section.lumpedCovarianceIndex() == mt ) {
+
+          partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, section.MT() ) );
+        }
+      }
+      std::sort( partials.begin(), partials.end() );
+      return partials;
+    }
+
+    /**
      *  @brief Return the partial reaction identifiers for a summation mt number
      *
      *  @param[in] projectile   the projectile identifier
      *  @param[in] target.      the target identifier
-     *  @param[in] material     the ENDF material
+     *  @param[in] material     the ENDF or GENDF material
      *  @param[in] mf           the MF number
      *  @param[in] mt           the MT number
      */
+    template < typename Material >
     static std::vector< dryad::id::ReactionID >
     partials( const dryad::id::ParticleID& projectile,
               const dryad::id::ParticleID& target,
-              const ENDFtk::tree::Material& material,
+              const Material& material,
               int mf, int mt ) {
 
       std::vector< dryad::id::ReactionID > partials;
@@ -330,15 +361,10 @@ namespace endf {
       }
       else if ( mf == 33 && isLumpedCovariance( mt ) ) {
 
-        auto covariances = material.file( 33 ).parse< 33 >();
-        for ( const auto& section : covariances ) {
+        if constexpr ( std::is_same_v< Material, ENDFtk::tree::Material > ) {
 
-          if ( section.lumpedCovarianceIndex() == mt ) {
-
-            partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, section.MT() ) );
-          }
+          partials = lumpedCovariancePartials( projectile, target, material, mt );
         }
-        std::sort( partials.begin(), partials.end() );
       }
       else if ( isSummation( material, mt ) ) {
 
