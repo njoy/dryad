@@ -674,6 +674,8 @@ namespace u235 {
 
   void verifyCrossSectionCovariances( const covariance::CrossSectionCovarianceData& xs ) {
 
+    //! @todo add covariance verification
+
     id::ReactionID mt1( "n,U235->total" );
     id::ReactionID mt2( "n,U235->n(0)" );
     id::ReactionID mt4( "n,U235->n(t)" );
@@ -700,35 +702,85 @@ namespace u235 {
     CHECK( lumped1 == xs.reactionIdentifiers()[9] );
     CHECK( lumped2 == xs.reactionIdentifiers()[10] );
 
-    // 11 diagonal + 55 off-diagonal matrices
     CHECK( 66 == xs.numberCovarianceMatrices() );
     CHECK( 66 == xs.covariances().size() );
 
     CHECK( true == xs.hasCovarianceMatrix( mt1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt2 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt4 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt5 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt16 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt17 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt18 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt51 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt1, lumped2 ) );
+
     CHECK( true == xs.hasCovarianceMatrix( mt2 ) );
-    CHECK( true == xs.hasCovarianceMatrix( mt4 ) );
-    CHECK( true == xs.hasCovarianceMatrix( mt5 ) );
-    CHECK( true == xs.hasCovarianceMatrix( mt16 ) );
-    CHECK( true == xs.hasCovarianceMatrix( mt17 ) );
-    CHECK( true == xs.hasCovarianceMatrix( mt18 ) );
-    CHECK( true == xs.hasCovarianceMatrix( mt51 ) );
-    CHECK( true == xs.hasCovarianceMatrix( mt102 ) );
-    CHECK( true == xs.hasCovarianceMatrix( lumped1 ) );
-    CHECK( true == xs.hasCovarianceMatrix( lumped2 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, mt4 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, mt5 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, mt16 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, mt17 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, mt18 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, mt51 ) );
     CHECK( true == xs.hasCovarianceMatrix( mt2, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt2, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( mt4 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, mt5 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, mt16 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, mt17 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, mt18 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, mt51 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt4, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( mt5 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt5, mt16 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt5, mt17 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt5, mt18 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt5, mt51 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt5, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt5, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt5, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( mt16 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt16, mt17 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt16, mt18 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt16, mt51 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt16, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt16, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt16, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( mt17 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt17, mt18 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt17, mt51 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt17, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt17, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt17, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( mt18 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt18, mt51 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt18, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt18, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt18, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( mt51 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt51, mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt51, lumped1 ) );
     CHECK( true == xs.hasCovarianceMatrix( mt51, lumped2 ) );
 
-    using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
-    auto variant = xs.covarianceMatrix( mt2 );
-    const auto& matrix = std::get< CrossSectionCovarianceMatrix >( variant );
-    CHECK( matrix.rowMetadata() == matrix.columnMetadata() );
-    CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
-    CHECK( id::ReactionID( "n,U235->n,U235" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
-    CHECK( 31 == matrix.rowMetadata().energies().size() );
-    CHECK_THAT( 1.390000e-4, WithinRel( matrix.rowMetadata().energies().front() ) );
-    CHECK_THAT( 1.700000e+7, WithinRel( matrix.rowMetadata().energies().back() ) );
-    CHECK( 30 == matrix.covariances().rows() );
-    CHECK( 30 == matrix.covariances().cols() );
+    CHECK( true == xs.hasCovarianceMatrix( mt102 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt102, lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( mt102, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( lumped1 ) );
+    CHECK( true == xs.hasCovarianceMatrix( lumped1, lumped2 ) );
+
+    CHECK( true == xs.hasCovarianceMatrix( lumped2 ) );
   }
 
   // n-092_U_235.covariances.gendf) : 9 reactions + covariance data

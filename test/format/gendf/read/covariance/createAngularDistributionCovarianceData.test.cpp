@@ -18,35 +18,34 @@ using namespace njoy::ENDFtk;
 
 SCENARIO( "createAngularDistributionCovarianceData" ) {
 
-    GIVEN( "a GENDF material" ) {
+  GIVEN( "a GENDF material" ) {
 
-    using GTape = njoy::ENDFtk::tree::GTape;
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_238.angular_covariances.gendf" );
-    auto material = tape.materials().front();
+  using GTape = njoy::ENDFtk::tree::GTape;
+  auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_238.angular_covariances.gendf" );
+  auto material = tape.materials().front();
 
-        WHEN( "constructing covariance matrices" ) {
+    WHEN( "constructing covariance matrices" ) {
 
-            id::ParticleID projectile( "n" );
-            id::ParticleID target( "U238" );
-            auto frame = ReferenceFrame::Laboratory;
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "U238" );
+      auto frame = ReferenceFrame::Laboratory;
 
-            auto chunk = gendf::read::covariance::createAngularDistributionCovarianceData( projectile, target, frame, material );
+      auto chunk = gendf::read::covariance::createAngularDistributionCovarianceData( projectile, target, frame, material );
 
-            THEN( "angular distribution covariance matrix can be created and members tested" ) {
+      THEN( "angular distribution covariance matrix can be created and members tested" ) {
 
-                id::ReactionID mt2( "n,U238->n(0)" );
+        id::ReactionID mt2( "n,U238->n(0)" );
 
-                CHECK( true == chunk.has_value() );
+        CHECK( true == chunk.has_value() );
 
-                CHECK( 1 == chunk->numberReactions() );
-                CHECK( 1 == chunk->reactionIdentifiers().size() );
-                CHECK( mt2 == chunk->reactionIdentifiers()[0] );
+        CHECK( 1 == chunk->numberReactions() );
+        CHECK( 1 == chunk->reactionIdentifiers().size() );
+        CHECK( mt2 == chunk->reactionIdentifiers()[0] );
 
-                CHECK( 1 == chunk->numberCovarianceMatrices() );
-                CHECK( 1 == chunk->covariances().size() );
-                CHECK( true == chunk->hasCovarianceMatrix( mt2 ) );
-
-            } // THEN
-        } // WHEN
-    } // GIVEN
+        CHECK( 1 == chunk->numberCovarianceMatrices() );
+        CHECK( 1 == chunk->covariances().size() );
+        CHECK( true == chunk->hasCovarianceMatrix( mt2 ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
