@@ -750,7 +750,7 @@ SCENARIO( "ReactionInformation" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "an GENDF material, mf and mt number" ) {
+  GIVEN( "an GROUPR GENDF material, mf and mt number" ) {
 
     using GTape = njoy::ENDFtk::tree::GTape;
     auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.gendf" );
@@ -857,6 +857,61 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( 834 == partials[91].reactionType().mt() );
       CHECK( 835 == partials[92].reactionType().mt() );
     }
+  }
+
+  GIVEN( "an ERRORR GENDF material, mf and mt number" ) {
+
+    using GTape = njoy::ENDFtk::tree::GTape;
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+    auto material = tape.materials().front();
+    auto n = njoy::dryad::id::ParticleID::neutron();
+    auto u235 = njoy::dryad::id::ParticleID( "U235" );
+
+    THEN( "partial mt numbers can be obtained for lumped covariance reactions" ) {
+
+      auto partials = ReactionInformation::partials( n, u235, material, 33, 851 );
+
+      CHECK( 39 == partials.size() );
+      CHECK( 52 == partials[0].reactionType().mt() );
+      CHECK( 53 == partials[1].reactionType().mt() );
+      CHECK( 54 == partials[2].reactionType().mt() );
+      CHECK( 55 == partials[3].reactionType().mt() );
+      CHECK( 56 == partials[4].reactionType().mt() );
+      CHECK( 57 == partials[5].reactionType().mt() );
+      CHECK( 58 == partials[6].reactionType().mt() );
+      CHECK( 59 == partials[7].reactionType().mt() );
+      CHECK( 60 == partials[8].reactionType().mt() );
+      CHECK( 61 == partials[9].reactionType().mt() );
+      CHECK( 62 == partials[10].reactionType().mt() );
+      CHECK( 63 == partials[11].reactionType().mt() );
+      CHECK( 64 == partials[12].reactionType().mt() );
+      CHECK( 65 == partials[13].reactionType().mt() );
+      CHECK( 66 == partials[14].reactionType().mt() );
+      CHECK( 67 == partials[15].reactionType().mt() );
+      CHECK( 68 == partials[16].reactionType().mt() );
+      CHECK( 69 == partials[17].reactionType().mt() );
+      CHECK( 70 == partials[18].reactionType().mt() );
+      CHECK( 71 == partials[19].reactionType().mt() );
+      CHECK( 72 == partials[20].reactionType().mt() );
+      CHECK( 73 == partials[21].reactionType().mt() );
+      CHECK( 74 == partials[22].reactionType().mt() );
+      CHECK( 75 == partials[23].reactionType().mt() );
+      CHECK( 76 == partials[24].reactionType().mt() );
+      CHECK( 77 == partials[25].reactionType().mt() );
+      CHECK( 78 == partials[26].reactionType().mt() );
+      CHECK( 79 == partials[27].reactionType().mt() );
+      CHECK( 80 == partials[28].reactionType().mt() );
+      CHECK( 81 == partials[29].reactionType().mt() );
+      CHECK( 82 == partials[30].reactionType().mt() );
+      CHECK( 83 == partials[31].reactionType().mt() );
+      CHECK( 84 == partials[32].reactionType().mt() );
+      CHECK( 85 == partials[33].reactionType().mt() );
+      CHECK( 86 == partials[34].reactionType().mt() );
+      CHECK( 87 == partials[35].reactionType().mt() );
+      CHECK( 88 == partials[36].reactionType().mt() );
+      CHECK( 89 == partials[37].reactionType().mt() );
+      CHECK( 91 == partials[38].reactionType().mt() );
+    } // THEN
   }
 
   GIVEN( "an ENDF material for a metastable state target, mf and mt number" ) {

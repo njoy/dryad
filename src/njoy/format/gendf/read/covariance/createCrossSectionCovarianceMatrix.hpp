@@ -38,7 +38,7 @@ namespace covariance {
     std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
 
     int mt = section.sectionNumber();
-    int lumped = section.lumpedReactionNumber();
+    int lumped = section.lumpedCovarianceIndex();
     if ( lumped != 0 ) {
 
       Log::info( "No covariance data for MT{}, included in lumped MT{} covariances",
