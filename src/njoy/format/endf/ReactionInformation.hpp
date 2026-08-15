@@ -10,7 +10,9 @@
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/format/adjustScatterLevel.hpp"
 #include "ENDFtk/Material.hpp"
+#include "ENDFtk/GMaterial.hpp"
 #include "ENDFtk/tree/Material.hpp"
+#include "ENDFtk/tree/GMaterial.hpp"
 
 namespace njoy {
 namespace format {
@@ -290,33 +292,6 @@ namespace endf {
     }
 
     /**
-     *  @brief Return the partial reaction identifiers for a lumped covariance mt number
-     *
-     *  @param[in] projectile   the projectile identifier
-     *  @param[in] target       the target identifier
-     *  @param[in] material     the ENDF material
-     *  @param[in] mt           the lumped covariance mt number
-     */
-    static std::vector< dryad::id::ReactionID >
-    lumpedCovariancePartials( const dryad::id::ParticleID& projectile,
-                              const dryad::id::ParticleID& target,
-                              const ENDFtk::tree::Material& material,
-                              int mt ) {
-
-      std::vector< dryad::id::ReactionID > partials;
-      auto covariances = material.file( 33 ).parse< 33 >();
-      for ( const auto& section : covariances ) {
-
-        if ( section.lumpedCovarianceIndex() == mt ) {
-
-          partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, section.MT() ) );
-        }
-      }
-      std::sort( partials.begin(), partials.end() );
-      return partials;
-    }
-
-    /**
      *  @brief Return the partial reaction identifiers for a summation mt number
      *
      *  @param[in] projectile   the projectile identifier
@@ -326,11 +301,14 @@ namespace endf {
      *  @param[in] mt           the MT number
      */
     template < typename Material >
-    static std::vector< dryad::id::ReactionID >
+    static auto
     partials( const dryad::id::ParticleID& projectile,
               const dryad::id::ParticleID& target,
               const Material& material,
-              int mf, int mt ) {
+              int mf, int mt )
+    -> std::enable_if_t< ( std::is_same_v< Material, ENDFtk::tree::Material > ||
+                           std::is_same_v< Material, ENDFtk::tree::GMaterial > ),
+                         std::vector< dryad::id::ReactionID > > {
 
       std::vector< dryad::id::ReactionID > partials;
 
@@ -361,10 +339,28 @@ namespace endf {
       }
       else if ( mf == 33 && isLumpedCovariance( mt ) ) {
 
-        if constexpr ( std::is_same_v< Material, ENDFtk::tree::Material > ) {
+        for ( const auto& entry : material.file( 33 ) ) {
 
-          partials = lumpedCovariancePartials( projectile, target, material, mt );
+          struct {
+
+            auto operator()( const ENDFtk::tree::GSection& section ) {
+
+              return section.parse< 33 >();
+            };
+
+            auto operator()( const ENDFtk::tree::Section& section ) {
+
+              return section.parse< 33 >();
+            };
+          } parse;
+
+          auto section = parse( entry );
+          if ( section.lumpedCovarianceIndex() == mt ) {
+
+            partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, section.MT() ) );
+          }
         }
+        std::sort( partials.begin(), partials.end() );
       }
       else if ( isSummation( material, mt ) ) {
 
