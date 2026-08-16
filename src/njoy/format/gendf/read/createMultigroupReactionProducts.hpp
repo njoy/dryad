@@ -8,8 +8,12 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/MultigroupReactionProduct.hpp"
+#include "njoy/dryad/MultigroupAverageCosine.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/format/createVector.hpp"
 #include "njoy/format/gendf/read/createMultiplicity.hpp"
+#include "ENDFtk/GMaterial.hpp"
+#include "ENDFtk/tree/GMaterial.hpp"
 
 namespace njoy {
 namespace format {
@@ -46,9 +50,27 @@ namespace read {
    *  @param[in] reaction   the reaction identifier
    */
   inline std::vector< dryad::MultigroupReactionProduct >
-  createMultigroupReactionProducts( const dryad::id::ReactionID& reaction ) {
+  createMultigroupReactionProducts( const dryad::id::ReactionID& reaction,
+                                    const ENDFtk::tree::GMaterial& material,
+                                    int mt,
+                                    const std::vector< double >& boundaries,
+                                    std::size_t dilution ) {
 
     std::vector< dryad::MultigroupReactionProduct > products;
+
+    if ( material.hasSection( 3, mt ) ) {
+
+      if ( mt == 2 && material.hasSection( 3, 251 ) ) {
+
+        Log::info( "Reading average cosine data for MT251" );
+
+        auto section = material.section( 3, 251 ).parse< 3 >();
+        auto cosines = createVector( section.ratio( 0, dilution ) );
+        dryad::MultigroupAverageCosine average( boundaries, std::move( cosines ) );
+
+        products.emplace_back( dryad::id::ParticleID::neutron(), createMultiplicity( 1 ), std::move( average ) );
+      }
+    }
 
     // add missing expected reaction products
     if ( reaction.particles().has_value() ) {
