@@ -23,20 +23,26 @@ namespace read {
   /**
    *  @brief Create every MultigroupReaction from an unparsed GENDF material
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
-   *  @param[in] material     the unparsed GENDF material
-   *  @param[in] boundaries   the energy group boundaries
-   *  @param[in] dilution     the dilution index to read
+   *  @param[in] projectile            the projectile identifier
+   *  @param[in] target                the target identifier
+   *  @param[in] material              the unparsed GENDF material (main groupr file)
+   *  @param[in] covariances_xs        the optional unparsed xs covariances material (errorr file)
+   *  @param[in] covariances_angular   the optional unparsed angular covariances material (errorr file)
+   *  @param[in] boundaries            the energy group boundaries
+   *  @param[in] dilution              the dilution index to read
    */
   inline std::vector< dryad::MultigroupReaction >
   createMultigroupReactions( const dryad::id::ParticleID& projectile,
                              const dryad::id::ParticleID& target,
                              const ENDFtk::tree::GMaterial& material,
+                             const std::optional< ENDFtk::tree::GMaterial >& covariances_xs,
+                             const std::optional< ENDFtk::tree::GMaterial >& covariances_angular,
                              const std::vector< double >& boundaries,
                              std::size_t dilution ) {
 
     std::vector< dryad::MultigroupReaction > reactions;
+
+    // get all reactions from the main gendf file
     if ( material.hasFile( 3 ) ) {
 
       // loop over the available reactions and create the reaction objects
@@ -46,30 +52,32 @@ namespace read {
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
           reactions.emplace_back( createMultigroupReaction( projectile, target, material, mt, boundaries, dilution ) );
-
-          if ( mt == 2 && material.hasSection( 3, 251 ) ) {
-
-            Log::info( "Reading average cosine data for MT251" );
-            auto section = material.section( 3, 251 ).parse< 3 >();
-            auto cosines = createVector( section.ratio( 0, dilution ) );
-            dryad::MultigroupAverageCosine average( boundaries, std::move( cosines ) );
-            reactions.back().product( projectile ).averageCosine( std::move( average ) );
-          }
         }
         else {
 
           Log::warning( "Skipping data for derived MT{}", mt );
         }
       }
-
-      // sort by MT
-      std::sort( reactions.begin(), reactions.end(),
-                 [] ( auto&& left, auto&&right )
-                    { return left.identifier().reactionType().mt()
-                             < right.identifier().reactionType().mt(); } );
-
-      reactions.shrink_to_fit();
     }
+
+    // add lumped covariance reactions
+    if ( covariances_xs.has_value() && covariances_xs->hasFile( 3 ) ) {
+
+      for ( auto mt : covariances_xs->file( 3 ).sectionNumbers() ) {
+
+        if ( endf::ReactionInformation::isLumpedCovariance( mt ) ) {
+
+          reactions.emplace_back( createMultigroupReaction( projectile, target, covariances_xs.value(), mt, boundaries, dilution ) );
+        }
+      }
+    }
+
+    // sort by MT
+    std::sort( reactions.begin(), reactions.end(),
+               [] ( auto&& left, auto&&right )
+                  { return left.identifier().reactionType().mt()
+                           < right.identifier().reactionType().mt(); } );
+    reactions.shrink_to_fit();
 
     return reactions;
   }
