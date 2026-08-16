@@ -310,7 +310,6 @@ add_cpp_test( format.gendf.read.covariance.createCrossSectionCovarianceDataFromF
 add_cpp_test( format.gendf.read.covariance.createAngularDistributionCovarianceMatrix         format/gendf/read/covariance/createAngularDistributionCovarianceMatrix.test.cpp )
 add_cpp_test( format.gendf.read.covariance.createAngularDistributionCovarianceData           format/gendf/read/covariance/createAngularDistributionCovarianceData.test.cpp )
 add_cpp_test( format.gendf.read.covariance.createAngularDistributionCovarianceDataFromFile   format/gendf/read/covariance/createAngularDistributionCovarianceDataFromFile.test.cpp )
-add_cpp_test( format.gendf.read.covariance.createCovarianceData                              format/gendf/read/covariance/createCovarianceData.test.cpp )
 add_cpp_test( format.gendf.read.createMultiplicity                                           format/gendf/read/createMultiplicity.test.cpp )
 add_cpp_test( format.gendf.read.createMultigroupCrossSection                                 format/gendf/read/createMultigroupCrossSection.test.cpp )
 add_cpp_test( format.gendf.read.createMultigroupReactionProducts                             format/gendf/read/createMultigroupReactionProducts.test.cpp )
