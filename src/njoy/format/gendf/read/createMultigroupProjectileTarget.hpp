@@ -14,7 +14,8 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/format/createVector.hpp"
 #include "njoy/format/gendf/read/createMultigroupReactions.hpp"
-#include "njoy/format/gendf/read/covariance/createCovarianceData.hpp"
+#include "njoy/format/gendf/read/covariance/createCrossSectionCovarianceData.hpp"
+#include "njoy/format/gendf/read/covariance/createAngularDistributionCovarianceData.hpp"
 #include "ENDFtk/GMaterial.hpp"
 #include "ENDFtk/tree/GMaterial.hpp"
 
@@ -26,51 +27,97 @@ namespace read {
   /**
    *  @brief Create a MultigroupProjectileTarget from an unparsed GENDF material
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
-   *  @param[in] relative     the flag to indicate whether or not the covariance data is relative
-   *  @param[in] frame        the reference frame
-   *  @param[in] material     the unparsed GENDF material
+   *  @param[in] projectile            the projectile identifier
+   *  @param[in] target                the target identifier
+   *  @param[in] relative              the flag to indicate whether or not the covariance data is relative
+   *  @param[in] frame                 the reference frame for the angular covariance data
+   *  @param[in] material              the unparsed GENDF material (main groupr file)
+   *  @param[in] covariances_xs        the optional unparsed xs covariances material (errorr file)
+   *  @param[in] covariances_angular   the optional unparsed angular covariances material (errorr file)
    */
   inline dryad::MultigroupProjectileTarget
   createMultigroupProjectileTarget( const dryad::id::ParticleID& projectile,
                                     const dryad::id::ParticleID& target,
                                     bool relative,
                                     const dryad::ReferenceFrame& frame,
-                                    const ENDFtk::tree::GMaterial& material ) {
+                                    const ENDFtk::tree::GMaterial& material,
+                                    const std::optional< ENDFtk::tree::GMaterial >& covariances_xs,
+                                    const std::optional< ENDFtk::tree::GMaterial >& covariances_angular ) {
 
     auto information = material.section( 1, 451 ).parse< 1, 451 >();
+    if ( information.type() != -1 ) {
+
+      Log::error( "The main GENDF file is not a GROUPR file." );
+      throw std::exception();
+    }
+
     std::vector< double > boundaries = createVector( information.neutronStructure() );
 
-    // interaction type
-    dryad::InteractionType type =
-        ( projectile == dryad::id::ParticleID::photon() ||
-          projectile == dryad::id::ParticleID::electron() )
-        ? dryad::InteractionType::Atomic
-        : dryad::InteractionType::Nuclear;
+    if ( covariances_xs.has_value() ) {
 
-    // the dilution index for the infinite dilution cross section
-    std::size_t dilution = 0;
-    if ( information.type() == -1 ) {
+      auto cov_information = covariances_xs->section( 1, 451 ).parse< 1, 451 >();
+      std::vector< double > cov_boundaries = createVector( cov_information.neutronStructure() );
 
-      // groupr gendf : search the dilution list for infinite dilution (1e+10)
-      auto dilutions = information.dilutions();
-      auto iter = std::find( dilutions.begin(), dilutions.end(), 1e+10 );
-      if ( iter == dilutions.end() ) {
+      if ( cov_boundaries != boundaries ) {
 
-        Log::error( "Could not find the infinite dilution (sigma0 = 1e+10) in the GENDF file" );
+        Log::error( "The group boundaries in the main GENDF file and the cross section covariance GENDF file do not match." );
         throw std::exception();
       }
-      dilution = std::distance( dilutions.begin(), iter );
     }
+
+    if ( covariances_angular.has_value() ) {
+
+      auto cov_information = covariances_angular->section( 1, 451 ).parse< 1, 451 >();
+      std::vector< double > cov_boundaries = createVector( cov_information.neutronStructure() );
+
+      if ( cov_boundaries != boundaries ) {
+
+        Log::error( "The group boundaries in the main GENDF file and the angular covariance GENDF file do not match." );
+        throw std::exception();
+      }
+    }
+
+    // interaction type
+    dryad::InteractionType type = ( projectile == dryad::id::ParticleID::photon() ||
+                                    projectile == dryad::id::ParticleID::electron() )
+                                  ? dryad::InteractionType::Atomic
+                                  : dryad::InteractionType::Nuclear;
+
+    // get the dilution index for infinite dilution
+    std::size_t dilution = 0;
+    auto iter = std::find( information.dilutions().begin(), information.dilutions().end(), 1e+10 );
+    if ( iter == information.dilutions().end() ) {
+
+      Log::error( "Could not find the infinite dilution (sigma0 = 1e+10) in the GENDF file" );
+      throw std::exception();
+    }
+    dilution = std::distance( information.dilutions().begin(), iter );
 
     // reaction data
     std::vector< dryad::MultigroupReaction > reactions =
-    createMultigroupReactions( projectile, target, material, boundaries, dilution );
+    createMultigroupReactions( projectile, target, material, covariances_xs, covariances_angular,
+                               boundaries, dilution );
 
     // covariance data
-    std::optional< dryad::covariance::CovarianceData > covariances =
-    covariance::createCovarianceData( projectile, target, relative, frame, material );
+    std::optional< dryad::covariance::CovarianceData > covariances;
+    if ( covariances_xs.has_value() || covariances_angular.has_value() ) {
+
+      std::optional< dryad::covariance::CrossSectionCovarianceData > xs;
+      std::optional< dryad::covariance::AngularDistributionCovarianceData > angular;
+
+      if ( covariances_xs.has_value() ) {
+
+        xs = covariance::createCrossSectionCovarianceData( projectile, target, relative,
+                                                           covariances_xs.value() );
+      }
+      if ( covariances_angular.has_value() ) {
+
+        angular = covariance::createAngularDistributionCovarianceData( projectile, target, frame,
+                                                                       covariances_angular.value() );
+      }
+
+      covariances = dryad::covariance::CovarianceData( std::move( xs ), std::move( angular ) );
+    }
 
     return dryad::MultigroupProjectileTarget( projectile, target, type,
                                               std::move( reactions ),

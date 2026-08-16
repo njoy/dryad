@@ -832,7 +832,7 @@ namespace u235 {
     verifyAlphaReaction( chunk.reaction( id::ReactionID( "n,U235->a,Th232[all]" ) ) );
     if ( xs_cov ) {
 
-      verifyLumped1Reaction( chunk.reaction( id::ReactionID( "n,U235->a,Th232[all]" ) ) );
+      verifyLumped1Reaction( chunk.reaction( id::ReactionID( "n,U235->lumped1" ) ) );
     }
 
     if ( xs_cov || angular_cov ) {

@@ -67,7 +67,7 @@ namespace read {
 
         if ( endf::ReactionInformation::isLumpedCovariance( mt ) ) {
 
-          reactions.emplace_back( createMultigroupReaction( projectile, target, covariances_xs.value(), mt, boundaries, dilution ) );
+          reactions.emplace_back( createMultigroupReaction( projectile, target, covariances_xs.value(), mt, boundaries, 0 ) );
         }
       }
     }
