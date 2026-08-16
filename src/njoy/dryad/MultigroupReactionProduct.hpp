@@ -78,23 +78,6 @@ namespace dryad {
         average_cosine_( std::move( averageCosine ) ),
         average_energy_( std::move( averageEnergy ) ) {}
 
-    /**
-     *  @brief Convenience constructor
-     *
-     *  @param[in] product         the reaction product identifier
-     *  @param[in] multiplicity    the reaction product multiplicity
-     *  @param[in] averageEnergy   the average reaction product energy
-     */
-    MultigroupReactionProduct( id::ParticleID product,
-                              Multiplicity multiplicity,
-                              MultigroupAverageEnergy averageEnergy ) :
-        MultigroupReactionProduct( std::move( product ),
-                                   std::move( multiplicity ),
-                                   std::nullopt,
-                                   std::move( averageEnergy ),
-                                   std::nullopt,
-                                   0 ) {}
-
     /* methods */
 
     /**
