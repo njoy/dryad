@@ -4,7 +4,6 @@
 #include "njoy/format/gendf/read/covariance/createAngularDistributionCovarianceData.hpp"
 #include "njoy/format/gendf/read/covariance/createAngularDistributionCovarianceDataFromFile.hpp"
 #include "njoy/format/gendf/read/covariance/createAngularDistributionCovarianceMatrix.hpp"
-#include "njoy/format/gendf/read/covariance/createCovarianceData.hpp"
 #include "njoy/format/gendf/read/createMultigroupCrossSection.hpp"
 #include "njoy/format/gendf/read/createMultigroupReactionProducts.hpp"
 #include "njoy/format/gendf/read/createMultigroupReaction.hpp"
