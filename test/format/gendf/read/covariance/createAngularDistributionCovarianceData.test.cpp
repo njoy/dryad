@@ -14,27 +14,26 @@ using Catch::Matchers::WithinAbs;
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::format;
-using namespace njoy::ENDFtk;
 
 SCENARIO( "createAngularDistributionCovarianceData" ) {
 
   GIVEN( "a GENDF material" ) {
 
-  using GTape = njoy::ENDFtk::tree::GTape;
-  auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_238.angular_covariances.gendf" );
-  auto material = tape.materials().front();
+    using GTape = njoy::ENDFtk::tree::GTape;
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.angular.gendf" );
+    auto material = tape.materials().front();
 
     WHEN( "constructing covariance matrices" ) {
 
       id::ParticleID projectile( "n" );
-      id::ParticleID target( "U238" );
+      id::ParticleID target( "U235" );
       auto frame = ReferenceFrame::Laboratory;
 
       auto chunk = gendf::read::covariance::createAngularDistributionCovarianceData( projectile, target, frame, material );
 
       THEN( "angular distribution covariance matrix can be created and members tested" ) {
 
-        id::ReactionID mt2( "n,U238->n(0)" );
+        id::ReactionID mt2( "n,U235->n(0)" );
 
         CHECK( true == chunk.has_value() );
 

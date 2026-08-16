@@ -24,14 +24,14 @@ SCENARIO( "createCovarianceData" ) {
 
   GIVEN( "an ERRORR formatted GENDF material with cross section covariances" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.xs.gendf" );
     auto material = tape.materials().front();
 
     WHEN( "constructing the covariance data" ) {
 
       auto chunk = gendf::read::covariance::createCovarianceData(
                        id::ParticleID( "n" ), id::ParticleID( "U235" ),
-                       true, ReferenceFrame::CentreOfMass, material );
+                       true, ReferenceFrame::Laboratory, material );
 
       THEN( "only cross section covariance data is present" ) {
 
@@ -46,14 +46,14 @@ SCENARIO( "createCovarianceData" ) {
 
   GIVEN( "an ERRORR formatted GENDF material with angular distribution covariances" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_238.angular_covariances.gendf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.angular.gendf" );
     auto material = tape.materials().front();
 
     WHEN( "constructing the covariance data" ) {
 
       auto chunk = gendf::read::covariance::createCovarianceData(
-                       id::ParticleID( "n" ), id::ParticleID( "U238" ),
-                       true, ReferenceFrame::CentreOfMass, material );
+                       id::ParticleID( "n" ), id::ParticleID( "U235" ),
+                       true, ReferenceFrame::Laboratory, material );
 
       THEN( "only angular distribution covariance data is present" ) {
 
@@ -61,7 +61,7 @@ SCENARIO( "createCovarianceData" ) {
         CHECK( std::nullopt == chunk->crossSection() );
         CHECK( std::nullopt != chunk->angularDistribution() );
 
-        neutron::u238::verifyAngularDistributionCovariances( chunk->angularDistribution().value() );
+        neutron::u235::verifyAngularDistributionCovariances( chunk->angularDistribution().value() );
       } // THEN
     } // WHEN
   } // GIVEN

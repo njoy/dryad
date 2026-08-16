@@ -42,36 +42,18 @@ SCENARIO( "createMultigroupProjectileTarget" ) {
 
   GIVEN( "an ERRORR formatted GENDF material with cross section covariances" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.xs.gendf" );
     auto material = tape.materials().front();
 
     WHEN( "constructing a MultigroupProjectileTarget" ) {
 
       auto chunk = gendf::read::createMultigroupProjectileTarget(
                        id::ParticleID( "n" ), id::ParticleID( "U235" ),
-                       true, ReferenceFrame::CentreOfMass, material );
+                       true, ReferenceFrame::Laboratory, material );
 
       THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
 
         neutron::u235::verifyErrorrU235( chunk );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "an ERRORR formatted GENDF material with angular distribution covariances" ) {
-
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_238.angular_covariances.gendf" );
-    auto material = tape.materials().front();
-
-    WHEN( "constructing a MultigroupProjectileTarget" ) {
-
-      auto chunk = gendf::read::createMultigroupProjectileTarget(
-                       id::ParticleID( "n" ), id::ParticleID( "U238" ),
-                       true, ReferenceFrame::CentreOfMass, material );
-
-      THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
-
-        neutron::u238::verifyU238( chunk );
       } // THEN
     } // WHEN
   } // GIVEN

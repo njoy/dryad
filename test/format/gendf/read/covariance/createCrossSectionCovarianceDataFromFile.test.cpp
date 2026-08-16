@@ -21,7 +21,7 @@ SCENARIO( "createCrossSectionCovarianceDataFromFile" ) {
 
       auto chunk = gendf::read::covariance::createCrossSectionCovarianceDataFromFile(
                        id::ParticleID( "n" ), id::ParticleID( "U235" ),
-                       true, "n-092_U_235.covariances.gendf" );
+                       true, "n-092_U_235.covariances.xs.gendf" );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
 

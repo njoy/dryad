@@ -51,7 +51,7 @@ SCENARIO( "createMultigroupCrossSection" ) {
   GIVEN( "an ERRORR formatted GENDF material" ) {
 
     using GTape = njoy::ENDFtk::tree::GTape;
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.xs.gendf" );
     auto section = tape.materials().front().section( 3, 1 ).parse< 3 >();
 
     std::vector< double > boundaries = {

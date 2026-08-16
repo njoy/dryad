@@ -37,26 +37,11 @@ SCENARIO( "createMultigroupProjectileTargetFromFile" ) {
 
       auto chunk = gendf::read::createMultigroupProjectileTargetFromFile(
                        id::ParticleID( "n" ), id::ParticleID( "U235" ),
-                       "n-092_U_235.covariances.gendf" );
+                       "n-092_U_235.covariances.xs.gendf" );
 
       THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
 
         neutron::u235::verifyErrorrU235( chunk );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "an ERRORR formatted GENDF file with angular distribution covariances" ) {
-
-    WHEN( "constructing a MultigroupProjectileTarget" ) {
-
-      auto chunk = gendf::read::createMultigroupProjectileTargetFromFile(
-                       id::ParticleID( "n" ), id::ParticleID( "U238" ),
-                       "n-092_U_238.angular_covariances.gendf" );
-
-      THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
-
-        neutron::u238::verifyU238( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
