@@ -84,7 +84,7 @@ SCENARIO( "createMultigroupReactions" ) {
     WHEN( "a single ENDF material is given" ) {
 
       using GTape = njoy::ENDFtk::tree::GTape;
-      auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+      auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.xs.gendf" );
       auto material = tape.materials().front();
 
       THEN( "all reactions can be created" ) {

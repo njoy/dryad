@@ -862,7 +862,7 @@ SCENARIO( "ReactionInformation" ) {
   GIVEN( "an ERRORR GENDF material, mf and mt number" ) {
 
     using GTape = njoy::ENDFtk::tree::GTape;
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.xs.gendf" );
     auto material = tape.materials().front();
     auto n = njoy::dryad::id::ParticleID::neutron();
     auto u235 = njoy::dryad::id::ParticleID( "U235" );

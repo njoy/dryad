@@ -783,7 +783,22 @@ namespace u235 {
     CHECK( true == xs.hasCovarianceMatrix( lumped2 ) );
   }
 
-  // n-092_U_235.covariances.gendf) : 9 reactions + covariance data
+  void verifyAngularDistributionCovariances( const covariance::AngularDistributionCovarianceData& angular ) {
+
+    //! @todo add covariance verification
+
+    id::ReactionID mt2( "n,U235->n(0)" );
+
+    CHECK( 1 == angular.numberReactions() );
+    CHECK( 1 == angular.reactionIdentifiers().size() );
+    CHECK( mt2 == angular.reactionIdentifiers()[0] );
+
+    CHECK( 1 == angular.numberCovarianceMatrices() );
+    CHECK( 1 == angular.covariances().size() );
+    CHECK( true == angular.hasCovarianceMatrix( mt2 ) );
+  }
+
+  // n-092_U_235.covariances.gendf : 9 reactions + covariance data
   void verifyErrorrU235( const MultigroupProjectileTarget& chunk ) {
 
     static const std::vector< id::ReactionID > reactions = {
