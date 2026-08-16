@@ -42,7 +42,7 @@ namespace u235 {
     checkGroups( boundaries, values );
   }
 
-  void verifyTotalReaction( const MultigroupReaction& reaction, bool groupr ) {
+  void verifyTotalReaction( const MultigroupReaction& reaction ) {
 
     static const std::vector< double > xs = {
 
@@ -102,13 +102,6 @@ namespace u235 {
       id::ReactionID( "n,U235->a(33)" ), id::ReactionID( "n,U235->a(34)" ),
       id::ReactionID( "n,U235->a(35)" )
     };
-    static const std::vector< id::ReactionID > partials_errorr = {
-
-      id::ReactionID( "n,U235->n(0)" ), id::ReactionID( "n,U235->anything" ),
-      id::ReactionID( "n,U235->2n(t)" ), id::ReactionID( "n,U235->3n(t)" ),
-      id::ReactionID( "n,U235->fission" ), id::ReactionID( "n,U235->n(1)" ),
-      id::ReactionID( "n,U235->g(t)" )
-    };
 
     CHECK( id::ReactionID( "n,U235->total" ) == reaction.identifier() );
     CHECK( 1 == reaction.identifier().reactionType().mt() );
@@ -118,14 +111,7 @@ namespace u235 {
     CHECK( false == reaction.hasProducts() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
-    if ( groupr ) {
-
-      checkPartials( partials, reaction.partialReactionIdentifiers().value() );
-    }
-    else {
-
-      checkPartials( partials_errorr, reaction.partialReactionIdentifiers().value() );
-    }
+    checkPartials( partials, reaction.partialReactionIdentifiers().value() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -137,7 +123,7 @@ namespace u235 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
-  void verifyElasticReaction( const MultigroupReaction& reaction, bool cosine ) {
+  void verifyElasticReaction( const MultigroupReaction& reaction ) {
 
     static const std::vector< double > xs = {
 
@@ -191,23 +177,15 @@ namespace u235 {
     CHECK( 1 == std::get< int >( residual.multiplicity() ) );
     CHECK( false == residual.hasAverageCosine() );
 
-    if ( cosine ) {
+    CHECK( true == neutron.hasAverageCosine() );
+    CHECK( std::nullopt != neutron.averageCosine() );
 
-      CHECK( true == neutron.hasAverageCosine() );
-      CHECK( std::nullopt != neutron.averageCosine() );
-
-      CHECK( 30 == neutron.averageCosine()->numberGroups() );
-      checkBoundaries( neutron.averageCosine()->boundaries() );
-      checkGroups( mu, neutron.averageCosine()->values() );
-    }
-    else {
-
-      CHECK( false == neutron.hasAverageCosine() );
-      CHECK( std::nullopt == neutron.averageCosine() );
-    }
+    CHECK( 30 == neutron.averageCosine()->numberGroups() );
+    checkBoundaries( neutron.averageCosine()->boundaries() );
+    checkGroups( mu, neutron.averageCosine()->values() );
   }
 
-  void verifyInelasticReaction( const MultigroupReaction& reaction, bool groupr ) {
+  void verifyInelasticReaction( const MultigroupReaction& reaction ) {
 
     static const std::vector< double > xs = {
 
@@ -241,10 +219,6 @@ namespace u235 {
       id::ReactionID( "n,U235->n(38)" ), id::ReactionID( "n,U235->n(39)" ),
       id::ReactionID( "n,U235->n(c)" )
     };
-    static const std::vector< id::ReactionID > partials_errorr = {
-
-      id::ReactionID( "n,U235->n(1)" )
-    };
 
     CHECK( id::ReactionID( "n,U235->n,U235[all]" ) == reaction.identifier() );
     CHECK( 4 == reaction.identifier().reactionType().mt() );
@@ -254,14 +228,7 @@ namespace u235 {
     CHECK( false == reaction.hasProducts() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
-    if ( groupr ) {
-
-      checkPartials( partials, reaction.partialReactionIdentifiers().value() );
-    }
-    else {
-
-      checkPartials( partials_errorr, reaction.partialReactionIdentifiers().value() );
-    }
+    checkPartials( partials, reaction.partialReactionIdentifiers().value() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -589,16 +556,18 @@ namespace u235 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
-  // n-092_U_235.gendf : 97 reactions, no covariance data
-  void verifyGrouprU235( const MultigroupProjectileTarget& chunk ) {
+  void verifyLumped1Reaction( const MultigroupReaction& reaction ) {
 
-    static const std::vector< id::ReactionID > reactions = {
+    static const std::vector< double > xs = {
 
-      id::ReactionID( "n,U235->total" ), id::ReactionID( "n,U235->n(t)" ),
-      id::ReactionID( "n,U235->p(t)" ), id::ReactionID( "n,U235->a(t)" ),
-      id::ReactionID( "n,U235->n(0)" ), id::ReactionID( "n,U235->anything" ),
-      id::ReactionID( "n,U235->2n(t)" ), id::ReactionID( "n,U235->3n(t)" ),
-      id::ReactionID( "n,U235->fission" ), id::ReactionID( "n,U235->n(1)" ),
+      0., 0., 0., 0., 0., 0., 0.,
+      0., 0., 0., 0., 0., 2.713859e-3, 4.411648e-2,
+      0.44346154, 0.96876308, 1.33249177, 1.61337072, 1.75459441, 1.93538854, 2.10148415,
+      2.21942734, 2.25977244, 2.21003447, 1.24020290, 0.66421263, 0.51404512, 0.41110993,
+      3.428301e-1, 0.33537626
+    };
+    static const std::vector< id::ReactionID > partials = {
+
       id::ReactionID( "n,U235->n(2)" ), id::ReactionID( "n,U235->n(3)" ),
       id::ReactionID( "n,U235->n(4)" ), id::ReactionID( "n,U235->n(5)" ),
       id::ReactionID( "n,U235->n(6)" ), id::ReactionID( "n,U235->n(7)" ),
@@ -618,58 +587,27 @@ namespace u235 {
       id::ReactionID( "n,U235->n(34)" ), id::ReactionID( "n,U235->n(35)" ),
       id::ReactionID( "n,U235->n(36)" ), id::ReactionID( "n,U235->n(37)" ),
       id::ReactionID( "n,U235->n(38)" ), id::ReactionID( "n,U235->n(39)" ),
-      id::ReactionID( "n,U235->n(c)" ), id::ReactionID( "n,U235->g(t)" ),
-      id::ReactionID( "n,U235->p(0)" ), id::ReactionID( "n,U235->p(1)" ),
-      id::ReactionID( "n,U235->p(2)" ), id::ReactionID( "n,U235->p(3)" ),
-      id::ReactionID( "n,U235->p(4)" ), id::ReactionID( "n,U235->p(5)" ),
-      id::ReactionID( "n,U235->p(6)" ), id::ReactionID( "n,U235->p(7)" ),
-      id::ReactionID( "n,U235->p(8)" ), id::ReactionID( "n,U235->p(9)" ),
-      id::ReactionID( "n,U235->p(c)" ), id::ReactionID( "n,U235->a(0)" ),
-      id::ReactionID( "n,U235->a(1)" ), id::ReactionID( "n,U235->a(2)" ),
-      id::ReactionID( "n,U235->a(3)" ), id::ReactionID( "n,U235->a(4)" ),
-      id::ReactionID( "n,U235->a(5)" ), id::ReactionID( "n,U235->a(6)" ),
-      id::ReactionID( "n,U235->a(7)" ), id::ReactionID( "n,U235->a(8)" ),
-      id::ReactionID( "n,U235->a(9)" ), id::ReactionID( "n,U235->a(10)" ),
-      id::ReactionID( "n,U235->a(11)" ), id::ReactionID( "n,U235->a(12)" ),
-      id::ReactionID( "n,U235->a(13)" ), id::ReactionID( "n,U235->a(14)" ),
-      id::ReactionID( "n,U235->a(15)" ), id::ReactionID( "n,U235->a(16)" ),
-      id::ReactionID( "n,U235->a(17)" ), id::ReactionID( "n,U235->a(18)" ),
-      id::ReactionID( "n,U235->a(19)" ), id::ReactionID( "n,U235->a(20)" ),
-      id::ReactionID( "n,U235->a(21)" ), id::ReactionID( "n,U235->a(22)" ),
-      id::ReactionID( "n,U235->a(23)" ), id::ReactionID( "n,U235->a(24)" ),
-      id::ReactionID( "n,U235->a(25)" ), id::ReactionID( "n,U235->a(26)" ),
-      id::ReactionID( "n,U235->a(27)" ), id::ReactionID( "n,U235->a(28)" ),
-      id::ReactionID( "n,U235->a(29)" ), id::ReactionID( "n,U235->a(30)" ),
-      id::ReactionID( "n,U235->a(31)" ), id::ReactionID( "n,U235->a(32)" ),
-      id::ReactionID( "n,U235->a(33)" ), id::ReactionID( "n,U235->a(34)" ),
-      id::ReactionID( "n,U235->a(35)" )
+      id::ReactionID( "n,U235->n(c)" )
     };
 
-    CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
-    CHECK( id::ParticleID( "U235" ) == chunk.targetIdentifier() );
+    CHECK( id::ReactionID( "n,U235->lumped1" ) == reaction.identifier() );
+    CHECK( 851 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Summation == reaction.category() );
+    CHECK( true == reaction.isSummationReaction() );
+    CHECK( false == reaction.isPrimaryReaction() );
+    CHECK( false == reaction.hasProducts() );
 
-    CHECK( InteractionType::Nuclear == chunk.interactionType() );
+    CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
+    checkPartials( partials, reaction.partialReactionIdentifiers().value() );
 
-    CHECK( 97 == chunk.numberReactions() );
-    for ( const id::ReactionID& id : reactions ) {
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt == reaction.reactionQValue() );
 
-      CHECK( true == chunk.hasReaction( id ) );
-    }
+    CHECK( 30 == reaction.crossSection().numberGroups() );
+    checkBoundaries( reaction.crossSection().boundaries() );
+    checkGroups( xs, reaction.crossSection().values() );
 
-    verifyTotalReaction( chunk.reaction( id::ReactionID( "n,U235->total" ) ), true );
-    verifyElasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235" ) ), true );
-    verifyInelasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235[all]" ) ), true );
-    verifyAnythingReaction( chunk.reaction( id::ReactionID( "n,U235->anything" ) ) );
-    verifyN2NReaction( chunk.reaction( id::ReactionID( "n,U235->2n,U234[all]" ) ) );
-    verifyN3NReaction( chunk.reaction( id::ReactionID( "n,U235->3n,U233[all]" ) ) );
-    verifyFissionReaction( chunk.reaction( id::ReactionID( "n,U235->fission(t)" ) ) );
-    verifyFirstInelasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235_e1" ) ) );
-    verifyCaptureReaction( chunk.reaction( id::ReactionID( "n,U235->g,U236[all]" ) ) );
-    verifyProtonReaction( chunk.reaction( id::ReactionID( "n,U235->p,Pa235[all]" ) ) );
-    verifyAlphaReaction( chunk.reaction( id::ReactionID( "n,U235->a,Th232[all]" ) ) );
-
-    // no covariance data in the GROUPR file
-    CHECK( std::nullopt == chunk.covarianceData() );
+    CHECK( 0 == reaction.numberProducts() );
   }
 
   void verifyCrossSectionCovariances( const covariance::CrossSectionCovarianceData& xs ) {
@@ -798,17 +736,63 @@ namespace u235 {
     CHECK( true == angular.hasCovarianceMatrix( mt2 ) );
   }
 
-  // n-092_U_235.covariances.gendf : 9 reactions + covariance data
-  void verifyErrorrU235( const MultigroupProjectileTarget& chunk ) {
+  // n-092_U_235.gendf : 97 reactions, no covariance data
+  // n-092_U_235.covariances.xs.gendf : 2 reactions, xs covariance data
+  // n-092_U_235.covariances.angular.gendf : no reactions, angular covariance data
+  void verifyU235( const MultigroupProjectileTarget& chunk,
+                   bool xs_cov, bool angular_cov ) {
 
     static const std::vector< id::ReactionID > reactions = {
 
-      id::ReactionID( "n,U235->total" ), id::ReactionID( "n,U235->n(0)" ),
-      id::ReactionID( "n,U235->n(t)" ), id::ReactionID( "n,U235->anything" ),
+      id::ReactionID( "n,U235->total" ), id::ReactionID( "n,U235->n(t)" ),
+      id::ReactionID( "n,U235->p(t)" ), id::ReactionID( "n,U235->a(t)" ),
+      id::ReactionID( "n,U235->n(0)" ), id::ReactionID( "n,U235->anything" ),
       id::ReactionID( "n,U235->2n(t)" ), id::ReactionID( "n,U235->3n(t)" ),
       id::ReactionID( "n,U235->fission" ), id::ReactionID( "n,U235->n(1)" ),
-      id::ReactionID( "n,U235->g(t)" ), id::ReactionID( "n,U235->lumped1" ),
-      id::ReactionID( "n,U235->lumped2" )
+      id::ReactionID( "n,U235->n(2)" ), id::ReactionID( "n,U235->n(3)" ),
+      id::ReactionID( "n,U235->n(4)" ), id::ReactionID( "n,U235->n(5)" ),
+      id::ReactionID( "n,U235->n(6)" ), id::ReactionID( "n,U235->n(7)" ),
+      id::ReactionID( "n,U235->n(8)" ), id::ReactionID( "n,U235->n(9)" ),
+      id::ReactionID( "n,U235->n(10)" ), id::ReactionID( "n,U235->n(11)" ),
+      id::ReactionID( "n,U235->n(12)" ), id::ReactionID( "n,U235->n(13)" ),
+      id::ReactionID( "n,U235->n(14)" ), id::ReactionID( "n,U235->n(15)" ),
+      id::ReactionID( "n,U235->n(16)" ), id::ReactionID( "n,U235->n(17)" ),
+      id::ReactionID( "n,U235->n(18)" ), id::ReactionID( "n,U235->n(19)" ),
+      id::ReactionID( "n,U235->n(20)" ), id::ReactionID( "n,U235->n(21)" ),
+      id::ReactionID( "n,U235->n(22)" ), id::ReactionID( "n,U235->n(23)" ),
+      id::ReactionID( "n,U235->n(24)" ), id::ReactionID( "n,U235->n(25)" ),
+      id::ReactionID( "n,U235->n(26)" ), id::ReactionID( "n,U235->n(27)" ),
+      id::ReactionID( "n,U235->n(28)" ), id::ReactionID( "n,U235->n(29)" ),
+      id::ReactionID( "n,U235->n(30)" ), id::ReactionID( "n,U235->n(31)" ),
+      id::ReactionID( "n,U235->n(32)" ), id::ReactionID( "n,U235->n(33)" ),
+      id::ReactionID( "n,U235->n(34)" ), id::ReactionID( "n,U235->n(35)" ),
+      id::ReactionID( "n,U235->n(36)" ), id::ReactionID( "n,U235->n(37)" ),
+      id::ReactionID( "n,U235->n(38)" ), id::ReactionID( "n,U235->n(39)" ),
+      id::ReactionID( "n,U235->n(c)" ), id::ReactionID( "n,U235->g(t)" ),
+      id::ReactionID( "n,U235->p(0)" ), id::ReactionID( "n,U235->p(1)" ),
+      id::ReactionID( "n,U235->p(2)" ), id::ReactionID( "n,U235->p(3)" ),
+      id::ReactionID( "n,U235->p(4)" ), id::ReactionID( "n,U235->p(5)" ),
+      id::ReactionID( "n,U235->p(6)" ), id::ReactionID( "n,U235->p(7)" ),
+      id::ReactionID( "n,U235->p(8)" ), id::ReactionID( "n,U235->p(9)" ),
+      id::ReactionID( "n,U235->p(c)" ), id::ReactionID( "n,U235->a(0)" ),
+      id::ReactionID( "n,U235->a(1)" ), id::ReactionID( "n,U235->a(2)" ),
+      id::ReactionID( "n,U235->a(3)" ), id::ReactionID( "n,U235->a(4)" ),
+      id::ReactionID( "n,U235->a(5)" ), id::ReactionID( "n,U235->a(6)" ),
+      id::ReactionID( "n,U235->a(7)" ), id::ReactionID( "n,U235->a(8)" ),
+      id::ReactionID( "n,U235->a(9)" ), id::ReactionID( "n,U235->a(10)" ),
+      id::ReactionID( "n,U235->a(11)" ), id::ReactionID( "n,U235->a(12)" ),
+      id::ReactionID( "n,U235->a(13)" ), id::ReactionID( "n,U235->a(14)" ),
+      id::ReactionID( "n,U235->a(15)" ), id::ReactionID( "n,U235->a(16)" ),
+      id::ReactionID( "n,U235->a(17)" ), id::ReactionID( "n,U235->a(18)" ),
+      id::ReactionID( "n,U235->a(19)" ), id::ReactionID( "n,U235->a(20)" ),
+      id::ReactionID( "n,U235->a(21)" ), id::ReactionID( "n,U235->a(22)" ),
+      id::ReactionID( "n,U235->a(23)" ), id::ReactionID( "n,U235->a(24)" ),
+      id::ReactionID( "n,U235->a(25)" ), id::ReactionID( "n,U235->a(26)" ),
+      id::ReactionID( "n,U235->a(27)" ), id::ReactionID( "n,U235->a(28)" ),
+      id::ReactionID( "n,U235->a(29)" ), id::ReactionID( "n,U235->a(30)" ),
+      id::ReactionID( "n,U235->a(31)" ), id::ReactionID( "n,U235->a(32)" ),
+      id::ReactionID( "n,U235->a(33)" ), id::ReactionID( "n,U235->a(34)" ),
+      id::ReactionID( "n,U235->a(35)" )
     };
 
     CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
@@ -816,26 +800,61 @@ namespace u235 {
 
     CHECK( InteractionType::Nuclear == chunk.interactionType() );
 
-    CHECK( 11 == chunk.numberReactions() );
-    for ( const id::ReactionID& id : reactions ) {
+    if ( ! xs_cov ) {
 
-      CHECK( true == chunk.hasReaction( id ) );
+      CHECK( 97 == chunk.numberReactions() );
+      for ( const id::ReactionID& id : reactions ) {
+
+        CHECK( true == chunk.hasReaction( id ) );
+      }
+    }
+    else {
+
+      CHECK( 99 == chunk.numberReactions() );
+      for ( const id::ReactionID& id : reactions ) {
+
+        CHECK( true == chunk.hasReaction( id ) );
+      }
+      CHECK( true == chunk.hasReaction( id::ReactionID( "n,U235->lumped1" ) ) );
+      CHECK( true == chunk.hasReaction( id::ReactionID( "n,U235->lumped2" ) ) );
     }
 
-    verifyTotalReaction( chunk.reaction( id::ReactionID( "n,U235->total" ) ), false );
-    verifyElasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235" ) ), false );
-    verifyInelasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235[all]" ) ), false );
+    verifyTotalReaction( chunk.reaction( id::ReactionID( "n,U235->total" ) ) );
+    verifyElasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235" ) ) );
+    verifyInelasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235[all]" ) ) );
     verifyAnythingReaction( chunk.reaction( id::ReactionID( "n,U235->anything" ) ) );
     verifyN2NReaction( chunk.reaction( id::ReactionID( "n,U235->2n,U234[all]" ) ) );
     verifyN3NReaction( chunk.reaction( id::ReactionID( "n,U235->3n,U233[all]" ) ) );
     verifyFissionReaction( chunk.reaction( id::ReactionID( "n,U235->fission(t)" ) ) );
     verifyFirstInelasticReaction( chunk.reaction( id::ReactionID( "n,U235->n,U235_e1" ) ) );
     verifyCaptureReaction( chunk.reaction( id::ReactionID( "n,U235->g,U236[all]" ) ) );
+    verifyProtonReaction( chunk.reaction( id::ReactionID( "n,U235->p,Pa235[all]" ) ) );
+    verifyAlphaReaction( chunk.reaction( id::ReactionID( "n,U235->a,Th232[all]" ) ) );
+    if ( xs_cov ) {
 
-    CHECK( std::nullopt != chunk.covarianceData() );
-    CHECK( std::nullopt != chunk.covarianceData()->crossSection() );
-    CHECK( std::nullopt == chunk.covarianceData()->angularDistribution() );
-    verifyCrossSectionCovariances( chunk.covarianceData()->crossSection().value() );
+      verifyLumped1Reaction( chunk.reaction( id::ReactionID( "n,U235->a,Th232[all]" ) ) );
+    }
+
+    if ( xs_cov || angular_cov ) {
+
+      CHECK( std::nullopt != chunk.covarianceData() );
+
+      if ( xs_cov ) {
+
+        CHECK( std::nullopt != chunk.covarianceData()->crossSection() );
+        verifyCrossSectionCovariances( chunk.covarianceData()->crossSection().value() );
+      }
+
+      if ( angular_cov ) {
+
+        CHECK( std::nullopt != chunk.covarianceData()->angularDistribution() );
+        verifyAngularDistributionCovariances( chunk.covarianceData()->angularDistribution().value() );
+      }
+    }
+    else {
+
+      CHECK( std::nullopt == chunk.covarianceData() );
+    }
   }
 
 } // namespace u235
