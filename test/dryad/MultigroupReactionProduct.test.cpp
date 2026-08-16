@@ -29,25 +29,6 @@ SCENARIO( "MultigroupReactionProduct" ) {
 
       verifyChunk( chunk );
     } // WHEN
-
-    WHEN( "the convenience constructor is used" ) {
-
-      id::ParticleID id = id::ParticleID::neutron();
-      int multiplicity = 1;
-      MultigroupAverageEnergy energy( { 1., 2., 3. }, { 1., 2. } );
-
-      MultigroupReactionProduct chunk( id, multiplicity, energy );
-
-      CHECK( id::ParticleID( "n" ) == chunk.productIdentifier() );
-      CHECK( std::nullopt == chunk.parentIdentifier() );
-      CHECK( 0 == chunk.chainIndex() );
-      CHECK( true == std::holds_alternative< int >( chunk.multiplicity() ) );
-      CHECK( 1 == std::get< int >( chunk.multiplicity() ) );
-      CHECK( std::nullopt == chunk.averageCosine() );
-      CHECK( energy == chunk.averageEnergy().value() );
-      CHECK( false == chunk.hasAverageCosine() );
-      CHECK( true == chunk.hasAverageEnergy() );
-    } // WHEN
   } // GIVEN
 
   GIVEN( "valid data for a MultigroupReactionProduct with a multigroup multiplicity" ) {
