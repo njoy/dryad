@@ -24,7 +24,7 @@ namespace read {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
-   *  @param[in] material     the unparsed GENDF material
+   *  @param[in] material     the unparsed GENDF material (groupr or errorr)
    *  @param[in] mt           the MT number to process
    *  @param[in] boundaries   the energy group boundaries
    *  @param[in] dilution     the dilution index to read
@@ -50,7 +50,8 @@ namespace read {
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
         // reaction products
-        std::vector< dryad::MultigroupReactionProduct > products = createMultigroupReactionProducts( id );
+        std::vector< dryad::MultigroupReactionProduct > products =
+        createMultigroupReactionProducts( id, material, mt, boundaries, dilution );
 
         // return the reaction data
         return dryad::MultigroupReaction( std::move( id ), std::move( xs ), std::move( products ) );
