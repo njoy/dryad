@@ -107,22 +107,22 @@ namespace write {
       { dryad::id::ParticleID::helion(), dryad::id::ParticleID( "He3" ) },
       { dryad::id::ParticleID::alpha(), dryad::id::ParticleID( "He4" ) }
     };
-    for ( const auto& pair : elementary ) {
+    for ( const auto& [particle, nuclide] : elementary ) {
 
-      if ( database.hasParticle( pair.first ) ) {
+      if ( database.hasParticle( particle ) ) {
 
-        if ( ! database.hasParticle( pair.second ) ) {
+        if ( ! database.hasParticle( nuclide ) ) {
 
-          particles.insert( std::lower_bound( particles.begin(), particles.end(), pair.second, compare ),
-                            dryad::Particle::defaultParticle( pair.second ) );
+          particles.insert( std::lower_bound( particles.begin(), particles.end(), nuclide, compare ),
+                            dryad::Particle::defaultParticle( nuclide ) );
         }
 
-        auto id = pair.second.symbol();
+        auto id = nuclide.symbol();
         std::transform( id.begin(), id.end(), id.begin(),
                         [] ( auto&& character ) { return std::tolower( character ); } );
 
         auto alias = aliases.append_child( "alias" );
-        alias.append_attribute( "id" ) = pair.first.symbol().c_str();
+        alias.append_attribute( "id" ) = particle.symbol().c_str();
         alias.append_attribute( "pid" ) = id.c_str();
       }
     }

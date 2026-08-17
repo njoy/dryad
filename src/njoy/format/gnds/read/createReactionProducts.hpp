@@ -90,9 +90,9 @@ namespace read {
       else {
 
         // add all expected reaction products
-        for ( const auto& pair : reaction.particles().value() ) {
+        for ( const auto& [particle, multiplicity] : reaction.particles().value() ) {
 
-          addProduct( pair.first, pair.second, data );
+          addProduct( particle, multiplicity, data );
         }
       }
     }
