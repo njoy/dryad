@@ -16,32 +16,66 @@ using namespace njoy::format;
 
 SCENARIO( "createMultigroupProjectileTargetFromFile" ) {
 
-  GIVEN( "a GROUPR formatted GENDF file" ) {
+  GIVEN( "a GENDF file and no covariance files" ) {
 
     WHEN( "constructing a MultigroupProjectileTarget" ) {
 
       auto chunk = gendf::read::createMultigroupProjectileTargetFromFile(
                        id::ParticleID( "n" ), id::ParticleID( "U235" ),
-                       "n-092_U_235.gendf" );
+                       "n-092_U_235.gendf", std::nullopt, std::nullopt );
 
       THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
 
-        neutron::u235::verifyGrouprU235( chunk );
+        neutron::u235::verifyU235( chunk, false, false );
       } // THEN
     } // WHEN
   } // GIVEN
 
-  GIVEN( "an ERRORR formatted GENDF file with cross section covariances" ) {
+  GIVEN( "a GENDF file and xs covariance file" ) {
 
     WHEN( "constructing a MultigroupProjectileTarget" ) {
 
       auto chunk = gendf::read::createMultigroupProjectileTargetFromFile(
                        id::ParticleID( "n" ), id::ParticleID( "U235" ),
-                       "n-092_U_235.covariances.xs.gendf" );
+                       "n-092_U_235.gendf", "n-092_U_235.covariances.xs.gendf",
+                       std::nullopt );
 
       THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
 
-        neutron::u235::verifyErrorrU235( chunk );
+        neutron::u235::verifyU235( chunk, true, false );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "a GENDF file and angular covariance file" ) {
+
+    WHEN( "constructing a MultigroupProjectileTarget" ) {
+
+      auto chunk = gendf::read::createMultigroupProjectileTargetFromFile(
+                       id::ParticleID( "n" ), id::ParticleID( "U235" ),
+                       "n-092_U_235.gendf", std::nullopt,
+                       "n-092_U_235.covariances.angular.gendf" );
+
+      THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
+
+        neutron::u235::verifyU235( chunk, false, true );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "a GENDF file, xs and angular covariance file" ) {
+
+    WHEN( "constructing a MultigroupProjectileTarget" ) {
+
+      auto chunk = gendf::read::createMultigroupProjectileTargetFromFile(
+                       id::ParticleID( "n" ), id::ParticleID( "U235" ),
+                       "n-092_U_235.gendf",
+                       "n-092_U_235.covariances.xs.gendf",
+                       "n-092_U_235.covariances.angular.gendf" );
+
+      THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
+
+        neutron::u235::verifyU235( chunk, true, true );
       } // THEN
     } // WHEN
   } // GIVEN
