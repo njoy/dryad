@@ -162,19 +162,28 @@ void wrapMultigroupProjectileTarget( python::module& module ) {
   .def_static(
 
     "from_gendf_file",
-    [] ( const ParticleID& projectile, const ParticleID& target,
-         const std::string& filename, bool relative,
+    [] ( const ParticleID& projectile,
+         const ParticleID& target,
+         const std::string& filename,
+         const std::optional< std::string >& xs,
+         const std::optional< std::string >& angular,
+         bool relative,
          const ReferenceFrame& frame ) -> decltype(auto) {
 
       return njoy::format::gendf::read::createMultigroupProjectileTargetFromFile(
-                 projectile, target, filename, relative, frame );
+                 projectile, target, filename, xs, angular, relative, frame );
     },
-    python::arg( "projectile" ), python::arg( "target" ),
-    python::arg( "filename" ), python::arg( "relative" ) = true,
+    python::arg( "projectile" ),
+    python::arg( "target" ),
+    python::arg( "filename" ),
+    python::arg( "xs_covariance_filename" ) = std::nullopt,
+    python::arg( "angular_covariance_filename" ) = std::nullopt,
+    python::arg( "relative" ) = true,
     python::arg( "frame" ) = ReferenceFrame::CentreOfMass,
-    "Create a MultigroupProjectileTarget from a GENDF file\n\n"
-    "If there are multiple materials in the GENDF file, only the first material\n"
-    "will be transformed into a MultigroupProjectileTarget.\n\n"
+    "Create a MultigroupProjectileTarget from one or more GENDF files\n\n"
+    "The main GENDF file has to be a groupr output file, and the optional covariance\n"
+    "files are errorr output files. When lumped covariances are used, the corresponding\n"
+    "cross section values are read from the errorr file itself.\n\n"
     "Parameters\n"
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
@@ -182,11 +191,15 @@ void wrapMultigroupProjectileTarget( python::module& module ) {
     "    target : njoy.dryad.id.ParticleID\n"
     "        the target identifier\n"
     "    filename : str\n"
-    "        the GENDF file name\n"
+    "        the file name for the main GENDF file\n"
+    "    xs_covariance_filename : str, default None\n"
+    "        the optional file name for the xs covariance GENDF file\n"
+    "    angular_covariance_filename : str, default None\n"
+    "        the optional file name for the angular covariance GENDF file\n"
     "    relative : bool, default True\n"
     "        the flag to indicate whether or not the covariance data is relative\n"
     "    frame : njoy.dryad.ReferenceFrame, default CentreOfMass\n"
-    "        the reference frame"
+    "        the reference frame for the angular covariance data"
   );
 
   // add standard equality comparison definitions

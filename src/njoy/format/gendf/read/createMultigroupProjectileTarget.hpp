@@ -8,6 +8,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "scion/math/compare.hpp"
 #include "njoy/dryad/InteractionType.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
 #include "njoy/dryad/MultigroupProjectileTarget.hpp"
@@ -56,9 +57,17 @@ namespace read {
     if ( covariances_xs.has_value() ) {
 
       auto cov_information = covariances_xs->section( 1, 451 ).parse< 1, 451 >();
+      if ( cov_information.type() != -11 ) {
+
+        Log::error( "The cross section covariance file is not an ERRORR file." );
+        throw std::exception();
+      }
+
       std::vector< double > cov_boundaries = createVector( cov_information.neutronStructure() );
 
-      if ( cov_boundaries != boundaries ) {
+      if ( cov_boundaries.size() != boundaries.size() &&
+           std::equal( boundaries.begin(), boundaries.end(), cov_boundaries.begin(),
+                      [] ( double left, double right ) { return scion::math::isClose( left, right ); } ) ) {
 
         Log::error( "The group boundaries in the main GENDF file and the cross section covariance GENDF file do not match." );
         throw std::exception();
@@ -68,9 +77,17 @@ namespace read {
     if ( covariances_angular.has_value() ) {
 
       auto cov_information = covariances_angular->section( 1, 451 ).parse< 1, 451 >();
+      if ( cov_information.type() != -11 ) {
+
+        Log::error( "The angular distribution covariance file is not an ERRORR file." );
+        throw std::exception();
+      }
+
       std::vector< double > cov_boundaries = createVector( cov_information.neutronStructure() );
 
-      if ( cov_boundaries != boundaries ) {
+      if ( cov_boundaries.size() != boundaries.size() &&
+           std::equal( boundaries.begin(), boundaries.end(), cov_boundaries.begin(),
+                      [] ( double left, double right ) { return scion::math::isClose( left, right ); } ) ) {
 
         Log::error( "The group boundaries in the main GENDF file and the angular covariance GENDF file do not match." );
         throw std::exception();
