@@ -1,0 +1,308 @@
+# standard imports
+import unittest
+import sys
+
+# third party imports
+
+# local imports
+from njoy.dryad import MultigroupReaction
+from njoy.dryad import MultigroupReactionProduct
+from njoy.dryad import MultigroupCrossSection
+from njoy.dryad import ReactionCategory
+from njoy.dryad.id import ReactionType
+from njoy.dryad.id import ReactionID
+from njoy.dryad.id import ParticleID
+
+def verify_chunk( self, chunk ) :
+
+    # reaction identifier
+    self.assertEqual( ReactionID( 'n,Fe56->n,Fe56_e1' ), chunk.identifier )
+
+    # metadata
+    self.assertEqual( True, chunk.has_products )
+
+    # reaction category
+    self.assertEqual( ReactionCategory.Primary, chunk.category )
+    self.assertEqual( False, chunk.is_summation_reaction )
+    self.assertEqual( True, chunk.is_primary_reaction )
+
+    # partial identifiers
+    self.assertEqual( 0, chunk.number_partial_reactions )
+    self.assertIsNone( chunk.partial_reaction_identifiers )
+
+    # q values
+    self.assertAlmostEqual( 0, chunk.mass_difference_qvalue )
+    self.assertAlmostEqual( -1, chunk.reaction_qvalue )
+
+    # cross section
+    self.assertEqual( 4, chunk.cross_section.number_groups )
+    self.assertEqual( 5, len( chunk.cross_section.boundaries ) )
+    self.assertEqual( 4, len( chunk.cross_section.values ) )
+    self.assertAlmostEqual( 1., chunk.cross_section.boundaries[0] )
+    self.assertAlmostEqual( 2., chunk.cross_section.boundaries[1] )
+    self.assertAlmostEqual( 3., chunk.cross_section.boundaries[2] )
+    self.assertAlmostEqual( 4., chunk.cross_section.boundaries[3] )
+    self.assertAlmostEqual( 5., chunk.cross_section.boundaries[4] )
+    self.assertAlmostEqual( 4., chunk.cross_section.values[0] )
+    self.assertAlmostEqual( 3., chunk.cross_section.values[1] )
+    self.assertAlmostEqual( 2., chunk.cross_section.values[2] )
+    self.assertAlmostEqual( 1., chunk.cross_section.values[3] )
+
+    # reaction products
+    self.assertEqual( True, chunk.has_product( ParticleID( 'n' ) ) )
+    self.assertEqual( True, chunk.has_product( ParticleID( 'g' ) ) )
+    self.assertEqual( True, chunk.has_product( ParticleID( 'Be8' ) ) )
+    self.assertEqual( True, chunk.has_product( ParticleID( 'a' ) ) )
+    self.assertEqual( False, chunk.has_product( ParticleID( 'h' ) ) )
+    self.assertEqual( 5, len( chunk.products ) )
+    self.assertEqual( 5, chunk.number_products() )
+    # total number of products
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'n' ) ) )
+    self.assertEqual( 2, chunk.number_products( ParticleID( 'g' ) ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'Be8' ) ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'a' ) ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ) ) )
+    # number of products by chain index, chain = 0
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'n' ), 0 ) )
+    self.assertEqual( 2, chunk.number_products( ParticleID( 'g' ), 0 ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'Be8' ), 0 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'a' ), 0 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ), 0 ) )
+    # number of products by chain index, chain = 1
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'n' ), 1 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'g' ), 1 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'Be8' ), 1 ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'a' ), 1 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ), 1 ) )
+    # number of products by chain index, chain = 2
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'n' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'g' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'Be8' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'a' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ), 2 ) )
+
+    self.assertEqual( 1, chunk.product( ParticleID( 'n' ) ).multiplicity )
+    self.assertEqual( 1, chunk.product( ParticleID( 'n' ), 0 ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'g' ) ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'g' ), 0 ).multiplicity )
+    self.assertEqual( 3, chunk.product( ParticleID( 'g' ), 1 ).multiplicity )
+    self.assertEqual( 1, chunk.product( ParticleID( 'Be8' ) ).multiplicity )
+    self.assertEqual( 1, chunk.product( ParticleID( 'Be8' ), 0 ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'a' ) ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'a' ), 0 ).multiplicity )
+
+    self.assertEqual( 1, chunk.product( ParticleID( 'n' ), 0, 0 ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'g' ), 0, 0 ).multiplicity )
+    self.assertEqual( 3, chunk.product( ParticleID( 'g' ), 0, 1 ).multiplicity )
+    self.assertEqual( 1, chunk.product( ParticleID( 'Be8' ), 0, 0 ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'a' ), 1, 0 ).multiplicity )
+
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'n' ), 1, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'g' ), 1, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'g' ), 1, 1 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'Be8' ), 1, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'a' ), 0, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'a' ), 1, 1 )
+
+    with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'n' ), 1 )
+    with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'h' ) )
+    with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'h' ), 1 )
+
+def verify_summation_chunk( self, chunk ) :
+
+    # reaction identifier
+    self.assertEqual( ReactionID( 'n,Fe56->total' ), chunk.identifier )
+
+    # metadata
+    self.assertEqual( False, chunk.has_products )
+
+    # reaction category
+    self.assertEqual( ReactionCategory.Summation, chunk.category )
+    self.assertEqual( True, chunk.is_summation_reaction )
+    self.assertEqual( False, chunk.is_primary_reaction )
+
+    # partial identifiers
+    self.assertEqual( 2, chunk.number_partial_reactions )
+    self.assertEqual( 2, len( chunk.partial_reaction_identifiers ) )
+    self.assertEqual( ReactionID( 'n,Fe56->n,Fe56' ), chunk.partial_reaction_identifiers[0] )
+    self.assertEqual( ReactionID( 'n,Fe56->2n,Fe55[all]' ), chunk.partial_reaction_identifiers[1] )
+
+    # q values
+    self.assertIsNone( chunk.mass_difference_qvalue )
+    self.assertIsNone( chunk.reaction_qvalue )
+
+    # cross section
+    self.assertEqual( 4, chunk.cross_section.number_groups )
+    self.assertEqual( 5, len( chunk.cross_section.boundaries ) )
+    self.assertEqual( 4, len( chunk.cross_section.values ) )
+    self.assertAlmostEqual( 1., chunk.cross_section.boundaries[0] )
+    self.assertAlmostEqual( 2., chunk.cross_section.boundaries[1] )
+    self.assertAlmostEqual( 3., chunk.cross_section.boundaries[2] )
+    self.assertAlmostEqual( 4., chunk.cross_section.boundaries[3] )
+    self.assertAlmostEqual( 5., chunk.cross_section.boundaries[4] )
+    self.assertAlmostEqual( 4., chunk.cross_section.values[0] )
+    self.assertAlmostEqual( 3., chunk.cross_section.values[1] )
+    self.assertAlmostEqual( 2., chunk.cross_section.values[2] )
+    self.assertAlmostEqual( 1., chunk.cross_section.values[3] )
+
+    # reaction products
+    self.assertEqual( False, chunk.has_product( ParticleID( 'n' ) ) )
+    self.assertEqual( False, chunk.has_product( ParticleID( 'g' ) ) )
+    self.assertEqual( 0, len( chunk.products ) )
+
+class Test_MultigroupReaction( unittest.TestCase ) :
+    """Unit test for the MultigroupReaction class."""
+
+    def test_component( self ) :
+
+        n = ParticleID.neutron()
+        g = ParticleID.photon()
+        a = ParticleID.alpha()
+        be8 = ParticleID( 'Be8' )
+        fe56 = ParticleID( 'Fe56' )
+
+        # the data is given explicitly for a primary reaction
+        chunk = MultigroupReaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
+                                    mass_q = 0, reaction_q = -1,
+                                    xs = MultigroupCrossSection( [ 1., 2., 3., 4., 5. ], [ 4., 3., 2., 1. ] ),
+                                    products = [ MultigroupReactionProduct( n, 1 ),
+                                                 MultigroupReactionProduct( g, 2 ),
+                                                 MultigroupReactionProduct( g, 3 ),
+                                                 MultigroupReactionProduct( be8, 1 ),
+                                                 MultigroupReactionProduct( a, 2, parent = be8, chain = 1 ) ] )
+
+        verify_chunk( self, chunk )
+
+        # the data is given explicitly for a summation reaction
+        chunk = MultigroupReaction( id = ReactionID( n, fe56, ReactionType.total() ),
+                                    partials = [ ReactionID( n, fe56, ReactionType.elastic( n ) ),
+                                                 ReactionID( n, fe56, ReactionType( n, 16 ) ) ],
+                                    xs = MultigroupCrossSection( [ 1., 2., 3., 4., 5. ], [ 4., 3., 2., 1. ] ) )
+
+        verify_summation_chunk( self, chunk )
+
+    def test_setter_functions( self ) :
+
+        n = ParticleID.neutron()
+        g = ParticleID.photon()
+        a = ParticleID.alpha()
+        be8 = ParticleID( 'Be8' )
+        fe56 = ParticleID( 'Fe56' )
+
+        chunk = MultigroupReaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
+                                    xs = MultigroupCrossSection( [ 1., 2., 3., 4., 5. ], [ 4., 3., 2., 1. ] ),
+                                    products = [ MultigroupReactionProduct( n, 1 ),
+                                                 MultigroupReactionProduct( g, 2 ),
+                                                 MultigroupReactionProduct( g, 3 ),
+                                                 MultigroupReactionProduct( be8, 1 ),
+                                                 MultigroupReactionProduct( a, 2, parent = be8, chain = 1 ) ],
+                                    mass_q = 0, reaction_q = -1 )
+
+        # the reaction identifier can be changed
+        newid = ReactionID( n, fe56, ReactionType( n, 90 ) )
+        original = ReactionID( n, fe56, ReactionType( n, 51 ) )
+
+        chunk.identifier = newid
+
+        self.assertEqual( newid, chunk.identifier )
+
+        chunk.identifier = original
+
+        verify_chunk( self, chunk )
+
+        # the partial reaction identifiers can be changed
+        newpartials = [ ReactionID( n, fe56, ReactionType.elastic( n ) ),
+                        ReactionID( n, fe56, ReactionType( n, 16 ) ) ]
+        original = None
+
+        chunk.partial_reaction_identifiers = newpartials
+
+        self.assertEqual( newpartials, chunk.partial_reaction_identifiers )
+        self.assertEqual( ReactionCategory.Summation, chunk.category )
+        self.assertEqual( False, chunk.is_primary_reaction )
+        self.assertEqual( True, chunk.is_summation_reaction )
+
+        chunk.partial_reaction_identifiers = original
+
+        verify_chunk( self, chunk )
+
+        # the q values can be changed
+        newmassq = 2
+        originalmassq = 0
+        newreactionq = -2
+        originalreactionq = -1
+
+        chunk.mass_difference_qvalue = newmassq
+        chunk.reaction_qvalue = newreactionq
+
+        self.assertEqual( newmassq, chunk.mass_difference_qvalue )
+        self.assertEqual( newreactionq, chunk.reaction_qvalue )
+
+        chunk.mass_difference_qvalue = originalmassq
+        chunk.reaction_qvalue = originalreactionq
+
+        verify_chunk( self, chunk )
+
+        # the cross section can be changed
+        newxs = MultigroupCrossSection( [ 1., 4. ], [ 1. ] )
+        original = MultigroupCrossSection( [ 1., 2., 3., 4., 5. ], [ 4., 3., 2., 1. ] )
+
+        chunk.cross_section = newxs
+
+        self.assertEqual( newxs, chunk.cross_section )
+
+        chunk.cross_section = original
+
+        verify_chunk( self, chunk )
+
+        # the products can be changed
+        newproducts = [ MultigroupReactionProduct( n, 1 ) ]
+        original = [ MultigroupReactionProduct( n, 1 ),
+                     MultigroupReactionProduct( g, 2 ),
+                     MultigroupReactionProduct( g, 3 ),
+                     MultigroupReactionProduct( be8, 1 ),
+                     MultigroupReactionProduct( a, 2, parent = be8, chain = 1 ) ]
+
+        chunk.products = newproducts
+
+        self.assertEqual( newproducts, chunk.products )
+        self.assertEqual( 1, chunk.number_products() )
+
+        chunk.products = original
+
+        verify_chunk( self, chunk )
+
+    def test_comparison( self ) :
+
+        n = ParticleID.neutron()
+        g = ParticleID.photon()
+        fe56 = ParticleID( 'Fe56' )
+
+        left = MultigroupReaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
+                                   xs = MultigroupCrossSection( [ 1., 2., 3., 4., 5. ], [ 4., 3., 2., 1. ] ),
+                                   products = [ MultigroupReactionProduct( n, 1 ),
+                                                MultigroupReactionProduct( g, 2 ),
+                                                MultigroupReactionProduct( g, 3 ) ],
+                                   mass_q = 0, reaction_q = -1 )
+        equal = MultigroupReaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
+                                    xs = MultigroupCrossSection( [ 1., 2., 3., 4., 5. ], [ 4., 3., 2., 1. ] ),
+                                    products = [ MultigroupReactionProduct( n, 1 ),
+                                                 MultigroupReactionProduct( g, 2 ),
+                                                 MultigroupReactionProduct( g, 3 ) ],
+                                    mass_q = 0, reaction_q = -1 )
+        different = MultigroupReaction( id = ReactionID( n, fe56, ReactionType.total() ),
+                                        partials = [ ReactionID( n, fe56, ReactionType.elastic( n ) ),
+                                                     ReactionID( n, fe56, ReactionType( n, 16 ) ) ],
+                                        xs = MultigroupCrossSection( [ 1., 2., 3., 4., 5. ], [ 4., 3., 2., 1. ] ) )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
+if __name__ == '__main__' :
+
+    unittest.main()

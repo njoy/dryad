@@ -86,6 +86,8 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ParticleDatabase.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupCrossSection.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupMultiplicity.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupAverageCosine.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupAverageEnergy.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/DistributionDataType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InteractionType.python.cpp
@@ -124,8 +126,11 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/CoherentDistributionData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IncoherentDistributionData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ReactionProduct.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupReactionProduct.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Reaction.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupReaction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ProjectileTarget.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/MultigroupProjectileTarget.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/AtomicRelaxation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ThermalScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external.python.cpp
