@@ -2,7 +2,6 @@
 import unittest
 
 # third party imports
-import copy
 
 # local imports
 from njoy.dryad import Particle
