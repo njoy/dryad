@@ -23,9 +23,38 @@ namespace id {
   class ElementID {
 
     /* helper class */
-    #include "njoy/dryad/id/ElementID/Entry.hpp"
+    /**
+     *  @class
+     *  @brief Private helper class
+     */
+    class Entry {
+
+      // unsigned char has a max value of 255
+
+      /* fields */
+      unsigned char number_;
+
+      std::string symbol_;
+      std::string name_;
+      std::vector< std::string > alternatives_;
+
+    public:
+
+      /* constructor */
+      Entry( unsigned char number, std::string symbol, std::string name,
+             std::vector< std::string > alternatives ) :
+        number_( number ), symbol_( std::move( symbol ) ),
+        name_( std::move( name ) ), alternatives_( std::move( alternatives ) ) {}
+
+      /* methods */
+      unsigned char number() const { return this->number_; }
+      const std::string& symbol() const { return this->symbol_; }
+      const std::string& name() const { return this->name_; }
+      const std::vector< std::string >& alternatives() const { return this->alternatives_; }
+    };
 
     /* static fields */
+
     static inline const std::vector< Entry > entries{
 
       Entry{   1, "H" , "Hydrogen"     , {} },
@@ -164,15 +193,71 @@ namespace id {
     }( entries );
 
     /* fields */
+
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "njoy/dryad/id/ElementID/src/getIndex.hpp"
+
+    /**
+     *  @brief Retrieve the index to the element information entry
+     *
+     *  @param number    the element number
+     */
+    static std::size_t getIndex( int number ) {
+
+      if ( ( number < 1 ) || ( number > static_cast< int >( entries.size() ) ) ) {
+
+        throw std::invalid_argument( "Not an element number: \'" + std::to_string( number ) + "\'" );
+      }
+
+      return static_cast< std::size_t >( number - 1 );
+    }
+
+    /**
+     *  @brief Retrieve the index to the element information entry
+     *
+     *  @param string    the element symbol, name or alternatives
+     */
+    static std::size_t getIndex( const std::string& string ) {
+
+      try {
+
+        return conversion_dictionary.at( string );
+      }
+      catch ( ... ) {
+
+        throw std::invalid_argument( "Not an element symbol or name: \'" + string + "\'" );
+      }
+    }
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/id/ElementID/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    ElementID() = default;
+
+    ElementID( const ElementID& ) = default;
+    ElementID( ElementID&& ) = default;
+
+    ElementID& operator=( const ElementID& ) = default;
+    ElementID& operator=( ElementID&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param number   the element number
+     */
+    ElementID( int number ) : index_( getIndex( number ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param string   the element identifier or element name
+     */
+    ElementID( const std::string& string ) : index_( getIndex( string ) ) {}
 
     /* methods */
 

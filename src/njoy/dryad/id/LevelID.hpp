@@ -33,9 +33,33 @@ namespace id {
   private:
 
     /* helper class */
-    #include "njoy/dryad/id/LevelID/Entry.hpp"
+
+    /**
+     *  @class
+     *  @brief Private helper class
+     */
+    class Entry {
+
+      // we need at least 999 as the max value so short is sufficient
+
+      /* fields */
+      short number_;
+
+      std::string symbol_;
+
+    public:
+
+      /* constructor */
+      Entry( short number, std::string symbol ) :
+        number_( number ), symbol_( std::move( symbol ) ) {}
+
+      /* methods */
+      short number() const { return this->number_; }
+      const std::string& symbol() const { return this->symbol_; }
+    };
 
     /* static fields */
+
     static inline const std::vector< Entry > entries = [] () {
 
       std::vector< Entry > entries;
@@ -64,12 +88,67 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "njoy/dryad/id/LevelID/src/getIndex.hpp"
+
+    /**
+     *  @brief Retrieve the index to the level information entry
+     *
+     *  @param number    the level number
+     */
+    static std::size_t getIndex( int number ) {
+
+      if ( ( number < 0 ) || ( number >= static_cast< int >( entries.size() ) ) ) {
+
+        throw std::invalid_argument( "Not a level number: \'" + std::to_string( number ) + "\'" );
+      }
+
+      return static_cast< std::size_t >( number );
+    }
+
+    /**
+     *  @brief Retrieve the index to the level information entry
+     *
+     *  @param string    the level symbol
+     */
+    static std::size_t getIndex( const std::string& string ) {
+
+      try {
+
+        return conversion_dictionary.at( string );
+      }
+      catch ( ... ) {
+
+        throw std::invalid_argument( "Not an element symbol or name: \'" + string + "\'" );
+      }
+    }
 
   public:
 
     /* constructor */
-    #include "njoy/dryad/id/LevelID/src/ctor.hpp"
+
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    LevelID() = default;
+
+    LevelID( const LevelID& ) = default;
+    LevelID( LevelID&& ) = default;
+
+    LevelID& operator=( const LevelID& ) = default;
+    LevelID& operator=( LevelID&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param number   the level number
+     */
+    LevelID( int number ) : index_( getIndex( number ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param string   the level identifier
+     */
+    LevelID( const std::string& string ) : index_( getIndex( string ) ) {}
 
     /* methods */
 
