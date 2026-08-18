@@ -65,9 +65,9 @@ namespace read {
 
       std::vector< double > cov_boundaries = createVector( cov_information.neutronStructure() );
 
-      if ( cov_boundaries.size() != boundaries.size() &&
-           std::equal( boundaries.begin(), boundaries.end(), cov_boundaries.begin(),
-                      [] ( double left, double right ) { return scion::math::isClose( left, right ); } ) ) {
+      if ( cov_boundaries.size() != boundaries.size() ||
+           ! std::equal( boundaries.begin(), boundaries.end(), cov_boundaries.begin(),
+                         [] ( double left, double right ) { return scion::math::isClose( left, right ); } ) ) {
 
         Log::error( "The group boundaries in the main GENDF file and the cross section covariance GENDF file do not match." );
         throw std::exception();
@@ -85,9 +85,9 @@ namespace read {
 
       std::vector< double > cov_boundaries = createVector( cov_information.neutronStructure() );
 
-      if ( cov_boundaries.size() != boundaries.size() &&
-           std::equal( boundaries.begin(), boundaries.end(), cov_boundaries.begin(),
-                      [] ( double left, double right ) { return scion::math::isClose( left, right ); } ) ) {
+      if ( cov_boundaries.size() != boundaries.size() ||
+           ! std::equal( boundaries.begin(), boundaries.end(), cov_boundaries.begin(),
+                         [] ( double left, double right ) { return scion::math::isClose( left, right ); } ) ) {
 
         Log::error( "The group boundaries in the main GENDF file and the angular covariance GENDF file do not match." );
         throw std::exception();
