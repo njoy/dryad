@@ -37,7 +37,7 @@ namespace covariance {
     generateEnergyGroups( const std::vector< double >& energies ) {
 
       std::vector< id::EnergyGroup > groups;
-      groups.reserve( energies.size() );
+      groups.reserve( energies.size() - 1 );
       for ( std::size_t i = 0; i < energies.size() - 1; ++i ) {
 
         groups.emplace_back( energies[i], energies[i+1] );
