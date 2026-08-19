@@ -3,7 +3,6 @@
 
 // system includes
 #include <optional>
-#include <vector>
 
 // other includes
 #include "tools/Log.hpp"

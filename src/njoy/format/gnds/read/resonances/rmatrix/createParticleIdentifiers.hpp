@@ -57,9 +57,9 @@ namespace rmatrix {
             identifiers.emplace_back( dryad::id::ParticleID::photon() );
           }
 
-          for ( const auto& pair : id.particles().value() ) {
+          for ( const auto& [particle, multiplicity] : id.particles().value() ) {
 
-            identifiers.emplace_back( pair.first );
+            identifiers.emplace_back( particle );
           }
         }
 

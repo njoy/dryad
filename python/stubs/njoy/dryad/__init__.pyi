@@ -1535,6 +1535,32 @@ class MultigroupProjectileTarget:
             the optional covariance data
     """
     __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def from_gendf_file(projectile: id.ParticleID, target: id.ParticleID, filename: str, xs_covariance_filename: str | None = None, angular_covariance_filename: str | None = None, relative: bool = True, frame: ReferenceFrame = ...) -> MultigroupProjectileTarget:
+        """
+        Create a MultigroupProjectileTarget from one or more GENDF files
+        
+        The main GENDF file has to be a groupr output file, and the optional covariance
+        files are errorr output files. When lumped covariances are used, the corresponding
+        cross section values are read from the errorr file itself.
+        
+        Parameters
+        ----------
+            projectile : njoy.dryad.id.ParticleID
+                the projectile identifier
+            target : njoy.dryad.id.ParticleID
+                the target identifier
+            filename : str
+                the file name for the main GENDF file
+            xs_covariance_filename : str, default None
+                the optional file name for the xs covariance GENDF file
+            angular_covariance_filename : str, default None
+                the optional file name for the angular covariance GENDF file
+            relative : bool, default True
+                the flag to indicate whether or not the covariance data is relative
+            frame : njoy.dryad.ReferenceFrame, default CentreOfMass
+                the reference frame for the angular covariance data
+        """
     def __copy__(self) -> MultigroupProjectileTarget:
         ...
     def __deepcopy__(self, arg0: dict) -> MultigroupProjectileTarget:

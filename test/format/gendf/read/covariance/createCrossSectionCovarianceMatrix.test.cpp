@@ -14,14 +14,13 @@ using Catch::Matchers::WithinAbs;
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::format;
-using namespace njoy::ENDFtk;
 
 SCENARIO( "createCrossSectionCovarianceMatrix" ) {
 
   GIVEN( "a GENDF MF33 section" ) {
 
     using GTape = njoy::ENDFtk::tree::GTape;
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.xs.gendf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 2 ).parse< 33 >();
 
@@ -59,7 +58,11 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[0].isOffDiagonal() );
         CHECK( true == chunk[0].isOnDiagonal() );
         CHECK( 30 == chunk[0].covariances().rows() );
-        CHECK( 30 ==chunk[0].covariances().cols() );
+        CHECK( 30 == chunk[0].covariances().cols() );
+        CHECK_THAT(  5.823541e-4, WithinRel( chunk[0].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[0].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[0].covariances()(29, 0) ) );
+        CHECK_THAT(  1.919472e-3, WithinRel( chunk[0].covariances()(29,29) ) );
 
         CHECK( chunk[1].rowMetadata() != chunk[1].columnMetadata() );
         CHECK( 1 == chunk[1].rowMetadata().reactionIdentifiers().size() );
@@ -79,6 +82,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[1].isOnDiagonal() );
         CHECK( 30 == chunk[1].covariances().rows() );
         CHECK( 30 ==chunk[1].covariances().cols() );
+        CHECK_THAT(  0.         , WithinRel( chunk[1].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[1].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[1].covariances()(29, 0) ) );
+        CHECK_THAT( -1.240704e-3, WithinRel( chunk[1].covariances()(29,29) ) );
 
         CHECK( chunk[2].rowMetadata() != chunk[2].columnMetadata() );
         CHECK( 1 == chunk[2].rowMetadata().reactionIdentifiers().size() );
@@ -98,6 +105,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[2].isOnDiagonal() );
         CHECK( 30 == chunk[2].covariances().rows() );
         CHECK( 30 ==chunk[2].covariances().cols() );
+        CHECK_THAT(  0.         , WithinRel( chunk[2].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[2].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[2].covariances()(29, 0) ) );
+        CHECK_THAT( -7.084817e-3, WithinRel( chunk[2].covariances()(29,29) ) );
 
         CHECK( chunk[3].rowMetadata() != chunk[3].columnMetadata() );
         CHECK( 1 == chunk[3].rowMetadata().reactionIdentifiers().size() );
@@ -117,6 +128,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[3].isOnDiagonal() );
         CHECK( 30 == chunk[3].covariances().rows() );
         CHECK( 30 ==chunk[3].covariances().cols() );
+        CHECK_THAT(  0.         , WithinRel( chunk[3].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[3].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[3].covariances()(29, 0) ) );
+        CHECK_THAT( -4.206275e-3, WithinRel( chunk[3].covariances()(29,29) ) );
 
         CHECK( chunk[4].rowMetadata() != chunk[4].columnMetadata() );
         CHECK( 1 == chunk[4].rowMetadata().reactionIdentifiers().size() );
@@ -136,6 +151,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[4].isOnDiagonal() );
         CHECK( 30 == chunk[4].covariances().rows() );
         CHECK( 30 ==chunk[4].covariances().cols() );
+        CHECK_THAT(  0.         , WithinRel( chunk[4].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[4].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[4].covariances()(29, 0) ) );
+        CHECK_THAT(  1.094054e-4, WithinRel( chunk[4].covariances()(29,29) ) );
 
         CHECK( chunk[5].rowMetadata() != chunk[5].columnMetadata() );
         CHECK( 1 == chunk[5].rowMetadata().reactionIdentifiers().size() );
@@ -155,6 +174,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[5].isOnDiagonal() );
         CHECK( 30 == chunk[5].covariances().rows() );
         CHECK( 30 ==chunk[5].covariances().cols() );
+        CHECK_THAT( -1.106591e-5, WithinRel( chunk[5].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[5].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[5].covariances()(29, 0) ) );
+        CHECK_THAT( -4.985396e-5, WithinRel( chunk[5].covariances()(29,29) ) );
 
         CHECK( chunk[6].rowMetadata() != chunk[6].columnMetadata() );
         CHECK( 1 == chunk[6].rowMetadata().reactionIdentifiers().size() );
@@ -174,6 +197,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[6].isOnDiagonal() );
         CHECK( 30 == chunk[6].covariances().rows() );
         CHECK( 30 ==chunk[6].covariances().cols() );
+        CHECK_THAT(  0.         , WithinRel( chunk[6].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[6].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[6].covariances()(29, 0) ) );
+        CHECK_THAT( -2.47735e-14, WithinRel( chunk[6].covariances()(29,29) ) );
 
         CHECK( chunk[7].rowMetadata() != chunk[7].columnMetadata() );
         CHECK( 1 == chunk[7].rowMetadata().reactionIdentifiers().size() );
@@ -193,6 +220,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[7].isOnDiagonal() );
         CHECK( 30 == chunk[7].covariances().rows() );
         CHECK( 30 ==chunk[7].covariances().cols() );
+        CHECK_THAT(  2.788707e-6, WithinRel( chunk[7].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[7].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[7].covariances()(29, 0) ) );
+        CHECK_THAT( -2.373946e-3, WithinRel( chunk[7].covariances()(29,29) ) );
 
         CHECK( chunk[8].rowMetadata() != chunk[8].columnMetadata() );
         CHECK( 1 == chunk[8].rowMetadata().reactionIdentifiers().size() );
@@ -212,6 +243,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[8].isOnDiagonal() );
         CHECK( 30 == chunk[8].covariances().rows() );
         CHECK( 30 ==chunk[8].covariances().cols() );
+        CHECK_THAT(  0.         , WithinRel( chunk[8].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[8].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[8].covariances()(29, 0) ) );
+        CHECK_THAT( -1.240704e-3, WithinRel( chunk[8].covariances()(29,29) ) );
 
         CHECK( chunk[9].rowMetadata() != chunk[9].columnMetadata() );
         CHECK( 1 == chunk[9].rowMetadata().reactionIdentifiers().size() );
@@ -231,6 +266,10 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[9].isOnDiagonal() );
         CHECK( 30 == chunk[9].covariances().rows() );
         CHECK( 30 ==chunk[9].covariances().cols() );
+        CHECK_THAT(  0.         , WithinRel( chunk[9].covariances()( 0, 0) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[9].covariances()( 0,29) ) );
+        CHECK_THAT(  0.         , WithinRel( chunk[9].covariances()(29, 0) ) );
+        CHECK_THAT( -3.461527e-3, WithinRel( chunk[9].covariances()(29,29) ) );
       } // THEN
     } // WHEN
   } // GIVEN

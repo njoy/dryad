@@ -14,14 +14,13 @@ using Catch::Matchers::WithinAbs;
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::format;
-using namespace njoy::ENDFtk;
 
 SCENARIO( "createCrossSectionCovarianceData" ) {
 
   GIVEN( "a GENDF material" ) {
 
     using GTape = njoy::ENDFtk::tree::GTape;
-    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.gendf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< GTape >( "n-092_U_235.covariances.xs.gendf" );
     auto material = tape.materials().front();
 
     WHEN( "constructing covariance matrices" ) {

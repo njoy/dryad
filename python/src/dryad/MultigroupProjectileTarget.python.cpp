@@ -5,6 +5,8 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/MultigroupProjectileTarget.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
+#include "njoy/format/gendf/read/createMultigroupProjectileTargetFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -21,6 +23,7 @@ void wrapMultigroupProjectileTarget( python::module& module ) {
   using MultigroupReaction = njoy::dryad::MultigroupReaction;
   using CovarianceData = njoy::dryad::covariance::CovarianceData;
   using InteractionType = njoy::dryad::InteractionType;
+  using ReferenceFrame = njoy::dryad::ReferenceFrame;
 
   // wrap views created by this component
 
@@ -155,6 +158,48 @@ void wrapMultigroupProjectileTarget( python::module& module ) {
     "This function recalculates the cross section of all summation reactions\n"
     "by summing the cross sections of the partials together. The partials are\n"
     "assumed to share the same group structure as the summation reaction."
+  )
+  .def_static(
+
+    "from_gendf_file",
+    [] ( const ParticleID& projectile,
+         const ParticleID& target,
+         const std::string& filename,
+         const std::optional< std::string >& xs,
+         const std::optional< std::string >& angular,
+         bool relative,
+         const ReferenceFrame& frame ) -> decltype(auto) {
+
+      return njoy::format::gendf::read::createMultigroupProjectileTargetFromFile(
+                 projectile, target, filename, xs, angular, relative, frame );
+    },
+    python::arg( "projectile" ),
+    python::arg( "target" ),
+    python::arg( "filename" ),
+    python::arg( "xs_covariance_filename" ) = std::nullopt,
+    python::arg( "angular_covariance_filename" ) = std::nullopt,
+    python::arg( "relative" ) = true,
+    python::arg( "frame" ) = ReferenceFrame::CentreOfMass,
+    "Create a MultigroupProjectileTarget from one or more GENDF files\n\n"
+    "The main GENDF file has to be a groupr output file, and the optional covariance\n"
+    "files are errorr output files. When lumped covariances are used, the corresponding\n"
+    "cross section values are read from the errorr file itself.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "        the projectile identifier\n"
+    "    target : njoy.dryad.id.ParticleID\n"
+    "        the target identifier\n"
+    "    filename : str\n"
+    "        the file name for the main GENDF file\n"
+    "    xs_covariance_filename : str, default None\n"
+    "        the optional file name for the xs covariance GENDF file\n"
+    "    angular_covariance_filename : str, default None\n"
+    "        the optional file name for the angular covariance GENDF file\n"
+    "    relative : bool, default True\n"
+    "        the flag to indicate whether or not the covariance data is relative\n"
+    "    frame : njoy.dryad.ReferenceFrame, default CentreOfMass\n"
+    "        the reference frame for the angular covariance data"
   );
 
   // add standard equality comparison definitions

@@ -58,7 +58,6 @@ namespace covariance {
         auto section = material.section( 34, mt ).parse< 34 >();
         auto data = covariance::createAngularDistributionCovarianceMatrix( projectile, target, boundaries, frame, section );
         std::move( data.begin(), data.end(), std::back_inserter( matrices ) );
-
       }
 
       covariances = dryad::covariance::AngularDistributionCovarianceData( std::move( matrices ) );
