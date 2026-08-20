@@ -47,13 +47,17 @@ namespace thermal {
      */
     std::vector< double > grid() const {
 
-      // the analytical form of the cross section is continuously decreasing
-      // so the minimal grid can be set to the lower and upper energy
+      std::vector< double > grid = { 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1., 10. };
 
-      //! @todo should we add a user option to add a point for each decade in
-      //!       between the lower and upper energy (ie 1e-5, 1e-4, 1e-3, etc)
+      auto iter = std::upper_bound( grid.begin(), grid.end(), this->lowerEnergyLimit() );
+      iter = grid.insert( iter, this->lowerEnergyLimit() );
+      grid.erase( grid.begin(), iter );
 
-      return { this->lowerEnergyLimit(), this->upperEnergyLimit() };
+      iter = std::lower_bound( grid.begin(), grid.end(), this->upperEnergyLimit() );
+      iter = grid.insert( iter, this->upperEnergyLimit() );
+      grid.erase( std::next( iter ), grid.end() );
+
+      return grid;
     }
 
     /* interface imposed function */
