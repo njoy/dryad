@@ -10,11 +10,10 @@ using Catch::Matchers::WithinRel;
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::matrix;
 using namespace njoy::format;
 
-void verifyDiagonalChunk( const Matrix< double >& );
-void verifyLowerSymmetricChunk( const Matrix< double >& );
+void verifyDiagonalChunk( const gnds::read::Array& );
+void verifyLowerSymmetricChunk( const gnds::read::Array& );
 
 SCENARIO( "readArray" ) {
 
@@ -81,80 +80,82 @@ SCENARIO( "readArray" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyDiagonalChunk( const Matrix< double >& chunk ) {
+void verifyDiagonalChunk( const gnds::read::Array& chunk ) {
 
-  CHECK( 12 == chunk.rows() );
-  CHECK( 12 == chunk.rows() );
+  CHECK( 12 == chunk.shape[0] );
+  CHECK( 12 == chunk.shape[1] );
+  CHECK( 144 == chunk.values.size() );
 
-  for ( unsigned int i = 0; i < chunk.rows(); ++i ) {
+  for ( unsigned int i = 0; i < 12; ++i ) {
 
-    for ( unsigned int j = 0; j < chunk.cols(); ++j ) {
+    for ( unsigned int j = 0; j < 12; ++j ) {
 
       if ( i != j ) {
 
-        CHECK( 0. == chunk(i,j) );
+        CHECK( 0. == chunk.values[i + j * 12] );
       }
     }
   }
 
-  CHECK_THAT( 0        , WithinRel( chunk(0,0) ) );
-  CHECK_THAT( 2.2235e-6, WithinRel( chunk(1,1) ) );
-  CHECK_THAT( 5.1343e-5, WithinRel( chunk(2,2) ) );
-  CHECK_THAT( 1.4699e-5, WithinRel( chunk(3,3) ) );
-  CHECK_THAT( 2.5148e-6, WithinRel( chunk(4,4) ) );
-  CHECK_THAT( 4.8846e-6, WithinRel( chunk(5,5) ) );
-  CHECK_THAT( 2.1413e-6, WithinRel( chunk(6,6) ) );
-  CHECK_THAT( 1.3654e-6, WithinRel( chunk(7,7) ) );
-  CHECK_THAT( 8.5116e-7, WithinRel( chunk(8,8) ) );
-  CHECK_THAT( 3.4763e-7, WithinRel( chunk(9,9) ) );
-  CHECK_THAT( 2.9932e-8, WithinRel( chunk(10,10) ) );
-  CHECK_THAT( 4.1382e-9, WithinRel( chunk(11,11) ) );
+  CHECK_THAT( 0        , WithinRel( chunk.values[0 + 0 * 12] ) );
+  CHECK_THAT( 2.2235e-6, WithinRel( chunk.values[1 + 1 * 12] ) );
+  CHECK_THAT( 5.1343e-5, WithinRel( chunk.values[2 + 2 * 12] ) );
+  CHECK_THAT( 1.4699e-5, WithinRel( chunk.values[3 + 3 * 12] ) );
+  CHECK_THAT( 2.5148e-6, WithinRel( chunk.values[4 + 4 * 12] ) );
+  CHECK_THAT( 4.8846e-6, WithinRel( chunk.values[5 + 5 * 12] ) );
+  CHECK_THAT( 2.1413e-6, WithinRel( chunk.values[6 + 6 * 12] ) );
+  CHECK_THAT( 1.3654e-6, WithinRel( chunk.values[7 + 7 * 12] ) );
+  CHECK_THAT( 8.5116e-7, WithinRel( chunk.values[8 + 8 * 12] ) );
+  CHECK_THAT( 3.4763e-7, WithinRel( chunk.values[9 + 9 * 12] ) );
+  CHECK_THAT( 2.9932e-8, WithinRel( chunk.values[10 + 10 * 12] ) );
+  CHECK_THAT( 4.1382e-9, WithinRel( chunk.values[11 + 11 * 12] ) );
 }
 
-void verifyLowerSymmetricChunk( const Matrix< double >& chunk ) {
+void verifyLowerSymmetricChunk( const gnds::read::Array& chunk ) {
 
-  CHECK( 6 == chunk.rows() );
-  CHECK( 6 == chunk.rows() );
+  CHECK( 6 == chunk.shape[0] );
+  CHECK( 6 == chunk.shape[1] );
+  CHECK( 36 == chunk.values.size() );
 
-  CHECK_THAT( 0., WithinRel( chunk(0,0) ) );
-  CHECK_THAT( 0., WithinRel( chunk(0,1) ) );
-  CHECK_THAT( 0., WithinRel( chunk(0,2) ) );
-  CHECK_THAT( 0., WithinRel( chunk(0,3) ) );
-  CHECK_THAT( 0., WithinRel( chunk(0,4) ) );
-  CHECK_THAT( 0., WithinRel( chunk(0,5) ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[0 + 0 * 6] ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[0 + 1 * 6] ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[0 + 2 * 6] ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[0 + 3 * 6] ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[0 + 4 * 6] ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[0 + 5 * 6] ) );
 
-  CHECK_THAT( 0., WithinRel( chunk(1,0) ) );
-  CHECK_THAT( 1.251800e-2, WithinRel( chunk(1,1) ) );
-  CHECK_THAT( 1.372900e-2, WithinRel( chunk(1,2) ) );
-  CHECK_THAT( 3.462100e-3, WithinRel( chunk(1,3) ) );
-  CHECK_THAT( 4.176900e-3, WithinRel( chunk(1,4) ) );
-  CHECK_THAT( 3.404000e-3, WithinRel( chunk(1,5) ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[1 + 0 * 6] ) );
+  CHECK_THAT( 1.251800e-2, WithinRel( chunk.values[1 + 1 * 6] ) );
+  CHECK_THAT( 1.372900e-2, WithinRel( chunk.values[1 + 2 * 6] ) );
+  CHECK_THAT( 3.462100e-3, WithinRel( chunk.values[1 + 3 * 6] ) );
+  CHECK_THAT( 4.176900e-3, WithinRel( chunk.values[1 + 4 * 6] ) );
+  CHECK_THAT( 3.404000e-3, WithinRel( chunk.values[1 + 5 * 6] ) );
 
-  CHECK_THAT( 0., WithinRel( chunk(2,0) ) );
-  CHECK_THAT( 1.372900e-2, WithinRel( chunk(2,1) ) );
-  CHECK_THAT( 1.557300e-2, WithinRel( chunk(2,2) ) );
-  CHECK_THAT( 5.634300e-3, WithinRel( chunk(2,3) ) );
-  CHECK_THAT( 5.288200e-3, WithinRel( chunk(2,4) ) );
-  CHECK_THAT( 3.863500e-3, WithinRel( chunk(2,5) ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[2 + 0 * 6] ) );
+  CHECK_THAT( 1.372900e-2, WithinRel( chunk.values[2 + 1 * 6] ) );
+  CHECK_THAT( 1.557300e-2, WithinRel( chunk.values[2 + 2 * 6] ) );
+  CHECK_THAT( 5.634300e-3, WithinRel( chunk.values[2 + 3 * 6] ) );
+  CHECK_THAT( 5.288200e-3, WithinRel( chunk.values[2 + 4 * 6] ) );
+  CHECK_THAT( 3.863500e-3, WithinRel( chunk.values[2 + 5 * 6] ) );
 
-  CHECK_THAT( 0., WithinRel( chunk(3,0) ) );
-  CHECK_THAT( 3.462100e-3, WithinRel( chunk(3,1) ) );
-  CHECK_THAT( 5.634300e-3, WithinRel( chunk(3,2) ) );
-  CHECK_THAT( 8.970100e-3, WithinRel( chunk(3,3) ) );
-  CHECK_THAT( 4.898600e-3, WithinRel( chunk(3,4) ) );
-  CHECK_THAT( 1.896700e-3, WithinRel( chunk(3,5) ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[3 + 0 * 6] ) );
+  CHECK_THAT( 3.462100e-3, WithinRel( chunk.values[3 + 1 * 6] ) );
+  CHECK_THAT( 5.634300e-3, WithinRel( chunk.values[3 + 2 * 6] ) );
+  CHECK_THAT( 8.970100e-3, WithinRel( chunk.values[3 + 3 * 6] ) );
+  CHECK_THAT( 4.898600e-3, WithinRel( chunk.values[3 + 4 * 6] ) );
+  CHECK_THAT( 1.896700e-3, WithinRel( chunk.values[3 + 5 * 6] ) );
 
-  CHECK_THAT( 0., WithinRel( chunk(4,0) ) );
-  CHECK_THAT( 4.176900e-3, WithinRel( chunk(4,1) ) );
-  CHECK_THAT( 5.288200e-3, WithinRel( chunk(4,2) ) );
-  CHECK_THAT( 4.898600e-3, WithinRel( chunk(4,3) ) );
-  CHECK_THAT( 3.694600e-3, WithinRel( chunk(4,4) ) );
-  CHECK_THAT( 1.726800e-3, WithinRel( chunk(4,5) ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[4 + 0 * 6] ) );
+  CHECK_THAT( 4.176900e-3, WithinRel( chunk.values[4 + 1 * 6] ) );
+  CHECK_THAT( 5.288200e-3, WithinRel( chunk.values[4 + 2 * 6] ) );
+  CHECK_THAT( 4.898600e-3, WithinRel( chunk.values[4 + 3 * 6] ) );
+  CHECK_THAT( 3.694600e-3, WithinRel( chunk.values[4 + 4 * 6] ) );
+  CHECK_THAT( 1.726800e-3, WithinRel( chunk.values[4 + 5 * 6] ) );
 
-  CHECK_THAT( 0., WithinRel( chunk(5,0) ) );
-  CHECK_THAT( 3.404000e-3, WithinRel( chunk(5,1) ) );
-  CHECK_THAT( 3.863500e-3, WithinRel( chunk(5,2) ) );
-  CHECK_THAT( 1.896700e-3, WithinRel( chunk(5,3) ) );
-  CHECK_THAT( 1.726800e-3, WithinRel( chunk(5,4) ) );
-  CHECK_THAT( 1.144800e-3, WithinRel( chunk(5,5) ) );
+  CHECK_THAT( 0., WithinRel( chunk.values[5 + 0 * 6] ) );
+  CHECK_THAT( 3.404000e-3, WithinRel( chunk.values[5 + 1 * 6] ) );
+  CHECK_THAT( 3.863500e-3, WithinRel( chunk.values[5 + 2 * 6] ) );
+  CHECK_THAT( 1.896700e-3, WithinRel( chunk.values[5 + 3 * 6] ) );
+  CHECK_THAT( 1.726800e-3, WithinRel( chunk.values[5 + 4 * 6] ) );
+  CHECK_THAT( 1.144800e-3, WithinRel( chunk.values[5 + 5 * 6] ) );
 }
