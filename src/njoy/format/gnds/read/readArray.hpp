@@ -10,6 +10,8 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/createCompression.hpp"
+#include "njoy/format/gnds/read/createSymmetry.hpp"
 #include "njoy/format/gnds/read/createStorageOrder.hpp"
 #include "njoy/format/gnds/read/readShape.hpp"
 #include "njoy/format/gnds/read/readValues.hpp"
@@ -41,26 +43,25 @@ namespace read {
     data.values.resize( std::accumulate( data.shape.begin(), data.shape.end(),
                                          1, std::multiplies() ) );
 
-    std::optional< std::string > compression = std::nullopt;
+    Compression compression = Compression::None;
     auto attribute = array.attribute( "compression" );
     if ( attribute ) {
 
-      compression = attribute.as_string();
-      if ( compression == "none" ) {
-
-        compression = std::nullopt;
-      }
+      compression = createCompression( attribute.as_string() );
     }
 
-    std::optional< std::string > symmetry = std::nullopt;
+    if ( compression == Compression::Embedded ) {
+
+      Log::error( "Array conversion currently only supports diagonal, flattened or no compression, contact a developer" );
+      Log::info( "compression: {}", attribute.as_string() );
+      throw std::exception();
+    }
+
+    Symmetry symmetry = Symmetry::None;
     attribute = array.attribute( "symmetry" );
     if ( attribute ) {
 
-      symmetry = attribute.as_string();
-      if ( symmetry == "none" ) {
-
-        symmetry = std::nullopt;
-      }
+      symmetry = createSymmetry( attribute.as_string() );
     }
 
     StorageOrder order = StorageOrder::RowMajor;
@@ -73,8 +74,6 @@ namespace read {
     if ( order != StorageOrder::RowMajor ) {
 
       Log::error( "Array conversion currently only supports row-major, contact a developer" );
-      Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
-      Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
       Log::info( "storageOrder: {}", attribute ? attribute.as_string() : "row-major" );
       throw std::exception();
     }
@@ -88,7 +87,7 @@ namespace read {
 
       std::size_t rows = data.shape[0];
       std::size_t cols = data.shape[1];
-      if ( compression.has_value() && compression.value() == "diagonal" ) {
+      if ( compression == Compression::Diagonal ) {
 
         for ( unsigned int i = 0; i < rows; ++i ) {
 
@@ -106,8 +105,7 @@ namespace read {
           }
         }
       }
-      else if ( !compression.has_value() && symmetry.has_value() &&
-                symmetry.value() == "lower" ) {
+      else if ( compression == Compression::None && symmetry == Symmetry::Lower ) {
 
         unsigned int index = 0;
         for ( unsigned int i = 0; i < rows; ++i ) {
@@ -126,8 +124,7 @@ namespace read {
           }
         }
       }
-      else if ( !compression.has_value() && symmetry.has_value() &&
-                symmetry.value() == "upper" ) {
+      else if ( compression == Compression::None && symmetry == Symmetry::Upper ) {
 
         unsigned int index = 0;
         for ( unsigned int i = 0; i < rows; ++i ) {
@@ -146,16 +143,13 @@ namespace read {
           }
         }
       }
-      else if ( !compression.has_value() && !symmetry.has_value()  ) {
+      else if ( compression == Compression::None && symmetry == Symmetry::None ) {
 
         data.values = std::move( values );
       }
       else {
 
         Log::error( "Array conversion currently unsupported, contact a developer" );
-        Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
-        Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
-        Log::info( "storageOrder: {}", attribute ? attribute.as_string() : "row-major" );
         throw std::exception();
       }
 
