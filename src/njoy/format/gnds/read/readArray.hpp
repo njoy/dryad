@@ -2,8 +2,9 @@
 #define NJOY_FORMAT_GNDS_READ_READARRAY
 
 // system includes
+#include <numeric>
+#include <functional>
 #include <optional>
-#include <sstream>
 #include <vector>
 
 // other includes
@@ -12,7 +13,6 @@
 #include "njoy/format/gnds/read/createStorageOrder.hpp"
 #include "njoy/format/gnds/read/readShape.hpp"
 #include "njoy/format/gnds/read/readValues.hpp"
-#include "njoy/matrix.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
@@ -20,16 +20,26 @@ namespace format {
 namespace gnds {
 namespace read {
 
+  struct Array {
+
+    std::vector< std::size_t > shape;
+    std::vector< double > values;
+  };
+
   /**
    *  @brief Read data from a GNDS array node
    *
    *  @param[in] array   the gnds array node
    */
-  inline matrix::Matrix< double > readArray( const pugi::xml_node& array ) {
+  inline Array readArray( const pugi::xml_node& array ) {
 
     throwExceptionOnWrongNode( array, "array" );
 
-    std::vector< std::size_t > shape = readShape( array.attribute( "shape" ).as_string() );
+    Array data;
+
+    data.shape = readShape( array.attribute( "shape" ).as_string() );
+    data.values.resize( std::accumulate( data.shape.begin(), data.shape.end(),
+                                         1, std::multiplies() ) );
 
     std::optional< std::string > compression = std::nullopt;
     auto attribute = array.attribute( "compression" );
@@ -69,25 +79,29 @@ namespace read {
       throw std::exception();
     }
 
-    auto data = readValues( array.child( "values" ) );
+    auto indices = array.find_child_by_attribute( "values", "label", "starts" );
+    auto lengths = array.find_child_by_attribute( "values", "label", "lengths" );
 
-    if ( shape.size() == 2 ) {
+    auto values = readValues( array.child( "values" ) );
 
-      matrix::Matrix< double > matrix( shape[0], shape[1] );
+    if ( data.shape.size() == 2 ) {
+
+      std::size_t rows = data.shape[0];
+      std::size_t cols = data.shape[1];
       if ( compression.has_value() && compression.value() == "diagonal" ) {
 
-        for ( unsigned int i = 0; i < matrix.rows(); ++i ) {
+        for ( unsigned int i = 0; i < rows; ++i ) {
 
-          for ( unsigned int j = i; j < matrix.cols(); ++j ) {
+          for ( unsigned int j = i; j < cols; ++j ) {
 
             if ( i == j ) {
 
-              matrix( i, j ) = data[i];
+              data.values[ i + j * rows ] = values[i];
             }
             else {
 
-              matrix( i, j ) = 0.;
-              matrix( j, i ) = 0.;
+              data.values[ i + j * rows ] = 0.;
+              data.values[ j + i * rows ] = 0.;
             }
           }
         }
@@ -96,18 +110,18 @@ namespace read {
                 symmetry.value() == "lower" ) {
 
         unsigned int index = 0;
-        for ( unsigned int i = 0; i < matrix.rows(); ++i ) {
+        for ( unsigned int i = 0; i < rows; ++i ) {
 
           for ( unsigned int j = 0; j <= i; ++j ) {
 
             if ( i == j ) {
 
-              matrix( i, j ) = data[index++];
+              data.values[ i + j * rows ] = values[index++];
             }
             else {
 
-              matrix( i, j ) = data[index++];
-              matrix( j, i ) = matrix( i, j );
+              data.values[ i + j * rows ] = values[index++];
+              data.values[ j + i * rows ] = data.values[ i + j * rows ];
             }
           }
         }
@@ -116,32 +130,25 @@ namespace read {
                 symmetry.value() == "upper" ) {
 
         unsigned int index = 0;
-        for ( unsigned int i = 0; i < matrix.rows(); ++i ) {
+        for ( unsigned int i = 0; i < rows; ++i ) {
 
-          for ( unsigned int j = i; j < matrix.cols(); ++j ) {
+          for ( unsigned int j = i; j < cols; ++j ) {
 
             if ( i == j ) {
 
-              matrix( i, j ) = data[index++];
+              data.values[ i + j * rows ] = values[index++];
             }
             else {
 
-              matrix( i, j ) = data[index++];
-              matrix( j, i ) = matrix( i, j );
+              data.values[ i + j * rows ] = values[index++];
+              data.values[ j + i * rows ] = data.values[ i + j * rows ];
             }
           }
         }
       }
       else if ( !compression.has_value() && !symmetry.has_value()  ) {
 
-        unsigned int index = 0;
-        for ( unsigned int i = 0; i < matrix.rows(); ++i ) {
-
-          for ( unsigned int j = 0; j < matrix.cols(); ++j ) {
-
-            matrix( i, j ) = data[index++];
-          }
-        }
+        data.values = std::move( values );
       }
       else {
 
@@ -152,7 +159,7 @@ namespace read {
         throw std::exception();
       }
 
-      return matrix;
+      return data;
     }
     else {
 
