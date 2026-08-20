@@ -35,7 +35,7 @@ namespace read {
     }
     else {
 
-      Log::error( "GNDS storage frame \'{}\' is not recognised", order );
+      Log::error( "GNDS storage order \'{}\' is not recognised", order );
       throw std::exception();
     }
   }
