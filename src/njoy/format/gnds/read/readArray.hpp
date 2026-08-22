@@ -39,10 +39,17 @@ namespace read {
 
     Array data;
 
+    // read shape
     data.shape = readShape( array.attribute( "shape" ).as_string() );
     data.values.resize( std::accumulate( data.shape.begin(), data.shape.end(),
                                          1, std::multiplies() ) );
+    if ( data.shape.size() == 0 ) {
 
+      Log::error( "Array shape should define at least one dimension, found none" );
+      throw std::exception();
+    }
+
+    // read compression
     Compression compression = Compression::None;
     auto attribute = array.attribute( "compression" );
     if ( attribute ) {
@@ -50,18 +57,21 @@ namespace read {
       compression = createCompression( attribute.as_string() );
     }
 
-    if ( compression == Compression::Embedded ) {
-
-      Log::error( "Array conversion currently only supports diagonal, flattened or no compression, contact a developer" );
-      Log::info( "compression: {}", attribute.as_string() );
-      throw std::exception();
-    }
-
+    // read symmetry
     Symmetry symmetry = Symmetry::None;
     attribute = array.attribute( "symmetry" );
     if ( attribute ) {
 
       symmetry = createSymmetry( attribute.as_string() );
+    }
+    if ( symmetry != Symmetry::None ) {
+
+      if ( std::any_of( data.shape.begin(), data.shape.end(),
+                        [&] ( auto&& number ) { return number != data.shape.front(); } ) ) {
+
+        Log::error( "The array shape must be equal-dimensional when using any symmetry option" );
+        throw std::exception();
+      }
     }
 
     StorageOrder order = StorageOrder::RowMajor;
@@ -78,10 +88,42 @@ namespace read {
       throw std::exception();
     }
 
-    auto indices = array.find_child_by_attribute( "values", "label", "starts" );
-    auto lengths = array.find_child_by_attribute( "values", "label", "lengths" );
+    // look for the values node (it has no label) and read it
+    pugi::xml_node child;
+    for ( child = array.child( "values" ); child; child = child.next_sibling( "values" ) ) {
 
-    auto values = readValues( array.child( "values" ) );
+      if ( ! child.attribute( "label" ) ) {
+
+        break;
+      }
+    }
+    auto values = readValues( child );
+
+//    // handle compression of the values
+//    switch ( compression ) {
+//
+//      case Compression::None : {
+//
+//
+//        break;
+//      }
+//      case Compression::Diagonal : {
+//
+//
+//        break;
+//      }
+//      case Compression::Flattened : {
+//
+//        auto indices = array.find_child_by_attribute( "values", "label", "starts" );
+//        auto lengths = array.find_child_by_attribute( "values", "label", "lengths" );
+//
+//        break;
+//      }
+//      default : {
+//
+//        break;
+//      }
+//    };
 
     if ( data.shape.size() == 2 ) {
 
@@ -89,56 +131,56 @@ namespace read {
       std::size_t cols = data.shape[1];
       if ( compression == Compression::Diagonal ) {
 
-        for ( unsigned int i = 0; i < rows; ++i ) {
+        for ( std::size_t i = 0; i < rows; ++i ) {
 
-          for ( unsigned int j = i; j < cols; ++j ) {
+          for ( std::size_t j = i; j < cols; ++j ) {
 
             if ( i == j ) {
 
-              data.values[ i + j * rows ] = values[i];
+              data.values[ i + j * cols ] = values[i];
             }
             else {
 
-              data.values[ i + j * rows ] = 0.;
-              data.values[ j + i * rows ] = 0.;
+              data.values[ i + j * cols ] = 0.;
+              data.values[ j + i * cols ] = 0.;
             }
           }
         }
       }
       else if ( compression == Compression::None && symmetry == Symmetry::Lower ) {
 
-        unsigned int index = 0;
-        for ( unsigned int i = 0; i < rows; ++i ) {
+        std::size_t index = 0;
+        for ( std::size_t i = 0; i < rows; ++i ) {
 
-          for ( unsigned int j = 0; j <= i; ++j ) {
+          for ( std::size_t j = 0; j <= i; ++j ) {
 
             if ( i == j ) {
 
-              data.values[ i + j * rows ] = values[index++];
+              data.values[ i + j * cols ] = values[index++];
             }
             else {
 
-              data.values[ i + j * rows ] = values[index++];
-              data.values[ j + i * rows ] = data.values[ i + j * rows ];
+              data.values[ i + j * cols ] = values[index++];
+              data.values[ j + i * cols ] = data.values[ i + j * cols ];
             }
           }
         }
       }
       else if ( compression == Compression::None && symmetry == Symmetry::Upper ) {
 
-        unsigned int index = 0;
-        for ( unsigned int i = 0; i < rows; ++i ) {
+        std::size_t index = 0;
+        for ( std::size_t i = 0; i < rows; ++i ) {
 
-          for ( unsigned int j = i; j < cols; ++j ) {
+          for ( std::size_t j = i; j < cols; ++j ) {
 
             if ( i == j ) {
 
-              data.values[ i + j * rows ] = values[index++];
+              data.values[ i + j * cols ] = values[index++];
             }
             else {
 
-              data.values[ i + j * rows ] = values[index++];
-              data.values[ j + i * rows ] = data.values[ i + j * rows ];
+              data.values[ i + j * cols ] = values[index++];
+              data.values[ j + i * cols ] = data.values[ i + j * cols ];
             }
           }
         }
