@@ -27,6 +27,7 @@ SCENARIO( "ElectronSubshellID" ) {
       CHECK( id == ElectronSubshellID( "1s" ) );
       CHECK( id == ElectronSubshellID( "1s+" ) );
       CHECK( id == ElectronSubshellID( "K" ) );
+      CHECK( id == ElectronSubshellID( 1, 0, 0.5 ) );
       CHECK( true == id.isRelativistic() );
       CHECK( false == id.isNonRelativistic() );
 
@@ -40,6 +41,7 @@ SCENARIO( "ElectronSubshellID" ) {
       CHECK( id == ElectronSubshellID( "2s" ) );
       CHECK( id == ElectronSubshellID( "2s+" ) );
       CHECK( id == ElectronSubshellID( "L1" ) );
+      CHECK( id == ElectronSubshellID( 2, 0, 0.5 ) );
       CHECK( true == id.isRelativistic() );
       CHECK( false == id.isNonRelativistic() );
 

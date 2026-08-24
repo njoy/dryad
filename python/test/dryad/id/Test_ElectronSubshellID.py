@@ -75,6 +75,7 @@ class Test_ElectronSubshellID( unittest.TestCase ) :
         self.assertEqual( id, ElectronSubshellID( '1s+' ) )
         self.assertEqual( id, ElectronSubshellID( '1s1/2' ) )
         self.assertEqual( id, ElectronSubshellID( 'K' ) )
+        self.assertEqual( id, ElectronSubshellID( 1, 0, 0.5 ) )
         self.assertEqual( True, id.is_relativistic )
         self.assertEqual( False, id.is_non_relativistic )
 
