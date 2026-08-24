@@ -13,6 +13,9 @@ namespace medic {
   void wrapPruneCrossSection( python::module& );
   void wrapPruneCrossSections( python::module& );
 
+  // declarations - curation
+  void wrapCurateComptonProfiles( python::module& );
+
   // declarations - covariance functions
   void wrapCovariance( python::module& );
 } // medic namespace
@@ -29,6 +32,9 @@ void wrapMedic( python::module& module ) {
   // wrap components - pruning
   medic::wrapPruneCrossSection( submodule );
   medic::wrapPruneCrossSections( submodule );
+
+  // wrap components - curation
+  medic::wrapCurateComptonProfiles( submodule );
 
   // wrap components - covariance functions
   medic::wrapCovariance( submodule );
