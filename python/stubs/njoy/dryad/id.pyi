@@ -88,6 +88,14 @@ class ElectronSubshellID:
         string : str 
             the subshell symbol, name or alternative name
     
+        principal : int 
+            the principal quantum number
+    
+        azimuthal : int 
+            the azimuthal quantum number
+    
+        angular : float 
+            the angular momentum (equal to azimuthal +/- 1/2)
     """
     K: typing.ClassVar[int] = 534
     L1: typing.ClassVar[int] = 535
@@ -161,6 +169,11 @@ class ElectronSubshellID:
     def __init__(self, string: str) -> None:
         """
         Initialise the subshell identifier using the subshell symbol, name or alternative name
+        """
+    @typing.overload
+    def __init__(self, principal: int, azimuthal: int, angular: float) -> None:
+        """
+        Initialise the subshell identifier using the subshell quantum numbers
         """
     def __le__(self, arg0: ElectronSubshellID) -> bool:
         ...
