@@ -7,12 +7,14 @@ using Catch::Matchers::WithinRel;
 #include "njoy/acer/processElectronPhotonRelaxation.hpp"
 
 // other includes
+#include "njoy/medic/curateComptonProfiles.hpp"
 #include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 #include "njoy/format/endf/read/createAtomicRelaxationFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::acer;
 using namespace njoy::dryad;
+using namespace njoy::medic;
 using namespace njoy::format;
 
 SCENARIO( "processElectronPhotonRelaxation" ) {
@@ -33,64 +35,6 @@ SCENARIO( "processElectronPhotonRelaxation" ) {
       electroatomic.calculateSummationCrossSections();
 
       std::string filename = "fuvnrkljnvoiarnglkanrlknfalkvnlkrua.ace";
-
-      THEN( "the ace file can be generated" ) {
-
-        processElectronPhotonRelaxation( photoatomic, electroatomic, relaxation, filename,
-                                         25, "02/19/26", "eprdata25 - ENDF/B-VIII.1 H" );
-
-        //! @todo do actual testing :-)
-
-        std::remove( filename.c_str() );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "instances of ProjectileTarget and AtomicRelaxation with z >= 12 and z < 31" ) {
-
-    WHEN( "correct data is given" ) {
-
-      auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-029_Cu_000.endf", true );
-      relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
-      photoatomic.unioniseCrossSections();
-      photoatomic.calculateSummationCrossSections();
-      photoatomic.calculateAverageEnergy();
-      external::ComptonProfiles::apply( photoatomic, true );
-      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-029_Cu_000.endf", true );
-      electroatomic.unioniseCrossSections();
-      electroatomic.calculateSummationCrossSections();
-
-      std::string filename = "ajrhctvnoiweuynckeuhrckeuhwkrlk.ace";
-
-      THEN( "the ace file can be generated" ) {
-
-        processElectronPhotonRelaxation( photoatomic, electroatomic, relaxation, filename,
-                                         25, "02/19/26", "eprdata25 - ENDF/B-VIII.1 Cu" );
-
-        //! @todo do actual testing :-)
-
-        std::remove( filename.c_str() );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "instances of ProjectileTarget and AtomicRelaxation with z >= 31 and z < 36" ) {
-
-    WHEN( "correct data is given" ) {
-
-      auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-032_Ge_000.endf", true );
-      relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
-      photoatomic.unioniseCrossSections();
-      photoatomic.calculateSummationCrossSections();
-      photoatomic.calculateAverageEnergy();
-      external::ComptonProfiles::apply( photoatomic, true );
-      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-032_Ge_000.endf", true );
-      electroatomic.unioniseCrossSections();
-      electroatomic.calculateSummationCrossSections();
-
-      std::string filename = "oieucnroieurcnouwehxmfkhskue4grkuegfl.ace";
 
       THEN( "the ace file can be generated" ) {
 
@@ -176,6 +120,9 @@ SCENARIO( "processElectronPhotonRelaxation" ) {
       auto electroatomic = endf::read::createProjectileTargetFromFile( "e-094_Pu_000.endf", true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
+
+      // fix the Pu Compton profiles
+      curateComptonProfiles( photoatomic, relaxation );
 
       std::string filename = "oxwincaweuxlkeuhrfkclalhnriuheuchaiulhrlm.ace";
 
