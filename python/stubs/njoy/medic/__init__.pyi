@@ -9,15 +9,17 @@ def curate_compton_profiles(photoatomic: njoy.dryad.ProjectileTarget, relaxation
     """
     Curate the Compton profile data
     
-    This function ensures that the Compton profile data in the incoherent
-    scattering function and the atomic relaxation data are consistent. The
-    following operations are performed on the Compton profile data:
-      - when the Compton profile data contains a subshell that is not present
-        in the atomic relaxation data, that profile is removed
-      - when the atomic relaxation data contains subshells that are not present
-        in the Compton profiles, then the Compton profile for the missing subshell
-        is set to the one with the same principal and azimuthal quantum number
-        that is already present
+    When the Compton profile data contains a subshell that is not present
+    in the atomic relaxation data, that profile is removed.
+    
+    When the atomic relaxation data contains subshells that are not present
+    in the Compton profiles, then an appropriate Compton profile for the
+    missing subshell is selected based on the available subshells. That
+    subshell is selected based on the quantum numbers of the missing subshell
+    (n, l, l + m with m = +1/2 or -1/2), whichever is found first:
+      - the shell with the same n and l but the other m
+      - the shell with the same n, l - 1 and the same m
+      - the shell with the same n, l - 1 and the other m
     
     Parameters
     ----------
