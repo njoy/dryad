@@ -24,7 +24,7 @@ shacl_FetchContent_Declare( scion
 
 shacl_FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         2ffe9dc4d0f564777e83b60a2e5fbd81e8bb0720  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         e8f72a0830034f69c8436e3ad32da70ed350d358  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ENDFtk

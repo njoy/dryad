@@ -483,6 +483,7 @@ add_cpp_test( reconr.calculateSummationCrossSections                            
 
 add_cpp_test( medic.pruneCrossSection                                                        medic/pruneCrossSection.test.cpp )
 add_cpp_test( medic.pruneCrossSections                                                       medic/pruneCrossSections.test.cpp )
+add_cpp_test( medic.curateComptonProfiles                                                    medic/curateComptonProfiles.test.cpp )
 add_cpp_test( medic.covariance.pruneSmallEigenvalues                                         medic/covariance/pruneSmallEigenvalues.test.cpp )
 
 # acer tests
