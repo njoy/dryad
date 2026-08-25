@@ -74,84 +74,88 @@ namespace medic {
         // currently we only curate relativistic Compton profiles
         if ( relativistic ) {
 
-          if ( relaxation.numberSubshells() < profiles.size() ) {
+          if ( ! std::equal( profiles.begin(), profiles.end(),
+                             relaxation.subshells().begin(), relaxation.subshells().end(),
+                             [] ( auto&& left, auto&& right )
+                                { return left.subshellIdentifier() == right.identifier(); } ) ) {
 
-            // there are less subshells in the relaxation data than in the Compton profiles
-
-            auto remove_if = [&] ( auto&& profile ) {
-
-              Log::info( "Removing Compton profile for the {} subshell", profile.subshellIdentifier().symbol() );
-              return ! relaxation.hasSubshell( profile.subshellIdentifier() );
-            };
-
+            // start by copying the profiles
             std::vector< dryad::TabulatedComptonProfile > new_profiles = profiles;
-            auto iter = std::remove_if( new_profiles.begin(), new_profiles.end(), remove_if );
-            new_profiles.erase( iter, new_profiles.end() );
 
-            // assign the profiles
-            distribution.comptonProfiles( std::move( new_profiles ) );
-          }
-          else if ( relaxation.numberSubshells() > profiles.size() ) {
-
-            // there are more subshells in the relaxation data than in the Compton profiles
-
-            std::vector< dryad::TabulatedComptonProfile > new_profiles = profiles;
+            // loop over the subshells in the relaxation data and copy profiles if possible
             for ( const auto& subshell : relaxation.subshells() ) {
 
               decltype(auto) id = subshell.identifier();
               auto iter = iterator( profiles, id );
               if ( iter == profiles.end() || iter->subshellIdentifier() != id ) {
 
-                // determine if the angular value is ell + 1/2
-                bool magnetic = id.totalAngularMomentum() == id.azimuthalQuantumNumber() + 0.5;
+                // generate a set of alternative subshell identifiers
+                std::vector< dryad::id::ElectronSubshellID > alternatives;
+                if ( id.azimuthalQuantumNumber() > 0 ) {
 
-                // alternate shell: same principal, azimuthal, other angular
-                dryad::id::ElectronSubshellID
-                alternate( id.principalQuantumNumber(), id.azimuthalQuantumNumber(),
-                           magnetic ? id.azimuthalQuantumNumber() - 0.5
-                                    : id.azimuthalQuantumNumber() + 0.5 );
+                  // determine if the angular value is ell + 1/2
+                  bool magnetic = id.totalAngularMomentum() == id.azimuthalQuantumNumber() + 0.5;
 
-                auto copy = iterator( profiles, alternate );
-                if ( copy == profiles.end() || copy->subshellIdentifier() != alternate ) {
+                  // alternate shell: same principal, azimuthal, other sign for magnetic spin
+                  alternatives.emplace_back( id.principalQuantumNumber(), id.azimuthalQuantumNumber(),
+                                             magnetic ? id.azimuthalQuantumNumber() - 0.5
+                                                      : id.azimuthalQuantumNumber() + 0.5 );
 
-                  if ( id.azimuthalQuantumNumber() > 0 ) {
+                  if ( id.azimuthalQuantumNumber() > 1 ) {
 
-                    // no luck, try alternate shell: same principal, azimuthal - 1, same magnetic spin
-                    alternate =
-                    dryad::id::ElectronSubshellID( id.principalQuantumNumber(), id.azimuthalQuantumNumber() - 1,
-                                                   magnetic ? id.azimuthalQuantumNumber() - 0.5
-                                                            : id.azimuthalQuantumNumber() - 1.5 );
-                    copy = iterator( profiles, alternate );
-                    if ( copy == profiles.end() || copy->subshellIdentifier() != alternate ) {
+                    // alternate shell: same principal, azimuthal - 1, same sign for magnetic spin
+                    alternatives.emplace_back( id.principalQuantumNumber(), id.azimuthalQuantumNumber() - 1,
+                                               magnetic ? id.azimuthalQuantumNumber() - 0.5
+                                                        : id.azimuthalQuantumNumber() - 1.5 );
 
-                      // no luck, try alternate shell: same principal, azimuthal - 1, other magnetic spin
-                      alternate =
-                      dryad::id::ElectronSubshellID( id.principalQuantumNumber(), id.azimuthalQuantumNumber() - 1,
-                                                     magnetic ? id.azimuthalQuantumNumber() - 1.5
-                                                              : id.azimuthalQuantumNumber() - 0.5 );
-                      copy = iterator( profiles, alternate );
-                    }
+                    // alternate shell: same principal, azimuthal - 1, other sign for magnetic spin
+                    alternatives.emplace_back( id.principalQuantumNumber(), id.azimuthalQuantumNumber() - 1,
+                                               magnetic ? id.azimuthalQuantumNumber() - 1.5
+                                                        : id.azimuthalQuantumNumber() - 0.5 );
+                  }
+                  else {
+
+                    // alternate shell: same principal, 0, 0.5
+                    alternatives.emplace_back( id.principalQuantumNumber(), 0, 0.5 );
                   }
                 }
 
-                if ( copy != profiles.end() && copy->subshellIdentifier() == alternate ) {
+                bool found_shell = false;
+                for ( auto&& alternate : alternatives ) {
 
-                  Log::info( "Copying Compton profile for the {} subshell to the {} subshell",
-                             alternate.symbol(), id.symbol() );
-                  new_profiles.emplace_back( id,
-                                             copy->momentum(), copy->values(),
-                                             copy->boundaries(), copy->interpolants() );
+                  auto copy = iterator( profiles, alternate );
+                  if ( copy != profiles.end() && copy->subshellIdentifier() == alternate ) {
+
+                    Log::info( "Copying Compton profile for the {} subshell to the {} subshell",
+                               alternate.symbol(), id.symbol() );
+                    new_profiles.emplace_back( id,
+                                               copy->momentum(), copy->values(),
+                                               copy->boundaries(), copy->interpolants() );
+
+                    found_shell = true;
+                    break;
+                  }
                 }
-                else {
 
-                  // still no luck, but this should never happen
+                if ( ! found_shell ) {
+
+                  // no luck, but this should never happen
 
                   throw std::runtime_error( "Could not find a Compton profile to copy, contact a developer" );
                 }
               }
             }
 
-            // assign the profiles
+            // remove profiles not given in the relaxation data
+            auto remove_if = [&] ( auto&& profile ) {
+
+              Log::info( "Removing Compton profile for the {} subshell", profile.subshellIdentifier().symbol() );
+              return ! relaxation.hasSubshell( profile.subshellIdentifier() );
+            };
+            auto iter = std::remove_if( new_profiles.begin(), new_profiles.end(), remove_if );
+            new_profiles.erase( iter, new_profiles.end() );
+
+            // assign the curated profiles
             distribution.comptonProfiles( std::move( new_profiles ) );
           }
         }
