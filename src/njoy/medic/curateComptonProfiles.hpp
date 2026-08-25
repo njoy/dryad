@@ -114,20 +114,23 @@ namespace medic {
                 auto copy = iterator( profiles, alternate );
                 if ( copy == profiles.end() || copy->subshellIdentifier() != alternate ) {
 
-                  // no luck, try alternate shell: same principal, azimuthal - 1, same magnetic spin
-                  alternate =
-                  dryad::id::ElectronSubshellID( id.principalQuantumNumber(), id.azimuthalQuantumNumber() - 1,
-                                                 magnetic ? id.azimuthalQuantumNumber() - 0.5
-                                                          : id.azimuthalQuantumNumber() - 1.5 );
-                  copy = iterator( profiles, alternate );
-                  if ( copy == profiles.end() || copy->subshellIdentifier() != alternate ) {
+                  if ( id.azimuthalQuantumNumber() > 0 ) {
 
-                    // no luck, try alternate shell: same principal, azimuthal - 1, other magnetic spin
+                    // no luck, try alternate shell: same principal, azimuthal - 1, same magnetic spin
                     alternate =
                     dryad::id::ElectronSubshellID( id.principalQuantumNumber(), id.azimuthalQuantumNumber() - 1,
-                                                   magnetic ? id.azimuthalQuantumNumber() - 1.5
-                                                            : id.azimuthalQuantumNumber() - 0.5 );
+                                                   magnetic ? id.azimuthalQuantumNumber() - 0.5
+                                                            : id.azimuthalQuantumNumber() - 1.5 );
                     copy = iterator( profiles, alternate );
+                    if ( copy == profiles.end() || copy->subshellIdentifier() != alternate ) {
+
+                      // no luck, try alternate shell: same principal, azimuthal - 1, other magnetic spin
+                      alternate =
+                      dryad::id::ElectronSubshellID( id.principalQuantumNumber(), id.azimuthalQuantumNumber() - 1,
+                                                     magnetic ? id.azimuthalQuantumNumber() - 1.5
+                                                              : id.azimuthalQuantumNumber() - 0.5 );
+                      copy = iterator( profiles, alternate );
+                    }
                   }
                 }
 

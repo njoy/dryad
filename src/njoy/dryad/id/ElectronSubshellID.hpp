@@ -293,7 +293,11 @@ namespace id {
                    std::to_string( 2 * static_cast< int >( half ) + 1 ) + "/2";
       };
 
-      std::array< char, 7 > letters = { 's', 'p', 'd', 'f', 'g', 'h', 'i' };
+      static constexpr std::array< char, 7 > letters = { 's', 'p', 'd', 'f', 'g', 'h', 'i' };
+      if ( azimuthal >= letters.size() ) {
+
+        throw std::runtime_error( "An azimuthal quantum number above 6 is not physical" );
+      }
 
       std::string string = std::to_string( principal );
       string += letters[azimuthal];
