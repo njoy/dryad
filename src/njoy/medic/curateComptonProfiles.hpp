@@ -23,7 +23,7 @@ namespace medic {
    *
    *  When the atomic relaxation data contains subshells that are not present
    *  in the Compton profiles, then an appropriate Compton profile for the
-   *  missing subshell is selected based on the available subshells. That
+   *  missing subshell is selected based on the other available subshells. That
    *  subshell is selected based on the quantum numbers of the missing subshell
    *  (n, l, l + m with m = +1/2 or -1/2), whichever is found first:
    *    - the shell with the same n and l but the other m

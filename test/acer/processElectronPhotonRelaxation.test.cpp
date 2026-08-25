@@ -7,6 +7,7 @@ using Catch::Matchers::WithinRel;
 #include "njoy/acer/processElectronPhotonRelaxation.hpp"
 
 // other includes
+#include "njoy/dryad/external/ComptonProfiles.hpp"
 #include "njoy/medic/curateComptonProfiles.hpp"
 #include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 #include "njoy/format/endf/read/createAtomicRelaxationFromFile.hpp"
