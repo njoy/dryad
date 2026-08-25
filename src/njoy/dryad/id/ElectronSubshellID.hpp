@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_ID_ELECTRONSUBSHELLID
 
 // system includes
+#include <cmath>
 #include <optional>
 #include <string>
 #include <unordered_map>
