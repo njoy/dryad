@@ -1561,6 +1561,16 @@ class MultigroupProjectileTarget:
             frame : njoy.dryad.ReferenceFrame, default CentreOfMass
                 the reference frame for the angular covariance data
         """
+    @staticmethod
+    def from_ndi_file(filename: str) -> MultigroupProjectileTarget | list[MultigroupProjectileTarget]:
+        """
+        Create a MultigroupProjectileTarget from an NDI file
+        
+        Parameters
+        ----------
+            filename : str
+                the file name for the NDI file
+        """
     def __copy__(self) -> MultigroupProjectileTarget:
         ...
     def __deepcopy__(self, arg0: dict) -> MultigroupProjectileTarget:
