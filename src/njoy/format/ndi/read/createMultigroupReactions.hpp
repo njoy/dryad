@@ -18,7 +18,7 @@ namespace ndi {
 namespace read {
 
   /**
-   *  @brief Create every MultigroupReaction from an unparsed GENDF material
+   *  @brief Create every MultigroupReaction from an NDI table
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
@@ -37,10 +37,17 @@ namespace read {
     // get all the reactions
     for ( auto&& entry : table.reactionCrossSections().reactions() ) {
 
-      reactions.emplace_back( createMultigroupReaction( projectile, target, table, entry.identifier(), boundaries ) );
-      if ( reactions.back().isPrimaryReaction() ) {
+      if ( entry.identifier() < 1000 ) {
 
-        identifiers.emplace_back( reactions.back().identifier() );
+        reactions.emplace_back( createMultigroupReaction( projectile, target, table, entry.identifier(), boundaries ) );
+        if ( reactions.back().isPrimaryReaction() ) {
+
+          identifiers.emplace_back( reactions.back().identifier() );
+        }
+      }
+      else {
+
+        Log::info( "Skipping metastable production for MT{}", entry.identifier() );
       }
     }
 
