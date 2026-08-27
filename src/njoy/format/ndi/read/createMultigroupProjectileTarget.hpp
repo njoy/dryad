@@ -12,6 +12,8 @@
 #include "njoy/dryad/MultigroupProjectileTarget.hpp"
 #include "njoy/format/createVector.hpp"
 #include "njoy/format/ndi/read/createMultigroupReactions.hpp"
+#include "njoy/format/ndi/read/createProjectileIdentifier.hpp"
+#include "njoy/format/ndi/read/createTargetIdentifier.hpp"
 #include "NDItk/MultigroupLibrary.hpp"
 
 namespace njoy {
@@ -29,9 +31,7 @@ namespace read {
    *  @param[in] table        the NDI multigroup table
    */
   inline dryad::MultigroupProjectileTarget
-  createMultigroupProjectileTarget( const dryad::id::ParticleID& projectile,
-                                    const dryad::id::ParticleID& target,
-                                    const NDItk::MultigroupTable& table ) {
+  createMultigroupProjectileTarget( const NDItk::MultigroupTable& table ) {
 
     // function to convert MeV to eV
     auto convertEnergy = [] ( auto&& energy ) {
@@ -39,6 +39,11 @@ namespace read {
       return energy * constants::mega;
     };
 
+    // projectile and target
+    dryad::id::ParticleID projectile = createProjectileIdentifier( table.metadata().zaid().value() );
+    dryad::id::ParticleID target = createTargetIdentifier( table.metadata().zaid().value() );
+
+    // boundaries
     std::vector< double > boundaries = createVector( table.primaryGroupBoundaries() );
     std::reverse( boundaries.begin(), boundaries.end() );
     std::transform( boundaries.begin(), boundaries.end(), boundaries.begin(), convertEnergy );

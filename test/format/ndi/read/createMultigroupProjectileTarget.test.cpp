@@ -28,8 +28,7 @@ SCENARIO( "createMultigroupProjectileTarget" ) {
 
     WHEN( "constructing a MultigroupProjectileTarget" ) {
 
-      auto chunk = ndi::read::createMultigroupProjectileTarget(
-                       id::ParticleID( "n" ), id::ParticleID( "H1" ), table );
+      auto chunk = ndi::read::createMultigroupProjectileTarget( table );
 
       THEN( "a MultigroupProjectileTarget can be created and members can be tested" ) {
 
