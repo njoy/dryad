@@ -320,6 +320,7 @@ add_cpp_test( format.gendf.read.createMultigroupProjectileTargetFromFile        
 
 add_cpp_test( format.ndi.read.createMultigroupCrossSection                                   format/ndi/read/createMultigroupCrossSection.test.cpp )
 add_cpp_test( format.ndi.read.createMultigroupReaction                                       format/ndi/read/createMultigroupReaction.test.cpp )
+add_cpp_test( format.ndi.read.createMultigroupReactions                                      format/ndi/read/createMultigroupReactions.test.cpp )
 
 add_cpp_test( format.gnds.read.convertEnergy                                                 format/gnds/read/convertEnergy.test.cpp )
 add_cpp_test( format.gnds.read.convertEnergies                                               format/gnds/read/convertEnergies.test.cpp )
