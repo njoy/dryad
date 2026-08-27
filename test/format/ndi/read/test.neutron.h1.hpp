@@ -142,5 +142,29 @@ namespace h1 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
+  void verifyH1( const MultigroupProjectileTarget& chunk ) {
+
+    static const std::vector< id::ReactionID > reactions = {
+
+      id::ReactionID( "n,H1->total" ), id::ReactionID( "n,H1->n(0)" ),
+      id::ReactionID( "n,H1->g(t)" )
+    };
+
+    CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
+    CHECK( id::ParticleID( "H1" ) == chunk.targetIdentifier() );
+
+    CHECK( InteractionType::Nuclear == chunk.interactionType() );
+
+    CHECK( 3 == chunk.numberReactions() );
+    for ( const id::ReactionID& id : reactions ) {
+
+      CHECK( true == chunk.hasReaction( id ) );
+    }
+
+    verifyTotalReaction( chunk.reaction( id::ReactionID( "n,H1->total" ) ) );
+    verifyElasticReaction( chunk.reaction( id::ReactionID( "n,H1->n,H1" ) ) );
+    verifyCaptureReaction( chunk.reaction( id::ReactionID( "n,H1->g,H2[all]" ) ) );
+  }
+
 } // namespace h1
 } // namespace neutron
