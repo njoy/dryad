@@ -98,7 +98,7 @@ namespace resonances {
     bool hasReaction( const id::ReactionID& id ) const {
 
       auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
-      return iter != this->reactions().end();
+      return iter != this->reactions().end() && *iter == id;
     }
 
     /**
