@@ -91,6 +91,17 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return whether or not a given reaction is present in the resonance parameters
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    bool hasReaction( const id::ReactionID& id ) const {
+
+      auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
+      return iter != this->reactions().end();
+    }
+
+    /**
      *  @brief Return the compound systems that make up the resolved resonance data
      */
     const std::vector< CompoundSystem >& resolved() const {
