@@ -8,6 +8,7 @@
 #include "pugixml.hpp"
 #include "njoy/format/revertScatterLevel.hpp"
 #include "njoy/format/gnds/write/insertCrossSection.hpp"
+#include "njoy/format/gnds/write/insertBackgroundCrossSection.hpp"
 #include "njoy/format/gnds/write/insertOutputChannel.hpp"
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
@@ -30,7 +31,7 @@ namespace write {
   insertReactions( pugi::xml_node& parent,
                    const Options& options,
                    const std::vector< dryad::Reaction >& reactions,
-                   const std::optional< dryad::resonances::ResonanceParameters > resonances,
+                   const std::optional< dryad::resonances::ResonanceParameters >& resonances,
                    const std::string& style ) {
 
     pugi::xml_node reactions_node;
@@ -56,9 +57,15 @@ namespace write {
             reaction_node.append_attribute( "ENDF_MT" ) = mt;
           }
 
-          //! @todo check the resonance parameters to see if we need to use background elements
+          if ( resonances.has_value() && resonances->hasReaction( reaction.identifier() ) ) {
 
-          insertCrossSection( reaction_node, options, reaction.crossSection(), style );
+            insertBackgroundCrossSection( reaction_node, options, reaction.crossSection(),
+                                          resonances.value(), style );
+          }
+          else {
+
+            insertCrossSection( reaction_node, options, reaction.crossSection(), style );
+          }
           insertOutputChannel( reaction_node, options, reaction, style );
         }
       }
