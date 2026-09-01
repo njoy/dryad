@@ -2,6 +2,8 @@
 #define NJOY_DRYAD_ID_ELECTRONSUBSHELLID
 
 // system includes
+#include <array>
+#include <cmath>
 #include <optional>
 #include <string>
 #include <unordered_map>
@@ -272,6 +274,38 @@ namespace id {
       }
     }
 
+    /**
+     *  @brief Retrieve the index to the subshell information entry
+     *
+     *  @param principal    the principal quantum number
+     *  @param azimuthal    the azimuthal quantum number
+     *  @param angular      the angular momentum (equal to azimuthal +/- 1/2)
+     */
+    static std::size_t getIndex( std::size_t principal, std::size_t azimuthal, double angular ) {
+
+      auto toHalfIntegerString = [] ( const double a ) {
+
+        double half;
+        return std::modf( a, &half ) == 0. ?
+                   // a is a full integer
+                   std::to_string( static_cast< int >( half ) ) :
+                   // a is a half integer value
+                   std::to_string( 2 * static_cast< int >( half ) + 1 ) + "/2";
+      };
+
+      static constexpr std::array< char, 7 > letters = { 's', 'p', 'd', 'f', 'g', 'h', 'i' };
+      if ( azimuthal >= letters.size() ) {
+
+        throw std::runtime_error( "An azimuthal quantum number above 6 is not physical" );
+      }
+
+      std::string string = std::to_string( principal );
+      string += letters[azimuthal];
+      string += toHalfIntegerString( angular );
+
+      return getIndex( string );
+    }
+
   public:
 
     /* constructor */
@@ -300,6 +334,16 @@ namespace id {
      *  @param string   the subshell identifier
      */
     ElectronSubshellID( const std::string& string ) : index_( getIndex( string ) ) {}
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param principal    the principal quantum number
+     *  @param azimuthal    the azimuthal quantum number
+     *  @param angular      the angular momentum (equal to azimuthal +/- 1/2)
+     */
+    ElectronSubshellID( std::size_t principal, std::size_t azimuthal, double angular ) :
+        index_( getIndex( principal, azimuthal, angular ) ) {}
 
     /* methods */
 

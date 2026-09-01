@@ -17,7 +17,7 @@ void verifyChunk( const ProjectileTarget& );
 
 SCENARIO( "pruneCrossSections" ) {
 
-  GIVEN( "a tabulated cross section data object" ) {
+  GIVEN( "a projectile target" ) {
 
     ProjectileTarget pt = makeProjectiletarget();
 

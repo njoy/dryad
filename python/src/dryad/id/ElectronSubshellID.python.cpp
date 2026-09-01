@@ -32,6 +32,12 @@ void wrapElectronSubshellID( python::module& module ) {
     "        the subshell number\n"
     "    string : str \n"
     "        the subshell symbol, name or alternative name\n\n"
+    "    principal : int \n"
+    "        the principal quantum number\n\n"
+    "    azimuthal : int \n"
+    "        the azimuthal quantum number\n\n"
+    "    angular : float \n"
+    "        the angular momentum (equal to azimuthal +/- 1/2)"
   );
 
   // wrap the component
@@ -47,6 +53,14 @@ void wrapElectronSubshellID( python::module& module ) {
     python::init< const std::string& >(),
     python::arg( "string" ),
     "Initialise the subshell identifier using the subshell symbol, name or alternative name"
+  )
+  .def(
+
+    python::init< std::size_t, std::size_t, double >(),
+    python::arg( "principal" ),
+    python::arg( "azimuthal" ),
+    python::arg( "angular" ),
+    "Initialise the subshell identifier using the subshell quantum numbers"
   )
   .def_property_readonly_static( "K"  ,  [] ( python::object ) { return Component::K;   }, "The K shell" )
   .def_property_readonly_static( "L1" ,  [] ( python::object ) { return Component::L1;  }, "The L1 shell" )
