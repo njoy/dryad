@@ -13,10 +13,11 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::format;
 
 void verifyChunk( const std::vector< double >& );
+void verifyChunk( const std::vector< std::size_t >& );
 
 SCENARIO( "readValues" ) {
 
-  GIVEN( "a GNDS values xml node" ) {
+  GIVEN( "a GNDS values xml node with doubles" ) {
 
     pugi::xml_document document;
     document.load_file( "e-001_H_000.endf.gnds.xml" );
@@ -44,6 +45,39 @@ SCENARIO( "readValues" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "a GNDS values xml node with integers" ) {
+
+    pugi::xml_document document;
+    document.load_file( "tsl-7Liin7LiD-mixed.endf.gnds.xml" );
+    pugi::xml_node reactions = document.child( "reactionSuite" ).child( "reactions" );
+
+    WHEN( "a single GNDS values node" ) {
+
+      pugi::xml_node values = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "4" ).
+                                        child( "doubleDifferentialCrossSection" ).
+                                        child( "thermalNeutronScatteringLaw_incoherentInelastic" ).
+                                        child( "scatteringAtoms" ).child( "scatteringAtom" ).
+                                        child( "selfScatteringKernel" ).child( "gridded3d" ).
+                                        child( "array" ).child( "values" );
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = gnds::read::readValues< std::size_t >( values );
+
+        verifyChunk( chunk );
+      } // THEN
+    } // WHEN
+
+    WHEN( "incorrect nodes are given" ) {
+
+      THEN( "exceptions are thrown" ) {
+
+        CHECK_THROWS( gnds::read::readValues< std::size_t >( reactions ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readValues< std::size_t >( reactions.child( "undefined" ) ) ); // undefined node
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const std::vector< double >& chunk ) {
@@ -54,4 +88,14 @@ void verifyChunk( const std::vector< double >& chunk ) {
  CHECK_THAT( 2.74896e+8, WithinRel( chunk[1] ) );
  CHECK_THAT( 1e+11     , WithinRel( chunk[200] ) );
  CHECK_THAT( 12987.1   , WithinRel( chunk[201] ) );
+}
+
+void verifyChunk( const std::vector< std::size_t >& chunk ) {
+
+ CHECK( 437 == chunk.size() );
+
+ CHECK( 0      == chunk[0] );
+ CHECK( 44805  == chunk[1] );
+ CHECK( 359755 == chunk[435] );
+ CHECK( 359956 == chunk[436] );
 }
