@@ -13,6 +13,7 @@
 #include "njoy/format/gnds/read/createCompression.hpp"
 #include "njoy/format/gnds/read/createSymmetry.hpp"
 #include "njoy/format/gnds/read/createStorageOrder.hpp"
+#include "njoy/format/gnds/read/createPermutation.hpp"
 #include "njoy/format/gnds/read/readShape.hpp"
 #include "njoy/format/gnds/read/readValues.hpp"
 #include "tools/Log.hpp"

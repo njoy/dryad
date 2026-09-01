@@ -50,6 +50,10 @@
 #include "njoy/format/gnds/read/createReferenceFrame.hpp"
 #include "njoy/format/gnds/read/createInteractionType.hpp"
 #include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/createCompression.hpp"
+#include "njoy/format/gnds/read/createStorageOrder.hpp"
+#include "njoy/format/gnds/read/createSymmetry.hpp"
+#include "njoy/format/gnds/read/createPermutation.hpp"
 #include "njoy/format/gnds/read/createParticleIdentifier.hpp"
 
 #include "njoy/format/gnds/read/createQValue.hpp"
