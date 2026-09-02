@@ -167,18 +167,6 @@ namespace write {
           isotope.append_attribute( "A" ) = groundstate.a();
           auto nuclides = isotope.append_child( "nuclides" );
 
-//          if ( database.hasParticle( continuumstate ) || database.hasParticle( allstate ) ) {
-//
-//            if ( ! database.hasParticle( groundstate ) ) {
-//
-//              dryad::Particle particle = database.hasParticle( continuumstate )
-//                                         ? database.particle( continuumstate )
-//                                         : database.particle( allstate );
-//              particle.identifier( groundstate );
-//              insertParticle( nuclides, local_options, "nuclide", particle, style );
-//            }
-//          }
-
           auto next_isotope = std::lower_bound(
                                   iter, next,
                                   dryad::id::ParticleID::nuclide( groundstate.za() + 1 ),
@@ -186,12 +174,7 @@ namespace write {
 
           while ( iter != next_isotope ) {
 
-//            if ( iter->identifier().e() != dryad::id::LevelID::continuum &&
-//                 iter->identifier().e() != dryad::id::LevelID::all ) {
-
-              insertParticle( nuclides, local_options, "nuclide", *iter, style );
-//            }
-
+            insertParticle( nuclides, local_options, "nuclide", *iter, style );
             ++iter;
           }
         }

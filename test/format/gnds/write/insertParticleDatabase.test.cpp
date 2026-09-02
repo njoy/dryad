@@ -51,7 +51,7 @@ SCENARIO( "insertParticleDatabase" ) {
         id::ParticleID::helion(), id::ParticleID::alpha(),
         id::ParticleID( "H2[all]" ),  id::ParticleID( "Li6[all]" ),
         id::ParticleID( "Li7" ), id::ParticleID( "Li7_e1" ), id::ParticleID( "Li7_e2" ),
-        id::ParticleID( "Li8[all]" )
+        id::ParticleID( "Li7[all]" ), id::ParticleID( "Li8[all]" )
       };
       ParticleDatabase particles( identifiers );
 
@@ -386,6 +386,19 @@ std::string chunkNuclear() {
          "                <energy>\n"
          "                  <double label=\"eval\" value=\"4630000\" unit=\"eV\" />\n"
          "                </energy>\n"
+         "              </nucleus>\n"
+         "            </nuclide>\n"
+         "            <nuclide id=\"Li7[all]\">\n"
+         "              <mass>\n"
+         "                <double label=\"eval\" value=\"7.01600343426\" unit=\"amu\" />\n"
+         "              </mass>\n"
+         "              <charge>\n"
+         "                <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "              </charge>\n"
+         "              <nucleus id=\"li7[all]\" index=\"999\">\n"
+         "                <charge>\n"
+         "                  <integer label=\"eval\" value=\"3\" unit=\"e\" />\n"
+         "                </charge>\n"
          "              </nucleus>\n"
          "            </nuclide>\n"
          "          </nuclides>\n"
