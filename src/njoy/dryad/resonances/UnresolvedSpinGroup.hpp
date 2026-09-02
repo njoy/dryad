@@ -235,8 +235,7 @@ namespace resonances {
 
       return this->channels().front().quantumNumbers().totalAngularMomentum();
     }
-
-
+    
     //! @todo average infinitely dilute cross sections from the average parameters.
     //        analog of SpinGroup::crossSections, but operating on the average
     //        widths and level spacings rather than per-resonance parameters.
