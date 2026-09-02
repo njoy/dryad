@@ -22,7 +22,7 @@ namespace read {
     //! @todo we're currently storing metastable state as an excited state
 
     int number = std::stoi( std::string( zaid.begin(), std::find( zaid.begin(), zaid.end(), '.' ) ) );
-    dryad::id::ElementID element( std::round( number%100000 / 1000 ) );
+    dryad::id::ElementID element( std::round( number%1000000 / 1000 ) );
     int mass = number%1000;
     dryad::id::LevelID level( std::round( number / 1000000 ) );
     return dryad::id::ParticleID( std::move( element ), mass, level );

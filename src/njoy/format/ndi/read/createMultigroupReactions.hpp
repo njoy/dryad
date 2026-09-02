@@ -61,7 +61,7 @@ namespace read {
 
     // sort by MT
     std::sort( reactions.begin(), reactions.end(),
-               [] ( auto&& left, auto&&right )
+               [] ( auto&& left, auto&& right )
                   { return left.identifier().reactionType().mt()
                            < right.identifier().reactionType().mt(); } );
     reactions.shrink_to_fit();
