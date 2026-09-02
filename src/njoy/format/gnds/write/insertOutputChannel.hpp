@@ -65,7 +65,7 @@ namespace write {
 
             auto distribution_node = product_node.append_child( "distribution" );
             distribution_node = distribution_node.append_child( "unspecified" );
-            distribution_node.append_attribute( "label" ) = style;
+            distribution_node.append_attribute( "label" ) = style.c_str();
             distribution_node.append_attribute( "productFrame" ) = "lab";
           }
         }

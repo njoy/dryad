@@ -49,13 +49,13 @@ namespace write {
 
       node.append_attribute( "label" ) = label.value();
     }
-    node.append_attribute( "value" ) = toString( options, value );
+    node.append_attribute( "value" ) = toString( options, value ).c_str();
     if ( outer.has_value() ) {
 
-      node.append_attribute( "outerDomainValue" ) = toString( options, outer.value() );
+      node.append_attribute( "outerDomainValue" ) = toString( options, outer.value() ).c_str();
     }
-    node.append_attribute( "domainMin" ) = toString( options, min );
-    node.append_attribute( "domainMax" ) = toString( options, max );
+    node.append_attribute( "domainMin" ) = toString( options, min ).c_str();
+    node.append_attribute( "domainMax" ) = toString( options, max ).c_str();
 
     insertAxes( node, options, xLabel, yLabel, xUnit, yUnit );
 

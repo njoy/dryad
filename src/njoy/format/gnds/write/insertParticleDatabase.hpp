@@ -171,7 +171,15 @@ namespace write {
 
           while ( iter != next_isotope ) {
 
-            insertParticle( nuclides, local_options, "nuclide", *iter, style );
+            if ( iter->identifier().e() != dryad::id::LevelID::continuum &&
+                 iter->identifier().e() != dryad::id::LevelID::all ) {
+
+              insertParticle( nuclides, local_options, "nuclide", *iter, style );
+            }
+            else {
+
+
+            }
 
             ++iter;
           }

@@ -14,7 +14,6 @@
 #include "njoy/format/gnds/write/insertDouble.hpp"
 #include "njoy/format/gnds/write/insertInteger.hpp"
 #include "njoy/format/gnds/write/insertFraction.hpp"
-#include "njoy/format/gnds/write/toString.hpp"
 
 namespace njoy {
 namespace format {
@@ -46,7 +45,7 @@ namespace write {
 
     pugi::xml_node node = parent.append_child( name );
     pugi::xml_node current = node;
-    current.append_attribute( "id" ) = id;
+    current.append_attribute( "id" ) = id.c_str();
 
     if ( particle.mass().has_value() ) {
 
@@ -57,12 +56,13 @@ namespace write {
     if ( name == "nuclide" ) {
 
       auto charge = current.append_child( "charge" );
-      insertDouble( charge, options, 0., style, "e" );
+      insertInteger( charge, options, 0, style, "e" );
 
       current = current.append_child( "nucleus" );
       std::transform( id.begin(), id.end(), id.begin(),
                       [] ( unsigned char character ) { return std::tolower( character ); } );
-      current.append_attribute( "id" ) = id;
+      current.append_attribute( "id" ) = id.c_str();
+      current.append_attribute( "index" ) = particle.identifier().e();
     }
 
     if ( particle.spin().has_value() ) {
@@ -88,7 +88,7 @@ namespace write {
     }
 
     auto charge = current.append_child( "charge" );
-    insertDouble( charge, options, particle.identifier().z(), style, "e" );
+    insertInteger( charge, options, particle.identifier().z(), style, "e" );
 
     if ( particle.energy().has_value() ) {
 

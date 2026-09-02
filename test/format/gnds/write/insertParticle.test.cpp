@@ -106,7 +106,7 @@ std::string chunkGaugeBoson() {
          "    <integer label=\"eval\" value=\"1\" />\n"
          "  </parity>\n"
          "  <charge>\n"
-         "    <double label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
          "  </charge>\n"
          "</gaugeBoson>\n";
 }
@@ -124,7 +124,7 @@ std::string chunkLepton() {
          "    <integer label=\"eval\" value=\"1\" />\n"
          "  </parity>\n"
          "  <charge>\n"
-         "    <double label=\"eval\" value=\"-1\" unit=\"e\" />\n"
+         "    <integer label=\"eval\" value=\"-1\" unit=\"e\" />\n"
          "  </charge>\n"
          "</lepton>\n";
 }
@@ -142,7 +142,7 @@ std::string chunkBaryon() {
          "    <integer label=\"eval\" value=\"1\" />\n"
          "  </parity>\n"
          "  <charge>\n"
-         "    <double label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
          "  </charge>\n"
          "</baryon>\n";
 }
@@ -154,9 +154,9 @@ std::string chunkNuclide() {
          "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\" />\n"
          "  </mass>\n"
          "  <charge>\n"
-         "    <double label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
          "  </charge>\n"
-         "  <nucleus id=\"u235\">\n"
+         "  <nucleus id=\"u235\" index=\"0\">\n"
          "    <spin>\n"
          "      <fraction label=\"eval\" value=\"7/2\" unit=\"hbar\" />\n"
          "    </spin>\n"
@@ -164,7 +164,7 @@ std::string chunkNuclide() {
          "      <integer label=\"eval\" value=\"-1\" />\n"
          "    </parity>\n"
          "    <charge>\n"
-         "      <double label=\"eval\" value=\"92\" unit=\"e\" />\n"
+         "      <integer label=\"eval\" value=\"92\" unit=\"e\" />\n"
          "    </charge>\n"
          "    <energy>\n"
          "      <double label=\"eval\" value=\"0\" unit=\"eV\" />\n"
@@ -180,9 +180,9 @@ std::string chunkNuclideWithExcitedState() {
          "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\" />\n"
          "  </mass>\n"
          "  <charge>\n"
-         "    <double label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
          "  </charge>\n"
-         "  <nucleus id=\"u235_e1\">\n"
+         "  <nucleus id=\"u235_e1\" index=\"1\">\n"
          "    <spin>\n"
          "      <fraction label=\"eval\" value=\"1/2\" unit=\"hbar\" />\n"
          "    </spin>\n"
@@ -190,7 +190,7 @@ std::string chunkNuclideWithExcitedState() {
          "      <integer label=\"eval\" value=\"1\" />\n"
          "    </parity>\n"
          "    <charge>\n"
-         "      <double label=\"eval\" value=\"92\" unit=\"e\" />\n"
+         "      <integer label=\"eval\" value=\"92\" unit=\"e\" />\n"
          "    </charge>\n"
          "    <energy>\n"
          "      <double label=\"eval\" value=\"76\" unit=\"eV\" />\n"

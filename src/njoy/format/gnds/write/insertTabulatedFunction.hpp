@@ -89,7 +89,7 @@ namespace write {
       }
       if ( outer.has_value() ) {
 
-        node.append_attribute( "outerDomainValue" ) = toString( options, outer.value() );
+        node.append_attribute( "outerDomainValue" ) = toString( options, outer.value() ).c_str();
       }
 
       if ( xLabel.has_value() || yLabel.has_value() || xUnit.has_value() || yUnit.has_value() ) {
