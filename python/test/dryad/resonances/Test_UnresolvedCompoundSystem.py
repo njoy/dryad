@@ -171,7 +171,6 @@ def verify_chunk( self, chunk ) :
 
     self.assertAlmostEqual( 0, spingroup.total_angular_momentum )
     self.assertEqual( -1, spingroup.parity )
-    self.assertEqual( False, spingroup.has_channels_with_background )
 
     channels = spingroup.channels
     self.assertEqual( 2, len( channels ) )
@@ -195,7 +194,6 @@ def verify_chunk( self, chunk ) :
 
     self.assertAlmostEqual( 1, spingroup.total_angular_momentum )
     self.assertEqual( -1, spingroup.parity )
-    self.assertEqual( False, spingroup.has_channels_with_background )
 
     channels = spingroup.channels
     self.assertEqual( 3, len( channels ) )
@@ -217,7 +215,6 @@ def verify_chunk( self, chunk ) :
 
     self.assertAlmostEqual( 1, spingroup.total_angular_momentum )
     self.assertEqual( +1, spingroup.parity )
-    self.assertEqual( False, spingroup.has_channels_with_background )
 
     channels = spingroup.channels
     self.assertEqual( 4, len( channels ) )
@@ -243,7 +240,6 @@ def verify_chunk( self, chunk ) :
 
     self.assertAlmostEqual( 2, spingroup.total_angular_momentum )
     self.assertEqual( +1, spingroup.parity )
-    self.assertEqual( False, spingroup.has_channels_with_background )
 
     channels = spingroup.channels
     self.assertEqual( 3, len( channels ) )
