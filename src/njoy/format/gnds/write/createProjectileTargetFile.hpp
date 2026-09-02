@@ -12,6 +12,7 @@
 #include "njoy/format/gnds/write/resonances/insertResonances.hpp"
 #include "njoy/format/gnds/write/createInteractionType.hpp"
 #include "njoy/format/gnds/write/insertProjectileEnergyDomain.hpp"
+#include "njoy/format/gnds/write/insertTemperature.hpp"
 #include "njoy/format/gnds/write/insertDocumentation.hpp"
 #include "njoy/format/gnds/write/insertParticleDatabase.hpp"
 #include "njoy/format/gnds/write/insertReactions.hpp"
@@ -64,6 +65,7 @@ namespace write {
     evaluated.append_attribute( "library" ) = "LibraryOfAlexandria";
     evaluated.append_attribute( "version" ) = "0.0alpha-rc1";
     insertProjectileEnergyDomain( evaluated, options, transport.reactions() );
+    insertTemperature( evaluated, options, 0, "K" );
     insertDocumentation( evaluated, options, transport.documentation() );
 
     if ( transport.particleData().has_value() ) {

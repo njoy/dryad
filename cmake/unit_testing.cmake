@@ -448,6 +448,7 @@ add_cpp_test( format.gnds.write.resonances.rmatrix.insertExternalRMatrix        
 add_cpp_test( format.gnds.write.resonances.rmatrix.insertChannels                            format/gnds/write/resonances/rmatrix/insertChannels.test.cpp )
 add_cpp_test( format.gnds.write.resonances.rmatrix.insertSpinGroup                           format/gnds/write/resonances/rmatrix/insertSpinGroup.test.cpp )
 add_cpp_test( format.gnds.write.resonances.rmatrix.insertRMatrix                             format/gnds/write/resonances/rmatrix/insertRMatrix.test.cpp )
+add_cpp_test( format.gnds.write.insertTemperature                                            format/gnds/write/insertTemperature.test.cpp )
 add_cpp_test( format.gnds.write.insertDocumentation                                          format/gnds/write/insertDocumentation.test.cpp )
 add_cpp_test( format.gnds.write.insertCrossSection                                           format/gnds/write/insertCrossSection.test.cpp )
 add_cpp_test( format.gnds.write.insertBackgroundCrossSection                                 format/gnds/write/insertBackgroundCrossSection.test.cpp )
