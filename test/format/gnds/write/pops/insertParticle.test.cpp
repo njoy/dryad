@@ -22,6 +22,7 @@ std::string chunkNuclide();
 std::string chunkElement();
 std::string chunkNuclideWithExcitedState();
 std::string chunkNuclideWithNuclearMass();
+std::string chunkNuclideWithUncertainties();
 
 SCENARIO( "insertParticle" ) {
 
@@ -108,6 +109,21 @@ SCENARIO( "insertParticle" ) {
       CHECK( out.str() == chunkNuclideWithNuclearMass() );
     } // THEN
 
+    THEN( "a nuclide with uncertainties can be inserted" ) {
+
+      pugi::xml_document parent;
+      auto u235_e1 = Particle::defaultParticle( id::ParticleID( "U235_e1" ) );
+      u235_e1.nuclearMass( 235. );
+      u235_e1.massUncertainty( 1e-6 );
+      u235_e1.nuclearMassUncertainty( 2e-6 );
+      u235_e1.energyUncertainty( 0.5 );
+      auto node = gnds::write::pops::insertParticle( parent, options, "nuclide", u235_e1 );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunkNuclideWithUncertainties() );
+    } // THEN
+
     THEN( "an invalid node name throws" ) {
 
       pugi::xml_document parent;
@@ -141,7 +157,13 @@ std::string chunkLepton() {
 
   return "<lepton id=\"e-\">\n"
          "  <mass>\n"
-         "    <double label=\"eval\" value=\"0.000548579909\" unit=\"amu\" />\n"
+         "    <double label=\"eval\" value=\"0.000548579909\" unit=\"amu\">\n"
+         "      <uncertainty>\n"
+         "        <standard>\n"
+         "          <double value=\"9.7e-15\" />\n"
+         "        </standard>\n"
+         "      </uncertainty>\n"
+         "    </double>\n"
          "  </mass>\n"
          "  <spin>\n"
          "    <fraction label=\"eval\" value=\"1/2\" unit=\"hbar\" />\n"
@@ -159,7 +181,13 @@ std::string chunkBaryon() {
 
   return "<baryon id=\"n\">\n"
          "  <mass>\n"
-         "    <double label=\"eval\" value=\"1.008664916\" unit=\"amu\" />\n"
+         "    <double label=\"eval\" value=\"1.008664916\" unit=\"amu\">\n"
+         "      <uncertainty>\n"
+         "        <standard>\n"
+         "          <double value=\"4e-10\" />\n"
+         "        </standard>\n"
+         "      </uncertainty>\n"
+         "    </double>\n"
          "  </mass>\n"
          "  <spin>\n"
          "    <fraction label=\"eval\" value=\"1/2\" unit=\"hbar\" />\n"
@@ -194,7 +222,13 @@ std::string chunkNuclide() {
 
   return "<nuclide id=\"U235\">\n"
          "  <mass>\n"
-         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\" />\n"
+         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\">\n"
+         "      <uncertainty>\n"
+         "        <standard>\n"
+         "          <double value=\"1.198e-06\" />\n"
+         "        </standard>\n"
+         "      </uncertainty>\n"
+         "    </double>\n"
          "  </mass>\n"
          "  <charge>\n"
          "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
@@ -220,7 +254,13 @@ std::string chunkNuclideWithExcitedState() {
 
   return "<nuclide id=\"U235_e1\">\n"
          "  <mass>\n"
-         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\" />\n"
+         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\">\n"
+         "      <uncertainty>\n"
+         "        <standard>\n"
+         "          <double value=\"1.198e-06\" />\n"
+         "        </standard>\n"
+         "      </uncertainty>\n"
+         "    </double>\n"
          "  </mass>\n"
          "  <charge>\n"
          "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
@@ -246,7 +286,13 @@ std::string chunkNuclideWithNuclearMass() {
 
   return "<nuclide id=\"U235\">\n"
          "  <mass>\n"
-         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\" />\n"
+         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\">\n"
+         "      <uncertainty>\n"
+         "        <standard>\n"
+         "          <double value=\"1.198e-06\" />\n"
+         "        </standard>\n"
+         "      </uncertainty>\n"
+         "    </double>\n"
          "  </mass>\n"
          "  <charge>\n"
          "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
@@ -266,6 +312,53 @@ std::string chunkNuclideWithNuclearMass() {
          "    </charge>\n"
          "    <energy>\n"
          "      <double label=\"eval\" value=\"0\" unit=\"eV\" />\n"
+         "    </energy>\n"
+         "  </nucleus>\n"
+         "</nuclide>\n";
+}
+
+std::string chunkNuclideWithUncertainties() {
+
+  return "<nuclide id=\"U235_e1\">\n"
+         "  <mass>\n"
+         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\">\n"
+         "      <uncertainty>\n"
+         "        <standard>\n"
+         "          <double value=\"1e-06\" />\n"
+         "        </standard>\n"
+         "      </uncertainty>\n"
+         "    </double>\n"
+         "  </mass>\n"
+         "  <charge>\n"
+         "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "  </charge>\n"
+         "  <nucleus id=\"u235_e1\" index=\"1\">\n"
+         "    <mass>\n"
+         "      <double label=\"eval\" value=\"235\" unit=\"amu\">\n"
+         "        <uncertainty>\n"
+         "          <standard>\n"
+         "            <double value=\"2e-06\" />\n"
+         "          </standard>\n"
+         "        </uncertainty>\n"
+         "      </double>\n"
+         "    </mass>\n"
+         "    <spin>\n"
+         "      <fraction label=\"eval\" value=\"1/2\" unit=\"hbar\" />\n"
+         "    </spin>\n"
+         "    <parity>\n"
+         "      <integer label=\"eval\" value=\"1\" />\n"
+         "    </parity>\n"
+         "    <charge>\n"
+         "      <integer label=\"eval\" value=\"92\" unit=\"e\" />\n"
+         "    </charge>\n"
+         "    <energy>\n"
+         "      <double label=\"eval\" value=\"76\" unit=\"eV\">\n"
+         "        <uncertainty>\n"
+         "          <standard>\n"
+         "            <double value=\"0.5\" />\n"
+         "          </standard>\n"
+         "        </uncertainty>\n"
+         "      </double>\n"
          "    </energy>\n"
          "  </nucleus>\n"
          "</nuclide>\n";

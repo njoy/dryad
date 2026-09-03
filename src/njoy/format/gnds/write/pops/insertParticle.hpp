@@ -14,6 +14,7 @@
 #include "njoy/format/gnds/write/insertDouble.hpp"
 #include "njoy/format/gnds/write/insertInteger.hpp"
 #include "njoy/format/gnds/write/insertFraction.hpp"
+#include "njoy/format/gnds/write/insertStandardUncertainty.hpp"
 
 namespace njoy {
 namespace format {
@@ -55,7 +56,11 @@ namespace pops {
     if ( particle.mass().has_value() ) {
 
       auto mass = current.append_child( "mass" );
-      insertDouble( mass, options, particle.mass().value(), style, "amu" );
+      auto value = insertDouble( mass, options, particle.mass().value(), style, "amu" );
+      if ( particle.massUncertainty().has_value() ) {
+
+        insertStandardUncertainty( value, options, particle.massUncertainty().value() );
+      }
     }
 
     if ( name == "nuclide" ) {
@@ -72,7 +77,11 @@ namespace pops {
       if ( particle.nuclearMass().has_value() ) {
 
         auto mass = current.append_child( "mass" );
-        insertDouble( mass, options, particle.nuclearMass().value(), style, "amu" );
+        auto value = insertDouble( mass, options, particle.nuclearMass().value(), style, "amu" );
+        if ( particle.nuclearMassUncertainty().has_value() ) {
+
+          insertStandardUncertainty( value, options, particle.nuclearMassUncertainty().value() );
+        }
       }
     }
 
@@ -104,7 +113,11 @@ namespace pops {
     if ( particle.energy().has_value() ) {
 
       auto energy = current.append_child( "energy" );
-      insertDouble( energy, options, particle.energy().value(), style, "eV" );
+      auto value = insertDouble( energy, options, particle.energy().value(), style, "eV" );
+      if ( particle.energyUncertainty().has_value() ) {
+
+        insertStandardUncertainty( value, options, particle.energyUncertainty().value() );
+      }
     }
 
     return node;
