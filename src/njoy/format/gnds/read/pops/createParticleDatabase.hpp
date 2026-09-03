@@ -117,6 +117,36 @@ namespace pops {
       }
     }
 
+    // loop over the aliases and look for p, d, t, h, a
+    auto aliases = pops.child( "aliases" );
+    for ( pugi::xml_node alias = aliases.child( "alias" );
+          alias; alias = alias.next_sibling( "alias" ) ) {
+
+      std::string symbol = alias.attribute( "id" ).as_string();
+      if ( dryad::id::ParticleID::isRegistered( symbol ) ) {
+
+        dryad::id::ParticleID id( symbol );
+        if ( id == dryad::id::ParticleID::proton() || id == dryad::id::ParticleID::deuteron() ||
+             id == dryad::id::ParticleID::triton() || id == dryad::id::ParticleID::helion()   ||
+             id == dryad::id::ParticleID::alpha() ) {
+
+          auto nuclide = dryad::id::ParticleID::nuclide( id.za() );
+          auto iter = std::find_if( particles.begin(), particles.end(),
+                                    [&] ( auto&& particle )
+                                        { return particle.identifier() == nuclide; } );
+          if ( iter != particles.end() ) {
+
+            particles.emplace_back( *iter );
+            particles.back().identifier( id );
+            particles.back().mass( particles.back().nuclearMass() );
+            particles.back().massUncertainty( particles.back().nuclearMassUncertainty() );
+            particles.back().nuclearMass( std::nullopt );
+            particles.back().nuclearMassUncertainty( std::nullopt );
+          }
+        }
+      }
+    }
+
     return dryad::ParticleDatabase( std::move( particles ) );
   }
 

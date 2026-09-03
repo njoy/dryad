@@ -95,12 +95,16 @@ namespace pops {
       }
     }
 
-    auto compare = [] ( const auto& particle, const auto& id )
+    // useful lambdas
+    auto compare = [] ( auto&& particle, const auto& id )
                       { return particle.identifier() < id; };
-    auto iter = std::lower_bound( database.particles().begin(), database.particles().end(),
-                                  dryad::id::ParticleID( "H" ), compare );
-    std::vector< dryad::Particle > particles( iter, database.particles().end() );
 
+    // get a vector of particles to write into the pops node
+    auto begin = std::lower_bound( database.particles().begin(), database.particles().end(),
+                                   dryad::id::ParticleID( "H" ), compare );
+    std::vector< dryad::Particle > particles( begin, database.particles().end() );
+
+    // add particles for elementary particles if needed and set aliases
     std::vector< std::pair< dryad::id::ParticleID, dryad::id::ParticleID > > elementary = {
 
       { dryad::id::ParticleID::deuteron(), dryad::id::ParticleID( "H2" ) },
@@ -112,11 +116,16 @@ namespace pops {
 
       if ( database.hasParticle( particle ) ) {
 
-        if ( ! database.hasParticle( nuclide ) ) {
+        decltype(auto) data = database.particle( particle );
 
-          particles.insert( std::lower_bound( particles.begin(), particles.end(), nuclide, compare ),
-                            dryad::Particle::defaultParticle( nuclide ) );
+        auto iter = std::lower_bound( particles.begin(), particles.end(), nuclide, compare );
+        if ( iter == particles.end() || iter->identifier() != nuclide ) {
+
+          iter = particles.insert( iter, dryad::Particle::defaultParticle( nuclide ) );
         }
+
+        iter->nuclearMass( data.mass() );
+        iter->nuclearMassUncertainty( data.massUncertainty() );
 
         auto id = nuclide.symbol();
         std::transform( id.begin(), id.end(), id.begin(),
@@ -128,6 +137,32 @@ namespace pops {
       }
     }
 
+    // remove continuum and all particles
+    auto iter = particles.begin();
+    while ( iter != particles.end() ) {
+
+      if ( iter->identifier().e() == dryad::id::LevelID::continuum ||
+           iter->identifier().e() == dryad::id::LevelID::all ) {
+
+        auto id = iter->identifier().groundState();
+        auto ground = std::lower_bound( particles.begin(), particles.end(), id, compare );
+        if ( ground == particles.end() || ground->identifier() != id ) {
+
+          iter->identifier( id );
+          ++iter;
+        }
+        else {
+
+          iter = particles.erase( iter );
+        }
+      }
+      else {
+
+        ++iter;
+      }
+    }
+
+    // write the data to the GNDS node
     iter = particles.begin();
     if ( iter != particles.end() ) {
 
@@ -135,7 +170,7 @@ namespace pops {
       while ( iter != particles.end() ) {
 
         dryad::id::ElementID element_id( iter->identifier().z() );
-        auto next = std::lower_bound( iter, particles.cend(),
+        auto next = std::lower_bound( iter, particles.end(),
                                       dryad::id::ParticleID::nuclide( ( element_id.number() + 1 ) * 1000 ),
                                       compare );
 
@@ -171,8 +206,6 @@ namespace pops {
           }
 
           auto groundstate = iter->identifier().groundState();
-          auto continuumstate = dryad::id::ParticleID::nuclide( groundstate.za(), dryad::id::LevelID::all );
-          auto allstate = dryad::id::ParticleID::nuclide( groundstate.za(), dryad::id::LevelID::continuum );
 
           auto isotope = isotopes.append_child( "isotope" );
           isotope.append_attribute( "symbol" ) = groundstate.symbol().c_str();

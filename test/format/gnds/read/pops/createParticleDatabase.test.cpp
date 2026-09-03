@@ -46,11 +46,15 @@ SCENARIO( "createParticleDatabase" ) {
 
         auto chunk = gnds::read::pops::createParticleDatabase( pops, "eval" );
 
-        CHECK( 45 == chunk.numberParticles() );
+        CHECK( 49 == chunk.numberParticles() );
 
         CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "n" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "p" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "d" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "t" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "h" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "a" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H1" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H2" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H3" ) ) );
