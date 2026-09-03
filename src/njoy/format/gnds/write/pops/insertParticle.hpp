@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLE
-#define NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLE
+#ifndef NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLE
+#define NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLE
 
 // system includes
 #include <algorithm>
@@ -19,6 +19,7 @@ namespace njoy {
 namespace format {
 namespace gnds {
 namespace write {
+namespace pops {
 
   /**
    *  @brief Insert a particle xml node
@@ -99,7 +100,8 @@ namespace write {
     return node;
   }
 
-} // read namespace
+} // pops namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace

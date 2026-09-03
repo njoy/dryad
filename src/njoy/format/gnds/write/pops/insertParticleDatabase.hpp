@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLEDATABASE
-#define NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLEDATABASE
+#ifndef NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLEDATABASE
+#define NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLEDATABASE
 
 // system includes
 #include <algorithm>
@@ -10,13 +10,14 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/dryad/ParticleDatabase.hpp"
-#include "njoy/format/gnds/write/insertParticle.hpp"
+#include "njoy/format/gnds/write/pops/insertParticle.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
 
 namespace njoy {
 namespace format {
 namespace gnds {
 namespace write {
+namespace pops {
 
   /**
    *  @brief Insert a properties of particles xml node
@@ -188,7 +189,8 @@ namespace write {
     return node;
   }
 
-} // read namespace
+} // pops namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace
