@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_READ_POPS_CREATEPARTICLEDATABASE
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes
@@ -84,8 +85,8 @@ namespace pops {
     for ( pugi::xml_node element = elements.child( "chemicalElement" );
           element; element = element.next_sibling( "chemicalElement" ) ) {
 
-      // if the element has a mass node: make it into a Particle
-      particles.emplace_back( createParticle( element, style ) );
+      std::size_t size = particles.size();
+      dryad::id::ParticleID id( element.attribute( "symbol" ).as_string() );
 
       // loop over the isotopes
       auto isotopes = element.child( "isotopes" );
@@ -104,6 +105,15 @@ namespace pops {
           particles.emplace_back( createParticle( nuclide, style ) );
           fill_missing_data( particles[index], particles.back() );
         }
+      }
+
+      auto begin = std::next( particles.begin(), size );
+      auto iter = std::find_if( begin, particles.end(),
+                                [&] ( auto&& particle )
+                                    { return particle.identifier() == id; } );
+      if ( iter == particles.end() ) {
+
+        particles.insert( begin, createParticle( element, style ) );
       }
     }
 
