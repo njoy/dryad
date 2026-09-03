@@ -103,7 +103,7 @@ namespace dryad {
     static Particle photon() {
 
       return Particle( id::ParticleID::photon(), 0., 1.0, +1,
-                       std::nullopt, std::nullopt, 0. );
+                       std::nullopt, std::nullopt, std::nullopt );
     };
 
     /**
