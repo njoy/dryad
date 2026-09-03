@@ -435,6 +435,7 @@ add_cpp_test( format.gnds.write.insertData                                      
 add_cpp_test( format.gnds.write.insertColumn                                                 format/gnds/write/insertColumn.test.cpp )
 add_cpp_test( format.gnds.write.insertColumnHeaders                                          format/gnds/write/insertColumnHeaders.test.cpp )
 add_cpp_test( format.gnds.write.insertTable                                                  format/gnds/write/insertTable.test.cpp )
+add_cpp_test( format.gnds.write.insertStandardUncertainty                                    format/gnds/write/insertStandardUncertainty.test.cpp )
 
 add_cpp_test( format.gnds.write.pops.insertParticle                                          format/gnds/write/pops/insertParticle.test.cpp )
 add_cpp_test( format.gnds.write.pops.insertParticleDatabase                                  format/gnds/write/pops/insertParticleDatabase.test.cpp )
