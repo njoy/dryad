@@ -215,7 +215,7 @@ namespace read {
     // read shape and calculate the total size
     data.shape = readShape( array.attribute( "shape" ).as_string() );
     data.values.resize( std::accumulate( data.shape.begin(), data.shape.end(),
-                                         1, std::multiplies() ) );
+                                         1, std::multiplies< std::size_t >() ) );
     if ( data.shape.size() == 0 ) {
 
       Log::error( "Array shape should define at least one dimension, found none" );
