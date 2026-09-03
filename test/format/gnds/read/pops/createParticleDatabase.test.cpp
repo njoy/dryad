@@ -195,6 +195,7 @@ SCENARIO( "createParticleDatabase" ) {
         CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( false == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
 
         // H has no mass node in the GNDS file
         decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
@@ -213,12 +214,13 @@ SCENARIO( "createParticleDatabase" ) {
 
         auto chunk = gnds::read::pops::createParticleDatabase( pops, particles, "eval" );
 
-        CHECK( 4 == chunk.numberParticles() );
+        CHECK( 5 == chunk.numberParticles() );
 
         CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
 
         // H has no mass node in the GNDS file
         decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
@@ -257,6 +259,7 @@ SCENARIO( "createParticleDatabase" ) {
         CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( false == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
 
         // H has a mass node in the GNDS file
         decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
@@ -275,12 +278,13 @@ SCENARIO( "createParticleDatabase" ) {
 
         auto chunk = gnds::read::pops::createParticleDatabase( pops, particles, "eval" );
 
-        CHECK( 4 == chunk.numberParticles() );
+        CHECK( 5 == chunk.numberParticles() );
 
         CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
-        CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
 
         // H has no mass node in the GNDS file
         decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
