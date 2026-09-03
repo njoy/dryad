@@ -43,6 +43,10 @@ namespace pops {
     }
 
     std::string id = particle.identifier().symbol();
+    if ( name == "nuclide" && particle.identifier().a() == 0 ) {
+
+      id += "0";
+    }
 
     pugi::xml_node node = parent.append_child( name );
     pugi::xml_node current = node;

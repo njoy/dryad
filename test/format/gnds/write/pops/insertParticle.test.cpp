@@ -19,6 +19,7 @@ std::string chunkGaugeBoson();
 std::string chunkLepton();
 std::string chunkBaryon();
 std::string chunkNuclide();
+std::string chunkElement();
 std::string chunkNuclideWithExcitedState();
 std::string chunkNuclideWithNuclearMass();
 
@@ -59,6 +60,18 @@ SCENARIO( "insertParticle" ) {
       std::ostringstream out;
       node.print( out, "  " );
       CHECK( out.str() == chunkBaryon() );
+    } // THEN
+
+    THEN( "an element can be inserted" ) {
+
+      pugi::xml_document parent;
+      auto u = Particle::defaultParticle( id::ParticleID( "U" ) );
+      u.mass( 235 );
+      auto node = gnds::write::pops::insertParticle( parent, options, "nuclide", u );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunkElement() );
     } // THEN
 
     THEN( "a nuclide can be inserted" ) {
@@ -158,6 +171,23 @@ std::string chunkBaryon() {
          "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
          "  </charge>\n"
          "</baryon>\n";
+}
+
+std::string chunkElement() {
+
+  return "<nuclide id=\"U0\">\n"
+         "  <mass>\n"
+         "    <double label=\"eval\" value=\"235\" unit=\"amu\" />\n"
+         "  </mass>\n"
+         "  <charge>\n"
+         "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "  </charge>\n"
+         "  <nucleus id=\"u0\" index=\"0\">\n"
+         "    <charge>\n"
+         "      <integer label=\"eval\" value=\"92\" unit=\"e\" />\n"
+         "    </charge>\n"
+         "  </nucleus>\n"
+         "</nuclide>\n";
 }
 
 std::string chunkNuclide() {
