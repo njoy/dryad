@@ -145,7 +145,7 @@ namespace np236m1 {
     CHECK( +1 == particle.parity().value() );
     CHECK( std::nullopt == particle.energy() );
     CHECK( std::nullopt == particle.nuclearMass() );
-    CHECK_THAT( 0., WithinRel( particle.massUncertainty().value() ) );
+    CHECK( std::nullopt == particle.massUncertainty() );
     CHECK( std::nullopt == particle.nuclearMassUncertainty() );
     CHECK( std::nullopt == particle.energyUncertainty() );
 
