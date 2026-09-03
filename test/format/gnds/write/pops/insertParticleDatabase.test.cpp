@@ -17,6 +17,7 @@ using namespace njoy::format;
 
 std::string chunkAtomic();
 std::string chunkNuclear();
+std::string chunkElementMass();
 
 SCENARIO( "insertParticleDatabase" ) {
 
@@ -33,12 +34,25 @@ SCENARIO( "insertParticleDatabase" ) {
       };
       ParticleDatabase particles( identifiers );
 
+      // no element mass
+
       pugi::xml_document parent;
       auto node = gnds::write::pops::insertParticleDatabase( parent, options, particles, "eval" );
 
       std::ostringstream out;
       node.print( out, "  " );
       CHECK( out.str() == chunkAtomic() );
+
+      // with element mass
+
+      particles.particle( id::ParticleID( "H" ) ).mass( 1. );
+
+      parent.reset();
+      node = gnds::write::pops::insertParticleDatabase( parent, options, particles, "eval" );
+
+      out.str( "" );
+      node.print( out, "  " );
+      CHECK( out.str() == chunkAtomicWithMass() );
     } // THEN
 
     THEN( "a particle database can be inserted for typical nuclear interactions" ) {
@@ -116,6 +130,81 @@ std::string chunkAtomic() {
          "  </leptons>\n"
          "  <chemicalElements>\n"
          "    <chemicalElement symbol=\"H\" Z=\"1\" name=\"Hydrogen\" />\n"
+         "  </chemicalElements>\n"
+         "</PoPs>\n";
+}
+
+std::string chunkAtomicWithMass() {
+
+  return "<PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
+         "  <gaugeBosons>\n"
+         "    <gaugeBoson id=\"g\">\n"
+         "      <mass>\n"
+         "        <double label=\"eval\" value=\"0\" unit=\"amu\" />\n"
+         "      </mass>\n"
+         "      <spin>\n"
+         "        <fraction label=\"eval\" value=\"1\" unit=\"hbar\" />\n"
+         "      </spin>\n"
+         "      <parity>\n"
+         "        <integer label=\"eval\" value=\"1\" />\n"
+         "      </parity>\n"
+         "      <charge>\n"
+         "        <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "      </charge>\n"
+         "    </gaugeBoson>\n"
+         "  </gaugeBosons>\n"
+         "  <leptons>\n"
+         "    <lepton id=\"e-\">\n"
+         "      <mass>\n"
+         "        <double label=\"eval\" value=\"0.0005485799090441\" unit=\"amu\" />\n"
+         "      </mass>\n"
+         "      <spin>\n"
+         "        <fraction label=\"eval\" value=\"1/2\" unit=\"hbar\" />\n"
+         "      </spin>\n"
+         "      <parity>\n"
+         "        <integer label=\"eval\" value=\"1\" />\n"
+         "      </parity>\n"
+         "      <charge>\n"
+         "        <integer label=\"eval\" value=\"-1\" unit=\"e\" />\n"
+         "      </charge>\n"
+         "    </lepton>\n"
+         "    <lepton id=\"e+\">\n"
+         "      <mass>\n"
+         "        <double label=\"eval\" value=\"0.0005485799090441\" unit=\"amu\" />\n"
+         "      </mass>\n"
+         "      <spin>\n"
+         "        <fraction label=\"eval\" value=\"1/2\" unit=\"hbar\" />\n"
+         "      </spin>\n"
+         "      <parity>\n"
+         "        <integer label=\"eval\" value=\"-1\" />\n"
+         "      </parity>\n"
+         "      <charge>\n"
+         "        <integer label=\"eval\" value=\"1\" unit=\"e\" />\n"
+         "      </charge>\n"
+         "    </lepton>\n"
+         "  </leptons>\n"
+         "  <chemicalElements>\n"
+         "    <chemicalElement symbol=\"H\" Z=\"1\" name=\"Hydrogen\">\n"
+         "      <isotopes>\n"
+         "        <isotope symbol=\"H0\" A=\"0\">\n"
+         "          <nuclides>\n"
+         "            <nuclide id=\"H0\">\n"
+         "              <mass>\n"
+         "                <double label=\"eval\" value=\"1\" unit=\"amu\" />\n"
+         "              </mass>\n"
+         "              <charge>\n"
+         "                <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "              </charge>\n"
+         "              <nucleus id=\"h0\" index=\"0\">\n"
+         "                <charge>\n"
+         "                  <integer label=\"eval\" value=\"1\" unit=\"e\" />\n"
+         "                </charge>\n"
+         "              </nucleus>\n"
+         "            </nuclide>\n"
+         "          </nuclides>\n"
+         "        </isotope>\n"
+         "      </isotopes>\n"
+         "    <chemicalElement/>\n"
          "  </chemicalElements>\n"
          "</PoPs>\n";
 }

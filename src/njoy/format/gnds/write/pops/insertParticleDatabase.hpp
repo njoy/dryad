@@ -144,14 +144,25 @@ namespace pops {
         element.append_attribute( "Z" ) = element_id.number();
         element.append_attribute( "name" ) = element_id.name().c_str();
 
+        pugi::xml_node isotopes;
         if ( iter->identifier().a() == 0 ) {
 
-          //! @todo mass value?
+          if ( iter->mass().has_value() || iter->nuclearMass().has_value() ||
+               iter->energy().has_value() || iter->spin().has_value() ||
+               iter->parity().has_value() ) {
 
+            isotopes = element.append_child( "isotopes" );
+
+            auto isotope = isotopes.append_child( "isotope" );
+            isotope.append_attribute( "symbol" ) = ( element_id.symbol() + "0" ).c_str();
+            isotope.append_attribute( "A" ) = 0;
+            auto nuclides = isotope.append_child( "nuclides" );
+
+            insertParticle( nuclides, local_options, "nuclide", *iter, style );
+          }
           ++iter;
         }
 
-        pugi::xml_node isotopes;
         while ( iter != next ) {
 
           if ( isotopes.empty() ) {
