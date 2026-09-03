@@ -16,8 +16,8 @@ using namespace njoy::dryad;
 using namespace njoy::format;
 
 std::string chunkAtomic();
+std::string chunkAtomicWithMass();
 std::string chunkNuclear();
-std::string chunkElementMass();
 
 SCENARIO( "insertParticleDatabase" ) {
 
@@ -204,7 +204,7 @@ std::string chunkAtomicWithMass() {
          "          </nuclides>\n"
          "        </isotope>\n"
          "      </isotopes>\n"
-         "    <chemicalElement/>\n"
+         "    </chemicalElement>\n"
          "  </chemicalElements>\n"
          "</PoPs>\n";
 }
