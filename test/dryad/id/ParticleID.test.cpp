@@ -48,6 +48,12 @@ SCENARIO( "ParticleID" ) {
       CHECK( true == ParticleID::isRegistered( "a" ) );
       CHECK( true == ParticleID::isRegistered( "alpha" ) );
 
+      // elements are registered
+      CHECK( true == ParticleID::isRegistered( "H" ) );
+      CHECK( true == ParticleID::isRegistered( "H0" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe0" ) );
+
       // all other particles are not registered
       CHECK( false == ParticleID::isRegistered( "H1" ) );
       CHECK( false == ParticleID::isRegistered( "H1_e0" ) );
@@ -402,6 +408,42 @@ SCENARIO( "ParticleID" ) {
       CHECK( 4 == id.a() );
       CHECK( 0 == id.e() );
       CHECK( 2004 == id.za() );
+      CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
+
+      id = ParticleID( "H" );
+      CHECK( "H" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 1000 == id.za() );
+      CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
+
+      id = ParticleID( "H0" );
+      CHECK( "H" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 1000 == id.za() );
+      CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
+
+      id = ParticleID( "Hydrogen" );
+      CHECK( "H" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 1000 == id.za() );
+      CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
+
+      id = ParticleID::nuclide( 1000, 0 );
+      CHECK( "H" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
       CHECK( id == id.groundState() );
 
