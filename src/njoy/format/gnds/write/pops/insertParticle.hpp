@@ -64,6 +64,12 @@ namespace pops {
                       [] ( unsigned char character ) { return std::tolower( character ); } );
       current.append_attribute( "id" ) = id.c_str();
       current.append_attribute( "index" ) = particle.identifier().e();
+
+      if ( particle.nuclearMass().has_value() ) {
+
+        auto mass = current.append_child( "mass" );
+        insertDouble( mass, options, particle.nuclearMass().value(), style, "amu" );
+      }
     }
 
     if ( particle.spin().has_value() ) {

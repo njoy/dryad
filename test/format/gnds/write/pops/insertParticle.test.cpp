@@ -20,6 +20,7 @@ std::string chunkLepton();
 std::string chunkBaryon();
 std::string chunkNuclide();
 std::string chunkNuclideWithExcitedState();
+std::string chunkNuclideWithNuclearMass();
 
 SCENARIO( "insertParticle" ) {
 
@@ -80,6 +81,18 @@ SCENARIO( "insertParticle" ) {
       std::ostringstream out;
       node.print( out, "  " );
       CHECK( out.str() == chunkNuclideWithExcitedState() );
+    } // THEN
+
+    THEN( "a nuclide with a nuclear mass can be inserted" ) {
+
+      pugi::xml_document parent;
+      auto u235 = Particle::defaultParticle( id::ParticleID( "U235" ) );
+      u235.nuclearMass( 235. );
+      auto node = gnds::write::pops::insertParticle( parent, options, "nuclide", u235 );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunkNuclideWithNuclearMass() );
     } // THEN
 
     THEN( "an invalid node name throws" ) {
@@ -194,6 +207,35 @@ std::string chunkNuclideWithExcitedState() {
          "    </charge>\n"
          "    <energy>\n"
          "      <double label=\"eval\" value=\"76\" unit=\"eV\" />\n"
+         "    </energy>\n"
+         "  </nucleus>\n"
+         "</nuclide>\n";
+}
+
+std::string chunkNuclideWithNuclearMass() {
+
+  return "<nuclide id=\"U235\">\n"
+         "  <mass>\n"
+         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\" />\n"
+         "  </mass>\n"
+         "  <charge>\n"
+         "    <integer label=\"eval\" value=\"0\" unit=\"e\" />\n"
+         "  </charge>\n"
+         "  <nucleus id=\"u235\" index=\"0\">\n"
+         "    <mass>\n"
+         "      <double label=\"eval\" value=\"235\" unit=\"amu\" />\n"
+         "    </mass>\n"
+         "    <spin>\n"
+         "      <fraction label=\"eval\" value=\"7/2\" unit=\"hbar\" />\n"
+         "    </spin>\n"
+         "    <parity>\n"
+         "      <integer label=\"eval\" value=\"-1\" />\n"
+         "    </parity>\n"
+         "    <charge>\n"
+         "      <integer label=\"eval\" value=\"92\" unit=\"e\" />\n"
+         "    </charge>\n"
+         "    <energy>\n"
+         "      <double label=\"eval\" value=\"0\" unit=\"eV\" />\n"
          "    </energy>\n"
          "  </nucleus>\n"
          "</nuclide>\n";
