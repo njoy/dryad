@@ -424,8 +424,6 @@ add_cpp_test( format.gnds.write.insertDouble                                    
 add_cpp_test( format.gnds.write.insertInteger                                                format/gnds/write/insertInteger.test.cpp )
 add_cpp_test( format.gnds.write.insertFraction                                               format/gnds/write/insertFraction.test.cpp )
 add_cpp_test( format.gnds.write.insertString                                                 format/gnds/write/insertString.test.cpp )
-add_cpp_test( format.gnds.write.insertParticle                                               format/gnds/write/insertParticle.test.cpp )
-add_cpp_test( format.gnds.write.insertParticleDatabase                                       format/gnds/write/insertParticleDatabase.test.cpp )
 add_cpp_test( format.gnds.write.insertAxis                                                   format/gnds/write/insertAxis.test.cpp )
 add_cpp_test( format.gnds.write.insertAxes                                                   format/gnds/write/insertAxes.test.cpp )
 add_cpp_test( format.gnds.write.insertValues                                                 format/gnds/write/insertValues.test.cpp )
@@ -437,6 +435,9 @@ add_cpp_test( format.gnds.write.insertData                                      
 add_cpp_test( format.gnds.write.insertColumn                                                 format/gnds/write/insertColumn.test.cpp )
 add_cpp_test( format.gnds.write.insertColumnHeaders                                          format/gnds/write/insertColumnHeaders.test.cpp )
 add_cpp_test( format.gnds.write.insertTable                                                  format/gnds/write/insertTable.test.cpp )
+
+add_cpp_test( format.gnds.write.pops.insertParticle                                          format/gnds/write/pops/insertParticle.test.cpp )
+add_cpp_test( format.gnds.write.pops.insertParticleDatabase                                  format/gnds/write/pops/insertParticleDatabase.test.cpp )
 
 add_cpp_test( format.gnds.write.resonances.insertScatteringRadius                            format/gnds/write/resonances/insertScatteringRadius.test.cpp )
 add_cpp_test( format.gnds.write.resonances.insertHardSphereRadius                            format/gnds/write/resonances/insertHardSphereRadius.test.cpp )
