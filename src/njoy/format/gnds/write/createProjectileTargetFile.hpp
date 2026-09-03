@@ -14,7 +14,7 @@
 #include "njoy/format/gnds/write/insertProjectileEnergyDomain.hpp"
 #include "njoy/format/gnds/write/insertTemperature.hpp"
 #include "njoy/format/gnds/write/insertDocumentation.hpp"
-#include "njoy/format/gnds/write/insertParticleDatabase.hpp"
+#include "njoy/format/gnds/write/pops/insertParticleDatabase.hpp"
 #include "njoy/format/gnds/write/insertReactions.hpp"
 #include "njoy/format/gnds/write/insertSums.hpp"
 #include "njoy/format/gnds/StyleType.hpp"
@@ -70,7 +70,7 @@ namespace write {
 
     if ( transport.particleData().has_value() ) {
 
-      insertParticleDatabase( suite, options, transport.particleData().value(), style_label );
+      pops::insertParticleDatabase( suite, options, transport.particleData().value(), style_label );
     }
 
     pugi::xml_node resonances_node = resonances::insertResonances( suite, options, transport,

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/format/gnds/write/insertParticle.hpp"
+#include "njoy/format/gnds/write/pops/insertParticle.hpp"
 
 // other includes
 #include <sstream>
@@ -31,7 +31,7 @@ SCENARIO( "insertParticle" ) {
 
       pugi::xml_document parent;
       auto photon = Particle::defaultParticle( id::ParticleID::photon() );
-      auto node = gnds::write::insertParticle( parent, options, "gaugeBoson", photon );
+      auto node = gnds::write::pops::insertParticle( parent, options, "gaugeBoson", photon );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -42,7 +42,7 @@ SCENARIO( "insertParticle" ) {
 
       pugi::xml_document parent;
       auto electron = Particle::defaultParticle( id::ParticleID::electron() );
-      auto node = gnds::write::insertParticle( parent, options, "lepton", electron );
+      auto node = gnds::write::pops::insertParticle( parent, options, "lepton", electron );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -53,7 +53,7 @@ SCENARIO( "insertParticle" ) {
 
       pugi::xml_document parent;
       auto neutron = Particle::defaultParticle( id::ParticleID::neutron() );
-      auto node = gnds::write::insertParticle( parent, options, "baryon", neutron );
+      auto node = gnds::write::pops::insertParticle( parent, options, "baryon", neutron );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -64,7 +64,7 @@ SCENARIO( "insertParticle" ) {
 
       pugi::xml_document parent;
       auto u235 = Particle::defaultParticle( id::ParticleID( "U235" ) );
-      auto node = gnds::write::insertParticle( parent, options, "nuclide", u235 );
+      auto node = gnds::write::pops::insertParticle( parent, options, "nuclide", u235 );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -75,7 +75,7 @@ SCENARIO( "insertParticle" ) {
 
       pugi::xml_document parent;
       auto u235_e1 = Particle::defaultParticle( id::ParticleID( "U235_e1" ) );
-      auto node = gnds::write::insertParticle( parent, options, "nuclide", u235_e1 );
+      auto node = gnds::write::pops::insertParticle( parent, options, "nuclide", u235_e1 );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -86,9 +86,9 @@ SCENARIO( "insertParticle" ) {
 
       pugi::xml_document parent;
       auto u235 = Particle::defaultParticle( id::ParticleID( "U235" ) );
-      CHECK_THROWS( gnds::write::insertParticle( parent, options, "invalid", u235 ) );
-      CHECK_THROWS( gnds::write::insertParticle( parent, options, "atom", u235 ) );
-      CHECK_THROWS( gnds::write::insertParticle( parent, options, "blabla", u235 ) );
+      CHECK_THROWS( gnds::write::pops::insertParticle( parent, options, "invalid", u235 ) );
+      CHECK_THROWS( gnds::write::pops::insertParticle( parent, options, "atom", u235 ) );
+      CHECK_THROWS( gnds::write::pops::insertParticle( parent, options, "blabla", u235 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO

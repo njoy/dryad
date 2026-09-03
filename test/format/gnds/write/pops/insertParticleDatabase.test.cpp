@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/format/gnds/write/insertParticleDatabase.hpp"
+#include "njoy/format/gnds/write/pops/insertParticleDatabase.hpp"
 
 // other includes
 #include <sstream>
@@ -34,7 +34,7 @@ SCENARIO( "insertParticleDatabase" ) {
       ParticleDatabase particles( identifiers );
 
       pugi::xml_document parent;
-      auto node = gnds::write::insertParticleDatabase( parent, options, particles, "eval" );
+      auto node = gnds::write::pops::insertParticleDatabase( parent, options, particles, "eval" );
 
       std::ostringstream out;
       node.print( out, "  " );
@@ -56,7 +56,7 @@ SCENARIO( "insertParticleDatabase" ) {
       ParticleDatabase particles( identifiers );
 
       pugi::xml_document parent;
-      auto node = gnds::write::insertParticleDatabase( parent, options, particles, "eval" );
+      auto node = gnds::write::pops::insertParticleDatabase( parent, options, particles, "eval" );
 
       std::ostringstream out;
       node.print( out, "  " );
