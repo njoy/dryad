@@ -13,6 +13,8 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::format;
 using namespace njoy::dryad;
 
+std::string chunk();
+
 SCENARIO( "createParticle" ) {
 
   GIVEN( "GNDS nodes for Particle data" ) {
@@ -31,6 +33,10 @@ SCENARIO( "createParticle" ) {
                                          find_child_by_attribute( "chemicalElement", "symbol", "Kr" ).
                                          child( "isotopes" ).child( "isotope" ).
                                          child( "nuclides" ).child( "nuclide" );
+
+    pugi::xml_document custom_document;
+    document.load_string( chunk().c_str() );
+    pugi::xml_node nuclide_with_uncertainties = document.child( "nuclide" );
 
     WHEN( "a single node is given" ) {
 
@@ -95,7 +101,42 @@ SCENARIO( "createParticle" ) {
         CHECK( std::nullopt == chunk.massUncertainty() );
         CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
         CHECK( std::nullopt == chunk.energyUncertainty() );
+
+        chunk = gnds::read::pops::createParticle( nuclide_with_uncertainties, "eval" );
+
+        CHECK( id::ParticleID( "U235_e1" ) == chunk.identifier() );
+        CHECK( std::nullopt == chunk.spin() );
+        CHECK( std::nullopt == chunk.parity() );
+        CHECK_THAT( 235.0439281, WithinRel( chunk.mass().value() ) );
+        CHECK_THAT( 235., WithinRel( chunk.nuclearMass().value() ) );
+        CHECK_THAT( 76., WithinRel( chunk.energy().value() ) );
+        CHECK_THAT( 1e-06, WithinRel( chunk.massUncertainty().value() ) );
+        CHECK_THAT( 2e-06, WithinRel( chunk.nuclearMassUncertainty().value() ) );
+        CHECK_THAT( 0.5, WithinRel( chunk.energyUncertainty().value() ) );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+std::string chunk() {
+
+  return "<nuclide id=\"U235_e1\">"
+         "  <mass>"
+         "    <double label=\"eval\" value=\"235.0439281\" unit=\"amu\">"
+         "      <uncertainty><standard><double value=\"1e-06\"/></standard></uncertainty>"
+         "    </double>"
+         "  </mass>"
+         "  <nucleus id=\"u235_e1\" index=\"1\">"
+         "    <mass>"
+         "      <double label=\"eval\" value=\"235\" unit=\"amu\">"
+         "        <uncertainty><standard><double value=\"2e-06\"/></standard></uncertainty>"
+         "      </double>"
+         "    </mass>"
+         "    <energy>"
+         "      <double label=\"eval\" value=\"76\" unit=\"eV\">"
+         "        <uncertainty><standard><double value=\"0.5\"/></standard></uncertainty>"
+         "      </double>"
+         "    </energy>"
+         "  </nucleus>"
+         "</nuclide>";
+}
