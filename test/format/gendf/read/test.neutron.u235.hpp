@@ -27,7 +27,7 @@ namespace u235 {
 
   // compare two vectors of values
   void checkGroups( const std::vector< double >& expected,
-                     const std::vector< double >& values ) {
+                    const std::vector< double >& values ) {
 
     CHECK( expected.size() == values.size() );
     for ( std::size_t i = 0; i < expected.size(); ++i ) {

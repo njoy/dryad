@@ -318,6 +318,14 @@ add_cpp_test( format.gendf.read.createMultigroupReactions                       
 add_cpp_test( format.gendf.read.createMultigroupProjectileTarget                             format/gendf/read/createMultigroupProjectileTarget.test.cpp )
 add_cpp_test( format.gendf.read.createMultigroupProjectileTargetFromFile                     format/gendf/read/createMultigroupProjectileTargetFromFile.test.cpp )
 
+add_cpp_test( format.ndi.read.createProjectileIdentifier                                     format/ndi/read/createProjectileIdentifier.test.cpp )
+add_cpp_test( format.ndi.read.createTargetIdentifier                                         format/ndi/read/createTargetIdentifier.test.cpp )
+add_cpp_test( format.ndi.read.createMultigroupCrossSection                                   format/ndi/read/createMultigroupCrossSection.test.cpp )
+add_cpp_test( format.ndi.read.createMultigroupReaction                                       format/ndi/read/createMultigroupReaction.test.cpp )
+add_cpp_test( format.ndi.read.createMultigroupReactions                                      format/ndi/read/createMultigroupReactions.test.cpp )
+add_cpp_test( format.ndi.read.createMultigroupProjectileTarget                               format/ndi/read/createMultigroupProjectileTarget.test.cpp )
+add_cpp_test( format.ndi.read.createMultigroupProjectileTargetFromFile                       format/ndi/read/createMultigroupProjectileTargetFromFile.test.cpp )
+
 add_cpp_test( format.gnds.read.convertEnergy                                                 format/gnds/read/convertEnergy.test.cpp )
 add_cpp_test( format.gnds.read.convertEnergies                                               format/gnds/read/convertEnergies.test.cpp )
 add_cpp_test( format.gnds.read.convertCrossSection                                           format/gnds/read/convertCrossSection.test.cpp )
