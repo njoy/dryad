@@ -35,8 +35,8 @@ SCENARIO( "createParticle" ) {
                                          child( "nuclides" ).child( "nuclide" );
 
     pugi::xml_document custom_document;
-    document.load_string( chunk().c_str() );
-    pugi::xml_node nuclide_with_uncertainties = document.child( "nuclide" );
+    custom_document.load_string( chunk().c_str() );
+    pugi::xml_node nuclide_with_uncertainties = custom_document.child( "nuclide" );
 
     WHEN( "a single node is given" ) {
 
