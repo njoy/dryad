@@ -24,6 +24,28 @@ namespace resonances {
 
     std::vector< CompoundSystem > resolved_;
 
+    std::vector< id::ReactionID > reactions_;
+
+    /* auxiliary functions */
+
+    /**
+     *  @brief Collect all reactions from the resonance parameters
+     */
+    void collectReactions() {
+
+      for ( auto&& compound : this->resolved() ) {
+
+        for ( auto&& id : compound.reactions() ) {
+
+          auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
+          if ( iter == this->reactions().end() || *iter != id ) {
+
+            this->reactions().insert( iter, id );
+          }
+        }
+      }
+    }
+
   public:
 
     /* constructor */
@@ -45,9 +67,39 @@ namespace resonances {
      *  @param[in] resolved   the resolved resonance compound systems
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved ) :
-        resolved_( std::move( resolved ) ) {}
+        resolved_( std::move( resolved ) ) {
+
+      this->collectReactions();
+    }
 
     /* methods */
+
+    /**
+     *  @brief Return the reactions to which the resonance parameters contribute
+     */
+    const std::vector< id::ReactionID >& reactions() const {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the reactions to which the resonance parameters contribute
+     */
+    std::vector< id::ReactionID >& reactions() {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return whether or not a given reaction is present in the resonance parameters
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    bool hasReaction( const id::ReactionID& id ) const {
+
+      auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
+      return iter != this->reactions().end() && *iter == id;
+    }
 
     /**
      *  @brief Return the compound systems that make up the resolved resonance data
@@ -73,6 +125,7 @@ namespace resonances {
     void resolved( std::vector< CompoundSystem > resolved ) {
 
       this->resolved_ = std::move( resolved );
+      this->collectReactions();
     }
 
     /**

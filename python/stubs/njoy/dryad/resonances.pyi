@@ -1212,6 +1212,11 @@ class ResonanceParameters:
     def __ne__(self, arg0: ResonanceParameters) -> bool:
         ...
     @property
+    def reactions(self) -> list[njoy.dryad.id.ReactionID]:
+        """
+        The reactions to which the resonance parameters contribute
+        """
+    @property
     def resolved(self) -> list[CompoundSystem]:
         """
         The compound systems that make up the resolved resonance data

@@ -51,6 +51,12 @@ void wrapResonanceParameters( python::module& module ) {
     python::overload_cast<>( &Component::resolved, python::const_ ),
     python::overload_cast< std::vector< CompoundSystem > >( &Component::resolved ),
     "The compound systems that make up the resolved resonance data"
+  )
+  .def_property_readonly(
+
+    "reactions",
+    python::overload_cast<>( &Component::reactions, python::const_ ),
+    "The reactions to which the resonance parameters contribute"
   );
 
   // add standard equality comparison definitions
