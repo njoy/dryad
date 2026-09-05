@@ -82,7 +82,7 @@ namespace resonances {
                     std::vector< UnresolvedSpinGroup > spinGroups ) :
         lower_( lowerEnergy ),
         upper_( upperEnergy ),
-        unresolved_spin_groups_( std::move( spinGroups )) {
+        unresolved_spin_groups_( std::move( spinGroups ) ) {
 
       this->processSpinGroups();
     }

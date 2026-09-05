@@ -17,6 +17,7 @@ void wrapResonanceParameters( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::resonances::ResonanceParameters;
   using CompoundSystem = njoy::dryad::resonances::CompoundSystem;
+  using UnresolvedCompoundSystem = njoy::dryad::resonances::UnresolvedCompoundSystem;
 
   // wrap views created by this component
 
@@ -29,6 +30,8 @@ void wrapResonanceParameters( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    resolved : list of njoy.dryad.resonances.CompoundSystem, optional\n"
+    "        the resolved resonance compound systems\n"
+    "    unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional\n"
     "        the resolved resonance compound systems"
   );
 
@@ -41,9 +44,12 @@ void wrapResonanceParameters( python::module& module ) {
   )
   .def(
 
-    python::init< std::vector< CompoundSystem > >(),
+    python::init< std::vector< CompoundSystem >,
+                  std::optional< UnresolvedCompoundSystem > >(),
     python::arg( "resolved" ),
-    "Initialise the resonance parameters with resolved compound systems"
+    python::arg( "unresolved" ) = std::nullopt,
+    "Initialise the resonance parameters with resolved compound systems\n"
+    "and an optional unresolved compound system"
   )
   .def_property(
 
@@ -51,6 +57,13 @@ void wrapResonanceParameters( python::module& module ) {
     python::overload_cast<>( &Component::resolved, python::const_ ),
     python::overload_cast< std::vector< CompoundSystem > >( &Component::resolved ),
     "The compound systems that make up the resolved resonance data"
+  )
+  .def_property(
+
+    "unresolved",
+    python::overload_cast<>( &Component::unresolved, python::const_ ),
+    python::overload_cast< UnresolvedCompoundSystem >( &Component::unresolved ),
+    "The compound system that makes up the unresolved resonance data"
   );
 
   // add standard equality comparison definitions

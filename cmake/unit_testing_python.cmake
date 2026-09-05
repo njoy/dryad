@@ -81,6 +81,8 @@ add_python_test( dryad.resonances.UnresolvedChannel                    dryad/res
 add_python_test( dryad.resonances.UnresolvedSpinGroup                  dryad/resonances/Test_UnresolvedSpinGroup.py )
 add_python_test( dryad.resonances.UnresolvedCompoundSystem             dryad/resonances/Test_UnresolvedCompoundSystem.py)
 
+add_python_test( dryad.resonances.ResonanceParameters                  dryad/resonances/Test_ResonanceParameters.py )
+
 add_python_test( dryad.thermal.BraggEdgeData                           dryad/thermal/Test_BraggEdgeData.py )
 add_python_test( dryad.thermal.DebyeWallerIntegralData                 dryad/thermal/Test_DebyeWallerIntegralData.py )
 add_python_test( dryad.thermal.TabulatedScatteringKernelFunction       dryad/thermal/Test_TabulatedScatteringKernelFunction.py )
