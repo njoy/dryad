@@ -7,6 +7,7 @@
 #include "njoy/dryad/MultigroupProjectileTarget.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
 #include "njoy/format/gendf/read/createMultigroupProjectileTargetFromFile.hpp"
+#include "njoy/format/ndi/read/createMultigroupProjectileTargetFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -200,6 +201,28 @@ void wrapMultigroupProjectileTarget( python::module& module ) {
     "        the flag to indicate whether or not the covariance data is relative\n"
     "    frame : njoy.dryad.ReferenceFrame, default CentreOfMass\n"
     "        the reference frame for the angular covariance data"
+  )
+  .def_static(
+
+    "from_ndi_file",
+    [] ( const std::string& filename ) -> std::variant< Component, std::vector< Component > > {
+
+      auto targets = njoy::format::ndi::read::createMultigroupProjectileTargetFromFile( filename );
+      if ( targets.size() == 1 ) {
+
+        return targets.front();
+      }
+      else {
+
+        return targets;
+      }
+    },
+    python::arg( "filename" ),
+    "Create a MultigroupProjectileTarget from an NDI file\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str\n"
+    "        the file name for the NDI file"
   );
 
   // add standard equality comparison definitions

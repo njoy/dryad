@@ -28,6 +28,54 @@ ame2020 = ame/2020/mass_1.mas20.txt
 ripl3_levels = ripl-3/levels
 ```
 
+# Building the Python bindings
+
+NJOY uses CMake to pull and build dependencies. Default build options provide python bindings for `dryad`
+and all other modules (`njoy.python` defaults to `ON`). On most Unix systems (non-Windows), assuming Python
+and CMake can be found in the users PATH, building NJOY can be done by:
+
+* Obtaining the source code
+* Navigating to the local repository root directory
+* Running
+
+```bash
+cmake -B <target_build_directory> -DCMAKE_BUILD_TYPE=Release
+cmake --build <target_build_directory> -j8
+```
+
+The resulting Python module can then be used directly from the `<target_build_directory>/python` directory, or installed as usual.
+
+On Windows, build commands depend more on your setup. Use command
+
+```cmd
+cmake -G
+```
+to find a generator string for the build system you intend to use. A generator string looks like "Visual Studio 18 2026" or "Ninja"
+
+For a single-configuration build system like Ninja, builds are made with
+
+```cmd
+cmake -G <generator string> -B <target_build_directory> -DCMAKE_BUILD_TYPE=Release
+cmake --build <target_build_directory> -j8
+```
+
+and the Python module is built in `<target_build_directory>/python`
+
+For multi-configuration build systems like MSBuild used by MSVC, builds are made with
+
+```cmd
+cmake -G <generator string> -B <target_build_directory>
+cmake --build <target_build_directory> --config Release -j8
+```
+
+and the Python module is built in `<target_build_directory>/python/Release`
+
+To also build and run the C++ and Python unit test suite alongside the bindings, add `-Dnjoy.tests=ON` to the
+CMake configuration step above.
+
+Some tests and bindings rely on external RIPL-3 and AME2020 data, so make sure the `NJOY_DATAPATH` environment
+variable is set as described in the [Configuration and external data](#configuration-and-external-data) section above.
+
 # Documentation
 
 Documentation is provided using [Sphinx](https://www.sphinx-doc.org/). The following Python packages need to be installed:

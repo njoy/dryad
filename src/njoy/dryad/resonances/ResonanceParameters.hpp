@@ -4,9 +4,12 @@
 // system includes
 #include <variant>
 #include <vector>
+#include <optional>
+#include <tuple>
 
 // other includes
 #include "njoy/dryad/resonances/CompoundSystem.hpp"
+#include "njoy/dryad/resonances/UnresolvedCompoundSystem.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -15,14 +18,13 @@ namespace resonances {
   /**
    *  @class
    *  @brief The resonance parameter data
-   *
-   *  Note: this is currently a placeholder
    */
   class ResonanceParameters {
 
     /* fields */
 
     std::vector< CompoundSystem > resolved_;
+    std::optional< UnresolvedCompoundSystem > unresolved_;
 
     std::vector< id::ReactionID > reactions_;
 
@@ -64,10 +66,13 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param[in] resolved   the resolved resonance compound systems
+     *  @param[in] resolved     the resolved resonance compound systems
+     *  @param[in] unresolved   the unresolved resonance compound systems
      */
-    ResonanceParameters( std::vector< CompoundSystem > resolved ) :
-        resolved_( std::move( resolved ) ) {
+    ResonanceParameters( std::vector< CompoundSystem > resolved,
+                         std::optional< UnresolvedCompoundSystem > unresolved=std::nullopt ) :
+        resolved_( std::move( resolved ) ),
+        unresolved_( std::move( unresolved ) )  {
 
       this->collectReactions();
     }
@@ -129,6 +134,33 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the compound systems that make up the unresolved resonance data
+     */
+    const std::optional< UnresolvedCompoundSystem >& unresolved() const {
+
+      return this->unresolved_;
+    }
+
+    /**
+     *  @brief Return the compound systems that make up the unresolved resonance data
+     */
+    std::optional< UnresolvedCompoundSystem >& unresolved() {
+
+      return this->unresolved_;
+    }
+
+    /**
+     *  @brief Set the compound systems that make up unresolved resonance data
+     *
+     *  @param[in] unresolved   the unresolved resonance compound systems
+     */
+    void unresolved(  UnresolvedCompoundSystem unresolved ) {
+
+      this->unresolved_ = std::move( unresolved );
+      this->collectReactions();
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side
@@ -136,7 +168,8 @@ namespace resonances {
      */
     friend bool operator==( const ResonanceParameters& left, const ResonanceParameters& right ) {
 
-      return left.resolved() == right.resolved();
+      return  std::tie( left.resolved(), left.unresolved() ) ==
+              std::tie( right.resolved(), right.unresolved() );
     }
 
     /**
