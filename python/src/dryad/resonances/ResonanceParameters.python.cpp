@@ -30,6 +30,8 @@ void wrapResonanceParameters( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    resolved : list of njoy.dryad.resonances.CompoundSystem, optional\n"
+    "        the resolved resonance compound systems\n"
+    "    unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional\n"
     "        the resolved resonance compound systems"
   );
 

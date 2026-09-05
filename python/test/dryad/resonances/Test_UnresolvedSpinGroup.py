@@ -173,8 +173,9 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
 
         table = UnresolvedResonanceTable(
                     channels = channels,
-                    level_spacings = spacings, 
+                    level_spacings = spacings,
                     average_widths = widths )
+
         # sorted channels
         chunk = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table )
 

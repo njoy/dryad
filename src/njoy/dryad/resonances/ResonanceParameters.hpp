@@ -46,14 +46,13 @@ namespace resonances {
     /**
      *  @brief Constructor
      *
-     *  @param[in] resolved   the resolved resonance compound systems
+     *  @param[in] resolved     the resolved resonance compound systems
+     *  @param[in] unresolved   the unresolved resonance compound systems
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved,
                          std::optional< UnresolvedCompoundSystem > unresolved=std::nullopt ) :
         resolved_( std::move( resolved ) ),
         unresolved_( std::move( unresolved ) ) {}
-
-
 
     /* methods */
 
@@ -109,7 +108,6 @@ namespace resonances {
       this->unresolved_ = std::move( unresolved );
     }
 
-
     /**
      *  @brief Equality comparison
      *
@@ -120,7 +118,6 @@ namespace resonances {
 
       return  std::tie( left.resolved(), left.unresolved() ) ==
               std::tie( right.resolved(), right.unresolved() );
-
     }
 
     /**
