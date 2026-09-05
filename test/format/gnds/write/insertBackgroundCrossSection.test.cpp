@@ -45,6 +45,8 @@ SCENARIO( "insertBackgroundCrossSection" ) {
    std::vector< resonances::CompoundSystem > resolved = { std::move( compound ) };
    resonances::ResonanceParameters resonances( std::move( resolved ) );
 
+   //! @todo add an unresolved once we can read/write unresolved resonance parameters
+
   GIVEN( "a parent node, resonance parameters and xs - upper resolved present" ) {
 
     gnds::write::Options options;
