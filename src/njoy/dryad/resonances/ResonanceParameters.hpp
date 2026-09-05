@@ -35,9 +35,23 @@ namespace resonances {
      */
     void collectReactions() {
 
+      // go over the reactions in the resolved compund systems
       for ( auto&& compound : this->resolved() ) {
 
         for ( auto&& id : compound.reactions() ) {
+
+          auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
+          if ( iter == this->reactions().end() || *iter != id ) {
+
+            this->reactions().insert( iter, id );
+          }
+        }
+      }
+
+      // go over the reactions in the unresolved compound system
+      if ( this->unresolved().has_value() ) {
+
+        for ( auto&& id : this->unresolved()->reactions() ) {
 
           auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
           if ( iter == this->reactions().end() || *iter != id ) {

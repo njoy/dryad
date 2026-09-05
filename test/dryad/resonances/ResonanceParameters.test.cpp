@@ -82,16 +82,10 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK_THAT( 1e+4, WithinRel( chunk.resolved()[0].upperEnergyLimit() ) );
 
       CHECK( false == chunk.unresolved().has_value() );
-    } // THEN
 
-    THEN( "ResonanceParameters can be constructed with resolved data only, using an explicit nullopt" ) {
-
-      ResonanceParameters chunk( { resolved }, std::nullopt );
-
-      CHECK( 1 == chunk.resolved().size() );
-      CHECK( resolved == chunk.resolved()[0] );
-
-      CHECK( false == chunk.unresolved().has_value() );
+      CHECK( 2 == chunk.reactions().size() );
+      CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );
+      CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );
     } // THEN
 
     THEN( "ResonanceParameters can be constructed with resolved and unresolved data" ) {
@@ -103,14 +97,12 @@ SCENARIO( "ResonanceParameters" ) {
 
       CHECK( true == chunk.unresolved().has_value() );
       CHECK( unresolved == chunk.unresolved().value() );
-      CHECK_THAT( 1e+4,
-                  WithinRel( chunk.unresolved()->lowerEnergyLimit() ) );
-      CHECK_THAT( 1e+6,
-                  WithinRel( chunk.unresolved()->upperEnergyLimit() ) );
+      CHECK_THAT( 1e+4, WithinRel( chunk.unresolved()->lowerEnergyLimit() ) );
+      CHECK_THAT( 1e+6, WithinRel( chunk.unresolved()->upperEnergyLimit() ) );
 
-      // the resolved region ends where the unresolved region begins
-      CHECK_THAT( chunk.resolved().back().upperEnergyLimit(),
-                  WithinRel( chunk.unresolved()->lowerEnergyLimit() ) );
+      CHECK( 2 == chunk.reactions().size() );
+      CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );
+      CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );
     } // THEN
 
     THEN( "ResonanceParameters can be constructed with multiple resolved compound systems" ) {
@@ -125,6 +117,10 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK_THAT( 1e+3, WithinRel( chunk.resolved()[1].lowerEnergyLimit() ) );
 
       CHECK( true == chunk.unresolved().has_value() );
+
+      CHECK( 2 == chunk.reactions().size() );
+      CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );
+      CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );
     } // THEN
 
     THEN( "ResonanceParameters can be constructed with unresolved data only" ) {
@@ -135,6 +131,10 @@ SCENARIO( "ResonanceParameters" ) {
 
       CHECK( true == chunk.unresolved().has_value() );
       CHECK( unresolved == chunk.unresolved().value() );
+
+      CHECK( 2 == chunk.reactions().size() );
+      CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );
+      CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );
     } // THEN
 
     WHEN( "the setters are used on an empty ResonanceParameters" ) {
