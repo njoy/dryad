@@ -32,6 +32,11 @@ shacl_FetchContent_Declare( ENDFtk
     GIT_TAG         a6b11b661edc2da9d6229b51c51e634661c92f81  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
+shacl_FetchContent_Declare( NDItk
+    GIT_REPOSITORY  ../../njoy/NDItk
+    GIT_TAG         da4438859ba723a0a4b749be125d5510bdc09109  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    )
+
 #######################################################################
 # Declare project dependencies
 #######################################################################
@@ -65,4 +70,5 @@ shacl_FetchContent_MakeAvailable(
     scion
     ACEtk
     ENDFtk
+    NDItk
     )

@@ -1191,6 +1191,8 @@ class ResonanceParameters:
     ----------
         resolved : list of njoy.dryad.resonances.CompoundSystem, optional
             the resolved resonance compound systems
+        unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional
+            the resolved resonance compound systems
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ResonanceParameters:
@@ -1205,9 +1207,10 @@ class ResonanceParameters:
         Initialise the resonance parameters with default values
         """
     @typing.overload
-    def __init__(self, resolved: list[CompoundSystem]) -> None:
+    def __init__(self, resolved: list[CompoundSystem], unresolved: UnresolvedCompoundSystem | None = None) -> None:
         """
         Initialise the resonance parameters with resolved compound systems
+        and an optional unresolved compound system
         """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
         ...
@@ -1223,6 +1226,14 @@ class ResonanceParameters:
         """
     @resolved.setter
     def resolved(self, arg1: list[CompoundSystem]) -> None:
+        ...
+    @property
+    def unresolved(self) -> UnresolvedCompoundSystem | None:
+        """
+        The compound system that makes up the unresolved resonance data
+        """
+    @unresolved.setter
+    def unresolved(self, arg1: UnresolvedCompoundSystem) -> None:
         ...
 class ResonanceTable:
     """
