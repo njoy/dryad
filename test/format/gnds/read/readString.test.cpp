@@ -48,6 +48,6 @@ SCENARIO( "readString" ) {
 
 void verifyChunkWithUnit( const gnds::read::String& chunk ) {
 
-  CHECK( "stable" == chunk.first );
-  CHECK( "s" == chunk.second );
+  CHECK( "stable" == chunk.value );
+  CHECK( "s" == chunk.unit );
 }
