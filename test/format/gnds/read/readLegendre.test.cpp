@@ -52,10 +52,10 @@ SCENARIO( "readLegendre" ) {
 void verifyChunk( const gnds::read::Legendre& chunk ) {
 
   // outer domain value and unit
-  CHECK( 1e-5 == chunk.first );
+  CHECK( 1e-5 == chunk.energy );
 
   // values
-  CHECK( 7 == chunk.second.size() );
-  CHECK_THAT( 1.         , WithinRel( chunk.second[0] ) );
-  CHECK_THAT( 3.93859e-18, WithinRel( chunk.second[6] ) );
+  CHECK( 7 == chunk.moments.size() );
+  CHECK_THAT( 1.         , WithinRel( chunk.moments[0] ) );
+  CHECK_THAT( 3.93859e-18, WithinRel( chunk.moments[6] ) );
 }

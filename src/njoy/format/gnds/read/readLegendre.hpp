@@ -15,7 +15,14 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Legendre = std::pair< std::optional< double >, std::vector< double > >;
+  /**
+   *  @brief The Legendre moment information
+   */
+  struct Legendre {
+
+    std::optional< double > energy;
+    std::vector< double > moments;
+  };
 
   /**
    *  @brief Read data from a GNDS legendre node
@@ -27,13 +34,12 @@ namespace read {
     throwExceptionOnWrongNode( legendre, "Legendre" );
 
     Legendre data;
-    data.first = std::nullopt;
 
     // check for the presence of an outerDomainValue
     auto outer = legendre.attribute( "outerDomainValue" );
     if ( outer ) {
 
-      data.first = outer.as_double();
+      data.energy = outer.as_double();
     }
 
     // check for initial zeros
@@ -43,7 +49,7 @@ namespace read {
       auto number = zeros.as_int();
       if ( number > 0 ) {
 
-        data.second = std::vector< double >( number, 0 );
+        data.moments = std::vector< double >( number, 0 );
       }
     }
 
@@ -58,11 +64,11 @@ namespace read {
 
     // get tabulated values
     auto values = legendre.child( "values" );
-    data.second = readValues( values );
-    if ( data.second.size() == 0 ) {
+    data.moments = readValues( values );
+    if ( data.moments.size() == 0 ) {
 
       Log::error( "There should be at least one value in the GNDS Legendre node, "
-                  "found {} values", data.second.size() );
+                  "found {} values", data.moments.size() );
       throw std::exception();
     }
 
