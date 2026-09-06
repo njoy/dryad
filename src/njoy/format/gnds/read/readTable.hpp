@@ -71,9 +71,9 @@ namespace read {
       for ( int i = 0; i < columns; ++i ) {
 
         auto x = content | std20::views::drop( i ) | std23::views::stride( columns );
-        data.emplace_back( std::get< 1 >( headers[i] ),
+        data.emplace_back( headers[i].name,
                            createVector( x ),
-                           std::get< 2 >( headers[i] ) );
+                           headers[i].unit );
       }
     }
     else {
@@ -83,9 +83,9 @@ namespace read {
       for ( int i = 0; i < columns; ++i ) {
 
         auto end = std::next( iter, rows );
-        data.emplace_back( std::get< 1 >( headers[i] ),
+        data.emplace_back( headers[i].name,
                            std::vector< double >( iter, end ),
-                           std::get< 2 >( headers[i] ) );
+                           headers[i].unit );
         iter = end;
       }
     }

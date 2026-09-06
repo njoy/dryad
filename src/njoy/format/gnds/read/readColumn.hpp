@@ -3,7 +3,7 @@
 
 // system includes
 #include <optional>
-#include <vector>
+#include <string>
 
 // other includes
 #include "pugixml.hpp"
@@ -15,7 +15,15 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Column = std::tuple< int, std::string, std::optional< std::string > >;
+  /**
+   *  @brief The column information: an index, name and optional unit
+   */
+  struct Column {
+
+    int index;
+    std::string name;
+    std::optional< std::string > unit = std::nullopt;
+  };
 
   /**
    *  @brief Read data from a GNDS column node

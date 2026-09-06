@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_READ_READAXES
 
 // system includes
+#include <string>
 #include <vector>
 
 // other includes
@@ -58,8 +59,7 @@ namespace read {
       }
     }
     std::sort( data.begin(), data.end(),
-               [] ( auto&& left, auto&& right )
-                  { return left.index > right.index; } );
+               [] ( auto&& left, auto&& right ) { return left.index > right.index; } );
 
     return data;
   }
