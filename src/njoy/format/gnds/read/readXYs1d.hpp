@@ -49,14 +49,14 @@ namespace read {
       auto units = readAxes( axes );
       if ( units.size() == 2 ) {
 
-        std::get< 3 >( data ) = std::get< 1 >( units[0] );
-        std::get< 5 >( data ) = std::get< 1 >( units[1] );
+        std::get< 3 >( data ) = units[0].unit;
+        std::get< 5 >( data ) = units[1].unit;
       }
       else {
 
-        std::get< 1 >( data ) = std::get< 1 >( units[0] );
-        std::get< 3 >( data ) = std::get< 1 >( units[1] );
-        std::get< 5 >( data ) = std::get< 1 >( units[2] );
+        std::get< 1 >( data ) = units[0].unit;
+        std::get< 3 >( data ) = units[1].unit;
+        std::get< 5 >( data ) = units[2].unit;
       }
     }
 
@@ -105,14 +105,14 @@ namespace read {
 
       if ( units.size() == 2 ) {
 
-        if ( ! std::get< 3 >( data ).has_value() ) { std::get< 3 >( data ) = std::get< 1 >( units[0] ); };
-        if ( ! std::get< 5 >( data ).has_value() ) { std::get< 5 >( data ) = std::get< 1 >( units[1] ); };
+        if ( ! std::get< 3 >( data ).has_value() ) { std::get< 3 >( data ) = units[0].unit; };
+        if ( ! std::get< 5 >( data ).has_value() ) { std::get< 5 >( data ) = units[1].unit; };
       }
       else {
 
-        if ( ! std::get< 1 >( data ).has_value() ) { std::get< 1 >( data ) = std::get< 1 >( units[0] ); };
-        if ( ! std::get< 3 >( data ).has_value() ) { std::get< 3 >( data ) = std::get< 1 >( units[1] ); };
-        if ( ! std::get< 5 >( data ).has_value() ) { std::get< 5 >( data ) = std::get< 1 >( units[2] ); };
+        if ( ! std::get< 1 >( data ).has_value() ) { std::get< 1 >( data ) = units[0].unit; };
+        if ( ! std::get< 3 >( data ).has_value() ) { std::get< 3 >( data ) = units[1].unit; };
+        if ( ! std::get< 5 >( data ).has_value() ) { std::get< 5 >( data ) = units[2].unit; };
       }
     }
 

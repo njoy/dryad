@@ -38,8 +38,8 @@ namespace covariance {
 
     // get the group structure from the axes - convert units if required
     auto axes = readAxes( scaling.child( "gridded2d" ).child( "axes" ) );
-    std::vector< double > energies = std::move( std::get< 2 >( axes[0] ).value() );
-    convertEnergies( energies, std::get< 1 >( axes[0] ).value() );
+    std::vector< double > energies = std::move( axes[0].values.value() );
+    convertEnergies( energies, axes[0].unit.value() );
 
     // read the array
     auto array = readArray( scaling.child( "gridded2d" ).child( "array" ) );
@@ -64,7 +64,7 @@ namespace covariance {
 
       factors.push_back( array.values[i + i * size ] );
     }
-    convertVarianceScalingFactors( factors, std::get< 1 >( axes[2] ).value() );
+    convertVarianceScalingFactors( factors, axes[2].unit.value() );
 
     //! @todo we may have to convert the array values
 

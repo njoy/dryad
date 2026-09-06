@@ -20,7 +20,7 @@ namespace read {
    */
   struct Axis {
 
-    std::optional< int > index;
+    std::optional< int > index = std::nullopt;
     std::optional< std::string > unit = std::nullopt;
   };
 

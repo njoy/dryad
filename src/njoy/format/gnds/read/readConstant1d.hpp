@@ -36,7 +36,7 @@ namespace read {
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = std::get< 1 >( units[1] );
+      data.second = units[1].unit;
     }
 
     return data;
@@ -60,7 +60,7 @@ namespace read {
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = std::get< 1 >( units[1] );
+      data.second = units[1].unit;
     }
 
     return data;

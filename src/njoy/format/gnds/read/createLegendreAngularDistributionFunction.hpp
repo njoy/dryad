@@ -36,7 +36,7 @@ namespace read {
     // convert outer domain value if necessary
     if ( data.first.has_value() ) {
 
-      convertEnergy( data.first.value(), std::get< 1 >( units[0] ).value() );
+      convertEnergy( data.first.value(), units[0].unit.value() );
     }
 
     return { std::move( data.first ),

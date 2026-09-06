@@ -68,12 +68,12 @@ namespace read {
     auto axes = readAxes( covariance.child( "gridded2d" ).child( "axes" ) );
 
     // assign the data
-    std::get< 1 >( data ) = std::move( std::get< 2 >( axes[0] ).value() );
-    std::get< 2 >( data ) = std::move( std::get< 2 >( axes[1] ).value() );
+    std::get< 1 >( data ) = std::move( axes[0].values.value() );
+    std::get< 2 >( data ) = std::move( axes[1].values.value() );
     std::get< 3 >( data ) = std::move( matrix );
-    std::get< 4 >( data ) = std::move( std::get< 1 >( axes[0] ) );
-    std::get< 5 >( data ) = std::move( std::get< 1 >( axes[1] ) );
-    std::get< 6 >( data ) = std::move( std::get< 1 >( axes[2] ) );
+    std::get< 4 >( data ) = std::move( axes[0].unit );
+    std::get< 5 >( data ) = std::move( axes[1].unit );
+    std::get< 6 >( data ) = std::move( axes[2].unit );
 
     return data;
   }

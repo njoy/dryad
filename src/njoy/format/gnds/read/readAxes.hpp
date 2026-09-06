@@ -16,9 +16,22 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Axes = std::vector< std::tuple< std::optional< int >,
-                                        std::optional< std::string >,
-                                        std::optional< std::vector< double > > > >;
+  /**
+   *  @brief The axis information: an optional index, unit and grid values
+   */
+  struct AxisInformation {
+
+    std::optional< int > index = std::nullopt;
+    std::optional< std::string > unit = std::nullopt;
+    std::optional< std::vector< double > > values = std::nullopt;
+
+    // C++-20 : constructor no longer required for emplace/emplace_back
+    AxisInformation( std::optional< int > index, std::optional< std::string > unit,
+                     std::optional< std::vector< double > > values ) :
+      index( std::move( index ) ), unit( std::move( unit ) ), values( std::move( values ) ) {}
+  };
+
+  using Axes = std::vector< AxisInformation >;
 
   /**
    *  @brief Read data from a GNDS axes node
@@ -41,14 +54,12 @@ namespace read {
       else if ( strcmp( child.name(), "grid" ) == 0 ) {
 
         auto grid = readGrid( child );
-        data.emplace_back( std::move( grid.index ),
-                           std::move( grid.unit ),
-                           std::move( grid.values ) );
+        data.emplace_back( std::move( grid.index ), std::move( grid.unit ), std::move( grid.values ) );
       }
     }
     std::sort( data.begin(), data.end(),
                [] ( auto&& left, auto&& right )
-                  { return std::get< 0 >( left ) > std::get< 0 >( right ); } );
+                  { return left.index > right.index; } );
 
     return data;
   }

@@ -62,7 +62,7 @@ namespace read {
       if ( attribute ) {
 
         outer = attribute.as_double();
-        convertEnergy( outer.value(), std::get< 1 >( units[0] ).value() );
+        convertEnergy( outer.value(), units[0].unit.value() );
       }
 
       // loop over the children of function1ds
