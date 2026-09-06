@@ -43,16 +43,16 @@ namespace pops {
     if ( child ) {
 
       auto content = readDouble( child );
-      convertMass( content.first, content.second.value() );
-      data.value = content.first;
+      convertMass( content.value, content.unit.value() );
+      data.value = content.value;
 
       auto node = child.child( "uncertainty" ).child( "standard" ).child( "double" );
       if ( node ) {
 
         auto uncertainty = readDouble( node );
-        auto unit = uncertainty.second.has_value() ? uncertainty.second.value() : content.second.value();
-        convertMass( uncertainty.first, unit );
-        data.uncertainty = uncertainty.first;
+        auto unit = uncertainty.unit.has_value() ? uncertainty.unit.value() : content.unit.value();
+        convertMass( uncertainty.value, unit );
+        data.uncertainty = uncertainty.value;
       }
     }
 
