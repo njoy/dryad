@@ -123,13 +123,13 @@ namespace covariance {
 
         // read data
         auto data = readCovarianceMatrix( matrix );
-        rowStructures.emplace_back( std::move( std::get< 1 >( data ) ) );
-        columnStructures.emplace_back( std::move( std::get< 2 >( data ) ) );
-        matrices.emplace_back( std::move( std::get< 3 >( data ) ) );
+        rowStructures.emplace_back( std::move( data.row_structure ) );
+        columnStructures.emplace_back( std::move( data.column_structure ) );
+        matrices.emplace_back( std::move( data.matrix ) );
 
         // convert structures
-        convertEnergies( rowStructures.back(), std::get< 4 >( data ).value() );
-        convertEnergies( columnStructures.back(), std::get< 5 >( data ).value() );
+        convertEnergies( rowStructures.back(), data.row_unit.value() );
+        convertEnergies( columnStructures.back(), data.column_unit.value() );
       }
 
       // check for variance scaling

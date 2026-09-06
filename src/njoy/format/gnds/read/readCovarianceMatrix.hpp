@@ -17,10 +17,19 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using CovarianceMatrix = std::tuple< bool, std::vector< double >, std::vector< double >,
-                                       matrix::Matrix< double >,
-                                       std::optional< std::string >, std::optional< std::string >,
-                                       std::optional< std::string > >;
+  /**
+   *  @brief The covariance matrix information
+   */
+  struct CovarianceMatrix {
+
+    bool relative;
+    std::vector< double > row_structure;
+    std::vector< double > column_structure;
+    matrix::Matrix< double > matrix;
+    std::optional< std::string > row_unit;
+    std::optional< std::string > column_unit;
+    std::optional< std::string > covariance_unit;
+  };
 
   /**
    *  @brief Read data from a GNDS covarianceMatrix node
@@ -35,14 +44,7 @@ namespace read {
 
     // check for the covariance type (relative or absolute)
     std::string type = covariance.attribute( "type" ).as_string();
-    if ( type == "relative" ) {
-
-      std::get< 0 >( data ) = true;
-    }
-    else {
-
-      std::get< 0 >( data ) = false;
-    }
+    data.relative = type == "relative";
 
     // read the array node
     auto array = readArray( covariance.child( "gridded2d" ).child( "array" ) );
@@ -54,13 +56,13 @@ namespace read {
     }
 
     // create the matrix
-    matrix::Matrix< double > matrix( array.shape[0], array.shape[1] );
+    data.matrix.resize( array.shape[0], array.shape[1] );
     unsigned int index = 0;
-    for ( unsigned int i = 0; i < matrix.rows(); ++i ) {
+    for ( unsigned int i = 0; i < data.matrix.rows(); ++i ) {
 
-      for ( unsigned int j = 0; j < matrix.cols(); ++j ) {
+      for ( unsigned int j = 0; j < data.matrix.cols(); ++j ) {
 
-        matrix( i, j ) = array.values[index++];
+        data.matrix( i, j ) = array.values[index++];
       }
     }
 
@@ -68,12 +70,11 @@ namespace read {
     auto axes = readAxes( covariance.child( "gridded2d" ).child( "axes" ) );
 
     // assign the data
-    std::get< 1 >( data ) = std::move( axes[0].values.value() );
-    std::get< 2 >( data ) = std::move( axes[1].values.value() );
-    std::get< 3 >( data ) = std::move( matrix );
-    std::get< 4 >( data ) = std::move( axes[0].unit );
-    std::get< 5 >( data ) = std::move( axes[1].unit );
-    std::get< 6 >( data ) = std::move( axes[2].unit );
+    data.row_structure = std::move( axes[0].values.value() );
+    data.column_structure = std::move( axes[1].values.value() );
+    data.row_unit = std::move( axes[0].unit );
+    data.column_unit = std::move( axes[1].unit );
+    data.covariance_unit = std::move( axes[2].unit );
 
     return data;
   }

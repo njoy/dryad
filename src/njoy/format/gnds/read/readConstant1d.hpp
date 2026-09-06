@@ -16,7 +16,7 @@ namespace gnds {
 namespace read {
 
   /**
-   *  @brief The axis information: an optional inde and unit
+   *  @brief The axis information: an optional index and unit
    */
   template < typename Type >
   struct Constant1d {

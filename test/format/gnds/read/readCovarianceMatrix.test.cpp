@@ -32,54 +32,54 @@ SCENARIO( "readCovarianceMatrix" ) {
 
         auto chunk = gnds::read::readCovarianceMatrix( covariance );
 
-        CHECK( true == std::get< 0 >( chunk ) );
+        CHECK( true == chunk.relative );
 
-        CHECK( 9 == std::get< 1 >( chunk ).size() );
-        CHECK_THAT( 1e-5  , WithinRel( std::get< 1 >( chunk )[0] ) );
-        CHECK_THAT( 115840, WithinRel( std::get< 1 >( chunk )[1] ) );
-        CHECK_THAT( 207460, WithinRel( std::get< 1 >( chunk )[2] ) );
-        CHECK_THAT( 3e5   , WithinRel( std::get< 1 >( chunk )[3] ) );
-        CHECK_THAT( 4.5e5 , WithinRel( std::get< 1 >( chunk )[4] ) );
-        CHECK_THAT( 6e5   , WithinRel( std::get< 1 >( chunk )[5] ) );
-        CHECK_THAT( 1.1e6 , WithinRel( std::get< 1 >( chunk )[6] ) );
-        CHECK_THAT( 1.5e6 , WithinRel( std::get< 1 >( chunk )[7] ) );
-        CHECK_THAT( 2e7   , WithinRel( std::get< 1 >( chunk )[8] ) );
+        CHECK( 9 == chunk.row_structure.size() );
+        CHECK_THAT( 1e-5  , WithinRel( chunk.row_structure[0] ) );
+        CHECK_THAT( 115840, WithinRel( chunk.row_structure[1] ) );
+        CHECK_THAT( 207460, WithinRel( chunk.row_structure[2] ) );
+        CHECK_THAT( 3e5   , WithinRel( chunk.row_structure[3] ) );
+        CHECK_THAT( 4.5e5 , WithinRel( chunk.row_structure[4] ) );
+        CHECK_THAT( 6e5   , WithinRel( chunk.row_structure[5] ) );
+        CHECK_THAT( 1.1e6 , WithinRel( chunk.row_structure[6] ) );
+        CHECK_THAT( 1.5e6 , WithinRel( chunk.row_structure[7] ) );
+        CHECK_THAT( 2e7   , WithinRel( chunk.row_structure[8] ) );
 
-        CHECK( 9 == std::get< 2 >( chunk ).size() );
-        CHECK_THAT( 1e-5  , WithinRel( std::get< 2 >( chunk )[0] ) );
-        CHECK_THAT( 115840, WithinRel( std::get< 2 >( chunk )[1] ) );
-        CHECK_THAT( 207460, WithinRel( std::get< 2 >( chunk )[2] ) );
-        CHECK_THAT( 3e5   , WithinRel( std::get< 2 >( chunk )[3] ) );
-        CHECK_THAT( 4.5e5 , WithinRel( std::get< 2 >( chunk )[4] ) );
-        CHECK_THAT( 6e5   , WithinRel( std::get< 2 >( chunk )[5] ) );
-        CHECK_THAT( 1.1e6 , WithinRel( std::get< 2 >( chunk )[6] ) );
-        CHECK_THAT( 1.5e6 , WithinRel( std::get< 2 >( chunk )[7] ) );
-        CHECK_THAT( 2e7   , WithinRel( std::get< 2 >( chunk )[8] ) );
+        CHECK( 9 == chunk.column_structure.size() );
+        CHECK_THAT( 1e-5  , WithinRel( chunk.column_structure[0] ) );
+        CHECK_THAT( 115840, WithinRel( chunk.column_structure[1] ) );
+        CHECK_THAT( 207460, WithinRel( chunk.column_structure[2] ) );
+        CHECK_THAT( 3e5   , WithinRel( chunk.column_structure[3] ) );
+        CHECK_THAT( 4.5e5 , WithinRel( chunk.column_structure[4] ) );
+        CHECK_THAT( 6e5   , WithinRel( chunk.column_structure[5] ) );
+        CHECK_THAT( 1.1e6 , WithinRel( chunk.column_structure[6] ) );
+        CHECK_THAT( 1.5e6 , WithinRel( chunk.column_structure[7] ) );
+        CHECK_THAT( 2e7   , WithinRel( chunk.column_structure[8] ) );
 
-        CHECK( 8 == std::get< 3 >( chunk ).rows() );
-        CHECK( 8 == std::get< 3 >( chunk ).cols() );
-        for ( unsigned int i = 0; i < std::get< 3 >( chunk ).rows(); ++i ) {
+        CHECK( 8 == chunk.matrix.rows() );
+        CHECK( 8 == chunk.matrix.cols() );
+        for ( unsigned int i = 0; i < chunk.matrix.rows(); ++i ) {
 
-          for ( unsigned int j = 0; j < std::get< 3 >( chunk ).cols(); ++j ) {
+          for ( unsigned int j = 0; j < chunk.matrix.cols(); ++j ) {
 
             if ( i != j ) {
 
-              CHECK( 0. == std::get< 3 >( chunk )(i,j) );
+              CHECK( 0. == chunk.matrix(i,j) );
             }
           }
         }
-        CHECK_THAT( 0     , WithinRel( std::get< 3 >( chunk )(0,0) ) );
-        CHECK_THAT( 4e-2  , WithinRel( std::get< 3 >( chunk )(1,1) ) );
-        CHECK_THAT( 0.0625, WithinRel( std::get< 3 >( chunk )(2,2) ) );
-        CHECK_THAT( 4e-2  , WithinRel( std::get< 3 >( chunk )(3,3) ) );
-        CHECK_THAT( 0.0225, WithinRel( std::get< 3 >( chunk )(4,4) ) );
-        CHECK_THAT( 4e-2  , WithinRel( std::get< 3 >( chunk )(5,5) ) );
-        CHECK_THAT( 0.0225, WithinRel( std::get< 3 >( chunk )(6,6) ) );
-        CHECK_THAT( 0     , WithinRel( std::get< 3 >( chunk )(7,7) ) );
+        CHECK_THAT( 0     , WithinRel( chunk.matrix(0,0) ) );
+        CHECK_THAT( 4e-2  , WithinRel( chunk.matrix(1,1) ) );
+        CHECK_THAT( 0.0625, WithinRel( chunk.matrix(2,2) ) );
+        CHECK_THAT( 4e-2  , WithinRel( chunk.matrix(3,3) ) );
+        CHECK_THAT( 0.0225, WithinRel( chunk.matrix(4,4) ) );
+        CHECK_THAT( 4e-2  , WithinRel( chunk.matrix(5,5) ) );
+        CHECK_THAT( 0.0225, WithinRel( chunk.matrix(6,6) ) );
+        CHECK_THAT( 0     , WithinRel( chunk.matrix(7,7) ) );
 
-        CHECK( "eV" == std::get< 4 >( chunk ) );
-        CHECK( "eV" == std::get< 5 >( chunk ) );
-        CHECK( std::nullopt == std::get< 6 >( chunk ) );
+        CHECK( "eV" == chunk.row_unit );
+        CHECK( "eV" == chunk.column_unit );
+        CHECK( std::nullopt == chunk.covariance_unit );
       } // THEN
     } // WHEN
 
@@ -93,68 +93,68 @@ SCENARIO( "readCovarianceMatrix" ) {
 
         auto chunk = gnds::read::readCovarianceMatrix( covariance );
 
-        CHECK( true == std::get< 0 >( chunk ) );
+        CHECK( true == chunk.relative );
 
-        CHECK( 7 == std::get< 1 >( chunk ).size() );
-        CHECK_THAT( 1.000000e-5, WithinRel( std::get< 1 >( chunk )[0] ) );
-        CHECK_THAT( 1.500000e+6, WithinRel( std::get< 1 >( chunk )[1] ) );
-        CHECK_THAT( 3.000000e+6, WithinRel( std::get< 1 >( chunk )[2] ) );
-        CHECK_THAT( 6.000000e+6, WithinRel( std::get< 1 >( chunk )[3] ) );
-        CHECK_THAT( 1.000000e+7, WithinRel( std::get< 1 >( chunk )[4] ) );
-        CHECK_THAT( 1.400000e+7, WithinRel( std::get< 1 >( chunk )[5] ) );
-        CHECK_THAT( 2.000000e+7, WithinRel( std::get< 1 >( chunk )[6] ) );
+        CHECK( 7 == chunk.row_structure.size() );
+        CHECK_THAT( 1.000000e-5, WithinRel( chunk.row_structure[0] ) );
+        CHECK_THAT( 1.500000e+6, WithinRel( chunk.row_structure[1] ) );
+        CHECK_THAT( 3.000000e+6, WithinRel( chunk.row_structure[2] ) );
+        CHECK_THAT( 6.000000e+6, WithinRel( chunk.row_structure[3] ) );
+        CHECK_THAT( 1.000000e+7, WithinRel( chunk.row_structure[4] ) );
+        CHECK_THAT( 1.400000e+7, WithinRel( chunk.row_structure[5] ) );
+        CHECK_THAT( 2.000000e+7, WithinRel( chunk.row_structure[6] ) );
 
-        CHECK( 7 == std::get< 2 >( chunk ).size() );
-        CHECK_THAT( 1.000000e-5, WithinRel( std::get< 2 >( chunk )[0] ) );
-        CHECK_THAT( 1.500000e+6, WithinRel( std::get< 2 >( chunk )[1] ) );
-        CHECK_THAT( 3.000000e+6, WithinRel( std::get< 2 >( chunk )[2] ) );
-        CHECK_THAT( 6.000000e+6, WithinRel( std::get< 2 >( chunk )[3] ) );
-        CHECK_THAT( 1.000000e+7, WithinRel( std::get< 2 >( chunk )[4] ) );
-        CHECK_THAT( 1.400000e+7, WithinRel( std::get< 2 >( chunk )[5] ) );
-        CHECK_THAT( 2.000000e+7, WithinRel( std::get< 2 >( chunk )[6] ) );
+        CHECK( 7 == chunk.column_structure.size() );
+        CHECK_THAT( 1.000000e-5, WithinRel( chunk.column_structure[0] ) );
+        CHECK_THAT( 1.500000e+6, WithinRel( chunk.column_structure[1] ) );
+        CHECK_THAT( 3.000000e+6, WithinRel( chunk.column_structure[2] ) );
+        CHECK_THAT( 6.000000e+6, WithinRel( chunk.column_structure[3] ) );
+        CHECK_THAT( 1.000000e+7, WithinRel( chunk.column_structure[4] ) );
+        CHECK_THAT( 1.400000e+7, WithinRel( chunk.column_structure[5] ) );
+        CHECK_THAT( 2.000000e+7, WithinRel( chunk.column_structure[6] ) );
 
-        CHECK( 6 == std::get< 3 >( chunk ).rows() );
-        CHECK( 6 == std::get< 3 >( chunk ).cols() );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(0,0) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(0,1) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(0,2) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(0,3) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(0,4) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(0,5) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(1,0) ) );
-        CHECK_THAT( 1.251800e-2, WithinRel( std::get< 3 >( chunk )(1,1) ) );
-        CHECK_THAT( 1.372900e-2, WithinRel( std::get< 3 >( chunk )(1,2) ) );
-        CHECK_THAT( 3.462100e-3, WithinRel( std::get< 3 >( chunk )(1,3) ) );
-        CHECK_THAT( 4.176900e-3, WithinRel( std::get< 3 >( chunk )(1,4) ) );
-        CHECK_THAT( 3.404000e-3, WithinRel( std::get< 3 >( chunk )(1,5) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(2,0) ) );
-        CHECK_THAT( 1.372900e-2, WithinRel( std::get< 3 >( chunk )(2,1) ) );
-        CHECK_THAT( 1.557300e-2, WithinRel( std::get< 3 >( chunk )(2,2) ) );
-        CHECK_THAT( 5.634300e-3, WithinRel( std::get< 3 >( chunk )(2,3) ) );
-        CHECK_THAT( 5.288200e-3, WithinRel( std::get< 3 >( chunk )(2,4) ) );
-        CHECK_THAT( 3.863500e-3, WithinRel( std::get< 3 >( chunk )(2,5) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(3,0) ) );
-        CHECK_THAT( 3.462100e-3, WithinRel( std::get< 3 >( chunk )(3,1) ) );
-        CHECK_THAT( 5.634300e-3, WithinRel( std::get< 3 >( chunk )(3,2) ) );
-        CHECK_THAT( 8.970100e-3, WithinRel( std::get< 3 >( chunk )(3,3) ) );
-        CHECK_THAT( 4.898600e-3, WithinRel( std::get< 3 >( chunk )(3,4) ) );
-        CHECK_THAT( 1.896700e-3, WithinRel( std::get< 3 >( chunk )(3,5) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(4,0) ) );
-        CHECK_THAT( 4.176900e-3, WithinRel( std::get< 3 >( chunk )(4,1) ) );
-        CHECK_THAT( 5.288200e-3, WithinRel( std::get< 3 >( chunk )(4,2) ) );
-        CHECK_THAT( 4.898600e-3, WithinRel( std::get< 3 >( chunk )(4,3) ) );
-        CHECK_THAT( 3.694600e-3, WithinRel( std::get< 3 >( chunk )(4,4) ) );
-        CHECK_THAT( 1.726800e-3, WithinRel( std::get< 3 >( chunk )(4,5) ) );
-        CHECK_THAT( 0., WithinRel( std::get< 3 >( chunk )(5,0) ) );
-        CHECK_THAT( 3.404000e-3, WithinRel( std::get< 3 >( chunk )(5,1) ) );
-        CHECK_THAT( 3.863500e-3, WithinRel( std::get< 3 >( chunk )(5,2) ) );
-        CHECK_THAT( 1.896700e-3, WithinRel( std::get< 3 >( chunk )(5,3) ) );
-        CHECK_THAT( 1.726800e-3, WithinRel( std::get< 3 >( chunk )(5,4) ) );
-        CHECK_THAT( 1.144800e-3, WithinRel( std::get< 3 >( chunk )(5,5) ) );
+        CHECK( 6 == chunk.matrix.rows() );
+        CHECK( 6 == chunk.matrix.cols() );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(0,0) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(0,1) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(0,2) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(0,3) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(0,4) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(0,5) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(1,0) ) );
+        CHECK_THAT( 1.251800e-2, WithinRel( chunk.matrix(1,1) ) );
+        CHECK_THAT( 1.372900e-2, WithinRel( chunk.matrix(1,2) ) );
+        CHECK_THAT( 3.462100e-3, WithinRel( chunk.matrix(1,3) ) );
+        CHECK_THAT( 4.176900e-3, WithinRel( chunk.matrix(1,4) ) );
+        CHECK_THAT( 3.404000e-3, WithinRel( chunk.matrix(1,5) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(2,0) ) );
+        CHECK_THAT( 1.372900e-2, WithinRel( chunk.matrix(2,1) ) );
+        CHECK_THAT( 1.557300e-2, WithinRel( chunk.matrix(2,2) ) );
+        CHECK_THAT( 5.634300e-3, WithinRel( chunk.matrix(2,3) ) );
+        CHECK_THAT( 5.288200e-3, WithinRel( chunk.matrix(2,4) ) );
+        CHECK_THAT( 3.863500e-3, WithinRel( chunk.matrix(2,5) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(3,0) ) );
+        CHECK_THAT( 3.462100e-3, WithinRel( chunk.matrix(3,1) ) );
+        CHECK_THAT( 5.634300e-3, WithinRel( chunk.matrix(3,2) ) );
+        CHECK_THAT( 8.970100e-3, WithinRel( chunk.matrix(3,3) ) );
+        CHECK_THAT( 4.898600e-3, WithinRel( chunk.matrix(3,4) ) );
+        CHECK_THAT( 1.896700e-3, WithinRel( chunk.matrix(3,5) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(4,0) ) );
+        CHECK_THAT( 4.176900e-3, WithinRel( chunk.matrix(4,1) ) );
+        CHECK_THAT( 5.288200e-3, WithinRel( chunk.matrix(4,2) ) );
+        CHECK_THAT( 4.898600e-3, WithinRel( chunk.matrix(4,3) ) );
+        CHECK_THAT( 3.694600e-3, WithinRel( chunk.matrix(4,4) ) );
+        CHECK_THAT( 1.726800e-3, WithinRel( chunk.matrix(4,5) ) );
+        CHECK_THAT( 0., WithinRel( chunk.matrix(5,0) ) );
+        CHECK_THAT( 3.404000e-3, WithinRel( chunk.matrix(5,1) ) );
+        CHECK_THAT( 3.863500e-3, WithinRel( chunk.matrix(5,2) ) );
+        CHECK_THAT( 1.896700e-3, WithinRel( chunk.matrix(5,3) ) );
+        CHECK_THAT( 1.726800e-3, WithinRel( chunk.matrix(5,4) ) );
+        CHECK_THAT( 1.144800e-3, WithinRel( chunk.matrix(5,5) ) );
 
-        CHECK( "eV" == std::get< 4 >( chunk ) );
-        CHECK( "eV" == std::get< 5 >( chunk ) );
-        CHECK( std::nullopt == std::get< 6 >( chunk ) );
+        CHECK( "eV" == chunk.row_unit );
+        CHECK( "eV" == chunk.column_unit );
+        CHECK( std::nullopt == chunk.covariance_unit );
       } // THEN
     } // WHEN
 
@@ -167,68 +167,68 @@ SCENARIO( "readCovarianceMatrix" ) {
 
         auto chunk = gnds::read::readCovarianceMatrix( covariance );
 
-        CHECK( true == std::get< 0 >( chunk ) );
+        CHECK( true == chunk.relative );
 
-        CHECK( 7 == std::get< 1 >( chunk ).size() );
-        CHECK_THAT( 1.000000e-5, WithinRel( std::get< 1 >( chunk )[0] ) );
-        CHECK_THAT( 1.098500e+7, WithinRel( std::get< 1 >( chunk )[1] ) );
-        CHECK_THAT( 1.200000e+7, WithinRel( std::get< 1 >( chunk )[2] ) );
-        CHECK_THAT( 1.400000e+7, WithinRel( std::get< 1 >( chunk )[3] ) );
-        CHECK_THAT( 1.600000e+7, WithinRel( std::get< 1 >( chunk )[4] ) );
-        CHECK_THAT( 1.800000e+7, WithinRel( std::get< 1 >( chunk )[5] ) );
-        CHECK_THAT( 2.000000e+7, WithinRel( std::get< 1 >( chunk )[6] ) );
+        CHECK( 7 == chunk.row_structure.size() );
+        CHECK_THAT( 1.000000e-5, WithinRel( chunk.row_structure[0] ) );
+        CHECK_THAT( 1.098500e+7, WithinRel( chunk.row_structure[1] ) );
+        CHECK_THAT( 1.200000e+7, WithinRel( chunk.row_structure[2] ) );
+        CHECK_THAT( 1.400000e+7, WithinRel( chunk.row_structure[3] ) );
+        CHECK_THAT( 1.600000e+7, WithinRel( chunk.row_structure[4] ) );
+        CHECK_THAT( 1.800000e+7, WithinRel( chunk.row_structure[5] ) );
+        CHECK_THAT( 2.000000e+7, WithinRel( chunk.row_structure[6] ) );
 
-        CHECK( 7 == std::get< 2 >( chunk ).size() );
-        CHECK_THAT( 1.000000e-5, WithinRel( std::get< 2 >( chunk )[0] ) );
-        CHECK_THAT( 1.098500e+7, WithinRel( std::get< 2 >( chunk )[1] ) );
-        CHECK_THAT( 1.200000e+7, WithinRel( std::get< 2 >( chunk )[2] ) );
-        CHECK_THAT( 1.400000e+7, WithinRel( std::get< 2 >( chunk )[3] ) );
-        CHECK_THAT( 1.600000e+7, WithinRel( std::get< 2 >( chunk )[4] ) );
-        CHECK_THAT( 1.800000e+7, WithinRel( std::get< 2 >( chunk )[5] ) );
-        CHECK_THAT( 2.000000e+7, WithinRel( std::get< 2 >( chunk )[6] ) );
+        CHECK( 7 == chunk.column_structure.size() );
+        CHECK_THAT( 1.000000e-5, WithinRel( chunk.column_structure[0] ) );
+        CHECK_THAT( 1.098500e+7, WithinRel( chunk.column_structure[1] ) );
+        CHECK_THAT( 1.200000e+7, WithinRel( chunk.column_structure[2] ) );
+        CHECK_THAT( 1.400000e+7, WithinRel( chunk.column_structure[3] ) );
+        CHECK_THAT( 1.600000e+7, WithinRel( chunk.column_structure[4] ) );
+        CHECK_THAT( 1.800000e+7, WithinRel( chunk.column_structure[5] ) );
+        CHECK_THAT( 2.000000e+7, WithinRel( chunk.column_structure[6] ) );
 
-        CHECK( 6 == std::get< 3 >( chunk ).rows() );
-        CHECK( 6 == std::get< 3 >( chunk ).cols() );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(0,0) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(0,1) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(0,2) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(0,3) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(0,4) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(0,5) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(1,0) ) );
-        CHECK_THAT( -2.732300e-3, WithinRel( std::get< 3 >( chunk )(1,1) ) );
-        CHECK_THAT( -8.431200e-4, WithinRel( std::get< 3 >( chunk )(1,2) ) );
-        CHECK_THAT(  1.625000e-3, WithinRel( std::get< 3 >( chunk )(1,3) ) );
-        CHECK_THAT(  2.647600e-3, WithinRel( std::get< 3 >( chunk )(1,4) ) );
-        CHECK_THAT(  4.939500e-3, WithinRel( std::get< 3 >( chunk )(1,5) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(2,0) ) );
-        CHECK_THAT( -1.625700e-3, WithinRel( std::get< 3 >( chunk )(2,1) ) );
-        CHECK_THAT( -3.558100e-4, WithinRel( std::get< 3 >( chunk )(2,2) ) );
-        CHECK_THAT(  1.459800e-3, WithinRel( std::get< 3 >( chunk )(2,3) ) );
-        CHECK_THAT(  2.437400e-3, WithinRel( std::get< 3 >( chunk )(2,4) ) );
-        CHECK_THAT(  3.772000e-3, WithinRel( std::get< 3 >( chunk )(2,5) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(3,0) ) );
-        CHECK_THAT( -2.314700e-4, WithinRel( std::get< 3 >( chunk )(3,1) ) );
-        CHECK_THAT(  3.051500e-4, WithinRel( std::get< 3 >( chunk )(3,2) ) );
-        CHECK_THAT(  1.292200e-3, WithinRel( std::get< 3 >( chunk )(3,3) ) );
-        CHECK_THAT(  2.152300e-3, WithinRel( std::get< 3 >( chunk )(3,4) ) );
-        CHECK_THAT(  2.538300e-3, WithinRel( std::get< 3 >( chunk )(3,5) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(4,0) ) );
-        CHECK_THAT(  3.229600e-4, WithinRel( std::get< 3 >( chunk )(4,1) ) );
-        CHECK_THAT(  6.356200e-4, WithinRel( std::get< 3 >( chunk )(4,2) ) );
-        CHECK_THAT(  1.308700e-3, WithinRel( std::get< 3 >( chunk )(4,3) ) );
-        CHECK_THAT(  1.986300e-3, WithinRel( std::get< 3 >( chunk )(4,4) ) );
-        CHECK_THAT(  2.439300e-3, WithinRel( std::get< 3 >( chunk )(4,5) ) );
-        CHECK_THAT(  0., WithinRel( std::get< 3 >( chunk )(5,0) ) );
-        CHECK_THAT(  4.981700e-4, WithinRel( std::get< 3 >( chunk )(5,1) ) );
-        CHECK_THAT(  8.811700e-4, WithinRel( std::get< 3 >( chunk )(5,2) ) );
-        CHECK_THAT(  1.559200e-3, WithinRel( std::get< 3 >( chunk )(5,3) ) );
-        CHECK_THAT(  2.135100e-3, WithinRel( std::get< 3 >( chunk )(5,4) ) );
-        CHECK_THAT(  2.953900e-3, WithinRel( std::get< 3 >( chunk )(5,5) ) );
+        CHECK( 6 == chunk.matrix.rows() );
+        CHECK( 6 == chunk.matrix.cols() );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(0,0) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(0,1) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(0,2) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(0,3) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(0,4) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(0,5) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(1,0) ) );
+        CHECK_THAT( -2.732300e-3, WithinRel( chunk.matrix(1,1) ) );
+        CHECK_THAT( -8.431200e-4, WithinRel( chunk.matrix(1,2) ) );
+        CHECK_THAT(  1.625000e-3, WithinRel( chunk.matrix(1,3) ) );
+        CHECK_THAT(  2.647600e-3, WithinRel( chunk.matrix(1,4) ) );
+        CHECK_THAT(  4.939500e-3, WithinRel( chunk.matrix(1,5) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(2,0) ) );
+        CHECK_THAT( -1.625700e-3, WithinRel( chunk.matrix(2,1) ) );
+        CHECK_THAT( -3.558100e-4, WithinRel( chunk.matrix(2,2) ) );
+        CHECK_THAT(  1.459800e-3, WithinRel( chunk.matrix(2,3) ) );
+        CHECK_THAT(  2.437400e-3, WithinRel( chunk.matrix(2,4) ) );
+        CHECK_THAT(  3.772000e-3, WithinRel( chunk.matrix(2,5) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(3,0) ) );
+        CHECK_THAT( -2.314700e-4, WithinRel( chunk.matrix(3,1) ) );
+        CHECK_THAT(  3.051500e-4, WithinRel( chunk.matrix(3,2) ) );
+        CHECK_THAT(  1.292200e-3, WithinRel( chunk.matrix(3,3) ) );
+        CHECK_THAT(  2.152300e-3, WithinRel( chunk.matrix(3,4) ) );
+        CHECK_THAT(  2.538300e-3, WithinRel( chunk.matrix(3,5) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(4,0) ) );
+        CHECK_THAT(  3.229600e-4, WithinRel( chunk.matrix(4,1) ) );
+        CHECK_THAT(  6.356200e-4, WithinRel( chunk.matrix(4,2) ) );
+        CHECK_THAT(  1.308700e-3, WithinRel( chunk.matrix(4,3) ) );
+        CHECK_THAT(  1.986300e-3, WithinRel( chunk.matrix(4,4) ) );
+        CHECK_THAT(  2.439300e-3, WithinRel( chunk.matrix(4,5) ) );
+        CHECK_THAT(  0., WithinRel( chunk.matrix(5,0) ) );
+        CHECK_THAT(  4.981700e-4, WithinRel( chunk.matrix(5,1) ) );
+        CHECK_THAT(  8.811700e-4, WithinRel( chunk.matrix(5,2) ) );
+        CHECK_THAT(  1.559200e-3, WithinRel( chunk.matrix(5,3) ) );
+        CHECK_THAT(  2.135100e-3, WithinRel( chunk.matrix(5,4) ) );
+        CHECK_THAT(  2.953900e-3, WithinRel( chunk.matrix(5,5) ) );
 
-        CHECK( "eV" == std::get< 4 >( chunk ) );
-        CHECK( "eV" == std::get< 5 >( chunk ) );
-        CHECK( std::nullopt == std::get< 6 >( chunk ) );
+        CHECK( "eV" == chunk.row_unit );
+        CHECK( "eV" == chunk.column_unit );
+        CHECK( std::nullopt == chunk.covariance_unit );
       } // THEN
     } // WHEN
 
