@@ -32,8 +32,8 @@ namespace read {
     if ( strcmp( child.name(), "constant1d" ) == 0 ) {
 
       auto data = readConstant1dAsDouble( child );
-      convertEnergy( data.first, data.second.value() );
-      return data.first;
+      convertEnergy( data.value, data.unit.value() );
+      return data.value;
     }
     else {
 

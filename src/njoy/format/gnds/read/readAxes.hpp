@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_READ_READAXES
 
 // system includes
+#include <optional>
 #include <string>
 #include <vector>
 

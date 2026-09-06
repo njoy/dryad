@@ -12,7 +12,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::format;
 
-void verifyChunk( const gnds::read::RealConstant1d& );
+void verifyChunk( const gnds::read::Constant1d< double >& );
 
 SCENARIO( "readConstant1d" ) {
 
@@ -46,8 +46,8 @@ SCENARIO( "readConstant1d" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const gnds::read::RealConstant1d& chunk ) {
+void verifyChunk( const gnds::read::Constant1d< double >& chunk ) {
 
-  CHECK( 2224648 == chunk.first );
-  CHECK( "eV" == chunk.second );
+  CHECK( 2224648 == chunk.value );
+  CHECK( "eV" == chunk.unit );
 }
