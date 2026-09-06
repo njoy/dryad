@@ -36,7 +36,7 @@ namespace read {
       if ( strcmp( child.name(), "axis" ) == 0 ) {
 
         auto axis = readAxis( child );
-        data.emplace_back( std::move( axis.first ), std::move( axis.second ), std::nullopt );
+        data.emplace_back( std::move( axis.index ), std::move( axis.unit ), std::nullopt );
       }
       else if ( strcmp( child.name(), "grid" ) == 0 ) {
 

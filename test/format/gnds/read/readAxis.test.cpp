@@ -47,6 +47,6 @@ SCENARIO( "readAxis" ) {
 
 void verifyChunk( const gnds::read::Axis& chunk ) {
 
-  CHECK( 1    == chunk.first );
-  CHECK( "eV"  == chunk.second );
+  CHECK( 1    == chunk.index );
+  CHECK( "eV"  == chunk.unit );
 }

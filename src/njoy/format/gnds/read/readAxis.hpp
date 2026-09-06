@@ -15,7 +15,14 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Axis = std::pair< std::optional< int >, std::optional< std::string > >;
+  /**
+   *  @brief The axis information: an optional inde and unit
+   */
+  struct Axis {
+
+    std::optional< int > index;
+    std::optional< std::string > unit = std::nullopt;
+  };
 
   /**
    *  @brief Read data from a GNDS axis node
@@ -32,14 +39,14 @@ namespace read {
     Axis data;
     if ( index ) {
 
-      data.first = index.as_int();
+      data.index = index.as_int();
     }
     if ( unit ) {
 
       std::string value = unit.as_string();
       if ( value.size() != 0 ) {
 
-        data.second = std::move( value );
+        data.unit = std::move( value );
       }
     }
 
