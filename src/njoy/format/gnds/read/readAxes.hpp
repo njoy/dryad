@@ -41,9 +41,9 @@ namespace read {
       else if ( strcmp( child.name(), "grid" ) == 0 ) {
 
         auto grid = readGrid( child );
-        data.emplace_back( std::move( std::get< 0 >( grid ) ),
-                           std::move( std::get< 1 >( grid ) ),
-                           std::move( std::get< 2 >( grid ) ) );
+        data.emplace_back( std::move( grid.index ),
+                           std::move( grid.unit ),
+                           std::move( grid.values ) );
       }
     }
     std::sort( data.begin(), data.end(),

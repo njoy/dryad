@@ -17,9 +17,15 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Grid = std::tuple< std::optional< int >,
-                           std::optional< std::string >,
-                           std::vector< double > >;
+  /**
+   *  @brief The grid information: an optional index and unit, and grid values
+   */
+  struct Grid {
+
+    std::optional< int > index = std::nullopt;
+    std::optional< std::string > unit = std::nullopt;
+    std::vector< double > values;
+  };
 
   /**
    *  @brief Read data from a GNDS grid node

@@ -62,22 +62,22 @@ SCENARIO( "readAxes" ) {
 
 void verifyChunk( const gnds::read::Grid& chunk, int index ) {
 
-  CHECK( index == std::get< 0 >( chunk ) );
-  CHECK( "eV"  == std::get< 1 >( chunk ) );
+  CHECK( index == chunk.index );
+  CHECK( "eV"  == chunk.unit );
 
-  CHECK( 13 == std::get< 2 >( chunk ).size() );
+  CHECK( 13 == chunk.values.size() );
 
-  CHECK_THAT( 1e-5   , WithinRel( std::get< 2 >( chunk )[0] ) );
-  CHECK_THAT( 115840 , WithinRel( std::get< 2 >( chunk )[1] ) );
-  CHECK_THAT( 207460 , WithinRel( std::get< 2 >( chunk )[2] ) );
-  CHECK_THAT( 3e5    , WithinRel( std::get< 2 >( chunk )[3] ) );
-  CHECK_THAT( 4.5e5  , WithinRel( std::get< 2 >( chunk )[4] ) );
-  CHECK_THAT( 6e5    , WithinRel( std::get< 2 >( chunk )[5] ) );
-  CHECK_THAT( 1.1e6  , WithinRel( std::get< 2 >( chunk )[6] ) );
-  CHECK_THAT( 1.5e6  , WithinRel( std::get< 2 >( chunk )[7] ) );
-  CHECK_THAT( 3e6    , WithinRel( std::get< 2 >( chunk )[8] ) );
-  CHECK_THAT( 6e6    , WithinRel( std::get< 2 >( chunk )[9] ) );
-  CHECK_THAT( 1e7    , WithinRel( std::get< 2 >( chunk )[10] ) );
-  CHECK_THAT( 1.4e7  , WithinRel( std::get< 2 >( chunk )[11] ) );
-  CHECK_THAT( 2e7    , WithinRel( std::get< 2 >( chunk )[12] ) );
+  CHECK_THAT( 1e-5   , WithinRel( chunk.values[0] ) );
+  CHECK_THAT( 115840 , WithinRel( chunk.values[1] ) );
+  CHECK_THAT( 207460 , WithinRel( chunk.values[2] ) );
+  CHECK_THAT( 3e5    , WithinRel( chunk.values[3] ) );
+  CHECK_THAT( 4.5e5  , WithinRel( chunk.values[4] ) );
+  CHECK_THAT( 6e5    , WithinRel( chunk.values[5] ) );
+  CHECK_THAT( 1.1e6  , WithinRel( chunk.values[6] ) );
+  CHECK_THAT( 1.5e6  , WithinRel( chunk.values[7] ) );
+  CHECK_THAT( 3e6    , WithinRel( chunk.values[8] ) );
+  CHECK_THAT( 6e6    , WithinRel( chunk.values[9] ) );
+  CHECK_THAT( 1e7    , WithinRel( chunk.values[10] ) );
+  CHECK_THAT( 1.4e7  , WithinRel( chunk.values[11] ) );
+  CHECK_THAT( 2e7    , WithinRel( chunk.values[12] ) );
 }
