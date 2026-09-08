@@ -80,8 +80,15 @@ namespace read {
         // grow the data accordingly
         energies.insert( energies.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
         values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
-        boundaries.emplace_back( energies.size() - 1 );
-        interpolants.emplace_back( interpolant );
+        if ( interpolants.size() == 0 || interpolants.back() != interpolant ) {
+
+          boundaries.emplace_back( energies.size() - 1 );
+          interpolants.emplace_back( interpolant );
+        }
+        else {
+
+          boundaries.back() = energies.size() - 1;
+        }
       }
     }
     else {

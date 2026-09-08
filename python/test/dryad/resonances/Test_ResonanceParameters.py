@@ -22,6 +22,7 @@ from njoy.dryad.resonances import TabulatedLevelSpacing
 from njoy.dryad.resonances import ResonanceParameters
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
+from njoy.dryad.id import ReactionID
 
 class Test_ResonanceParameters( unittest.TestCase ) :
 
@@ -91,13 +92,9 @@ class Test_ResonanceParameters( unittest.TestCase ) :
 
         self.assertEqual( None, chunk.unresolved )
 
-        # resolved data only, using an explicit None
-        chunk = ResonanceParameters( [ resolved ], None )
-
-        self.assertEqual( 1, len( chunk.resolved ) )
-        self.assertEqual( resolved, chunk.resolved[0] )
-
-        self.assertEqual( None, chunk.unresolved )
+        self.assertEqual( 2, len( chunk.reactions ) )
+        self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
+        self.assertEqual( ReactionID( 'n,Cl35->n,Cl35' ), chunk.reactions[1] )
 
         # resolved and unresolved data
         chunk = ResonanceParameters( [ resolved ], unresolved )
@@ -110,8 +107,9 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+4, chunk.unresolved.lower_energy_limit )
         self.assertAlmostEqual( 1e+6, chunk.unresolved.upper_energy_limit )
 
-        # the resolved region ends where the unresolved region begins
-        self.assertAlmostEqual( chunk.resolved[-1].upper_energy_limit, chunk.unresolved.lower_energy_limit )
+        self.assertEqual( 2, len( chunk.reactions ) )
+        self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
+        self.assertEqual( ReactionID( 'n,Cl35->n,Cl35' ), chunk.reactions[1] )
 
         # keyword arguments should give the same thing
         chunk = ResonanceParameters( resolved = [ resolved ], unresolved = unresolved )
@@ -130,12 +128,20 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+3, chunk.resolved[1].lower_energy_limit )
         self.assertEqual( True, chunk.unresolved is not None )
 
+        self.assertEqual( 2, len( chunk.reactions ) )
+        self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
+        self.assertEqual( ReactionID( 'n,Cl35->n,Cl35' ), chunk.reactions[1] )
+
         # unresolved data only
         chunk = ResonanceParameters( [], unresolved )
 
         self.assertEqual( 0, len( chunk.resolved ) )
         self.assertEqual( True, chunk.unresolved is not None )
         self.assertEqual( unresolved, chunk.unresolved )
+
+        self.assertEqual( 2, len( chunk.reactions ) )
+        self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
+        self.assertEqual( ReactionID( 'n,Cl35->n,Cl35' ), chunk.reactions[1] )
 
     def test_setters( self ) :
 

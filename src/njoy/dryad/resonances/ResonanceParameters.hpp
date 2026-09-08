@@ -18,8 +18,6 @@ namespace resonances {
   /**
    *  @class
    *  @brief The resonance parameter data
-   *
-   *  Note: this is currently a placeholder
    */
   class ResonanceParameters {
 
@@ -27,6 +25,44 @@ namespace resonances {
 
     std::vector< CompoundSystem > resolved_;
     std::optional< UnresolvedCompoundSystem > unresolved_;
+
+    std::vector< id::ReactionID > reactions_;
+
+    /* auxiliary functions */
+
+    /**
+     *  @brief Collect all reactions from the resonance parameters
+     */
+    void collectReactions() {
+
+      this->reactions().clear();
+
+      // go over the reactions in the resolved compund systems
+      for ( auto&& compound : this->resolved() ) {
+
+        for ( auto&& id : compound.reactions() ) {
+
+          auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
+          if ( iter == this->reactions().end() || *iter != id ) {
+
+            this->reactions().insert( iter, id );
+          }
+        }
+      }
+
+      // go over the reactions in the unresolved compound system
+      if ( this->unresolved().has_value() ) {
+
+        for ( auto&& id : this->unresolved()->reactions() ) {
+
+          auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
+          if ( iter == this->reactions().end() || *iter != id ) {
+
+            this->reactions().insert( iter, id );
+          }
+        }
+      }
+    }
 
   public:
 
@@ -52,9 +88,39 @@ namespace resonances {
     ResonanceParameters( std::vector< CompoundSystem > resolved,
                          std::optional< UnresolvedCompoundSystem > unresolved=std::nullopt ) :
         resolved_( std::move( resolved ) ),
-        unresolved_( std::move( unresolved ) ) {}
+        unresolved_( std::move( unresolved ) )  {
+
+      this->collectReactions();
+    }
 
     /* methods */
+
+    /**
+     *  @brief Return the reactions to which the resonance parameters contribute
+     */
+    const std::vector< id::ReactionID >& reactions() const {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the reactions to which the resonance parameters contribute
+     */
+    std::vector< id::ReactionID >& reactions() {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return whether or not a given reaction is present in the resonance parameters
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    bool hasReaction( const id::ReactionID& id ) const {
+
+      auto iter = std::lower_bound( this->reactions().begin(), this->reactions().end(), id );
+      return iter != this->reactions().end() && *iter == id;
+    }
 
     /**
      *  @brief Return the compound systems that make up the resolved resonance data
@@ -80,6 +146,7 @@ namespace resonances {
     void resolved( std::vector< CompoundSystem > resolved ) {
 
       this->resolved_ = std::move( resolved );
+      this->collectReactions();
     }
 
     /**
@@ -106,6 +173,7 @@ namespace resonances {
     void unresolved(  UnresolvedCompoundSystem unresolved ) {
 
       this->unresolved_ = std::move( unresolved );
+      this->collectReactions();
     }
 
     /**
