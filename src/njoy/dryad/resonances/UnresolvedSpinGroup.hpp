@@ -81,9 +81,9 @@ namespace resonances {
 
       std::sort( this->channels().begin(), this->channels().end(),
                  [] ( auto&& left, auto&& right )
-                    { return left.identifier() < right.identifier(); }
-        );
+                    { return left.identifier() < right.identifier(); } );
 
+      this->reactions().clear();
       for ( const auto& channel : this->channels() ) {
 
         auto id = channel.identifier().reaction();
@@ -235,7 +235,7 @@ namespace resonances {
 
       return this->channels().front().quantumNumbers().totalAngularMomentum();
     }
-    
+
     //! @todo average infinitely dilute cross sections from the average parameters.
     //        analog of SpinGroup::crossSections, but operating on the average
     //        widths and level spacings rather than per-resonance parameters.
