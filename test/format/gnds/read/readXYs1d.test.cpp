@@ -50,21 +50,21 @@ SCENARIO( "readXYs1D" ) {
 void verifyChunk( const gnds::read::XYs1d& chunk ) {
 
   // outer domain value and unit
-  CHECK( std::nullopt == std::get< 0 >( chunk ) );
-  CHECK( std::nullopt == std::get< 1 >( chunk ) );
+  CHECK( std::nullopt == chunk.outer );
+  CHECK( std::nullopt == chunk.outer_unit );
 
   // interpolation type
-  CHECK( "" == std::get< 6 >( chunk ) );
+  CHECK( "" == chunk.interpolation );
 
   // x and y units
-  CHECK( "eV" == std::get< 3 >( chunk ) );
-  CHECK( "b"  == std::get< 5 >( chunk ) );
+  CHECK( "eV" == chunk.x_unit );
+  CHECK( "b"  == chunk.y_unit );
 
   // x and y values
-  CHECK( 101 == std::get< 2 >( chunk ).size() );
-  CHECK( 101 == std::get< 4 >( chunk ).size() );
-  CHECK_THAT( 10.       , WithinRel( std::get< 2 >( chunk )[0] ) );
-  CHECK_THAT( 1e+11     , WithinRel( std::get< 2 >( chunk )[100] ) );
-  CHECK_THAT( 2.74896e+8, WithinRel( std::get< 4 >( chunk )[0] ) );
-  CHECK_THAT( 12987.1   , WithinRel( std::get< 4 >( chunk )[100] ) );
+  CHECK( 101 == chunk.x.size() );
+  CHECK( 101 == chunk.y.size() );
+  CHECK_THAT( 10.       , WithinRel( chunk.x[0] ) );
+  CHECK_THAT( 1e+11     , WithinRel( chunk.x[100] ) );
+  CHECK_THAT( 2.74896e+8, WithinRel( chunk.y[0] ) );
+  CHECK_THAT( 12987.1   , WithinRel( chunk.y[100] ) );
 }

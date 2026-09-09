@@ -52,7 +52,7 @@ SCENARIO( "readLegendre" ) {
 void verifyChunk( const gnds::read::Legendre& chunk ) {
 
   // outer domain value and unit
-  CHECK( 1e-5 == chunk.energy );
+  CHECK( 1e-5 == chunk.outer );
 
   // values
   CHECK( 7 == chunk.moments.size() );

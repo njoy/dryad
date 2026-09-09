@@ -20,7 +20,7 @@ namespace read {
    */
   struct Legendre {
 
-    std::optional< double > energy;
+    std::optional< double > outer;
     std::vector< double > moments;
   };
 
@@ -39,7 +39,7 @@ namespace read {
     auto outer = legendre.attribute( "outerDomainValue" );
     if ( outer ) {
 
-      data.energy = outer.as_double();
+      data.outer = outer.as_double();
     }
 
     // check for initial zeros

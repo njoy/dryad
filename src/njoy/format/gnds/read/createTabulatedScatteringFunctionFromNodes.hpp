@@ -36,14 +36,14 @@ namespace read {
       auto data = readXYs1D( node );
 
       // get the interpolation type
-      auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+      auto interpolant = createInterpolationType( data.interpolation );
 
       // convert units - if necessary
-      convertInverseLengths( std::get< 2 >( data ), std::get< 3 >( data ).value() );
+      convertInverseLengths( data.x, data.x_unit.value() );
 
       // assign data
-      x = std::move( std::get< 2 >( data ) );
-      values = std::move( std::get< 4 >( data ) );
+      x = std::move( data.x );
+      values = std::move( data.y );
       boundaries.emplace_back( x.size() - 1 );
       interpolants.emplace_back( interpolant );
     }
@@ -61,25 +61,24 @@ namespace read {
         auto data = readXYs1D( xys1d, units );
 
         // get the interpolation type
-        auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+        auto interpolant = createInterpolationType( data.interpolation );
 
         // convert units - if necessary
-        convertInverseLengths( std::get< 2 >( data ), std::get< 3 >( data ).value() );
+        convertInverseLengths( data.x, data.x_unit.value() );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;
         if ( x.size() > 0 ) {
 
-          if ( x.back() == std::get< 2 >( data ).front() &&
-               values.back() == std::get< 4 >( data ).front() ) {
+          if ( x.back() == data.x.front() && values.back() == data.y.front() ) {
 
             offset = 1;
           }
         }
 
         // grow the data accordingly
-        x.insert( x.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
-        values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
+        x.insert( x.end(), std::next( data.x.begin(), offset ), data.x.end() );
+        values.insert( values.end(), std::next( data.y.begin(), offset ), data.y.end() );
         boundaries.emplace_back( x.size() - 1 );
         interpolants.emplace_back( interpolant );
       }

@@ -40,12 +40,12 @@ namespace thermal {
       auto data = readXYs1D( node );
 
       // convert units - if necessary
-      convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ).value() );
-      convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ).value() );
+      convertTemperatures( data.x, data.x_unit.value() );
+      convertInverseEnergies( data.y, data.y_unit.value() );
 
       // assign data
-      temperatures = std::move( std::get< 2 >( data ) );
-      values = std::move( std::get< 4 >( data ) );
+      temperatures = std::move( data.x );
+      values = std::move( data.y );
     }
     else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
 
@@ -61,23 +61,22 @@ namespace thermal {
         auto data = readXYs1D( xys1d, units );
 
         // convert units - if necessary
-        convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ).value() );
-        convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ).value() );
+        convertTemperatures( data.x, data.x_unit.value() );
+        convertInverseEnergies( data.y, data.y_unit.value() );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;
         if ( temperatures.size() > 0 ) {
 
-          if ( temperatures.back() == std::get< 2 >( data ).front() &&
-               values.back() == std::get< 4 >( data ).front() ) {
+          if ( temperatures.back() == data.x.front() && values.back() == data.y.front() ) {
 
             offset = 1;
           }
         }
 
         // grow the data accordingly
-        temperatures.insert( temperatures.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
-        values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
+        temperatures.insert( temperatures.end(), std::next( data.x.begin(), offset), data.x.end() );
+        values.insert( values.end(), std::next( data.y.begin(), offset ), data.y.end() );
       }
     }
     else {

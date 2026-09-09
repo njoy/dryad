@@ -34,12 +34,12 @@ namespace read {
     convertLegendreMoments( data.moments );
 
     // convert outer domain value if necessary
-    if ( data.energy.has_value() ) {
+    if ( data.outer.has_value() ) {
 
-      convertEnergy( data.energy.value(), units[0].unit.value() );
+      convertEnergy( data.outer.value(), units[0].unit.value() );
     }
 
-    return { std::move( data.energy ),
+    return { std::move( data.outer ),
              dryad::LegendreAngularDistributionFunction( std::move( data.moments ) ) };
   }
 
