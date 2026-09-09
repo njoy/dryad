@@ -21,7 +21,13 @@ namespace resonances {
    */
   class ResonanceParameters {
 
+    /* alias */
+
+    using Radius = std::variant< double, TabulatedRadius >;
+
     /* fields */
+
+    Radius scattering_;
 
     std::vector< CompoundSystem > resolved_;
     std::optional< UnresolvedCompoundSystem > unresolved_;
@@ -29,6 +35,16 @@ namespace resonances {
     std::vector< id::ReactionID > reactions_;
 
     /* auxiliary functions */
+
+    /**
+     *  @brief Find the scattering radius in the data
+     */
+    static Radius
+    findScatteringRadius( const std::vector< CompoundSystem>& resolved,
+                          const std::optional< UnresolvedCompoundSystem >& unresolved ) {
+
+      return 0.;
+    }
 
     /**
      *  @brief Collect all reactions from the resonance parameters
@@ -81,12 +97,17 @@ namespace resonances {
      *  @brief Constructor
      *
      *  @param[in] resolved     the resolved resonance compound systems
-     *  @param[in] unresolved   the unresolved resonance compound systems
+     *  @param[in] unresolved   the optional unresolved resonance compound system
+     *  @param[in] unresolved   the optional scattering radius
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved,
-                         std::optional< UnresolvedCompoundSystem > unresolved=std::nullopt ) :
+                         std::optional< UnresolvedCompoundSystem > unresolved = std::nullopt,
+                         std::optional< Radius > radius = std::nullopt ) :
         resolved_( std::move( resolved ) ),
-        unresolved_( std::move( unresolved ) )  {
+        unresolved_( std::move( unresolved ) ),
+        scattering_( radius.has_value()
+                       ? radius.value()
+                       : findScatteringRadius( resolved, unresolved ) )  {
 
       this->collectReactions();
     }
