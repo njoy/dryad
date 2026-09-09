@@ -21,9 +21,21 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Table = std::vector< std::tuple< std::string,
-                                         std::vector< double >,
-                                         std::optional< std::string > > >;
+  /**
+   *  @brief The column data information
+   */
+  struct ColumnData {
+
+    std::string name;
+    std::vector< double > values;
+    std::optional< std::string > unit = std::nullopt;
+
+    // C++-20 : constructor no longer required for emplace/emplace_back
+    ColumnData( std::string name, std::vector< double > values, std::optional< std::string > unit ) :
+      name( std::move( name ) ), values( std::move( values ) ), unit( std::move( unit ) ) {}
+  };
+
+  using Table = std::vector< ColumnData >;
 
   /**
    *  @brief Read data from a GNDS table node

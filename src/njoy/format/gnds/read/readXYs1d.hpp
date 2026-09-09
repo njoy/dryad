@@ -33,7 +33,6 @@ namespace read {
     std::string interpolation;
   };
 
-
   /**
    *  @brief Read data from a GNDS XYs1D node
    *
