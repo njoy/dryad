@@ -42,12 +42,27 @@ namespace covariance {
     convertEnergies( energies, std::get< 1 >( axes[0] ).value() );
 
     // read the array
-    auto matrix = readArray( scaling.child( "gridded2d" ).child( "array" ) );
-    std::vector< double > factors;
-    factors.reserve( energies.size() - 1 );
-    for ( unsigned int i = 0; i < energies.size() - 1; ++i ) {
+    auto array = readArray( scaling.child( "gridded2d" ).child( "array" ) );
+    if ( array.shape.size() != 2 ) {
 
-      factors.push_back( matrix(i,i) );
+      Log::error( "Expected a GNDS array node with rank {}, found one with rank {} instead",
+                  2, array.shape.size() );
+      throw std::exception();
+    }
+
+    std::size_t size = energies.size() - 1;
+    std::vector< double > factors;
+    factors.reserve( size );
+    if ( array.shape[0] != size || array.shape[1] != size ) {
+
+      Log::error( "Expected the dimensions of a GNDS array node to be equal to {}, found {} and {} instead",
+                  size, array.shape[0], array.shape[1] );
+      throw std::exception();
+    }
+
+    for ( unsigned int i = 0; i < size; ++i ) {
+
+      factors.push_back( array.values[ i + i * size ] );
     }
     convertVarianceScalingFactors( factors, std::get< 1 >( axes[2] ).value() );
 

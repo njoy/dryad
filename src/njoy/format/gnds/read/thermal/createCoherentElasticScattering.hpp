@@ -42,7 +42,13 @@ namespace thermal {
 
       // get the axes and array data
       auto axes = readAxes( node.child( "gridded2d" ).child( "axes" ) );
-      auto data = readArray( node.child( "gridded2d" ).child( "array" ) );
+      auto array = readArray( node.child( "gridded2d" ).child( "array" ) );
+      if ( array.shape.size() != 2 ) {
+
+        Log::error( "Expected a GNDS array node with rank {}, found one with rank {} instead",
+                    2, array.shape.size() );
+        throw std::exception();
+      }
 
       // temperatures are the first entry
       auto temperatures = std::get< 2 >( axes[0] ).value();
@@ -55,20 +61,29 @@ namespace thermal {
       // extract Bragg edge data
       auto number_temperatures = temperatures.size();
       auto number_energies = energies.size();
+      if ( array.shape[0] != number_temperatures ) {
+
+        Log::error( "Expected the first dimension of a GNDS array node to be equal to {}, found {} instead",
+                    number_temperatures, array.shape[0] );
+        throw std::exception();
+      }
+      if ( array.shape[1] != number_energies ) {
+
+        Log::error( "Expected the second dimension of a GNDS array node to be equal to {}, found {} instead",
+                    number_energies, array.shape[1] );
+        throw std::exception();
+      }
+
       std::vector< dryad::thermal::BraggEdgeData > edges;
       for ( std::size_t i = 0; i < number_temperatures; ++i ) {
 
-        std::vector< double > values;
-        values.reserve( number_energies );
-        for ( std::size_t j = 0; j < number_energies; ++j ) {
-
-          values.emplace_back( data( i, j ) );
-        }
+        auto begin = std::next( array.values.begin(), i * number_energies );
+        auto end = std::next( begin, number_energies );
+        std::vector< double > values( begin, end );
 
         //! @todo convert values to ev barns
 
         edges.emplace_back( temperatures[i], energies, std::move( values ) );
-
       }
 
       return dryad::thermal::CoherentElasticScattering( lower, upper, std::move( edges ) );
