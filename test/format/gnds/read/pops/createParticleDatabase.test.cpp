@@ -15,7 +15,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "createParticleDatabase" ) {
 
-  GIVEN( "GNDS energy node" ) {
+  GIVEN( "GNDS PoPs node" ) {
 
     pugi::xml_document document;
     document.load_file( "n-038_Sr_088.endf.gnds.xml" );
@@ -46,11 +46,15 @@ SCENARIO( "createParticleDatabase" ) {
 
         auto chunk = gnds::read::pops::createParticleDatabase( pops, "eval" );
 
-        CHECK( 45 == chunk.numberParticles() );
+        CHECK( 49 == chunk.numberParticles() );
 
         CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "n" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "p" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "d" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "t" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "h" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "a" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H1" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H2" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "H3" ) ) );
@@ -166,6 +170,134 @@ SCENARIO( "createParticleDatabase" ) {
         CHECK( true == chunk.hasParticle( id::ParticleID( "Sr88[continuum]" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "Sr88[all]" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "Sr89[all]" ) ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "GNDS PoPs node for atomic interactions - GNDS 2.0 and 2.1" ) {
+
+    pugi::xml_document document;
+    document.load_file( "photoat-001_H_000.endf.gnds.xml" );
+    pugi::xml_node suite = document.child( "reactionSuite" );
+    pugi::xml_node pops = suite.child( "PoPs" );
+
+    std::vector< id::ParticleID > particles = {
+
+      id::ParticleID( "g" ), id::ParticleID( "e-" ), id::ParticleID( "e+" ), id::ParticleID( "H" ),
+      id::ParticleID( "H{1s1/2}" )
+    };
+
+    WHEN( "a single pops node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = gnds::read::pops::createParticleDatabase( pops, "eval" );
+
+        CHECK( 4 == chunk.numberParticles() );
+
+        CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( false == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
+
+        // H has no mass node in the GNDS file
+        decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
+        CHECK( std::nullopt == h.mass() );
+        CHECK( std::nullopt == h.massUncertainty() );
+        CHECK( std::nullopt == h.nuclearMass() );
+        CHECK( std::nullopt == h.nuclearMassUncertainty() );
+        CHECK( std::nullopt == h.energy() );
+        CHECK( std::nullopt == h.energyUncertainty() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single pops node is given along with a list of identifiers" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = gnds::read::pops::createParticleDatabase( pops, particles, "eval" );
+
+        CHECK( 5 == chunk.numberParticles() );
+
+        CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
+
+        // H has no mass node in the GNDS file
+        decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
+        CHECK( std::nullopt == h.mass() );
+        CHECK( std::nullopt == h.massUncertainty() );
+        CHECK( std::nullopt == h.nuclearMass() );
+        CHECK( std::nullopt == h.nuclearMassUncertainty() );
+        CHECK( std::nullopt == h.energy() );
+        CHECK( std::nullopt == h.energyUncertainty() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "GNDS PoPs node for atomic interactions - GNDS 2.2" ) {
+
+    pugi::xml_document document;
+    document.load_file( "photoat-001_H_000.endf.gnds.2.2.xml" );
+    pugi::xml_node suite = document.child( "reactionSuite" );
+    pugi::xml_node pops = suite.child( "PoPs" );
+
+    std::vector< id::ParticleID > particles = {
+
+      id::ParticleID( "g" ), id::ParticleID( "e-" ), id::ParticleID( "e+" ), id::ParticleID( "H" ),
+      id::ParticleID( "H{1s1/2}" )
+    };
+
+    WHEN( "a single pops node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = gnds::read::pops::createParticleDatabase( pops, "eval" );
+
+        CHECK( 4 == chunk.numberParticles() );
+
+        CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( false == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
+
+        // H has a mass node in the GNDS file
+        decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
+        CHECK( 1.00790034773 == h.mass() );
+        CHECK( std::nullopt == h.massUncertainty() );
+        CHECK( std::nullopt == h.nuclearMass() );
+        CHECK( std::nullopt == h.nuclearMassUncertainty() );
+        CHECK( std::nullopt == h.energy() );
+        CHECK( std::nullopt == h.energyUncertainty() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single pops node is given along with a list of identifiers" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = gnds::read::pops::createParticleDatabase( pops, particles, "eval" );
+
+        CHECK( 5 == chunk.numberParticles() );
+
+        CHECK( true == chunk.hasParticle( id::ParticleID( "g" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e-" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "e+" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H" ) ) );
+        CHECK( true == chunk.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
+
+        // H has no mass node in the GNDS file
+        decltype(auto) h = chunk.particle( id::ParticleID( "H" ) );
+        CHECK( 1.00790034773 == h.mass() );
+        CHECK( std::nullopt == h.massUncertainty() );
+        CHECK( std::nullopt == h.nuclearMass() );
+        CHECK( std::nullopt == h.nuclearMassUncertainty() );
+        CHECK( std::nullopt == h.energy() );
+        CHECK( std::nullopt == h.energyUncertainty() );
       } // THEN
     } // WHEN
   } // GIVEN

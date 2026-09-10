@@ -30,20 +30,25 @@ namespace pops {
                                          const std::string& style = "eval" ) {
 
     dryad::id::ParticleID id;
-    std::optional< double > mass;
-    std::optional< double > nuclear_mass;
-    std::optional< double > energy;
-    std::optional< double > mass_uncertainty;
-    std::optional< double > nuclear_mass_uncertainty;
-    std::optional< double > energy_uncertainty;
-    std::optional< double > spin;
-    std::optional< short > parity;
+    std::optional< double > mass = std::nullopt;
+    std::optional< double > nuclear_mass = std::nullopt;
+    std::optional< double > energy = std::nullopt;
+    std::optional< double > mass_uncertainty = std::nullopt;
+    std::optional< double > nuclear_mass_uncertainty = std::nullopt;
+    std::optional< double > energy_uncertainty = std::nullopt;
+    std::optional< double > spin = std::nullopt;
+    std::optional< short > parity = std::nullopt;
 
     if ( strcmp( node.name(), "nuclide" ) == 0 ) {
 
       id = dryad::id::ParticleID( node.attribute( "id" ).as_string() );
       auto child = node.child( "mass" );
-      mass = child ? createMass( child, style ) : std::nullopt;
+      if ( child ) {
+
+        auto data = createMass( child, style );
+        mass = data.value;
+        mass_uncertainty = data.uncertainty;
+      }
 
       auto nucleus = node.child( "nucleus" );
       child = nucleus.child( "spin" );
@@ -51,9 +56,19 @@ namespace pops {
       child = nucleus.child( "parity" );
       parity = child ? createParity( child, style ) : std::nullopt;
       child = nucleus.child( "energy" );
-      energy = child ? createEnergy( child, style ) : std::nullopt;
+      if ( child ) {
+
+        auto data = createEnergy( child, style );
+        energy = data.value;
+        energy_uncertainty = data.uncertainty;
+      }
       child = nucleus.child( "mass" );
-      nuclear_mass = child ? createMass( child, style ) : std::nullopt;
+      if ( child ) {
+
+        auto data = createMass( child, style );
+        nuclear_mass = data.value;
+        nuclear_mass_uncertainty = data.uncertainty;
+      }
     }
     else if ( strcmp( node.name(), "gaugeBoson" ) == 0 ||
               strcmp( node.name(), "baryon" ) == 0 ||
@@ -62,7 +77,12 @@ namespace pops {
       id = dryad::id::ParticleID( node.attribute( "id" ).as_string() );
 
       auto child = node.child( "mass" );
-      mass = child ? createMass( child, style ) : std::nullopt;
+      if ( child ) {
+
+        auto data = createMass( child, style );
+        mass = data.value;
+        mass_uncertainty = data.uncertainty;
+      }
       child = node.child( "spin" );
       spin = child ? createSpin( child, style ) : std::nullopt;
       child = node.child( "parity" );
@@ -73,7 +93,12 @@ namespace pops {
       id = dryad::id::ParticleID( node.attribute( "symbol" ).as_string() );
 
       auto child = node.child( "mass" );
-      mass = child ? createMass( child, style ) : std::nullopt;
+      if ( child ) {
+
+        auto data = createMass( child, style );
+        mass = data.value;
+        mass_uncertainty = data.uncertainty;
+      }
     }
     else {
 

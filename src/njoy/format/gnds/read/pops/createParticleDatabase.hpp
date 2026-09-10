@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_READ_POPS_CREATEPARTICLEDATABASE
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes
@@ -84,8 +85,8 @@ namespace pops {
     for ( pugi::xml_node element = elements.child( "chemicalElement" );
           element; element = element.next_sibling( "chemicalElement" ) ) {
 
-      // if the element has a mass node: make it into a Particle
-      particles.emplace_back( createParticle( element, style ) );
+      std::size_t size = particles.size();
+      dryad::id::ParticleID id( element.attribute( "symbol" ).as_string() );
 
       // loop over the isotopes
       auto isotopes = element.child( "isotopes" );
@@ -103,6 +104,45 @@ namespace pops {
 
           particles.emplace_back( createParticle( nuclide, style ) );
           fill_missing_data( particles[index], particles.back() );
+        }
+      }
+
+      auto begin = std::next( particles.begin(), size );
+      auto iter = std::find_if( begin, particles.end(),
+                                [&] ( auto&& particle )
+                                    { return particle.identifier() == id; } );
+      if ( iter == particles.end() ) {
+
+        particles.insert( begin, createParticle( element, style ) );
+      }
+    }
+
+    // loop over the aliases and look for p, d, t, h, a
+    auto aliases = pops.child( "aliases" );
+    for ( pugi::xml_node alias = aliases.child( "alias" );
+          alias; alias = alias.next_sibling( "alias" ) ) {
+
+      std::string symbol = alias.attribute( "id" ).as_string();
+      if ( dryad::id::ParticleID::isRegistered( symbol ) ) {
+
+        dryad::id::ParticleID id( symbol );
+        if ( id == dryad::id::ParticleID::proton() || id == dryad::id::ParticleID::deuteron() ||
+             id == dryad::id::ParticleID::triton() || id == dryad::id::ParticleID::helion()   ||
+             id == dryad::id::ParticleID::alpha() ) {
+
+          auto nuclide = dryad::id::ParticleID::nuclide( id.za() );
+          auto iter = std::find_if( particles.begin(), particles.end(),
+                                    [&] ( auto&& particle )
+                                        { return particle.identifier() == nuclide; } );
+          if ( iter != particles.end() ) {
+
+            particles.emplace_back( *iter );
+            particles.back().identifier( id );
+            particles.back().mass( particles.back().nuclearMass() );
+            particles.back().massUncertainty( particles.back().nuclearMassUncertainty() );
+            particles.back().nuclearMass( std::nullopt );
+            particles.back().nuclearMassUncertainty( std::nullopt );
+          }
         }
       }
     }

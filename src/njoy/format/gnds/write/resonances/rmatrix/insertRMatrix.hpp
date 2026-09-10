@@ -11,7 +11,7 @@
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/resonances/CompoundSystem.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
-#include "njoy/format/gnds/write/insertParticleDatabase.hpp"
+#include "njoy/format/gnds/write/pops/insertParticleDatabase.hpp"
 #include "njoy/format/gnds/write/resonances/rmatrix/createFormalism.hpp"
 #include "njoy/format/gnds/write/resonances/rmatrix/createBoundaryCondition.hpp"
 #include "njoy/format/gnds/write/resonances/rmatrix/insertResonanceReactions.hpp"
@@ -91,7 +91,7 @@ namespace rmatrix {
       node.append_attribute( "reducedWidthAmplitudes" ) = "true";
     }
 
-    insertParticleDatabase( node, options, collectParticles( compound ), style );
+    pops::insertParticleDatabase( node, options, collectParticles( compound ), style );
     insertResonanceReactions( node, options, compound, qvalues, style, true );
 
     pugi::xml_node groups = node.append_child( "spinGroups" );

@@ -72,6 +72,7 @@ namespace id {
           symbol_( std::move( symbol ) ),
           alternatives_( std::move( alternatives ) ) {
 
+        this->alternatives_.emplace_back( this->symbol_ + "0" );
         this->hash_ = std::hash< std::string >{}( this->symbol() );
       }
 

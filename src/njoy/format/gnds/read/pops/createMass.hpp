@@ -2,7 +2,7 @@
 #define NJOY_FORMAT_GNDS_READ_POPS_CREATEMASS
 
 // system includes
-#include <tuple>
+#include <optional>
 
 // other includes
 #include "pugixml.hpp"
@@ -17,27 +17,46 @@ namespace read {
 namespace pops {
 
   /**
-   *  @brief Create a mass values from a GNDS mass xml node
+   *  @brief A mass and associated uncertainty value
+   */
+  struct Mass {
+
+    std::optional< double > value = std::nullopt;
+    std::optional< double > uncertainty = std::nullopt;
+  };
+
+  /**
+   *  @brief Create a mass and uncertainty value from a GNDS energy xml node
    *
    *  @param[in] mass    the GNDS mass node
    *  @param[in] style   the gnds style to process (default is eval)
    */
-  inline std::optional< double >
+  inline Mass
   createMass( const pugi::xml_node& mass, const std::string& style = "eval" ) {
 
     // check that this is a valid mass node
     throwExceptionOnWrongNode( mass, "mass" );
 
-    // get a double node if it exists, else return nullopt
+    Mass data;
+
     auto child = mass.find_child_by_attribute( "double", "label", style.c_str() );
     if ( child ) {
 
       auto content = readDouble( child );
       convertMass( content.first, content.second.value() );
-      return content.first;
+      data.value = content.first;
+
+      auto node = child.child( "uncertainty" ).child( "standard" ).child( "double" );
+      if ( node ) {
+
+        auto uncertainty = readDouble( node );
+        auto unit = uncertainty.second.has_value() ? uncertainty.second.value() : content.second.value();
+        convertMass( uncertainty.first, unit );
+        data.uncertainty = uncertainty.first;
+      }
     }
 
-    return std::nullopt;
+    return data;
   }
 
 } // pops namespace

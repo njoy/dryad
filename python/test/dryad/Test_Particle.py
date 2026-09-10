@@ -75,7 +75,7 @@ class Test_Particle( unittest.TestCase ) :
         self.assertEqual( +1, particle.parity )
         self.assertIsNone( particle.energy )
         self.assertIsNone( particle.nuclear_mass )
-        self.assertAlmostEqual( 0., particle.mass_uncertainty )
+        self.assertIsNone( particle.mass_uncertainty )
         self.assertIsNone( particle.energy_uncertainty )
         self.assertIsNone( particle.nuclear_mass_uncertainty )
 
@@ -174,7 +174,7 @@ class Test_Particle( unittest.TestCase ) :
         self.assertEqual( +1, particle.parity )
         self.assertIsNone( particle.energy )
         self.assertIsNone( particle.nuclear_mass )
-        self.assertAlmostEqual( 0., particle.mass_uncertainty )
+        self.assertIsNone( particle.mass_uncertainty )
         self.assertIsNone( particle.energy_uncertainty )
         self.assertIsNone( particle.nuclear_mass_uncertainty )
 

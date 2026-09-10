@@ -264,6 +264,38 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2004, id.za )
         self.assertIsNone( id.vacancies )
 
+        id = ParticleID( 'H' )
+        self.assertEqual( 'H', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 1000, id.za )
+        self.assertIsNone( id.vacancies )
+
+        id = ParticleID( 'H0' )
+        self.assertEqual( 'H', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 1000, id.za )
+        self.assertIsNone( id.vacancies )
+
+        id = ParticleID( 'Hydrogen' )
+        self.assertEqual( 'H', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 1000, id.za )
+        self.assertIsNone( id.vacancies )
+
+        id = ParticleID.nuclide( 1000, 0 )
+        self.assertEqual( 'H', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 1000, id.za )
+        self.assertIsNone( id.vacancies )
+
         self.assertEqual( size, ParticleID.size() )     # no additional identifiers
 
         id = ParticleID( ElementID( 1 ), 1, LevelID( 0 ) )

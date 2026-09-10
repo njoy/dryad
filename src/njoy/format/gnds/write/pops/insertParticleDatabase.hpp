@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLEDATABASE
-#define NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLEDATABASE
+#ifndef NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLEDATABASE
+#define NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLEDATABASE
 
 // system includes
 #include <algorithm>
@@ -10,13 +10,14 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/dryad/ParticleDatabase.hpp"
-#include "njoy/format/gnds/write/insertParticle.hpp"
+#include "njoy/format/gnds/write/pops/insertParticle.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
 
 namespace njoy {
 namespace format {
 namespace gnds {
 namespace write {
+namespace pops {
 
   /**
    *  @brief Insert a properties of particles xml node
@@ -94,12 +95,16 @@ namespace write {
       }
     }
 
-    auto compare = [] ( const auto& particle, const auto& id )
+    // useful lambdas
+    auto compare = [] ( auto&& particle, const auto& id )
                       { return particle.identifier() < id; };
-    auto iter = std::lower_bound( database.particles().begin(), database.particles().end(),
-                                  dryad::id::ParticleID( "H" ), compare );
-    std::vector< dryad::Particle > particles( iter, database.particles().end() );
 
+    // get a vector of particles to write into the pops node
+    auto begin = std::lower_bound( database.particles().begin(), database.particles().end(),
+                                   dryad::id::ParticleID( "H" ), compare );
+    std::vector< dryad::Particle > particles( begin, database.particles().end() );
+
+    // add particles for elementary particles if needed and set aliases
     std::vector< std::pair< dryad::id::ParticleID, dryad::id::ParticleID > > elementary = {
 
       { dryad::id::ParticleID::deuteron(), dryad::id::ParticleID( "H2" ) },
@@ -111,11 +116,16 @@ namespace write {
 
       if ( database.hasParticle( particle ) ) {
 
-        if ( ! database.hasParticle( nuclide ) ) {
+        decltype(auto) data = database.particle( particle );
 
-          particles.insert( std::lower_bound( particles.begin(), particles.end(), nuclide, compare ),
-                            dryad::Particle::defaultParticle( nuclide ) );
+        auto iter = std::lower_bound( particles.begin(), particles.end(), nuclide, compare );
+        if ( iter == particles.end() || iter->identifier() != nuclide ) {
+
+          iter = particles.insert( iter, dryad::Particle::defaultParticle( nuclide ) );
         }
+
+        iter->nuclearMass( data.mass() );
+        iter->nuclearMassUncertainty( data.massUncertainty() );
 
         auto id = nuclide.symbol();
         std::transform( id.begin(), id.end(), id.begin(),
@@ -127,6 +137,32 @@ namespace write {
       }
     }
 
+    // remove continuum and all particles
+    auto iter = particles.begin();
+    while ( iter != particles.end() ) {
+
+      if ( iter->identifier().e() == dryad::id::LevelID::continuum ||
+           iter->identifier().e() == dryad::id::LevelID::all ) {
+
+        auto id = iter->identifier().groundState();
+        auto ground = std::lower_bound( particles.begin(), particles.end(), id, compare );
+        if ( ground == particles.end() || ground->identifier() != id ) {
+
+          iter->identifier( id );
+          ++iter;
+        }
+        else {
+
+          iter = particles.erase( iter );
+        }
+      }
+      else {
+
+        ++iter;
+      }
+    }
+
+    // write the data to the GNDS node
     iter = particles.begin();
     if ( iter != particles.end() ) {
 
@@ -134,7 +170,7 @@ namespace write {
       while ( iter != particles.end() ) {
 
         dryad::id::ElementID element_id( iter->identifier().z() );
-        auto next = std::lower_bound( iter, particles.cend(),
+        auto next = std::lower_bound( iter, particles.end(),
                                       dryad::id::ParticleID::nuclide( ( element_id.number() + 1 ) * 1000 ),
                                       compare );
 
@@ -143,14 +179,25 @@ namespace write {
         element.append_attribute( "Z" ) = element_id.number();
         element.append_attribute( "name" ) = element_id.name().c_str();
 
+        pugi::xml_node isotopes;
         if ( iter->identifier().a() == 0 ) {
 
-          //! @todo mass value?
+          if ( iter->mass().has_value() || iter->nuclearMass().has_value() ||
+               iter->energy().has_value() || iter->spin().has_value() ||
+               iter->parity().has_value() ) {
 
+            isotopes = element.append_child( "isotopes" );
+
+            auto isotope = isotopes.append_child( "isotope" );
+            isotope.append_attribute( "symbol" ) = ( element_id.symbol() + "0" ).c_str();
+            isotope.append_attribute( "A" ) = 0;
+            auto nuclides = isotope.append_child( "nuclides" );
+
+            insertParticle( nuclides, local_options, "nuclide", *iter, style );
+          }
           ++iter;
         }
 
-        pugi::xml_node isotopes;
         while ( iter != next ) {
 
           if ( isotopes.empty() ) {
@@ -158,21 +205,21 @@ namespace write {
             isotopes = element.append_child( "isotopes" );
           }
 
-          auto next_isotope = std::lower_bound(
-                                  iter, next,
-                                  dryad::id::ParticleID::nuclide( iter->identifier().za() + 1 ),
-                                  compare );
-
           auto groundstate = iter->identifier().groundState();
+
           auto isotope = isotopes.append_child( "isotope" );
           isotope.append_attribute( "symbol" ) = groundstate.symbol().c_str();
           isotope.append_attribute( "A" ) = groundstate.a();
           auto nuclides = isotope.append_child( "nuclides" );
 
+          auto next_isotope = std::lower_bound(
+                                  iter, next,
+                                  dryad::id::ParticleID::nuclide( groundstate.za() + 1 ),
+                                  compare );
+
           while ( iter != next_isotope ) {
 
             insertParticle( nuclides, local_options, "nuclide", *iter, style );
-
             ++iter;
           }
         }
@@ -186,7 +233,8 @@ namespace write {
     return node;
   }
 
-} // read namespace
+} // pops namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace

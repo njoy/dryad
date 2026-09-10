@@ -103,7 +103,7 @@ namespace dryad {
     static Particle photon() {
 
       return Particle( id::ParticleID::photon(), 0., 1.0, +1,
-                       std::nullopt, std::nullopt, 0. );
+                       std::nullopt, std::nullopt, std::nullopt );
     };
 
     /**
@@ -206,6 +206,8 @@ namespace dryad {
 
         if ( id.a() != 0 ) {
 
+          // non-elemental identifiers: update with external data
+
           Particle particle( id );
           if ( external::ripl3::Levels::hasEntry( id ) ) {
 
@@ -225,8 +227,9 @@ namespace dryad {
         }
         else {
 
-          Particle particle( id::ParticleID( id.z(), 0, 0 ) );
-          return particle;
+          // elemental identifiers: return empty particle for the element
+
+          return Particle( id::ParticleID( id.z(), 0, 0 ) );
         }
       }
     };

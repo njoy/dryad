@@ -62,7 +62,7 @@ namespace dryad {
      *  @param[in] identifiers   the particle identifiers
      */
     static std::vector< Particle >
-    defaultParticles( const std::vector< id::ParticleID > identifiers ) {
+    defaultParticles( const std::vector< id::ParticleID >& identifiers ) {
 
       auto less = [] ( auto&&left, auto&& right ) {
 

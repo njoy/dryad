@@ -11,7 +11,6 @@
 #include "njoy/dryad/Documentation.hpp"
 #include "njoy/format/gnds/write/determineDepth.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
-#include "njoy/format/gnds/write/toString.hpp"
 
 namespace njoy {
 namespace format {

@@ -24,6 +24,9 @@ namespace format {
 namespace gnds {
 namespace read {
 
+  /**
+   *  @brief The array shape and data as a row major flat array
+   */
   struct Array {
 
     std::vector< std::size_t > shape;

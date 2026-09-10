@@ -1,5 +1,5 @@
-#ifndef NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLE
-#define NJOY_FORMAT_GNDS_WRITE_INSERTPARTICLE
+#ifndef NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLE
+#define NJOY_FORMAT_GNDS_WRITE_POPS_INSERTPARTICLE
 
 // system includes
 #include <algorithm>
@@ -14,12 +14,13 @@
 #include "njoy/format/gnds/write/insertDouble.hpp"
 #include "njoy/format/gnds/write/insertInteger.hpp"
 #include "njoy/format/gnds/write/insertFraction.hpp"
-#include "njoy/format/gnds/write/toString.hpp"
+#include "njoy/format/gnds/write/insertStandardUncertainty.hpp"
 
 namespace njoy {
 namespace format {
 namespace gnds {
 namespace write {
+namespace pops {
 
   /**
    *  @brief Insert a particle xml node
@@ -43,26 +44,45 @@ namespace write {
     }
 
     std::string id = particle.identifier().symbol();
+    if ( name == "nuclide" && particle.identifier().a() == 0 ) {
+
+      id += "0";
+    }
 
     pugi::xml_node node = parent.append_child( name );
     pugi::xml_node current = node;
-    current.append_attribute( "id" ) = id;
+    current.append_attribute( "id" ) = id.c_str();
 
     if ( particle.mass().has_value() ) {
 
       auto mass = current.append_child( "mass" );
-      insertDouble( mass, options, particle.mass().value(), style, "amu" );
+      auto value = insertDouble( mass, options, particle.mass().value(), style, "amu" );
+      if ( particle.massUncertainty().has_value() ) {
+
+        insertStandardUncertainty( value, options, particle.massUncertainty().value() );
+      }
     }
 
     if ( name == "nuclide" ) {
 
       auto charge = current.append_child( "charge" );
-      insertDouble( charge, options, 0., style, "e" );
+      insertInteger( charge, options, 0, style, "e" );
 
       current = current.append_child( "nucleus" );
       std::transform( id.begin(), id.end(), id.begin(),
                       [] ( unsigned char character ) { return std::tolower( character ); } );
-      current.append_attribute( "id" ) = id;
+      current.append_attribute( "id" ) = id.c_str();
+      current.append_attribute( "index" ) = particle.identifier().e();
+
+      if ( particle.nuclearMass().has_value() ) {
+
+        auto mass = current.append_child( "mass" );
+        auto value = insertDouble( mass, options, particle.nuclearMass().value(), style, "amu" );
+        if ( particle.nuclearMassUncertainty().has_value() ) {
+
+          insertStandardUncertainty( value, options, particle.nuclearMassUncertainty().value() );
+        }
+      }
     }
 
     if ( particle.spin().has_value() ) {
@@ -88,18 +108,23 @@ namespace write {
     }
 
     auto charge = current.append_child( "charge" );
-    insertDouble( charge, options, particle.identifier().z(), style, "e" );
+    insertInteger( charge, options, particle.identifier().z(), style, "e" );
 
     if ( particle.energy().has_value() ) {
 
       auto energy = current.append_child( "energy" );
-      insertDouble( energy, options, particle.energy().value(), style, "eV" );
+      auto value = insertDouble( energy, options, particle.energy().value(), style, "eV" );
+      if ( particle.energyUncertainty().has_value() ) {
+
+        insertStandardUncertainty( value, options, particle.energyUncertainty().value() );
+      }
     }
 
     return node;
   }
 
-} // read namespace
+} // pops namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace

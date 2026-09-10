@@ -35,19 +35,19 @@ namespace write {
     pugi::xml_node node = parent.append_child( "fraction" );
     if ( label.has_value() ) {
 
-      node.append_attribute( "label" ) = std::move( label.value() );
+      node.append_attribute( "label" ) = label.value().c_str();
     }
     if ( denominator == 1 || numerator == 0 ) {
 
-      node.append_attribute( "value" ) = std::to_string( numerator );
+      node.append_attribute( "value" ) = std::to_string( numerator ).c_str();
     }
     else {
 
-      node.append_attribute( "value" ) = std::to_string( numerator ) + '/' + std::to_string( denominator );
+      node.append_attribute( "value" ) = ( std::to_string( numerator ) + '/' + std::to_string( denominator ) ).c_str();
     }
     if ( unit.has_value() ) {
 
-      node.append_attribute( "unit" ) = std::move( unit.value() );
+      node.append_attribute( "unit" ) = unit.value().c_str();
     }
 
     return node;

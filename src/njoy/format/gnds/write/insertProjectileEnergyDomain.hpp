@@ -44,8 +44,8 @@ namespace write {
     }
 
     pugi::xml_node node = parent.append_child( "projectileEnergyDomain" );
-    node.append_attribute( "min" ) = toString( options, min );
-    node.append_attribute( "max" ) = toString( options, max );
+    node.append_attribute( "min" ) = toString( options, min ).c_str();
+    node.append_attribute( "max" ) = toString( options, max ).c_str();
     node.append_attribute( "unit" ) = "eV";
 
     return node;
