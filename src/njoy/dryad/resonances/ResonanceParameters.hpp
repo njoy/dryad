@@ -21,13 +21,9 @@ namespace resonances {
    */
   class ResonanceParameters {
 
-    /* alias */
-
-    using Radius = std::variant< double, TabulatedRadius >;
-
     /* fields */
 
-    Radius scattering_;
+    ChannelRadii radii_;
 
     std::vector< CompoundSystem > resolved_;
     std::optional< UnresolvedCompoundSystem > unresolved_;
@@ -39,11 +35,11 @@ namespace resonances {
     /**
      *  @brief Find the scattering radius in the data
      */
-    static Radius
-    findScatteringRadius( const std::vector< CompoundSystem>& resolved,
-                          const std::optional< UnresolvedCompoundSystem >& unresolved ) {
+    static ChannelRadii
+    findRadii( const std::vector< CompoundSystem>& resolved,
+               const std::optional< UnresolvedCompoundSystem >& unresolved ) {
 
-      return 0.;
+      return ChannelRadii( 0. );
     }
 
     /**
@@ -53,7 +49,7 @@ namespace resonances {
 
       this->reactions().clear();
 
-      // go over the reactions in the resolved compund systems
+      // go over the reactions in the resolved compound systems
       for ( auto&& compound : this->resolved() ) {
 
         for ( auto&& id : compound.reactions() ) {
@@ -100,21 +96,53 @@ namespace resonances {
      *
      *  @param[in] resolved     the resolved resonance compound systems
      *  @param[in] unresolved   the optional unresolved resonance compound system
-     *  @param[in] unresolved   the optional scattering radius
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved,
-                         std::optional< UnresolvedCompoundSystem > unresolved = std::nullopt,
-                         std::optional< Radius > radius = std::nullopt ) :
+                         std::optional< UnresolvedCompoundSystem > unresolved = std::nullopt ) :
         resolved_( std::move( resolved ) ),
         unresolved_( std::move( unresolved ) ),
-        scattering_( radius.has_value()
-                       ? radius.value()
-                       : findScatteringRadius( resolved, unresolved ) )  {
+        radii_( findRadii( resolved, unresolved ) )  {
 
       this->collectReactions();
     }
 
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] radii   the default channel radii (informational only)
+     */
+    ResonanceParameters( ChannelRadii radii ) :
+        resolved_(),
+        unresolved_( std::nullopt ),
+        radii_( std::move( radii ) )  {}
+
     /* methods */
+
+    /**
+     *  @brief Return the default channel radii
+     */
+    const ChannelRadii& radii() const {
+
+      return this->radii_;
+    }
+
+    /**
+     *  @brief Return the default channel radii
+     */
+    ChannelRadii& radii() {
+
+      return this->radii_;
+    }
+
+    /**
+     *  @brief Set the default channel radii
+     *
+     *  @param[in] radii  the channel radii
+     */
+    void radii( ChannelRadii radii ) {
+
+      this->radii_ = std::move( radii );
+    }
 
     /**
      *  @brief Return the reactions to which the resonance parameters contribute
@@ -205,8 +233,8 @@ namespace resonances {
      */
     friend bool operator==( const ResonanceParameters& left, const ResonanceParameters& right ) {
 
-      return  std::tie( left.resolved(), left.unresolved() ) ==
-              std::tie( right.resolved(), right.unresolved() );
+      return  std::tie( left.radii(), left.resolved(), left.unresolved() ) ==
+              std::tie( right.radii(), right.resolved(), right.unresolved() );
     }
 
     /**

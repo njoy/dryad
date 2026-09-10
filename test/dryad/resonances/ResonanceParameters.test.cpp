@@ -76,6 +76,14 @@ SCENARIO( "ResonanceParameters" ) {
 
       ResonanceParameters chunk( { resolved } );
 
+      decltype(auto) radii = chunk.radii();
+      CHECK( false == radii.hasShiftFactorRadius() );
+      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
+      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK( std::nullopt == radii.shiftFactorRadius() );
+      CHECK( std::nullopt == radii.phaseShiftRadius() );
+
       CHECK( 1 == chunk.resolved().size() );
       CHECK( resolved == chunk.resolved()[0] );
       CHECK_THAT( 1e-5, WithinRel( chunk.resolved()[0].lowerEnergyLimit() ) );
@@ -91,6 +99,14 @@ SCENARIO( "ResonanceParameters" ) {
     THEN( "ResonanceParameters can be constructed with resolved and unresolved data" ) {
 
       ResonanceParameters chunk( { resolved }, unresolved );
+
+      decltype(auto) radii = chunk.radii();
+      CHECK( false == radii.hasShiftFactorRadius() );
+      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
+      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK( std::nullopt == radii.shiftFactorRadius() );
+      CHECK( std::nullopt == radii.phaseShiftRadius() );
 
       CHECK( 1 == chunk.resolved().size() );
       CHECK( resolved == chunk.resolved()[0] );
@@ -112,6 +128,14 @@ SCENARIO( "ResonanceParameters" ) {
 
       ResonanceParameters chunk( { lower, upper }, unresolved );
 
+      decltype(auto) radii = chunk.radii();
+      CHECK( false == radii.hasShiftFactorRadius() );
+      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
+      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK( std::nullopt == radii.shiftFactorRadius() );
+      CHECK( std::nullopt == radii.phaseShiftRadius() );
+
       CHECK( 2 == chunk.resolved().size() );
       CHECK_THAT( 1e-5, WithinRel( chunk.resolved()[0].lowerEnergyLimit() ) );
       CHECK_THAT( 1e+3, WithinRel( chunk.resolved()[1].lowerEnergyLimit() ) );
@@ -127,6 +151,14 @@ SCENARIO( "ResonanceParameters" ) {
 
       ResonanceParameters chunk( {}, unresolved );
 
+      decltype(auto) radii = chunk.radii();
+      CHECK( false == radii.hasShiftFactorRadius() );
+      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
+      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK( std::nullopt == radii.shiftFactorRadius() );
+      CHECK( std::nullopt == radii.phaseShiftRadius() );
+
       CHECK( 0 == chunk.resolved().size() );
 
       CHECK( true == chunk.unresolved().has_value() );
@@ -137,42 +169,50 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );
     } // THEN
 
-    WHEN( "the setters are used on an empty ResonanceParameters" ) {
+    THEN( "ResonanceParameters can be constructed with channel radii only" ) {
 
-      ResonanceParameters chunk;
+      ResonanceParameters chunk( ChannelRadii( 4.3 ) );
 
-      THEN( "the resolved data can be set" ) {
+      decltype(auto) radii = chunk.radii();
+      CHECK( false == radii.hasShiftFactorRadius() );
+      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
+      CHECK( 4.3 == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK( std::nullopt == radii.shiftFactorRadius() );
+      CHECK( std::nullopt == radii.phaseShiftRadius() );
 
-        chunk.resolved( { resolved } );
+      CHECK( 0 == chunk.resolved().size() );
+      CHECK( false == chunk.unresolved().has_value() );
+    } // THEN
+  } // GIVEN
 
-        CHECK( 1 == chunk.resolved().size() );
-        CHECK( resolved == chunk.resolved()[0] );
-        CHECK( false == chunk.unresolved().has_value() );
-      } // THEN
-
-      THEN( "the unresolved data can be overwritten" ) {
-
-        UnresolvedResonanceTable other_table(
-            { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-              id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
-            { TabulatedAverageWidths( { 1e+4, 1e+6 }, { 0.1, 0.4 } ),
-              TabulatedAverageWidths( { 1e+4, 1e+6 }, { 1.1, 1.4 } ) },
-            TabulatedLevelSpacing( { 1e+4, 1e+6 }, { 20., 80. } ) );
-
-        UnresolvedCompoundSystem other_unresolved(
-            1e+4, 1e+6,
-            { UnresolvedSpinGroup( { capture, elastic }, other_table ) } );
-
-        chunk.unresolved( unresolved );
-        chunk.unresolved( other_unresolved );
-
-        CHECK( true == chunk.unresolved().has_value() );
-        CHECK( other_unresolved == chunk.unresolved().value() );
-        CHECK( unresolved != chunk.unresolved().value() );
-      } // THEN
-    } // WHEN
+  GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of ResonanceParameters are given" ) {
+
+      ParticlePair photon_pair(
+          Particle( id::ParticleID::photon(), 0, 1, +1 ),
+          Particle( id::ParticleID( "Cl36[all]" ),
+                    35.65932 * constants::neutron_mass, 0, +1 ) );
+      ParticlePair neutron_pair(
+          Particle( id::ParticleID::neutron(), constants::neutron_mass, 0.5, +1 ),
+          Particle( id::ParticleID( "Cl35" ),
+                    34.66845 * constants::neutron_mass, 1.5, +1 ) );
+
+      ChannelRadii zero_radii( 0., 0. );
+      ChannelRadii resolved_radii( 4.822220, 3.667980 );
+
+      SpinGroup spingroup( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                               neutron_pair, photon_pair, 0., std::nullopt,
+                               zero_radii, false },
+                             { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                               neutron_pair, neutron_pair, 0., std::nullopt,
+                               resolved_radii } },
+                           { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                               id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                             { 1. }, { { 2. }, { 3. } } },
+                           Formalism::ReichMoore,
+                           BoundaryCondition::ShiftFactor );
 
       // a resolved compound system with the resonance at 2 eV instead of 1 eV
       SpinGroup other_spingroup(
@@ -188,11 +228,41 @@ SCENARIO( "ResonanceParameters" ) {
           Formalism::ReichMoore,
           BoundaryCondition::ShiftFactor );
 
+      CompoundSystem resolved( 1e-5, 1e+4, { spingroup } );
       CompoundSystem other_resolved( 1e-5, 1e+4, { other_spingroup } );
 
       // a resolved compound system with the same spin group but a different
       // upper energy limit
       CompoundSystem resolved_limits( 1e-5, 5e+3, { spingroup } );
+
+      ParticlePair capture_pair(
+          Particle( id::ParticleID::photon(), 0, 1, +1 ),
+          Particle( id::ParticleID( "Cl36" ), 35.9683050031, 0, +1 ) );
+      ParticlePair elastic_pair(
+          Particle( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 ),
+          Particle( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 ) );
+
+      ChannelRadii capture_radii( 0. );
+      ChannelRadii unresolved_radii( 4.822220, 3.667980 );
+
+      UnresolvedChannel capture( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                                 elastic_pair, capture_pair,
+                                 0., std::nullopt, capture_radii );
+      UnresolvedChannel elastic( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                                 elastic_pair, elastic_pair,
+                                 0., std::nullopt, unresolved_radii );
+
+      UnresolvedResonanceTable table(
+          { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+            id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+          { TabulatedAverageWidths( { 1e+4, 1e+6 }, { 0.1, 0.4 } ),
+            TabulatedAverageWidths( { 1e+4, 1e+6 }, { 1.1, 1.4 } ) },
+          TabulatedLevelSpacing( { 1e+4, 1e+6 }, { 10., 40. } ) );
+
+      UnresolvedSpinGroup unresolved_spingroup( { capture, elastic }, table );
+
+      UnresolvedCompoundSystem unresolved( 1e+4, 1e+6,
+                                           { unresolved_spingroup } );
 
       // an unresolved compound system with a different level spacing
       UnresolvedResonanceTable other_table(
@@ -219,6 +289,7 @@ SCENARIO( "ResonanceParameters" ) {
       ResonanceParameters resolved_only( { resolved } );
       ResonanceParameters unresolved_only( {}, unresolved );
       ResonanceParameters empty;
+      ResonanceParameters limits( { resolved }, unresolved_limits );
 
       THEN( "they can be compared" ) {
 
@@ -231,11 +302,6 @@ SCENARIO( "ResonanceParameters" ) {
         CHECK( false == ( left != equal ) );
         CHECK( true  == ( left != different_resolved ) );
         CHECK( true  == ( left != different_unresolved ) );
-      } // THEN
-
-      THEN( "the energy limits of the unresolved data take part in the comparison" ) {
-
-        ResonanceParameters limits( { resolved }, unresolved_limits );
 
         CHECK( false == ( left == limits ) );
         CHECK( true  == ( left != limits ) );

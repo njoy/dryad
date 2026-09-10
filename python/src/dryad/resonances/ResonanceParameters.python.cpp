@@ -18,6 +18,7 @@ void wrapResonanceParameters( python::module& module ) {
   using Component = njoy::dryad::resonances::ResonanceParameters;
   using CompoundSystem = njoy::dryad::resonances::CompoundSystem;
   using UnresolvedCompoundSystem = njoy::dryad::resonances::UnresolvedCompoundSystem;
+  using ChannelRadii = njoy::dryad::resonances::ChannelRadii;
 
   // wrap views created by this component
 
@@ -32,16 +33,13 @@ void wrapResonanceParameters( python::module& module ) {
     "    resolved : list of njoy.dryad.resonances.CompoundSystem, optional\n"
     "        the resolved resonance compound systems\n"
     "    unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional\n"
-    "        the resolved resonance compound systems"
+    "        the resolved resonance compound systems\n"
+    "    radii : njoy.dryad.resonances.ChannelRadii\n"
+    "        the default channel radii (informational only)"
   );
 
   // wrap the component
   component
-  .def(
-
-    python::init<>(),
-    "Initialise the resonance parameters with default values"
-  )
   .def(
 
     python::init< std::vector< CompoundSystem >,
@@ -50,6 +48,19 @@ void wrapResonanceParameters( python::module& module ) {
     python::arg( "unresolved" ) = std::nullopt,
     "Initialise the resonance parameters with resolved compound systems\n"
     "and an optional unresolved compound system"
+  )
+  .def(
+
+    python::init< ChannelRadii >(),
+    python::arg( "radii" ),
+    "Initialise the resonance parameters with default channel radii information"
+  )
+  .def_property(
+
+    "radii",
+    python::overload_cast<>( &Component::radii, python::const_ ),
+    python::overload_cast< ChannelRadii >( &Component::radii ),
+    "The default channel radii"
   )
   .def_property(
 

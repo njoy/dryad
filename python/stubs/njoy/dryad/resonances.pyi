@@ -1193,6 +1193,8 @@ class ResonanceParameters:
             the resolved resonance compound systems
         unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional
             the resolved resonance compound systems
+        radii : njoy.dryad.resonances.ChannelRadii
+            the default channel radii (informational only)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ResonanceParameters:
@@ -1202,17 +1204,25 @@ class ResonanceParameters:
     def __eq__(self, arg0: ResonanceParameters) -> bool:
         ...
     @typing.overload
-    def __init__(self) -> None:
-        """
-        Initialise the resonance parameters with default values
-        """
-    @typing.overload
     def __init__(self, resolved: list[CompoundSystem], unresolved: UnresolvedCompoundSystem | None = None) -> None:
         """
         Initialise the resonance parameters with resolved compound systems
         and an optional unresolved compound system
         """
+    @typing.overload
+    def __init__(self, radii: ChannelRadii) -> None:
+        """
+        Initialise the resonance parameters with default channel radii information
+        """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
+        ...
+    @property
+    def radii(self) -> ChannelRadii:
+        """
+        The default channel radii
+        """
+    @radii.setter
+    def radii(self, arg1: ChannelRadii) -> None:
         ...
     @property
     def reactions(self) -> list[njoy.dryad.id.ReactionID]:
