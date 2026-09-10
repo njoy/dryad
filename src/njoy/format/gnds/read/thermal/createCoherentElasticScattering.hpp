@@ -45,7 +45,7 @@ namespace thermal {
       auto array = readArray( node.child( "gridded2d" ).child( "array" ) );
       if ( array.shape.size() != 2 ) {
 
-        Log::error( "Expected a GNDS array node with dimension {}, found one with dimension {} instead",
+        Log::error( "Expected a GNDS array node with rank {}, found one with rank {} instead",
                     2, array.shape.size() );
         throw std::exception();
       }

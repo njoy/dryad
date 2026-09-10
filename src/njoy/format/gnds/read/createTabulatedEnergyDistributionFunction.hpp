@@ -95,8 +95,15 @@ namespace read {
         // grow the data accordingly
         energies.insert( energies.end(), std::next( data.x.begin(), offset ), data.x.end() );
         values.insert( values.end(), std::next( data.y.begin(), offset ), data.y.end() );
-        boundaries.emplace_back( energies.size() - 1 );
-        interpolants.emplace_back( interpolant );
+        if ( interpolants.size() == 0 || interpolants.back() != interpolant ) {
+
+          boundaries.emplace_back( energies.size() - 1 );
+          interpolants.emplace_back( interpolant );
+        }
+        else {
+
+          boundaries.back() = energies.size() - 1;
+        }
       }
     }
     else {
