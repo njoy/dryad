@@ -68,7 +68,7 @@ namespace write {
     std::size_t size = region_energies.size();
 
     // check for a jump
-    if ( *eiter == *std::next( eiter ) ) {
+    if ( std::next( eiter ) != energies.end() && *eiter == *std::next( eiter ) ) {
 
       ++eiter;
       ++viter;
@@ -156,11 +156,14 @@ namespace write {
                                       table, "unresolvedRegion" );
     }
 
-    // insert the remainder of the cross section data in the fast region
-    pugi::xml_node fast = background.append_child( "fastRegion" );
-    insertTabulatedFunction( fast, options, energies, values,
-                             boundaries, interpolants,
-                             "incidentEnergy", "crossSection", "eV", "b" );
+    if ( energies.size() > 0 ) {
+
+      // insert the remainder of the cross section data in the fast region
+      pugi::xml_node fast = background.append_child( "fastRegion" );
+      insertTabulatedFunction( fast, options, energies, values,
+                               boundaries, interpolants,
+                               "incidentEnergy", "crossSection", "eV", "b" );
+    }
 
     return node;
   }

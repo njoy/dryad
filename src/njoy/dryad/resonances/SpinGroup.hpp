@@ -81,6 +81,7 @@ namespace resonances {
                  [] ( auto&& left, auto&& right )
                     { return left.identifier() < right.identifier(); } );
 
+      this->reactions().clear();
       for ( const auto& channel : this->channels() ) {
 
         auto id = channel.identifier().reaction();

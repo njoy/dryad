@@ -42,6 +42,7 @@ namespace resonances {
                              std::make_tuple( right.totalAngularMomentum(), right.parity(), right.orbitalAngularMomentum() );
                  } );
 
+      this->reactions().clear();
       for ( const auto& group : this->spinGroups() ) {
 
         for ( const auto& reaction : group.reactions() ) {

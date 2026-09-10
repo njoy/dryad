@@ -51,6 +51,8 @@ namespace resonances {
      */
     void collectReactions() {
 
+      this->reactions().clear();
+
       // go over the reactions in the resolved compund systems
       for ( auto&& compound : this->resolved() ) {
 
