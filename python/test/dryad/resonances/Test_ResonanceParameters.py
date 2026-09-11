@@ -88,11 +88,12 @@ class Test_ResonanceParameters( unittest.TestCase ) :
 
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
-        self.assertEqual( False, radii.has_phase_shift_radius )
+        self.assertEqual( True, radii.has_phase_shift_radius )
         self.assertEqual( True, isinstance( radii.penetrability_radius, float ) )
-        self.assertAlmostEqual( 0., radii.penetrability_radius )
+        self.assertAlmostEqual( 4.822220, radii.penetrability_radius )
         self.assertEqual( None, radii.shift_factor_radius )
-        self.assertEqual( None, radii.phase_shift_radius )
+        self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
+        self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
 
         self.assertEqual( 1, len( chunk.resolved ) )
         self.assertEqual( resolved, chunk.resolved[0] )
@@ -110,11 +111,12 @@ class Test_ResonanceParameters( unittest.TestCase ) :
 
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
-        self.assertEqual( False, radii.has_phase_shift_radius )
+        self.assertEqual( True, radii.has_phase_shift_radius )
         self.assertEqual( True, isinstance( radii.penetrability_radius, float ) )
-        self.assertAlmostEqual( 0., radii.penetrability_radius )
+        self.assertAlmostEqual( 4.822220, radii.penetrability_radius )
         self.assertEqual( None, radii.shift_factor_radius )
-        self.assertEqual( None, radii.phase_shift_radius )
+        self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
+        self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
 
         self.assertEqual( 1, len( chunk.resolved ) )
         self.assertEqual( resolved, chunk.resolved[0] )
@@ -136,11 +138,12 @@ class Test_ResonanceParameters( unittest.TestCase ) :
 
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
-        self.assertEqual( False, radii.has_phase_shift_radius )
+        self.assertEqual( True, radii.has_phase_shift_radius )
         self.assertEqual( True, isinstance( radii.penetrability_radius, float ) )
-        self.assertAlmostEqual( 0., radii.penetrability_radius )
+        self.assertAlmostEqual( 4.822220, radii.penetrability_radius )
         self.assertEqual( None, radii.shift_factor_radius )
-        self.assertEqual( None, radii.phase_shift_radius )
+        self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
+        self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
 
         self.assertEqual( 2, len( chunk.resolved ) )
         self.assertAlmostEqual( 1e-5, chunk.resolved[0].lower_energy_limit )
@@ -157,11 +160,12 @@ class Test_ResonanceParameters( unittest.TestCase ) :
 
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
-        self.assertEqual( False, radii.has_phase_shift_radius )
+        self.assertEqual( True, radii.has_phase_shift_radius )
         self.assertEqual( True, isinstance( radii.penetrability_radius, float ) )
-        self.assertAlmostEqual( 0., radii.penetrability_radius )
+        self.assertAlmostEqual( 4.822220, radii.penetrability_radius )
         self.assertEqual( None, radii.shift_factor_radius )
-        self.assertEqual( None, radii.phase_shift_radius )
+        self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
+        self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
 
         self.assertEqual( 0, len( chunk.resolved ) )
 

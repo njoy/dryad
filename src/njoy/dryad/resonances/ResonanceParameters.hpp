@@ -21,6 +21,10 @@ namespace resonances {
    */
   class ResonanceParameters {
 
+    /* alias */
+
+    using Radius = std::variant< double, TabulatedRadius >;
+
     /* fields */
 
     ChannelRadii radii_;
@@ -33,13 +37,78 @@ namespace resonances {
     /* auxiliary functions */
 
     /**
-     *  @brief Find the scattering radius in the data
+     *  @brief Find the default channel radii in the data
+     *
+     *  @param[in] resolved     the resolved resonance compound systems
+     *  @param[in] unresolved   the optional unresolved resonance compound system
      */
     static ChannelRadii
     findRadii( const std::vector< CompoundSystem>& resolved,
                const std::optional< UnresolvedCompoundSystem >& unresolved ) {
 
-      return ChannelRadii( 0. );
+      std::vector< ChannelRadii > radii;
+      std::vector< std::size_t > frequency;
+
+      for ( auto&& compound : resolved ) {
+
+        for ( auto&& group : compound.spinGroups() ) {
+
+          for ( auto&& channel : group.channels() ) {
+
+            if ( channel.isIncidentChannel() ) {
+
+              auto iter = std::find( radii.begin(), radii.end(), channel.channelRadii() );
+              if ( iter == radii.end() ) {
+
+                radii.emplace_back( channel.channelRadii() );
+                frequency.emplace_back( 1 );
+              }
+              else {
+
+                std::size_t index = std::distance( radii.begin(), iter );
+                ++frequency[index];
+              }
+            }
+          }
+        }
+      }
+
+      // in case we did not find radii
+      if ( radii.size() == 0 ) {
+
+        if ( unresolved.has_value() ) {
+
+          for ( auto&& group : unresolved->spinGroups() ) {
+
+            for ( auto&& channel : group.channels() ) {
+
+              if ( channel.isIncidentChannel() ) {
+
+              auto iter = std::find( radii.begin(), radii.end(), channel.channelRadii() );
+              if ( iter == radii.end() ) {
+
+                radii.emplace_back( channel.channelRadii() );
+                frequency.emplace_back( 1 );
+              }
+              else {
+
+                std::size_t index = std::distance( radii.begin(), iter );
+                ++frequency[index];
+              }
+              }
+            }
+          }
+        }
+        else {
+
+          return ChannelRadii( 0. );
+        }
+      }
+
+      auto iter = std::max_element( frequency.begin(), frequency.end() );
+      std::size_t index = std::distance( frequency.begin(), iter );
+
+      return radii[index];
     }
 
     /**

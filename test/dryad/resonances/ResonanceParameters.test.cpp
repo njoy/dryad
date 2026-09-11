@@ -78,11 +78,12 @@ SCENARIO( "ResonanceParameters" ) {
 
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
-      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == radii.hasPhaseShiftRadius() );
       CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
-      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK_THAT( 4.822220, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
       CHECK( std::nullopt == radii.shiftFactorRadius() );
-      CHECK( std::nullopt == radii.phaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
+      CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
       CHECK( 1 == chunk.resolved().size() );
       CHECK( resolved == chunk.resolved()[0] );
@@ -102,11 +103,12 @@ SCENARIO( "ResonanceParameters" ) {
 
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
-      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == radii.hasPhaseShiftRadius() );
       CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
-      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK_THAT( 4.822220, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
       CHECK( std::nullopt == radii.shiftFactorRadius() );
-      CHECK( std::nullopt == radii.phaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
+      CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
       CHECK( 1 == chunk.resolved().size() );
       CHECK( resolved == chunk.resolved()[0] );
@@ -130,11 +132,12 @@ SCENARIO( "ResonanceParameters" ) {
 
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
-      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == radii.hasPhaseShiftRadius() );
       CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
-      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK_THAT( 4.822220, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
       CHECK( std::nullopt == radii.shiftFactorRadius() );
-      CHECK( std::nullopt == radii.phaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
+      CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
       CHECK( 2 == chunk.resolved().size() );
       CHECK_THAT( 1e-5, WithinRel( chunk.resolved()[0].lowerEnergyLimit() ) );
@@ -153,11 +156,12 @@ SCENARIO( "ResonanceParameters" ) {
 
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
-      CHECK( false == radii.hasPhaseShiftRadius() );
+      CHECK( true == radii.hasPhaseShiftRadius() );
       CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
-      CHECK( 0. == std::get< double >( radii.penetrabilityRadius() ) );
+      CHECK_THAT( 4.822220, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
       CHECK( std::nullopt == radii.shiftFactorRadius() );
-      CHECK( std::nullopt == radii.phaseShiftRadius() );
+      CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
+      CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
       CHECK( 0 == chunk.resolved().size() );
 
