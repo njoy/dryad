@@ -55,12 +55,12 @@ SCENARIO( "readFraction" ) {
 
 void verifyChunkUsingNoFraction( const gnds::read::Fraction& chunk ) {
 
-  CHECK_THAT( 1., WithinRel( chunk.first ) );
-  CHECK( "hbar" == chunk.second );
+  CHECK_THAT( 1., WithinRel( chunk.value ) );
+  CHECK( "hbar" == chunk.unit );
 }
 
 void verifyChunkUsingFraction( const gnds::read::Fraction& chunk ) {
 
-  CHECK( 0.5 == chunk.first );
-  CHECK( "hbar" == chunk.second );
+  CHECK( 0.5 == chunk.value );
+  CHECK( "hbar" == chunk.unit );
 }

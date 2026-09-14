@@ -16,9 +16,7 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Headers = std::vector< std::tuple< int,
-                                           std::string,
-                                           std::optional< std::string > > >;
+  using Headers = std::vector< Column >;
 
   /**
    *  @brief Read data from a GNDS column headers node
@@ -37,8 +35,7 @@ namespace read {
       data.emplace_back( readColumn( child ) );
     }
     std::sort( data.begin(), data.end(),
-               [] ( auto&& left, auto&& right )
-                  { return std::get< 0 >( left ) < std::get< 0 >( right ); } );
+               [] ( auto&& left, auto&& right ) { return left.index < right.index; } );
 
     return data;
   }

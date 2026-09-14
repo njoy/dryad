@@ -52,12 +52,12 @@ SCENARIO( "readInteger" ) {
 
 void verifyChunkWithoutUnit( const gnds::read::Integer& chunk ) {
 
-  CHECK( 1 == chunk.first );
-  CHECK( std::nullopt == chunk.second );
+  CHECK( 1 == chunk.value );
+  CHECK( std::nullopt == chunk.unit );
 }
 
 void verifyChunkWithUnit( const gnds::read::Integer& chunk ) {
 
-  CHECK( 0 == chunk.first );
-  CHECK( "e" == chunk.second );
+  CHECK( 0 == chunk.value );
+  CHECK( "e" == chunk.unit );
 }

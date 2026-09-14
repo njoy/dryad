@@ -39,19 +39,19 @@ namespace read {
       auto data = readXYs1D( node, units );
 
       // get the interpolation type
-      auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+      auto interpolant = createInterpolationType( data.interpolation );
 
       // cosine and probability data does not need to be converted
       // convert outer domain value if necessary
-      if ( std::get< 0 >( data ).has_value() ) {
+      if ( data.outer.has_value() ) {
 
-        convertEnergy( std::get< 0 >( data ).value(), std::get< 1 >( data ).value() );
+        convertEnergy( data.outer.value(), data.outer_unit.value() );
       }
 
       // assign data
-      outer = std::move( std::get< 0 >( data ) );
-      cosines = std::move( std::get< 2 >( data ) );
-      values = std::move( std::get< 4 >( data ) );
+      outer = std::move( data.outer );
+      cosines = std::move( data.x );
+      values = std::move( data.y );
       boundaries.emplace_back( cosines.size() - 1 );
       interpolants.emplace_back( interpolant );
     }
@@ -62,7 +62,7 @@ namespace read {
       if ( attribute ) {
 
         outer = attribute.as_double();
-        convertEnergy( outer.value(), std::get< 1 >( units[0] ).value() );
+        convertEnergy( outer.value(), units[0].unit.value() );
       }
 
       // loop over the children of function1ds
@@ -74,22 +74,21 @@ namespace read {
         auto data = readXYs1D( xys1d, units );
 
         // get the interpolation type
-        auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+        auto interpolant = createInterpolationType( data.interpolation );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;
         if ( cosines.size() > 0 ) {
 
-          if ( cosines.back() == std::get< 2 >( data ).front() &&
-               values.back() == std::get< 4 >( data ).front() ) {
+          if ( cosines.back() == data.x.front() && values.back() == data.y.front() ) {
 
             offset = 1;
           }
         }
 
         // grow the data accordingly
-        cosines.insert( cosines.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
-        values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
+        cosines.insert( cosines.end(), std::next( data.x.begin(), offset ), data.x.end() );
+        values.insert( values.end(), std::next( data.y.begin(), offset ), data.y.end() );
         if ( interpolants.size() == 0 || interpolants.back() != interpolant ) {
 
           boundaries.emplace_back( cosines.size() - 1 );

@@ -31,16 +31,16 @@ namespace read {
 
     // read data from the node and convert to coefficients
     auto data = readLegendre( legendre );
-    convertLegendreMoments( data.second );
+    convertLegendreMoments( data.moments );
 
     // convert outer domain value if necessary
-    if ( data.first.has_value() ) {
+    if ( data.outer.has_value() ) {
 
-      convertEnergy( data.first.value(), std::get< 1 >( units[0] ).value() );
+      convertEnergy( data.outer.value(), units[0].unit.value() );
     }
 
-    return { std::move( data.first ),
-             dryad::LegendreAngularDistributionFunction( std::move( data.second ) ) };
+    return { std::move( data.outer ),
+             dryad::LegendreAngularDistributionFunction( std::move( data.moments ) ) };
   }
 
 } // read namespace

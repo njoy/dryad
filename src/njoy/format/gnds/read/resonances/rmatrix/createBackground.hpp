@@ -44,37 +44,37 @@ namespace rmatrix {
         auto r = readDouble( external.find_child_by_attribute( "double", "label", "constantExternalR" ) );
         auto s = readDouble( external.find_child_by_attribute( "double", "label", "poleStrength" ) );
         auto gamma = readDouble( external.find_child_by_attribute( "double", "label", "averageRadiationWidth" ) );
-        convertEnergy( gamma.first, gamma.second.value() );
+        convertEnergy( gamma.value, gamma.unit.value() );
 
         auto lower = readDouble( external.find_child_by_attribute( "double", "label", "singularityEnergyBelow" ) );
         auto upper = readDouble( external.find_child_by_attribute( "double", "label", "singularityEnergyAbove" ) );
-        convertEnergy( lower.first, lower.second.value() );
-        convertEnergy( upper.first, upper.second.value() );
+        convertEnergy( lower.value, lower.unit.value() );
+        convertEnergy( upper.value, upper.unit.value() );
         return njoy::dryad::resonances::FrohnerBackground(
-                 r.first, s.first, gamma.first,
-                 lower.first, upper.first );
+                 r.value, s.value, gamma.value,
+                 lower.value, upper.value );
       }
       else if ( strcmp( type.as_string(), "SAMMY" ) == 0 ) {
 
         auto r0 = readDouble( external.find_child_by_attribute( "double", "label", "constantExternalR" ) );
         auto r1 = readDouble( external.find_child_by_attribute( "double", "label", "linearExternalR" ) );
         auto r2 = readDouble( external.find_child_by_attribute( "double", "label", "quadraticExternalR" ) );
-        std::array< double, 3 > polynomial = { r0.first, r1.first, r2.first };
-        convertInverseEnergy( polynomial[1], r1.second.value() );
-        convertInverseEnergySquared( polynomial[2], r2.second.value() );
+        std::array< double, 3 > polynomial = { r0.value, r1.value, r2.value };
+        convertInverseEnergy( polynomial[1], r1.unit.value() );
+        convertInverseEnergySquared( polynomial[2], r2.unit.value() );
 
         auto s0 = readDouble( external.find_child_by_attribute( "double", "label", "constantLogarithmicCoefficient" ) );
         auto s1 = readDouble( external.find_child_by_attribute( "double", "label", "linearLogarithmicCoefficient" ) );
-        std::array< double, 2 > logarithmic = { s0.first, s1.first };
-        convertInverseEnergy( logarithmic[1], s1.second.value() );
+        std::array< double, 2 > logarithmic = { s0.value, s1.value };
+        convertInverseEnergy( logarithmic[1], s1.unit.value() );
 
         auto lower = readDouble( external.find_child_by_attribute( "double", "label", "singularityEnergyBelow" ) );
         auto upper = readDouble( external.find_child_by_attribute( "double", "label", "singularityEnergyAbove" ) );
-        convertEnergy( lower.first, lower.second.value() );
-        convertEnergy( upper.first, upper.second.value() );
+        convertEnergy( lower.value, lower.unit.value() );
+        convertEnergy( upper.value, upper.unit.value() );
         return njoy::dryad::resonances::SammyBackground(
                  std::move( polynomial ), std::move( logarithmic ),
-                 lower.first, upper.first );
+                 lower.value, upper.value );
       }
       else {
 

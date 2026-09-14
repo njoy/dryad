@@ -37,15 +37,15 @@ namespace read {
       auto data = readXYs1D( node );
 
       // get the interpolation type
-      auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+      auto interpolant = createInterpolationType( data.interpolation );
 
       // convert units - if necessary
-      convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ).value() );
-      convertCrossSections( std::get< 4 >( data ), std::get< 5 >( data ).value() );
+      convertEnergies( data.x, data.x_unit.value() );
+      convertCrossSections( data.y, data.y_unit.value() );
 
       // assign data
-      energies = std::move( std::get< 2 >( data ) );
-      values = std::move( std::get< 4 >( data ) );
+      energies = std::move( data.x );
+      values = std::move( data.y );
       boundaries.emplace_back( energies.size() - 1 );
       interpolants.emplace_back( interpolant );
     }
@@ -63,26 +63,25 @@ namespace read {
         auto data = readXYs1D( xys1d, units );
 
         // get the interpolation type
-        auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+        auto interpolant = createInterpolationType( data.interpolation );
 
         // convert units - if necessary
-        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ).value() );
-        convertCrossSections( std::get< 4 >( data ), std::get< 5 >( data ).value() );
+        convertEnergies( data.x, data.x_unit.value() );
+        convertCrossSections( data.y, data.y_unit.value() );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;
         if ( energies.size() > 0 ) {
 
-          if ( energies.back() == std::get< 2 >( data ).front() &&
-               values.back() == std::get< 4 >( data ).front() ) {
+          if ( energies.back() == data.x.front() && values.back() == data.y.front() ) {
 
             offset = 1;
           }
         }
 
         // grow the data accordingly
-        energies.insert( energies.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
-        values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
+        energies.insert( energies.end(), std::next( data.x.begin(), offset ), data.x.end() );
+        values.insert( values.end(), std::next( data.y.begin(), offset ), data.y.end() );
         if ( interpolants.size() == 0 || interpolants.back() != interpolant ) {
 
           boundaries.emplace_back( energies.size() - 1 );

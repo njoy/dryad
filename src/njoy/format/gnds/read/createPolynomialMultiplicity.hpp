@@ -40,23 +40,23 @@ namespace read {
       auto data = readPolynomial1d( node );
 
       // convert units - if necessary
-      convertEnergy( std::get< 2 >( data ), std::get< 5 >( data ).value() );
-      convertEnergy( std::get< 3 >( data ), std::get< 5 >( data ).value() );
-      if ( std::get< 5 >( data ) != "eV" ) {
+      convertEnergy( data.lower, data.x_unit.value() );
+      convertEnergy( data.upper, data.x_unit.value() );
+      if ( data.x_unit != "eV" ) {
 
         double conversion = 1;
-        convertEnergy( conversion, std::get< 5 >( data ).value() );
-        for ( unsigned int i = 1; i < std::get< 4 >( data ).size(); ++i ) {
+        convertEnergy( conversion, data.x_unit.value() );
+        for ( unsigned int i = 1; i < data.coefficients.size(); ++i ) {
 
-          std::get< 4 >( data )[i] /= conversion;
+          data.coefficients[i] /= conversion;
           conversion *= conversion;
         }
       }
 
       // assign data
-      lower = std::move( std::get< 2 >( data ) );
-      upper = std::move( std::get< 3 >( data ) );
-      coefficients = std::move( std::get< 4 >( data ) );
+      lower = data.lower;
+      upper = data.upper;
+      coefficients = std::move( data.coefficients );
     }
     else {
 

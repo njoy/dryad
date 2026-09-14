@@ -15,28 +15,35 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using RealConstant1d = std::pair< double, std::optional< std::string > >;
-  using IntegerConstant1d = std::pair< int, std::optional< std::string > >;
+  /**
+   *  @brief The axis information: an optional index and unit
+   */
+  template < typename Type >
+  struct Constant1d {
+
+    Type value;
+    std::optional< std::string > unit = std::nullopt;
+  };
 
   /**
    *  @brief Read data from a GNDS constant1d node as a double
    *
    *  @param[in] constant1d   the gnds constant1d node
    */
-  inline RealConstant1d readConstant1dAsDouble( const pugi::xml_node& constant1d ) {
+  inline Constant1d< double > readConstant1dAsDouble( const pugi::xml_node& constant1d ) {
 
     // check that this is a valid constant1d node
     throwExceptionOnWrongNode( constant1d, "constant1d" );
 
     // initialise the data
-    RealConstant1d data( constant1d.attribute( "value" ).as_double(), "" );
+    Constant1d< double > data{ constant1d.attribute( "value" ).as_double(), std::nullopt };
 
     // get the unit for the constant
     auto axes = constant1d.child( "axes" );
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = std::get< 1 >( units[1] );
+      data.unit = units[1].unit;
     }
 
     return data;
@@ -47,20 +54,20 @@ namespace read {
    *
    *  @param[in] constant1d   the gnds constant1d node
    */
-  IntegerConstant1d readConstant1dAsInteger( const pugi::xml_node& constant1d ) {
+  inline Constant1d< int > readConstant1dAsInteger( const pugi::xml_node& constant1d ) {
 
     // check that this is a valid constant1d node
     throwExceptionOnWrongNode( constant1d, "constant1d" );
 
     // initialise the data
-    IntegerConstant1d data( constant1d.attribute( "value" ).as_int(), "" );
+    Constant1d< int > data{ constant1d.attribute( "value" ).as_int(), std::nullopt };
 
     // get the unit for the constant
     auto axes = constant1d.child( "axes" );
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = std::get< 1 >( units[1] );
+      data.unit = units[1].unit;
     }
 
     return data;

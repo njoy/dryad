@@ -49,13 +49,13 @@ SCENARIO( "readColumnHeaders" ) {
 void verifyChunk( const gnds::read::Headers& chunk ) {
 
   CHECK( 3 == chunk.size() );
-  CHECK( 0  == std::get< 0 >( chunk[0] ) );
-  CHECK( 1  == std::get< 0 >( chunk[1] ) );
-  CHECK( 2  == std::get< 0 >( chunk[2] ) );
-  CHECK( "energy"                          == std::get< 1 >( chunk[0] ) );
-  CHECK( "Al28 + photon [inclusive] width" == std::get< 1 >( chunk[1] ) );
-  CHECK( "n + Al27 width"                  == std::get< 1 >( chunk[2] ) );
-  CHECK( "eV" == std::get< 2 >( chunk[0] ).value() );
-  CHECK( "eV" == std::get< 2 >( chunk[1] ).value() );
-  CHECK( "eV" == std::get< 2 >( chunk[2] ).value() );
+  CHECK( 0  == chunk[0].index );
+  CHECK( 1  == chunk[1].index );
+  CHECK( 2  == chunk[2].index );
+  CHECK( "energy"                          == chunk[0].name );
+  CHECK( "Al28 + photon [inclusive] width" == chunk[1].name );
+  CHECK( "n + Al27 width"                  == chunk[2].name );
+  CHECK( "eV" == chunk[0].unit.value() );
+  CHECK( "eV" == chunk[1].unit.value() );
+  CHECK( "eV" == chunk[2].unit.value() );
 }

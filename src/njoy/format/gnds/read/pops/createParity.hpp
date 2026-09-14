@@ -21,18 +21,18 @@ namespace pops {
    *  @param[in] parity    the GNDS parity node
    *  @param[in] style     the gnds style to process (default is eval)
    */
-  inline std::optional< double >
+  inline std::optional< int >
   createParity( const pugi::xml_node& parity, const std::string& style = "eval" ) {
 
     // check that this is a valid parity node
     throwExceptionOnWrongNode( parity, "parity" );
 
-    // get a double node if it exists, else return nullopt
+    // get an integer node if it exists, else return nullopt
     auto child = parity.find_child_by_attribute( "integer", "label", style.c_str() );
     if ( child ) {
 
       auto content = readInteger( child );
-      return content.first;
+      return content.value;
     }
 
     return std::nullopt;

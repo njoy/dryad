@@ -16,7 +16,14 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Fraction = std::pair< double, std::optional< std::string > >;
+  /**
+   *  @brief An fraction value and optional unit
+   */
+  struct Fraction {
+
+    double value;
+    std::optional< std::string > unit = std::nullopt;
+  };
 
   /**
    *  @brief Read data from a GNDS fraction node
@@ -28,13 +35,12 @@ namespace read {
     throwExceptionOnWrongNode( node, "fraction" );
 
     Fraction data;
-    data.second = std::nullopt;
 
     // get the value (required)
     auto value = node.attribute( "value" );
     if ( value ) {
 
-      data.first = readFractionFromString( value.as_string() );
+      data.value = readFractionFromString( value.as_string() );
     }
     else {
 
@@ -47,7 +53,7 @@ namespace read {
     auto unit = node.attribute( "unit" );
     if ( unit ) {
 
-      data.second = unit.as_string();
+      data.unit = unit.as_string();
     }
 
     return data;

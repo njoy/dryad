@@ -95,30 +95,29 @@ SCENARIO( "readAxes" ) {
 void verifyChunk( const gnds::read::Axes& chunk ) {
 
   CHECK( 2 == chunk.size() );
-  CHECK( 1  == std::get< 0 >( chunk[0] ).value() );
-  CHECK( 0  == std::get< 0 >( chunk[1] ).value() );
-  CHECK( "eV" == std::get< 1 >( chunk[0] ).value() );
-  CHECK( "b"  == std::get< 1 >( chunk[1] ).value() );
-  CHECK( std::nullopt == std::get< 2 >( chunk[0] ) );
-  CHECK( std::nullopt == std::get< 2 >( chunk[1] ) );
+  CHECK( 1  == chunk[0].index.value() );
+  CHECK( 0  == chunk[1].index.value() );
+  CHECK( "eV" == chunk[0].unit.value() );
+  CHECK( "b"  == chunk[1].unit.value() );
+  CHECK( std::nullopt == chunk[0].values );
+  CHECK( std::nullopt == chunk[1].values );
 }
 
 void verifyChunkWithIndex2( const gnds::read::Axes& chunk ) {
 
   CHECK( 3 == chunk.size() );
-  CHECK( 2  == std::get< 0 >( chunk[0] ).value() );
-  CHECK( 1  == std::get< 0 >( chunk[1] ).value() );
-  CHECK( 0  == std::get< 0 >( chunk[2] ).value() );
-  CHECK( "eV" == std::get< 1 >( chunk[0] ).value() );
-  CHECK( std::nullopt   == std::get< 1 >( chunk[1] ) );
-  CHECK( std::nullopt   == std::get< 1 >( chunk[2] ) );
-  CHECK( std::nullopt == std::get< 2 >( chunk[0] ) );
-  CHECK( std::nullopt == std::get< 2 >( chunk[1] ) );
-  CHECK( std::nullopt == std::get< 2 >( chunk[2] ) );
+  CHECK( 2  == chunk[0].index.value() );
+  CHECK( 1  == chunk[1].index.value() );
+  CHECK( 0  == chunk[2].index.value() );
+  CHECK( "eV" == chunk[0].unit.value() );
+  CHECK( std::nullopt == chunk[1].unit );
+  CHECK( std::nullopt == chunk[2].unit );
+  CHECK( std::nullopt == chunk[0].values );
+  CHECK( std::nullopt == chunk[1].values );
+  CHECK( std::nullopt == chunk[2].values );
 }
 
 void verifyChunkWithGrid( const gnds::read::Axes& chunk ) {
 
   CHECK( 3 == chunk.size() );
-
 }

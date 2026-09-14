@@ -51,12 +51,12 @@ namespace thermal {
       }
 
       // temperatures are the first entry
-      auto temperatures = std::get< 2 >( axes[0] ).value();
-      convertTemperatures( temperatures, std::get< 1 >( axes[0] ).value() );
+      auto temperatures = axes[0].values.value();
+      convertTemperatures( temperatures, axes[0].unit.value() );
 
       // energies are the second entry
-      auto energies = std::get< 2 >( axes[1] ).value();
-      convertEnergies( energies, std::get< 1 >( axes[1] ).value() );
+      auto energies = axes[1].values.value();
+      convertEnergies( energies, axes[1].unit.value() );
 
       // extract Bragg edge data
       auto number_temperatures = temperatures.size();

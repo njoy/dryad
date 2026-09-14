@@ -14,7 +14,14 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using String = std::pair< std::string, std::optional< std::string > >;
+  /**
+   *  @brief A string value and optional unit
+   */
+  struct String {
+
+    std::string value;
+    std::optional< std::string > unit = std::nullopt;
+  };
 
   /**
    *  @brief Read data from a GNDS string node
@@ -26,13 +33,12 @@ namespace read {
     throwExceptionOnWrongNode( node, "string" );
 
     String data;
-    data.second = std::nullopt;
 
     // get the value (required)
     auto value = node.attribute( "value" );
     if ( value ) {
 
-      data.first = value.as_string();
+      data.value = value.as_string();
     }
     else {
 
@@ -45,7 +51,7 @@ namespace read {
     auto unit = node.attribute( "unit" );
     if ( unit ) {
 
-      data.second = unit.as_string();
+      data.unit = unit.as_string();
     }
 
     return data;

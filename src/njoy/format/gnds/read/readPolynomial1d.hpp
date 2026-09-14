@@ -16,9 +16,19 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Polynomial1d = std::tuple< std::optional< double >, std::optional< std::string >,
-                                   double, double, std::vector< double >,
-                                   std::optional< std::string >, std::optional< std::string > >;
+  /**
+   *  @brief The one dimensional polynomial data
+   */
+  struct Polynomial1d {
+
+    std::optional< double > outer = std::nullopt;
+    std::optional< std::string > outer_unit = std::nullopt;
+    double lower;
+    double upper;
+    std::vector< double > coefficients;
+    std::optional< std::string > x_unit = std::nullopt;
+    std::optional< std::string > y_unit = std::nullopt;
+  };
 
   /**
    *  @brief Read data from a GNDS polynomial1d node
@@ -30,8 +40,6 @@ namespace read {
     throwExceptionOnWrongNode( polynomial1d, "polynomial1d" );
 
     Polynomial1d data;
-    std::get< 0 >( data ) = std::nullopt;
-    std::get< 1 >( data ) = std::nullopt;
 
     // the axes and values nodes
     auto axes = polynomial1d.child( "axes" );
@@ -43,14 +51,14 @@ namespace read {
       auto units = readAxes( axes );
       if ( units.size() == 2 ) {
 
-        std::get< 5 >( data ) = std::get< 1 >( units[0] );
-        std::get< 6 >( data ) = std::get< 1 >( units[1] );
+        data.x_unit = units[0].unit;
+        data.y_unit = units[1].unit;
       }
       else {
 
-        std::get< 1 >( data ) = std::get< 1 >( units[0] );
-        std::get< 5 >( data ) = std::get< 1 >( units[1] );
-        std::get< 6 >( data ) = std::get< 1 >( units[2] );
+        data.outer_unit = units[0].unit;
+        data.x_unit = units[1].unit;
+        data.y_unit = units[2].unit;
       }
     }
 
@@ -61,7 +69,7 @@ namespace read {
       auto number = zeros.as_int();
       if ( number > 0 ) {
 
-        std::get< 4 >( data ) = std::vector< double >( number, 0 );
+        data.coefficients = std::vector< double >( number, 0 );
       }
     }
 
@@ -69,7 +77,7 @@ namespace read {
     auto outer = polynomial1d.attribute( "outerDomainValue" );
     if ( outer ) {
 
-      std::get< 0 >( data ) = outer.as_double();
+      data.outer = outer.as_double();
     }
 
     // check for domain
@@ -77,8 +85,8 @@ namespace read {
     auto upper = polynomial1d.attribute( "domainMax" );
     if ( lower && upper ) {
 
-      std::get< 2 >( data ) = lower.as_double();
-      std::get< 3 >( data ) = upper.as_double();
+      data.lower = lower.as_double();
+      data.upper = upper.as_double();
     }
     else {
 
@@ -94,8 +102,7 @@ namespace read {
                   "found {} values", content.size() );
       throw std::exception();
     }
-    std::get< 4 >( data ).insert( std::get< 4 >( data ).end(),
-                                  content.begin(), content.end() );
+    data.coefficients.insert( data.coefficients.end(), content.begin(), content.end() );
 
     return data;
   }

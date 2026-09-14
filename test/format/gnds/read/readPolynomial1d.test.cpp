@@ -50,19 +50,19 @@ SCENARIO( "readPolynomial1d" ) {
 void verifyChunk( const gnds::read::Polynomial1d& chunk ) {
 
   // outer domain value and unit
-  CHECK( std::nullopt == std::get< 0 >( chunk ) );
-  CHECK( std::nullopt == std::get< 1 >( chunk ) );
+  CHECK( std::nullopt == chunk.outer );
+  CHECK( std::nullopt == chunk.outer_unit );
 
   // domain
-  CHECK( 1e-5 == std::get< 2 >( chunk ) );
-  CHECK( 2e+7  == std::get< 3 >( chunk ) );
+  CHECK( 1e-5 == chunk.lower );
+  CHECK( 2e+7 == chunk.upper );
 
   // x and y units
-  CHECK( "eV" == std::get< 5 >( chunk ).value() );
-  CHECK( std::nullopt  == std::get< 6 >( chunk ) );
+  CHECK( "eV" == chunk.x_unit.value() );
+  CHECK( std::nullopt == chunk.y_unit );
 
   // values
-  CHECK( 2 == std::get< 4 >( chunk ).size() );
-  CHECK_THAT(   2.824, WithinRel( std::get< 4 >( chunk )[0] ) );
-  CHECK_THAT( 1.42e-7, WithinRel( std::get< 4 >( chunk )[1] ) );
+  CHECK( 2 == chunk.coefficients.size() );
+  CHECK_THAT(   2.824, WithinRel( chunk.coefficients[0] ) );
+  CHECK_THAT( 1.42e-7, WithinRel( chunk.coefficients[1] ) );
 }

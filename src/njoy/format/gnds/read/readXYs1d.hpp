@@ -19,10 +19,19 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using XYs1d = std::tuple< std::optional< double >, std::optional< std::string >,
-                            std::vector< double >, std::optional< std::string >,
-                            std::vector< double >, std::optional< std::string >,
-                            std::string >;
+  /**
+   *  @brief The XYs1d information
+   */
+  struct XYs1d {
+
+    std::optional< double > outer = std::nullopt;
+    std::optional< std::string > outer_unit = std::nullopt;
+    std::vector< double > x;
+    std::optional< std::string > x_unit = std::nullopt;
+    std::vector< double > y;
+    std::optional< std::string > y_unit = std::nullopt;
+    std::string interpolation;
+  };
 
   /**
    *  @brief Read data from a GNDS XYs1D node
@@ -34,8 +43,6 @@ namespace read {
     throwExceptionOnWrongNode( xys1d, "XYs1d" );
 
     XYs1d data;
-    std::get< 0 >( data ) = std::nullopt;
-    std::get< 1 >( data ) = std::nullopt;
 
     using namespace njoy::tools;
 
@@ -49,14 +56,14 @@ namespace read {
       auto units = readAxes( axes );
       if ( units.size() == 2 ) {
 
-        std::get< 3 >( data ) = std::get< 1 >( units[0] );
-        std::get< 5 >( data ) = std::get< 1 >( units[1] );
+        data.x_unit = units[0].unit;
+        data.y_unit = units[1].unit;
       }
       else {
 
-        std::get< 1 >( data ) = std::get< 1 >( units[0] );
-        std::get< 3 >( data ) = std::get< 1 >( units[1] );
-        std::get< 5 >( data ) = std::get< 1 >( units[2] );
+        data.outer_unit = units[0].unit;
+        data.x_unit = units[1].unit;
+        data.y_unit = units[2].unit;
       }
     }
 
@@ -64,14 +71,14 @@ namespace read {
     auto outer = xys1d.attribute( "outerDomainValue" );
     if ( outer ) {
 
-      std::get< 0 >( data ) = outer.as_double();
+      data.outer = outer.as_double();
     }
 
     // check for interpolation type
     auto interpolation = xys1d.attribute( "interpolation" );
     if ( interpolation ) {
 
-      std::get< 6 >( data ) = interpolation.as_string();
+      data.interpolation = interpolation.as_string();
     }
 
     // get tabulated values
@@ -86,8 +93,8 @@ namespace read {
     // move data to their respective vectors
     auto x = content | std23::views::stride( 2 );
     auto y = content | std20::views::drop( 1 )| std23::views::stride( 2 );
-    std::get< 2 >( data ).insert( std::get< 2 >( data ).begin(), x.begin(), x.end() );
-    std::get< 4 >( data ).insert( std::get< 4 >( data ).begin(), y.begin(), y.end() );
+    data.x.insert( data.x.begin(), x.begin(), x.end() );
+    data.y.insert( data.y.begin(), y.begin(), y.end() );
 
     return data;
   }
@@ -105,14 +112,14 @@ namespace read {
 
       if ( units.size() == 2 ) {
 
-        if ( ! std::get< 3 >( data ).has_value() ) { std::get< 3 >( data ) = std::get< 1 >( units[0] ); };
-        if ( ! std::get< 5 >( data ).has_value() ) { std::get< 5 >( data ) = std::get< 1 >( units[1] ); };
+        if ( ! data.x_unit.has_value() ) { data.x_unit = units[0].unit; };
+        if ( ! data.y_unit.has_value() ) { data.y_unit = units[1].unit; };
       }
       else {
 
-        if ( ! std::get< 1 >( data ).has_value() ) { std::get< 1 >( data ) = std::get< 1 >( units[0] ); };
-        if ( ! std::get< 3 >( data ).has_value() ) { std::get< 3 >( data ) = std::get< 1 >( units[1] ); };
-        if ( ! std::get< 5 >( data ).has_value() ) { std::get< 5 >( data ) = std::get< 1 >( units[2] ); };
+        if ( ! data.outer_unit.has_value() ) { data.outer_unit = units[0].unit; };
+        if ( ! data.x_unit.has_value() ) { data.x_unit = units[1].unit; };
+        if ( ! data.y_unit.has_value() ) { data.y_unit = units[2].unit; };
       }
     }
 

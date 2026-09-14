@@ -56,17 +56,17 @@ namespace rmatrix {
 
     // read the resonance parameter table
     auto parameters = readTable( group.child( "resonanceParameters" ).child( "table" ) );
-    convertEnergies( std::get< 1 >( parameters[0] ), std::get< 2 >( parameters[0] ).value() );
+    convertEnergies( parameters[0].values, parameters[0].unit.value() );
 
     for ( std::size_t i = 1; i < parameters.size(); ++i ) {
 
       if ( reduced_amplitudes ) {
 
-        convertSquareRootEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+        convertSquareRootEnergies( parameters[i].values, parameters[i].unit.value() );
       }
       else {
 
-        convertEnergies( std::get< 1 >( parameters[i] ), std::get< 2 >( parameters[i] ).value() );
+        convertEnergies( parameters[i].values, parameters[i].unit.value() );
       }
     }
 
@@ -80,8 +80,8 @@ namespace rmatrix {
       std::size_t column = channel.attribute( "columnIndex" ).as_int();
 
       // get the data
-      std::vector< double > energies = std::get< 1 >( parameters[0] );
-      std::vector< double > amplitudes = std::move( std::get< 1 >( parameters[column] ) );
+      std::vector< double > energies = parameters[0].values;
+      std::vector< double > amplitudes = parameters[column].values;
 
       // remove zero widths
       auto is_zero = [] ( auto&& value ) { return value == 0.; };

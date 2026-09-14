@@ -55,12 +55,12 @@ SCENARIO( "readLegendre" ) {
 
 void verifyChunkWithoutUnit( const gnds::read::Double& chunk ) {
 
-  CHECK_THAT( -0.043, WithinRel( chunk.first ) );
-  CHECK( std::nullopt == chunk.second );
+  CHECK_THAT( -0.043, WithinRel( chunk.value ) );
+  CHECK( std::nullopt == chunk.unit );
 }
 
 void verifyChunkWithUnit( const gnds::read::Double& chunk ) {
 
-  CHECK_THAT( 2.8e-8, WithinRel( chunk.first ) );
-  CHECK( "1/eV" == chunk.second );
+  CHECK_THAT( 2.8e-8, WithinRel( chunk.value ) );
+  CHECK( "1/eV" == chunk.unit );
 }

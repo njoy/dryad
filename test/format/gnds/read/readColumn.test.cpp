@@ -49,7 +49,7 @@ SCENARIO( "readAxis" ) {
 
 void verifyChunk( const gnds::read::Column& chunk ) {
 
-  CHECK( 0        == std::get< 0 >( chunk ) );
-  CHECK( "energy" == std::get< 1 >( chunk ) );
-  CHECK( "eV"     == std::get< 2 >( chunk ) );
+  CHECK( 0        == chunk.index );
+  CHECK( "energy" == chunk.name );
+  CHECK( "eV"     == chunk.unit );
 }

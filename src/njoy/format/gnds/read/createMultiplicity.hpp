@@ -35,7 +35,7 @@ namespace read {
     if ( strcmp( child.name(), "constant1d" ) == 0 ) {
 
       auto data = readConstant1dAsInteger( child );
-      return data.first;
+      return data.value;
     }
     else if ( strcmp( child.name(), "polynomial1d" ) == 0 ) {
 

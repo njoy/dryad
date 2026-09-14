@@ -52,21 +52,21 @@ void verifyChunk( const gnds::read::Table& chunk ) {
 
   CHECK( 3 == chunk.size() );
 
-  CHECK( "energy"                          == std::get< 0 >( chunk[0] ) );
-  CHECK( "Al28 + photon [inclusive] width" == std::get< 0 >( chunk[1] ) );
-  CHECK( "n + Al27 width"                  == std::get< 0 >( chunk[2] ) );
+  CHECK( "energy"                          == chunk[0].name );
+  CHECK( "Al28 + photon [inclusive] width" == chunk[1].name );
+  CHECK( "n + Al27 width"                  == chunk[2].name );
 
-  CHECK( 10 == std::get< 1 >( chunk[0] ).size() );
-  CHECK_THAT( -4585600, WithinRel( std::get< 1 >( chunk[0] )[0] ) );
-  CHECK_THAT( 1.63e6  , WithinRel( std::get< 1 >( chunk[0] )[9] ) );
-  CHECK( 10 == std::get< 1 >( chunk[1] ).size() );
-  CHECK_THAT( 0.99675 , WithinRel( std::get< 1 >( chunk[1] )[0] ) );
-  CHECK_THAT( 2       , WithinRel( std::get< 1 >( chunk[1] )[9] ) );
-  CHECK( 10 == std::get< 1 >( chunk[2] ).size() );
-  CHECK_THAT( 3291200 , WithinRel( std::get< 1 >( chunk[2] )[0] ) );
-  CHECK_THAT( 37262   , WithinRel( std::get< 1 >( chunk[2] )[9] ) );
+  CHECK( 10 == chunk[0].values.size() );
+  CHECK_THAT( -4585600, WithinRel( chunk[0].values[0] ) );
+  CHECK_THAT( 1.63e6  , WithinRel( chunk[0].values[9] ) );
+  CHECK( 10 == chunk[1].values.size() );
+  CHECK_THAT( 0.99675 , WithinRel( chunk[1].values[0] ) );
+  CHECK_THAT( 2       , WithinRel( chunk[1].values[9] ) );
+  CHECK( 10 == chunk[2].values.size() );
+  CHECK_THAT( 3291200 , WithinRel( chunk[2].values[0] ) );
+  CHECK_THAT( 37262   , WithinRel( chunk[2].values[9] ) );
 
-  CHECK( "eV" == std::get< 2 >( chunk[0] ).value() );
-  CHECK( "eV" == std::get< 2 >( chunk[1] ).value() );
-  CHECK( "eV" == std::get< 2 >( chunk[2] ).value() );
+  CHECK( "eV" == chunk[0].unit.value() );
+  CHECK( "eV" == chunk[1].unit.value() );
+  CHECK( "eV" == chunk[2].unit.value() );
 }

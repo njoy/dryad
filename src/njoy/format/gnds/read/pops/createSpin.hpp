@@ -32,14 +32,14 @@ namespace pops {
     if ( child ) {
 
       auto content = readFraction( child );
-      if ( "hbar" == content.second || ! content.second.has_value() ) {
+      if ( "hbar" == content.unit || ! content.unit.has_value() ) {
 
-        return content.first;
+        return content.value;
       }
       else {
 
         Log::error( "Cannot convert spin with unit \'{}\' to hbar, "
-                    "contact dryad developers", content.second.value() );
+                    "contact dryad developers", content.unit.value() );
         throw std::exception();
       }
     }

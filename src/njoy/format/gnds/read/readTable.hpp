@@ -21,9 +21,21 @@ namespace format {
 namespace gnds {
 namespace read {
 
-  using Table = std::vector< std::tuple< std::string,
-                                         std::vector< double >,
-                                         std::optional< std::string > > >;
+  /**
+   *  @brief The column data information
+   */
+  struct ColumnData {
+
+    std::string name;
+    std::vector< double > values;
+    std::optional< std::string > unit = std::nullopt;
+
+    // C++-20 : constructor no longer required for emplace/emplace_back
+    ColumnData( std::string name, std::vector< double > values, std::optional< std::string > unit ) :
+      name( std::move( name ) ), values( std::move( values ) ), unit( std::move( unit ) ) {}
+  };
+
+  using Table = std::vector< ColumnData >;
 
   /**
    *  @brief Read data from a GNDS table node
@@ -71,9 +83,9 @@ namespace read {
       for ( int i = 0; i < columns; ++i ) {
 
         auto x = content | std20::views::drop( i ) | std23::views::stride( columns );
-        data.emplace_back( std::get< 1 >( headers[i] ),
+        data.emplace_back( headers[i].name,
                            createVector( x ),
-                           std::get< 2 >( headers[i] ) );
+                           headers[i].unit );
       }
     }
     else {
@@ -83,9 +95,9 @@ namespace read {
       for ( int i = 0; i < columns; ++i ) {
 
         auto end = std::next( iter, rows );
-        data.emplace_back( std::get< 1 >( headers[i] ),
+        data.emplace_back( headers[i].name,
                            std::vector< double >( iter, end ),
-                           std::get< 2 >( headers[i] ) );
+                           headers[i].unit );
         iter = end;
       }
     }
