@@ -43,7 +43,9 @@ namespace write {
                  ? transport.particleData()->particle( target ).mass().value() /
                    constants::neutron_mass
                  : 0.;
-    int lrp = transport.resonances().has_value() ? 1 : -1;
+    int lrp = transport.resonances().has_value()
+              ? transport.resonances()->hasParameters() ? 1 : 0
+              : -1;
     int lfi = 0;
     int nlib = transport.documentation().library().has_value()
                ? transport.documentation().library().value()
@@ -88,8 +90,11 @@ namespace write {
     //! @todo if lrp=0, should write a 'special case' MF2
     if ( transport.resonances().has_value() ) {
 
-      material.insert( createFile2Section151( awr, transport.resonances().value(),
-                                                  reducedWidthAmplitudes ) );
+      double za = target.za();
+      double spin = transport.particleData().has_value()
+                    ? transport.particleData()->particle( target ).spin().value() : 0;
+      material.insert( createFile2Section151( za, awr, spin, transport.resonances().value(),
+                                              reducedWidthAmplitudes ) );
     }
 
     for ( const auto& reaction : transport.reactions() ) {

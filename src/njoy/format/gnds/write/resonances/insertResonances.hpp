@@ -62,6 +62,8 @@ namespace resonances {
       }
     }
 
+    //! @todo handle unresolved resonances
+
     return node;
   }
 

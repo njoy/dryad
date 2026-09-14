@@ -113,6 +113,8 @@ SCENARIO( "createAtomicRelaxationFile" ) {
       "analyses,\" Nuclear Data Sheets, 109, 2812 (2008).                 \n"
       " **************************************************************** \n";
 
+    resonances::ResonanceParameters parameters( 1e-5, 1e+5, resonances::ChannelRadii( 12.75246 ) );
+
     std::vector< Reaction > reactions = {
 
       Reaction( id::ReactionID( "n,H1->total" ),
@@ -315,12 +317,13 @@ SCENARIO( "createAtomicRelaxationFile" ) {
     id::ParticleID target( "H1" );
     ParticleDatabase particles( { { projectile, njoy::constants::neutron_mass },
                                   { target, 9.991673e-1 * njoy::constants::neutron_mass,
-                                    std::nullopt, std::nullopt, 0. } } );
+                                    0.5, std::nullopt, 0. } } );
 
     ProjectileTarget transport( projectile, target,
                                 InteractionType::Nuclear,
                                 std::move( reactions ),
-                                std::move( particles ) );
+                                std::move( particles ),
+                                std::move( parameters ) );
     transport.documentation().library( 0 );
     transport.documentation().version( std::make_pair( 8, 0 ) );
     transport.documentation().description( std::move( description ) );
@@ -1066,10 +1069,10 @@ std::string chunkForGroundState() {
 
   return
     "n+H1 data                                                            0 0  0     \n"
-    " 1.001000+3 9.991673-1         -1          0          0          0 125 1451     \n"
+    " 1.001000+3 9.991673-1          0          0          0          0 125 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6 125 1451     \n"
     " 1.000000+0 2.000000+7          0          0         10          8 125 1451     \n"
-    " 0.000000+0 0.000000+0          0          0         87          4 125 1451     \n"
+    " 0.000000+0 0.000000+0          0          0         87          5 125 1451     \n"
     "  1-H -  1 LANL       EVAL-JUL16 G.M.Hale                          125 1451     \n"
     " NDS 148, 1 (2018)    DIST-FEB18                       20170124    125 1451     \n"
     "----ENDF/B-VIII.0     MATERIAL  125                                125 1451     \n"
@@ -1157,11 +1160,18 @@ std::string chunkForGroundState() {
     "[1] G. M. Hale, \"Covariances from light-element R-matrix           125 1451     \n"
     "analyses,\" Nuclear Data Sheets, 109, 2812 (2008).                  125 1451     \n"
     " ****************************************************************  125 1451     \n"
-    "                                1        451         95          0 125 1451     \n"
+    "                                1        451         96          0 125 1451     \n"
+    "                                2        151          4          0 125 1451     \n"
     "                                3          1         54          0 125 1451     \n"
     "                                3          2         54          0 125 1451     \n"
     "                                3        102         54          0 125 1451     \n"
     "                                                                   125 1  0     \n"
+    "                                                                   125 0  0     \n"
+    " 1.001000+3 9.991673-1          0          0          1          0 125 2151     \n"
+    " 1.001000+3 1.000000+0          0          0          1          0 125 2151     \n"
+    " 1.000000-5 1.000000+5          0          0          0          0 125 2151     \n"
+    " 5.000000-1 1.275246+0          0          0          0          0 125 2151     \n"
+    "                                                                   125 2  0     \n"
     "                                                                   125 0  0     \n"
     " 1.001000+3 9.991673-1          0          0          0          0 125 3  1     \n"
     " 0.000000+0 0.000000+0          0          0          2        153 125 3  1     \n"
