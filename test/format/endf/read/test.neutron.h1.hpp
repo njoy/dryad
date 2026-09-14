@@ -103,56 +103,73 @@ namespace h1 {
 
     using namespace njoy::constants;
 
-      CHECK( 4 == particles.numberParticles() );
+    CHECK( 4 == particles.numberParticles() );
 
-      CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
-      CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
-      CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
-      CHECK( true == particles.hasParticle( id::ParticleID( "H2[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H2[all]" ) ) );
 
-      auto particle = particles.particle( id::ParticleID( "g" ) );
-      CHECK( id::ParticleID::photon() == particle.identifier() );
-      CHECK_THAT( 0., WithinRel( particle.mass().value() ) );
-      CHECK_THAT( 1.0, WithinRel( particle.spin().value() ) );
-      CHECK( +1 == particle.parity().value() );
-      CHECK( std::nullopt == particle.energy() );
-      CHECK( std::nullopt == particle.nuclearMass() );
-      CHECK( std::nullopt == particle.massUncertainty() );
-      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
-      CHECK( std::nullopt == particle.energyUncertainty() );
+    auto particle = particles.particle( id::ParticleID( "g" ) );
+    CHECK( id::ParticleID::photon() == particle.identifier() );
+    CHECK_THAT( 0., WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 1.0, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
 
-      particle = particles.particle( id::ParticleID( "n" ) );
-      CHECK( id::ParticleID::neutron() == particle.identifier() );
-      CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
-      CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
-      CHECK( +1 == particle.parity().value() );
-      CHECK( std::nullopt == particle.energy() );
-      CHECK( std::nullopt == particle.nuclearMass() );
-      CHECK( std::nullopt == particle.massUncertainty() );
-      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
-      CHECK( std::nullopt == particle.energyUncertainty() );
+    particle = particles.particle( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID::neutron() == particle.identifier() );
+    CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
 
-      particle = particles.particle( id::ParticleID( "H1" ) );
-      CHECK( id::ParticleID( "H1" ) == particle.identifier() );
-      CHECK_THAT( 0.9991673 * neutron_mass, WithinRel( particle.mass().value() ) );
-      CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
-      CHECK( +1 == particle.parity().value() );
-      CHECK_THAT( 0., WithinRel( particle.energy().value() ) );
-      CHECK( std::nullopt == particle.nuclearMass() );
-      CHECK( std::nullopt == particle.massUncertainty() );
-      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
-      CHECK( std::nullopt == particle.energyUncertainty() );
+    particle = particles.particle( id::ParticleID( "H1" ) );
+    CHECK( id::ParticleID( "H1" ) == particle.identifier() );
+    CHECK_THAT( 0.9991673 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
+    CHECK_THAT( 0., WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
 
-      particle = particles.particle( id::ParticleID( "H2[all]" ) );
-      CHECK( id::ParticleID( "H2[all]" ) == particle.identifier() );
-      CHECK_THAT( 1.996256 * neutron_mass , WithinRel( particle.mass().value() ) );
-      CHECK( std::nullopt == particle.spin() );
-      CHECK( std::nullopt == particle.parity() );
-      CHECK( std::nullopt == particle.energy() );
-      CHECK( std::nullopt == particle.nuclearMass() );
-      CHECK( std::nullopt == particle.massUncertainty() );
-      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
-      CHECK( std::nullopt == particle.energyUncertainty() );
+    particle = particles.particle( id::ParticleID( "H2[all]" ) );
+    CHECK( id::ParticleID( "H2[all]" ) == particle.identifier() );
+    CHECK_THAT( 1.996256 * neutron_mass , WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+  }
+
+  void verifyResonances( const resonances::ResonanceParameters& resonances ) {
+
+    CHECK_THAT( 1e-5, WithinRel( resonances.lowerEnergyLimit() ) );
+    CHECK_THAT( 1e+5, WithinRel( resonances.upperEnergyLimit() ) );
+
+    CHECK( 0 == resonances.resolved().size() );
+    CHECK( std::nullopt == resonances.unresolved() );
+
+    decltype(auto) radii = resonances.radii();
+    CHECK( false == radii.hasShiftFactorRadius() );
+    CHECK( false == radii.hasPhaseShiftRadius() );
+    CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
+    CHECK_THAT( 12.75246, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
+    CHECK( std::nullopt == radii.shiftFactorRadius() );
+    CHECK( std::nullopt == radii.phaseShiftRadius() );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {
@@ -485,7 +502,8 @@ namespace h1 {
     CHECK( std::nullopt != H1.particleData() );
     verifyParticleDatabase( H1.particleData().value() );
 
-    CHECK( std::nullopt == H1.resonances() );
+    CHECK( std::nullopt != H1.resonances() );
+    verifyResonances( H1.resonances().value() );
 
     CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->total" ) ) );
     CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->n,H1" ) ) );

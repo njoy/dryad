@@ -31,6 +31,9 @@ namespace resonances {
                              const dryad::id::ParticleID& target,
                              const ENDFtk::section::Type< 2, 151 >& section ) {
 
+    double lowerEnergy;
+    double upperEnergy;
+    std::optional< dryad::resonances::ChannelRadii > radii = std::nullopt;
     std::vector< dryad::resonances::CompoundSystem > resolved;
 
     for ( const auto& range : section.isotopes().front().resonanceRanges() ) {
@@ -45,7 +48,16 @@ namespace resonances {
         nro = createTabulatedRadius( range.scatteringRadius().value() );
       }
 
-      if ( range.type() == 1 ) {
+      if ( range.type() == 0 ) {
+
+        Log::info( "Reading scattering radius between {} and {} eV", lower, upper );
+        decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::SpecialCase >( range.parameters() );
+
+        lowerEnergy = lower;
+        upperEnergy = upper;
+        radii = dryad::resonances::ChannelRadii( parameters.scatteringRadius() * constants::deca );
+      }
+      else if ( range.type() == 1 ) {
 
         Log::info( "Reading resolved resonance region between {} and {} eV", lower, upper );
         switch ( range.representation() ) {
@@ -79,6 +91,10 @@ namespace resonances {
     if ( resolved.size() != 0 ) {
 
       return dryad::resonances::ResonanceParameters( std::move( resolved ) );
+    }
+    else if ( radii.has_value() ) {
+
+      return dryad::resonances::ResonanceParameters( lowerEnergy, upperEnergy, std::move( radii.value() ) );
     }
     else {
 

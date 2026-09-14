@@ -12,6 +12,7 @@
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
 #include "njoy/format/gnds/write/Options.hpp"
 #include "njoy/format/gnds/write/resonances/rmatrix/insertRMatrix.hpp"
+#include "njoy/format/gnds/write/resonances/insertScatteringRadius.hpp"
 
 namespace njoy {
 namespace format {
@@ -39,6 +40,9 @@ namespace resonances {
     if ( pt.resonances().has_value() ) {
 
       node = parent.append_child( "resonances" );
+      insertScatteringRadius( node, options, pt.resonances()->radii().penetrabilityRadius(),
+                              pt.resonances()->lowerEnergyLimit(), pt.resonances()->upperEnergyLimit(),
+                              style );
 
       std::map< dryad::id::ReactionID, double > qvalues;
 
