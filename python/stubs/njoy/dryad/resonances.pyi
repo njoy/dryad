@@ -1193,6 +1193,10 @@ class ResonanceParameters:
             the resolved resonance compound systems
         unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional
             the resolved resonance compound systems
+        lower_energy : float
+            the lower energy limit for the compound system
+        upper_energy : float
+            the upper energy limit for the compound system
         radii : njoy.dryad.resonances.ChannelRadii
             the default channel radii (informational only)
     """
@@ -1210,11 +1214,19 @@ class ResonanceParameters:
         and an optional unresolved compound system
         """
     @typing.overload
-    def __init__(self, radii: ChannelRadii) -> None:
+    def __init__(self, lower_energy: float, upper_energy: float, radii: ChannelRadii) -> None:
         """
         Initialise the resonance parameters with default channel radii information
         """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
+        ...
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
         ...
     @property
     def radii(self) -> ChannelRadii:
@@ -1244,6 +1256,14 @@ class ResonanceParameters:
         """
     @unresolved.setter
     def unresolved(self, arg1: UnresolvedCompoundSystem) -> None:
+        ...
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
         ...
 class ResonanceTable:
     """

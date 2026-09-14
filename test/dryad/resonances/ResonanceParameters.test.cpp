@@ -76,6 +76,9 @@ SCENARIO( "ResonanceParameters" ) {
 
       ResonanceParameters chunk( { resolved } );
 
+      CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+      CHECK_THAT( 1e+4, WithinRel( chunk.upperEnergyLimit() ) );
+
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
       CHECK( true == radii.hasPhaseShiftRadius() );
@@ -100,6 +103,9 @@ SCENARIO( "ResonanceParameters" ) {
     THEN( "ResonanceParameters can be constructed with resolved and unresolved data" ) {
 
       ResonanceParameters chunk( { resolved }, unresolved );
+
+      CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+      CHECK_THAT( 1e+6, WithinRel( chunk.upperEnergyLimit() ) );
 
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
@@ -130,6 +136,9 @@ SCENARIO( "ResonanceParameters" ) {
 
       ResonanceParameters chunk( { lower, upper }, unresolved );
 
+      CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+      CHECK_THAT( 1e+6, WithinRel( chunk.upperEnergyLimit() ) );
+
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
       CHECK( true == radii.hasPhaseShiftRadius() );
@@ -154,6 +163,9 @@ SCENARIO( "ResonanceParameters" ) {
 
       ResonanceParameters chunk( {}, unresolved );
 
+      CHECK_THAT( 1e+4, WithinRel( chunk.lowerEnergyLimit() ) );
+      CHECK_THAT( 1e+6, WithinRel( chunk.upperEnergyLimit() ) );
+
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );
       CHECK( true == radii.hasPhaseShiftRadius() );
@@ -175,7 +187,10 @@ SCENARIO( "ResonanceParameters" ) {
 
     THEN( "ResonanceParameters can be constructed with channel radii only" ) {
 
-      ResonanceParameters chunk( ChannelRadii( 4.3 ) );
+      ResonanceParameters chunk( 1e-5, 5e+5, ChannelRadii( 4.3 ) );
+
+      CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+      CHECK_THAT( 5e+5, WithinRel( chunk.upperEnergyLimit() ) );
 
       decltype(auto) radii = chunk.radii();
       CHECK( false == radii.hasShiftFactorRadius() );

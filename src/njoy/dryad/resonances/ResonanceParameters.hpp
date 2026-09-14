@@ -27,6 +27,8 @@ namespace resonances {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     ChannelRadii radii_;
 
     std::vector< CompoundSystem > resolved_;
@@ -73,16 +75,13 @@ namespace resonances {
         }
       }
 
-      // in case we did not find radii
-      if ( radii.size() == 0 ) {
+      if ( unresolved.has_value() ) {
 
-        if ( unresolved.has_value() ) {
+        for ( auto&& group : unresolved->spinGroups() ) {
 
-          for ( auto&& group : unresolved->spinGroups() ) {
+          for ( auto&& channel : group.channels() ) {
 
-            for ( auto&& channel : group.channels() ) {
-
-              if ( channel.isIncidentChannel() ) {
+            if ( channel.isIncidentChannel() ) {
 
               auto iter = std::find( radii.begin(), radii.end(), channel.channelRadii() );
               if ( iter == radii.end() ) {
@@ -95,20 +94,21 @@ namespace resonances {
                 std::size_t index = std::distance( radii.begin(), iter );
                 ++frequency[index];
               }
-              }
             }
           }
         }
-        else {
-
-          return ChannelRadii( 0. );
-        }
       }
 
-      auto iter = std::max_element( frequency.begin(), frequency.end() );
-      std::size_t index = std::distance( frequency.begin(), iter );
+      if ( radii.size() != 0 ) {
 
-      return radii[index];
+        auto iter = std::max_element( frequency.begin(), frequency.end() );
+        std::size_t index = std::distance( frequency.begin(), iter );
+        return radii[index];
+      }
+      else {
+
+        return ChannelRadii( 0. );
+      }
     }
 
     /**
@@ -145,6 +145,31 @@ namespace resonances {
       }
     }
 
+    /**
+     *  @brief Set the energy limits for the resonance parameters
+     */
+    void setEnergylimits() {
+
+      if ( this->resolved().size() != 0 ) {
+
+        this->lowerEnergyLimit() = this->resolved().front().lowerEnergyLimit();
+        this->upperEnergyLimit() = this->resolved().front().upperEnergyLimit();
+      }
+
+      if ( this->unresolved().has_value() ) {
+
+        if ( this->resolved().size() == 0 ) {
+
+          this->lowerEnergyLimit() = this->unresolved()->lowerEnergyLimit();
+          this->upperEnergyLimit() = this->unresolved()->upperEnergyLimit();
+        }
+        else {
+
+          this->upperEnergyLimit() = this->unresolved()->upperEnergyLimit();
+        }
+      }
+    }
+
   public:
 
     /* constructor */
@@ -168,24 +193,82 @@ namespace resonances {
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved,
                          std::optional< UnresolvedCompoundSystem > unresolved = std::nullopt ) :
+        radii_( findRadii( resolved, unresolved ) ),
         resolved_( std::move( resolved ) ),
-        unresolved_( std::move( unresolved ) ),
-        radii_( findRadii( resolved, unresolved ) )  {
+        unresolved_( std::move( unresolved ) )  {
 
       this->collectReactions();
+      this->setEnergylimits();
     }
 
     /**
      *  @brief Constructor
      *
-     *  @param[in] radii   the default channel radii (informational only)
+     *  @param[in] lowerEnergy   the lower energy limit
+     *  @param[in] upperEnergy   the upper energy limit
+     *  @param[in] radii         the default channel radii (informational only)
      */
-    ResonanceParameters( ChannelRadii radii ) :
+    ResonanceParameters( double lowerEnergy, double upperEnergy,
+                         ChannelRadii radii ) :
+        lower_( lowerEnergy ),
+        upper_( upperEnergy ),
+        radii_( std::move( radii ) ),
         resolved_(),
-        unresolved_( std::nullopt ),
-        radii_( std::move( radii ) )  {}
+        unresolved_( std::nullopt ) {}
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double& lowerEnergyLimit() {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Set the lower energy limit
+     *
+     *  @param[in] lowerEnergy   the lower energy limit for the compound system
+     */
+    void lowerEnergyLimit( double lowerEnergy ) {
+
+      this->lower_ = lowerEnergy;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double& upperEnergyLimit() {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Set the upper energy limit
+     *
+     *  @param[in] upperEnergy   the upper energy limit for the compound system
+     */
+    void upperEnergyLimit( double upperEnergy ) {
+
+      this->upper_ = upperEnergy;
+    }
 
     /**
      *  @brief Return the default channel radii
@@ -265,6 +348,7 @@ namespace resonances {
 
       this->resolved_ = std::move( resolved );
       this->collectReactions();
+      this->setEnergylimits();
     }
 
     /**
@@ -292,6 +376,7 @@ namespace resonances {
 
       this->unresolved_ = std::move( unresolved );
       this->collectReactions();
+      this->setEnergylimits();
     }
 
     /**
@@ -302,8 +387,8 @@ namespace resonances {
      */
     friend bool operator==( const ResonanceParameters& left, const ResonanceParameters& right ) {
 
-      return  std::tie( left.radii(), left.resolved(), left.unresolved() ) ==
-              std::tie( right.radii(), right.resolved(), right.unresolved() );
+      return  std::tie( left.lower_, left.upper_, left.radii(), left.resolved(), left.unresolved() ) ==
+              std::tie( right.lower_, right.upper_, right.radii(), right.resolved(), right.unresolved() );
     }
 
     /**

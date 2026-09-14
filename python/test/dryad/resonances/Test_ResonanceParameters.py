@@ -86,6 +86,9 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         # resolved data only, without the unresolved argument
         chunk = ResonanceParameters( [ resolved ] )
 
+        self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
+        self.assertAlmostEqual( 1e+4, chunk.upper_energy_limit )
+
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
         self.assertEqual( True, radii.has_phase_shift_radius )
@@ -108,6 +111,9 @@ class Test_ResonanceParameters( unittest.TestCase ) :
 
         # resolved and unresolved data
         chunk = ResonanceParameters( [ resolved ], unresolved )
+
+        self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
+        self.assertAlmostEqual( 1e+6, chunk.upper_energy_limit )
 
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
@@ -136,6 +142,9 @@ class Test_ResonanceParameters( unittest.TestCase ) :
 
         chunk = ResonanceParameters( [ lower, upper ], unresolved )
 
+        self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
+        self.assertAlmostEqual( 1e+6, chunk.upper_energy_limit )
+
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
         self.assertEqual( True, radii.has_phase_shift_radius )
@@ -158,6 +167,9 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         # unresolved data only
         chunk = ResonanceParameters( [], unresolved )
 
+        self.assertAlmostEqual( 1e+4, chunk.lower_energy_limit )
+        self.assertAlmostEqual( 1e+6, chunk.upper_energy_limit )
+
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )
         self.assertEqual( True, radii.has_phase_shift_radius )
@@ -177,7 +189,10 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertEqual( ReactionID( 'n,Cl35->n,Cl35' ), chunk.reactions[1] )
 
         # channel radii only
-        chunk = ResonanceParameters( ChannelRadii( 4.3 ) )
+        chunk = ResonanceParameters( 1e-5, 5e+5, ChannelRadii( 4.3 ) )
+
+        self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
+        self.assertAlmostEqual( 5e+5, chunk.upper_energy_limit )
 
         radii = chunk.radii
         self.assertEqual( False, radii.has_shift_factor_radius )

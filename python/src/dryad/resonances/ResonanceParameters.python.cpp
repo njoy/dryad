@@ -34,6 +34,10 @@ void wrapResonanceParameters( python::module& module ) {
     "        the resolved resonance compound systems\n"
     "    unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional\n"
     "        the resolved resonance compound systems\n"
+    "    lower_energy : float\n"
+    "        the lower energy limit for the compound system\n"
+    "    upper_energy : float\n"
+    "        the upper energy limit for the compound system\n"
     "    radii : njoy.dryad.resonances.ChannelRadii\n"
     "        the default channel radii (informational only)"
   );
@@ -51,9 +55,25 @@ void wrapResonanceParameters( python::module& module ) {
   )
   .def(
 
-    python::init< ChannelRadii >(),
+    python::init< double, double, ChannelRadii >(),
+    python::arg( "lower_energy" ),
+    python::arg( "upper_energy" ),
     python::arg( "radii" ),
     "Initialise the resonance parameters with default channel radii information"
+  )
+  .def_property(
+
+    "lower_energy_limit",
+    python::overload_cast<>( &Component::lowerEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::lowerEnergyLimit ),
+    "The lower energy limit"
+  )
+  .def_property(
+
+    "upper_energy_limit",
+    python::overload_cast<>( &Component::upperEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::upperEnergyLimit ),
+    "The upper energy limit"
   )
   .def_property(
 
