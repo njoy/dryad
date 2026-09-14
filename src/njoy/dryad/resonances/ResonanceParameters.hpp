@@ -380,6 +380,14 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return whether or not resonance parameters are given
+     */
+    bool hasParameters() const {
+
+      return this->resolved().size() > 0 || this->unresolved().has_value();
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side

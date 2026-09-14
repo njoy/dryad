@@ -101,6 +101,12 @@ void wrapResonanceParameters( python::module& module ) {
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions to which the resonance parameters contribute"
+  )
+  .def_property_readonly(
+
+    "has_parameters",
+    python::overload_cast<>( &Component::hasParameters, python::const_ ),
+    "Return whether or not resonance parameters are given"
   );
 
   // add standard equality comparison definitions

@@ -1221,6 +1221,11 @@ class ResonanceParameters:
     def __ne__(self, arg0: ResonanceParameters) -> bool:
         ...
     @property
+    def has_parameters(self) -> bool:
+        """
+        Return whether or not resonance parameters are given
+        """
+    @property
     def lower_energy_limit(self) -> float:
         """
         The lower energy limit

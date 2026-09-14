@@ -88,6 +88,8 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
       CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
+      CHECK( true == chunk.hasParameters() );
+
       CHECK( 1 == chunk.resolved().size() );
       CHECK( resolved == chunk.resolved()[0] );
       CHECK_THAT( 1e-5, WithinRel( chunk.resolved()[0].lowerEnergyLimit() ) );
@@ -115,6 +117,8 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK( std::nullopt == radii.shiftFactorRadius() );
       CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
       CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
+
+      CHECK( true == chunk.hasParameters() );
 
       CHECK( 1 == chunk.resolved().size() );
       CHECK( resolved == chunk.resolved()[0] );
@@ -148,6 +152,8 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
       CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
+      CHECK( true == chunk.hasParameters() );
+
       CHECK( 2 == chunk.resolved().size() );
       CHECK_THAT( 1e-5, WithinRel( chunk.resolved()[0].lowerEnergyLimit() ) );
       CHECK_THAT( 1e+3, WithinRel( chunk.resolved()[1].lowerEnergyLimit() ) );
@@ -175,6 +181,8 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK( true == std::holds_alternative< double >( radii.phaseShiftRadius().value() ) );
       CHECK_THAT( 3.667980, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
+      CHECK( true == chunk.hasParameters() );
+
       CHECK( 0 == chunk.resolved().size() );
 
       CHECK( true == chunk.unresolved().has_value() );
@@ -199,6 +207,8 @@ SCENARIO( "ResonanceParameters" ) {
       CHECK( 4.3 == std::get< double >( radii.penetrabilityRadius() ) );
       CHECK( std::nullopt == radii.shiftFactorRadius() );
       CHECK( std::nullopt == radii.phaseShiftRadius() );
+
+      CHECK( false == chunk.hasParameters() );
 
       CHECK( 0 == chunk.resolved().size() );
       CHECK( false == chunk.unresolved().has_value() );

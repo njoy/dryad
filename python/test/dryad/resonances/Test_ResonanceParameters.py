@@ -98,6 +98,8 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
         self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
 
+        self.assertEqual( True, chunk.has_parameters )
+
         self.assertEqual( 1, len( chunk.resolved ) )
         self.assertEqual( resolved, chunk.resolved[0] )
         self.assertAlmostEqual( 1e-5, chunk.resolved[0].lower_energy_limit )
@@ -123,6 +125,8 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertEqual( None, radii.shift_factor_radius )
         self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
         self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
+
+        self.assertEqual( True, chunk.has_parameters )
 
         self.assertEqual( 1, len( chunk.resolved ) )
         self.assertEqual( resolved, chunk.resolved[0] )
@@ -154,6 +158,8 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
         self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
 
+        self.assertEqual( True, chunk.has_parameters )
+
         self.assertEqual( 2, len( chunk.resolved ) )
         self.assertAlmostEqual( 1e-5, chunk.resolved[0].lower_energy_limit )
         self.assertAlmostEqual( 1e+3, chunk.resolved[1].lower_energy_limit )
@@ -179,6 +185,8 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertEqual( True, isinstance( radii.phase_shift_radius, float ) )
         self.assertAlmostEqual( 3.667980, radii.phase_shift_radius )
 
+        self.assertEqual( True, chunk.has_parameters )
+
         self.assertEqual( 0, len( chunk.resolved ) )
 
         self.assertEqual( True, chunk.unresolved is not None )
@@ -201,6 +209,8 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertAlmostEqual( 4.3, radii.penetrability_radius )
         self.assertEqual( None, radii.shift_factor_radius )
         self.assertEqual( None, radii.phase_shift_radius )
+
+        self.assertEqual( False, chunk.has_parameters )
 
         self.assertEqual( 0, len( chunk.resolved ) )
         self.assertEqual( None, chunk.unresolved )
