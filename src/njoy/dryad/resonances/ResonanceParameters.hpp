@@ -21,10 +21,6 @@ namespace resonances {
    */
   class ResonanceParameters {
 
-    /* alias */
-
-    using Radius = std::variant< double, TabulatedRadius >;
-
     /* fields */
 
     double lower_;
