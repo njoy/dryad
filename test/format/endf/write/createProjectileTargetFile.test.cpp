@@ -113,7 +113,7 @@ SCENARIO( "createAtomicRelaxationFile" ) {
       "analyses,\" Nuclear Data Sheets, 109, 2812 (2008).                 \n"
       " **************************************************************** \n";
 
-    resonances::ResonanceParameters parameters( 1e-5, 1e+5, resonances::ChannelRadii( 12.75246 ) );
+    resonances::ResonanceParameters parameters( 1e-5, 1e+5, 12.75246 );
 
     std::vector< Reaction > reactions = {
 

@@ -38,8 +38,8 @@ void wrapResonanceParameters( python::module& module ) {
     "        the lower energy limit for the compound system\n"
     "    upper_energy : float\n"
     "        the upper energy limit for the compound system\n"
-    "    radii : njoy.dryad.resonances.ChannelRadii\n"
-    "        the default channel radii (informational only)"
+    "    radius : float\n"
+    "        the scattering radius"
   );
 
   // wrap the component
@@ -55,11 +55,11 @@ void wrapResonanceParameters( python::module& module ) {
   )
   .def(
 
-    python::init< double, double, ChannelRadii >(),
+    python::init< double, double, double >(),
     python::arg( "lower_energy" ),
     python::arg( "upper_energy" ),
-    python::arg( "radii" ),
-    "Initialise the resonance parameters with default channel radii information"
+    python::arg( "radius" ),
+    "Initialise the resonance parameters with a scattering radius"
   )
   .def_property(
 
@@ -77,10 +77,10 @@ void wrapResonanceParameters( python::module& module ) {
   )
   .def_property(
 
-    "radii",
-    python::overload_cast<>( &Component::radii, python::const_ ),
-    python::overload_cast< ChannelRadii >( &Component::radii ),
-    "The default channel radii"
+    "scattering_radius",
+    python::overload_cast<>( &Component::scatteringRadius, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::scatteringRadius ),
+    "The scattering radius"
   )
   .def_property(
 

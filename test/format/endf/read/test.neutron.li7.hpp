@@ -402,13 +402,7 @@ namespace li7 {
     CHECK( 0 == resonances.resolved().size() );
     CHECK( std::nullopt == resonances.unresolved() );
 
-    decltype(auto) radii = resonances.radii();
-    CHECK( false == radii.hasShiftFactorRadius() );
-    CHECK( false == radii.hasPhaseShiftRadius() );
-    CHECK( true == std::holds_alternative< double >( radii.penetrabilityRadius() ) );
-    CHECK_THAT( 2.778311, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
-    CHECK( std::nullopt == radii.shiftFactorRadius() );
-    CHECK( std::nullopt == radii.phaseShiftRadius() );
+    CHECK_THAT( 2.778311, WithinRel( resonances.scatteringRadius().value() ) );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {

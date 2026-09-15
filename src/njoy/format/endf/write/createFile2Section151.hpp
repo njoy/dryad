@@ -49,19 +49,10 @@ namespace write {
     }
     else {
 
-      auto get_radius= tools::overload{
-
-        [] ( double radius ) -> double {
-
-          return radius;
-        },
-        [] ( const auto& ) -> double {
-
-          Log::error( "Tabulated channel radii are not compatible with ENDF" );
-          throw std::exception();
-        }
-      };
-      double radius = std::visit( get_radius, parameters.radii().penetrabilityRadius() ) * constants::deci;
+      double radius = parameters.scatteringRadius().has_value()
+                      ? parameters.scatteringRadius().value()
+                      : 0.;
+      radius *= constants::deci;
 
       // LRU=0 : NRO=0, NAPS=0
       ranges.emplace_back( parameters.lowerEnergyLimit(), parameters.upperEnergyLimit(), 0,

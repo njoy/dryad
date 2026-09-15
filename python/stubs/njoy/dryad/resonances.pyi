@@ -1197,8 +1197,8 @@ class ResonanceParameters:
             the lower energy limit for the compound system
         upper_energy : float
             the upper energy limit for the compound system
-        radii : njoy.dryad.resonances.ChannelRadii
-            the default channel radii (informational only)
+        radius : float
+            the scattering radius
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ResonanceParameters:
@@ -1214,9 +1214,9 @@ class ResonanceParameters:
         and an optional unresolved compound system
         """
     @typing.overload
-    def __init__(self, lower_energy: float, upper_energy: float, radii: ChannelRadii) -> None:
+    def __init__(self, lower_energy: float, upper_energy: float, radius: float) -> None:
         """
-        Initialise the resonance parameters with default channel radii information
+        Initialise the resonance parameters with a scattering radius
         """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
         ...
@@ -1234,14 +1234,6 @@ class ResonanceParameters:
     def lower_energy_limit(self, arg1: float) -> None:
         ...
     @property
-    def radii(self) -> ChannelRadii:
-        """
-        The default channel radii
-        """
-    @radii.setter
-    def radii(self, arg1: ChannelRadii) -> None:
-        ...
-    @property
     def reactions(self) -> list[njoy.dryad.id.ReactionID]:
         """
         The reactions to which the resonance parameters contribute
@@ -1253,6 +1245,14 @@ class ResonanceParameters:
         """
     @resolved.setter
     def resolved(self, arg1: list[CompoundSystem]) -> None:
+        ...
+    @property
+    def scattering_radius(self) -> float | None:
+        """
+        The scattering radius
+        """
+    @scattering_radius.setter
+    def scattering_radius(self, arg1: float | None) -> None:
         ...
     @property
     def unresolved(self) -> UnresolvedCompoundSystem | None:

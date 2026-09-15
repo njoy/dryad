@@ -29,7 +29,7 @@ namespace resonances {
 
     double lower_;
     double upper_;
-    ChannelRadii radii_;
+    std::optional< double > scattering_radius_;
 
     std::vector< CompoundSystem > resolved_;
     std::optional< UnresolvedCompoundSystem > unresolved_;
@@ -37,79 +37,6 @@ namespace resonances {
     std::vector< id::ReactionID > reactions_;
 
     /* auxiliary functions */
-
-    /**
-     *  @brief Find the default channel radii in the data
-     *
-     *  @param[in] resolved     the resolved resonance compound systems
-     *  @param[in] unresolved   the optional unresolved resonance compound system
-     */
-    static ChannelRadii
-    findRadii( const std::vector< CompoundSystem>& resolved,
-               const std::optional< UnresolvedCompoundSystem >& unresolved ) {
-
-      std::vector< ChannelRadii > radii;
-      std::vector< std::size_t > frequency;
-
-      for ( auto&& compound : resolved ) {
-
-        for ( auto&& group : compound.spinGroups() ) {
-
-          for ( auto&& channel : group.channels() ) {
-
-            if ( channel.isIncidentChannel() ) {
-
-              auto iter = std::find( radii.begin(), radii.end(), channel.channelRadii() );
-              if ( iter == radii.end() ) {
-
-                radii.emplace_back( channel.channelRadii() );
-                frequency.emplace_back( 1 );
-              }
-              else {
-
-                std::size_t index = std::distance( radii.begin(), iter );
-                ++frequency[index];
-              }
-            }
-          }
-        }
-      }
-
-      if ( unresolved.has_value() ) {
-
-        for ( auto&& group : unresolved->spinGroups() ) {
-
-          for ( auto&& channel : group.channels() ) {
-
-            if ( channel.isIncidentChannel() ) {
-
-              auto iter = std::find( radii.begin(), radii.end(), channel.channelRadii() );
-              if ( iter == radii.end() ) {
-
-                radii.emplace_back( channel.channelRadii() );
-                frequency.emplace_back( 1 );
-              }
-              else {
-
-                std::size_t index = std::distance( radii.begin(), iter );
-                ++frequency[index];
-              }
-            }
-          }
-        }
-      }
-
-      if ( radii.size() != 0 ) {
-
-        auto iter = std::max_element( frequency.begin(), frequency.end() );
-        std::size_t index = std::distance( frequency.begin(), iter );
-        return radii[index];
-      }
-      else {
-
-        return ChannelRadii( 0. );
-      }
-    }
 
     /**
      *  @brief Collect all reactions from the resonance parameters
@@ -193,7 +120,7 @@ namespace resonances {
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved,
                          std::optional< UnresolvedCompoundSystem > unresolved = std::nullopt ) :
-        radii_( findRadii( resolved, unresolved ) ),
+        scattering_radius_( std::nullopt ),
         resolved_( std::move( resolved ) ),
         unresolved_( std::move( unresolved ) )  {
 
@@ -206,13 +133,12 @@ namespace resonances {
      *
      *  @param[in] lowerEnergy   the lower energy limit
      *  @param[in] upperEnergy   the upper energy limit
-     *  @param[in] radii         the default channel radii (informational only)
+     *  @param[in] radius        the scattering radius
      */
-    ResonanceParameters( double lowerEnergy, double upperEnergy,
-                         ChannelRadii radii ) :
+    ResonanceParameters( double lowerEnergy, double upperEnergy, double radius ) :
         lower_( lowerEnergy ),
         upper_( upperEnergy ),
-        radii_( std::move( radii ) ),
+        scattering_radius_( radius ),
         resolved_(),
         unresolved_( std::nullopt ) {}
 
@@ -271,29 +197,29 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the default channel radii
+     *  @brief Return the scattering radius
      */
-    const ChannelRadii& radii() const {
+    const std::optional< double >& scatteringRadius() const {
 
-      return this->radii_;
+      return this->scattering_radius_;
     }
 
     /**
-     *  @brief Return the default channel radii
+     *  @brief Return the scattering radius
      */
-    ChannelRadii& radii() {
+    std::optional< double >& scatteringRadius() {
 
-      return this->radii_;
+      return this->scattering_radius_;
     }
 
     /**
-     *  @brief Set the default channel radii
+     *  @brief Set the scattering radius
      *
-     *  @param[in] radii  the channel radii
+     *  @param[in] radius  the scattering radius
      */
-    void radii( ChannelRadii radii ) {
+    void scatteringRadius( std::optional< double > radius ) {
 
-      this->radii_ = std::move( radii );
+      this->scattering_radius_ = std::move( radius );
     }
 
     /**
@@ -347,6 +273,7 @@ namespace resonances {
     void resolved( std::vector< CompoundSystem > resolved ) {
 
       this->resolved_ = std::move( resolved );
+      this->scatteringRadius( std::nullopt );
       this->collectReactions();
       this->setEnergylimits();
     }
@@ -375,6 +302,7 @@ namespace resonances {
     void unresolved(  UnresolvedCompoundSystem unresolved ) {
 
       this->unresolved_ = std::move( unresolved );
+      this->scatteringRadius( std::nullopt );
       this->collectReactions();
       this->setEnergylimits();
     }
@@ -395,8 +323,8 @@ namespace resonances {
      */
     friend bool operator==( const ResonanceParameters& left, const ResonanceParameters& right ) {
 
-      return  std::tie( left.lower_, left.upper_, left.radii(), left.resolved(), left.unresolved() ) ==
-              std::tie( right.lower_, right.upper_, right.radii(), right.resolved(), right.unresolved() );
+      return  std::tie( left.lower_, left.upper_, left.scatteringRadius(), left.resolved(), left.unresolved() ) ==
+              std::tie( right.lower_, right.upper_, right.scatteringRadius(), right.resolved(), right.unresolved() );
     }
 
     /**

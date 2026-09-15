@@ -30,9 +30,7 @@ SCENARIO( "createFile2Section" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      resonances::ChannelRadii radii( 12.75246 );
-
-      resonances::ResonanceParameters parameters( 1e-5, 1e+5, std::move( radii ) );
+      resonances::ResonanceParameters parameters( 1e-5, 1e+5, 12.75246 );
 
       double za = 1001;
       double awr = 0.9991673;

@@ -33,7 +33,7 @@ namespace resonances {
 
     double lowerEnergy;
     double upperEnergy;
-    std::optional< dryad::resonances::ChannelRadii > radii = std::nullopt;
+    std::optional< double > radius = std::nullopt;
     std::vector< dryad::resonances::CompoundSystem > resolved;
 
     for ( const auto& range : section.isotopes().front().resonanceRanges() ) {
@@ -55,7 +55,7 @@ namespace resonances {
 
         lowerEnergy = lower;
         upperEnergy = upper;
-        radii = dryad::resonances::ChannelRadii( parameters.scatteringRadius() * constants::deca );
+        radius = parameters.scatteringRadius() * constants::deca;
       }
       else if ( range.type() == 1 ) {
 
@@ -92,9 +92,9 @@ namespace resonances {
 
       return dryad::resonances::ResonanceParameters( std::move( resolved ) );
     }
-    else if ( radii.has_value() ) {
+    else if ( radius.has_value() ) {
 
-      return dryad::resonances::ResonanceParameters( lowerEnergy, upperEnergy, std::move( radii.value() ) );
+      return dryad::resonances::ResonanceParameters( lowerEnergy, upperEnergy, radius.value() );
     }
     else {
 
