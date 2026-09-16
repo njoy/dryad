@@ -1193,6 +1193,12 @@ class ResonanceParameters:
             the resolved resonance compound systems
         unresolved : njoy.dryad.resonances.UnresolvedCompoundSystem, optional
             the resolved resonance compound systems
+        lower_energy : float
+            the lower energy limit for the compound system
+        upper_energy : float
+            the upper energy limit for the compound system
+        radius : float
+            the scattering radius
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ResonanceParameters:
@@ -1202,17 +1208,30 @@ class ResonanceParameters:
     def __eq__(self, arg0: ResonanceParameters) -> bool:
         ...
     @typing.overload
-    def __init__(self) -> None:
-        """
-        Initialise the resonance parameters with default values
-        """
-    @typing.overload
     def __init__(self, resolved: list[CompoundSystem], unresolved: UnresolvedCompoundSystem | None = None) -> None:
         """
         Initialise the resonance parameters with resolved compound systems
         and an optional unresolved compound system
         """
+    @typing.overload
+    def __init__(self, lower_energy: float, upper_energy: float, radius: float) -> None:
+        """
+        Initialise the resonance parameters with a scattering radius
+        """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
+        ...
+    @property
+    def has_parameters(self) -> bool:
+        """
+        Return whether or not resonance parameters are given
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
         ...
     @property
     def reactions(self) -> list[njoy.dryad.id.ReactionID]:
@@ -1228,12 +1247,28 @@ class ResonanceParameters:
     def resolved(self, arg1: list[CompoundSystem]) -> None:
         ...
     @property
+    def scattering_radius(self) -> float | None:
+        """
+        The scattering radius
+        """
+    @scattering_radius.setter
+    def scattering_radius(self, arg1: float | None) -> None:
+        ...
+    @property
     def unresolved(self) -> UnresolvedCompoundSystem | None:
         """
         The compound system that makes up the unresolved resonance data
         """
     @unresolved.setter
     def unresolved(self, arg1: UnresolvedCompoundSystem) -> None:
+        ...
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
         ...
 class ResonanceTable:
     """

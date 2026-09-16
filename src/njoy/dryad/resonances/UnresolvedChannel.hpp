@@ -118,6 +118,7 @@ namespace resonances {
     using Channel::quantumNumbers;
     using Channel::incidentParticlePair;
     using Channel::outgoingParticlePair;
+    using Channel::isIncidentChannel;
     using Channel::channelRadii;
     using Channel::statisticalSpinFactor;
     using Channel::isBelowThreshold;

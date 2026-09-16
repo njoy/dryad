@@ -23,6 +23,10 @@ namespace resonances {
 
     /* fields */
 
+    double lower_;
+    double upper_;
+    std::optional< double > scattering_radius_;
+
     std::vector< CompoundSystem > resolved_;
     std::optional< UnresolvedCompoundSystem > unresolved_;
 
@@ -37,7 +41,7 @@ namespace resonances {
 
       this->reactions().clear();
 
-      // go over the reactions in the resolved compund systems
+      // go over the reactions in the resolved compound systems
       for ( auto&& compound : this->resolved() ) {
 
         for ( auto&& id : compound.reactions() ) {
@@ -64,6 +68,31 @@ namespace resonances {
       }
     }
 
+    /**
+     *  @brief Set the energy limits for the resonance parameters
+     */
+    void setEnergyLimits() {
+
+      if ( this->resolved().size() != 0 ) {
+
+        this->lowerEnergyLimit() = this->resolved().front().lowerEnergyLimit();
+        this->upperEnergyLimit() = this->resolved().front().upperEnergyLimit();
+      }
+
+      if ( this->unresolved().has_value() ) {
+
+        if ( this->resolved().size() == 0 ) {
+
+          this->lowerEnergyLimit() = this->unresolved()->lowerEnergyLimit();
+          this->upperEnergyLimit() = this->unresolved()->upperEnergyLimit();
+        }
+        else {
+
+          this->upperEnergyLimit() = this->unresolved()->upperEnergyLimit();
+        }
+      }
+    }
+
   public:
 
     /* constructor */
@@ -83,17 +112,111 @@ namespace resonances {
      *  @brief Constructor
      *
      *  @param[in] resolved     the resolved resonance compound systems
-     *  @param[in] unresolved   the unresolved resonance compound systems
+     *  @param[in] unresolved   the optional unresolved resonance compound system
      */
     ResonanceParameters( std::vector< CompoundSystem > resolved,
-                         std::optional< UnresolvedCompoundSystem > unresolved=std::nullopt ) :
+                         std::optional< UnresolvedCompoundSystem > unresolved = std::nullopt ) :
+        scattering_radius_( std::nullopt ),
         resolved_( std::move( resolved ) ),
         unresolved_( std::move( unresolved ) )  {
 
       this->collectReactions();
+      this->setEnergyLimits();
     }
 
+    /**
+     *  @brief Constructor
+     *
+     *  @param[in] lowerEnergy   the lower energy limit
+     *  @param[in] upperEnergy   the upper energy limit
+     *  @param[in] radius        the scattering radius
+     */
+    ResonanceParameters( double lowerEnergy, double upperEnergy, double radius ) :
+        lower_( lowerEnergy ),
+        upper_( upperEnergy ),
+        scattering_radius_( radius ),
+        resolved_(),
+        unresolved_( std::nullopt ) {}
+
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double& lowerEnergyLimit() {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Set the lower energy limit
+     *
+     *  @param[in] lowerEnergy   the lower energy limit for the compound system
+     */
+    void lowerEnergyLimit( double lowerEnergy ) {
+
+      this->lower_ = lowerEnergy;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double& upperEnergyLimit() {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Set the upper energy limit
+     *
+     *  @param[in] upperEnergy   the upper energy limit for the compound system
+     */
+    void upperEnergyLimit( double upperEnergy ) {
+
+      this->upper_ = upperEnergy;
+    }
+
+    /**
+     *  @brief Return the scattering radius
+     */
+    const std::optional< double >& scatteringRadius() const {
+
+      return this->scattering_radius_;
+    }
+
+    /**
+     *  @brief Return the scattering radius
+     */
+    std::optional< double >& scatteringRadius() {
+
+      return this->scattering_radius_;
+    }
+
+    /**
+     *  @brief Set the scattering radius
+     *
+     *  @param[in] radius  the scattering radius
+     */
+    void scatteringRadius( std::optional< double > radius ) {
+
+      this->scattering_radius_ = std::move( radius );
+    }
 
     /**
      *  @brief Return the reactions to which the resonance parameters contribute
@@ -146,7 +269,9 @@ namespace resonances {
     void resolved( std::vector< CompoundSystem > resolved ) {
 
       this->resolved_ = std::move( resolved );
+      this->scatteringRadius( std::nullopt );
       this->collectReactions();
+      this->setEnergyLimits();
     }
 
     /**
@@ -173,7 +298,17 @@ namespace resonances {
     void unresolved(  UnresolvedCompoundSystem unresolved ) {
 
       this->unresolved_ = std::move( unresolved );
+      this->scatteringRadius( std::nullopt );
       this->collectReactions();
+      this->setEnergyLimits();
+    }
+
+    /**
+     *  @brief Return whether or not resonance parameters are given
+     */
+    bool hasParameters() const {
+
+      return this->resolved().size() > 0 || this->unresolved().has_value();
     }
 
     /**
@@ -184,8 +319,8 @@ namespace resonances {
      */
     friend bool operator==( const ResonanceParameters& left, const ResonanceParameters& right ) {
 
-      return  std::tie( left.resolved(), left.unresolved() ) ==
-              std::tie( right.resolved(), right.unresolved() );
+      return  std::tie( left.lower_, left.upper_, left.scatteringRadius(), left.resolved(), left.unresolved() ) ==
+              std::tie( right.lower_, right.upper_, right.scatteringRadius(), right.resolved(), right.unresolved() );
     }
 
     /**

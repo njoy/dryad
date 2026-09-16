@@ -13,12 +13,41 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::format;
 
+std::string chunkH1();
 std::string chunkSi29();
 std::string chunkCu63();
 std::string chunkCl35();
 std::string chunkSr88();
 
 SCENARIO( "createFile2Section" ) {
+
+  GIVEN( "valid data for resonance parameters with only radii" ) {
+
+    // H1 ENDF/B-VIII.1
+    // particular features: - only scattering radius
+
+    std::string string = chunkH1();
+
+    WHEN( "the data is given explicitly" ) {
+
+      resonances::ResonanceParameters parameters( 1e-5, 1e+5, 12.75246 );
+
+      double za = 1001;
+      double awr = 0.9991673;
+      double spin = 0.5;
+
+      THEN( "it can be converted to ENDF" ) {
+
+        auto data = endf::write::createFile2Section151( za, awr, spin, parameters );
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        data.print( output, 125, 2 );
+
+        CHECK( buffer == string );
+      } // THEN
+    } // WHEN
+  } // THEN
 
   GIVEN( "valid data for a compound system - Si29" ) {
 
@@ -29,18 +58,18 @@ SCENARIO( "createFile2Section" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-    auto photon = id::ParticleID::photon();
-    auto neutron = id::ParticleID::neutron();
-    auto si29 = id::ParticleID( "Si29" );
-    auto si30 = id::ParticleID( "Si30[all]" );
+      auto photon = id::ParticleID::photon();
+      auto neutron = id::ParticleID::neutron();
+      auto si29 = id::ParticleID( "Si29" );
+      auto si30 = id::ParticleID( "Si30[all]" );
 
-    resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                              Particle( si30, 29.728 * njoy::constants::neutron_mass, 0, +1 ) );
-    resonances::ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
-                               Particle( si29, 28.728 * njoy::constants::neutron_mass, 0.5, +1 ) );
+      resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                Particle( si30, 29.728 * njoy::constants::neutron_mass, 0, +1 ) );
+      resonances::ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
+                                 Particle( si29, 28.728 * njoy::constants::neutron_mass, 0.5, +1 ) );
 
-    resonances::ChannelRadii zero_radii( 0., 0. );
-    resonances::ChannelRadii radii( 4.221, 4.221 );
+      resonances::ChannelRadii zero_radii( 0., 0. );
+      resonances::ChannelRadii radii( 4.221, 4.221 );
 
       resonances::CompoundSystem compound( 1e-5, 1.3e+6,
                                { { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
@@ -131,11 +160,13 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::ResonanceParameters parameters( { compound } );
 
+      double za = 14029;
       double awr = 28.728;
+      double spin = 0.5;
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = endf::write::createFile2Section151( awr, parameters );
+        auto data = endf::write::createFile2Section151( za, awr, spin, parameters );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -247,11 +278,13 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::ResonanceParameters parameters( { compound } );
 
+      double za = 29063;
       double awr = 62.389;
+      double spin = 1.5;
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = endf::write::createFile2Section151( awr, parameters );
+        auto data = endf::write::createFile2Section151( za, awr, spin, parameters );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -399,11 +432,13 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::ResonanceParameters parameters( { compound } );
 
+      double za = 17035;
       double awr = 34.66845;
+      double spin = 1.5;
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = endf::write::createFile2Section151( awr, parameters );
+        auto data = endf::write::createFile2Section151( za, awr, spin, parameters );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -533,11 +568,13 @@ SCENARIO( "createFile2Section" ) {
 
       resonances::ResonanceParameters parameters( { compound } );
 
+      double za = 38088;
       double awr = 87.15;
+      double spin = 0;
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = endf::write::createFile2Section151( awr, parameters );
+        auto data = endf::write::createFile2Section151( za, awr, spin, parameters );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -548,6 +585,15 @@ SCENARIO( "createFile2Section" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+std::string chunkH1() {
+  return
+    " 1.001000+3 9.991673-1          0          0          1          0 125 2151     \n"
+    " 1.001000+3 1.000000+0          0          0          1          0 125 2151     \n"
+    " 1.000000-5 1.000000+5          0          0          0          0 125 2151     \n"
+    " 5.000000-1 1.275246+0          0          0          0          0 125 2151     \n"
+    "                                                                   125 2  0     \n";
+}
 
 std::string chunkSi29() {
 

@@ -394,6 +394,17 @@ namespace li7 {
     CHECK( std::nullopt == particle.energyUncertainty() );
   }
 
+  void verifyResonances( const resonances::ResonanceParameters& resonances ) {
+
+    CHECK_THAT( 1e-5, WithinRel( resonances.lowerEnergyLimit() ) );
+    CHECK_THAT( 1e+5, WithinRel( resonances.upperEnergyLimit() ) );
+
+    CHECK( 0 == resonances.resolved().size() );
+    CHECK( std::nullopt == resonances.unresolved() );
+
+    CHECK_THAT( 2.778311, WithinRel( resonances.scatteringRadius().value() ) );
+  }
+
   void verifyTotalReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "n,Li7->total" ) == reaction.identifier() );
@@ -1935,7 +1946,8 @@ namespace li7 {
     CHECK( std::nullopt != Li7.particleData() );
     verifyParticleDatabase( Li7.particleData().value() );
 
-    CHECK( std::nullopt == Li7.resonances() );
+    CHECK( std::nullopt != Li7.resonances() );
+    verifyResonances( Li7.resonances().value() );
 
     CHECK( true == Li7.hasReaction( id::ReactionID( "n,Li7->total" ) ) );
     CHECK( true == Li7.hasReaction( id::ReactionID( "n,Li7->n,Li7" ) ) );
