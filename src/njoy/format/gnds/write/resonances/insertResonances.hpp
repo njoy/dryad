@@ -26,7 +26,7 @@ namespace resonances {
    *  @param[in] resolved     the resolved resonance compound systems
    *  @param[in] unresolved   the optional unresolved resonance compound system
    */
-  static dryad::resonances::ChannelRadii
+  inline dryad::resonances::ChannelRadii
   findRadii( const std::vector< dryad::resonances::CompoundSystem>& resolved,
              const std::optional< dryad::resonances::UnresolvedCompoundSystem >& unresolved ) {
 

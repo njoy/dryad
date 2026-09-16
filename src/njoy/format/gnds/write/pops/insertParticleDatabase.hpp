@@ -33,6 +33,8 @@ namespace pops {
                           const dryad::ParticleDatabase& database,
                           const std::string& style = "eval" ) {
 
+    // copy the options and set precision to 13 (which is enough to print standard particle
+    // mass values with all known digits)
     Options local_options = options;
     if ( options.precision < 13 ) {
 

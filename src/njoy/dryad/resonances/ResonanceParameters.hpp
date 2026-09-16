@@ -71,7 +71,7 @@ namespace resonances {
     /**
      *  @brief Set the energy limits for the resonance parameters
      */
-    void setEnergylimits() {
+    void setEnergyLimits() {
 
       if ( this->resolved().size() != 0 ) {
 
@@ -121,7 +121,7 @@ namespace resonances {
         unresolved_( std::move( unresolved ) )  {
 
       this->collectReactions();
-      this->setEnergylimits();
+      this->setEnergyLimits();
     }
 
     /**
@@ -271,7 +271,7 @@ namespace resonances {
       this->resolved_ = std::move( resolved );
       this->scatteringRadius( std::nullopt );
       this->collectReactions();
-      this->setEnergylimits();
+      this->setEnergyLimits();
     }
 
     /**
@@ -300,7 +300,7 @@ namespace resonances {
       this->unresolved_ = std::move( unresolved );
       this->scatteringRadius( std::nullopt );
       this->collectReactions();
-      this->setEnergylimits();
+      this->setEnergyLimits();
     }
 
     /**
