@@ -243,6 +243,7 @@ add_cpp_test( format.endf.read.resonances.lrf7.createChannels                   
 add_cpp_test( format.endf.read.resonances.lrf7.createSpinGroups                              format/endf/read/resonances/lrf7/createSpinGroups.test.cpp )
 add_cpp_test( format.endf.read.resonances.lrf7.createCompoundSystem                          format/endf/read/resonances/lrf7/createCompoundSystem.test.cpp )
 add_cpp_test( format.endf.read.resonances.urr.caseA.createCompoundSystem                     format/endf/read/resonances/urr/caseA/createCompoundSystem.test.cpp )
+add_cpp_test( format.endf.read.resonances.urr.caseB.createCompoundSystem                     format/endf/read/resonances/urr/caseB/createCompoundSystem.test.cpp )
 add_cpp_test( format.endf.read.resonances.urr.caseC.createCompoundSystem                     format/endf/read/resonances/urr/caseC/createCompoundSystem.test.cpp )
 add_cpp_test( format.endf.read.thermal.createBraggEdges                                      format/endf/read/thermal/createBraggEdges.test.cpp )
 add_cpp_test( format.endf.read.thermal.createDebyeWallerIntegralData                         format/endf/read/thermal/createDebyeWallerIntegralData.test.cpp )
