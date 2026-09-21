@@ -22,6 +22,7 @@ void wrapThermalScattering( python::module& module ) {
   using CoherentElasticScattering = njoy::dryad::thermal::CoherentElasticScattering;
   using IncoherentElasticScattering = njoy::dryad::thermal::IncoherentElasticScattering;
   using IncoherentInelasticScattering = njoy::dryad::thermal::IncoherentInelasticScattering;
+  using StyleType = njoy::format::gnds::StyleType;
 
   // wrap views created by this component
 
@@ -148,21 +149,23 @@ void wrapThermalScattering( python::module& module ) {
   .def_static(
 
     "from_gnds_file",
-    [] ( double lower, double upper, const std::string& filename, const std::string& style ) -> decltype(auto) {
+    [] ( const std::string& filename,
+         const std::optional< double >& upper,
+         const StyleType& style ) -> decltype(auto) {
 
-      return njoy::format::gnds::read::createThermalScatteringFromFile( lower, upper, filename, style );
+      return njoy::format::gnds::read::createThermalScatteringFromFile( filename, upper, style );
     },
-    python::arg( "lower" ), python::arg( "upper" ),
-    python::arg( "filename" ), python::arg( "style" ) = "eval",
+    python::arg( "filename" ),
+    python::arg( "upper" ) = std::nullopt,
+    python::arg( "style" ) = StyleType::Evaluation,
     "Create ThermalScattering data from a GNDS file\n\n"
     "Parameters\n"
     "----------\n"
-    "    lower : float\n"
-    "        the lower energy limit\n"
-    "    upper : float\n"
-    "        the upper energy limit\n"
     "    filename : string\n"
     "        the GNDS file name\n"
+    "    upper : float, default None\n"
+    "        the upper energy limit, the upper energy limit of the evaluation is used\n"
+    "        if no value is defined\n"
     "    style : string\n"
     "        the GNDS style to process (default is eval)"
   )

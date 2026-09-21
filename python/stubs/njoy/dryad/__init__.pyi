@@ -4871,18 +4871,17 @@ class ThermalScattering:
                 if no value is defined
         """
     @staticmethod
-    def from_gnds_file(lower: float, upper: float, filename: str, style: str = 'eval') -> ThermalScattering:
+    def from_gnds_file(filename: str, upper: float | None = None, style: njoy.format.gnds.StyleType = ...) -> ThermalScattering:
         """
         Create ThermalScattering data from a GNDS file
         
         Parameters
         ----------
-            lower : float
-                the lower energy limit
-            upper : float
-                the upper energy limit
             filename : string
                 the GNDS file name
+            upper : float, default None
+                the upper energy limit, the upper energy limit of the evaluation is used
+                if no value is defined
             style : string
                 the GNDS style to process (default is eval)
         """

@@ -17,15 +17,15 @@ namespace read {
   /**
    *  @brief Create a ThermalScattering instance from a GNDS file
    *
-   *  @param[in] lower      the lower energy limit
-   *  @param[in] upper      the upper energy limit
    *  @param[in] filename   the GNDS file name
+   *  @param[in] upper      the optional upper energy limit (default: use the upper
+   *                        energy limit of the evaluation)
    *  @param[in] style      the gnds style to process (default is eval)
    */
   inline dryad::ThermalScattering
-  createThermalScatteringFromFile( double lower, double upper,
-                                   const std::string& filename,
-                                   const std::string& style = "eval" ) {
+  createThermalScatteringFromFile( const std::string& filename,
+                                   const std::optional< double >& upper = std::nullopt,
+                                   const StyleType& style = StyleType::Evaluation ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );
 
@@ -33,7 +33,7 @@ namespace read {
     document.load_file( filename.c_str() );
     if ( document ) {
 
-      return createThermalScattering( lower, upper, document, style );
+      return createThermalScattering( document, upper, style );
     }
     else {
 
