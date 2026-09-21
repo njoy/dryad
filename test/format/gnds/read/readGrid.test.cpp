@@ -13,6 +13,7 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::format;
 
 void verifyChunk( const gnds::read::Grid&, int index );
+void verifyChunkWithInterpolation( const gnds::read::Grid& );
 
 SCENARIO( "readAxes" ) {
 
@@ -24,6 +25,15 @@ SCENARIO( "readAxes" ) {
                                    find_child_by_attribute( "covarianceSection", "label", "(z,n)" ).
                                    child( "mixed" ).child( "shortRangeSelfScalingVariance" ).
                                    child( "gridded2d" ).child( "axes" );
+
+    pugi::xml_document tsl_document;
+    tsl_document.load_file( "tsl-ZrinZrH.endf.gnds.xml" );
+    pugi::xml_node tsl_axes = tsl_document.child( "reactionSuite" ).child( "reactions" ).
+                                           find_child_by_attribute( "reaction", "ENDF_MT", "4" ).
+                                           child( "doubleDifferentialCrossSection" ).
+                                           child( "thermalNeutronScatteringLaw_incoherentInelastic" ).
+                                           child( "scatteringAtoms" ).child( "scatteringAtom" ).
+                                           child( "selfScatteringKernel" ).child( "gridded3d" ).child( "axes" );
 
     WHEN( "a single GNDS grid node with a values node is used" ) {
 
@@ -49,6 +59,18 @@ SCENARIO( "readAxes" ) {
       } // THEN
     } // WHEN
 
+    WHEN( "a single GNDS grid node with interpolation" ) {
+
+      pugi::xml_node grid = tsl_axes.first_child();
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = gnds::read::readGrid( grid );
+
+        verifyChunkWithInterpolation( chunk );
+      } // THEN
+    } // WHEN
+
     WHEN( "incorrect nodes are given" ) {
 
       THEN( "exceptions are thrown" ) {
@@ -64,6 +86,7 @@ void verifyChunk( const gnds::read::Grid& chunk, int index ) {
 
   CHECK( index == chunk.index );
   CHECK( "eV"  == chunk.unit );
+  CHECK( ""  == chunk.interpolation );
 
   CHECK( 13 == chunk.values.size() );
 
@@ -80,4 +103,22 @@ void verifyChunk( const gnds::read::Grid& chunk, int index ) {
   CHECK_THAT( 1e7    , WithinRel( chunk.values[10] ) );
   CHECK_THAT( 1.4e7  , WithinRel( chunk.values[11] ) );
   CHECK_THAT( 2e7    , WithinRel( chunk.values[12] ) );
+}
+
+void verifyChunkWithInterpolation( const gnds::read::Grid& chunk ) {
+
+  CHECK( 3 == chunk.index );
+  CHECK( "K"  == chunk.unit );
+  CHECK( "log-lin"  == chunk.interpolation );
+
+  CHECK( 8 == chunk.values.size() );
+
+  CHECK_THAT(  296, WithinRel( chunk.values[0] ) );
+  CHECK_THAT(  400, WithinRel( chunk.values[1] ) );
+  CHECK_THAT(  500, WithinRel( chunk.values[2] ) );
+  CHECK_THAT(  600, WithinRel( chunk.values[3] ) );
+  CHECK_THAT(  700, WithinRel( chunk.values[4] ) );
+  CHECK_THAT(  800, WithinRel( chunk.values[5] ) );
+  CHECK_THAT( 1000, WithinRel( chunk.values[6] ) );
+  CHECK_THAT( 1200, WithinRel( chunk.values[7] ) );
 }
