@@ -11,6 +11,7 @@
 #include "njoy/format/endf/read/resonances/createTabulatedRadius.hpp"
 #include "njoy/format/endf/read/resonances/lrf3/createCompoundSystem.hpp"
 #include "njoy/format/endf/read/resonances/lrf7/createCompoundSystem.hpp"
+#include "njoy/format/endf/read/resonances/urr/caseA/createCompoundSystem.hpp"
 #include "njoy/format/endf/read/resonances/urr/caseC/createCompoundSystem.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
@@ -86,7 +87,13 @@ namespace resonances {
       else {
 
         Log::info( "Reading unresolved resonance region between {} and {} eV", lower, upper );
-        if ( range.representation() == 2 ) {
+        if ( range.representation() == 1 && ! range.averageFissionWidthFlag() ) {
+
+          // Case A: energy-independent unresolved parameters (LRF = 1, LFW = 0)
+          decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyIndependent >( range.parameters() );
+          unresolved = urr::caseA::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters );
+        }
+        else if ( range.representation() == 2 ) {
 
           // Case C: fully energy-dependent unresolved parameters (LRF = 2)
           decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyDependent >( range.parameters() );
