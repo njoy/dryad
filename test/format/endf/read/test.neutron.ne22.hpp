@@ -1189,7 +1189,8 @@ namespace ne22 {
     CHECK( std::nullopt != Ne22.particleData() );
     verifyParticleDatabase( Ne22.particleData().value() );
 
-    CHECK( std::nullopt == Ne22.resonances() );
+    //! @todo Complete test
+    CHECK( std::nullopt != Ne22.resonances() );
 
     auto elastic = Ne22.reaction( id::ReactionID( "n,Ne22->n,Ne22" ) );
     neutron::ne22::verifyElasticReaction( elastic, normalise );

@@ -11,6 +11,7 @@
 #include "njoy/format/endf/read/resonances/createTabulatedRadius.hpp"
 #include "njoy/format/endf/read/resonances/lrf3/createCompoundSystem.hpp"
 #include "njoy/format/endf/read/resonances/lrf7/createCompoundSystem.hpp"
+#include "njoy/format/endf/read/resonances/urr/caseC/createCompoundSystem.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -35,6 +36,7 @@ namespace resonances {
     double upperEnergy;
     std::optional< double > radius = std::nullopt;
     std::vector< dryad::resonances::CompoundSystem > resolved;
+    std::optional< dryad::resonances::UnresolvedCompoundSystem > unresolved = std::nullopt;
 
     for ( const auto& range : section.isotopes().front().resonanceRanges() ) {
 
@@ -84,13 +86,24 @@ namespace resonances {
       else {
 
         Log::info( "Reading unresolved resonance region between {} and {} eV", lower, upper );
-        Log::info( "  Unresolved formalism {} is currently unsupported, skipping", range.representation() );
+        if ( range.representation() == 2 ) {
+
+          // Case C: fully energy-dependent unresolved parameters (LRF = 2)
+          decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyDependent >( range.parameters() );
+          unresolved = urr::caseC::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters );
+        }
+        else {
+
+          Log::info( "  Unresolved formalism LRF = {}, LFW = {} is currently unsupported, skipping",
+                     range.representation(), range.averageFissionWidthFlag() );
+          continue;
+        }
       }
     }
 
-    if ( resolved.size() != 0 ) {
+    if ( resolved.size() != 0 || unresolved.has_value() ) {
 
-      return dryad::resonances::ResonanceParameters( std::move( resolved ) );
+      return dryad::resonances::ResonanceParameters( std::move( resolved ), std::move( unresolved ) );
     }
     else if ( radius.has_value() ) {
 

@@ -12,6 +12,7 @@
 #include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/format/createVector.hpp"
 #include "njoy/format/endf/read/resonances/createChannelRadii.hpp"
+#include "njoy/format/endf/read/resonances/retrieveQuantumNumber.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -19,41 +20,7 @@ namespace format {
 namespace endf {
 namespace read {
 namespace resonances {
-namespace lrf3 {
-
-  inline dryad::resonances::ChannelQuantumNumbers
-  retrieveQuantumNumber( unsigned int l, double j,
-                         std::vector< dryad::resonances::ChannelQuantumNumbers >& available ) {
-
-    auto find = [l,j] ( auto&& numbers ) {
-
-      return numbers.orbitalAngularMomentum() == l &&
-             numbers.totalAngularMomentum() == std::abs( j );
-    };
-
-    auto first = std::find_if( available.begin(), available.end(), find );
-    if ( first != available.end() ) {
-
-      auto second = std::find_if( std::next( first ), available.end(), find );
-      if ( second != available.end() ) {
-
-        if ( j > 0 ) {
-
-          first = second;
-        }
-      }
-
-      auto numbers = *first;
-      available.erase( first );
-      return numbers;
-    }
-    else {
-
-      throw std::runtime_error( "None of the expected spin groups has l = "
-                                + std::to_string( l ) + " and J = "
-                                + std::to_string( std::abs( j ) ) );
-    }
-  }
+namespace lrf3{
 
   /**
    *  @brief Create the channel data for Reich-Moore data for a given l value
