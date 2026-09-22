@@ -89,8 +89,8 @@ namespace thermal {
     // we have to cast to int since std::size_t does not work
     using namespace njoy::tools;
     auto chunked = std20::views::all( array.values )
-                   | std23::views::chunk( static_cast< int >( alphas.size() ) )
-                   | std23::views::chunk( static_cast< int >( betas.size() ) );
+                   | std23::views::chunk( static_cast< long >( alphas.size() ) )
+                   | std23::views::chunk( static_cast< long >( betas.size() ) );
 
     auto beta_interpolation = createInterpolationType( axes[1].interpolation.value() );
     auto alpha_interpolation = createInterpolationType( axes[2].interpolation.value() );
