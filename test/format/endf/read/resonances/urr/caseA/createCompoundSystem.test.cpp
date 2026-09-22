@@ -54,7 +54,7 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   resonances::ParticlePair neutron_pair( Particle( neutron, neutron_mass, 0.5, +1 ),
                              Particle( ba140, 138.709 * neutron_mass, 0, +1 ) );
 
-  double a = 7.185412578602798;
+  double a = 1.23 * std::pow( 138.709 * neutron_mass, 1. / 3. ) + 0.8;
   double ap = 6.233;
   resonances::ChannelRadii zero_radii( 0., 0. );
   resonances::ChannelRadii elastic_radii( a, ap );
