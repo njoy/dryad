@@ -117,7 +117,7 @@ SCENARIO( "createHeatingNumbersBlock" ) {
         CHECK( 12396 == block.NES() );
         CHECK( 12396 == block.heating().size() );
 
-        CHECK_THAT( 6.18306127716396e-14, WithinRel( block.heating()[0], 5e-10 ) );
+        CHECK_THAT( 6.18306127716396e-14, WithinRel( block.heating()[0], 1e-10 ) );
         CHECK_THAT( 1.00464768820740e-02, WithinRel( block.heating()[3099] ) );
         CHECK_THAT( 1.37726983856500e-02, WithinRel( block.heating()[6198] ) );
         CHECK_THAT( 1.31606138907762e+00, WithinRel( block.heating()[9297] ) );
