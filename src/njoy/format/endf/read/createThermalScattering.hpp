@@ -28,7 +28,7 @@ namespace read {
    */
   inline dryad::ThermalScattering
   createThermalScattering( const ENDFtk::tree::Material& material,
-                           std::optional< double > upper = std::nullopt ) {
+                           const std::optional< double >& upper = std::nullopt ) {
 
     if ( material.hasSection( 7, 2 ) || material.hasSection( 7, 4 ) ) {
 

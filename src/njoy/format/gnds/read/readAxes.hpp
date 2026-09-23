@@ -25,12 +25,22 @@ namespace read {
 
     std::optional< int > index = std::nullopt;
     std::optional< std::string > unit = std::nullopt;
+    std::optional< std::string > interpolation = std::nullopt;
     std::optional< std::vector< double > > values = std::nullopt;
 
     // C++-20 : constructor no longer required for emplace/emplace_back
-    AxisInformation( std::optional< int > index, std::optional< std::string > unit,
+    AxisInformation( std::optional< int > index,
+                     std::optional< std::string > unit,
                      std::optional< std::vector< double > > values ) :
-      index( std::move( index ) ), unit( std::move( unit ) ), values( std::move( values ) ) {}
+      index( std::move( index ) ), unit( std::move( unit ) ),
+      interpolation( std::nullopt ), values( std::move( values ) ) {}
+
+    AxisInformation( std::optional< int > index,
+                     std::optional< std::string > unit,
+                     std::optional< std::string > interpolation,
+                     std::optional< std::vector< double > > values ) :
+      index( std::move( index ) ), unit( std::move( unit ) ),
+      interpolation( std::move( interpolation ) ), values( std::move( values ) ) {}
   };
 
   using Axes = std::vector< AxisInformation >;
@@ -56,7 +66,8 @@ namespace read {
       else if ( strcmp( child.name(), "grid" ) == 0 ) {
 
         auto grid = readGrid( child );
-        data.emplace_back( std::move( grid.index ), std::move( grid.unit ), std::move( grid.values ) );
+        data.emplace_back( std::move( grid.index ), std::move( grid.unit ),
+                           std::move( grid.interpolation ), std::move( grid.values ) );
       }
     }
     std::sort( data.begin(), data.end(),

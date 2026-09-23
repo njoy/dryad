@@ -391,6 +391,7 @@ add_cpp_test( format.gnds.read.resonances.rmatrix.createCompoundSystem          
 add_cpp_test( format.gnds.read.thermal.createDebyeWallerIntegralData                         format/gnds/read/thermal/createDebyeWallerIntegralData.test.cpp )
 add_cpp_test( format.gnds.read.thermal.createCoherentElasticScattering                       format/gnds/read/thermal/createCoherentElasticScattering.test.cpp )
 add_cpp_test( format.gnds.read.thermal.createIncoherentElasticScattering                     format/gnds/read/thermal/createIncoherentElasticScattering.test.cpp )
+add_cpp_test( format.gnds.read.thermal.createIncoherentInelasticScattering                   format/gnds/read/thermal/createIncoherentInelasticScattering.test.cpp )
 add_cpp_test( format.gnds.read.readCovarianceMatrix                                          format/gnds/read/readCovarianceMatrix.test.cpp )
 add_cpp_test( format.gnds.read.createPolynomialMultiplicity                                  format/gnds/read/createPolynomialMultiplicity.test.cpp )
 add_cpp_test( format.gnds.read.createTabulatedMultiplicity                                   format/gnds/read/createTabulatedMultiplicity.test.cpp )

@@ -24,6 +24,7 @@ namespace read {
 
     std::optional< int > index = std::nullopt;
     std::optional< std::string > unit = std::nullopt;
+    std::string interpolation;
     std::vector< double > values;
   };
 
@@ -38,6 +39,7 @@ namespace read {
 
     auto index = grid.attribute( "index" );
     auto unit = grid.attribute( "unit" );
+    auto interpolation = grid.attribute( "interpolation" );
 
     auto values = grid.child( "values" );
     if ( ! values ) {
@@ -57,6 +59,7 @@ namespace read {
 
     return { index ? std::make_optional( index.as_int() ) : std::nullopt,
              unit ? std::make_optional( unit.as_string() ) : std::nullopt,
+             interpolation.as_string(),
              readValues( values ) };
   }
 
