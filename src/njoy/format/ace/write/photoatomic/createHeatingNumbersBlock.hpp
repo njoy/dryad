@@ -104,17 +104,24 @@ namespace photoatomic {
 
     // set average outgoing energies
 
+    auto find_edge = [&] ( double edge ) {
+
+      auto lower = std::lower_bound( energies.begin(), energies.end(), edge );
+      auto upper = std::upper_bound( lower, energies.end(), edge );
+      return upper != lower ? std::prev( upper ) : upper;
+    };
+
     // as a function of the z value
     if ( z > 11 && z < 20 ) {
 
-      auto iter = std::upper_bound( energies.begin(), energies.end(), k_edge );
+      auto iter = find_edge( k_edge );
       auto fiter = std::next( fluorescence.begin(), std::distance( energies.begin(), iter ) );
       std::transform( fiter, fluorescence.end(), fiter,
                       [&] ( const auto& ) { return k_probability * k_average_energy; } );
     }
     else {
 
-      auto iter = std::upper_bound( energies.begin(), energies.end(), k_edge );
+      auto iter = find_edge( k_edge );
       auto fiter = std::next( fluorescence.begin(), std::distance( energies.begin(), iter ) );
       std::transform( fiter, fluorescence.end(), fiter,
                       [&] ( const auto& ) { return l2_probability * l2_energy + l3_probability * l3_energy +
@@ -138,10 +145,11 @@ namespace photoatomic {
                                     l3_shell.averageRadiativeEnergy() * l3_shell.totalRadiativeProbability() * l3_weight ) /
                                   l_probability;
 
-        iter = std::upper_bound( energies.begin(), energies.end(), l_edge );
+        // add to the average energy
+        iter = find_edge( l_edge );
         fiter = std::next( fluorescence.begin(), std::distance( energies.begin(), iter ) );
         std::transform( fiter, fluorescence.end(), fiter,
-                        [&] ( const auto& ) { return l_probability * l_average_energy; } );
+                        [&] ( const auto& value ) { return value + l_probability * l_average_energy; } );
       }
     }
 
