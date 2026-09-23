@@ -189,6 +189,19 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "disappearance" ) );
       CHECK_THROWS( id.resolve( n, u238 ) );
 
+      id = ReactionType( "competitive" );
+      CHECK( 20000000001 == id.number() );
+      CHECK( std::nullopt == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "competitive" == id.symbol() );
+      CHECK( std::nullopt == id.particles() );
+      CHECK( std::nullopt == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( true == id.isSpecial() );
+      CHECK( false == id.isCompatibleWithENDF() );
+      CHECK_THROWS( id.resolve( n, u238 ) );
+
       // standard incident neutron and charged particle reaction types
 
       // elastic for a ground state target

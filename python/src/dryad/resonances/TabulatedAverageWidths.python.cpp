@@ -29,7 +29,7 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     "A table of average widths\n\n"
     "Parameters\n"
     "----------\n"
-    "    dof : int\n"
+    "    dof : float\n"
     "        the degrees of freedom\n"
     "    energies : list of float\n"
     "        the energy values\n"
@@ -47,7 +47,7 @@ void wrapTabulatedAverageWidths( python::module& module ) {
   component
   .def(
 
-    python::init< int,
+    python::init< double,
                   std::vector< double >,
                   std::vector< double >,
                   std::vector< std::size_t >,
@@ -61,7 +61,7 @@ void wrapTabulatedAverageWidths( python::module& module ) {
   )
   .def(
 
-    python::init< int,
+    python::init< double,
                   std::vector< double >,
                   std::vector< double >,
                   InterpolationType >(),
@@ -96,7 +96,7 @@ void wrapTabulatedAverageWidths( python::module& module ) {
   .def_property(
     "degrees_of_freedom",
     python::overload_cast<>( &Component::degreesOfFreedom, python::const_ ),
-    python::overload_cast< std::optional< int > >( &Component::degreesOfFreedom ),
+    python::overload_cast< std::optional< double > >( &Component::degreesOfFreedom ),
     "The degrees of freedom"
   )
   .def_property_readonly(

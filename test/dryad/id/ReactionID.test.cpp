@@ -277,6 +277,22 @@ SCENARIO( "ReactionID" ) {
       CHECK( id == ReactionID( n, am242m, ReactionType( 50 ) ) );
 
       CHECK( size + 13 == ReactionID::size() );
+
+      id = ReactionID( "n,Am242_e2->competitive" );
+      CHECK( n == id.projectile() );
+      CHECK( am242m == id.target() );
+      CHECK( std::nullopt == id.particles() );
+      CHECK( std::nullopt == id.residual() );
+      CHECK( std::nullopt == id.mt() );
+      CHECK( false == id.isCompatibleWithENDF() );
+      CHECK( ReactionType( "competitive" ) == id.reactionType() );
+      CHECK( InteractionType::Nuclear == id.interactionType() );
+      CHECK( "n,Am242_e2->competitive" == id.symbol() );
+      CHECK( id == ReactionID( n, am242m, "competitive" ) );
+      CHECK( id == ReactionID( n, am242m, ReactionType( "competitive" ) ) );
+
+      CHECK( size + 14 == ReactionID::size() );
+
     }
   } // GIVEN
 

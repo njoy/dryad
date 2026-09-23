@@ -39,11 +39,11 @@ namespace resonances {
 
     /* fields */
 
-    std::optional< int > degrees_freedom_;
+    std::optional< double > degrees_freedom_;
 
     /* auxiliary functions */
 
-    static std::optional< int > combineDoF( const std::optional< int >& left, const std::optional< int >& right ) {
+    static std::optional< double > combineDoF( const std::optional< double >& left, const std::optional< double >& right ) {
 
       if ( left.has_value() && right.has_value() ) {
 
@@ -68,7 +68,7 @@ namespace resonances {
      *  @param[in]  dof     the degrees of freedom
      *  @param[in]  table   the interpolation table
      */
-    TabulatedAverageWidths( std::optional< int > dof,
+    TabulatedAverageWidths( std::optional< double > dof,
                             InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ), degrees_freedom_( dof ) {}
 
@@ -101,12 +101,12 @@ namespace resonances {
      *  @param[in]  boundaries     the boundaries of the interpolation regions
      *  @param[in]  interpolants   the interpolation types of the interpolation regions
      */
-    TabulatedAverageWidths( int dof,
+    TabulatedAverageWidths( double dof,
                             std::vector< double > energies,
                             std::vector< double > widths,
                             std::vector< std::size_t > boundaries,
                             std::vector< InterpolationType > interpolants ) :
-      TabulatedAverageWidths( std::optional< int >( dof ),
+      TabulatedAverageWidths( std::optional< double >( dof ),
                               InterpolationTable< double, double >( std::move( energies ),
                                                                     std::move( widths ),
                                                                     std::move( boundaries ),
@@ -120,11 +120,11 @@ namespace resonances {
      *  @param[in] widths        the average width values (eV)
      *  @param[in] interpolant   the interpolation type (default lin-lin)
      */
-    TabulatedAverageWidths( int dof,
+    TabulatedAverageWidths( double dof,
                             std::vector< double > energies,
                             std::vector< double > widths,
                             InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      TabulatedAverageWidths( std::optional< int >( dof ),
+      TabulatedAverageWidths( std::optional< double >( dof ),
                               InterpolationTable< double, double >( std::move( energies ),
                                                                     std::move( widths ),
                                                                     interpolant ) ) {}
@@ -182,7 +182,7 @@ namespace resonances {
     /**
      * @brief Return the degrees of freedom
      */
-    const std::optional< int >& degreesOfFreedom() const {
+    const std::optional< double >& degreesOfFreedom() const {
 
       return this->degrees_freedom_;
     }
@@ -190,7 +190,7 @@ namespace resonances {
     /**
      * @brief Return the degrees of freedom
      */
-    std::optional< int >& degreesOfFreedom() {
+    std::optional< double >& degreesOfFreedom() {
 
       return this->degrees_freedom_;
     }
@@ -198,7 +198,7 @@ namespace resonances {
     /**
      * @brief Set the degrees of freedom
      */
-    void degreesOfFreedom( std::optional< int > dof ) {
+    void degreesOfFreedom( std::optional< double > dof ) {
 
       this->degrees_freedom_ = std::move( dof );
     }

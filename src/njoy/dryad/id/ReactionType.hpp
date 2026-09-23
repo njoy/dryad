@@ -116,6 +116,13 @@ namespace id {
                std::move( symbols ),
                std::move( interaction ), std::nullopt ) {}
 
+      // special reaction without an mt number
+      Entry( std::int64_t number, InteractionType interaction,
+             std::vector< std::string > symbols ) :
+        Entry( std::move( number ), std::nullopt, std::nullopt,
+               std::move( symbols ),
+               std::move( interaction ), std::nullopt ) {}
+
       // normal reaction with an mt number but no defined level/subshell
       Entry( std::int64_t number, short mt, InteractionType interaction,
              std::vector< std::string > symbols,
@@ -208,6 +215,8 @@ namespace id {
       Entry{ 10000000868, 868, InteractionType::Nuclear, { "lumped18" } },
       Entry{ 10000000869, 869, InteractionType::Nuclear, { "lumped19" } },
       Entry{ 10000000870, 870, InteractionType::Nuclear, { "lumped20" } },
+
+      Entry{ 20000000001,  InteractionType::Nuclear, { "competitive" } },
 
       // normal reactions: reactions with ejectiles (not counting photons and residual)
       // all these must have a final excited state set for the residual
@@ -1241,13 +1250,13 @@ namespace id {
 
         if ( level >= 0 && level < 100 ) {
 
-          if      ( projectile == ParticleID::neutron() )  { return 132 + level; }
-          else if ( projectile == ParticleID::photon() )   { return 30 + level; }
-          else if ( projectile == ParticleID::proton() )   { return 258 + level; }
-          else if ( projectile == ParticleID::deuteron() ) { return 375 + level; }
-          else if ( projectile == ParticleID::triton() )   { return 485 + level; }
-          else if ( projectile == ParticleID::helion() )   { return 597 + level; }
-          else if ( projectile == ParticleID::alpha() )    { return 708 + level; }
+          if      ( projectile == ParticleID::neutron() )  { return 1 + 132 + level; }
+          else if ( projectile == ParticleID::photon() )   { return 1 + 30 + level; }
+          else if ( projectile == ParticleID::proton() )   { return 1 + 258 + level; }
+          else if ( projectile == ParticleID::deuteron() ) { return 1 + 375 + level; }
+          else if ( projectile == ParticleID::triton() )   { return 1 + 485 + level; }
+          else if ( projectile == ParticleID::helion() )   { return 1 + 597 + level; }
+          else if ( projectile == ParticleID::alpha() )    { return 1 + 708 + level; }
         }
 
         throw std::invalid_argument( "Elastic scattering using mt = 2 for \'" + projectile.symbol() + "\' "
@@ -1261,8 +1270,8 @@ namespace id {
       else {
 
         std::size_t offset = 0;
-        if      ( projectile == ParticleID::electron() ) { offset = 900; }
-        else if ( projectile == ParticleID::photon() )   { offset = 850; }
+        if      ( projectile == ParticleID::electron() ) { offset = 900 + 1; }
+        else if ( projectile == ParticleID::photon() )   { offset = 850 + 1; }
         else {
 
           throw std::invalid_argument( "Ionisation is not defined for \'" + projectile.symbol() + "\'" );
@@ -1427,7 +1436,7 @@ namespace id {
       }
       else {
 
-        return ReactionType( static_cast< std::size_t >( 849 ) );
+        return ReactionType( static_cast< std::size_t >( 1 + 849 ) );
       }
     };
 
@@ -1444,31 +1453,31 @@ namespace id {
 
         if ( projectile == ParticleID::neutron() ) {
 
-          return ReactionType( static_cast< std::size_t >( 132 + level ) );
+          return ReactionType( static_cast< std::size_t >( 1 + 132 + level ) );
         }
         else if ( projectile == ParticleID::photon() ) {
 
-          return ReactionType( static_cast< std::size_t >( 30 + level ) );
+          return ReactionType( static_cast< std::size_t >( 1 + 30 + level ) );
         }
         else if ( projectile == ParticleID::proton() ) {
 
-          return ReactionType( static_cast< std::size_t >( 258 + level ) );
+          return ReactionType( static_cast< std::size_t >( 1 + 258 + level ) );
         }
         else if ( projectile == ParticleID::deuteron() ) {
 
-          return ReactionType( static_cast< std::size_t >( 375 + level ) );
+          return ReactionType( static_cast< std::size_t >( 1 + 375 + level ) );
         }
         else if ( projectile == ParticleID::triton() ) {
 
-          return ReactionType( static_cast< std::size_t >( 485 + level ) );
+          return ReactionType( static_cast< std::size_t >( 1 + 485 + level ) );
         }
         else if ( projectile == ParticleID::helion() ) {
 
-          return ReactionType( static_cast< std::size_t >( 597 + level ) );
+          return ReactionType( static_cast< std::size_t >( 1 + 597 + level ) );
         }
         else if ( projectile == ParticleID::alpha() ) {
 
-          return ReactionType( static_cast< std::size_t >( 708 + level ) );
+          return ReactionType( static_cast< std::size_t >( 1 + 708 + level ) );
         }
       }
 
