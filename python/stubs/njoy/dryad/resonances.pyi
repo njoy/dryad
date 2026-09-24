@@ -1613,7 +1613,7 @@ class TabulatedAverageWidths:
     
     Parameters
     ----------
-        dof : int
+        dof : float
             the degrees of freedom
         energies : list of float
             the energy values
@@ -1657,12 +1657,12 @@ class TabulatedAverageWidths:
     def __imul__(self, arg0: float) -> TabulatedAverageWidths:
         ...
     @typing.overload
-    def __init__(self, dof: int, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, dof: float, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
         """
         Initialise the average width table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, dof: int, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, dof: float, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
         Initialise the average width table with a single interpolation region
         """
@@ -1719,12 +1719,12 @@ class TabulatedAverageWidths:
         The boundaries of the interpolation regions
         """
     @property
-    def degrees_of_freedom(self) -> int | None:
+    def degrees_of_freedom(self) -> float | None:
         """
         The degrees of freedom
         """
     @degrees_of_freedom.setter
-    def degrees_of_freedom(self, arg1: int | None) -> None:
+    def degrees_of_freedom(self, arg1: float | None) -> None:
         ...
     @property
     def energies(self) -> list[float]:
