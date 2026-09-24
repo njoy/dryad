@@ -23,7 +23,7 @@ SCENARIO( "createCompoundSystem" ) {
   GIVEN( "ENDF MF2 MT151 fully energy-dependent unresolved (Case C) data" ) {
 
     using Tape = njoy::ENDFtk::tree::Tape;
-    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-063_Eu_156.endf" );
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-063_Eu_156-endf80.endf" );
     auto section = tape.materials().front().section( 2, 151 ).parse< 2, 151 >();
     auto parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyDependent >(
                         section.isotopes().front().resonanceRanges().front().parameters() );

@@ -12,6 +12,7 @@
 #include "njoy/format/endf/read/resonances/lrf3/createCompoundSystem.hpp"
 #include "njoy/format/endf/read/resonances/lrf7/createCompoundSystem.hpp"
 #include "njoy/format/endf/read/resonances/urr/caseA/createCompoundSystem.hpp"
+#include "njoy/format/endf/read/resonances/urr/caseB/createCompoundSystem.hpp"
 #include "njoy/format/endf/read/resonances/urr/caseC/createCompoundSystem.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
@@ -92,6 +93,12 @@ namespace resonances {
           // Case A: energy-independent unresolved parameters (LRF = 1, LFW = 0)
           decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyIndependent >( range.parameters() );
           unresolved = urr::caseA::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters );
+        }
+        else if ( range.representation() == 1 && range.averageFissionWidthFlag() ) {
+
+          // Case B: energy-dependent-fission-width unresolved parameters (LRF = 1, LFW = 1)
+          decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyDependentFissionWidths >( range.parameters() );
+          unresolved = urr::caseB::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters );
         }
         else if ( range.representation() == 2 ) {
 
