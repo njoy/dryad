@@ -71,6 +71,10 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   auto groups = chunk.spinGroups();
   CHECK( 5 == groups.size() );
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 0
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   auto spingroup = groups[0];
   CHECK_THAT( 0.5, WithinRel( spingroup.totalAngularMomentum() ) );
   CHECK( -1 == spingroup.parity() );
@@ -78,7 +82,6 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   auto channels = spingroup.channels();
 
   CHECK( 2 == channels.size() );
-
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 0: capture
@@ -106,7 +109,10 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.incidentParticlePair() );
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
-  CHECK( elastic_radii == channel1.channelRadii() );
+  auto radii = channel1.channelRadii();
+  CHECK_THAT( a, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
+  CHECK( std::nullopt == radii.shiftFactorRadius() );
+  CHECK_THAT( ap, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
   CHECK( true == channel1.hasPenetrability() );
   CHECK( true == channel1.hasShiftFactor() );
@@ -137,7 +143,6 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( 2 == spacing.energies().size() );
   CHECK_THAT( 4.4000000000e+3, WithinRel( spacing.values().front() ) );
   CHECK_THAT( 4.4000000000e+3, WithinRel( spacing.values().back() ) );
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 1
@@ -177,7 +182,10 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.incidentParticlePair() );
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
-  CHECK( elastic_radii == channel1.channelRadii() );
+  radii = channel1.channelRadii();
+  CHECK_THAT( a, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
+  CHECK( std::nullopt == radii.shiftFactorRadius() );
+  CHECK_THAT( ap, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
   CHECK( true == channel1.hasPenetrability() );
   CHECK( true == channel1.hasShiftFactor() );
@@ -208,7 +216,6 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( 2 == spacing.energies().size() );
   CHECK_THAT( 4.4000000000e+3, WithinRel( spacing.values().front() ) );
   CHECK_THAT( 4.4000000000e+3, WithinRel( spacing.values().back() ) );
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 2
@@ -248,7 +255,10 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.incidentParticlePair() );
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
-  CHECK( elastic_radii == channel1.channelRadii() );
+  radii = channel1.channelRadii();
+  CHECK_THAT( a, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
+  CHECK( std::nullopt == radii.shiftFactorRadius() );
+  CHECK_THAT( ap, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
   CHECK( true == channel1.hasPenetrability() );
   CHECK( true == channel1.hasShiftFactor() );
@@ -279,7 +289,6 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( 2 == spacing.energies().size() );
   CHECK_THAT( 2.2000000000e+3, WithinRel( spacing.values().front() ) );
   CHECK_THAT( 2.2000000000e+3, WithinRel( spacing.values().back() ) );
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 3
@@ -319,7 +328,10 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.incidentParticlePair() );
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
-  CHECK( elastic_radii == channel1.channelRadii() );
+  radii = channel1.channelRadii();
+  CHECK_THAT( a, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
+  CHECK( std::nullopt == radii.shiftFactorRadius() );
+  CHECK_THAT( ap, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
   CHECK( true == channel1.hasPenetrability() );
   CHECK( true == channel1.hasShiftFactor() );
@@ -350,7 +362,6 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( 2 == spacing.energies().size() );
   CHECK_THAT( 2.2000000000e+3, WithinRel( spacing.values().front() ) );
   CHECK_THAT( 2.2000000000e+3, WithinRel( spacing.values().back() ) );
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 4
@@ -390,7 +401,10 @@ void verifyChunkBa140( const resonances::UnresolvedCompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.incidentParticlePair() );
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
-  CHECK( elastic_radii == channel1.channelRadii() );
+  radii = channel1.channelRadii();
+  CHECK_THAT( a, WithinRel( std::get< double >( radii.penetrabilityRadius() ) ) );
+  CHECK( std::nullopt == radii.shiftFactorRadius() );
+  CHECK_THAT( ap, WithinRel( std::get< double >( radii.phaseShiftRadius().value() ) ) );
 
   CHECK( true == channel1.hasPenetrability() );
   CHECK( true == channel1.hasShiftFactor() );
