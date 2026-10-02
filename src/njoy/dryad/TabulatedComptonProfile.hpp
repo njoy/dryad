@@ -80,6 +80,7 @@ namespace dryad {
      *  @param[in] interpolants   the interpolation types of the interpolation regions
      *  @param[in] normalise      option to indicate whether or not to normalise
      *                            all probability data (default: no normalisation)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedComptonProfile(
         id::ElectronSubshellID identifier,
@@ -87,11 +88,16 @@ namespace dryad {
         std::vector< double > values,
         std::vector< std::size_t > boundaries,
         std::vector< InterpolationType > interpolants,
-        bool normalise = false ) :
+        bool normalise = false,
+        bool curate = false ) :
       TabulatedComptonProfile(
           std::move( identifier ) ,
-          TabulatedComptonProfileFunction( std::move( momentum ), std::move( values ),
-                                           std::move( boundaries ), std::move( interpolants ) ),
+          TabulatedComptonProfileFunction(
+              std::move( momentum ),
+              std::move( values ),
+              std::move( boundaries ),
+              std::move( interpolants ),
+              curate ),
           normalise ) {}
 
     /**
@@ -103,17 +109,22 @@ namespace dryad {
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
      *  @param[in] normalise      option to indicate whether or not to normalise
      *                            all probability data (default: no normalisation)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedComptonProfile(
         id::ElectronSubshellID identifier,
         std::vector< double > momentum,
         std::vector< double > values,
         InterpolationType interpolant = InterpolationType::LinearLinear,
-        bool normalise = false ) :
+        bool normalise = false,
+        bool curate = false ) :
       TabulatedComptonProfile(
           std::move( identifier ) ,
-          TabulatedComptonProfileFunction( std::move( momentum ), std::move( values ),
-                                           std::move( interpolant ) ),
+          TabulatedComptonProfileFunction(
+              std::move( momentum ),
+              std::move( values ),
+              std::move( interpolant ),
+              curate ),
           normalise ) {}
 
     /**
@@ -220,6 +231,15 @@ namespace dryad {
     void normalise() {
 
       this->pdf().normalise();
+      this->cdf() = this->pdf().calculateCdf( true );
+    }
+
+    /**
+     *  @brief Curate the distribution
+     */
+    void curate() {
+
+      this->pdf().curate();
       this->cdf() = this->pdf().calculateCdf( true );
     }
 

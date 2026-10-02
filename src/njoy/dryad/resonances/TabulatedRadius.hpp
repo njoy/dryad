@@ -60,7 +60,7 @@ namespace resonances {
      *  @param[in] values         the radius values
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
-     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedRadius( std::vector< double > energies,
                      std::vector< double > values,
@@ -77,7 +77,7 @@ namespace resonances {
      *  @param[in] energies       the energy values
      *  @param[in] values         the radius values
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
-     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedRadius( std::vector< double > energies,
                      std::vector< double > values,

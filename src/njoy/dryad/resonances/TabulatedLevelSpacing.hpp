@@ -58,7 +58,7 @@ namespace resonances {
      *  @param[in]  spacings        the average level spacing values (eV)
      *  @param[in]  boundaries      the boundaries of the interpolation regions
      *  @param[in]  interpolants    the interpolation types of the interpolation regions
-     *  @param[in]  curate          flag to indicate whether or not to curate the table (default: false)
+     *  @param[in]  curate          flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedLevelSpacing( std::vector< double > energies,
                            std::vector< double > spacings,
@@ -75,7 +75,7 @@ namespace resonances {
      *  @param[in]  energies        the energy values (eV)
      *  @param[in]  spacings        the average level spacing values (eV)
      *  @param[in]  interpolant     the interpolation type (default lin-lin)
-     *  @param[in]  curate          flag to indicate whether or not to curate the table (default: false)
+     *  @param[in]  curate          flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedLevelSpacing( std::vector< double > energies,
                            std::vector< double > spacings,

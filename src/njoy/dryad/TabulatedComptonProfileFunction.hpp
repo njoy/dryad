@@ -81,7 +81,7 @@ namespace dryad {
      *  @param[in] values         the probability values
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
-     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedComptonProfileFunction(
         std::vector< double > momentum,
@@ -99,7 +99,7 @@ namespace dryad {
      *  @param[in] momentum       the momentum values
      *  @param[in] values         the probability values
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
-     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedComptonProfileFunction(
         std::vector< double > momentum,

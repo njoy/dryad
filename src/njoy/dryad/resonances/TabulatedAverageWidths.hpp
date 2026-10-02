@@ -100,7 +100,7 @@ namespace resonances {
      *  @param[in]  widths         the average width values (eV)
      *  @param[in]  boundaries     the boundaries of the interpolation regions
      *  @param[in]  interpolants   the interpolation types of the interpolation regions
-     *  @param[in]  curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in]  curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedAverageWidths( double dof,
                             std::vector< double > energies,
@@ -122,7 +122,7 @@ namespace resonances {
      *  @param[in] energies      the energy values (eV)
      *  @param[in] widths        the average width values (eV)
      *  @param[in] interpolant   the interpolation type (default lin-lin)
-     *  @param[in] curate        flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate        flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedAverageWidths( double dof,
                             std::vector< double > energies,
@@ -141,7 +141,7 @@ namespace resonances {
      *  @param[in] widths         the average width values (eV)
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
-     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedAverageWidths( std::vector< double > energies,
                             std::vector< double > widths,
@@ -161,7 +161,7 @@ namespace resonances {
      *  @param[in] energies       the energy values (eV)
      *  @param[in] widths         the average width values (eV)
      *  @param[in] interpolant    the interpolation type (default lin-lin)
-     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedAverageWidths( std::vector< double > energies,
                             std::vector< double > widths,

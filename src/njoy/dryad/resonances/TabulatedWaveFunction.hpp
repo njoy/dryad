@@ -58,7 +58,7 @@ namespace resonances {
      *  @param[in] values         the wave function values
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
-     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedWaveFunction( std::vector< double > ratios,
                            std::vector< double > values,
@@ -75,7 +75,7 @@ namespace resonances {
      *  @param[in] ratios        the ratio values
      *  @param[in] values        the wave function values
      *  @param[in] interpolant   the interpolation type of the data (default lin-lin)
-     *  @param[in] curate        flag to indicate whether or not to curate the table (default: false)
+     *  @param[in] curate        flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedWaveFunction( std::vector< double > ratios,
                            std::vector< double > values,
