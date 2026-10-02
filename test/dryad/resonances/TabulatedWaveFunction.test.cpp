@@ -18,8 +18,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > ratios = { 1., 2., 3., 4. };
-      const std::vector< double > values = { 4., 3., 2., 1. };
+      std::vector< double > ratios = { 1., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 2., 1. };
 
       TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ) );
 
@@ -44,6 +44,107 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( true == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+
+      THEN( "a TabulatedWaveFunction can be copy and move constructed" ) {
+
+        TabulatedWaveFunction copy( chunk );
+
+        CHECK_THAT( 1., WithinRel( copy.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( copy.upperRatioLimit() ) );
+        CHECK( 4 == copy.numberPoints() );
+        CHECK( 1 == copy.numberRegions() );
+        CHECK( 4 == copy.ratios().size() );
+        CHECK( 4 == copy.values().size() );
+        CHECK( 1 == copy.boundaries().size() );
+        CHECK( 1 == copy.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( copy.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( copy.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( copy.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( copy.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( copy.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( copy.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( copy.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( copy.values()[3] ) );
+        CHECK( 3 == copy.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == copy.interpolants()[0] );
+        CHECK( true == copy.isLinearised() );
+        CHECK( true == copy.isCurated() );
+
+        TabulatedWaveFunction move( std::move( copy ) );
+
+        CHECK_THAT( 1., WithinRel( move.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( move.upperRatioLimit() ) );
+        CHECK( 4 == move.numberPoints() );
+        CHECK( 1 == move.numberRegions() );
+        CHECK( 4 == move.ratios().size() );
+        CHECK( 4 == move.values().size() );
+        CHECK( 1 == move.boundaries().size() );
+        CHECK( 1 == move.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( move.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( move.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( move.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( move.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( move.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( move.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( move.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( move.values()[3] ) );
+        CHECK( 3 == move.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == move.interpolants()[0] );
+        CHECK( true == move.isLinearised() );
+        CHECK( true == move.isCurated() );
+      } // THEN
+
+      THEN( "a TabulatedWaveFunction can be copy and move assigned" ) {
+
+        TabulatedWaveFunction copy( { 1., 4. }, { 0., 0. } );
+        copy = chunk;
+
+        CHECK_THAT( 1., WithinRel( copy.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( copy.upperRatioLimit() ) );
+        CHECK( 4 == copy.numberPoints() );
+        CHECK( 1 == copy.numberRegions() );
+        CHECK( 4 == copy.ratios().size() );
+        CHECK( 4 == copy.values().size() );
+        CHECK( 1 == copy.boundaries().size() );
+        CHECK( 1 == copy.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( copy.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( copy.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( copy.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( copy.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( copy.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( copy.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( copy.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( copy.values()[3] ) );
+        CHECK( 3 == copy.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == copy.interpolants()[0] );
+        CHECK( true == copy.isLinearised() );
+        CHECK( true == copy.isCurated() );
+
+        TabulatedWaveFunction move( { 1., 4. }, { 0., 0. } );
+        move = std::move( copy );
+
+        CHECK_THAT( 1., WithinRel( move.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( move.upperRatioLimit() ) );
+        CHECK( 4 == move.numberPoints() );
+        CHECK( 1 == move.numberRegions() );
+        CHECK( 4 == move.ratios().size() );
+        CHECK( 4 == move.values().size() );
+        CHECK( 1 == move.boundaries().size() );
+        CHECK( 1 == move.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( move.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( move.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( move.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( move.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( move.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( move.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( move.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( move.values()[3] ) );
+        CHECK( 3 == move.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == move.interpolants()[0] );
+        CHECK( true == move.isLinearised() );
+        CHECK( true == move.isCurated() );
       } // THEN
 
       THEN( "a TabulatedWaveFunction can be evaluated" ) {
@@ -74,6 +175,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk += 2.;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -93,6 +196,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk -= 2.;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -112,6 +217,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk *= 2.;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -131,6 +238,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk /= 2.;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -150,6 +259,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = -chunk;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -169,6 +280,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk + 2.;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -188,6 +301,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = 2. + chunk;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -207,6 +322,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk - 2.;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -226,6 +343,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = 2. - chunk;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -245,6 +364,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk * 2.;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -264,6 +385,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = 2. * chunk;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -283,6 +406,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk / 2.;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -302,6 +427,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk += same;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -321,6 +448,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk -= same;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -340,6 +469,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk + same;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -359,6 +490,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk - same;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -378,6 +511,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk += threshold;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -397,6 +532,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk -= threshold;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -416,6 +553,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk + threshold;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -435,6 +574,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk - threshold;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 4 == result.numberPoints() );
         CHECK( 1 == result.numberRegions() );
         CHECK( 4 == result.ratios().size() );
@@ -454,6 +595,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk += nonzerothreshold;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 5 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
         CHECK( 5 == chunk.ratios().size() );
@@ -477,6 +620,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         chunk -= nonzerothreshold;
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -496,6 +641,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk + nonzerothreshold;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 5 == result.numberPoints() );
         CHECK( 2 == result.numberRegions() );
         CHECK( 5 == result.ratios().size() );
@@ -519,6 +666,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         result = chunk - nonzerothreshold;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 5 == result.numberPoints() );
         CHECK( 2 == result.numberRegions() );
         CHECK( 5 == result.ratios().size() );
@@ -540,9 +689,11 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
         CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
 
-        // this will add a second point at the lower end point
+        // this will add a second point at the upper end point of small
         result = chunk + small;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 5 == result.numberPoints() );
         CHECK( 2 == result.numberRegions() );
         CHECK( 5 == result.ratios().size() );
@@ -562,10 +713,13 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( 2 == result.boundaries()[0] );
         CHECK( 4 == result.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
 
-        // this will add a second point at the lower end point
+        // this will add a second point at the upper end point of small
         result = chunk - small;
 
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
         CHECK( 5 == result.numberPoints() );
         CHECK( 2 == result.numberRegions() );
         CHECK( 5 == result.ratios().size() );
@@ -585,12 +739,15 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( 2 == result.boundaries()[0] );
         CHECK( 4 == result.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
       } // THEN
 
       THEN( "a TabulatedWaveFunction can be linearised" ) {
 
         TabulatedWaveFunction linear = chunk.linearise();
 
+        CHECK_THAT( 1., WithinRel( linear.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( linear.upperRatioLimit() ) );
         CHECK( 4 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
 
@@ -614,6 +771,7 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK_THAT( 1., WithinRel( linear.values()[3] ) );
 
         CHECK( true == linear.isLinearised() );
+        CHECK( true == linear.isCurated() );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -622,11 +780,12 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > ratios = { 1., 2., 2., 3., 4. };
-      const std::vector< double > values = { 4., 3., 4., 3., 2. };
+      std::vector< double > ratios = { 1., 2., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ),
+      TabulatedWaveFunction chunk( std::move( ratios ),
+                                   std::move( values ),
                                    interpolant );
 
       THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
@@ -635,6 +794,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
         // as required
         CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
         CHECK( 5 == chunk.ratios().size() );
         CHECK( 5 == chunk.values().size() );
         CHECK( 2 == chunk.boundaries().size() );
@@ -654,6 +815,7 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
         CHECK( true == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
 
       THEN( "a TabulatedWaveFunction can be evaluated" ) {
@@ -674,587 +836,12 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK_THAT( 2.5, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "arithmetic operations can be performed" ) {
-
-        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
-        TabulatedWaveFunction same( { 1., 4. }, { 0., 3. } );
-        TabulatedWaveFunction threshold( { 2., 4. }, { 0., 2. } );
-        TabulatedWaveFunction nonzerothreshold( { 3., 4. }, { 1., 2. } );
-        TabulatedWaveFunction small( { 1., 3. }, { 0., 2. } );
-
-        chunk += 2.;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 6., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 5., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 6., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        chunk -= 2.;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        chunk *= 2.;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 8., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 6., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        chunk /= 2.;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        result = -chunk;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT(  1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT(  2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT(  2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT(  3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT(  4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
-        CHECK_THAT( -4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( -3., WithinRel( result.values()[3] ) );
-        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = chunk + 2.;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = 2. + chunk;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = chunk - 2.;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 1., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 1., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 0., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = 2. - chunk;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT(  1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT(  2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT(  2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT(  3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT(  4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( -2., WithinRel( result.values()[0] ) );
-        CHECK_THAT( -1., WithinRel( result.values()[1] ) );
-        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
-        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
-        CHECK_THAT(  0., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = chunk * 2.;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = 2. * chunk;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = chunk / 2.;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1. , WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2. , WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2. , WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3. , WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4. , WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 2. , WithinRel( result.values()[0] ) );
-        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
-        CHECK_THAT( 2. , WithinRel( result.values()[2] ) );
-        CHECK_THAT( 1.5, WithinRel( result.values()[3] ) );
-        CHECK_THAT( 1. , WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        chunk += same;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 5., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 5., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        chunk -= same;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        result = chunk + same;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = chunk - same;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
-        CHECK_THAT(  2., WithinRel( result.values()[1] ) );
-        CHECK_THAT(  3., WithinRel( result.values()[2] ) );
-        CHECK_THAT(  1., WithinRel( result.values()[3] ) );
-        CHECK_THAT( -1., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        chunk += threshold;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        chunk -= threshold;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        result = chunk + threshold;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        result = chunk - threshold;
-
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 0., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-
-        chunk += nonzerothreshold;
-
-        CHECK( 6 == chunk.ratios().size() );
-        CHECK( 6 == chunk.values().size() );
-        CHECK( 3 == chunk.boundaries().size() );
-        CHECK( 3 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[5] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 3 == chunk.boundaries()[1] );
-        CHECK( 5 == chunk.boundaries()[2] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
-
-        chunk -= nonzerothreshold;
-
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-        result = chunk + nonzerothreshold;
-
-        CHECK( 6 == result.ratios().size() );
-        CHECK( 6 == result.values().size() );
-        CHECK( 3 == result.boundaries().size() );
-        CHECK( 3 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[5] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( 5 == result.boundaries()[2] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
-
-        result = chunk - nonzerothreshold;
-
-        CHECK( 6 == result.ratios().size() );
-        CHECK( 6 == result.values().size() );
-        CHECK( 3 == result.boundaries().size() );
-        CHECK( 3 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[4] ) );
-        CHECK_THAT( 0., WithinRel( result.values()[5] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( 5 == result.boundaries()[2] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
-
-        // this will add a second point at the lower end point
-        result = chunk + small;
-
-        CHECK( 6 == result.ratios().size() );
-        CHECK( 6 == result.values().size() );
-        CHECK( 3 == result.boundaries().size() );
-        CHECK( 3 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[4] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[5] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( 5 == result.boundaries()[2] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
-
-        // this will add a second point at the lower end point
-        result = chunk - small;
-
-        CHECK( 6 == result.ratios().size() );
-        CHECK( 6 == result.values().size() );
-        CHECK( 3 == result.boundaries().size() );
-        CHECK( 3 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 1., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 3., WithinRel( result.values()[4] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[5] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( 5 == result.boundaries()[2] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
-      } // THEN
-
       THEN( "a TabulatedWaveFunction can be linearised" ) {
 
         TabulatedWaveFunction linear = chunk.linearise();
 
+        CHECK_THAT( 1., WithinRel( linear.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( linear.upperRatioLimit() ) );
         CHECK( 5 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
 
@@ -1282,6 +869,688 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK_THAT( 2., WithinRel( linear.values()[4] ) );
 
         CHECK( true == linear.isLinearised() );
+        CHECK( true == linear.isCurated() );
+      } // THEN
+
+      THEN( "arithmetic operations can be performed" ) {
+
+        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedWaveFunction same( { 1., 4. }, { 0., 3. } );
+        TabulatedWaveFunction threshold( { 2., 4. }, { 0., 2. } );
+        TabulatedWaveFunction nonzerothreshold( { 3., 4. }, { 1., 2. } );
+        TabulatedWaveFunction small( { 1., 3. }, { 0., 2. } );
+
+        chunk += 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk -= 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk *= 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk /= 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = -chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT(  2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT(  3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT(  4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk + 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = 2. + chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk - 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 0., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = 2. - chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT(  2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT(  3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT(  4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK_THAT(  0., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk * 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = 2. * chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk / 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2. , WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3. , WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4. , WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[3] ) );
+        CHECK_THAT( 1. , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        chunk += same;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk -= same;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = chunk + same;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk - same;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.values()[2] ) );
+        CHECK_THAT(  1., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        chunk += threshold;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk -= threshold;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = chunk + threshold;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk - threshold;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 0., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        chunk += nonzerothreshold;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 6 == chunk.numberPoints() );
+        CHECK( 3 == chunk.numberRegions() );
+        CHECK( 6 == chunk.ratios().size() );
+        CHECK( 6 == chunk.values().size() );
+        CHECK( 3 == chunk.boundaries().size() );
+        CHECK( 3 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[5] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( 5 == chunk.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+
+        chunk -= nonzerothreshold;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = chunk + nonzerothreshold;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 6 == result.numberPoints() );
+        CHECK( 3 == result.numberRegions() );
+        CHECK( 6 == result.ratios().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
+
+        result = chunk - nonzerothreshold;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 6 == result.numberPoints() );
+        CHECK( 3 == result.numberRegions() );
+        CHECK( 6 == result.ratios().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 0., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
+
+        // this will add a second point at the upper end point of small
+        result = chunk + small;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 6 == result.numberPoints() );
+        CHECK( 3 == result.numberRegions() );
+        CHECK( 6 == result.ratios().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
+
+        // this will add a second point at the upper end point of small
+        result = chunk - small;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 6 == result.numberPoints() );
+        CHECK( 3 == result.numberRegions() );
+        CHECK( 6 == result.ratios().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -1290,10 +1559,10 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > ratios = { 1., 2., 3., 4. };
-      const std::vector< double > values = { 4., 3., 2., 1. };
-      const std::vector< std::size_t > boundaries = { 1, 3 };
-      const std::vector< InterpolationType > interpolants = {
+      std::vector< double > ratios = { 1., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 2., 1. };
+      std::vector< std::size_t > boundaries = { 1, 3 };
+      std::vector< InterpolationType > interpolants = {
 
         InterpolationType::LinearLinear,
         InterpolationType::LinearLog
@@ -1327,6 +1596,7 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
         CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
 
       THEN( "a TabulatedWaveFunction can be evaluated" ) {
@@ -1349,167 +1619,12 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK_THAT( 1.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "some arithmetic operations can be performed" ) {
-
-        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
-
-        chunk *= 2.;
-
-        CHECK( 4 == chunk.numberPoints() );
-        CHECK( 2 == chunk.numberRegions() );
-        CHECK( 4 == chunk.ratios().size() );
-        CHECK( 4 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[3] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 3 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
-        CHECK( false == chunk.isLinearised() );
-
-        chunk /= 2.;
-
-        CHECK( 4 == chunk.numberPoints() );
-        CHECK( 2 == chunk.numberRegions() );
-        CHECK( 4 == chunk.ratios().size() );
-        CHECK( 4 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 3 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
-        CHECK( false == chunk.isLinearised() );
-
-        result = -chunk;
-
-        CHECK( 4 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 4 == result.ratios().size() );
-        CHECK( 4 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT(  1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT(  2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT(  3., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT(  4., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
-        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
-        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-
-        result = chunk * 2.;
-
-        CHECK( 4 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 4 == result.ratios().size() );
-        CHECK( 4 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-
-        result = 2. * chunk;
-
-        CHECK( 4 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 4 == result.ratios().size() );
-        CHECK( 4 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-
-        result = chunk / 2.;
-
-        CHECK( 4 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 4 == result.ratios().size() );
-        CHECK( 4 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1. , WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2. , WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 3. , WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 4. , WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 2.0, WithinRel( result.values()[0] ) );
-        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
-        CHECK_THAT( 1.0, WithinRel( result.values()[2] ) );
-        CHECK_THAT( 0.5, WithinRel( result.values()[3] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 3 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-      } // THEN
-
-      THEN( "some arithmetic operations cannot be performed" ) {
-
-        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
-        TabulatedWaveFunction right( { 1., 4. }, { 0., 0. } );
-
-        // scalar operations
-        CHECK_THROWS( chunk += 2. );
-        CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( result = chunk + 2. );
-        CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = 2. + chunk );
-        CHECK_THROWS( result = 2. - chunk );
-
-        // table operations
-        CHECK_THROWS( chunk += right );
-        CHECK_THROWS( chunk -= right );
-        CHECK_THROWS( result = chunk + right );
-        CHECK_THROWS( result = chunk - right );
-      } // THEN
-
       THEN( "a TabulatedWaveFunction can be linearised" ) {
 
         TabulatedWaveFunction linear = chunk.linearise();
 
+        CHECK_THAT( 1., WithinRel( linear.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( linear.upperRatioLimit() ) );
         CHECK( 18 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
 
@@ -1561,6 +1676,210 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK_THAT( 1.              , WithinRel( linear.values()[17] ) );
 
         CHECK( true == linear.isLinearised() );
+        CHECK( true == linear.isCurated() );
+      } // THEN
+
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.ratios().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+
+        chunk /= 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.ratios().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+
+        result = -chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.ratios().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT(  4., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+
+        result = chunk * 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.ratios().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+
+        result = 2. * chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.ratios().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+
+        result = chunk / 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.ratios().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 2.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 1.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 0.5, WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+      } // THEN
+
+      THEN( "some arithmetic operations cannot be performed" ) {
+
+        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedWaveFunction right( { 1., 4. }, { 0., 0. } );
+
+        // scalar operations
+        CHECK_THROWS( chunk += 2. );
+        CHECK_THROWS( chunk -= 2. );
+        CHECK_THROWS( result = chunk + 2. );
+        CHECK_THROWS( result = chunk - 2. );
+        CHECK_THROWS( result = 2. + chunk );
+        CHECK_THROWS( result = 2. - chunk );
+
+        // table operations
+        CHECK_THROWS( chunk += right );
+        CHECK_THROWS( chunk -= right );
+        CHECK_THROWS( result = chunk + right );
+        CHECK_THROWS( result = chunk - right );
+        CHECK_THROWS( right += chunk );
+        CHECK_THROWS( right -= chunk );
+        CHECK_THROWS( result = right + chunk );
+        CHECK_THROWS( result = right - chunk );
+
+        // the table is unchanged after the failed operations
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.ratios().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -1569,10 +1888,10 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > ratios = { 1., 2., 2., 3., 4. };
-      const std::vector< double > values = { 4., 3., 4., 3., 2. };
-      const std::vector< std::size_t > boundaries = { 1, 4 };
-      const std::vector< InterpolationType > interpolants = {
+      std::vector< double > ratios = { 1., 2., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 4., 3., 2. };
+      std::vector< std::size_t > boundaries = { 1, 4 };
+      std::vector< InterpolationType > interpolants = {
 
         InterpolationType::LinearLinear,
         InterpolationType::LinearLog
@@ -1587,6 +1906,8 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
         CHECK( 5 == chunk.ratios().size() );
         CHECK( 5 == chunk.values().size() );
         CHECK( 2 == chunk.boundaries().size() );
@@ -1606,6 +1927,7 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
         CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
 
       THEN( "a TabulatedWaveFunction can be evaluated" ) {
@@ -1628,179 +1950,12 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK_THAT( 2.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "some arithmetic operations can be performed" ) {
-
-        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
-
-        chunk *= 2.;
-
-        CHECK( 5 == chunk.numberPoints() );
-        CHECK( 2 == chunk.numberRegions() );
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 8., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 6., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
-        CHECK( false == chunk.isLinearised() );
-
-        chunk /= 2.;
-
-        CHECK( 5 == chunk.numberPoints() );
-        CHECK( 2 == chunk.numberRegions() );
-        CHECK( 5 == chunk.ratios().size() );
-        CHECK( 5 == chunk.values().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
-        CHECK( false == chunk.isLinearised() );
-
-        result = -chunk;
-
-        CHECK( 5 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
-        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
-        CHECK_THAT( -4., WithinRel( result.values()[2] ) );
-        CHECK_THAT( -3., WithinRel( result.values()[3] ) );
-        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-
-        result = chunk * 2.;
-
-        CHECK( 5 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-
-        result = 2. * chunk;
-
-        CHECK( 5 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
-        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-
-        result = chunk / 2.;
-
-        CHECK( 5 == result.numberPoints() );
-        CHECK( 2 == result.numberRegions() );
-        CHECK( 5 == result.ratios().size() );
-        CHECK( 5 == result.values().size() );
-        CHECK( 2 == result.boundaries().size() );
-        CHECK( 2 == result.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
-        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
-        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
-        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
-        CHECK_THAT( 2. , WithinRel( result.values()[0] ) );
-        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
-        CHECK_THAT( 2. , WithinRel( result.values()[2] ) );
-        CHECK_THAT( 1.5, WithinRel( result.values()[3] ) );
-        CHECK_THAT( 1. , WithinRel( result.values()[4] ) );
-        CHECK( 1 == result.boundaries()[0] );
-        CHECK( 4 == result.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
-        CHECK( false == result.isLinearised() );
-      } // THEN
-
-      THEN( "arithmetic operations cannot be performed" ) {
-
-        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
-        TabulatedWaveFunction right( { 1., 4. }, { 0., 0. } );
-
-        // scalar operations
-        CHECK_THROWS( chunk += 2. );
-        CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( result = chunk + 2. );
-        CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = 2. + chunk );
-        CHECK_THROWS( result = 2. - chunk );
-
-        // table operations
-        CHECK_THROWS( chunk += right );
-        CHECK_THROWS( chunk -= right );
-        CHECK_THROWS( result = chunk + right );
-        CHECK_THROWS( result = chunk - right );
-      } // THEN
-
       THEN( "a TabulatedWaveFunction can be linearised" ) {
 
         TabulatedWaveFunction linear = chunk.linearise();
 
+        CHECK_THAT( 1., WithinRel( linear.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( linear.upperRatioLimit() ) );
         CHECK( 12 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
 
@@ -1842,6 +1997,224 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK_THAT( 2.              , WithinRel( linear.values()[11] ) );
 
         CHECK( true == linear.isLinearised() );
+        CHECK( true == linear.isCurated() );
+      } // THEN
+
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+
+        chunk /= 2.;
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+
+        result = -chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+
+        result = chunk * 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+
+        result = 2. * chunk;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+
+        result = chunk / 2.;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.ratios().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[3] ) );
+        CHECK_THAT( 1. , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+        CHECK( true == result.isCurated() );
+      } // THEN
+
+      THEN( "some arithmetic operations cannot be performed" ) {
+
+        TabulatedWaveFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedWaveFunction right( { 1., 4. }, { 0., 0. } );
+
+        // scalar operations
+        CHECK_THROWS( chunk += 2. );
+        CHECK_THROWS( chunk -= 2. );
+        CHECK_THROWS( result = chunk + 2. );
+        CHECK_THROWS( result = chunk - 2. );
+        CHECK_THROWS( result = 2. + chunk );
+        CHECK_THROWS( result = 2. - chunk );
+
+        // table operations
+        CHECK_THROWS( chunk += right );
+        CHECK_THROWS( chunk -= right );
+        CHECK_THROWS( result = chunk + right );
+        CHECK_THROWS( result = chunk - right );
+        CHECK_THROWS( right += chunk );
+        CHECK_THROWS( right -= chunk );
+        CHECK_THROWS( result = right + chunk );
+        CHECK_THROWS( result = right - chunk );
+
+        // the table is unchanged after the failed operations
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -1849,27 +2222,155 @@ SCENARIO( "TabulatedWaveFunction" ) {
   GIVEN( "non-linearised data with multiple regions with a jump that consist of "
          "more than 2 points" ) {
 
-    // note: at construction time, the extraneous points in between the first and last
-    //       x value in the jump are removed. boundaries always point to the first point
-    //       in the jump
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump are kept. boundaries always point to the first point
+    //       in the jump, regardless of curation.
 
-    WHEN( "the data is given explicitly" ) {
+    WHEN( "the data is given explicitly and curate is not requested" ) {
 
-      const std::vector< double > x = { 1., 2., 2., 2., 3., 4. }; // <-- jump of 3 x values
-      const std::vector< double > y = { 4., 3., 2., 4., 3., 2. };
-      const std::vector< std::size_t > boundaries = { 2, 5 }; // <-- pointing to middle of the jump
-      const std::vector< InterpolationType > interpolants = {
+      std::vector< double > ratios = { 1., 2., 2., 2., 3., 4. }; // <-- jump of 3 x values
+      std::vector< double > values = { 4., 3., 2., 4., 3., 2. };
+      std::vector< std::size_t > boundaries = { 2, 5 }; // <-- pointing to middle of the jump
+      std::vector< InterpolationType > interpolants = {
 
         InterpolationType::LinearLinear,
         InterpolationType::LinearLog
       };
 
-      TabulatedWaveFunction chunk( std::move( x ), std::move( y ),
+      TabulatedWaveFunction chunk( std::move( ratios ),
+                                   std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
       THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 6 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 6 == chunk.ratios().size() );
+        CHECK( 6 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[5] ) );
+        CHECK( 1 == chunk.boundaries()[0] );         // <-- this is changed from 2 to 1
+        CHECK( 5 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( false == chunk.isCurated() );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        // note: curate() curates the table in place - it does not return a new instance
+        chunk.curate();
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+
+      THEN( "the table can be linearised and the extraneous point in the jump is removed" ) {
+
+        TabulatedWaveFunction linear = chunk.linearise();
+
+        CHECK_THAT( 1., WithinRel( linear.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( linear.upperRatioLimit() ) );
+        CHECK( 12 == linear.numberPoints() );
+        CHECK( 2 == linear.numberRegions() );
+        CHECK( 12 == linear.ratios().size() );
+        CHECK( 12 == linear.values().size() );
+        CHECK( 2 == linear.boundaries().size() );
+        CHECK( 2 == linear.interpolants().size() );
+        CHECK_THAT( 1.   , WithinRel( linear.ratios()[0] ) );
+        CHECK_THAT( 2.   , WithinRel( linear.ratios()[1] ) );
+        CHECK_THAT( 2.   , WithinRel( linear.ratios()[2] ) );
+        CHECK_THAT( 2.125, WithinRel( linear.ratios()[3] ) );
+        CHECK_THAT( 2.25 , WithinRel( linear.ratios()[4] ) );
+        CHECK_THAT( 2.5  , WithinRel( linear.ratios()[5] ) );
+        CHECK_THAT( 2.75 , WithinRel( linear.ratios()[6] ) );
+        CHECK_THAT( 3.   , WithinRel( linear.ratios()[7] ) );
+        CHECK_THAT( 3.25 , WithinRel( linear.ratios()[8] ) );
+        CHECK_THAT( 3.5  , WithinRel( linear.ratios()[9] ) );
+        CHECK_THAT( 3.75 , WithinRel( linear.ratios()[10] ) );
+        CHECK_THAT( 4.   , WithinRel( linear.ratios()[11] ) );
+        CHECK_THAT( 4.                 , WithinRel( linear.values()[0] ) );
+        CHECK_THAT( 3.                 , WithinRel( linear.values()[1] ) );
+        CHECK_THAT( 4.                 , WithinRel( linear.values()[2] ) );
+        CHECK_THAT( 3.8504812853088648 , WithinRel( linear.values()[3] ) );
+        CHECK_THAT( 3.709511291351455  , WithinRel( linear.values()[4] ) );
+        CHECK_THAT( 3.4496602867867914 , WithinRel( linear.values()[5] ) );
+        CHECK_THAT( 3.2145964603356649 , WithinRel( linear.values()[6] ) );
+        CHECK_THAT( 3.                 , WithinRel( linear.values()[7] ) );
+        CHECK_THAT( 2.7217667858432417 , WithinRel( linear.values()[8] ) );
+        CHECK_THAT( 2.4641630654510251 , WithinRel( linear.values()[9] ) );
+        CHECK_THAT( 2.2243397393085331 , WithinRel( linear.values()[10] ) );
+        CHECK_THAT( 2.                 , WithinRel( linear.values()[11] ) );
+        CHECK( 1 == linear.boundaries()[0] );
+        CHECK( 11 == linear.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[1] );
+        CHECK( true == linear.isLinearised() );
+        CHECK( true == linear.isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      std::vector< double > ratios = { 1., 2., 2., 2., 3., 4. }; // <-- jump of 3 x values
+      std::vector< double > values = { 4., 3., 2., 4., 3., 2. };
+      std::vector< std::size_t > boundaries = { 2, 5 }; // <-- pointing to middle of the jump
+      std::vector< InterpolationType > interpolants = {
+
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLog
+      };
+
+      TabulatedWaveFunction chunk( std::move( ratios ),
+                                   std::move( values ),
+                                   std::move( boundaries ),
+                                   std::move( interpolants ),
+                                   true );
+
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
         CHECK( 5 == chunk.ratios().size() );
         CHECK( 5 == chunk.values().size() );
         CHECK( 2 == chunk.boundaries().size() );
@@ -1889,6 +2390,429 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
         CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.ratios().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "linearised data with multiple jumps that consist of more than 2 points" ) {
+
+    WHEN( "the data is given explicitly and curate is not requested" ) {
+
+      std::vector< double > ratios = { 1., 2., 2., 2., 3., 4., 4., 4., 5. }; // <-- 2 jumps of 3 x values
+      std::vector< double > values = { 1., 2., 3., 4., 5., 6., 7., 8., 9. };
+
+      TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ) );
+
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 5., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 9 == chunk.numberPoints() );
+        CHECK( 3 == chunk.numberRegions() );
+        CHECK( 9 == chunk.ratios().size() );
+        CHECK( 9 == chunk.values().size() );
+        CHECK( 3 == chunk.boundaries().size() );
+        CHECK( 3 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[6] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[7] ) );
+        CHECK_THAT( 5., WithinRel( chunk.ratios()[8] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[5] ) );
+        CHECK_THAT( 7., WithinRel( chunk.values()[6] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[7] ) );
+        CHECK_THAT( 9., WithinRel( chunk.values()[8] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 5 == chunk.boundaries()[1] );
+        CHECK( 8 == chunk.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+        CHECK( true == chunk.isLinearised() );
+        CHECK( false == chunk.isCurated() );
+      } // THEN
+
+      THEN( "a TabulatedWaveFunction can be evaluated and the extraneous points are ignored" ) {
+
+        // note: in a jump, the table is evaluated using the last point of the jump
+        CHECK_THAT( 1. , WithinRel( chunk( 1.  ) ) );
+        CHECK_THAT( 1.5, WithinRel( chunk( 1.5 ) ) );
+        CHECK_THAT( 4. , WithinRel( chunk( 2.  ) ) );
+        CHECK_THAT( 4.5, WithinRel( chunk( 2.5 ) ) );
+        CHECK_THAT( 5. , WithinRel( chunk( 3.  ) ) );
+        CHECK_THAT( 8. , WithinRel( chunk( 4.  ) ) );
+        CHECK_THAT( 8.5, WithinRel( chunk( 4.5 ) ) );
+        CHECK_THAT( 9. , WithinRel( chunk( 5.  ) ) );
+      } // THEN
+
+      THEN( "arithmetic operations can be performed and the table remains uncurated" ) {
+
+        TabulatedWaveFunction same( { 1., 2., 2., 2., 3., 4., 4., 4., 5. },
+                                    { 1., 1., 1., 1., 1., 1., 1., 1., 1. } );
+        TabulatedWaveFunction different( { 1., 5. }, { 0., 4. } );
+
+        chunk += 2.;
+
+        CHECK( 9 == chunk.numberPoints() );
+        CHECK( 3 == chunk.numberRegions() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[6] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[7] ) );
+        CHECK_THAT( 5., WithinRel( chunk.ratios()[8] ) );
+        CHECK_THAT(  3., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  4., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  5., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  6., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT(  7., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT(  8., WithinRel( chunk.values()[5] ) );
+        CHECK_THAT(  9., WithinRel( chunk.values()[6] ) );
+        CHECK_THAT( 10., WithinRel( chunk.values()[7] ) );
+        CHECK_THAT( 11., WithinRel( chunk.values()[8] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 5 == chunk.boundaries()[1] );
+        CHECK( 8 == chunk.boundaries()[2] );
+        CHECK( true == chunk.isLinearised() );
+        CHECK( false == chunk.isCurated() );
+
+        chunk -= same;
+
+        CHECK( 9 == chunk.numberPoints() );
+        CHECK( 3 == chunk.numberRegions() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[6] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[7] ) );
+        CHECK_THAT( 5., WithinRel( chunk.ratios()[8] ) );
+        CHECK_THAT(  2., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  5., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT(  6., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT(  7., WithinRel( chunk.values()[5] ) );
+        CHECK_THAT(  8., WithinRel( chunk.values()[6] ) );
+        CHECK_THAT(  9., WithinRel( chunk.values()[7] ) );
+        CHECK_THAT( 10., WithinRel( chunk.values()[8] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 5 == chunk.boundaries()[1] );
+        CHECK( 8 == chunk.boundaries()[2] );
+        CHECK( true == chunk.isLinearised() );
+        CHECK( false == chunk.isCurated() );
+
+        chunk *= 2.;
+
+        CHECK( 9 == chunk.numberPoints() );
+        CHECK( 3 == chunk.numberRegions() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[6] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[7] ) );
+        CHECK_THAT( 5., WithinRel( chunk.ratios()[8] ) );
+        CHECK_THAT(  4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  8., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 10., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 12., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT( 14., WithinRel( chunk.values()[5] ) );
+        CHECK_THAT( 16., WithinRel( chunk.values()[6] ) );
+        CHECK_THAT( 18., WithinRel( chunk.values()[7] ) );
+        CHECK_THAT( 20., WithinRel( chunk.values()[8] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 5 == chunk.boundaries()[1] );
+        CHECK( 8 == chunk.boundaries()[2] );
+        CHECK( true == chunk.isLinearised() );
+        CHECK( false == chunk.isCurated() );
+
+        // note: the union grid keeps all points in the jumps of the uncurated table
+        TabulatedWaveFunction result = chunk + different;
+
+        CHECK_THAT( 1., WithinRel( result.lowerRatioLimit() ) );
+        CHECK_THAT( 5., WithinRel( result.upperRatioLimit() ) );
+        CHECK( 9 == result.numberPoints() );
+        CHECK( 3 == result.numberRegions() );
+        CHECK( 9 == result.ratios().size() );
+        CHECK( 9 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.ratios()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[6] ) );
+        CHECK_THAT( 4., WithinRel( result.ratios()[7] ) );
+        CHECK_THAT( 5., WithinRel( result.ratios()[8] ) );
+        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
+        CHECK_THAT(  7., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  9., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 11., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 14., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 17., WithinRel( result.values()[5] ) );
+        CHECK_THAT( 19., WithinRel( result.values()[6] ) );
+        CHECK_THAT( 21., WithinRel( result.values()[7] ) );
+        CHECK_THAT( 24., WithinRel( result.values()[8] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 5 == result.boundaries()[1] );
+        CHECK( 8 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
+        CHECK( true == result.isLinearised() );
+        CHECK( false == result.isCurated() );
+      } // THEN
+
+      THEN( "the extraneous points are removed when calling curate()" ) {
+
+        chunk.curate();
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 5., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 7 == chunk.numberPoints() );
+        CHECK( 3 == chunk.numberRegions() );
+        CHECK( 7 == chunk.ratios().size() );
+        CHECK( 7 == chunk.values().size() );
+        CHECK( 3 == chunk.boundaries().size() );
+        CHECK( 3 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 5., WithinRel( chunk.ratios()[6] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[5] ) );
+        CHECK_THAT( 9., WithinRel( chunk.values()[6] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( 6 == chunk.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+        CHECK( true == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      std::vector< double > ratios = { 1., 2., 2., 2., 3., 4., 4., 4., 5. }; // <-- 2 jumps of 3 x values
+      std::vector< double > values = { 1., 2., 3., 4., 5., 6., 7., 8., 9. };
+
+      TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ),
+                                   InterpolationType::LinearLinear, true );
+
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 5., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 7 == chunk.numberPoints() );
+        CHECK( 3 == chunk.numberRegions() );
+        CHECK( 7 == chunk.ratios().size() );
+        CHECK( 7 == chunk.values().size() );
+        CHECK( 3 == chunk.boundaries().size() );
+        CHECK( 3 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[5] ) );
+        CHECK_THAT( 5., WithinRel( chunk.ratios()[6] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[5] ) );
+        CHECK_THAT( 9., WithinRel( chunk.values()[6] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( 6 == chunk.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+        CHECK( true == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "linearised data with a jump that consist of more than 2 points" ) {
+
+    WHEN( "the data is given explicitly and curate is not requested" ) {
+
+      std::vector< double > ratios = { 1., 2., 2., 2., 4. }; // <-- jump of 3 x values
+      std::vector< double > values = { 1., 2., 5., 3., 4. };
+
+      TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ) );
+
+      THEN( "linearise() removes the extraneous point in the jump" ) {
+
+        CHECK( true == chunk.isLinearised() );
+        CHECK( false == chunk.isCurated() );
+
+        TabulatedWaveFunction linear = chunk.linearise();
+
+        CHECK_THAT( 1., WithinRel( linear.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( linear.upperRatioLimit() ) );
+        CHECK( 4 == linear.numberPoints() );
+        CHECK( 2 == linear.numberRegions() );
+        CHECK( 4 == linear.ratios().size() );
+        CHECK( 4 == linear.values().size() );
+        CHECK( 2 == linear.boundaries().size() );
+        CHECK( 2 == linear.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( linear.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( linear.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( linear.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( linear.ratios()[3] ) );
+        CHECK_THAT( 1., WithinRel( linear.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( linear.values()[1] ) );
+        CHECK_THAT( 3., WithinRel( linear.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( linear.values()[3] ) );
+        CHECK( 1 == linear.boundaries()[0] );
+        CHECK( 3 == linear.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[1] );
+        CHECK( true == linear.isLinearised() );
+        CHECK( true == linear.isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and the first and second y value in the jump are "
+          "the same" ) {
+
+      std::vector< double > ratios = { 1., 2., 2., 2., 4. }; // <-- jump of 3 x values
+      std::vector< double > values = { 1., 2., 2., 3., 4. }; // <-- extraneous point has same y
+
+      TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ) );
+
+      THEN( "linearise() removes the extraneous point in the jump and keeps the jump" ) {
+
+        CHECK( true == chunk.isLinearised() );
+        CHECK( false == chunk.isCurated() );
+
+        TabulatedWaveFunction linear = chunk.linearise();
+
+        CHECK_THAT( 1., WithinRel( linear.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( linear.upperRatioLimit() ) );
+        CHECK( 4 == linear.numberPoints() );
+        CHECK( 2 == linear.numberRegions() );
+        CHECK( 4 == linear.ratios().size() );
+        CHECK( 4 == linear.values().size() );
+        CHECK( 2 == linear.boundaries().size() );
+        CHECK( 2 == linear.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( linear.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( linear.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( linear.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( linear.ratios()[3] ) );
+        CHECK_THAT( 1., WithinRel( linear.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( linear.values()[1] ) );
+        CHECK_THAT( 3., WithinRel( linear.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( linear.values()[3] ) );
+        CHECK( 1 == linear.boundaries()[0] );
+        CHECK( 3 == linear.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[1] );
+        CHECK( true == linear.isLinearised() );
+        CHECK( true == linear.isCurated() );
+
+        CHECK_THAT( 1.5, WithinRel( linear( 1.5 ) ) );
+        CHECK_THAT( 3.5, WithinRel( linear( 3. ) ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "linearised data with a jump where both y values in the jump are the same" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      std::vector< double > ratios = { 1., 2., 2., 3. };
+      std::vector< double > values = { 1., 2., 2., 3. }; // <-- same y values in the jump
+
+      TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ) );
+
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 3., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.ratios().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( true == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -1898,25 +2822,30 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
     //       the jump. As a result, the final data contained in this TabulatedWaveFunction is the
-    //       same as the previous test.
+    //       same as the "non-linearised data with multiple regions with a jump" test.
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > x = { 1., 2., 2., 3., 4. };
-      const std::vector< double > y = { 4., 3., 4., 3., 2. };
-      const std::vector< std::size_t > boundaries = { 2, 4 }; // <-- pointing to end of the jump
-      const std::vector< InterpolationType > interpolants = {
+      std::vector< double > ratios = { 1., 2., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 4., 3., 2. };
+      std::vector< std::size_t > boundaries = { 2, 4 }; // <-- pointing to end of the jump
+      std::vector< InterpolationType > interpolants = {
 
         InterpolationType::LinearLinear,
         InterpolationType::LinearLog
       };
 
-      TabulatedWaveFunction chunk( std::move( x ), std::move( y ),
+      TabulatedWaveFunction chunk( std::move( ratios ),
+                                   std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
       THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
         CHECK( 5 == chunk.ratios().size() );
         CHECK( 5 == chunk.values().size() );
         CHECK( 2 == chunk.boundaries().size() );
@@ -1936,32 +2865,35 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
         CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
     } // WHEN
   } // GIVEN
 
   GIVEN( "non-linearised data with multiple regions with a jump at the end" ) {
 
-    // note: at construction time, the last x and y value will be removed and the last
-    //       boundary value will be decremented by 1.
+    // note: at construction time, all but the first point of the jump will be removed and
+    //       the last boundary value will point to the first point of the jump.
 
-    WHEN( "the data is given explicitly" ) {
+    WHEN( "the data is given explicitly and the jump consists of 2 points" ) {
 
-      const std::vector< double > x = { 1., 2., 3., 4., 4. }; // <-- jump at end
-      const std::vector< double > y = { 4., 3., 2., 1., 4. };
-      const std::vector< std::size_t > boundaries = { 1, 4 }; // <-- pointing to end
-      const std::vector< InterpolationType > interpolants = {
+      std::vector< double > ratios = { 1., 2., 3., 4., 4. }; // <-- jump at end
+      std::vector< double > values = { 4., 3., 2., 1., 4. };
+      std::vector< std::size_t > boundaries = { 1, 4 }; // <-- pointing to end
+      std::vector< InterpolationType > interpolants = {
 
         InterpolationType::LinearLinear,
         InterpolationType::LinearLog
       };
 
-      TabulatedWaveFunction chunk( std::move( x ), std::move( y ),
+      TabulatedWaveFunction chunk( std::move( ratios ), std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
-      THEN( "an TabulatedWaveFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -1981,32 +2913,79 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
         CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and the jump consists of more than 2 points" ) {
+
+      std::vector< double > ratios = { 1., 2., 3., 4., 4., 4. }; // <-- jump of 3 x values at end
+      std::vector< double > values = { 4., 3., 2., 1., 4., 5. };
+      std::vector< std::size_t > boundaries = { 1, 5 }; // <-- pointing to end
+      std::vector< InterpolationType > interpolants = {
+
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLog
+      };
+
+      TabulatedWaveFunction chunk( std::move( ratios ),
+                                   std::move( values ),
+                                   std::move( boundaries ),
+                                   std::move( interpolants ) );
+
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.ratios().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[3] ) ); // <-- last two points removed
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) ); // <-- last two points removed
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );         // <-- boundary value reset
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
     } // WHEN
   } // GIVEN
 
   GIVEN( "non-linearised data with multiple regions with a jump at the beginning" ) {
 
-    // note: at construction time, the first x and y value will be removed and all
-    //       boundary values will be decremented by 1.
+    // note: at construction time, all but the last point of the jump will be removed and
+    //       all boundary values will be decremented by the number of points removed.
 
-    WHEN( "the data is given explicitly" ) {
+    WHEN( "the data is given explicitly and the jump consists of 2 points" ) {
 
-      const std::vector< double > x = { 1., 1., 2., 3., 4. }; // <-- jump at beginning
-      const std::vector< double > y = { 1., 4., 3., 2., 1. };
-      const std::vector< std::size_t > boundaries = { 2, 4 }; // <-- pointing to end
-      const std::vector< InterpolationType > interpolants = {
+      std::vector< double > ratios = { 1., 1., 2., 3., 4. }; // <-- jump at beginning
+      std::vector< double > values = { 1., 4., 3., 2., 1. };
+      std::vector< std::size_t > boundaries = { 2, 4 };
+      std::vector< InterpolationType > interpolants = {
 
         InterpolationType::LinearLinear,
         InterpolationType::LinearLog
       };
 
-      TabulatedWaveFunction chunk( std::move( x ), std::move( y ),
+      TabulatedWaveFunction chunk( std::move( ratios ),
+                                   std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
-      THEN( "an TabulatedWaveFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
         CHECK( 4 == chunk.ratios().size() );
@@ -2026,6 +3005,50 @@ SCENARIO( "TabulatedWaveFunction" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
         CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and the jump consists of more than 2 points" ) {
+
+      std::vector< double > ratios = { 1., 1., 1., 2., 3., 4. }; // <-- jump of 3 x values at beginning
+      std::vector< double > values = { 1., 2., 4., 3., 2., 1. };
+      std::vector< std::size_t > boundaries = { 3, 5 };
+      std::vector< InterpolationType > interpolants = {
+
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLog
+      };
+
+      TabulatedWaveFunction chunk( std::move( ratios ),
+                                   std::move( values ),
+                                   std::move( boundaries ),
+                                   std::move( interpolants ) );
+
+      THEN( "a TabulatedWaveFunction can be constructed and members can be tested" ) {
+
+        CHECK_THAT( 1., WithinRel( chunk.lowerRatioLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperRatioLimit() ) );
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.ratios().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.ratios()[0] ) ); // <-- first two points removed
+        CHECK_THAT( 2., WithinRel( chunk.ratios()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.ratios()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.ratios()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) ); // <-- first two points removed
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );         // <-- boundary value reset
+        CHECK( 3 == chunk.boundaries()[1] );         // <-- boundary value reset
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+        CHECK( true == chunk.isCurated() );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -2034,24 +3057,44 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     WHEN( "two instances of TabulatedWaveFunction are given" ) {
 
-      TabulatedWaveFunction left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
-      TabulatedWaveFunction equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
-      TabulatedWaveFunction different( { 1., 4. }, { 4., 1. } );
+      TabulatedWaveFunction left( { 1., 2., 3. }, { 1., 2., 3. } );
+      TabulatedWaveFunction equal( { 1., 2., 3. }, { 1., 2., 3. } );
+      TabulatedWaveFunction different1( { 1., 2., 3. }, { 1., 0., 3. } );
+      TabulatedWaveFunction different2( { 1., 2., 3. }, { 1., 2., 3. }, InterpolationType::LogLog );
+      TabulatedWaveFunction different3( { 1., 2., 3. }, { 1., 2., 3. },
+                                        { 1, 2 },
+                                        { InterpolationType::LinearLinear, InterpolationType::LogLog } );
+      TabulatedWaveFunction different4( { 1., 2.5, 3. }, { 1., 2., 3. } );
+      TabulatedWaveFunction uncurated( { 1., 2., 2., 2., 3. }, { 1., 2., 3., 4., 5. } );
+      TabulatedWaveFunction curated( { 1., 2., 2., 2., 3. }, { 1., 2., 3., 4., 5. },
+                                     InterpolationType::LinearLinear, true );
 
       THEN( "they can be compared" ) {
 
         CHECK( true == ( left == left ) );
         CHECK( true == ( left == equal ) );
-        CHECK( false == ( left == different ) );
+        CHECK( false == ( left == different1 ) );
+        CHECK( false == ( left == different2 ) );
+        CHECK( false == ( left == different3 ) );
+        CHECK( false == ( left == different4 ) );
 
         CHECK( false == ( left != left ) );
         CHECK( false == ( left != equal ) );
-        CHECK( true == ( left != different ) );
+        CHECK( true == ( left != different1 ) );
+        CHECK( true == ( left != different2 ) );
+        CHECK( true == ( left != different3 ) );
+        CHECK( true == ( left != different4 ) );
+
+        CHECK( false == uncurated.isCurated() );
+        CHECK( true == curated.isCurated() );
+
+        CHECK( false == ( uncurated == curated ) );
+        CHECK( true == ( uncurated != curated ) );
       } // THEN
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an TabulatedWaveFunction object" ) {
+  GIVEN( "invalid data for a TabulatedWaveFunction object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 
@@ -2067,25 +3110,26 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     WHEN( "the x and y grid do not have the same number of points" ) {
 
-      std::vector< double > x = { 1., 2., 3., 4. };
-      std::vector< double > y = { 4., 3., 2. };
+      std::vector< double > ratios = { 1., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 2. };
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedWaveFunction( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedWaveFunction( std::move( ratios ), std::move( values ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the boundaries and interpolants do not have the same size" ) {
 
-      std::vector< double > x = { 1., 2., 3., 4. };
-      std::vector< double > y = { 4., 3., 2., 1. };
+      std::vector< double > ratios = { 1., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 2., 1. };
       std::vector< std::size_t > boundaries = { 3 };
       std::vector< InterpolationType > interpolants = {};
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedWaveFunction( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedWaveFunction( std::move( ratios ),
+                                             std::move( values ),
                                              std::move( boundaries ),
                                              std::move( interpolants ) ) );
       } // THEN
@@ -2093,25 +3137,84 @@ SCENARIO( "TabulatedWaveFunction" ) {
 
     WHEN( "the x grid is not sorted" ) {
 
-      std::vector< double > x = { 1., 3., 2., 4. };
-      std::vector< double > y = { 4., 3., 2., 1. };
+      std::vector< double > ratios = { 1., 3., 2., 4. };
+      std::vector< double > values = { 4., 3., 2., 1. };
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedWaveFunction( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedWaveFunction( std::move( ratios ), std::move( values ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the last boundary does not point to the last point" ) {
 
-      std::vector< double > x = { 1., 2., 4., 4. };
-      std::vector< double > y = { 4., 3., 1., 4. };
+      std::vector< double > ratios = { 1., 2., 4., 4. };
+      std::vector< double > values = { 4., 3., 1., 4. };
       std::vector< std::size_t > boundaries = { 2 };
       std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedWaveFunction( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedWaveFunction( std::move( ratios ),
+                                             std::move( values ),
+                                             std::move( boundaries ),
+                                             std::move( interpolants ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the boundaries are not sorted" ) {
+
+      std::vector< double > ratios = { 1., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 2., 1. };
+      std::vector< std::size_t > boundaries = { 2, 1, 3 };
+      std::vector< InterpolationType > interpolants = {
+
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLinear
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedWaveFunction( std::move( ratios ),
+                                             std::move( values ),
+                                             std::move( boundaries ),
+                                             std::move( interpolants ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the boundaries are not unique" ) {
+
+      std::vector< double > ratios = { 1., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 2., 1. };
+      std::vector< std::size_t > boundaries = { 1, 1, 3 };
+      std::vector< InterpolationType > interpolants = {
+
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLinear
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedWaveFunction( std::move( ratios ),
+                                             std::move( values ),
+                                             std::move( boundaries ),
+                                             std::move( interpolants ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "there are no boundaries and interpolants" ) {
+
+      std::vector< double > ratios = { 1., 2., 3., 4. };
+      std::vector< double > values = { 4., 3., 2., 1. };
+      std::vector< std::size_t > boundaries = {};
+      std::vector< InterpolationType > interpolants = {};
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedWaveFunction( std::move( ratios ),
+                                             std::move( values ),
                                              std::move( boundaries ),
                                              std::move( interpolants ) ) );
       } // THEN

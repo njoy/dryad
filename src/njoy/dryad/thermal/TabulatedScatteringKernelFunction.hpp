@@ -57,25 +57,30 @@ namespace thermal {
      *  @param[in] values              the scattering function values
      *  @param[in] boundaries          the boundaries of the interpolation regions
      *  @param[in] interpolants        the interpolation types of the interpolation regions
+     *  @param[in] curate              flag to indicate whether or not to curate the table (default: false)
      */
     TabulatedScatteringKernelFunction( std::vector< double > momentumTransfers,
                                        std::vector< double > values,
                                        std::vector< std::size_t > boundaries,
-                                       std::vector< InterpolationType > interpolants ) :
+                                       std::vector< InterpolationType > interpolants,
+                                       bool curate = false ) :
       InterpolationTable( std::move( momentumTransfers ), std::move( values ),
-                          std::move( boundaries ), std::move( interpolants ) ) {}
+                          std::move( boundaries ), std::move( interpolants ),
+                          curate ) {}
 
     /**
-     *  @brief Constructor for a scattering function table using a single interpolation zone
+     *  @brief Constructor using a single interpolation zone
      *
      *  @param[in] momentumTransfers   the momentum transfer values
      *  @param[in] values              the effective temperature values
      *  @param[in] interpolant         the interpolation type of the data (default lin-lin)
+     *  @param[in] curate              flag to indicate whether or not to curate the table (default: false)
      */
     TabulatedScatteringKernelFunction( std::vector< double > momentumTransfers,
                                        std::vector< double > values,
-                                       InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      InterpolationTable( std::move( momentumTransfers ), std::move( values ), interpolant ) {}
+                                       InterpolationType interpolant = InterpolationType::LinearLinear,
+                                       bool curate = false ) :
+      InterpolationTable( std::move( momentumTransfers ), std::move( values ), interpolant, curate ) {}
 
     /* methods */
 
@@ -116,6 +121,8 @@ namespace thermal {
     using InterpolationTable::numberPoints;
     using InterpolationTable::numberRegions;
     using InterpolationTable::isLinearised;
+    using InterpolationTable::isCurated;
+    using InterpolationTable::curate;
 
     using InterpolationTable::operator();
 

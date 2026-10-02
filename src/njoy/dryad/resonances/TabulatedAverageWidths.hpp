@@ -100,17 +100,20 @@ namespace resonances {
      *  @param[in]  widths         the average width values (eV)
      *  @param[in]  boundaries     the boundaries of the interpolation regions
      *  @param[in]  interpolants   the interpolation types of the interpolation regions
+     *  @param[in]  curate         flag to indicate whether or not to curate the table (default: false)
      */
     TabulatedAverageWidths( double dof,
                             std::vector< double > energies,
                             std::vector< double > widths,
                             std::vector< std::size_t > boundaries,
-                            std::vector< InterpolationType > interpolants ) :
+                            std::vector< InterpolationType > interpolants,
+                            bool curate = false ) :
       TabulatedAverageWidths( std::optional< double >( dof ),
                               InterpolationTable< double, double >( std::move( energies ),
                                                                     std::move( widths ),
                                                                     std::move( boundaries ),
-                                                                    std::move( interpolants ) ) ) {}
+                                                                    std::move( interpolants ),
+                                                                    curate ) ) {}
 
     /**
      *  @brief Constructor for a single interpolation zone
@@ -119,15 +122,17 @@ namespace resonances {
      *  @param[in] energies      the energy values (eV)
      *  @param[in] widths        the average width values (eV)
      *  @param[in] interpolant   the interpolation type (default lin-lin)
+     *  @param[in] curate        flag to indicate whether or not to curate the table (default: false)
      */
     TabulatedAverageWidths( double dof,
                             std::vector< double > energies,
                             std::vector< double > widths,
-                            InterpolationType interpolant = InterpolationType::LinearLinear ) :
+                            InterpolationType interpolant = InterpolationType::LinearLinear,
+                            bool curate = false ) :
       TabulatedAverageWidths( std::optional< double >( dof ),
                               InterpolationTable< double, double >( std::move( energies ),
                                                                     std::move( widths ),
-                                                                    interpolant ) ) {}
+                                                                    interpolant, curate ) ) {}
 
     /**
      *  @brief Constructor without the degrees of freedom
@@ -136,16 +141,19 @@ namespace resonances {
      *  @param[in] widths         the average width values (eV)
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
      */
     TabulatedAverageWidths( std::vector< double > energies,
                             std::vector< double > widths,
                             std::vector< std::size_t > boundaries,
-                            std::vector< InterpolationType > interpolants ) :
+                            std::vector< InterpolationType > interpolants,
+                            bool curate = false ) :
       TabulatedAverageWidths( std::nullopt,
                               InterpolationTable< double, double >( std::move( energies ),
                                                                     std::move( widths ),
                                                                     std::move( boundaries ),
-                                                                    std::move( interpolants ) ) ) {}
+                                                                    std::move( interpolants ),
+                                                                    curate ) ) {}
 
     /**
      *  @brief Constructor for a single interpolation zone without the degrees of freedom
@@ -153,14 +161,16 @@ namespace resonances {
      *  @param[in] energies       the energy values (eV)
      *  @param[in] widths         the average width values (eV)
      *  @param[in] interpolant    the interpolation type (default lin-lin)
+     *  @param[in] curate         flag to indicate whether or not to curate the table (default: false)
      */
     TabulatedAverageWidths( std::vector< double > energies,
                             std::vector< double > widths,
-                            InterpolationType interpolant = InterpolationType::LinearLinear ) :
+                            InterpolationType interpolant = InterpolationType::LinearLinear,
+                            bool curate = false ) :
       TabulatedAverageWidths( std::nullopt,
                               InterpolationTable< double, double >( std::move( energies ),
                                                                     std::move( widths ),
-                                                                    interpolant ) ) {}
+                                                                    interpolant, curate ) ) {}
     /* methods */
 
     /**
@@ -224,6 +234,8 @@ namespace resonances {
     using InterpolationTable::numberPoints;
     using InterpolationTable::numberRegions;
     using InterpolationTable::isLinearised;
+    using InterpolationTable::isCurated;
+    using InterpolationTable::curate;
 
     using InterpolationTable::operator();
 
