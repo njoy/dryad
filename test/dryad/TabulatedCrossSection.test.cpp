@@ -42,6 +42,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
         CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -813,6 +814,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -1594,6 +1596,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -1704,6 +1707,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
 
@@ -1729,6 +1733,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
 
@@ -1877,6 +1882,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -1925,6 +1931,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2027,6 +2034,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
 
@@ -2054,6 +2062,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
 
@@ -2212,6 +2221,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2267,6 +2277,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 5 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( false == chunk.isCurated() );
       } // THEN
@@ -2298,6 +2309,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2388,6 +2400,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );         // <-- this is changed from 5 to 4
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2418,6 +2431,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2467,6 +2481,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( false == chunk.isCurated() );
       } // THEN
@@ -2515,6 +2530,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 1 == chunk.boundaries()[0] );
         CHECK( 5 == chunk.boundaries()[1] );
         CHECK( 8 == chunk.boundaries()[2] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( false == chunk.isCurated() );
 
@@ -2543,6 +2559,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 1 == chunk.boundaries()[0] );
         CHECK( 5 == chunk.boundaries()[1] );
         CHECK( 8 == chunk.boundaries()[2] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( false == chunk.isCurated() );
 
@@ -2571,6 +2588,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 1 == chunk.boundaries()[0] );
         CHECK( 5 == chunk.boundaries()[1] );
         CHECK( 8 == chunk.boundaries()[2] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( false == chunk.isCurated() );
 
@@ -2645,6 +2663,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2688,6 +2707,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2810,6 +2830,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( true == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2863,6 +2884,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2911,6 +2933,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );         // <-- boundary value reset
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -2954,6 +2977,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );         // <-- boundary value reset
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -3003,6 +3027,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );         // <-- boundary value reset
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
@@ -3046,6 +3071,7 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK( 3 == chunk.boundaries()[1] );         // <-- boundary value reset
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( std::nullopt == chunk.threshold() );
         CHECK( false == chunk.isLinearised() );
         CHECK( true == chunk.isCurated() );
       } // THEN
