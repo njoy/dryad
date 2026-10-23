@@ -312,6 +312,21 @@ namespace resonances {
     }
 
     /**
+     *  @brief Curate the resonance parameter data
+     */
+    void curate() {
+
+      for ( auto& system : this->resolved() ) {
+
+        system.curate();
+      }
+      if ( this->unresolved().has_value() ) {
+
+        this->unresolved()->curate();
+      }
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side

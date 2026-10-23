@@ -483,6 +483,17 @@ namespace resonances {
     }
 
     /**
+     *  @brief Curate the spin group data
+     */
+    void curate() {
+
+      for ( auto& channel : this->channels() ) {
+
+        channel.curate();
+      }
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side

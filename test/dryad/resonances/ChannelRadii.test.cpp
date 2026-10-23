@@ -67,6 +67,47 @@ SCENARIO( "ChannelRadii" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "channel radii with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      ChannelRadii chunk( TabulatedRadius( { 1e-5, 1., 1., 1., 2e+7 }, { 0.4, 0.4, 0.45, 0.5, 0.5 } ),   // <-- discontinuity with 3 points
+                          TabulatedRadius( { 1e-5, 2., 2., 2., 2e+7 }, { 0.5, 0.5, 0.55, 0.6, 0.6 } ),   // <-- discontinuity with 3 points
+                          TabulatedRadius( { 1e-5, 3., 3., 3., 2e+7 }, { 0.6, 0.6, 0.65, 0.7, 0.7 } ) ); // <-- discontinuity with 3 points
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< TabulatedRadius >( chunk.penetrabilityRadius() ).isCurated() );
+        CHECK( false == std::get< TabulatedRadius >( chunk.shiftFactorRadius().value() ).isCurated() );
+        CHECK( false == std::get< TabulatedRadius >( chunk.phaseShiftRadius().value() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedRadius >( chunk.penetrabilityRadius() ).isCurated() );
+        CHECK( true == std::get< TabulatedRadius >( chunk.shiftFactorRadius().value() ).isCurated() );
+        CHECK( true == std::get< TabulatedRadius >( chunk.phaseShiftRadius().value() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using constant radii" ) {
+
+      ChannelRadii chunk( 0.1 );
+
+      THEN( "curating does not change anything" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::holds_alternative< double >( chunk.penetrabilityRadius() ) );
+        CHECK( std::nullopt == chunk.shiftFactorRadius() );
+        CHECK( std::nullopt == chunk.phaseShiftRadius() );
+        CHECK( 0.1 == chunk.calculatePenetrabilityRadius( 1e-5 ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of ChannelRadii is given" ) {

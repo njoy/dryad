@@ -111,6 +111,47 @@ SCENARIO( "SpinGroup" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "a SpinGroup with tabulated data that is not curated" ) {
+
+    Particle g( id::ParticleID::photon(), 0, 1, +1 );
+    Particle n( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
+    Particle cl36( id::ParticleID( "Cl36" ), 35.9683050031, 0, +1 );
+    Particle cl35( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 );
+    ParticlePair elasticPair( n, cl35 );
+    ParticlePair capturePair( g, cl36 );
+
+    WHEN( "the data is given explicitly" ) {
+
+      SpinGroup chunk( { Channel( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                                  elasticPair, capturePair, 0., std::nullopt,
+                                  ChannelRadii( TabulatedRadius( { 1e-5, 1., 1., 1., 2e+7 },  // <-- discontinuity of 3 points
+                                                                 { 4., 4., 4.5, 5., 5. } ) ),
+                                  false ),
+                         Channel( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                                  elasticPair, elasticPair, 0., std::nullopt,
+                                  ChannelRadii( TabulatedRadius( { 1e-5, 2., 2., 2., 2e+7 },  // <-- discontinuity of 3 points
+                                                                 { 4., 4., 4.5, 5., 5. } ) ) ) },
+                       ResonanceTable( { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                                         id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                                       { 1. }, { { 2. }, { 3. } } ),
+                       Formalism::ReichMoore, BoundaryCondition::ShiftFactor );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< TabulatedRadius >( chunk.channels()[0].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( false == std::get< TabulatedRadius >( chunk.channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedRadius >( chunk.channels()[0].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( true == std::get< TabulatedRadius >( chunk.channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of SpinGroup are given" ) {

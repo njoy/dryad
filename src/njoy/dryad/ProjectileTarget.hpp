@@ -561,11 +561,13 @@ namespace dryad {
 
     /**
      *  @brief Curate the data
-     *
-     *  @todo curate the resonance parameters
      */
     void curate() {
 
+      if ( this->resonances().has_value() ) {
+
+        this->resonances()->curate();
+      }
       for ( auto&& reaction : this->reactions() ) {
 
         reaction.curate();

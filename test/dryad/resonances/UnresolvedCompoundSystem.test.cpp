@@ -153,6 +153,46 @@ SCENARIO( "UnresolvedCompoundSystem" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "an UnresolvedCompoundSystem with tabulated data that is not curated" ) {
+
+    ParticlePair elastic_pair( Particle( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 ),
+                               Particle( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 ) );
+
+    WHEN( "the data is given explicitly" ) {
+
+      UnresolvedCompoundSystem chunk(
+        1e+4, 1e+6,
+        { UnresolvedSpinGroup( { UnresolvedChannel( id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
+                                                    elastic_pair, elastic_pair, 0., std::nullopt,
+                                                    ChannelRadii( 4.822220 ) ) },
+                               UnresolvedResonanceTable( { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
+                                                         { TabulatedAverageWidths( { 1e+4, 1e+5, 1e+5, 1e+5, 1e+6 },  // <-- discontinuity of 3 points
+                                                                                   { 0.1, 0.2, 0.3, 0.35, 0.4 } ) },
+                                                         TabulatedLevelSpacing( { 1e+4, 1e+6 }, { 10., 40. } ) ) ),
+          UnresolvedSpinGroup( { UnresolvedChannel( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                                                    elastic_pair, elastic_pair, 0., std::nullopt,
+                                                    ChannelRadii( 4.822220 ) ) },
+                               UnresolvedResonanceTable( { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                                                         { TabulatedAverageWidths( { 1e+4, 1e+6 }, { 1.1, 1.4 } ) },  // <-- discontinuity of 3 points
+                                                         TabulatedLevelSpacing( { 1e+4, 2e+5, 2e+5, 2e+5, 1e+6 },
+                                                                                { 10., 20., 30., 35., 40. } ) ) ) } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.spinGroups()[0].resonanceTable().widths()[0].isCurated() );
+        CHECK( false == chunk.spinGroups()[1].resonanceTable().spacings().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.spinGroups()[0].resonanceTable().widths()[0].isCurated() );
+        CHECK( true == chunk.spinGroups()[1].resonanceTable().spacings().isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of UnresolvedCompoundSystem are given" ) {

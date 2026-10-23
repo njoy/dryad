@@ -181,6 +181,79 @@ SCENARIO( "ResonanceParameters" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "ResonanceParameters with tabulated data that is not curated" ) {
+
+    ParticlePair photon_pair(
+        Particle( id::ParticleID::photon(), 0, 1, +1 ),
+        Particle( id::ParticleID( "Cl36[all]" ),
+                  35.65932 * constants::neutron_mass, 0, +1 ) );
+    ParticlePair neutron_pair(
+        Particle( id::ParticleID::neutron(), constants::neutron_mass, 0.5, +1 ),
+        Particle( id::ParticleID( "Cl35" ),
+                  34.66845 * constants::neutron_mass, 1.5, +1 ) );
+
+    SpinGroup spingroup( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                             neutron_pair, photon_pair, 0., std::nullopt,
+                             ChannelRadii( 0. ), false },
+                           { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                             neutron_pair, neutron_pair, 0., std::nullopt,
+                             ChannelRadii( TabulatedRadius( { 1e-5, 1., 1., 1., 2e+7 },  // <-- threshold with 3 points
+                                                            { 4., 4., 4.5, 5., 5. } ) ) } },
+                         { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                             id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                           { 1. }, { { 2. }, { 3. } } },
+                         Formalism::ReichMoore,
+                         BoundaryCondition::ShiftFactor );
+
+    CompoundSystem resolved( 1e-5, 1e+4, { spingroup } );
+
+    UnresolvedCompoundSystem unresolved(
+      1e+4, 1e+6,
+      { UnresolvedSpinGroup(
+          { UnresolvedChannel( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                               neutron_pair, neutron_pair, 0., std::nullopt,
+                               ChannelRadii( 4.822220 ) ) },
+          UnresolvedResonanceTable( { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                                    { TabulatedAverageWidths(
+                                          { 1e+4, 1e+5, 1e+5, 1e+5, 1e+6 },  // <-- threshold with 3 points
+                                          { 0.1, 0.2, 0.3, 0.35, 0.4 } ) },
+                                    TabulatedLevelSpacing( { 1e+4, 1e+6 }, { 10., 40. } ) ) ) } );
+
+    WHEN( "the data is given explicitly" ) {
+
+      ResonanceParameters chunk( { resolved }, unresolved );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< TabulatedRadius >( chunk.resolved()[0].spinGroups()[0].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( false == chunk.unresolved()->spinGroups()[0].resonanceTable().widths()[0].isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedRadius >( chunk.resolved()[0].spinGroups()[0].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( true == chunk.unresolved()->spinGroups()[0].resonanceTable().widths()[0].isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly without unresolved data" ) {
+
+      ResonanceParameters chunk( { resolved } );
+
+      THEN( "the tabulated data can be curated" ) {
+
+        CHECK( false == std::get< TabulatedRadius >( chunk.resolved()[0].spinGroups()[0].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedRadius >( chunk.resolved()[0].spinGroups()[0].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( std::nullopt == chunk.unresolved() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of ResonanceParameters are given" ) {

@@ -243,6 +243,37 @@ SCENARIO( "UnresolvedResonanceTable" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "an UnresolvedResonanceTable with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      UnresolvedResonanceTable chunk( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                        id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) },
+                                      { TabulatedAverageWidths( { 1., 2., 2., 2., 4. },     // <-- discontinuity with 3 points
+                                                                { 0.11, 0.12, 0.13, 0.14, 0.15 } ),
+                                        TabulatedAverageWidths( { 1., 3., 3., 3., 4. },     // <-- discontinuity with 3 points
+                                                                { 0.21, 0.22, 0.23, 0.24, 0.25 } ) },
+                                      TabulatedLevelSpacing( { 1., 2., 2., 2., 4. },
+                                                             { 10., 11., 12., 13., 14. } ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.widths()[0].isCurated() );
+        CHECK( false == chunk.widths()[1].isCurated() );
+        CHECK( false == chunk.spacings().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.widths()[0].isCurated() );
+        CHECK( true == chunk.widths()[1].isCurated() );
+        CHECK( true == chunk.spacings().isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of UnresolvedResonanceTable are given" ) {

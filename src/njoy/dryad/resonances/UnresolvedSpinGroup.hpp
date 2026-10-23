@@ -248,6 +248,18 @@ namespace resonances {
     //                     std::map< id::ReactionID, std::vector< double > >& xs );
 
     /**
+     *  @brief Curate the spin group data
+     */
+    void curate() {
+
+      for ( auto& channel : this->channels() ) {
+
+        channel.curate();
+      }
+      this->resonanceTable().curate();
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left   the object on the left-hand-side

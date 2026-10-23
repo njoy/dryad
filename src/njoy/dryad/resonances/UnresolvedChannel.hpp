@@ -129,6 +129,7 @@ namespace resonances {
     using Channel::penetrability;
     using Channel::shiftFactor;
     using Channel::phaseShift;
+    using Channel::curate;
 
     /**
      *  @brief Return the reference energy

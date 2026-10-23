@@ -186,6 +186,17 @@ namespace resonances {
     //  TODO
 
     /**
+     *  @brief Curate the compound system data
+     */
+    void curate() {
+
+      for ( auto& group : this->spinGroups() ) {
+
+        group.curate();
+      }
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side
