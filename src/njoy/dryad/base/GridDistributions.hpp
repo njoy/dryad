@@ -100,6 +100,8 @@ namespace base {
     using Parent::numberRegions;
 
     using Parent::operator();
+
+    using Parent::curate;
   };
 
 } // base namespace

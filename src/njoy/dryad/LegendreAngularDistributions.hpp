@@ -48,15 +48,22 @@ namespace dryad {
      *  @param[in] interpolants    the interpolation types of the interpolation regions
      *  @param[in] normalise       option to indicate whether or not to normalise
      *                             all probability data (default: no normalisation)
+     *  @param[in] curate          flag to indicate whether or not to curate the data (default: false)
      */
-    LegendreAngularDistributions( std::vector< double > grid,
-                                  std::vector< LegendreAngularDistribution > distributions,
-                                  std::vector< std::size_t > boundaries,
-                                  std::vector< InterpolationType > interpolants,
-                                  bool normalise = false ) :
+    LegendreAngularDistributions(
+        std::vector< double > grid,
+        std::vector< LegendreAngularDistribution > distributions,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants,
+        bool normalise = false,
+        bool curate = false ) :
       Parent( std::move( grid ), std::move( distributions ),
               std::move( boundaries ), std::move( interpolants ) ) {
 
+      if ( curate ) {
+
+        this->curate();
+      }
       if ( normalise ) {
 
         this->normalise();
@@ -71,13 +78,20 @@ namespace dryad {
      *  @param[in] interpolant     the interpolation type of the data (default lin-lin)
      *  @param[in] normalise       option to indicate whether or not to normalise
      *                             all probability data (default: no normalisation)
+     *  @param[in] curate          flag to indicate whether or not to curate the data (default: false)
      */
-    LegendreAngularDistributions( std::vector< double > grid,
-                                  std::vector< LegendreAngularDistribution > distributions,
-                                  InterpolationType interpolant = InterpolationType::LinearLinear,
-                                  bool normalise = false ) :
+    LegendreAngularDistributions(
+        std::vector< double > grid,
+        std::vector< LegendreAngularDistribution > distributions,
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool normalise = false,
+        bool curate = false ) :
       Parent( std::move( grid ), std::move( distributions ), interpolant ) {
 
+      if ( curate ) {
+
+        this->curate();
+      }
       if ( normalise ) {
 
         this->normalise();
@@ -93,6 +107,8 @@ namespace dryad {
     using Parent::numberPoints;
     using Parent::numberRegions;
     using Parent::operator();
+
+    using Parent::curate;
 
     /**
      *  @brief Normalise the distributions
@@ -139,11 +155,12 @@ namespace dryad {
       distributions.reserve( this->numberPoints() );
       std::transform( this->distributions().begin(), this->distributions().end(),
                       std::back_inserter( distributions ),
-                      [tolerance, normalise]
+                      [tolerance]
                         ( auto&& distribution )
-                        { return distribution.linearise( tolerance, normalise ); } );
+                        { return distribution.linearise( tolerance ); } );
       return TabulatedAngularDistributions( this->grid(), std::move( distributions ),
-                                            this->boundaries(), this->interpolants() );
+                                            this->boundaries(), this->interpolants(),
+                                            normalise, true );
     }
 
     /**

@@ -44,13 +44,22 @@ namespace dryad {
      *  @param[in] distributions   the associated distributions
      *  @param[in] boundaries      the boundaries of the interpolation regions
      *  @param[in] interpolants    the interpolation types of the interpolation regions
+     *  @param[in] curate          flag to indicate whether or not to curate the data (default: false)
      */
-    UniformAngularDistributions( std::vector< double > grid,
-                                 std::vector< UniformAngularDistribution > distributions,
-                                 std::vector< std::size_t > boundaries,
-                                 std::vector< InterpolationType > interpolants ) :
+    UniformAngularDistributions(
+        std::vector< double > grid,
+        std::vector< UniformAngularDistribution > distributions,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants,
+        bool curate = false ) :
       Parent( std::move( grid ), std::move( distributions ),
-              std::move( boundaries ), std::move( interpolants ) ) {}
+              std::move( boundaries ), std::move( interpolants ) ) {
+
+      if ( curate ) {
+
+        this->curate();
+      }
+    }
 
     /**
      *  @brief Constructor for angular distributions using a single interpolation zone
@@ -58,11 +67,20 @@ namespace dryad {
      *  @param[in] grid            the grid values
      *  @param[in] distributions   the associated distributions
      *  @param[in] interpolant     the interpolation type of the data (default lin-lin)
+     *  @param[in] curate          flag to indicate whether or not to curate the data (default: false)
      */
-    UniformAngularDistributions( std::vector< double > grid,
-                                 std::vector< UniformAngularDistribution > distributions,
-                                 InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      Parent( std::move( grid ), std::move( distributions ), interpolant ) {}
+    UniformAngularDistributions(
+        std::vector< double > grid,
+        std::vector< UniformAngularDistribution > distributions,
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool curate = false ) :
+      Parent( std::move( grid ), std::move( distributions ), interpolant ) {
+
+      if ( curate ) {
+
+        this->curate();
+      }
+    }
 
     /* methods */
 
@@ -72,6 +90,8 @@ namespace dryad {
     using Parent::interpolants;
     using Parent::numberPoints;
     using Parent::numberRegions;
+
+    using Parent::curate;
 
     // there is no call operator on the uniform distribution, so we do not expose operator()
 
