@@ -404,6 +404,7 @@ void verifyChunk( const TabulatedScatteringKernel& chunk ) {
   CHECK_THAT( 0.8 , WithinRel( chunk.functions()[3].values()[1] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // evaluate
 
@@ -524,6 +525,7 @@ void verifyChunkWithJumpCurated( const TabulatedScatteringKernel& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
 }
 
 void verifyChunkWithJumpNotCurated( const TabulatedScatteringKernel& chunk ) {
@@ -585,6 +587,7 @@ void verifyChunkWithJumpNotCurated( const TabulatedScatteringKernel& chunk ) {
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
 }
 
 void verifyChunkWithDistributionJumpCurated( const TabulatedScatteringKernel& chunk ) {
@@ -605,6 +608,7 @@ void verifyChunkWithDistributionJumpCurated( const TabulatedScatteringKernel& ch
   CHECK_THAT( 3., WithinRel( chunk.energyTransfers()[2] ) );
   CHECK( 2 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // function 0: no jump
   CHECK( 2 == chunk.functions()[0].momentumTransfers().size() );
@@ -675,6 +679,7 @@ void verifyChunkWithDistributionJumpNotCurated( const TabulatedScatteringKernel&
   CHECK_THAT( 3., WithinRel( chunk.energyTransfers()[2] ) );
   CHECK( 2 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( false == chunk.isCurated() ); // the grid is curated but function 1 is not
 
   // function 0: no jump
   CHECK( 2 == chunk.functions()[0].momentumTransfers().size() );

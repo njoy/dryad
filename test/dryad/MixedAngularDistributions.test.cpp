@@ -448,6 +448,7 @@ void verifyChunk( const MixedAngularDistributions& chunk, bool normalise ) {
   CHECK_THAT( 0.2666666666666666 / normalisation, WithinRel( cdf3.coefficients()[2] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // evaluate
 
@@ -579,6 +580,7 @@ void verifyChunkWithJumpCurated( const MixedAngularDistributions& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
 
   CHECK( true == std::holds_alternative< IsotropicAngularDistributionFunction >( chunk.distributions()[0].pdf() ) );
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.distributions()[1].pdf() ) );
@@ -664,6 +666,7 @@ void verifyChunkWithJumpNotCurated( const MixedAngularDistributions& chunk ) {
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
 
   CHECK( true == std::holds_alternative< IsotropicAngularDistributionFunction >( chunk.distributions()[0].pdf() ) );
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.distributions()[1].pdf() ) );
@@ -829,6 +832,7 @@ void verifyLinearisedChunkWithJump( const TabulatedAngularDistributions& chunk )
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
 }
 
 void verifyChunkWithDistributionJumpCurated( const MixedAngularDistributions& chunk ) {
@@ -844,6 +848,7 @@ void verifyChunkWithDistributionJumpCurated( const MixedAngularDistributions& ch
   CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
   CHECK( 2 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   CHECK( true == std::holds_alternative< IsotropicAngularDistributionFunction >( chunk.distributions()[0].pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.distributions()[1].pdf() ) );
@@ -851,6 +856,10 @@ void verifyChunkWithDistributionJumpCurated( const MixedAngularDistributions& ch
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.distributions()[0].cdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.distributions()[1].cdf() ) );
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.distributions()[2].cdf() ) );
+
+  CHECK( true == chunk.distributions()[0].isCurated() );
+  CHECK( true == chunk.distributions()[1].isCurated() );
+  CHECK( true == chunk.distributions()[2].isCurated() );
 
   auto pdf0 = std::get< IsotropicAngularDistributionFunction >( chunk.distributions()[0].pdf() );
   auto pdf1 = std::get< TabulatedAngularDistributionFunction >( chunk.distributions()[1].pdf() );
@@ -939,6 +948,7 @@ void verifyChunkWithDistributionJumpNotCurated( const MixedAngularDistributions&
   CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
   CHECK( 2 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( false == chunk.isCurated() ); // the grid is curated but distribution 1 is not
 
   CHECK( true == std::holds_alternative< IsotropicAngularDistributionFunction >( chunk.distributions()[0].pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.distributions()[1].pdf() ) );
@@ -946,6 +956,10 @@ void verifyChunkWithDistributionJumpNotCurated( const MixedAngularDistributions&
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.distributions()[0].cdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.distributions()[1].cdf() ) );
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.distributions()[2].cdf() ) );
+
+  CHECK( true == chunk.distributions()[0].isCurated() );
+  CHECK( false == chunk.distributions()[1].isCurated() );
+  CHECK( true == chunk.distributions()[2].isCurated() );
 
   auto pdf0 = std::get< IsotropicAngularDistributionFunction >( chunk.distributions()[0].pdf() );
   auto pdf1 = std::get< TabulatedAngularDistributionFunction >( chunk.distributions()[1].pdf() );
@@ -1038,6 +1052,7 @@ void verifyLinearisedChunkWithDistributionJump( const TabulatedAngularDistributi
   CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
   CHECK( 2 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // distribution 0: linearised isotropic distribution
   CHECK( 2 == chunk.distributions()[0].pdf().cosines().size() );
@@ -1064,6 +1079,7 @@ void verifyLinearisedChunkWithDistributionJump( const TabulatedAngularDistributi
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].cdf().interpolants()[0] );
   CHECK( true == chunk.distributions()[0].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[0].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[0].isCurated() );
 
   // distribution 1: curated jump
   CHECK( 5 == chunk.distributions()[1].pdf().cosines().size() );
@@ -1106,6 +1122,7 @@ void verifyLinearisedChunkWithDistributionJump( const TabulatedAngularDistributi
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[1] );
   CHECK( true == chunk.distributions()[1].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[1].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[1].isCurated() );
 
   // distribution 2: linearised legendre distribution
   CHECK( 2 == chunk.distributions()[2].pdf().cosines().size() );
@@ -1132,4 +1149,5 @@ void verifyLinearisedChunkWithDistributionJump( const TabulatedAngularDistributi
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].cdf().interpolants()[0] );
   CHECK( true == chunk.distributions()[2].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[2].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[2].isCurated() );
 }

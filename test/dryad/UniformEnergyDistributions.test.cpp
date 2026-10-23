@@ -356,6 +356,7 @@ void verifyChunk( const UniformEnergyDistributions& chunk ) {
   CHECK_THAT( 10. , WithinRel( chunk.distributions()[3].energies()[1] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // average energies
   auto energies = chunk.averageEnergies();
@@ -411,6 +412,7 @@ void verifyChunkWithJumpCurated( const UniformEnergyDistributions& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
 }
 
 void verifyChunkWithJumpNotCurated( const UniformEnergyDistributions& chunk ) {
@@ -448,4 +450,5 @@ void verifyChunkWithJumpNotCurated( const UniformEnergyDistributions& chunk ) {
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
 }

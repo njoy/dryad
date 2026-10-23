@@ -356,6 +356,7 @@ void verifyChunk( const UniformAngularDistributions& chunk ) {
   CHECK_THAT(  1.  , WithinRel( chunk.distributions()[3].cosines()[2] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // average cosines
   auto cosines = chunk.averageCosines();
@@ -411,6 +412,7 @@ void verifyChunkWithJumpCurated( const UniformAngularDistributions& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
 }
 
 void verifyChunkWithJumpNotCurated( const UniformAngularDistributions& chunk ) {
@@ -448,4 +450,5 @@ void verifyChunkWithJumpNotCurated( const UniformAngularDistributions& chunk ) {
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
 }

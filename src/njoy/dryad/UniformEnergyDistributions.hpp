@@ -91,6 +91,7 @@ namespace dryad {
     using Parent::numberPoints;
     using Parent::numberRegions;
 
+    using Parent::isCurated;
     using Parent::curate;
 
     // there is no call operator on the uniform distribution, so we do not expose operator()

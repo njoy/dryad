@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_TABULATEDENERGYDISTRIBUTIONS
 
 // system includes
+#include <algorithm>
 
 // other includes
 #include "njoy/dryad/base/GridDistributions.hpp"
@@ -119,6 +120,16 @@ namespace dryad {
 
         distribution.normalise();
       }
+    }
+
+    /**
+     *  @brief Return whether or not the distributions are curated
+     */
+    bool isCurated() const {
+
+      return Parent::isCurated() &&
+             std::all_of( this->distributions().begin(), this->distributions().end(),
+                          [] ( auto&& distribution ) { return distribution.isCurated(); } );
     }
 
     /**

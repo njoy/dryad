@@ -74,6 +74,42 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
       verifyChunkCurated( chunk1 );
       verifyChunkCurated( chunk2 );
     } // WHEN
+
+    WHEN( "the pdf and cdf are given explicitly and only one of them is curated" ) {
+
+      std::vector< double > energies = { 0., 2., 3., 3., 3., 4. };
+      std::vector< double > pdfValues = { 0., 1., 2., 3., 1., 2. };
+      std::vector< double > cdfValues = { 0., 1., 2.5, 2.5, 2.5, 4. };
+      InterpolationType interpolation = InterpolationType::LinearLinear;
+
+      TabulatedEnergyDistributionFunction curatedPdf( energies, pdfValues, interpolation, true );
+      TabulatedEnergyDistributionFunction curatedCdf( energies, cdfValues, interpolation, true );
+      TabulatedEnergyDistributionFunction notCuratedPdf( energies, pdfValues, interpolation, false );
+      TabulatedEnergyDistributionFunction notCuratedCdf( energies, cdfValues, interpolation, false );
+
+      TabulatedEnergyDistribution chunk1( curatedPdf, notCuratedCdf );
+      TabulatedEnergyDistribution chunk2( notCuratedPdf, curatedCdf );
+
+      THEN( "the distribution is not curated" ) {
+
+        CHECK( true == chunk1.pdf().isCurated() );
+        CHECK( false == chunk1.cdf().isCurated() );
+        CHECK( false == chunk1.isCurated() );
+
+        CHECK( false == chunk2.pdf().isCurated() );
+        CHECK( true == chunk2.cdf().isCurated() );
+        CHECK( false == chunk2.isCurated() );
+      } // THEN
+
+      THEN( "the distribution can be curated on demand" ) {
+
+        chunk1.curate();
+        chunk2.curate();
+
+        verifyChunkCurated( chunk1 );
+        verifyChunkCurated( chunk2 );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "comparison operators" ) {
@@ -134,6 +170,7 @@ void verifyChunk( const TabulatedEnergyDistribution& chunk, bool normalise ) {
   CHECK_THAT( 1.   / normalisation, WithinRel( chunk.values()[3] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );
@@ -258,6 +295,7 @@ void verifyChunkNotCurated( const TabulatedEnergyDistribution& chunk ) {
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );
@@ -332,6 +370,7 @@ void verifyChunkCurated( const TabulatedEnergyDistribution& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );

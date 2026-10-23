@@ -108,6 +108,7 @@ namespace dryad {
     using Parent::numberRegions;
     using Parent::operator();
 
+    using Parent::isCurated;
     using Parent::curate;
 
     /**

@@ -235,12 +235,20 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not the distribution is curated
+     */
+    bool isCurated() const {
+
+      return this->pdf().isCurated() && this->cdf().isCurated();
+    }
+
+    /**
      *  @brief Curate the distribution
      */
     void curate() {
 
       this->pdf().curate();
-      this->cdf() = this->pdf().calculateCdf( true );
+      this->cdf().curate();
     }
 
     /**

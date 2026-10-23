@@ -432,6 +432,7 @@ void verifyChunk( const TabulatedEnergyDistributions& chunk, bool normalise ) {
   CHECK_THAT( 2.0 / normalisation, WithinRel( chunk.distributions()[3].cdf().values()[1] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // evaluate
 
@@ -623,6 +624,7 @@ void verifyChunkWithJumpCurated( const TabulatedEnergyDistributions& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
 }
 
 void verifyChunkWithJumpNotCurated( const TabulatedEnergyDistributions& chunk ) {
@@ -715,6 +717,7 @@ void verifyChunkWithJumpNotCurated( const TabulatedEnergyDistributions& chunk ) 
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
 }
 
 void verifyChunkWithDistributionJumpCurated( const TabulatedEnergyDistributions& chunk ) {
@@ -730,6 +733,7 @@ void verifyChunkWithDistributionJumpCurated( const TabulatedEnergyDistributions&
   CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
   CHECK( 2 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // distribution 0: no jump
   CHECK( 2 == chunk.distributions()[0].pdf().energies().size() );
@@ -756,6 +760,7 @@ void verifyChunkWithDistributionJumpCurated( const TabulatedEnergyDistributions&
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].cdf().interpolants()[0] );
   CHECK( true == chunk.distributions()[0].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[0].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[0].isCurated() );
 
   // distribution 1: curated jump
   CHECK( 5 == chunk.distributions()[1].pdf().energies().size() );
@@ -798,6 +803,7 @@ void verifyChunkWithDistributionJumpCurated( const TabulatedEnergyDistributions&
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[1] );
   CHECK( true == chunk.distributions()[1].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[1].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[1].isCurated() );
 
   // distribution 2: no jump
   CHECK( 2 == chunk.distributions()[2].pdf().energies().size() );
@@ -824,6 +830,7 @@ void verifyChunkWithDistributionJumpCurated( const TabulatedEnergyDistributions&
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].cdf().interpolants()[0] );
   CHECK( true == chunk.distributions()[2].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[2].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[2].isCurated() );
 }
 
 void verifyChunkWithDistributionJumpNotCurated( const TabulatedEnergyDistributions& chunk ) {
@@ -839,6 +846,7 @@ void verifyChunkWithDistributionJumpNotCurated( const TabulatedEnergyDistributio
   CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
   CHECK( 2 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( false == chunk.isCurated() ); // the grid is curated but distribution 1 is not
 
   // distribution 0: no jump
   CHECK( 2 == chunk.distributions()[0].pdf().energies().size() );
@@ -865,6 +873,7 @@ void verifyChunkWithDistributionJumpNotCurated( const TabulatedEnergyDistributio
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].cdf().interpolants()[0] );
   CHECK( true == chunk.distributions()[0].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[0].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[0].isCurated() );
 
   // distribution 1: uncurated jump
   CHECK( 6 == chunk.distributions()[1].pdf().energies().size() );
@@ -911,6 +920,7 @@ void verifyChunkWithDistributionJumpNotCurated( const TabulatedEnergyDistributio
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[1] );
   CHECK( true == chunk.distributions()[1].cdf().isLinearised() );
   CHECK( false == chunk.distributions()[1].cdf().isCurated() );
+  CHECK( false == chunk.distributions()[1].isCurated() );
 
   // distribution 2: no jump
   CHECK( 2 == chunk.distributions()[2].pdf().energies().size() );
@@ -937,4 +947,5 @@ void verifyChunkWithDistributionJumpNotCurated( const TabulatedEnergyDistributio
   CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].cdf().interpolants()[0] );
   CHECK( true == chunk.distributions()[2].cdf().isLinearised() );
   CHECK( true == chunk.distributions()[2].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[2].isCurated() );
 }

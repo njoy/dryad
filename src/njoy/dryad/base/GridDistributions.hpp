@@ -101,6 +101,7 @@ namespace base {
 
     using Parent::operator();
 
+    using Parent::isCurated;
     using Parent::curate;
   };
 

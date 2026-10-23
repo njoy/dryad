@@ -142,6 +142,8 @@ void verifyIsotropicChunk( const MixedAngularDistribution& chunk, bool normalise
   CHECK( true == std::holds_alternative< IsotropicAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
 
+  CHECK( true == chunk.isCurated() );
+
   auto cdf = std::get< TabulatedAngularDistributionFunction >( chunk.cdf() );
   CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
   CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
@@ -202,6 +204,8 @@ void verifyLegendreChunk( const MixedAngularDistribution& chunk, bool normalise 
 
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.cdf() ) );
+
+  CHECK( true == chunk.isCurated() );
 
   auto pdf = std::get< LegendreAngularDistributionFunction >( chunk.pdf() );
   CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
@@ -270,6 +274,8 @@ void verifyTabulatedChunk( const MixedAngularDistribution& chunk, bool normalise
 
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
+
+  CHECK( true == chunk.isCurated() );
 
   auto pdf = std::get< TabulatedAngularDistributionFunction >( chunk.pdf() );
   CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
@@ -373,6 +379,8 @@ void verifyChunkNotCurated( const MixedAngularDistribution& chunk ) {
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
 
+  CHECK( false == chunk.isCurated() );
+
   auto pdf = std::get< TabulatedAngularDistributionFunction >( chunk.pdf() );
   CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
   CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
@@ -430,6 +438,8 @@ void verifyChunkCurated( const MixedAngularDistribution& chunk ) {
 
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
+
+  CHECK( true == chunk.isCurated() );
 
   auto pdf = std::get< TabulatedAngularDistributionFunction >( chunk.pdf() );
   CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
@@ -502,6 +512,8 @@ void verifyChunkNotCurated( const TabulatedAngularDistribution& chunk ) {
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+  CHECK( false == chunk.isCurated() );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
@@ -576,6 +588,8 @@ void verifyChunkCurated( const TabulatedAngularDistribution& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+  CHECK( true == chunk.isCurated() );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );

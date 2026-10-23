@@ -192,6 +192,16 @@ namespace thermal {
     using Parent::numberRegions;
 
     /**
+     *  @brief Return whether or not the scattering kernel is curated
+     */
+    bool isCurated() const {
+
+      return Parent::isCurated() &&
+             std::all_of( this->functions().begin(), this->functions().end(),
+                          [] ( auto&& function ) { return function.isCurated(); } );
+    }
+
+    /**
      *  @brief Curate the scattering functions
      */
     void curate() {

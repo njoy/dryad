@@ -232,6 +232,20 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not the distribution is curated
+     */
+    bool isCurated() const {
+
+      auto curated = tools::overload{
+
+        [] ( const TabulatedAngularDistributionFunction& distribution ) { return distribution.isCurated(); },
+        [] ( const auto& distribution ) { return true; },
+      };
+
+      return std::visit( curated, this->pdf() ) && std::visit( curated, this->cdf() );
+    }
+
+    /**
      *  @brief Curate the distribution
      */
     void curate() {
