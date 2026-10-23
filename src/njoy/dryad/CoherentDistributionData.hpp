@@ -143,6 +143,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the scattering function
+     */
+    TabulatedScatteringFunction& scatteringFunction() {
+
+      return this->scattering_;
+    }
+
+    /**
      *  @brief Set the scattering function
      *
      *  @param[in] scattering   the scattering function
@@ -156,6 +164,14 @@ namespace dryad {
      *  @brief Return the real part of the anomalous form factor
      */
     const std::optional< TabulatedFormFactor >& realAnomalousFormFactor() const {
+
+      return this->real_;
+    }
+
+    /**
+     *  @brief Return the real part of the anomalous form factor
+     */
+    std::optional< TabulatedFormFactor >& realAnomalousFormFactor() {
 
       return this->real_;
     }
@@ -179,6 +195,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the imaginary part of the anomalous form factor
+     */
+    std::optional< TabulatedFormFactor >& imaginaryAnomalousFormFactor() {
+
+      return this->imaginary_;
+    }
+
+    /**
      *  @brief Set the imaginary part of the anomalous form factor
      *
      *  @param[in] imaginary   the imaginary part of the anamolous form factor
@@ -186,6 +210,22 @@ namespace dryad {
     void imaginaryAnomalousFormFactor( std::optional< TabulatedFormFactor > imaginary ) {
 
       this->imaginary_ = imaginary;
+    }
+
+    /**
+     *  @brief Curate the distribution data
+     */
+    void curate() {
+
+      this->scatteringFunction().curate();
+      if ( this->realAnomalousFormFactor().has_value() ) {
+
+        this->realAnomalousFormFactor()->curate();
+      }
+      if ( this->imaginaryAnomalousFormFactor().has_value() ) {
+
+        this->imaginaryAnomalousFormFactor()->curate();
+      }
     }
 
     /**

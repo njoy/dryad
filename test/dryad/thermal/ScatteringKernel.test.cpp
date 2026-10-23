@@ -70,6 +70,32 @@ SCENARIO( "ScatteringKernel" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "a tabulated scattering kernel that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      ScatteringKernel chunk( 293.6, 300.,
+                              { 0., 1., 1., 1., 2. },
+                              { { { 0., 4. }, { 0.8, 0.2 } },
+                                { { 0., 4. }, { 0.5, 0.5 } },
+                                { { 0., 2., 2., 2., 4. }, { 0.5, 0.5, 0.6, 0.4, 0.5 } },   // <-- discontinuity with 3 points
+                                { { 0., 4. }, { 0.48, 0.52 } },
+                                { { 0., 4. }, { 0.2, 0.8 } } } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.tabulatedScatteringKernel().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.tabulatedScatteringKernel().isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of ScatteringKernel are given" ) {

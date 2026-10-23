@@ -234,6 +234,20 @@ namespace dryad {
     }
 
     /**
+     *  @brief Curate the thermal scattering data
+     *
+     *  Only the incoherent inelastic data contains tabulated data that can be
+     *  curated.
+     */
+    void curate() {
+
+      if ( this->hasIncoherentInelasticScattering() ) {
+
+        this->incoherentInelasticScattering()->curate();
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

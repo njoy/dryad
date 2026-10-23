@@ -308,6 +308,16 @@ namespace thermal {
     }
 
     /**
+     *  @brief Curate the scattering kernel
+     *
+     *  Only the tabulated scattering kernel is affected.
+     */
+    void curate() {
+
+      this->tabulatedScatteringKernel().curate();
+    }
+
+    /**
      *  @brief Return whether or not the scattering kernel is symmetric along the
      *         energy transfer axis
      */

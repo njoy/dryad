@@ -32,6 +32,53 @@ SCENARIO( "ThermalScattering" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "thermal scattering data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      IncoherentInelasticScattering
+      inelastic( 1e-5, 10., 6.337872, 1.,
+                 { { 293.6, 300.,
+                     { 0., 2., 2., 2., 4. },    // <-- threshold with 3 points
+                     { { { 0., 4. }, { 0.8, 0.2 } },
+                       { { 0., 4. }, { 0.6, 0.4 } },
+                       { { 0., 4. }, { 0.5, 0.5 } },
+                       { { 0., 4. }, { 0.4, 0.6 } },
+                       { { 0., 4. }, { 0.2, 0.8 } } } } } );
+
+      ThermalScattering chunk( std::nullopt, std::nullopt, std::move( inelastic ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.incoherentInelasticScattering()->scatteringKernels()[0].tabulatedScatteringKernel().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.incoherentInelasticScattering()->scatteringKernels()[0].tabulatedScatteringKernel().isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly without discontinuities" ) {
+
+      ThermalScattering chunk( std::nullopt,
+                               IncoherentElasticScattering(
+                                 1e-5, 10., 6.337872,
+                                 { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
+                                   { 2.013538, 2.677764, 3.323456, 3.972601,
+                                     4.623738, 5.276127, 6.583171, 7.891981 } } ) );
+
+      THEN( "curating does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of ThermalScattering is given" ) {

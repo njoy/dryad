@@ -45,6 +45,42 @@ SCENARIO( "IncoherentInelasticScattering" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "incoherent scattering data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      IncoherentInelasticScattering chunk( 1e-5, 10., 6.337872, 1.,
+                                           { { 293.6, 300.,
+                                               { 0., 2., 2., 2., 4. },   // <-- discontinuity with 3 points
+                                               { { { 0., 4. }, { 0.8, 0.2 } },
+                                                 { { 0., 4. }, { 0.6, 0.4 } },
+                                                 { { 0., 4. }, { 0.5, 0.5 } },
+                                                 { { 0., 4. }, { 0.4, 0.6 } },
+                                                 { { 0., 4. }, { 0.2, 0.8 } } } },
+                                             { 325, 350.,
+                                               { 0., 3., 3., 3., 5. },   // <-- discontinuity with 3 points
+                                               { { { 0., 5. }, { 0.9, 0.1 } },
+                                                 { { 0., 5. }, { 0.7, 0.3 } },
+                                                 { { 0., 5. }, { 0.5, 0.5 } },
+                                                 { { 0., 5. }, { 0.3, 0.7 } },
+                                                 { { 0., 5. }, { 0.1, 0.9 } } } } } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.scatteringKernels()[0].tabulatedScatteringKernel().isCurated() );
+        CHECK( false == chunk.scatteringKernels()[1].tabulatedScatteringKernel().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.scatteringKernels()[0].tabulatedScatteringKernel().isCurated() );
+        CHECK( true == chunk.scatteringKernels()[1].tabulatedScatteringKernel().isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of IncoherentInelasticScattering is given" ) {
