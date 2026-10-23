@@ -13,7 +13,10 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 
 void verifyChunk( const TabulatedEnergyDistributions&, bool );
-void verifyChunkWithJump( const TabulatedEnergyDistributions&, bool );
+void verifyChunkWithJumpCurated( const TabulatedEnergyDistributions& );
+void verifyChunkWithJumpNotCurated( const TabulatedEnergyDistributions& );
+void verifyChunkWithDistributionJumpCurated( const TabulatedEnergyDistributions& );
+void verifyChunkWithDistributionJumpNotCurated( const TabulatedEnergyDistributions& );
 
 SCENARIO( "TabulatedEnergyDistributions" ) {
 
@@ -47,13 +50,13 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "data with a jump that consist of more than 2 points" ) {
+  GIVEN( "linearised data with a jump that consist of more than 2 points" ) {
 
-    // note: at construction time, the extraneous points in between the first and last
-    //       x value in the jump are removed. boundaries always point to the first point
-    //       in the jump
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump are kept. boundaries always point to the first point
+    //       in the jump, regardless of curation.
 
-    WHEN( "the data is given explicitly" ) {
+    WHEN( "the data is given explicitly and curate is not requested" ) {
 
       std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
       std::vector< TabulatedEnergyDistribution > distributions = {
@@ -66,12 +69,119 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
         { { 0., 4. }, { 0.2, 0.8 } }
       };
 
-      TabulatedEnergyDistributions
-      chunk( std::move( grid ), std::move( distributions ) );
+      TabulatedEnergyDistributions chunk( std::move( grid ), std::move( distributions ) );
 
       THEN( "a TabulatedEnergyDistributions can be constructed and members can be tested" ) {
 
-        verifyChunkWithJump( chunk, false );
+        verifyChunkWithJumpNotCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be linearised and the extraneous point in the jump is removed" ) {
+
+        TabulatedEnergyDistributions linear = chunk.linearise();
+
+        verifyChunkWithJumpCurated( linear );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
+
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 4. }, { 0.52, 0.48 } },
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 4. }, { 0.51, 0.49 } },
+        { { 0., 4. }, { 0.48, 0.52 } },
+        { { 0., 4. }, { 0.2, 0.8 } }
+      };
+
+      TabulatedEnergyDistributions chunk( std::move( grid ), std::move( distributions ),
+                                          InterpolationType::LinearLinear, false, true );
+
+      THEN( "a TabulatedEnergyDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "linearised data with a jump that consist of more than 2 points in one of the distributions" ) {
+
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump of a distribution are kept. curation of the
+    //       distributions removes them from both the pdf and the cdf.
+
+    WHEN( "the data is given explicitly and curate is not requested" ) {
+
+      std::vector< double > grid = { 1., 2., 3. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
+
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 1., 2., 2., 2., 4. }, { 0., 1., 2., 3., 1., 2. } }, // <-- jump of 3 x values
+        { { 0., 4. }, { 0.2, 0.8 } }
+      };
+
+      TabulatedEnergyDistributions chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a TabulatedEnergyDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithDistributionJumpNotCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        chunk.curate();
+
+        verifyChunkWithDistributionJumpCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be linearised and the extraneous point in the jump is removed" ) {
+
+        TabulatedEnergyDistributions linear = chunk.linearise();
+
+        verifyChunkWithDistributionJumpCurated( linear );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      std::vector< double > grid = { 1., 2., 3. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
+
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 1., 2., 2., 2., 4. }, { 0., 1., 2., 3., 1., 2. } }, // <-- jump of 3 x values
+        { { 0., 4. }, { 0.2, 0.8 } }
+      };
+
+      TabulatedEnergyDistributions chunk( std::move( grid ), std::move( distributions ),
+                                          InterpolationType::LinearLinear, false, true );
+
+      THEN( "a TabulatedEnergyDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithDistributionJumpCurated( chunk );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunkWithDistributionJumpCurated( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -436,9 +546,7 @@ void verifyChunk( const TabulatedEnergyDistributions& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
 }
 
-void verifyChunkWithJump( const TabulatedEnergyDistributions& chunk, bool normalise ) {
-
-  double normalisation = normalise ? 2.0 : 1.0;
+void verifyChunkWithJumpCurated( const TabulatedEnergyDistributions& chunk ) {
 
   CHECK( 5 == chunk.numberPoints() );
   CHECK( 2 == chunk.numberRegions() );
@@ -471,18 +579,362 @@ void verifyChunkWithJump( const TabulatedEnergyDistributions& chunk, bool normal
   CHECK_THAT( 4., WithinRel( chunk.distributions()[3].pdf().energies()[1] ) );
   CHECK_THAT( 0., WithinRel( chunk.distributions()[4].pdf().energies()[0] ) );
   CHECK_THAT( 4., WithinRel( chunk.distributions()[4].pdf().energies()[1] ) );
-  CHECK_THAT( 0.5  / normalisation, WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT( 0.5  / normalisation, WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
-  CHECK_THAT( 0.52 / normalisation, WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT( 0.48 / normalisation, WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
-  CHECK_THAT( 0.51 / normalisation, WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
-  CHECK_THAT( 0.49 / normalisation, WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
-  CHECK_THAT( 0.48 / normalisation, WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
-  CHECK_THAT( 0.52 / normalisation, WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
-  CHECK_THAT( 0.2  / normalisation, WithinRel( chunk.distributions()[4].pdf().values()[0] ) );
-  CHECK_THAT( 0.8  / normalisation, WithinRel( chunk.distributions()[4].pdf().values()[1] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT( 0.52, WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( 0.48, WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( 0.51, WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT( 0.49, WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK_THAT( 0.48, WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
+  CHECK_THAT( 0.52, WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
+  CHECK_THAT( 0.2 , WithinRel( chunk.distributions()[4].pdf().values()[0] ) );
+  CHECK_THAT( 0.8 , WithinRel( chunk.distributions()[4].pdf().values()[1] ) );
+  CHECK( 2 == chunk.distributions()[0].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().values().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[0].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[1].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[2].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[3].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[3].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[4].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[4].cdf().energies()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[3].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[3].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[4].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[4].cdf().values()[1] ) );
   CHECK( 1 == chunk.boundaries()[0] );
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+}
+
+void verifyChunkWithJumpNotCurated( const TabulatedEnergyDistributions& chunk ) {
+
+  CHECK( 6 == chunk.numberPoints() );
+  CHECK( 2 == chunk.numberRegions() );
+  CHECK( 6 == chunk.grid().size() );
+  CHECK( 6 == chunk.distributions().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[3] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.grid()[5] ) );
+  CHECK( 2 == chunk.distributions()[0].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[0].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[3].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[3].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[4].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[4].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[5].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[5].pdf().values().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[0].pdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[1].pdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[2].pdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[3].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[3].pdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[4].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[4].pdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[5].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[5].pdf().energies()[1] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT( 0.52, WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( 0.48, WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK_THAT( 0.51, WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
+  CHECK_THAT( 0.49, WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
+  CHECK_THAT( 0.48, WithinRel( chunk.distributions()[4].pdf().values()[0] ) );
+  CHECK_THAT( 0.52, WithinRel( chunk.distributions()[4].pdf().values()[1] ) );
+  CHECK_THAT( 0.2 , WithinRel( chunk.distributions()[5].pdf().values()[0] ) );
+  CHECK_THAT( 0.8 , WithinRel( chunk.distributions()[5].pdf().values()[1] ) );
+  CHECK( 2 == chunk.distributions()[0].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[5].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[5].cdf().values().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[0].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[1].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[2].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[3].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[3].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[4].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[4].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[5].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[5].cdf().energies()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[3].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[3].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[4].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[4].cdf().values()[1] ) );
+  CHECK_THAT( 0.0, WithinRel( chunk.distributions()[5].cdf().values()[0] ) );
+  CHECK_THAT( 2.0, WithinRel( chunk.distributions()[5].cdf().values()[1] ) );
+  CHECK( 1 == chunk.boundaries()[0] );
+  CHECK( 5 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+}
+
+void verifyChunkWithDistributionJumpCurated( const TabulatedEnergyDistributions& chunk ) {
+
+  CHECK( 3 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 3 == chunk.grid().size() );
+  CHECK( 3 == chunk.distributions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+  // distribution 0: no jump
+  CHECK( 2 == chunk.distributions()[0].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[0].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[0].pdf().energies()[1] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[0].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[0].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].cdf().isCurated() );
+
+  // distribution 1: curated jump
+  CHECK( 5 == chunk.distributions()[1].pdf().energies().size() );
+  CHECK( 5 == chunk.distributions()[1].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].pdf().energies()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().energies()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().energies()[3] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[1].pdf().energies()[4] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[2] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[4] ) );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries()[0] );
+  CHECK( 4 == chunk.distributions()[1].pdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[1].pdf().isCurated() );
+  CHECK( 5 == chunk.distributions()[1].cdf().energies().size() );
+  CHECK( 5 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].cdf().energies()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].cdf().energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].cdf().energies()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].cdf().energies()[3] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[1].cdf().energies()[4] ) );
+  CHECK_THAT( 0. , WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT( 2. , WithinRel( chunk.distributions()[1].cdf().values()[2] ) );
+  CHECK_THAT( 2. , WithinRel( chunk.distributions()[1].cdf().values()[3] ) );
+  CHECK_THAT( 5. , WithinRel( chunk.distributions()[1].cdf().values()[4] ) );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries()[0] );
+  CHECK( 4 == chunk.distributions()[1].cdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[1].cdf().isCurated() );
+
+  // distribution 2: no jump
+  CHECK( 2 == chunk.distributions()[2].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[2].pdf().energies()[1] ) );
+  CHECK_THAT( 0.2, WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT( 0.8, WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[2].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[2].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].cdf().isCurated() );
+}
+
+void verifyChunkWithDistributionJumpNotCurated( const TabulatedEnergyDistributions& chunk ) {
+
+  CHECK( 3 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 3 == chunk.grid().size() );
+  CHECK( 3 == chunk.distributions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+  // distribution 0: no jump
+  CHECK( 2 == chunk.distributions()[0].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[0].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[0].pdf().energies()[1] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[0].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[0].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].cdf().isCurated() );
+
+  // distribution 1: uncurated jump
+  CHECK( 6 == chunk.distributions()[1].pdf().energies().size() );
+  CHECK( 6 == chunk.distributions()[1].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].pdf().energies()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().energies()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().energies()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().energies()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[1].pdf().energies()[5] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.distributions()[1].pdf().values()[3] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[4] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[5] ) );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries()[0] );
+  CHECK( 5 == chunk.distributions()[1].pdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].pdf().isLinearised() );
+  CHECK( false == chunk.distributions()[1].pdf().isCurated() );
+  CHECK( 6 == chunk.distributions()[1].cdf().energies().size() );
+  CHECK( 6 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].cdf().energies()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].cdf().energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].cdf().energies()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].cdf().energies()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].cdf().energies()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[1].cdf().energies()[5] ) );
+  CHECK_THAT( 0. , WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT( 2. , WithinRel( chunk.distributions()[1].cdf().values()[2] ) );
+  CHECK_THAT( 2. , WithinRel( chunk.distributions()[1].cdf().values()[3] ) );
+  CHECK_THAT( 2. , WithinRel( chunk.distributions()[1].cdf().values()[4] ) );
+  CHECK_THAT( 5. , WithinRel( chunk.distributions()[1].cdf().values()[5] ) );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries()[0] );
+  CHECK( 5 == chunk.distributions()[1].cdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].cdf().isLinearised() );
+  CHECK( false == chunk.distributions()[1].cdf().isCurated() );
+
+  // distribution 2: no jump
+  CHECK( 2 == chunk.distributions()[2].pdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].pdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[2].pdf().energies()[1] ) );
+  CHECK_THAT( 0.2, WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT( 0.8, WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[2].cdf().energies().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].cdf().energies()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.distributions()[2].cdf().energies()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].cdf().isCurated() );
 }

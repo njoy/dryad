@@ -12,6 +12,10 @@ using Catch::Matchers::WithinAbs;
 // convenience typedefs
 using namespace njoy::dryad;
 
+void verifyChunk( const UniformEnergyDistributions& );
+void verifyChunkWithJumpCurated( const UniformEnergyDistributions& );
+void verifyChunkWithJumpNotCurated( const UniformEnergyDistributions& );
+
 SCENARIO( "UniformEnergyDistributions" ) {
 
   GIVEN( "linearised data without boundaries and no jumps" ) {
@@ -28,70 +32,22 @@ SCENARIO( "UniformEnergyDistributions" ) {
       };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      UniformEnergyDistributions
-      chunk( std::move( grid ), std::move( distributions ), interpolant );
+      UniformEnergyDistributions chunk( std::move( grid ), std::move( distributions ), interpolant );
 
       THEN( "a UniformEnergyDistributions can be constructed and members can be tested" ) {
 
-        CHECK( 4 == chunk.numberPoints() );
-        CHECK( 1 == chunk.numberRegions() );
-        CHECK( 4 == chunk.grid().size() );
-        CHECK( 4 == chunk.distributions().size() );
-        CHECK( 1 == chunk.boundaries().size() );
-        CHECK( 1 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
-        CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
-        CHECK_THAT( 4., WithinRel( chunk.grid()[3] ) );
-        CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
-        CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
-        CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
-        CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
-        CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
-        CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
-        CHECK_THAT(  3. , WithinRel( chunk.distributions()[2].energies()[0] ) );
-        CHECK_THAT(  5. , WithinRel( chunk.distributions()[2].energies()[1] ) );
-        CHECK_THAT(  7. , WithinRel( chunk.distributions()[2].energies()[2] ) );
-        CHECK_THAT(  5. , WithinRel( chunk.distributions()[3].energies()[0] ) );
-        CHECK_THAT( 10. , WithinRel( chunk.distributions()[3].energies()[1] ) );
-        CHECK( 3 == chunk.boundaries()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-      } // THEN
-
-      THEN( "average energies can be calculated" ) {
-
-        auto energies = chunk.averageEnergies();
-
-        CHECK_THAT( 1., WithinRel( energies.lowerEnergyLimit() ) );
-        CHECK_THAT( 4., WithinRel( energies.upperEnergyLimit() ) );
-        CHECK( 4 == energies.numberPoints() );
-        CHECK( 1 == energies.numberRegions() );
-        CHECK( 4 == energies.energies().size() );
-        CHECK( 4 == energies.values().size() );
-        CHECK( 1 == energies.boundaries().size() );
-        CHECK( 1 == energies.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( energies.energies()[0] ) );
-        CHECK_THAT( 2., WithinRel( energies.energies()[1] ) );
-        CHECK_THAT( 3., WithinRel( energies.energies()[2] ) );
-        CHECK_THAT( 4., WithinRel( energies.energies()[3] ) );
-        CHECK_THAT( 2.875, WithinRel( energies.values()[0] ) );
-        CHECK_THAT( 1.5  , WithinRel( energies.values()[1] ) );
-        CHECK_THAT( 5.   , WithinRel( energies.values()[2] ) );
-        CHECK_THAT( 7.5  , WithinRel( energies.values()[3] ) );
-        CHECK( 3 == energies.boundaries()[0] );
-        CHECK( InterpolationType::LinearLinear == energies.interpolants()[0] );
-        CHECK( true == energies.isLinearised() );
+        verifyChunk( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
 
-  GIVEN( "data with a jump that consist of more than 2 points" ) {
+  GIVEN( "linearised data with a jump that consist of more than 2 points" ) {
 
-    // note: at construction time, the extraneous points in between the first and last
-    //       x value in the jump are removed. boundaries always point to the first point
-    //       in the jump
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump are kept. boundaries always point to the first point
+    //       in the jump, regardless of curation.
 
-    WHEN( "the data is given explicitly" ) {
+    WHEN( "the data is given explicitly and curate is not requested" ) {
 
       std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
       std::vector< UniformEnergyDistribution > distributions = {
@@ -104,40 +60,47 @@ SCENARIO( "UniformEnergyDistributions" ) {
         { { 5., 10. }, UniformDistributionType::Discrete }
       };
 
-      UniformEnergyDistributions
-      chunk( std::move( grid ), std::move( distributions ) );
+      UniformEnergyDistributions chunk( std::move( grid ), std::move( distributions ) );
 
       THEN( "a UniformEnergyDistributions can be constructed and members can be tested" ) {
 
-        CHECK( 5 == chunk.numberPoints() );
-        CHECK( 2 == chunk.numberRegions() );
-        CHECK( 5 == chunk.grid().size() );
-        CHECK( 5 == chunk.distributions().size() );
-        CHECK( 2 == chunk.boundaries().size() );
-        CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
-        CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
-        CHECK_THAT( 2., WithinRel( chunk.grid()[2] ) );
-        CHECK_THAT( 3., WithinRel( chunk.grid()[3] ) );
-        CHECK_THAT( 4., WithinRel( chunk.grid()[4] ) );
-        CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
-        CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
-        CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
-        CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
-        CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
-        CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
-        CHECK_THAT(  4. , WithinRel( chunk.distributions()[2].energies()[0] ) );
-        CHECK_THAT(  6. , WithinRel( chunk.distributions()[2].energies()[1] ) );
-        CHECK_THAT(  8. , WithinRel( chunk.distributions()[2].energies()[2] ) );
-        CHECK_THAT(  3. , WithinRel( chunk.distributions()[3].energies()[0] ) );
-        CHECK_THAT(  5. , WithinRel( chunk.distributions()[3].energies()[1] ) );
-        CHECK_THAT(  7. , WithinRel( chunk.distributions()[3].energies()[2] ) );
-        CHECK_THAT(  5. , WithinRel( chunk.distributions()[4].energies()[0] ) );
-        CHECK_THAT( 10. , WithinRel( chunk.distributions()[4].energies()[1] ) );
-        CHECK( 1 == chunk.boundaries()[0] );
-        CHECK( 4 == chunk.boundaries()[1] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        verifyChunkWithJumpNotCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< UniformEnergyDistribution > distributions = {
+
+        { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
+        { { 1., 2. }, UniformDistributionType::Discrete },
+        { { 2., 4., 6. }, UniformDistributionType::Discrete },
+        { { 4., 6., 8. }, UniformDistributionType::Discrete },
+        { { 3., 5., 7. }, UniformDistributionType::Discrete },
+        { { 5., 10. }, UniformDistributionType::Discrete }
+      };
+
+      UniformEnergyDistributions chunk( std::move( grid ), std::move( distributions ),
+                                        InterpolationType::LinearLinear, true );
+
+      THEN( "a UniformEnergyDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -367,3 +330,122 @@ SCENARIO( "UniformEnergyDistributions" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+void verifyChunk( const UniformEnergyDistributions& chunk ) {
+
+  CHECK( 4 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 4 == chunk.grid().size() );
+  CHECK( 4 == chunk.distributions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
+  CHECK_THAT( 4., WithinRel( chunk.grid()[3] ) );
+  CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
+  CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
+  CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
+  CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
+  CHECK_THAT(  3. , WithinRel( chunk.distributions()[2].energies()[0] ) );
+  CHECK_THAT(  5. , WithinRel( chunk.distributions()[2].energies()[1] ) );
+  CHECK_THAT(  7. , WithinRel( chunk.distributions()[2].energies()[2] ) );
+  CHECK_THAT(  5. , WithinRel( chunk.distributions()[3].energies()[0] ) );
+  CHECK_THAT( 10. , WithinRel( chunk.distributions()[3].energies()[1] ) );
+  CHECK( 3 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+  // average energies
+  auto energies = chunk.averageEnergies();
+  CHECK_THAT( 1., WithinRel( energies.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( energies.upperEnergyLimit() ) );
+  CHECK( 4 == energies.numberPoints() );
+  CHECK( 1 == energies.numberRegions() );
+  CHECK( 4 == energies.energies().size() );
+  CHECK( 4 == energies.values().size() );
+  CHECK( 1 == energies.boundaries().size() );
+  CHECK( 1 == energies.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( energies.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( energies.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( energies.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( energies.energies()[3] ) );
+  CHECK_THAT( 2.875, WithinRel( energies.values()[0] ) );
+  CHECK_THAT( 1.5  , WithinRel( energies.values()[1] ) );
+  CHECK_THAT( 5.   , WithinRel( energies.values()[2] ) );
+  CHECK_THAT( 7.5  , WithinRel( energies.values()[3] ) );
+  CHECK( 3 == energies.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == energies.interpolants()[0] );
+  CHECK( true == energies.isLinearised() );
+}
+
+void verifyChunkWithJumpCurated( const UniformEnergyDistributions& chunk ) {
+
+  CHECK( 5 == chunk.numberPoints() );
+  CHECK( 2 == chunk.numberRegions() );
+  CHECK( 5 == chunk.grid().size() );
+  CHECK( 5 == chunk.distributions().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[3] ) );
+  CHECK_THAT( 4., WithinRel( chunk.grid()[4] ) );
+  CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
+  CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
+  CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
+  CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
+  CHECK_THAT(  4. , WithinRel( chunk.distributions()[2].energies()[0] ) );
+  CHECK_THAT(  6. , WithinRel( chunk.distributions()[2].energies()[1] ) );
+  CHECK_THAT(  8. , WithinRel( chunk.distributions()[2].energies()[2] ) );
+  CHECK_THAT(  3. , WithinRel( chunk.distributions()[3].energies()[0] ) );
+  CHECK_THAT(  5. , WithinRel( chunk.distributions()[3].energies()[1] ) );
+  CHECK_THAT(  7. , WithinRel( chunk.distributions()[3].energies()[2] ) );
+  CHECK_THAT(  5. , WithinRel( chunk.distributions()[4].energies()[0] ) );
+  CHECK_THAT( 10. , WithinRel( chunk.distributions()[4].energies()[1] ) );
+  CHECK( 1 == chunk.boundaries()[0] );
+  CHECK( 4 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+}
+
+void verifyChunkWithJumpNotCurated( const UniformEnergyDistributions& chunk ) {
+
+  CHECK( 6 == chunk.numberPoints() );
+  CHECK( 2 == chunk.numberRegions() );
+  CHECK( 6 == chunk.grid().size() );
+  CHECK( 6 == chunk.distributions().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[3] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.grid()[5] ) );
+  CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
+  CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
+  CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
+  CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
+  CHECK_THAT(  2. , WithinRel( chunk.distributions()[2].energies()[0] ) );
+  CHECK_THAT(  4. , WithinRel( chunk.distributions()[2].energies()[1] ) );
+  CHECK_THAT(  6. , WithinRel( chunk.distributions()[2].energies()[2] ) );
+  CHECK_THAT(  4. , WithinRel( chunk.distributions()[3].energies()[0] ) );
+  CHECK_THAT(  6. , WithinRel( chunk.distributions()[3].energies()[1] ) );
+  CHECK_THAT(  8. , WithinRel( chunk.distributions()[3].energies()[2] ) );
+  CHECK_THAT(  3. , WithinRel( chunk.distributions()[4].energies()[0] ) );
+  CHECK_THAT(  5. , WithinRel( chunk.distributions()[4].energies()[1] ) );
+  CHECK_THAT(  7. , WithinRel( chunk.distributions()[4].energies()[2] ) );
+  CHECK_THAT(  5. , WithinRel( chunk.distributions()[5].energies()[0] ) );
+  CHECK_THAT( 10. , WithinRel( chunk.distributions()[5].energies()[1] ) );
+  CHECK( 1 == chunk.boundaries()[0] );
+  CHECK( 5 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+}
