@@ -75,6 +75,46 @@ SCENARIO( "ProjectileTarget" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "projectile target data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      id::ParticleID n = id::ParticleID::neutron();
+      id::ParticleID g = id::ParticleID::photon();
+      id::ParticleID fe56( "Fe56" );
+
+      ProjectileTarget chunk( Documentation(), n, fe56, InteractionType::Nuclear,
+                              { Reaction( id::ReactionID( n, fe56, id::ReactionType::elastic( n ) ),
+                                          TabulatedCrossSection( { 1., 2., 2., 2., 4. },                                // <-- discontinuity with 3 points
+                                                                 { 4., 3., 4., 5., 2. } ),
+                                          { ReactionProduct( n, TabulatedMultiplicity( { 1., 2., 2., 2., 4. },          // <-- discontinuity with 3 points
+                                                                                       { 1., 1., 2., 1., 1. } ) ) } ),
+                                Reaction( id::ReactionID( n, fe56, id::ReactionType( 102 ) ),
+                                          TabulatedCrossSection( { 1., 3., 3., 3., 4. },                                // <-- discontinuity with 3 points
+                                                                 { 4., 3., 4., 5., 2. } ),
+                                          { ReactionProduct( g, TabulatedMultiplicity( { 1., 3., 3., 3., 4. },          // <-- discontinuity with 3 points
+                                                                                       { 1., 2., 3., 4., 5. } ) ) } ) } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.reactions()[0].crossSection().isCurated() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.reactions()[0].products()[0].multiplicity() ).isCurated() );
+        CHECK( false == chunk.reactions()[1].crossSection().isCurated() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.reactions()[1].products()[0].multiplicity() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.reactions()[0].crossSection().isCurated() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.reactions()[0].products()[0].multiplicity() ).isCurated() );
+        CHECK( true == chunk.reactions()[1].crossSection().isCurated() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.reactions()[1].products()[0].multiplicity() ).isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of ProjectileTarget is given" ) {

@@ -111,6 +111,89 @@ SCENARIO( "UncorrelatedDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "uncorrelated distribution data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly using tabulated distributions" ) {
+
+      UncorrelatedDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                          TabulatedAngularDistributions(
+                                            { 1e-5, 20. },
+                                            { { { -1., 0., 0., 0., +1. },        // <-- discontinuity with 3 points
+                                                { 1., 1., 1.1, 0.9, 1. } },
+                                              { { -1., +1. }, { 0.8, 1.2 } } } ),
+                                          TabulatedEnergyDistributions(
+                                            { 1e-5, 20. },
+                                            { { { 0., 20. }, { 0., 0.2 } },
+                                              { { 0., 10., 10., 10., 20. },      // <-- discontinuity with 3 points
+                                                { 0.1, 0.1, 0.2, 0.05, 0.1 } } } ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< TabulatedAngularDistributions >( chunk.angle() ).isCurated() );
+        CHECK( false == std::get< TabulatedEnergyDistributions >( chunk.energy() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedAngularDistributions >( chunk.angle() ).isCurated() );
+        CHECK( true == std::get< TabulatedEnergyDistributions >( chunk.energy() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using Legendre and tabulated distributions" ) {
+
+      UncorrelatedDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                          LegendreAngularDistributions(
+                                            { 1e-5, 1., 1., 1., 20. },   // <-- discontinuity with 3 points
+                                            { { { 1.0 } }, { { 1.0, 0.1 } }, { { 1.0, 0.2 } },
+                                              { { 1.0, 0.3 } }, { { 1.0, 0.4 } } } ),
+                                          TabulatedEnergyDistributions(
+                                            { 1e-5, 1., 1., 1., 20. },   // <-- discontinuity with 3 points
+                                            { { { 0., 20. }, { 0., 0.2 } },
+                                              { { 0., 20. }, { 0.05, 0.15 } },
+                                              { { 0., 20. }, { 0.1, 0.1 } },
+                                              { { 0., 20. }, { 0.15, 0.05 } },
+                                              { { 0., 20. }, { 0.2, 0. } } } ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< LegendreAngularDistributions >( chunk.angle() ).isCurated() );
+        CHECK( false == std::get< TabulatedEnergyDistributions >( chunk.energy() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< LegendreAngularDistributions >( chunk.angle() ).isCurated() );
+        CHECK( true == std::get< TabulatedEnergyDistributions >( chunk.energy() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using isotropic angular distributions" ) {
+
+      UncorrelatedDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                          IsotropicAngularDistributions(),
+                                          TabulatedEnergyDistributions(
+                                            { 1e-5, 20. },
+                                            { { { 0., 20. }, { 0., 0.2 } },
+                                              { { 0., 10., 10., 10., 20. },    // <-- discontinuity with 3 points
+                                                { 0.1, 0.1, 0.2, 0.05, 0.1 } } } ) );
+
+      THEN( "the tabulated data can be curated" ) {
+
+        CHECK( false == std::get< TabulatedEnergyDistributions >( chunk.energy() ).isCurated() );
+
+        chunk.curate();
+
+        CHECK( true == std::holds_alternative< IsotropicAngularDistributions >( chunk.angle() ) );
+        CHECK( true == std::get< TabulatedEnergyDistributions >( chunk.energy() ).isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of UncorrelatedDistributionData is given" ) {

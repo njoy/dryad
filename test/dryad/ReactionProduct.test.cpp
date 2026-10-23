@@ -75,6 +75,159 @@ SCENARIO( "ReactionProduct" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "reaction product data with tabulated data that is not curated" ) {
+
+    id::ParticleID id = id::ParticleID::neutron();
+    TabulatedMultiplicity multiplicity( { 1., 2., 2., 2., 4. }, { 4., 3., 4., 5., 2. } );  // <-- discontinuity with 3 points
+    TabulatedAverageCosine cosine( { 1., 2., 2., 2., 4. }, { 0., 0.1, 0.2, 0.3, 0.4 } );   // <-- discontinuity with 3 points
+    TabulatedAverageEnergy energy( { 1., 2., 2., 2., 4. }, { 0.5, 1., 1.5, 2., 3. } );     // <-- discontinuity with 3 points
+
+    WHEN( "the data is given explicitly using two body distribution data" ) {
+
+      ReactionProduct chunk( id, multiplicity,
+                             TwoBodyDistributionData(
+                               ReferenceFrame::CentreOfMass,
+                               TabulatedAngularDistributions(
+                                 { 1e-5, 20. },
+                                 { { { -1., 0., 0., 0., +1. }, { 1., 1., 1.1, 0.9, 1. } },  // <-- discontinuity with 3 points
+                                   { { -1., +1. }, { 0.8, 1.2 } } } ) ),
+                             cosine, energy );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        auto& distribution = std::get< TwoBodyDistributionData >( chunk.distributionData().value() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( false == chunk.averageCosine()->isCurated() );
+        CHECK( false == chunk.averageEnergy()->isCurated() );
+        CHECK( false == std::get< TabulatedAngularDistributions >( distribution.angle() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        auto& distribution = std::get< TwoBodyDistributionData >( chunk.distributionData().value() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( true == chunk.averageCosine()->isCurated() );
+        CHECK( true == chunk.averageEnergy()->isCurated() );
+        CHECK( true == std::get< TabulatedAngularDistributions >( distribution.angle() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using uncorrelated distribution data" ) {
+
+      ReactionProduct chunk( id, multiplicity,
+                             UncorrelatedDistributionData(
+                               ReferenceFrame::CentreOfMass,
+                               TabulatedAngularDistributions(
+                                 { 1e-5, 20. },
+                                 { { { -1., 0., 0., 0., +1. }, { 1., 1., 1.1, 0.9, 1. } },             // <-- discontinuity with 3 points
+                                   { { -1., +1. }, { 0.8, 1.2 } } } ),
+                               TabulatedEnergyDistributions(
+                                 { 1e-5, 20. },
+                                 { { { 0., 20. }, { 0., 0.2 } },
+                                   { { 0., 10., 10., 10., 20. }, { 0.1, 0.1, 0.2, 0.05, 0.1 } } } ) ), // <-- discontinuity with 3 points
+                             cosine, energy );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        auto& distribution = std::get< UncorrelatedDistributionData >( chunk.distributionData().value() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( false == chunk.averageCosine()->isCurated() );
+        CHECK( false == chunk.averageEnergy()->isCurated() );
+        CHECK( false == std::get< TabulatedAngularDistributions >( distribution.angle() ).isCurated() );
+        CHECK( false == std::get< TabulatedEnergyDistributions >( distribution.energy() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        auto& distribution = std::get< UncorrelatedDistributionData >( chunk.distributionData().value() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( true == chunk.averageCosine()->isCurated() );
+        CHECK( true == chunk.averageEnergy()->isCurated() );
+        CHECK( true == std::get< TabulatedAngularDistributions >( distribution.angle() ).isCurated() );
+        CHECK( true == std::get< TabulatedEnergyDistributions >( distribution.energy() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using coherent distribution data" ) {
+
+      ReactionProduct chunk( id, multiplicity,
+                             CoherentDistributionData(
+                               ReferenceFrame::CentreOfMass,
+                               TabulatedScatteringFunction( { 0., 1., 1., 1., 2. },    // <-- discontinuity with 3 points
+                                                            { 2., 1.5, 1.4, 1.3, 1. } ) ),
+                             cosine, energy );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        auto& distribution = std::get< CoherentDistributionData >( chunk.distributionData().value() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( false == chunk.averageCosine()->isCurated() );
+        CHECK( false == chunk.averageEnergy()->isCurated() );
+        CHECK( false == distribution.scatteringFunction().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        auto& distribution = std::get< CoherentDistributionData >( chunk.distributionData().value() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( true == chunk.averageCosine()->isCurated() );
+        CHECK( true == chunk.averageEnergy()->isCurated() );
+        CHECK( true == distribution.scatteringFunction().isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using incoherent distribution data" ) {
+
+      ReactionProduct chunk( id, multiplicity,
+                             IncoherentDistributionData(
+                               ReferenceFrame::CentreOfMass,
+                               TabulatedScatteringFunction( { 1., 2., 2., 2., 1e+6 },      // <-- discontinuity with 3 points
+                                                            { 2., 1.9, 1.8, 1.7, 1. } ) ),
+                             cosine, energy );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        auto& distribution = std::get< IncoherentDistributionData >( chunk.distributionData().value() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( false == chunk.averageCosine()->isCurated() );
+        CHECK( false == chunk.averageEnergy()->isCurated() );
+        CHECK( false == distribution.scatteringFunction().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        auto& distribution = std::get< IncoherentDistributionData >( chunk.distributionData().value() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.multiplicity() ).isCurated() );
+        CHECK( true == chunk.averageCosine()->isCurated() );
+        CHECK( true == chunk.averageEnergy()->isCurated() );
+        CHECK( true == distribution.scatteringFunction().isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using an integer multiplicity and no other data" ) {
+
+      ReactionProduct chunk( id, 1 );
+
+      THEN( "curating does not change anything" ) {
+
+        chunk.curate();
+
+        CHECK( 1 == std::get< int >( chunk.multiplicity() ) );
+        CHECK( std::nullopt == chunk.averageCosine() );
+        CHECK( std::nullopt == chunk.averageEnergy() );
+        CHECK( std::nullopt == chunk.distributionData() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of Reaction is given" ) {

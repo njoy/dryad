@@ -86,6 +86,35 @@ SCENARIO( "Reaction" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "reaction data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      Reaction chunk( id::ReactionID( n, fe56, id::ReactionType( 51 ) ),
+                      TabulatedCrossSection( { 1., 2., 2., 2., 4. }, { 4., 3., 4., 5., 2. } ),    // <-- discontinuity with 3 points
+                      { ReactionProduct( n, TabulatedMultiplicity( { 1., 2., 2., 2., 4. },        // <-- discontinuity with 3 points
+                                                                   { 1., 1., 2., 1., 1. } ) ),
+                        ReactionProduct( g, TabulatedMultiplicity( { 1., 3., 3., 3., 4. },        // <-- discontinuity with 3 points
+                                                                   { 1., 2., 3., 4., 5. } ) ) } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.crossSection().isCurated() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.products()[0].multiplicity() ).isCurated() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.products()[1].multiplicity() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.crossSection().isCurated() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.products()[0].multiplicity() ).isCurated() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.products()[1].multiplicity() ).isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of Reaction is given" ) {

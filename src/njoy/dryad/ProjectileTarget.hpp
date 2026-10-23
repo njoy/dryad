@@ -560,6 +560,19 @@ namespace dryad {
     }
 
     /**
+     *  @brief Curate the data
+     *
+     *  @todo curate the resonance parameters
+     */
+    void curate() {
+
+      for ( auto&& reaction : this->reactions() ) {
+
+        reaction.curate();
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

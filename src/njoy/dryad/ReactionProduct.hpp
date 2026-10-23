@@ -185,6 +185,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the reaction product multiplicity
+     */
+    Multiplicity& multiplicity() {
+
+      return this->multiplicity_;
+    }
+
+    /**
      *  @brief Set the reaction product multiplicity
      *
      *  @param[in] multiplicity   the multiplicity of the reaction product
@@ -203,6 +211,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the average reaction product cosine
+     */
+    std::optional< TabulatedAverageCosine >& averageCosine() {
+
+      return this->average_cosine_;
+    }
+
+    /**
      *  @brief Set the average reaction product cosine
      *
      *  @param[in] averageCosine   the average reaction product cosine
@@ -216,6 +232,14 @@ namespace dryad {
      *  @brief Return the average reaction product energy
      */
     const std::optional< TabulatedAverageEnergy >& averageEnergy() const {
+
+      return this->average_energy_;
+    }
+
+    /**
+     *  @brief Return the average reaction product energy
+     */
+    std::optional< TabulatedAverageEnergy >& averageEnergy() {
 
       return this->average_energy_;
     }
@@ -270,6 +294,35 @@ namespace dryad {
                       [] ( auto&& data ) { data.normalise(); }
                     },
                     this->distributionData().value() );
+      }
+    }
+
+    /**
+     *  @brief Curate the reaction product data
+     *
+     *  This curates the multiplicity, average cosine and average energy if they
+     *  are tabulated, as well as the distribution data.
+     */
+    void curate() {
+
+      std::visit( tools::overload{
+
+                    [] ( int ) {},
+                    [] ( PolynomialMultiplicity& ) {},
+                    [] ( auto&& multiplicity ) { multiplicity.curate(); }
+                  },
+                  this->multiplicity() );
+      if ( this->hasAverageCosine() ) {
+
+        this->averageCosine()->curate();
+      }
+      if ( this->hasAverageEnergy() ) {
+
+        this->averageEnergy()->curate();
+      }
+      if ( this->hasDistributionData() ) {
+
+        std::visit( [] ( auto&& data ) { data.curate(); }, this->distributionData().value() );
       }
     }
 

@@ -89,6 +89,63 @@ SCENARIO( "TwoBodyDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "two body distribution data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly using Legendre distributions" ) {
+
+      TwoBodyDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                     LegendreAngularDistributions(
+                                       { 1e-5, 1., 1., 1., 20. },      // <-- discontinuity with 3 points
+                                       { { { 1.0 } }, { { 1.0, 0.1 } }, { { 1.0, 0.2 } },
+                                         { { 1.0, 0.3 } }, { { 1.0, 0.4 } } } ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< LegendreAngularDistributions >( chunk.angle() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< LegendreAngularDistributions >( chunk.angle() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using tabulated distributions" ) {
+
+      TwoBodyDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                     TabulatedAngularDistributions(
+                                       { 1e-5, 20. },
+                                       { { { -1., 0., 0., 0., +1. }, { 1., 1., 1.1, 0.9, 1. } },  // <-- discontinuity with 3 points
+                                         { { -1., +1. }, { 0.8, 1.2 } } } ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< TabulatedAngularDistributions >( chunk.angle() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedAngularDistributions >( chunk.angle() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly using isotropic distributions" ) {
+
+      TwoBodyDistributionData chunk( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+
+      THEN( "curating does not change anything" ) {
+
+        chunk.curate();
+
+        verifyIsotropicChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of TwoBodyDistributionData is given" ) {
