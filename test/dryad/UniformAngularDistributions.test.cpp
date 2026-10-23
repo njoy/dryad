@@ -18,8 +18,8 @@ SCENARIO( "UniformAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< UniformAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< UniformAngularDistribution > distributions = {
 
         { { -0.5, 0.5 }, UniformDistributionType::Discrete },
         { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },
@@ -93,8 +93,8 @@ SCENARIO( "UniformAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
-      const std::vector< UniformAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< UniformAngularDistribution > distributions = {
 
         { { -0.5, 0.5 }, UniformDistributionType::Discrete },
         { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },
@@ -147,8 +147,8 @@ SCENARIO( "UniformAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 1., 2., 3., 4. };
-      const std::vector< UniformAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 1., 2., 3., 4. };
+      std::vector< UniformAngularDistribution > distributions = {
 
         { { -0.5, 1., 0.5 }, UniformDistributionType::Discrete },
         { { -0.5, 0.5 }, UniformDistributionType::Discrete },
@@ -195,8 +195,8 @@ SCENARIO( "UniformAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4., 4. };
-      const std::vector< UniformAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4., 4. };
+      std::vector< UniformAngularDistribution > distributions = {
 
         { { -0.5, 0.5 }, UniformDistributionType::Discrete },
         { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },
@@ -305,8 +305,8 @@ SCENARIO( "UniformAngularDistributions" ) {
 
     WHEN( "the boundaries and interpolants do not have the same size" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< UniformAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< UniformAngularDistribution > distributions = {
 
         { { -0.5, 0.5 }, UniformDistributionType::Discrete },
         { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },
@@ -327,8 +327,8 @@ SCENARIO( "UniformAngularDistributions" ) {
 
     WHEN( "the x grid is not sorted" ) {
 
-      const std::vector< double > grid = { 1., 3., 2., 4. };
-      const std::vector< UniformAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 3., 2., 4. };
+      std::vector< UniformAngularDistribution > distributions = {
 
         { { -0.5, 0.5 }, UniformDistributionType::Discrete },
         { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },
@@ -345,8 +345,8 @@ SCENARIO( "UniformAngularDistributions" ) {
 
     WHEN( "the last boundary does not point to the last point" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< UniformAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< UniformAngularDistribution > distributions = {
 
         { { -0.5, 0.5 }, UniformDistributionType::Discrete },
         { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },

@@ -21,8 +21,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 1.0, 1.0 } },
         { { -1., +1. }, { 0.98, 1.02 } },
@@ -31,7 +31,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedAngularDistributions chunk1( std::move( grid ), std::move( distributions ),
+      TabulatedAngularDistributions chunk1( grid, distributions,
                                             interpolant, false );
       TabulatedAngularDistributions chunk2( std::move( grid ), std::move( distributions ),
                                             interpolant, true );
@@ -55,8 +55,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 1.0, 1.0 } },
         { { -1., +1. }, { 0.98, 1.02 } },
@@ -82,8 +82,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.0, 2.0 } },
         { { -1., +1. }, { 1.0, 1.0 } },
@@ -108,8 +108,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 1.0, 1.0 } },
         { { -1., +1. }, { 0.98, 1.02 } },
@@ -205,8 +205,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the boundaries and interpolants do not have the same size" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.5, 0.5 } },
         { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
@@ -227,8 +227,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the x grid is not sorted" ) {
 
-      const std::vector< double > grid = { 1., 3., 2., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 3., 2., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.5, 0.5 } },
         { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
@@ -245,8 +245,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the last boundary does not point to the last point" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.5, 0.5 } },
         { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },

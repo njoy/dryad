@@ -109,8 +109,9 @@ namespace dryad {
      *                         all probability data (default: no normalisation)
      */
     MixedAngularDistribution( double value, bool normalise = false ) :
-      MixedAngularDistribution( IsotropicAngularDistributionFunction( std::move( value ) ),
-                                normalise ) {}
+      MixedAngularDistribution(
+          IsotropicAngularDistributionFunction( std::move( value ) ),
+          normalise ) {}
 
     /**
      *  @brief Constructor
@@ -122,8 +123,9 @@ namespace dryad {
      */
     MixedAngularDistribution( std::vector< double > coefficients,
                               bool normalise = false ) :
-      MixedAngularDistribution( LegendreAngularDistributionFunction( std::move( coefficients ) ),
-                                normalise ) {}
+      MixedAngularDistribution(
+          LegendreAngularDistributionFunction( std::move( coefficients ) ),
+          normalise ) {}
 
     /**
      *  @brief Constructor
@@ -134,16 +136,22 @@ namespace dryad {
      *  @param[in] interpolants   the interpolation types of the interpolation regions
      *  @param[in] normalise      option to indicate whether or not to normalise
      *                            all probability data (default: no normalisation)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     MixedAngularDistribution(
         std::vector< double > cosines,
         std::vector< double > values,
         std::vector< std::size_t > boundaries,
         std::vector< InterpolationType > interpolants,
-        bool normalise = false ) :
+        bool normalise = false,
+        bool curate = false ) :
       MixedAngularDistribution(
-          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
-                                                std::move( boundaries ), std::move( interpolants ) ),
+          TabulatedAngularDistributionFunction(
+              std::move( cosines ),
+              std::move( values ),
+              std::move( boundaries ),
+              std::move( interpolants ),
+              curate ),
           normalise ) {}
 
     /**
@@ -154,15 +162,20 @@ namespace dryad {
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
      *  @param[in] normalise      option to indicate whether or not to normalise
      *                            all probability data (default: no normalisation)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     MixedAngularDistribution(
         std::vector< double > cosines,
         std::vector< double > values,
         InterpolationType interpolant = InterpolationType::LinearLinear,
-        bool normalise = false ) :
+        bool normalise = false,
+        bool curate = false ) :
       MixedAngularDistribution(
-          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
-                                                std::move( interpolant ) ),
+          TabulatedAngularDistributionFunction(
+              std::move( cosines ),
+              std::move( values ),
+              std::move( interpolant ),
+              curate ),
           normalise ) {}
 
     /* methods */
@@ -216,6 +229,21 @@ namespace dryad {
 
       std::visit( [] ( auto&& function ) { return function.normalise(); }, this->pdf() );
       this->cdf_ = this->deriveCdf( true );
+    }
+
+    /**
+     *  @brief Curate the distribution
+     */
+    void curate() {
+
+      auto curate = tools::overload{
+
+        [] ( TabulatedAngularDistributionFunction& distribution ) { distribution.curate(); },
+        [] ( auto& distribution ) { return; },
+      };
+
+      std::visit( curate, this->pdf() );
+      std::visit( curate, this->cdf() );
     }
 
     /**

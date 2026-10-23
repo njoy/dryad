@@ -21,8 +21,8 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedEnergyDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 4. }, { 0.52, 0.48 } },
@@ -32,7 +32,7 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
       TabulatedEnergyDistributions
-      chunk1( std::move( grid ), std::move( distributions ), interpolant, false );
+      chunk1( grid, distributions, interpolant, false );
       TabulatedEnergyDistributions
       chunk2( std::move( grid ), std::move( distributions ), interpolant, true );
 
@@ -55,8 +55,8 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
-      const std::vector< TabulatedEnergyDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 4. }, { 0.52, 0.48 } },
@@ -82,8 +82,8 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 1., 2., 3., 4. };
-      const std::vector< TabulatedEnergyDistribution > distributions = {
+      std::vector< double > grid = { 1., 1., 2., 3., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
 
         { { 0., 1. }, { 0.1, 0.1 } },
         { { 0., 4. }, { 0.5, 0.5 } },
@@ -108,8 +108,8 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4., 4. };
-      const std::vector< TabulatedEnergyDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 4. }, { 0.52, 0.48 } },
@@ -196,8 +196,8 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
 
     WHEN( "the boundaries and interpolants do not have the same size" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedEnergyDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 1., 4. }, { 0.49, 0.5, 0.51 } },
@@ -218,8 +218,8 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
 
     WHEN( "the x grid is not sorted" ) {
 
-      const std::vector< double > grid = { 1., 3., 2., 4. };
-      const std::vector< TabulatedEnergyDistribution > distributions = {
+      std::vector< double > grid = { 1., 3., 2., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 1., 4. }, { 0.49, 0.5, 0.51 } },
@@ -236,8 +236,8 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
 
     WHEN( "the last boundary does not point to the last point" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedEnergyDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedEnergyDistribution > distributions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 1., 4. }, { 0.49, 0.5, 0.51 } },

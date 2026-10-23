@@ -53,8 +53,8 @@ SCENARIO( "MixedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
-      const std::vector< MixedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< MixedAngularDistribution > distributions = {
 
         { IsotropicAngularDistributionFunction{ 1.0 } },
         { LegendreAngularDistributionFunction{ { 1.0, 0.02 } } },
@@ -80,8 +80,8 @@ SCENARIO( "MixedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 1., 2., 3., 4. };
-      const std::vector< MixedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 1., 2., 3., 4. };
+      std::vector< MixedAngularDistribution > distributions = {
 
         { LegendreAngularDistributionFunction{ { 1.0, 0.01 } } },
         { IsotropicAngularDistributionFunction{ 1.0 } },
@@ -106,8 +106,8 @@ SCENARIO( "MixedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4., 4. };
-      const std::vector< MixedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4., 4. };
+      std::vector< MixedAngularDistribution > distributions = {
 
         { IsotropicAngularDistributionFunction{ 1. } },
         { LegendreAngularDistributionFunction{ { 1.0, 0.02 } } },
@@ -203,8 +203,8 @@ SCENARIO( "MixedAngularDistributions" ) {
 
     WHEN( "the boundaries and interpolants do not have the same size" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< MixedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< MixedAngularDistribution > distributions = {
 
         { IsotropicAngularDistributionFunction{ 1. } },
         { LegendreAngularDistributionFunction{ { 1.0, 0.02 } } },
@@ -225,8 +225,8 @@ SCENARIO( "MixedAngularDistributions" ) {
 
     WHEN( "the x grid is not sorted" ) {
 
-      const std::vector< double > grid = { 1., 3., 2., 4. };
-      const std::vector< MixedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 3., 2., 4. };
+      std::vector< MixedAngularDistribution > distributions = {
 
         { IsotropicAngularDistributionFunction{ 1. } },
         { LegendreAngularDistributionFunction{ { 1.0, 0.02 } } },
@@ -243,8 +243,8 @@ SCENARIO( "MixedAngularDistributions" ) {
 
     WHEN( "the last boundary does not point to the last point" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< MixedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< MixedAngularDistribution > distributions = {
 
         { IsotropicAngularDistributionFunction{ 1. } },
         { LegendreAngularDistributionFunction{ { 1.0, 0.02 } } },

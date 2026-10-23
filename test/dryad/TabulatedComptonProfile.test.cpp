@@ -21,8 +21,8 @@ SCENARIO( "TabulatedComptonProfile" ) {
     WHEN( "the data is given explicitly" ) {
 
       const id::ElectronSubshellID identifier( "1s" );
-      const std::vector< double > momentum = { 0., 1., 1.5, 2. };
-      const std::vector< double > values = { 0., 1., 1.5, 2. };
+      std::vector< double > momentum = { 0., 1., 1.5, 2. };
+      std::vector< double > values = { 0., 1., 1.5, 2. };
 
       TabulatedComptonProfile chunk1( identifier, momentum, values, InterpolationType::LinearLinear, false );
       TabulatedComptonProfile chunk2( std::move( identifier ), std::move( momentum ),
@@ -70,8 +70,8 @@ SCENARIO( "TabulatedComptonProfile" ) {
       THEN( "an exception is thrown" ) {
 
         const id::ElectronSubshellID identifier( "1s" );
-        const std::vector< double > momentum = { 0., 2. };
-        const std::vector< double > values = { 0., 0.5, 0.75, 1. };
+        std::vector< double > momentum = { 0., 2. };
+        std::vector< double > values = { 0., 0.5, 0.75, 1. };
 
         CHECK_THROWS( TabulatedComptonProfile( identifier, momentum, values ) );
       } // THEN

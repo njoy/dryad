@@ -17,8 +17,8 @@ SCENARIO( "MultigroupAverageCosine" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > boundaries = { 1., 2., 3., 4., 5. };
-      const std::vector< double > values = { 4., 3., 2., 1. };
+      std::vector< double > boundaries = { 1., 2., 3., 4., 5. };
+      std::vector< double > values = { 4., 3., 2., 1. };
 
       MultigroupAverageCosine chunk( std::move( boundaries ), std::move( values ) );
 

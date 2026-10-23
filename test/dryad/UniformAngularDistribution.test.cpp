@@ -18,7 +18,7 @@ SCENARIO( "UniformAngularDistribution" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > cosines = { -0.25, 0., 0.55 };
+      std::vector< double > cosines = { -0.25, 0., 0.55 };
       UniformDistributionType type = UniformDistributionType::Discrete;
 
       UniformAngularDistribution chunk( std::move( cosines ), std::move( type ) );
@@ -45,7 +45,7 @@ SCENARIO( "UniformAngularDistribution" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > cosines = { -1., -0.25, 0., 0.5, 1.0 };
+      std::vector< double > cosines = { -1., -0.25, 0., 0.5, 1.0 };
       UniformDistributionType type = UniformDistributionType::Interval;
 
       UniformAngularDistribution chunk( std::move( cosines ), std::move( type ) );

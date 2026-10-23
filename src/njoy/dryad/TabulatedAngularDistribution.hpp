@@ -53,8 +53,9 @@ namespace dryad {
      *  @param[in] normalise   option to indicate whether or not to normalise
      *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf,
-                                  bool normalise = false ) :
+    TabulatedAngularDistribution(
+        TabulatedAngularDistributionFunction pdf,
+        bool normalise = false ) :
       pdf_( std::move( pdf ) ), cdf_() {
 
       if ( normalise ) {
@@ -76,16 +77,22 @@ namespace dryad {
      *  @param[in] interpolants   the interpolation types of the interpolation regions
      *  @param[in] normalise      option to indicate whether or not to normalise
      *                            all probability data (default: no normalisation)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedAngularDistribution(
         std::vector< double > cosines,
         std::vector< double > values,
         std::vector< std::size_t > boundaries,
         std::vector< InterpolationType > interpolants,
-        bool normalise = false ) :
+        bool normalise = false,
+        bool curate = false ) :
       TabulatedAngularDistribution(
-          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
-                                                std::move( boundaries ), std::move( interpolants ) ),
+          TabulatedAngularDistributionFunction(
+              std::move( cosines ),
+              std::move( values ),
+              std::move( boundaries ),
+              std::move( interpolants ),
+              curate ),
           normalise ) {}
 
     /**
@@ -96,15 +103,20 @@ namespace dryad {
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
      *  @param[in] normalise      option to indicate whether or not to normalise
      *                            all probability data (default: no normalisation)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedAngularDistribution(
         std::vector< double > cosines,
         std::vector< double > values,
         InterpolationType interpolant = InterpolationType::LinearLinear,
-        bool normalise = false ) :
+        bool normalise = false,
+        bool curate = false ) :
       TabulatedAngularDistribution(
-          TabulatedAngularDistributionFunction( std::move( cosines ), std::move( values ),
-                                                std::move( interpolant ) ),
+          TabulatedAngularDistributionFunction(
+              std::move( cosines ),
+              std::move( values ),
+              std::move( interpolant ),
+              curate ),
           normalise ) {}
 
     /**
@@ -200,6 +212,15 @@ namespace dryad {
 
       this->pdf().normalise();
       this->cdf() = this->pdf().calculateCdf( true );
+    }
+
+    /**
+     *  @brief Curate the distribution
+     */
+    void curate() {
+
+      this->pdf().curate();
+      this->cdf().curate();
     }
 
     /**
