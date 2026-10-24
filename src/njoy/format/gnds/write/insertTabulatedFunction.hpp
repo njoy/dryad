@@ -2,6 +2,7 @@
 #define NJOY_FORMAT_GNDS_WRITE_INSERTTABULATEDFUNCTION
 
 // system includes
+#include <algorithm>
 #include <iterator>
 #include <optional>
 #include <string>
@@ -127,14 +128,9 @@ namespace write {
                      std::nullopt, std::nullopt, std::nullopt, std::nullopt,
                      interpolation, std::nullopt, index );
 
-        xBegin = xEnd;
-        yBegin = yEnd;
-        auto iter = std::next( xEnd );
-        if ( iter != x.end() && *iter == *xBegin ) {
-
-          xBegin = iter;
-          yBegin = std::next( yBegin );
-        }
+        // go to the last point of the jump if there is one
+        xBegin = std::prev( std::upper_bound( xEnd, x.end(), *xEnd ) );
+        yBegin = std::next( y.begin(), std::distance( x.begin(), xBegin ) );
       }
     }
 

@@ -27,6 +27,7 @@ std::string chunk9();
 std::string chunk10();
 std::string chunk11();
 std::string chunk12();
+std::string chunk13();
 
 SCENARIO( "insertTabulatedFunction" ) {
 
@@ -231,6 +232,93 @@ SCENARIO( "insertTabulatedFunction" ) {
       std::ostringstream out;
       node.print( out, "  " );
       CHECK( out.str() == chunk12() );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "a parent node and data with multiple interpolation zone with discontinuities with more "
+         "than 2 points" ) {
+
+    gnds::write::Options options;
+
+    // the extraneous points in the discontinuities are not written
+
+    THEN( "a regions1d node can be inserted" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertTabulatedFunction( parent, options,
+                                                        {  1.,  2.,  3.,  4.,  4.,  4., 5.,  6. },
+                                                        {  7.,  8.,  9., 10., 99., 11., 12., 13. },
+                                                        { 3, 7 },
+                                                        { InterpolationType::LinearLinear, InterpolationType::LogLog },
+                                                        "incidentEnergy", "crossSection", "eV", "b" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk9() );
+    } // THEN
+
+    THEN( "a regions1d node can be inserted - with an index" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertTabulatedFunction( parent, options,
+                                                        {  1.,  2.,  3.,  4.,  4.,  4., 5.,  6. },
+                                                        {  7.,  8.,  9., 10., 99., 11., 12., 13. },
+                                                        { 3, 7 },
+                                                        { InterpolationType::LinearLinear, InterpolationType::LogLog },
+                                                        "incidentEnergy", "crossSection", "eV", "b",
+                                                        std::nullopt, 0 );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk10() );
+    } // THEN
+
+    THEN( "a regions1d node can be inserted - with an outer domain value" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertTabulatedFunction( parent, options,
+                                                        {  1.,  2.,  3.,  4.,  4.,  4., 5.,  6. },
+                                                        {  7.,  8.,  9., 10., 99., 11., 12., 13. },
+                                                        { 3, 7 },
+                                                        { InterpolationType::LinearLinear, InterpolationType::LogLog },
+                                                        "incidentEnergy", "crossSection", "eV", "b",
+                                                        std::nullopt, std::nullopt, 1e-5 );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk11() );
+    } // THEN
+
+    THEN( "a regions1d node can be inserted - with a label" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertTabulatedFunction( parent, options,
+                                                        {  1.,  2.,  3.,  4.,  4.,  4., 5.,  6. },
+                                                        {  7.,  8.,  9., 10., 99., 11., 12., 13. },
+                                                        { 3, 7 },
+                                                        { InterpolationType::LinearLinear, InterpolationType::LogLog },
+                                                        "incidentEnergy", "crossSection", "eV", "b",
+                                                        "eval" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk12() );
+    } // THEN
+
+    THEN( "a regions1d node can be inserted - with consecutive discontinuities" ) {
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertTabulatedFunction( parent, options,
+                                                        {  1.,  2.,  3.,  3.,  3.,  4.,  4.,  4.,  5. },
+                                                        {  7.,  8.,  9., 99., 10., 11., 99., 12., 13. },
+                                                        { 2, 5, 8 },
+                                                        { InterpolationType::LinearLinear, InterpolationType::LogLog,
+                                                          InterpolationType::LinearLinear },
+                                                        "incidentEnergy", "crossSection", "eV", "b" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk13() );
     } // THEN
   } // GIVEN
 } // SCENARIO
@@ -457,6 +545,33 @@ std::string chunk12() {
          "    <XYs1d index=\"1\" interpolation=\"log-log\">\n"
          "      <values>\n"
          "        4 11 5 12 6 13\n"
+         "      </values>\n"
+         "    </XYs1d>\n"
+         "  </function1ds>\n"
+         "</regions1d>\n";
+}
+
+std::string chunk13() {
+
+  return "<regions1d>\n"
+         "  <axes>\n"
+         "    <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "    <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
+         "  </axes>\n"
+         "  <function1ds>\n"
+         "    <XYs1d index=\"0\">\n"
+         "      <values>\n"
+         "        1 7 2 8 3 9\n"
+         "      </values>\n"
+         "    </XYs1d>\n"
+         "    <XYs1d index=\"1\" interpolation=\"log-log\">\n"
+         "      <values>\n"
+         "        3 10 4 11\n"
+         "      </values>\n"
+         "    </XYs1d>\n"
+         "    <XYs1d index=\"2\">\n"
+         "      <values>\n"
+         "        4 12 5 13\n"
          "      </values>\n"
          "    </XYs1d>\n"
          "  </function1ds>\n"
