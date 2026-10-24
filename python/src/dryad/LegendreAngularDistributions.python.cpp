@@ -117,6 +117,20 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     "      every distribution up or down by the same amount to avoid changing\n"
     "      the full distribution shape)."
   )
+  .def(
+
+    "curate",
+    [] ( Component& self ) { self.curate(); },
+    "Curate the table\n\n"
+    "This removes extraneous interior points in discontinuities in the data."
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isCurated(); },
+    "Flag indicating whether or not the data is curated"
+  )
   .def_property_readonly(
 
     "average_cosines",
@@ -137,20 +151,6 @@ void wrapLegendreAngularDistributions( python::module& module ) {
                  "    normalise : bool, default False\n"
                  "        option to indicate whether or not to normalise\n"
                  "        all probability data (default: no normalisation)" ).c_str()
-  )
-  .def(
-
-    "curate",
-    [] ( Component& self ) { self.curate(); },
-    "Curate the table\n\n"
-    "This removes extraneous interior points in discontinuities in the data."
-  )
-  .def_property_readonly(
-
-    "is_curated",
-    [] ( const Component& self ) -> decltype(auto)
-       { return self.isCurated(); },
-    "Flag indicating whether or not the data is curated"
   );
 
   // add standard equality comparison definitions

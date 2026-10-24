@@ -100,6 +100,12 @@ void wrapIncoherentDistributionData( python::module& module ) {
   )
   .def(
 
+    "curate",
+    &Component::curate,
+    "Curate the distribution data"
+  )
+  .def(
+
     "average_energy",
     python::overload_cast< double, double >( &Component::averageEnergy, python::const_ ),
     python::arg( "energy" ),
@@ -121,12 +127,6 @@ void wrapIncoherentDistributionData( python::module& module ) {
     python::arg( "energies" ),
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
     "Calculate the average outgoing energy"
-  )
-  .def(
-
-    "curate",
-    &Component::curate,
-    "Curate the distribution data"
   );
 
   // add standard equality comparison definitions

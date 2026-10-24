@@ -145,6 +145,18 @@ void wrapMixedAngularDistribution( python::module& module ) {
     &Component::normalise,
     "Normalise the distribution"
   )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the distribution"
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    &Component::isCurated,
+    "Flag indicating whether or not the distribution is curated"
+  )
   .def_property_readonly(
 
     "average_cosine",
@@ -165,18 +177,6 @@ void wrapMixedAngularDistribution( python::module& module ) {
                  "    normalise : bool, default False\n"
                  "        option to indicate whether or not to normalise\n"
                  "        all probability data (default: no normalisation)" ).c_str()
-  )
-  .def(
-
-    "curate",
-    &Component::curate,
-    "Curate the distribution"
-  )
-  .def_property_readonly(
-
-    "is_curated",
-    &Component::isCurated,
-    "Flag indicating whether or not the distribution is curated"
   );
 
   // add standard equality comparison definitions
