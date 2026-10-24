@@ -65,24 +65,25 @@ namespace write {
     std::vector< std::size_t > region_boundaries( boundaries.begin(), std::next( biter ) );
     region_boundaries.back() = region_energies.size() - 1;
     std::vector< dryad::InterpolationType > region_interpolants( interpolants.begin(), std::next( iiter ) );
-    std::size_t size = region_energies.size();
 
-    // check for a jump
-    if ( std::next( eiter ) != energies.end() && *eiter == *std::next( eiter ) ) {
+    // if the interpolation region ends at the upper energy
+    if ( *biter == eindex ) {
 
-      ++eiter;
-      ++viter;
       ++biter;
       ++iiter;
-      ++size;
     }
+
+    // go to the last point of the jump if there is one
+    eiter = std::prev( std::upper_bound( eiter, energies.end(), *eiter ) );
+    std::size_t offset = std::distance( energies.begin(), eiter );
+    viter = std::next( values.begin(), offset );
 
     // erase the data for this region and adjust remaining boundaries
     energies.erase( energies.begin(), eiter );
     values.erase( values.begin(), viter );
     boundaries.erase( boundaries.begin(), biter );
     std::transform( boundaries.begin(), boundaries.end(), boundaries.begin(),
-                    [&] ( auto&& boundary ) { return boundary - size; } );
+                    [&] ( auto&& boundary ) { return boundary - offset; } );
     interpolants.erase( interpolants.begin(), iiter );
 
     pugi::xml_node region = parent.append_child( name.c_str() );
