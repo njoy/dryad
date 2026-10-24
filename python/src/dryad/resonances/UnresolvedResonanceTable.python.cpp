@@ -96,6 +96,12 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
     "----------\n"
     "    channel : njoy.dryad.id.ChannelID\n"
     "        the channel identifier"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the resonance parameter data"
   );
 
   addStandardEqualityComparisonDefinitions< Component >( component );

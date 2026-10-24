@@ -228,8 +228,6 @@ namespace resonances {
 
     /**
      *  @brief Curate the channel radii
-     *
-     *  Only tabulated radii are affected.
      */
     void curate() {
 

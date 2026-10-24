@@ -55,7 +55,9 @@ void wrapMixedAngularDistribution( python::module& module ) {
     "        the interpolation type (default lin-lin)\n"
     "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "        all probability data (default: no normalisation)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -86,23 +88,30 @@ void wrapMixedAngularDistribution( python::module& module ) {
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< std::vector< double >,
+                  std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType >,
+                  bool,
                   bool >(),
     python::arg( "cosines" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the angular distribution with tabulated data with multiple\n"
     "interpolation zones"
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
-                  InterpolationType, bool >(),
+    python::init< std::vector< double >,
+                  std::vector< double >,
+                  InterpolationType,
+                  bool,
+                  bool >(),
     python::arg( "cosines" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the angular distribution with tabulated data with a single\n"
     "interpolation zone"
   )
@@ -156,6 +165,18 @@ void wrapMixedAngularDistribution( python::module& module ) {
                  "    normalise : bool, default False\n"
                  "        option to indicate whether or not to normalise\n"
                  "        all probability data (default: no normalisation)" ).c_str()
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the distribution"
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    &Component::isCurated,
+    "Flag indicating whether or not the distribution is curated"
   );
 
   // add standard equality comparison definitions

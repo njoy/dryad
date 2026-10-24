@@ -36,26 +36,37 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     "    interpolants : list of njoy.dryad.InterpolationType\n"
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "        the interpolation type (default lin-lin)"
+    "        the interpolation type (default lin-lin)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< std::vector< double >,
+                  std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
-    python::arg( "energies" ), python::arg( "values" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
+                  std::vector< InterpolationType >,
+                  bool >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the energy distribution function with multiple interpolation zones"
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
-                  InterpolationType >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::init< std::vector< double >,
+                  std::vector< double >,
+                  InterpolationType,
+                  bool >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the energy distribution function with a single interpolation zone"
   )
   .def_property_readonly(

@@ -39,7 +39,9 @@ void wrapTabulatedComptonProfileFunction( python::module& module ) {
     "        the interpolation type (default lin-lin)\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "        all probability data (default: no normalisation)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -49,18 +51,25 @@ void wrapTabulatedComptonProfileFunction( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
-    python::arg( "momentum" ), python::arg( "values" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
+                  std::vector< InterpolationType >,
+                  bool >(),
+    python::arg( "momentum" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the compton profile function with multiple interpolation zones"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< double >,
-                  InterpolationType >(),
-    python::arg( "momentum" ), python::arg( "values" ),
+                  InterpolationType,
+                  bool >(),
+    python::arg( "momentum" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the compton profile function with a single interpolation zone"
   )
   .def_property_readonly(
@@ -104,6 +113,12 @@ void wrapTabulatedComptonProfileFunction( python::module& module ) {
     "integral",
     [] ( const Component& self ) { return self.integral(); },
     "The integral (zeroth order moment) of the Compton profile function over its domain"
+  )
+  .def_property_readonly(
+
+    "mean",
+    [] ( const Component& self ) { return self.mean(); },
+    "The mean value of the Compton profile function over its domain"
   )
   .def_property_readonly(
 

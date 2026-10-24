@@ -249,6 +249,12 @@ void wrapReaction( python::module& module ) {
                  "----------\n"
                  "    tolerance : float, default " + tolerance.str() + "\n"
                  "        the integration tolerance" ).c_str()
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the reaction data"
   );
 
   // add standard equality comparison definitions

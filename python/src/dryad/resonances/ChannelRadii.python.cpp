@@ -134,6 +134,12 @@ void wrapChannelRadii( python::module& module ) {
     "----------\n"
     "    energy : float\n"
     "        the energy for which the radius must be given"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the channel radii"
   );
 
   // add standard equality comparison definitions

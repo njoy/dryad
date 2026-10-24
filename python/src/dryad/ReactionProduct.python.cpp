@@ -145,6 +145,12 @@ void wrapReactionProduct( python::module& module ) {
     "normalise",
     &Component::normalise,
     "Normalise the distribution data"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the reaction product data"
   );
 
   // add standard equality comparison definitions

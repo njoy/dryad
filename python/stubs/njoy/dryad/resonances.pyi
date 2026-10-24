@@ -122,6 +122,10 @@ class Channel:
         """
     def __ne__(self, arg0: Channel) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the channel data
+        """
     def is_below_threshold(self, energy: float) -> bool:
         """
         Return whether or not the energy is below the threshold for this channel
@@ -517,6 +521,10 @@ class ChannelRadii:
             energy : float
                 the energy for which the radius must be given
         """
+    def curate(self) -> None:
+        """
+        Curate the channel radii
+        """
     @property
     def has_phase_shift_radius(self) -> bool:
         """
@@ -596,6 +604,10 @@ class CompoundSystem:
         ----------
             energies : list of float
                 the energy values
+        """
+    def curate(self) -> None:
+        """
+        Curate the compound system data
         """
     @property
     def boundary_condition(self) -> BoundaryCondition:
@@ -1220,6 +1232,10 @@ class ResonanceParameters:
         """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the resonance parameter data
+        """
     @property
     def has_parameters(self) -> bool:
         """
@@ -1491,6 +1507,10 @@ class SpinGroup:
             energies : list of float
                 the energy values
         """
+    def curate(self) -> None:
+        """
+        Curate the spin group data
+        """
     def r_l_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
         """
         Calculate the R_L matrix at a given energy
@@ -1625,6 +1645,8 @@ class TabulatedAverageWidths:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1657,22 +1679,22 @@ class TabulatedAverageWidths:
     def __imul__(self, arg0: float) -> TabulatedAverageWidths:
         ...
     @typing.overload
-    def __init__(self, dof: float, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, dof: float, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType], curate: bool = False) -> None:
         """
         Initialise the average width table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, dof: float, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, dof: float, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the average width table with a single interpolation region
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType], curate: bool = False) -> None:
         """
         Initialise the average width table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the average width table with a single interpolation region
         """
@@ -1704,6 +1726,12 @@ class TabulatedAverageWidths:
         ...
     def __truediv__(self, arg0: float) -> TabulatedAverageWidths:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedAverageWidths:
         """
         Linearise the table
@@ -1735,6 +1763,11 @@ class TabulatedAverageWidths:
     def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -1785,6 +1818,8 @@ class TabulatedBackground:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1817,12 +1852,12 @@ class TabulatedBackground:
     def __imul__(self, arg0: float) -> TabulatedBackground:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[complex], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[complex], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType], curate: bool = False) -> None:
         """
         Initialise the background function with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[complex], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[complex], interpolant: njoy.dryad.InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the background function with a single interpolation zone
         """
@@ -1854,6 +1889,12 @@ class TabulatedBackground:
         ...
     def __truediv__(self, arg0: float) -> TabulatedBackground:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedBackground:
         """
         Linearise the table
@@ -1877,6 +1918,11 @@ class TabulatedBackground:
     def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -1926,6 +1972,8 @@ class TabulatedLevelSpacing:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1958,12 +2006,12 @@ class TabulatedLevelSpacing:
     def __imul__(self, arg0: float) -> TabulatedLevelSpacing:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType], curate: bool = False) -> None:
         """
         Initialise the level spacing table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the level spacing table with a single interpolation region
         """
@@ -1995,6 +2043,12 @@ class TabulatedLevelSpacing:
         ...
     def __truediv__(self, arg0: float) -> TabulatedLevelSpacing:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedLevelSpacing:
         """
         Linearise the table
@@ -2018,6 +2072,11 @@ class TabulatedLevelSpacing:
     def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -2067,6 +2126,8 @@ class TabulatedRadius:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2099,12 +2160,12 @@ class TabulatedRadius:
     def __imul__(self, arg0: float) -> TabulatedRadius:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType], curate: bool = False) -> None:
         """
         Initialise the radius table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the radius table with a single interpolation region
         """
@@ -2136,6 +2197,12 @@ class TabulatedRadius:
         ...
     def __truediv__(self, arg0: float) -> TabulatedRadius:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedRadius:
         """
         Linearise the table
@@ -2159,6 +2226,11 @@ class TabulatedRadius:
     def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -2206,6 +2278,8 @@ class TabulatedWaveFunction:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2238,12 +2312,12 @@ class TabulatedWaveFunction:
     def __imul__(self, arg0: float) -> TabulatedWaveFunction:
         ...
     @typing.overload
-    def __init__(self, ratios: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, ratios: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType], curate: bool = False) -> None:
         """
         Initialise the wave function table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, ratios: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, ratios: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the wave function table with a single interpolation region
         """
@@ -2275,6 +2349,12 @@ class TabulatedWaveFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedWaveFunction:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedWaveFunction:
         """
         Linearise the table
@@ -2293,6 +2373,11 @@ class TabulatedWaveFunction:
     def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -2370,6 +2455,10 @@ class UnresolvedChannel:
         """
     def __ne__(self, arg0: UnresolvedChannel) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the channel data
+        """
     def is_below_threshold(self, energy: float) -> bool:
         """
         Return whether or not the energy is below the threshold for this channel
@@ -2518,6 +2607,10 @@ class UnresolvedCompoundSystem:
         """
     def __ne__(self, arg0: UnresolvedCompoundSystem) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the compound system data
+        """
     @property
     def lower_energy_limit(self) -> float:
         """
@@ -2582,6 +2675,10 @@ class UnresolvedResonanceTable:
             channel : njoy.dryad.id.ChannelID
                 the channel identifier
         """
+    def curate(self) -> None:
+        """
+        Curate the resonance parameter data
+        """
     def has_channel(self, channel: njoy.dryad.id.ChannelID) -> bool:
         """
         Return whether or not a channel is present
@@ -2638,6 +2735,10 @@ class UnresolvedSpinGroup:
         """
     def __ne__(self, arg0: UnresolvedSpinGroup) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the spin group data
+        """
     @property
     def channels(self) -> list[UnresolvedChannel]:
         """

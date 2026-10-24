@@ -186,6 +186,12 @@ void wrapThermalScattering( python::module& module ) {
     "        the ENDF mat number to be used\n"
     "    filename : string\n"
     "        the ENDF file name\n"
+  )
+  .def(
+
+    "curate",
+    [] ( Component& self ) { self.curate(); },
+    "Curate the thermal scattering data"
   );
 
   // add standard equality comparison definitions

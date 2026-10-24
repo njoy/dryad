@@ -235,9 +235,6 @@ namespace dryad {
 
     /**
      *  @brief Curate the thermal scattering data
-     *
-     *  Only the incoherent inelastic data contains tabulated data that can be
-     *  curated.
      */
     void curate() {
 

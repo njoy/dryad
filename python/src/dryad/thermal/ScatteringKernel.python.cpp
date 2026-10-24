@@ -279,6 +279,12 @@ void wrapScatteringKernel( python::module& module ) {
                  "        the atomic mass ratio of the target to the projectile"
                  "    tolerance : float, default " + tolerance.str() + "\n"
                  "        the linearisation tolerance" ).c_str()
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the scattering kernel"
   );
 
   // add standard equality comparison definitions

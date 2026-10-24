@@ -88,6 +88,12 @@ void wrapUnresolvedSpinGroup( python::module& module ) {
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions to which this spin group contributes"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the spin group data"
   );
 
   addStandardEqualityComparisonDefinitions< Component >( component );

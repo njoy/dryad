@@ -71,6 +71,12 @@ void wrapUnresolvedCompoundSystem( python::module& module ) {
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions to which this compound system contributes"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the compound system data"
   );
 
   // TODO: wrap cross_sections once UnresolvedCompoundSystem::crossSections

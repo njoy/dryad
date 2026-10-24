@@ -347,6 +347,12 @@ void wrapProjectileTarget( python::module& module ) {
     "        the GNDS style name\n"
     "    use_reduced_width_amplitudes : bool, default True\n"
     "        if there are resonances, use reduced width amplitudes"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the data"
   );
 
   // add standard equality comparison definitions

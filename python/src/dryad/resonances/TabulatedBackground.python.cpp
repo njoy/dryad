@@ -39,7 +39,9 @@ void wrapTabulatedBackground( python::module& module ) {
     "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
-    "        the interpolation type for single-region tables"
+    "        the interpolation type for single-region tables\n"
+    "    curate : bool, default=False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -49,18 +51,24 @@ void wrapTabulatedBackground( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< std::complex< double > >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
-    python::arg( "energies" ), python::arg( "values" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
+                  std::vector< InterpolationType >,
+                  bool >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the background function with multiple interpolation zones"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< std::complex< double > >,
-                  InterpolationType >(),
-    python::arg( "energies" ), python::arg( "values" ),
+                  InterpolationType, bool >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the background function with a single interpolation zone"
   )
   .def_property_readonly(

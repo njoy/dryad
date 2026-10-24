@@ -138,6 +138,12 @@ void wrapIncoherentInelasticScattering( python::module& module ) {
                  "        the moderator temperature for which the cross section is requested\n"
                  "    tolerance : float, default " + tolerance.str() + "\n"
                  "        the linearisation tolerance" ).c_str()
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the scattering kernels"
   );
 
   // add standard equality comparison definitions

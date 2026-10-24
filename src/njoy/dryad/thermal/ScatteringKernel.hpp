@@ -309,8 +309,6 @@ namespace thermal {
 
     /**
      *  @brief Curate the scattering kernel
-     *
-     *  Only the tabulated scattering kernel is affected.
      */
     void curate() {
 

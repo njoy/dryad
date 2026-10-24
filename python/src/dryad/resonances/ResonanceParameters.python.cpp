@@ -107,6 +107,12 @@ void wrapResonanceParameters( python::module& module ) {
     "has_parameters",
     python::overload_cast<>( &Component::hasParameters, python::const_ ),
     "Return whether or not resonance parameters are given"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the resonance parameter data"
   );
 
   // add standard equality comparison definitions

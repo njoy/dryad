@@ -48,9 +48,15 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
     "        the interpolation type (default lin-lin)\n"
+    "    pdf : njoy.dryad.TabulatedComptonProfileFunction\n"
+    "        the probability distribution function\n"
+    "    cdf : njoy.dryad.TabulatedComptonProfileFunction\n"
+    "        the cumulative distribution function\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "        all probability data (default: no normalisation)\n"
+    "    curate : bool, default false\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -62,6 +68,7 @@ void wrapTabulatedComptonProfile( python::module& module ) {
                   std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType >,
+                  bool,
                   bool >(),
     python::arg( "subshell_identifier" ),
     python::arg( "momentum" ),
@@ -69,6 +76,7 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     python::arg( "boundaries" ),
     python::arg( "interpolants" ),
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the compton profile with multiple interpolation zones"
   )
   .def(
@@ -77,13 +85,35 @@ void wrapTabulatedComptonProfile( python::module& module ) {
                   std::vector< double >,
                   std::vector< double >,
                   InterpolationType,
+                  bool,
                   bool >(),
     python::arg( "subshell_identifier" ),
     python::arg( "momentum" ),
     python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the compton profile with a single interpolation zone"
+  )
+  .def(
+
+    python::init< ElectronSubshellID,
+                  njoy::dryad::TabulatedComptonProfileFunction,
+                  bool >(),
+    python::arg( "subshell_identifier" ),
+    python::arg( "pdf" ),
+    python::arg( "normalise" ) = false,
+    "Initialise the compton profile using a pdf"
+  )
+  .def(
+
+    python::init< ElectronSubshellID,
+                  njoy::dryad::TabulatedComptonProfileFunction,
+                  njoy::dryad::TabulatedComptonProfileFunction >(),
+    python::arg( "subshell_identifier" ),
+    python::arg( "pdf" ),
+    python::arg( "cdf" ),
+    "Initialise the compton profile using a pdf and cdf"
   )
   .def_property_readonly(
 
@@ -165,6 +195,18 @@ void wrapTabulatedComptonProfile( python::module& module ) {
                  "    normalise : bool, default False\n"
                  "        option to indicate whether or not to normalise\n"
                  "        all probability data (default: no normalisation)" ).c_str()
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the distribution"
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    &Component::isCurated,
+    "Flag indicating whether or not the distribution is curated"
   );
 
   // add standard equality comparison definitions

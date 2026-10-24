@@ -91,6 +91,12 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
     "normalise",
     &Component::normalise,
     "Normalise the distribution data"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the distribution data"
   );
 
   // add standard equality comparison definitions

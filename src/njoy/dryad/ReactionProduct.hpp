@@ -299,9 +299,6 @@ namespace dryad {
 
     /**
      *  @brief Curate the reaction product data
-     *
-     *  This curates the multiplicity, average cosine and average energy if they
-     *  are tabulated, as well as the distribution data.
      */
     void curate() {
 

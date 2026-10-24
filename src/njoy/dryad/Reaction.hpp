@@ -579,8 +579,6 @@ namespace dryad {
 
     /**
      *  @brief Curate the reaction data
-     *
-     *  This curates the cross section and all reaction products.
      */
     void curate() {
 
