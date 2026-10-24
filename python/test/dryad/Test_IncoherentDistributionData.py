@@ -47,6 +47,42 @@ class Test_IncoherentDistributionData( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_curation( self ) :
+
+        # the data is given explicitly
+        chunk = IncoherentDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                            scattering = TabulatedScatteringFunction( [ 1., 2., 2., 2., 1e+6 ],    # <-- discontinuity with 3 points
+                                                                                      [ 2., 1.9, 1.8, 1.7, 1. ] ),
+                                            profiles = [ TabulatedComptonProfile( ElectronSubshellID( '1s' ),
+                                                                                  [ 0., 2., 3., 3., 3., 4. ], [ 0., 1., 2., 3., 1., 2. ] ),    # <-- discontinuity with 3 points
+                                                         TabulatedComptonProfile( ElectronSubshellID( '2s' ),
+                                                                                  [ 0., 1., 2., 2., 2., 4. ], [ 0., 1., 2., 3., 1., 2. ] ) ] )    # <-- discontinuity with 3 points
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.scattering_function.is_curated )
+        self.assertEqual( False, chunk.compton_profiles[0].is_curated )
+        self.assertEqual( False, chunk.compton_profiles[1].is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.scattering_function.is_curated )
+        self.assertEqual( True, chunk.compton_profiles[0].is_curated )
+        self.assertEqual( True, chunk.compton_profiles[1].is_curated )
+
+        # the data is given explicitly without Compton profiles
+        chunk = IncoherentDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                            scattering = TabulatedScatteringFunction( [ 1., 2., 2., 2., 1e+6 ],    # <-- discontinuity with 3 points
+                                                                                      [ 2., 1.9, 1.8, 1.7, 1. ] ) )
+
+        # the tabulated data can be curated
+        self.assertEqual( False, chunk.scattering_function.is_curated )
+
+        chunk.curate()
+
+        self.assertEqual( True, chunk.scattering_function.is_curated )
+        self.assertEqual( None, chunk.compton_profiles )
+
     def test_setter_functions( self ) :
 
         chunk = IncoherentDistributionData( frame = ReferenceFrame.CentreOfMass,

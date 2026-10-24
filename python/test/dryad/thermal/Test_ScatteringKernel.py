@@ -204,6 +204,25 @@ class Test_ScatteringKernel( unittest.TestCase ) :
 
         verify_asymmetric_chunk( self, chunk )
 
+    def test_curation( self ) :
+
+        # the data is given explicitly
+        chunk = ScatteringKernel( 293.6, 300.,
+                                  [ 0., 1., 1., 1., 2. ],
+                                  [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
+                                    TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                    TabulatedScatteringKernelFunction( [ 0., 2., 2., 2., 4. ], [ 0.5, 0.5, 0.6, 0.4, 0.5 ] ),    # <-- discontinuity with 3 points
+                                    TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                    TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.tabulated_scattering_kernel.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.tabulated_scattering_kernel.is_curated )
+
     def test_comparison( self ) :
 
         left = ScatteringKernel( 293.6, 300,
