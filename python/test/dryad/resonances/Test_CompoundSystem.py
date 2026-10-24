@@ -15,6 +15,7 @@ from njoy.dryad.resonances import BoundaryCondition
 from njoy.dryad.resonances import SpinGroup
 from njoy.dryad.resonances import CompoundSystem
 from njoy.dryad.resonances import Kinematics
+from njoy.dryad.resonances import TabulatedRadius
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
@@ -1045,6 +1046,50 @@ class Test_CompoundSystem( unittest.TestCase ) :
                                 [ spingroup5, spingroup4, spingroup3, spingroup2, spingroup1, spingroup0 ] )
 
         verify_chunk( self, chunk )
+
+    def test_curation( self ) :
+
+        neutron_mass = 1.00866491574
+
+        photon_pair = ParticlePair( Particle( ParticleID.photon(), 0, 1, +1 ),
+                                    Particle( ParticleID( 'Cl36[all]' ), 35.65932 * neutron_mass, 0, +1 ) )
+        neutron_pair = ParticlePair( Particle( ParticleID.neutron(), neutron_mass, 0.5, +1 ),
+                                     Particle( ParticleID( 'Cl35' ), 34.66845 * neutron_mass, 1.5, +1 ) )
+
+        # the data is given explicitly
+        chunk = CompoundSystem( 1e-5, 1e+4,
+                                [ SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                                        neutron_pair, photon_pair, 0., None,
+                                                        ChannelRadii( 0. ), False ),
+                                               Channel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                                                        neutron_pair, neutron_pair, 0., None,
+                                                        ChannelRadii( TabulatedRadius( [ 1e-5, 1., 1., 1., 2e+7 ],    # <-- discontinuity of 3 points
+                                                                                       [ 4., 4., 4.5, 5., 5. ] ) ) ) ],
+                                             ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                                               ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ) ],
+                                                             [ 1. ], [ [ 2. ], [ 3. ] ] ),
+                                             Formalism.ReichMoore, BoundaryCondition.ShiftFactor ),
+                                  SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
+                                                        neutron_pair, photon_pair, 0., None,
+                                                        ChannelRadii( 0. ), False ),
+                                               Channel( ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ),
+                                                        neutron_pair, neutron_pair, 0., None,
+                                                        ChannelRadii( TabulatedRadius( [ 1e-5, 2., 2., 2., 2e+7 ],    # <-- discontinuity of 3 points
+                                                                                       [ 4., 4., 4.5, 5., 5. ] ) ) ) ],
+                                             ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
+                                                               ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ) ],
+                                                             [ 1. ], [ [ 2. ], [ 3. ] ] ),
+                                             Formalism.ReichMoore, BoundaryCondition.ShiftFactor ) ] )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.spin_groups[0].channels[1].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( False, chunk.spin_groups[1].channels[1].channel_radii.penetrability_radius.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.spin_groups[0].channels[1].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( True, chunk.spin_groups[1].channels[1].channel_radii.penetrability_radius.is_curated )
 
     def test_comparison( self ) :
 

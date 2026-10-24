@@ -301,6 +301,75 @@ class Test_UncorrelatedDistributionData( unittest.TestCase ) :
         verify_tabulated_and_tabulated_chunk( self, chunk1, True )
         verify_tabulated_and_tabulated_chunk( self, chunk2, True )
 
+    def test_curation( self ) :
+
+        # the data is given explicitly using tabulated distributions
+        chunk = UncorrelatedDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                              angle = TabulatedAngularDistributions(
+                                                        [ 1e-5, 20. ],
+                                                        [ TabulatedAngularDistribution( [ -1., 0., 0., 0., +1. ],    # <-- discontinuity with 3 points
+                                                                                        [ 1., 1., 1.1, 0.9, 1. ] ),
+                                                          TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ),
+                                              energy = TabulatedEnergyDistributions(
+                                                         [ 1e-5, 20. ],
+                                                         [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.2 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 10., 10., 10., 20. ],    # <-- discontinuity with 3 points
+                                                                                        [ 0.1, 0.1, 0.2, 0.05, 0.1 ] ) ] ) )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.angle.is_curated )
+        self.assertEqual( False, chunk.energy.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.angle.is_curated )
+        self.assertEqual( True, chunk.energy.is_curated )
+
+        # the data is given explicitly using Legendre and tabulated distributions
+        chunk = UncorrelatedDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                              angle = LegendreAngularDistributions(
+                                                        [ 1e-5, 1., 1., 1., 20. ],    # <-- discontinuity with 3 points
+                                                        [ LegendreAngularDistribution( [ 1.0 ] ),
+                                                          LegendreAngularDistribution( [ 1.0, 0.1 ] ),
+                                                          LegendreAngularDistribution( [ 1.0, 0.2 ] ),
+                                                          LegendreAngularDistribution( [ 1.0, 0.3 ] ),
+                                                          LegendreAngularDistribution( [ 1.0, 0.4 ] ) ] ),
+                                              energy = TabulatedEnergyDistributions(
+                                                         [ 1e-5, 1., 1., 1., 20. ],    # <-- discontinuity with 3 points
+                                                         [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.2 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 20. ], [ 0.05, 0.15 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 20. ], [ 0.1, 0.1 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 20. ], [ 0.15, 0.05 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 20. ], [ 0.2, 0. ] ) ] ) )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.angle.is_curated )
+        self.assertEqual( False, chunk.energy.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.angle.is_curated )
+        self.assertEqual( True, chunk.energy.is_curated )
+
+        # the data is given explicitly using isotropic angular distributions
+        chunk = UncorrelatedDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                              angle = IsotropicAngularDistributions(),
+                                              energy = TabulatedEnergyDistributions(
+                                                         [ 1e-5, 20. ],
+                                                         [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.2 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 10., 10., 10., 20. ],    # <-- discontinuity with 3 points
+                                                                                        [ 0.1, 0.1, 0.2, 0.05, 0.1 ] ) ] ) )
+
+        # the tabulated data can be curated
+        self.assertEqual( False, chunk.energy.is_curated )
+
+        chunk.curate()
+
+        self.assertEqual( True, isinstance( chunk.angle, IsotropicAngularDistributions ) )
+        self.assertEqual( True, chunk.energy.is_curated )
+
     def test_setter_functions( self ) :
 
         chunk = UncorrelatedDistributionData( frame = ReferenceFrame.CentreOfMass,

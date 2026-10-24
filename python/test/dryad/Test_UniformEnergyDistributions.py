@@ -17,7 +17,6 @@ class Test_UniformEnergyDistributions( unittest.TestCase ) :
 
         def verify_chunk( self, chunk ) :
 
-            # verify content
             self.assertEqual( 4, chunk.number_points )
             self.assertEqual( 1, chunk.number_regions )
             self.assertEqual( 4, len( chunk.grid ) )
@@ -28,21 +27,22 @@ class Test_UniformEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., chunk.grid[1] )
             self.assertAlmostEqual( 3., chunk.grid[2] )
             self.assertAlmostEqual( 4., chunk.grid[3] )
-            self.assertAlmostEqual(  0.5, chunk.distributions[0].energies[0] )
-            self.assertAlmostEqual(  1. , chunk.distributions[0].energies[1] )
-            self.assertAlmostEqual(  4. , chunk.distributions[0].energies[2] )
-            self.assertAlmostEqual(  6. , chunk.distributions[0].energies[3] )
-            self.assertAlmostEqual(  1. , chunk.distributions[1].energies[0] )
-            self.assertAlmostEqual(  2. , chunk.distributions[1].energies[1] )
-            self.assertAlmostEqual(  3. , chunk.distributions[2].energies[0] )
-            self.assertAlmostEqual(  5. , chunk.distributions[2].energies[1] )
-            self.assertAlmostEqual(  7. , chunk.distributions[2].energies[2] )
-            self.assertAlmostEqual(  5. , chunk.distributions[3].energies[0] )
+            self.assertAlmostEqual( 0.5, chunk.distributions[0].energies[0] )
+            self.assertAlmostEqual( 1. , chunk.distributions[0].energies[1] )
+            self.assertAlmostEqual( 4. , chunk.distributions[0].energies[2] )
+            self.assertAlmostEqual( 6. , chunk.distributions[0].energies[3] )
+            self.assertAlmostEqual( 1. , chunk.distributions[1].energies[0] )
+            self.assertAlmostEqual( 2. , chunk.distributions[1].energies[1] )
+            self.assertAlmostEqual( 3. , chunk.distributions[2].energies[0] )
+            self.assertAlmostEqual( 5. , chunk.distributions[2].energies[1] )
+            self.assertAlmostEqual( 7. , chunk.distributions[2].energies[2] )
+            self.assertAlmostEqual( 5. , chunk.distributions[3].energies[0] )
             self.assertAlmostEqual( 10. , chunk.distributions[3].energies[1] )
             self.assertEqual( 3, chunk.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( True, chunk.is_curated )
 
-            # verify average energies
+            # average energies
             energies = chunk.average_energies
             self.assertAlmostEqual( 1., energies.lower_energy_limit )
             self.assertAlmostEqual( 4., energies.upper_energy_limit )
@@ -57,16 +57,15 @@ class Test_UniformEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 3., energies.energies[2] )
             self.assertAlmostEqual( 4., energies.energies[3] )
             self.assertAlmostEqual( 2.875, energies.values[0] )
-            self.assertAlmostEqual( 1.5  , energies.values[1] )
-            self.assertAlmostEqual( 5.   , energies.values[2] )
-            self.assertAlmostEqual( 7.5  , energies.values[3] )
+            self.assertAlmostEqual( 1.5 , energies.values[1] )
+            self.assertAlmostEqual( 5. , energies.values[2] )
+            self.assertAlmostEqual( 7.5 , energies.values[3] )
             self.assertEqual( 3, energies.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, energies.interpolants[0] )
             self.assertEqual( True, energies.is_linearised )
 
-        def verify_chunk_jump( self, chunk ) :
+        def verify_chunk_with_jump_curated( self, chunk ) :
 
-            # verify content
             self.assertEqual( 5, chunk.number_points )
             self.assertEqual( 2, chunk.number_regions )
             self.assertEqual( 5, len( chunk.grid ) )
@@ -78,27 +77,65 @@ class Test_UniformEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., chunk.grid[2] )
             self.assertAlmostEqual( 3., chunk.grid[3] )
             self.assertAlmostEqual( 4., chunk.grid[4] )
-            self.assertAlmostEqual(  0.5, chunk.distributions[0].energies[0] )
-            self.assertAlmostEqual(  1. , chunk.distributions[0].energies[1] )
-            self.assertAlmostEqual(  4. , chunk.distributions[0].energies[2] )
-            self.assertAlmostEqual(  6. , chunk.distributions[0].energies[3] )
-            self.assertAlmostEqual(  1. , chunk.distributions[1].energies[0] )
-            self.assertAlmostEqual(  2. , chunk.distributions[1].energies[1] )
-            self.assertAlmostEqual(  4. , chunk.distributions[2].energies[0] )
-            self.assertAlmostEqual(  6. , chunk.distributions[2].energies[1] )
-            self.assertAlmostEqual(  8. , chunk.distributions[2].energies[2] )
-
-            self.assertAlmostEqual(  3. , chunk.distributions[3].energies[0] )
-            self.assertAlmostEqual(  5. , chunk.distributions[3].energies[1] )
-            self.assertAlmostEqual(  7. , chunk.distributions[3].energies[2] )
-            self.assertAlmostEqual(  5. , chunk.distributions[4].energies[0] )
+            self.assertAlmostEqual( 0.5, chunk.distributions[0].energies[0] )
+            self.assertAlmostEqual( 1. , chunk.distributions[0].energies[1] )
+            self.assertAlmostEqual( 4. , chunk.distributions[0].energies[2] )
+            self.assertAlmostEqual( 6. , chunk.distributions[0].energies[3] )
+            self.assertAlmostEqual( 1. , chunk.distributions[1].energies[0] )
+            self.assertAlmostEqual( 2. , chunk.distributions[1].energies[1] )
+            self.assertAlmostEqual( 4. , chunk.distributions[2].energies[0] )
+            self.assertAlmostEqual( 6. , chunk.distributions[2].energies[1] )
+            self.assertAlmostEqual( 8. , chunk.distributions[2].energies[2] )
+            self.assertAlmostEqual( 3. , chunk.distributions[3].energies[0] )
+            self.assertAlmostEqual( 5. , chunk.distributions[3].energies[1] )
+            self.assertAlmostEqual( 7. , chunk.distributions[3].energies[2] )
+            self.assertAlmostEqual( 5. , chunk.distributions[4].energies[0] )
             self.assertAlmostEqual( 10. , chunk.distributions[4].energies[1] )
             self.assertEqual( 1, chunk.boundaries[0] )
             self.assertEqual( 4, chunk.boundaries[1] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+            self.assertEqual( True, chunk.is_curated )
 
-        # the data is given explicitly
+        def verify_chunk_with_jump_not_curated( self, chunk ) :
+
+            self.assertEqual( 6, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
+            self.assertEqual( 6, len( chunk.grid ) )
+            self.assertEqual( 6, len( chunk.distributions ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.grid[0] )
+            self.assertAlmostEqual( 2., chunk.grid[1] )
+            self.assertAlmostEqual( 2., chunk.grid[2] )
+            self.assertAlmostEqual( 2., chunk.grid[3] )
+            self.assertAlmostEqual( 3., chunk.grid[4] )
+            self.assertAlmostEqual( 4., chunk.grid[5] )
+            self.assertAlmostEqual( 0.5, chunk.distributions[0].energies[0] )
+            self.assertAlmostEqual( 1. , chunk.distributions[0].energies[1] )
+            self.assertAlmostEqual( 4. , chunk.distributions[0].energies[2] )
+            self.assertAlmostEqual( 6. , chunk.distributions[0].energies[3] )
+            self.assertAlmostEqual( 1. , chunk.distributions[1].energies[0] )
+            self.assertAlmostEqual( 2. , chunk.distributions[1].energies[1] )
+            self.assertAlmostEqual( 2. , chunk.distributions[2].energies[0] )
+            self.assertAlmostEqual( 4. , chunk.distributions[2].energies[1] )
+            self.assertAlmostEqual( 6. , chunk.distributions[2].energies[2] )
+            self.assertAlmostEqual( 4. , chunk.distributions[3].energies[0] )
+            self.assertAlmostEqual( 6. , chunk.distributions[3].energies[1] )
+            self.assertAlmostEqual( 8. , chunk.distributions[3].energies[2] )
+            self.assertAlmostEqual( 3. , chunk.distributions[4].energies[0] )
+            self.assertAlmostEqual( 5. , chunk.distributions[4].energies[1] )
+            self.assertAlmostEqual( 7. , chunk.distributions[4].energies[2] )
+            self.assertAlmostEqual( 5. , chunk.distributions[5].energies[0] )
+            self.assertAlmostEqual( 10. , chunk.distributions[5].energies[1] )
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 5, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_curated )
+
+        # linearised data without boundaries and no jumps
+
         chunk = UniformEnergyDistributions( grid = [ 1., 2., 3., 4. ],
                                             distributions = [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 1., 2. ], UniformDistributionType.Discrete ),
@@ -106,9 +143,35 @@ class Test_UniformEnergyDistributions( unittest.TestCase ) :
                                                               UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ],
                                             interpolant = InterpolationType.LinearLinear )
 
+        # a UniformEnergyDistributions can be constructed and members can be tested
         verify_chunk( self, chunk )
 
-        # the data is given explicitly with a jump that uses more than 2 x values
+        # linearised data with a jump that consist of more than 2 points (curate is not requested)
+        # note: by default (curate = false), the extraneous points in between the first and
+        # last x value in the jump are kept. boundaries always point to the first point
+        # in the jump, regardless of curation.
+
+        chunk = UniformEnergyDistributions( grid = [ 1., 2., 2., 2., 3., 4. ],
+                                            distributions = [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
+                                                              UniformEnergyDistribution( [ 1., 2. ], UniformDistributionType.Discrete ),
+                                                              UniformEnergyDistribution( [ 2., 4., 6. ], UniformDistributionType.Discrete ),
+                                                              UniformEnergyDistribution( [ 4., 6., 8. ], UniformDistributionType.Discrete ),
+                                                              UniformEnergyDistribution( [ 3., 5., 7. ], UniformDistributionType.Discrete ),
+                                                              UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ] )
+
+        # a UniformEnergyDistributions can be constructed and members can be tested
+        verify_chunk_with_jump_not_curated( self, chunk )
+
+        # the table can be curated on demand and the extraneous points are removed
+        chunk.curate()
+
+        verify_chunk_with_jump_curated( self, chunk )
+
+        # linearised data with a jump that consist of more than 2 points (curate is requested)
+        # note: by default (curate = false), the extraneous points in between the first and
+        # last x value in the jump are kept. boundaries always point to the first point
+        # in the jump, regardless of curation.
+
         chunk = UniformEnergyDistributions( grid = [ 1., 2., 2., 2., 3., 4. ],
                                             distributions = [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 1., 2. ], UniformDistributionType.Discrete ),
@@ -116,47 +179,102 @@ class Test_UniformEnergyDistributions( unittest.TestCase ) :
                                                               UniformEnergyDistribution( [ 4., 6., 8. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 3., 5., 7. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ],
-                                            interpolant = InterpolationType.LinearLinear )
+                                            interpolant = InterpolationType.LinearLinear,
+                                            curate = True )
 
-        verify_chunk_jump( self, chunk )
+        # a UniformEnergyDistributions can be constructed and members can be tested
+        verify_chunk_with_jump_curated( self, chunk )
 
-        # the data is given explicitly with a jump at the beginning
+        # calling curate() again on an already curated table does not change anything
+        chunk.curate()
+
+        verify_chunk_with_jump_curated( self, chunk )
+
+        # data with a jump at the beginning
+        # note: at construction time, the first point is removed
+
         chunk = UniformEnergyDistributions( grid = [ 1., 1., 2., 3., 4. ],
                                             distributions = [ UniformEnergyDistribution( [ 2., 4., 6. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 1., 2. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 3., 5., 7. ], UniformDistributionType.Discrete ),
-                                                              UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ],
-                                            interpolant = InterpolationType.LinearLinear )
+                                                              UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ] )
 
-        verify_chunk( self, chunk )
+        # a UniformEnergyDistributions can be constructed and members can be tested
+        self.assertEqual( 4, chunk.number_points )
+        self.assertEqual( 1, chunk.number_regions )
+        self.assertEqual( 4, len( chunk.grid ) )
+        self.assertEqual( 4, len( chunk.distributions ) )
+        self.assertEqual( 1, len( chunk.boundaries ) )
+        self.assertEqual( 1, len( chunk.interpolants ) )
+        self.assertAlmostEqual( 1., chunk.grid[0] )
+        self.assertAlmostEqual( 2., chunk.grid[1] )
+        self.assertAlmostEqual( 3., chunk.grid[2] )
+        self.assertAlmostEqual( 4., chunk.grid[3] )
+        self.assertAlmostEqual( 0.5, chunk.distributions[0].energies[0] )
+        self.assertAlmostEqual( 1. , chunk.distributions[0].energies[1] )
+        self.assertAlmostEqual( 4. , chunk.distributions[0].energies[2] )
+        self.assertAlmostEqual( 6. , chunk.distributions[0].energies[3] )
+        self.assertAlmostEqual( 1. , chunk.distributions[1].energies[0] )
+        self.assertAlmostEqual( 2. , chunk.distributions[1].energies[1] )
+        self.assertAlmostEqual( 3. , chunk.distributions[2].energies[0] )
+        self.assertAlmostEqual( 5. , chunk.distributions[2].energies[1] )
+        self.assertAlmostEqual( 7. , chunk.distributions[2].energies[2] )
+        self.assertAlmostEqual( 5. , chunk.distributions[3].energies[0] )
+        self.assertAlmostEqual( 10. , chunk.distributions[3].energies[1] )
+        self.assertEqual( 3, chunk.boundaries[0] )
+        self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 
-        # the data is given explicitly with a jump at the end
+        # data with a jump at the end
+        # note: at construction time, the last point is removed
+
         chunk = UniformEnergyDistributions( grid = [ 1., 2., 3., 4., 4. ],
                                             distributions = [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 1., 2. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 3., 5., 7. ], UniformDistributionType.Discrete ),
                                                               UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ),
-                                                              UniformEnergyDistribution( [ 2., 4., 6. ], UniformDistributionType.Discrete ) ],
-                                            interpolant = InterpolationType.LinearLinear )
+                                                              UniformEnergyDistribution( [ 2., 4., 6. ], UniformDistributionType.Discrete ) ] )
 
-        verify_chunk( self, chunk )
+        # a UniformEnergyDistributions can be constructed and members can be tested
+        self.assertEqual( 4, chunk.number_points )
+        self.assertEqual( 1, chunk.number_regions )
+        self.assertEqual( 4, len( chunk.grid ) )
+        self.assertEqual( 4, len( chunk.distributions ) )
+        self.assertEqual( 1, len( chunk.boundaries ) )
+        self.assertEqual( 1, len( chunk.interpolants ) )
+        self.assertAlmostEqual( 1., chunk.grid[0] )
+        self.assertAlmostEqual( 2., chunk.grid[1] )
+        self.assertAlmostEqual( 3., chunk.grid[2] )
+        self.assertAlmostEqual( 4., chunk.grid[3] )
+        self.assertAlmostEqual( 0.5, chunk.distributions[0].energies[0] )
+        self.assertAlmostEqual( 1. , chunk.distributions[0].energies[1] )
+        self.assertAlmostEqual( 4. , chunk.distributions[0].energies[2] )
+        self.assertAlmostEqual( 6. , chunk.distributions[0].energies[3] )
+        self.assertAlmostEqual( 1. , chunk.distributions[1].energies[0] )
+        self.assertAlmostEqual( 2. , chunk.distributions[1].energies[1] )
+        self.assertAlmostEqual( 3. , chunk.distributions[2].energies[0] )
+        self.assertAlmostEqual( 5. , chunk.distributions[2].energies[1] )
+        self.assertAlmostEqual( 7. , chunk.distributions[2].energies[2] )
+        self.assertAlmostEqual( 5. , chunk.distributions[3].energies[0] )
+        self.assertAlmostEqual( 10. , chunk.distributions[3].energies[1] )
+        self.assertEqual( 3, chunk.boundaries[0] )
+        self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 
     def test_comparison( self ) :
 
         left = UniformEnergyDistributions( [ 1., 2., 3., 4. ],
-                                           [ UniformEnergyDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                             UniformEnergyDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
-                                             UniformEnergyDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
-                                             UniformEnergyDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+                                           [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
+                                             UniformEnergyDistribution( [ 1., 2. ], UniformDistributionType.Discrete ),
+                                             UniformEnergyDistribution( [ 3., 5., 7. ], UniformDistributionType.Discrete ),
+                                             UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ] )
         equal = UniformEnergyDistributions( [ 1., 2., 3., 4. ],
-                                            [ UniformEnergyDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                              UniformEnergyDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
-                                              UniformEnergyDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
-                                              UniformEnergyDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+                                            [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
+                                              UniformEnergyDistribution( [ 1., 2. ], UniformDistributionType.Discrete ),
+                                              UniformEnergyDistribution( [ 3., 5., 7. ], UniformDistributionType.Discrete ),
+                                              UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ] )
         different = UniformEnergyDistributions( [ 1., 4. ],
-                                                [ UniformEnergyDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                  UniformEnergyDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+                                                [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ),
+                                                  UniformEnergyDistribution( [ 5., 10. ], UniformDistributionType.Discrete ) ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )
@@ -178,18 +296,18 @@ class Test_UniformEnergyDistributions( unittest.TestCase ) :
         with self.assertRaises( Exception ) :
 
             chunk = UniformEnergyDistributions( grid = [ 1. ],
-                                                distributions = [ [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ] )
+                                                distributions = [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ) ] )
 
         with self.assertRaises( Exception ) :
 
             chunk = UniformEnergyDistributions( grid = [],
-                                                distributions = [ [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ] )
+                                                distributions = [ UniformEnergyDistribution( [ 0.5, 1., 4., 6. ], UniformDistributionType.Discrete ) ] )
 
         with self.assertRaises( Exception ) :
 
             chunk = UniformEnergyDistributions( grid = [ 1. ], distributions = [] )
 
-        # the x and y grid do not have the same number of points
+        # the x and f(y) grid do not have the same number of points
         with self.assertRaises( Exception ) :
 
             chunk = UniformEnergyDistributions( grid = [ 1., 2., 3., 4. ],

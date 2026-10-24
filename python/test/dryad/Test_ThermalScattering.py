@@ -8,6 +8,9 @@ import sys
 from njoy.dryad import ThermalScattering
 from njoy.dryad.thermal import DebyeWallerIntegralData
 from njoy.dryad.thermal import IncoherentElasticScattering
+from njoy.dryad.thermal import IncoherentInelasticScattering
+from njoy.dryad.thermal import ScatteringKernel
+from njoy.dryad.thermal import TabulatedScatteringKernelFunction
 from njoy.dryad import InterpolationType
 
 def verify_chunk( self, chunk ) :
@@ -58,6 +61,43 @@ class Test_ThermalScattering( unittest.TestCase ) :
                                              [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
                                              [ 2.013538, 2.677764, 3.323456, 3.972601,
                                                4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
+
+        verify_chunk( self, chunk )
+
+    def test_curation( self ) :
+
+        # the data is given explicitly
+        inelastic = IncoherentInelasticScattering(
+                      1e-5, 10., 6.337872, 1.,
+                      [ ScatteringKernel( 293.6, 300.,
+                                          [ 0., 2., 2., 2., 4. ],    # <-- threshold with 3 points
+                                          [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
+                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.6, 0.4 ] ),
+                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.4, 0.6 ] ),
+                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) ] )
+
+        chunk = ThermalScattering( incoherent_inelastic = inelastic )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.incoherent_inelastic_scattering.scattering_kernels[0].tabulated_scattering_kernel.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.incoherent_inelastic_scattering.scattering_kernels[0].tabulated_scattering_kernel.is_curated )
+
+        # the data is given explicitly without discontinuities
+        chunk = ThermalScattering(
+                    incoherent_elastic = IncoherentElasticScattering(
+                                           1e-5, 10., 6.337872,
+                                           DebyeWallerIntegralData(
+                                             [ 296, 400, 500, 600, 700, 800, 1000, 1200 ],
+                                             [ 2.013538, 2.677764, 3.323456, 3.972601,
+                                               4.623738, 5.276127, 6.583171, 7.891981 ] ) ) )
+
+        # curating does not change anything
+        chunk.curate()
 
         verify_chunk( self, chunk )
 

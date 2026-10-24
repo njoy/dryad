@@ -8,6 +8,7 @@ import sys
 from njoy.dryad import TabulatedComptonProfile
 from njoy.dryad import InterpolationType
 from njoy.dryad.id import ElectronSubshellID
+from njoy.dryad import TabulatedComptonProfileFunction
 
 class Test_TabulatedComptonProfile( unittest.TestCase ) :
     """Unit test for the TabulatedComptonProfile class."""
@@ -18,41 +19,42 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
 
             normalisation = 2.0 if normalise else 1.0
 
-            # verify content
             self.assertEqual( ElectronSubshellID( '1s1/2' ), chunk.subshell_identifier )
 
             self.assertEqual( 4, len( chunk.momentum ) )
             self.assertEqual( 4, len( chunk.values ) )
             self.assertEqual( 1, len( chunk.boundaries ) )
             self.assertEqual( 1, len( chunk.interpolants ) )
-            self.assertAlmostEqual( 0.  , chunk.momentum[0] )
-            self.assertAlmostEqual( 1.  , chunk.momentum[1] )
+            self.assertAlmostEqual( 0. , chunk.momentum[0] )
+            self.assertAlmostEqual( 1. , chunk.momentum[1] )
             self.assertAlmostEqual( 1.5 , chunk.momentum[2] )
-            self.assertAlmostEqual( 2.  , chunk.momentum[3] )
-            self.assertAlmostEqual( 0.  / normalisation, chunk.values[0] )
-            self.assertAlmostEqual( 1.  / normalisation, chunk.values[1] )
+            self.assertAlmostEqual( 2. , chunk.momentum[3] )
+            self.assertAlmostEqual( 0. / normalisation, chunk.values[0] )
+            self.assertAlmostEqual( 1. / normalisation, chunk.values[1] )
             self.assertAlmostEqual( 1.5 / normalisation, chunk.values[2] )
-            self.assertAlmostEqual( 2.  / normalisation, chunk.values[3] )
-            self.assertAlmostEqual( 3, chunk.boundaries[0] )
-            self.assertAlmostEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertAlmostEqual( 2. / normalisation, chunk.values[3] )
+            self.assertEqual( 3, chunk.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+
+            self.assertEqual( True, chunk.is_curated )
 
             pdf = chunk.pdf
-            self.assertAlmostEqual(  0., pdf.lower_momentum_limit )
-            self.assertAlmostEqual(  2., pdf.upper_momentum_limit )
+            self.assertAlmostEqual( 0., pdf.lower_momentum_limit )
+            self.assertAlmostEqual( 2., pdf.upper_momentum_limit )
             self.assertEqual( 4, len( pdf.momentum ) )
             self.assertEqual( 4, len( pdf.values ) )
             self.assertEqual( 1, len( pdf.boundaries ) )
             self.assertEqual( 1, len( pdf.interpolants ) )
-            self.assertAlmostEqual( 0.  , pdf.momentum[0] )
-            self.assertAlmostEqual( 1.  , pdf.momentum[1] )
+            self.assertAlmostEqual( 0. , pdf.momentum[0] )
+            self.assertAlmostEqual( 1. , pdf.momentum[1] )
             self.assertAlmostEqual( 1.5 , pdf.momentum[2] )
-            self.assertAlmostEqual( 2.  , pdf.momentum[3] )
-            self.assertAlmostEqual( 0.  / normalisation, pdf.values[0] )
-            self.assertAlmostEqual( 1.  / normalisation, pdf.values[1] )
+            self.assertAlmostEqual( 2. , pdf.momentum[3] )
+            self.assertAlmostEqual( 0. / normalisation, pdf.values[0] )
+            self.assertAlmostEqual( 1. / normalisation, pdf.values[1] )
             self.assertAlmostEqual( 1.5 / normalisation, pdf.values[2] )
-            self.assertAlmostEqual( 2.  / normalisation, pdf.values[3] )
-            self.assertAlmostEqual( 3, pdf.boundaries[0] )
-            self.assertAlmostEqual( InterpolationType.LinearLinear, pdf.interpolants[0] )
+            self.assertAlmostEqual( 2. / normalisation, pdf.values[3] )
+            self.assertEqual( 3, pdf.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[0] )
 
             cdf = chunk.cdf
             self.assertAlmostEqual( 0., cdf.lower_momentum_limit )
@@ -61,31 +63,31 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertEqual( 4, len( cdf.values ) )
             self.assertEqual( 1, len( cdf.boundaries ) )
             self.assertEqual( 1, len( cdf.interpolants ) )
-            self.assertAlmostEqual( 0.  , cdf.momentum[0] )
-            self.assertAlmostEqual( 1.  , cdf.momentum[1] )
+            self.assertAlmostEqual( 0. , cdf.momentum[0] )
+            self.assertAlmostEqual( 1. , cdf.momentum[1] )
             self.assertAlmostEqual( 1.5 , cdf.momentum[2] )
-            self.assertAlmostEqual( 2.  , cdf.momentum[3] )
-            self.assertAlmostEqual( 0.    / normalisation, cdf.values[0] )
-            self.assertAlmostEqual( 0.5   / normalisation, cdf.values[1] )
+            self.assertAlmostEqual( 2. , cdf.momentum[3] )
+            self.assertAlmostEqual( 0. / normalisation, cdf.values[0] )
+            self.assertAlmostEqual( 0.5 / normalisation, cdf.values[1] )
             self.assertAlmostEqual( 1.125 / normalisation, cdf.values[2] )
-            self.assertAlmostEqual( 2.    / normalisation, cdf.values[3] )
-            self.assertAlmostEqual( 3, cdf.boundaries[0] )
-            self.assertAlmostEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
+            self.assertAlmostEqual( 2. / normalisation, cdf.values[3] )
+            self.assertEqual( 3, cdf.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
 
             self.assertAlmostEqual( 2.0 / normalisation, pdf.integral )
 
             # verify evaluation - values of x in the x grid
-            self.assertAlmostEqual( 0.  / normalisation, chunk( momentum = 0. ) )
-            self.assertAlmostEqual( 1.  / normalisation, chunk( momentum = 1. ) )
+            self.assertAlmostEqual( 0. / normalisation, chunk( momentum = 0. ) )
+            self.assertAlmostEqual( 1. / normalisation, chunk( momentum = 1. ) )
             self.assertAlmostEqual( 1.5 / normalisation, chunk( momentum = 1.5 ) )
-            self.assertAlmostEqual( 2.  / normalisation, chunk( momentum = 2. ) )
+            self.assertAlmostEqual( 2. / normalisation, chunk( momentum = 2. ) )
 
             # verify evaluation - values of x outside the x grid
-            self.assertAlmostEqual( 0.0, chunk( momentum = -5. ) )
-            self.assertAlmostEqual( 0.0, chunk( momentum =  5. ) )
+            self.assertAlmostEqual( 0., chunk( momentum = -5. ) )
+            self.assertAlmostEqual( 0., chunk( momentum = 5. ) )
 
-            # verify evaluation - values of x inside the x grid (lin-lin piece)
-            self.assertAlmostEqual( 0.5  / normalisation, chunk( momentum = 0.5 ) )
+            # verify evaluation - values of x inside the x grid
+            self.assertAlmostEqual( 0.5 / normalisation, chunk( momentum = 0.5 ) )
             self.assertAlmostEqual( 1.75 / normalisation, chunk( momentum = 1.75 ) )
 
             # verify average momentum - always the mean value even for unnormalised distributions
@@ -101,16 +103,16 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertEqual( 4, len( pdf.values ) )
             self.assertEqual( 1, len( pdf.boundaries ) )
             self.assertEqual( 1, len( pdf.interpolants ) )
-            self.assertAlmostEqual( 0.  , pdf.momentum[0] )
-            self.assertAlmostEqual( 1.  , pdf.momentum[1] )
+            self.assertAlmostEqual( 0. , pdf.momentum[0] )
+            self.assertAlmostEqual( 1. , pdf.momentum[1] )
             self.assertAlmostEqual( 1.5 , pdf.momentum[2] )
-            self.assertAlmostEqual( 2.  , pdf.momentum[3] )
-            self.assertAlmostEqual( 0.  / normalisation, pdf.values[0] )
-            self.assertAlmostEqual( 1.  / normalisation, pdf.values[1] )
+            self.assertAlmostEqual( 2. , pdf.momentum[3] )
+            self.assertAlmostEqual( 0. / normalisation, pdf.values[0] )
+            self.assertAlmostEqual( 1. / normalisation, pdf.values[1] )
             self.assertAlmostEqual( 1.5 / normalisation, pdf.values[2] )
-            self.assertAlmostEqual( 2.  / normalisation, pdf.values[3] )
-            self.assertAlmostEqual( 3, pdf.boundaries[0] )
-            self.assertAlmostEqual( InterpolationType.LinearLinear, pdf.interpolants[0] )
+            self.assertAlmostEqual( 2. / normalisation, pdf.values[3] )
+            self.assertEqual( 3, pdf.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[0] )
 
             cdf = linear.cdf
             self.assertAlmostEqual( 0., cdf.lower_momentum_limit )
@@ -119,23 +121,176 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertEqual( 4, len( cdf.values ) )
             self.assertEqual( 1, len( cdf.boundaries ) )
             self.assertEqual( 1, len( cdf.interpolants ) )
-            self.assertAlmostEqual( 0.  , cdf.momentum[0] )
-            self.assertAlmostEqual( 1.  , cdf.momentum[1] )
+            self.assertAlmostEqual( 0. , cdf.momentum[0] )
+            self.assertAlmostEqual( 1. , cdf.momentum[1] )
             self.assertAlmostEqual( 1.5 , cdf.momentum[2] )
-            self.assertAlmostEqual( 2.  , cdf.momentum[3] )
-            self.assertAlmostEqual( 0.    / normalisation, cdf.values[0] )
-            self.assertAlmostEqual( 0.5   / normalisation, cdf.values[1] )
+            self.assertAlmostEqual( 2. , cdf.momentum[3] )
+            self.assertAlmostEqual( 0. / normalisation, cdf.values[0] )
+            self.assertAlmostEqual( 0.5 / normalisation, cdf.values[1] )
             self.assertAlmostEqual( 1.125 / normalisation, cdf.values[2] )
-            self.assertAlmostEqual( 2.    / normalisation, cdf.values[3] )
-            self.assertAlmostEqual( 3, cdf.boundaries[0] )
-            self.assertAlmostEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
+            self.assertAlmostEqual( 2. / normalisation, cdf.values[3] )
+            self.assertEqual( 3, cdf.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
 
-        # the data is given explicitly using a normalised table
+        def verify_chunk_curated( self, chunk ) :
+
+            self.assertEqual( 5, len( chunk.momentum ) )
+            self.assertEqual( 5, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 0., chunk.momentum[0] )
+            self.assertAlmostEqual( 2., chunk.momentum[1] )
+            self.assertAlmostEqual( 3., chunk.momentum[2] )
+            self.assertAlmostEqual( 3., chunk.momentum[3] )
+            self.assertAlmostEqual( 4., chunk.momentum[4] )
+            self.assertAlmostEqual( 0., chunk.values[0] )
+            self.assertAlmostEqual( 1., chunk.values[1] )
+            self.assertAlmostEqual( 2., chunk.values[2] )
+            self.assertAlmostEqual( 1., chunk.values[3] )
+            self.assertAlmostEqual( 2., chunk.values[4] )
+            self.assertEqual( 2, chunk.boundaries[0] )
+            self.assertEqual( 4, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+
+            self.assertEqual( True, chunk.is_curated )
+
+            pdf = chunk.pdf
+            self.assertAlmostEqual( 0., pdf.lower_momentum_limit )
+            self.assertAlmostEqual( 4., pdf.upper_momentum_limit )
+            self.assertEqual( 5, len( pdf.momentum ) )
+            self.assertEqual( 5, len( pdf.values ) )
+            self.assertEqual( 2, len( pdf.boundaries ) )
+            self.assertEqual( 2, len( pdf.interpolants ) )
+            self.assertAlmostEqual( 0., pdf.momentum[0] )
+            self.assertAlmostEqual( 2., pdf.momentum[1] )
+            self.assertAlmostEqual( 3., pdf.momentum[2] )
+            self.assertAlmostEqual( 3., pdf.momentum[3] )
+            self.assertAlmostEqual( 4., pdf.momentum[4] )
+            self.assertAlmostEqual( 0., pdf.values[0] )
+            self.assertAlmostEqual( 1., pdf.values[1] )
+            self.assertAlmostEqual( 2., pdf.values[2] )
+            self.assertAlmostEqual( 1., pdf.values[3] )
+            self.assertAlmostEqual( 2., pdf.values[4] )
+            self.assertEqual( 2, pdf.boundaries[0] )
+            self.assertEqual( 4, pdf.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[1] )
+            self.assertEqual( True, pdf.is_linearised )
+            self.assertEqual( True, pdf.is_curated )
+
+            cdf = chunk.cdf
+            self.assertAlmostEqual( 0., cdf.lower_momentum_limit )
+            self.assertAlmostEqual( 4., cdf.upper_momentum_limit )
+            self.assertEqual( 5, len( cdf.momentum ) )
+            self.assertEqual( 5, len( cdf.values ) )
+            self.assertEqual( 2, len( cdf.boundaries ) )
+            self.assertEqual( 2, len( cdf.interpolants ) )
+            self.assertAlmostEqual( 0., cdf.momentum[0] )
+            self.assertAlmostEqual( 2., cdf.momentum[1] )
+            self.assertAlmostEqual( 3., cdf.momentum[2] )
+            self.assertAlmostEqual( 3., cdf.momentum[3] )
+            self.assertAlmostEqual( 4., cdf.momentum[4] )
+            self.assertAlmostEqual( 0. , cdf.values[0] )
+            self.assertAlmostEqual( 1. , cdf.values[1] )
+            self.assertAlmostEqual( 2.5, cdf.values[2] )
+            self.assertAlmostEqual( 2.5, cdf.values[3] )
+            self.assertAlmostEqual( 4. , cdf.values[4] )
+            self.assertEqual( 2, cdf.boundaries[0] )
+            self.assertEqual( 4, cdf.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[1] )
+            self.assertEqual( True, cdf.is_linearised )
+            self.assertEqual( True, cdf.is_curated )
+
+        def verify_chunk_not_curated( self, chunk ) :
+
+            self.assertEqual( 6, len( chunk.momentum ) )
+            self.assertEqual( 6, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 0., chunk.momentum[0] )
+            self.assertAlmostEqual( 2., chunk.momentum[1] )
+            self.assertAlmostEqual( 3., chunk.momentum[2] )
+            self.assertAlmostEqual( 3., chunk.momentum[3] )
+            self.assertAlmostEqual( 3., chunk.momentum[4] )
+            self.assertAlmostEqual( 4., chunk.momentum[5] )
+            self.assertAlmostEqual( 0., chunk.values[0] )
+            self.assertAlmostEqual( 1., chunk.values[1] )
+            self.assertAlmostEqual( 2., chunk.values[2] )
+            self.assertAlmostEqual( 3., chunk.values[3] )
+            self.assertAlmostEqual( 1., chunk.values[4] )
+            self.assertAlmostEqual( 2., chunk.values[5] )
+            self.assertEqual( 2, chunk.boundaries[0] )
+            self.assertEqual( 5, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+
+            self.assertEqual( False, chunk.is_curated )
+
+            pdf = chunk.pdf
+            self.assertAlmostEqual( 0., pdf.lower_momentum_limit )
+            self.assertAlmostEqual( 4., pdf.upper_momentum_limit )
+            self.assertEqual( 6, len( pdf.momentum ) )
+            self.assertEqual( 6, len( pdf.values ) )
+            self.assertEqual( 2, len( pdf.boundaries ) )
+            self.assertEqual( 2, len( pdf.interpolants ) )
+            self.assertAlmostEqual( 0., pdf.momentum[0] )
+            self.assertAlmostEqual( 2., pdf.momentum[1] )
+            self.assertAlmostEqual( 3., pdf.momentum[2] )
+            self.assertAlmostEqual( 3., pdf.momentum[3] )
+            self.assertAlmostEqual( 3., pdf.momentum[4] )
+            self.assertAlmostEqual( 4., pdf.momentum[5] )
+            self.assertAlmostEqual( 0., pdf.values[0] )
+            self.assertAlmostEqual( 1., pdf.values[1] )
+            self.assertAlmostEqual( 2., pdf.values[2] )
+            self.assertAlmostEqual( 3., pdf.values[3] )
+            self.assertAlmostEqual( 1., pdf.values[4] )
+            self.assertAlmostEqual( 2., pdf.values[5] )
+            self.assertEqual( 2, pdf.boundaries[0] )
+            self.assertEqual( 5, pdf.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[1] )
+            self.assertEqual( True, pdf.is_linearised )
+            self.assertEqual( False, pdf.is_curated )
+
+            cdf = chunk.cdf
+            self.assertAlmostEqual( 0., cdf.lower_momentum_limit )
+            self.assertAlmostEqual( 4., cdf.upper_momentum_limit )
+            self.assertEqual( 6, len( cdf.momentum ) )
+            self.assertEqual( 6, len( cdf.values ) )
+            self.assertEqual( 2, len( cdf.boundaries ) )
+            self.assertEqual( 2, len( cdf.interpolants ) )
+            self.assertAlmostEqual( 0., cdf.momentum[0] )
+            self.assertAlmostEqual( 2., cdf.momentum[1] )
+            self.assertAlmostEqual( 3., cdf.momentum[2] )
+            self.assertAlmostEqual( 3., cdf.momentum[3] )
+            self.assertAlmostEqual( 3., cdf.momentum[4] )
+            self.assertAlmostEqual( 4., cdf.momentum[5] )
+            self.assertAlmostEqual( 0. , cdf.values[0] )
+            self.assertAlmostEqual( 1. , cdf.values[1] )
+            self.assertAlmostEqual( 2.5, cdf.values[2] )
+            self.assertAlmostEqual( 2.5, cdf.values[3] )
+            self.assertAlmostEqual( 2.5, cdf.values[4] )
+            self.assertAlmostEqual( 4. , cdf.values[5] )
+            self.assertEqual( 2, cdf.boundaries[0] )
+            self.assertEqual( 5, cdf.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[1] )
+            self.assertEqual( True, cdf.is_linearised )
+            self.assertEqual( False, cdf.is_curated )
+
+        # momentum and probabilities for a table
+
         chunk1 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
-                                          momentum = [ 0., 1., 1.5, 2. ], values = [ 0., 1., 1.5, 2. ],
+                                          momentum = [ 0., 1., 1.5, 2. ],
+                                          values = [ 0., 1., 1.5, 2. ],
+                                          interpolant = InterpolationType.LinearLinear,
                                           normalise = False )
         chunk2 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
-                                          momentum = [ 0., 1., 1.5, 2. ], values = [ 0., 1., 1.5, 2. ],
+                                          momentum = [ 0., 1., 1.5, 2. ],
+                                          values = [ 0., 1., 1.5, 2. ],
+                                          interpolant = InterpolationType.LinearLinear,
                                           normalise = True )
 
         verify_chunk( self, chunk1, False )
@@ -147,16 +302,104 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
         verify_chunk( self, chunk1, True )
         verify_chunk( self, chunk2, True )
 
+        # momentum and probabilities for a table with discontinuities
+
+        # curation can be requested at construction time
+
+        chunk1 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
+                                          momentum = [ 0., 2., 3., 3., 3., 4. ],
+                                          values = [ 0., 1., 2., 3., 1., 2. ],
+                                          interpolant = InterpolationType.LinearLinear,
+                                          normalise = False,
+                                          curate = False )
+        chunk2 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
+                                          momentum = [ 0., 2., 3., 3., 3., 4. ],
+                                          values = [ 0., 1., 2., 3., 1., 2. ],
+                                          interpolant = InterpolationType.LinearLinear,
+                                          normalise = False,
+                                          curate = True )
+
+        verify_chunk_not_curated( self, chunk1 )
+        verify_chunk_curated( self, chunk2 )
+
+        # curation happens when linearising
+
+        linear1 = chunk1.linearise()
+        linear2 = chunk2.linearise()
+
+        verify_chunk_curated( self, linear1 )
+        verify_chunk_curated( self, linear2 )
+
+        # curation can be requested after construction
+
+        chunk1.curate()
+        chunk2.curate()
+
+        verify_chunk_curated( self, chunk1 )
+        verify_chunk_curated( self, chunk2 )
+
+        # momentum and probabilities for a table with discontinuities (the pdf and cdf are given explicitly and only one of them is curated)
+
+        curated_pdf = TabulatedComptonProfileFunction( momentum = [ 0., 2., 3., 3., 3., 4. ],
+                                                       values = [ 0., 1., 2., 3., 1., 2. ],
+                                                       interpolant = InterpolationType.LinearLinear,
+                                                       curate = True )
+        curated_cdf = TabulatedComptonProfileFunction( momentum = [ 0., 2., 3., 3., 3., 4. ],
+                                                       values = [ 0., 1., 2.5, 2.5, 2.5, 4. ],
+                                                       interpolant = InterpolationType.LinearLinear,
+                                                       curate = True )
+        not_curated_pdf = TabulatedComptonProfileFunction( momentum = [ 0., 2., 3., 3., 3., 4. ],
+                                                           values = [ 0., 1., 2., 3., 1., 2. ],
+                                                           interpolant = InterpolationType.LinearLinear,
+                                                           curate = False )
+        not_curated_cdf = TabulatedComptonProfileFunction( momentum = [ 0., 2., 3., 3., 3., 4. ],
+                                                           values = [ 0., 1., 2.5, 2.5, 2.5, 4. ],
+                                                           interpolant = InterpolationType.LinearLinear,
+                                                           curate = False )
+
+        chunk1 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
+                                          pdf = curated_pdf,
+                                          cdf = not_curated_cdf )
+        chunk2 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
+                                          pdf = not_curated_pdf,
+                                          cdf = curated_cdf )
+
+        # the distribution is not curated
+        self.assertEqual( True, chunk1.pdf.is_curated )
+        self.assertEqual( False, chunk1.cdf.is_curated )
+        self.assertEqual( False, chunk1.is_curated )
+
+        self.assertEqual( False, chunk2.pdf.is_curated )
+        self.assertEqual( True, chunk2.cdf.is_curated )
+        self.assertEqual( False, chunk2.is_curated )
+
+        # the distribution can be curated on demand
+        chunk1.curate()
+        chunk2.curate()
+
+        verify_chunk_curated( self, chunk1 )
+        verify_chunk_curated( self, chunk2 )
+
     def test_comparison( self ) :
 
-        left = TabulatedComptonProfile( ElectronSubshellID( '1s' ),[ 0., 2. ], [ 0.5, 0.5 ] )
-        equal = TabulatedComptonProfile( ElectronSubshellID( '1s' ),[ 0., 2. ], [ 0.5, 0.5 ] )
-        unnormalised = TabulatedComptonProfile( ElectronSubshellID( '1s' ),[ 0., 2. ], [ 1., 1. ], InterpolationType.LinearLinear, True )
-        different = TabulatedComptonProfile( ElectronSubshellID( '2s' ),[ 0., 2. ], [ 0.25, 0.75 ] )
+        left = TabulatedComptonProfile( ElectronSubshellID( '1s' ),
+                                        [ 0., 2. ],
+                                        [ 0.5, 0.5 ] )
+        equal = TabulatedComptonProfile( ElectronSubshellID( '1s' ),
+                                         [ 0., 2. ],
+                                         [ 0.5, 0.5 ] )
+        unnormalised = TabulatedComptonProfile( ElectronSubshellID( '1s' ),
+                                                [ 0., 2. ],
+                                                [ 1., 1. ],
+                                                InterpolationType.LinearLinear,
+                                                True )
+        different = TabulatedComptonProfile( ElectronSubshellID( '2s' ),
+                                             [ 0., 2. ],
+                                             [ 0.25, 0.75 ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )
-        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( True, ( left == unnormalised ) )    # normalised under the hood, so equal
         self.assertEqual( False, ( left == different ) )
 
         self.assertEqual( False, ( left != left ) )
@@ -168,10 +411,12 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
 
         print( '\n' )
 
-        # the momentum and values vector are not of the same length
+        # the cosine and values vector are not of the same length
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( ElectronSubshellID( '1s' ), momentum = [ 0., 2. ], values = [ 0., 0.5, 0.75, 1. ] )
+            chunk = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
+                                             momentum = [ 0., 2. ],
+                                             values = [ 0., 0.5, 0.75, 1. ] )
 
 if __name__ == '__main__' :
 

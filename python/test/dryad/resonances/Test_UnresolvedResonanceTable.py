@@ -1,6 +1,5 @@
 import unittest
 import sys
-from copy import copy
 
 
 from njoy.dryad.resonances import UnresolvedResonanceTable, TabulatedAverageWidths, TabulatedLevelSpacing
@@ -82,6 +81,30 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
                       mixed_table.widths[0] )
     self.assertEqual( TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
                       mixed_table.widths[1] )
+
+  def test_curation( self ):
+
+    # the data is given explicitly
+    chunk = UnresolvedResonanceTable( [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                        ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
+                                      [ TabulatedAverageWidths( [ 1., 2., 2., 2., 4. ],    # <-- discontinuity with 3 points
+                                                                [ 0.11, 0.12, 0.13, 0.14, 0.15 ] ),
+                                        TabulatedAverageWidths( [ 1., 3., 3., 3., 4. ],    # <-- discontinuity with 3 points
+                                                                [ 0.21, 0.22, 0.23, 0.24, 0.25 ] ) ],
+                                      TabulatedLevelSpacing( [ 1., 2., 2., 2., 4. ],
+                                                             [ 10., 11., 12., 13., 14. ] ) )
+
+    # the tabulated data is not curated
+    self.assertEqual( False, chunk.widths[0].is_curated )
+    self.assertEqual( False, chunk.widths[1].is_curated )
+    self.assertEqual( False, chunk.spacings.is_curated )
+
+    # the tabulated data can be curated
+    chunk.curate()
+
+    self.assertEqual( True, chunk.widths[0].is_curated )
+    self.assertEqual( True, chunk.widths[1].is_curated )
+    self.assertEqual( True, chunk.spacings.is_curated )
 
   def test_equality( self ):
 
