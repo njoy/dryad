@@ -25,11 +25,14 @@ namespace read {
    *  @param[in] distribution   the parsed ENDF mixed distributions
    *  @param[in] normalise      the flag to indicate whether or not distributions
    *                            need to be normalised
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   inline dryad::MixedAngularDistributions
   createMixedAngularDistributions(
       const ENDFtk::section::Type< 4 >::MixedDistributions& distribution,
-      bool normalise ) {
+      bool normalise,
+      bool curate ) {
 
     try {
 
@@ -60,7 +63,8 @@ namespace read {
       auto interpolants = createInterpolants( distribution.interpolants() );
       return dryad::MixedAngularDistributions(
                std::move( energies ), std::move( distributions ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               false, curate );
     }
     catch ( ... ) {
 

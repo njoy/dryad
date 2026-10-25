@@ -42,13 +42,13 @@ namespace caseA {
     return dryad::resonances::UnresolvedCompoundSystem( lower, upper, std::move( groups ) );
   }
 
-} // caseA namespace      
-} // urr namespace        
-} // resonances namespace 
-} // read namespace       
-} // endf namespace       
-} // format namespace     
-} // njoy namespace       
+} // caseA namespace
+} // urr namespace
+} // resonances namespace
+} // read namespace
+} // endf namespace
+} // format namespace
+} // njoy namespace
 
 
 #endif

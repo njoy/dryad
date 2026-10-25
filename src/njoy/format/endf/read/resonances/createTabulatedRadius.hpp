@@ -23,8 +23,11 @@ namespace resonances {
    *  @brief Create a TabulatedCrossSection from a parsed ENDF section
    *
    *  @param[in] radius   the energy dependent scattering radius record
+   *  @param[in] curate   the flag to indicate whether or not tabulated data
+   *                      need to be curated
    */
-  inline auto createTabulatedRadius( const ENDFtk::section::Type< 2, 151 >::ScatteringRadius& radius ) {
+  inline auto createTabulatedRadius( const ENDFtk::section::Type< 2, 151 >::ScatteringRadius& radius,
+                                     bool curate ) {
 
     try {
 
@@ -39,7 +42,8 @@ namespace resonances {
       auto interpolants = createInterpolants( radius.interpolants() );
       return dryad::resonances::TabulatedRadius(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               curate );
     }
     catch ( ... ) {
 

@@ -36,11 +36,14 @@ namespace read {
    *  @param[in] section     the MF4 section
    *  @param[in] normalise   the flag to indicate whether or not the distributions
    *                         need to be normalised
+   *  @param[in] curate      the flag to indicate whether or not tabulated data
+   *                         need to be curated
    */
   inline dryad::ReactionProduct
   createReactionProduct( const dryad::id::ReactionID& reaction,
                          const ENDFtk::section::Type< 4 >& section,
-                         bool normalise ) {
+                         bool normalise,
+                         bool curate ) {
 
     using Isotropic = ENDFtk::section::Type< 4 >::Isotropic;
     using LegendreDistributions = ENDFtk::section::Type< 4 >::LegendreDistributions;
@@ -55,15 +58,15 @@ namespace read {
       },
       [&] ( const LegendreDistributions& distributions ) -> dryad::TwoBodyDistributionData::AngularDistributions {
 
-        return createLegendreAngularDistributions( distributions, normalise );
+        return createLegendreAngularDistributions( distributions, normalise, curate );
       },
       [&] ( const TabulatedDistributions& distributions ) -> dryad::TwoBodyDistributionData::AngularDistributions {
 
-        return createTabulatedAngularDistributions( distributions, normalise );
+        return createTabulatedAngularDistributions( distributions, normalise, curate );
       },
       [&] ( const MixedDistributions& distributions ) -> dryad::TwoBodyDistributionData::AngularDistributions {
 
-        return createMixedAngularDistributions( distributions, normalise );
+        return createMixedAngularDistributions( distributions, normalise, curate );
       }
     };
 
@@ -94,19 +97,22 @@ namespace read {
   /**
    *  @brief Create a ReactionProduct from a parsed ENDF MF6 reaction product
    *
-   *  @param[in] reaction     the reaction identifier
-   *  @param[in] product      the MF6 reaction product data
-   *  @param[in] normalise    the flag to indicate whether or not the distributions
-   *                          need to be normalised
+   *  @param[in] reaction    the reaction identifier
+   *  @param[in] product     the MF6 reaction product data
+   *  @param[in] normalise   the flag to indicate whether or not the distributions
+   *                         need to be normalised
+   *  @param[in] curate      the flag to indicate whether or not tabulated data
+   *                         need to be curated
    */
   inline dryad::ReactionProduct
   createReactionProduct( const dryad::id::ReactionID& reaction,
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
-                         bool /* normalise */ ) {
+                         bool /* normalise */,
+                         bool curate ) {
 
     // get the reaction product id and look for the residual - if it is defined
     dryad::id::ParticleID id = createProductIdentifier( product.productIdentifier(),
-                                                 product.productModifierFlag() );
+                                                        product.productModifierFlag() );
     if ( reaction.residual().has_value() ) {
 
       auto residual = reaction.residual().value();
@@ -146,7 +152,7 @@ namespace read {
 
     // read data and add the product
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
-    auto multiplicity = createMultiplicity( product.multiplicity() );
+    auto multiplicity = createMultiplicity( product.multiplicity(), curate );
 
     return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ) );
   }
@@ -154,21 +160,24 @@ namespace read {
   /**
    *  @brief Create a ReactionProduct from a parsed ENDF MF26 reaction product
    *
-   *  @param[in] reaction     the reaction identifier
-   *  @param[in] product      the MF26 reaction product data
-   *  @param[in] mt           the ENDF MT number
-   *  @param[in] normalise    the flag to indicate whether or not the distributions
-   *                          need to be normalised
+   *  @param[in] reaction    the reaction identifier
+   *  @param[in] product     the MF26 reaction product data
+   *  @param[in] mt          the ENDF MT number
+   *  @param[in] normalise   the flag to indicate whether or not the distributions
+   *                         need to be normalised
+   *  @param[in] curate      the flag to indicate whether or not tabulated data
+   *                         need to be curated
    */
   inline dryad::ReactionProduct
   createReactionProduct( const dryad::id::ReactionID& /* reaction */,
                          const ENDFtk::section::Type< 26 >::ReactionProduct& product,
                          int mt,
-                         bool normalise ) {
+                         bool normalise,
+                         bool curate ) {
 
     dryad::id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0 );
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
-    auto multiplicity = createMultiplicity( product.multiplicity() );
+    auto multiplicity = createMultiplicity( product.multiplicity(), curate );
 
     //! @todo what about the reference frames?
 
@@ -188,7 +197,7 @@ namespace read {
         decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::ContinuumEnergyAngle >( product.distribution() );
         auto distribution = dryad::UncorrelatedDistributionData( dryad::ReferenceFrame::Laboratory,
                                                                  dryad::IsotropicAngularDistributions(),
-                                                                 createTabulatedEnergyDistributions( data, normalise ) );
+                                                                 createTabulatedEnergyDistributions( data, normalise, curate ) );
         return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
       }
       case 2 : {
@@ -196,14 +205,14 @@ namespace read {
         // MF26 LAW = 2 : Legendre coefficients are not allowed
         decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering >( product.distribution() );
         auto distribution = dryad::TwoBodyDistributionData( dryad::ReferenceFrame::CentreOfMass,
-                                                            createTabulatedAngularDistributions( data, normalise ) );
+                                                            createTabulatedAngularDistributions( data, normalise, curate ) );
         return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
       }
       case 8 : {
 
         // MF26 LAW = 8 : energy transfer is given (converted to the average energy of the outgoing electron)
         decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::EnergyTransfer >( product.distribution() );
-        auto average = createTabulatedAverageEnergy( data );
+        auto average = createTabulatedAverageEnergy( data, curate );
         return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( average ) );
       }
       default : {
@@ -225,6 +234,8 @@ namespace read {
    *  @param[in] mt           the ENDF MT number
    *  @param[in] normalise    the flag to indicate whether or not the distributions
    *                          need to be normalised
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline dryad::ReactionProduct
   createReactionProduct( const dryad::id::ReactionID& /* reaction */,
@@ -232,7 +243,8 @@ namespace read {
                          const std::optional< ENDFtk::section::Type< 27 > >& real,
                          const std::optional< ENDFtk::section::Type< 27 > >& imaginary,
                          int /* mt */,
-                         bool /* normalise */ ) {
+                         bool /* normalise */,
+                         bool curate ) {
 
     dryad::id::ParticleID id = dryad::id::ParticleID::photon();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
@@ -243,16 +255,16 @@ namespace read {
     if ( real.has_value() || imaginary.has_value() ) {
 
       auto distribution = dryad::CoherentDistributionData( dryad::ReferenceFrame::Laboratory,
-                                                           createTabulatedScatteringFunction( coherent ),
-                                                           createTabulatedFormFactor( real.value() ),
-                                                           createTabulatedFormFactor( imaginary.value() ) );
+                                                           createTabulatedScatteringFunction( coherent, curate ),
+                                                           createTabulatedFormFactor( real.value(), curate ),
+                                                           createTabulatedFormFactor( imaginary.value(), curate ) );
       return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
 
     }
     else {
 
       auto distribution = dryad::CoherentDistributionData( dryad::ReferenceFrame::Laboratory,
-                                                           createTabulatedScatteringFunction( coherent ) );
+                                                           createTabulatedScatteringFunction( coherent, curate ) );
       return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
     }
   }
@@ -265,12 +277,15 @@ namespace read {
    *  @param[in] mt           the ENDF MT number
    *  @param[in] normalise    the flag to indicate whether or not the distributions
    *                          need to be normalised
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline dryad::ReactionProduct
   createReactionProduct( const dryad::id::ReactionID& /* reaction */,
                          const ENDFtk::section::Type< 27 >& incoherent,
                          int /* mt */,
-                         bool /* normalise */ ) {
+                         bool /* normalise */,
+                         bool curate ) {
 
     dryad::id::ParticleID id = dryad::id::ParticleID::photon();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
@@ -279,7 +294,7 @@ namespace read {
     //! @todo what about the reference frames?
 
     auto distribution = dryad::IncoherentDistributionData( dryad::ReferenceFrame::Laboratory,
-                                                           createTabulatedScatteringFunction( incoherent ) );
+                                                           createTabulatedScatteringFunction( incoherent, curate ) );
     return dryad::ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
   }
 

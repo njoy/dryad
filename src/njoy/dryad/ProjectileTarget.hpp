@@ -68,7 +68,8 @@ namespace dryad {
                       std::optional< resonances::ResonanceParameters > resonances,
                       std::vector< Reaction >&& reactions,
                       std::optional< covariance::CovarianceData > covariances,
-                      bool normalise ) :
+                      bool normalise,
+                      bool curate ) :
         documentation_( std::move( documentation ) ),
         projectile_id_( std::move( projectile ) ),
         target_id_( std::move( target ) ),
@@ -79,6 +80,10 @@ namespace dryad {
         covariances_( std::move( covariances ) ) {
 
       this->resolvePartialIdentifiers();
+      if ( curate ) {
+
+        this->curate();
+      }
       if ( normalise ) {
 
         this->normalise();
@@ -113,6 +118,8 @@ namespace dryad {
      *  @param[in] covariances     the optional covariance data (default: none)
      *  @param[in] normalise       option to indicate whether or not to normalise
      *                             all probability data (default: no normalisation)
+     *  @param[in] curate          option to indicate whether or not to curate
+     *                             all tabulated data (default: no curation)
      */
     ProjectileTarget( Documentation documentation,
                       id::ParticleID projectile,
@@ -122,7 +129,8 @@ namespace dryad {
                       std::optional< ParticleDatabase > particles = std::nullopt,
                       std::optional< resonances::ResonanceParameters > resonances = std::nullopt,
                       std::optional< covariance::CovarianceData > covariances = std::nullopt,
-                      bool normalise = false ) :
+                      bool normalise = false,
+                      bool curate = false ) :
         ProjectileTarget( std::move( documentation ),
                           std::move( projectile ),
                           std::move( target ),
@@ -131,7 +139,8 @@ namespace dryad {
                           std::move( resonances ),
                           std::move( reactions ),
                           std::move( covariances ),
-                          normalise ) {}
+                          normalise,
+                          curate ) {}
 
     /**
      *  @brief Constructor
@@ -145,6 +154,8 @@ namespace dryad {
      *  @param[in] covariances   the optional covariance data (default: none)
      *  @param[in] normalise     option to indicate whether or not to normalise
      *                           all probability data (default: no normalisation)
+     *  @param[in] curate        option to indicate whether or not to curate
+     *                           all tabulated data (default: no curation)
      */
     ProjectileTarget( id::ParticleID projectile,
                       id::ParticleID target,
@@ -153,7 +164,8 @@ namespace dryad {
                       std::optional< ParticleDatabase > particles = std::nullopt,
                       std::optional< resonances::ResonanceParameters > resonances = std::nullopt,
                       std::optional< covariance::CovarianceData > covariances = std::nullopt,
-                      bool normalise = false ) :
+                      bool normalise = false,
+                      bool curate = false ) :
         ProjectileTarget( {},
                           std::move( projectile ),
                           std::move( target ),
@@ -162,7 +174,8 @@ namespace dryad {
                           std::move( resonances ),
                           std::move( reactions ),
                           std::move( covariances ),
-                          normalise ) {}
+                          normalise,
+                          curate ) {}
 
     /* methods */
 

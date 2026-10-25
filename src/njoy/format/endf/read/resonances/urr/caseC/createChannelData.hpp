@@ -42,6 +42,8 @@ namespace caseC {
    *  @param[in] radii        the channel radii
    *  @param[in] numbers      the elastic channel's quantum numbers
    *  @param[in] jvalue       the parsed ENDF fully energy-dependent j-value data
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline std::pair< std::vector< dryad::resonances::UnresolvedChannel >,
                     dryad::resonances::UnresolvedResonanceTable >
@@ -51,7 +53,8 @@ namespace caseC {
       const dryad::resonances::ParticlePair& incident,
       const dryad::resonances::ChannelRadii& radii,
       const dryad::resonances::ChannelQuantumNumbers& numbers,
-      const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependent::JValue& jvalue ) {
+      const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependent::JValue& jvalue,
+      bool curate ) {
 
     // the energy grid and interpolation law shared by every tabulated quantity
     auto energies = format::createVector( jvalue.energies() );
@@ -63,7 +66,7 @@ namespace caseC {
     dryad::resonances::UnresolvedChannel elastic( elastic_id, incident, incident,
                                                   0., std::nullopt, radii, true );
     dryad::resonances::TabulatedAverageWidths elastic_widths(
-        jvalue.AMUN(), energies, format::createVector( jvalue.GN() ), interpolant );
+        jvalue.AMUN(), energies, format::createVector( jvalue.GN() ), interpolant, curate );
 
     // the non-elastic channels all share the resonance level's total angular
     // momentum J and parity. The parity of the level is (-1)^l, where l is the
@@ -83,7 +86,7 @@ namespace caseC {
     dryad::resonances::UnresolvedChannel capture( capture_id, incident, capture_pair,
                                                   0., std::nullopt, zero_radii, false );
     dryad::resonances::TabulatedAverageWidths capture_widths(
-        jvalue.AMUG(), energies, format::createVector( jvalue.GG() ), interpolant );
+        jvalue.AMUG(), energies, format::createVector( jvalue.GG() ), interpolant, curate );
 
     // elastic and capture are always present
     std::vector< dryad::id::ChannelID > ids = { elastic_id, capture_id };
@@ -104,10 +107,10 @@ namespace caseC {
                                                     0., std::nullopt, zero_radii, false );
       ids.push_back( fission_id );
       channels.push_back( std::move( fission ) );
-      widths.emplace_back( jvalue.AMUF(), energies, std::move( fission_widths ), interpolant );
+      widths.emplace_back( jvalue.AMUF(), energies, std::move( fission_widths ), interpolant, curate );
     }
 
-    // the competitive channel (newly defined reaction type "competitive"): 
+    // the competitive channel (newly defined reaction type "competitive"):
     // no defined outgoing pair, added only when the competitive width is genuinely nonzero
     auto competitive_widths = format::createVector( jvalue.GX() );
     if ( std::any_of( competitive_widths.begin(), competitive_widths.end(), is_nonzero ) ) {
@@ -117,12 +120,12 @@ namespace caseC {
                                                         0., std::nullopt, zero_radii, false );
       ids.push_back( competitive_id );
       channels.push_back( std::move( competitive ) );
-      widths.emplace_back( jvalue.AMUX(), energies, std::move( competitive_widths ), interpolant );
+      widths.emplace_back( jvalue.AMUX(), energies, std::move( competitive_widths ), interpolant, curate );
     }
 
     // the level spacing, shared by every channel in this spin group
     dryad::resonances::TabulatedLevelSpacing spacing(
-        energies, format::createVector( jvalue.D() ), interpolant );
+        energies, format::createVector( jvalue.D() ), interpolant, curate );
 
     dryad::resonances::UnresolvedResonanceTable table( std::move( ids ), std::move( widths ),
                                                        std::move( spacing ) );

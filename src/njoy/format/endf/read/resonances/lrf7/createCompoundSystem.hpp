@@ -27,17 +27,20 @@ namespace lrf7 {
    *  @param[in] lower        the lower energy limit
    *  @param[in] upper        the upper energy limit
    *  @param[in] endf         the parsed ENDF LRF7 data
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline auto createCompoundSystem( const dryad::id::ParticleID& projectile,
                                     const dryad::id::ParticleID& target,
                                     double lower,
                                     double upper,
-                                    const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+                                    const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf,
+                                    bool curate ) {
 
     auto formalism = lrf7::createFormalism( endf );
     auto kinematics = lrf7::createKinematics( endf );
     auto boundary = lrf7::createBoundaryCondition( endf.particlePairs() );
-    auto groups = lrf7::createSpinGroups( projectile, target, formalism, boundary, kinematics, endf );
+    auto groups = lrf7::createSpinGroups( projectile, target, formalism, boundary, kinematics, endf, curate );
 
     return dryad::resonances::CompoundSystem( lower, upper, std::move( groups ) );
   }

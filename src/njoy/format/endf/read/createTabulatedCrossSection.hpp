@@ -23,9 +23,11 @@ namespace read {
    *  @brief Create a TabulatedCrossSection from a parsed ENDF section
    *
    *  @param[in] section   the parsed ENDF cross section (MF3 or MF23)
+   *  @param[in] curate    the flag to indicate whether or not tabulated data
+   *                       need to be curated
    */
   template < typename Section >
-  auto createTabulatedCrossSection( const Section& section )
+  auto createTabulatedCrossSection( const Section& section, bool curate )
   -> std::enable_if_t< ( std::is_same_v< Section, ENDFtk::section::Type< 3 > > ||
                          std::is_same_v< Section, ENDFtk::section::Type< 23 > > ),
                        dryad::TabulatedCrossSection > {
@@ -39,7 +41,8 @@ namespace read {
       auto interpolants = createInterpolants( section.interpolants() );
       return dryad::TabulatedCrossSection(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               curate );
     }
     catch ( ... ) {
 
@@ -52,14 +55,16 @@ namespace read {
    *  @brief Create a TabulatedCrossSection from an unparsed ENDF section
    *
    *  @param[in] section   the unparsed ENDF cross section (MF3 or MF23)
+   *  @param[in] curate    the flag to indicate whether or not tabulated data
+   *                       need to be curated
    */
   inline dryad::TabulatedCrossSection
-  createTabulatedCrossSection( const ENDFtk::tree::Section& tree ) {
+  createTabulatedCrossSection( const ENDFtk::tree::Section& tree, bool curate ) {
 
     switch ( tree.fileNumber() ) {
 
-      case  3 : return createTabulatedCrossSection( tree.parse< 3 >() );
-      case 23 : return createTabulatedCrossSection( tree.parse< 23 >() );
+      case  3 : return createTabulatedCrossSection( tree.parse< 3 >(), curate );
+      case 23 : return createTabulatedCrossSection( tree.parse< 23 >(), curate );
       default : {
 
         Log::error( "The MAT{} MF{} MT{} section does not define a "

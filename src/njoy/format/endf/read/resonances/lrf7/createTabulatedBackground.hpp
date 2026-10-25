@@ -23,10 +23,13 @@ namespace lrf7 {
    *  @brief Create a TabulatedCrossSection from a parsed ENDF section
    *
    *  @param[in] background   the energy dependent scattering radius record
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline dryad::resonances::TabulatedBackground
   createTabulatedBackground(
-      const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::TabulatedBackgroundRMatrix& background ) {
+      const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::TabulatedBackgroundRMatrix& background,
+      bool curate ) {
 
     try {
 
@@ -37,7 +40,8 @@ namespace lrf7 {
       auto interpolants = createInterpolants( background.interpolants() );
       return dryad::resonances::TabulatedBackground(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               curate );
     }
     catch ( ... ) {
 

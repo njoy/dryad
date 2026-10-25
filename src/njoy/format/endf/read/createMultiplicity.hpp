@@ -35,10 +35,13 @@ namespace read {
    *  @param[in] lower          the lower energy limit
    *  @param[in] upper          the upper energy limit
    *  @param[in] multiplicity   the parsed ENDF polynomial multiplicity
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity >
   createMultiplicity( double lower, double upper,
-                      const ENDFtk::section::PolynomialMultiplicity& multiplicity ) {
+                      const ENDFtk::section::PolynomialMultiplicity& multiplicity,
+                      bool /* curate */ ) {
 
     return createPolynomialMultiplicity( lower, upper, multiplicity );
   }
@@ -46,22 +49,29 @@ namespace read {
   /**
    *  @brief Create a tabulated multiplicity from a parsed ENDF multiplicity
    *
+   *  @param[in] lower          the lower energy limit
+   *  @param[in] upper          the upper energy limit
    *  @param[in] multiplicity   the parsed ENDF tabulated multiplicity
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity >
   createMultiplicity( double, double,
-                      const ENDFtk::section::TabulatedMultiplicity& multiplicity ) {
+                      const ENDFtk::section::TabulatedMultiplicity& multiplicity,
+                      bool curate ) {
 
-    return createTabulatedMultiplicity( multiplicity );
+    return createTabulatedMultiplicity( multiplicity, curate );
   }
 
   /**
    *  @brief Create an integer or tabulated multiplicity from a parsed ENDF multiplicity
    *
    *  @param[in] multiplicity   the integer, polynomial or tabulated multiplicity
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   template < typename Multiplicity >
-  auto createMultiplicity( const Multiplicity& multiplicity )
+  auto createMultiplicity( const Multiplicity& multiplicity, bool curate )
   -> std::enable_if_t< ( std::is_same_v< Multiplicity, ENDFtk::section::Type< 6 >::Multiplicity > ||
                          std::is_same_v< Multiplicity, ENDFtk::section::Type< 26 >::Multiplicity > ),
                          std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity > > {
@@ -75,12 +85,12 @@ namespace read {
       }
       else {
 
-        return createTabulatedMultiplicity( multiplicity );
+        return createTabulatedMultiplicity( multiplicity, curate );
       }
     }
     else {
 
-      return createTabulatedMultiplicity( multiplicity );
+      return createTabulatedMultiplicity( multiplicity, curate );
     }
   }
 

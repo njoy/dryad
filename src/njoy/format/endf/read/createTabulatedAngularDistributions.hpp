@@ -25,11 +25,14 @@ namespace read {
    *  @param[in] distribution   the parsed ENDF tabulated distributions
    *  @param[in] normalise      the flag to indicate whether or not distributions
    *                            need to be normalised
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   inline dryad::TabulatedAngularDistributions
   createTabulatedAngularDistributions(
       const ENDFtk::section::Type< 4 >::TabulatedDistributions& distribution,
-      bool normalise ) {
+      bool normalise,
+      bool curate ) {
 
     try {
 
@@ -44,7 +47,8 @@ namespace read {
       auto interpolants = createInterpolants( distribution.interpolants() );
       return dryad::TabulatedAngularDistributions(
                std::move( energies ), std::move( distributions ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               false, curate );
     }
     catch ( ... ) {
 
@@ -60,11 +64,14 @@ namespace read {
    *  @param[in] distribution   the parsed ENDF tabulated distributions
    *  @param[in] normalise      the flag to indicate whether or not distributions
    *                            need to be normalised
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   inline dryad::TabulatedAngularDistributions
   createTabulatedAngularDistributions(
       const ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering& distribution,
-      bool normalise ) {
+      bool normalise,
+      bool curate ) {
 
     try {
 
@@ -79,7 +86,8 @@ namespace read {
       auto interpolants = createInterpolants( distribution.interpolants() );
       return dryad::TabulatedAngularDistributions(
                std::move( energies ), std::move( distributions ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               false, curate );
     }
     catch ( ... ) {
 

@@ -29,13 +29,16 @@ namespace lrf7 {
    *  @param[in] boundary     the boundary condition to be applied
    *  @param[in] kinematics   the kinematics type to be applied
    *  @param[in] endf         the parsed ENDF LRF7 data
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline auto createSpinGroups( const dryad::id::ParticleID& projectile,
                                 const dryad::id::ParticleID& target,
                                 const dryad::resonances::Formalism& formalism,
                                 const dryad::resonances::BoundaryCondition& boundary,
                                 const dryad::resonances::Kinematics& kinematics,
-                                const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+                                const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf,
+                                bool curate ) {
 
     std::vector< dryad::resonances::SpinGroup > groups;
 
@@ -53,7 +56,8 @@ namespace lrf7 {
       auto data = lrf7::createChannelData( projectile, target,
                                            formalism, boundary_condition,
                                            kinematics, reduced_amplitudes,
-                                           endf.particlePairs(), group );
+                                           endf.particlePairs(), group,
+                                           curate );
 
       // add each to the final channel data, keep it sorted and consolidate duplicate channels
       for ( auto&& channel : data ) {

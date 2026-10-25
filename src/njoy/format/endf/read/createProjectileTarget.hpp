@@ -30,9 +30,11 @@ namespace read {
    *  @param[in] material    the unparsed ENDF material
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
+   *  @param[in] curate      the flag to indicate whether or not tabulated data
+   *                         need to be curated
    */
   inline dryad::ProjectileTarget
-  createProjectileTarget( const ENDFtk::tree::Material& material, bool normalise ) {
+  createProjectileTarget( const ENDFtk::tree::Material& material, bool normalise, bool curate ) {
 
     auto information = material.section( 1, 451 ).parse< 1, 451 >();
 
@@ -43,13 +45,14 @@ namespace read {
     dryad::InteractionType type = createInteractionType( information.subLibrary() );
 
     std::map< dryad::id::ParticleID, double > masses;
-    std::vector< dryad::Reaction > reactions = createReactions( projectile, target, material, normalise, masses );
+    std::vector< dryad::Reaction > reactions = createReactions( projectile, target, material, normalise, curate, masses );
 
     std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
     if ( type == dryad::InteractionType::Nuclear ) {
 
       resonances = resonances::createResonanceParameters( projectile, target,
-                                                          material.section( 2, 151 ).parse< 2, 151 >() );
+                                                          material.section( 2, 151 ).parse< 2, 151 >(),
+                                                          curate );
     }
 
     dryad::ParticleDatabase particles = createParticleDatabase( projectile, target, reactions, information, masses );

@@ -33,13 +33,16 @@ namespace caseB {
    *  @param[in] lower        the lower energy limit of the range (eV)
    *  @param[in] upper        the upper energy limit of the range (eV)
    *  @param[in] endf         the parsed ENDF energy-dependent-fission-width unresolved data
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline auto createSpinGroups( const dryad::id::ParticleID& projectile,
                                 const dryad::id::ParticleID& target,
                                 int naps,
                                 const std::optional< dryad::resonances::TabulatedRadius >& nro,
                                 double lower, double upper,
-                                const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependentFissionWidths& endf ) {
+                                const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependentFissionWidths& endf,
+                                bool curate ) {
 
     std::vector< dryad::resonances::UnresolvedSpinGroup > groups;
 
@@ -72,7 +75,7 @@ namespace caseB {
 
         auto [ channels, table ] = caseB::createChannelData(
             projectile, target, incident, radii, numbers, lower, upper,
-            jvalue, fissionEnergies );
+            jvalue, fissionEnergies, curate );
 
         groups.emplace_back( std::move( channels ), std::move( table ) );
       }

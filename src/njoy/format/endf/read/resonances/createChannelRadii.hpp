@@ -19,10 +19,10 @@ namespace resonances {
   /**
    *  @brief Create the channel radii based on ENDF information
    *
-   *  @param[in] naps   the channel radius option as given in the ENDF file
-   *  @param[in] nro    the energy dependent scattering radius (if defined, given in fm)
-   *  @param[in] ap     the l-dependent scattering radius (if defined, given in fm)
-   *  @param[in] awr    the atomic weight ratio as given in the ENDF file
+   *  @param[in] naps     the channel radius option as given in the ENDF file
+   *  @param[in] nro      the energy dependent scattering radius (if defined, given in fm)
+   *  @param[in] ap       the l-dependent scattering radius (if defined, given in fm)
+   *  @param[in] awr      the atomic weight ratio as given in the ENDF file
    */
   inline auto createChannelRadii( int naps,
                                   const std::optional< dryad::resonances::TabulatedRadius >& nro,
