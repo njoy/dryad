@@ -50,7 +50,9 @@ void wrapScatteringKernel( python::module& module ) {
     "    interpolants : list of njoy.dryad.InterpolationType\n"
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "        the interpolation type (default lin-lin)"
+    "        the interpolation type (default lin-lin)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -72,13 +74,15 @@ void wrapScatteringKernel( python::module& module ) {
                   std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "moderator_temperature" ),
     python::arg( "effective_temperature" ),
     python::arg( "energy_transfers" ),
     python::arg( "functions" ),
     python::arg( "boundaries" ),
     python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the scattering kernel with multiple interpolation zones"
   )
   .def(
@@ -87,12 +91,14 @@ void wrapScatteringKernel( python::module& module ) {
                   double,
                   std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
-                  InterpolationType >(),
+                  InterpolationType,
+                  bool >(),
     python::arg( "moderator_temperature" ),
     python::arg( "effective_temperature" ),
     python::arg( "energy_transfers" ),
     python::arg( "functions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the scattering kernel with a single interpolation zone"
   )
   .def_property_readonly(
