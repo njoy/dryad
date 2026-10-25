@@ -2372,6 +2372,9 @@ class ProjectileTarget:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data
+        curate : bool, default False
+            option to indicate whether or not to curate
+            all tabulated data
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -2392,7 +2395,7 @@ class ProjectileTarget:
                 all probability data
         """
     @staticmethod
-    def from_endf_file(filename: str, normalise: bool = False) -> ProjectileTarget:
+    def from_endf_file(filename: str, normalise: bool = False, curate: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from an ENDF file
         
@@ -2406,6 +2409,9 @@ class ProjectileTarget:
             normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data
+            curate : bool, default False
+                option to indicate whether or not to curate
+                all tabulated data
         """
     @staticmethod
     def from_gnds_file(filename: str, normalise: bool = False, style: njoy.format.gnds.StyleType = ...) -> ProjectileTarget:
@@ -2427,12 +2433,12 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the ProjectileTarget with documentation
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the ProjectileTarget without documentation
         """
@@ -5109,7 +5115,7 @@ class ThermalScattering:
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
-    def from_endf_file(filename: str, upper: float | None = None) -> ThermalScattering:
+    def from_endf_file(filename: str, upper: float | None = None, curate: bool = False) -> ThermalScattering:
         """
         Create ThermalScattering data from an ENDF file
         
@@ -5123,6 +5129,9 @@ class ThermalScattering:
             upper : float, default None
                 the upper energy limit, the upper energy limit of the evaluation is used
                 if no value is defined
+            curate : bool, default False
+                option to indicate whether or not to curate
+                all tabulated data
         """
     @staticmethod
     def from_gnds_file(filename: str, upper: float | None = None, style: njoy.format.gnds.StyleType = ...) -> ThermalScattering:

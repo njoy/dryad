@@ -135,12 +135,13 @@ void wrapThermalScattering( python::module& module ) {
   .def_static(
 
     "from_endf_file",
-    [] ( const std::string& filename, const std::optional< double >& upper ) -> decltype(auto) {
+    [] ( const std::string& filename, const std::optional< double >& upper, bool curate ) -> decltype(auto) {
 
-      return njoy::format::endf::read::createThermalScatteringFromFile( filename, upper );
+      return njoy::format::endf::read::createThermalScatteringFromFile( filename, curate, upper );
     },
     python::arg( "filename" ),
     python::arg( "upper" ) = std::nullopt,
+    python::arg( "curate" ) = false,
     "Create ThermalScattering data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a ThermalScattering instance.\n\n"
@@ -150,7 +151,10 @@ void wrapThermalScattering( python::module& module ) {
     "        the ENDF file name\n"
     "    upper : float, default None\n"
     "        the upper energy limit, the upper energy limit of the evaluation is used\n"
-    "        if no value is defined"
+    "        if no value is defined\n"
+    "    curate : bool, default False\n"
+    "        option to indicate whether or not to curate\n"
+    "        all tabulated data"
   )
   .def_static(
 

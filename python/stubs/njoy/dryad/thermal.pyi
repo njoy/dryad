@@ -709,6 +709,8 @@ class ScatteringKernel:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
             the interpolation type (default lin-lin)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -748,12 +750,12 @@ class ScatteringKernel:
         Initialise the scattering kernel with a tabulated scattering kernel
         """
     @typing.overload
-    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType], curate: bool = False) -> None:
         """
         Initialise the scattering kernel with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+    def __init__(self, moderator_temperature: float, effective_temperature: float, energy_transfers: list[float], functions: list[TabulatedScatteringKernelFunction], interpolant: njoy.dryad.InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the scattering kernel with a single interpolation zone
         """
