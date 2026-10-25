@@ -24,8 +24,8 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-001_H_001.endf", false );
-        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-001_H_001.endf", true );
+        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-001_H_001.endf", false, true );
+        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-001_H_001.endf", true, true );
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
@@ -36,8 +36,8 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-003_Li_007.endf", false );
-        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-003_Li_007.endf", true );
+        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-003_Li_007.endf", false, true );
+        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-003_Li_007.endf", true, true );
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
@@ -48,8 +48,8 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-010_Ne_022.endf", false );
-        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-010_Ne_022.endf", true );
+        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-010_Ne_022.endf", false, true );
+        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-010_Ne_022.endf", true, true );
 
         neutron::ne22::verifyNe22( first, false );
         neutron::ne22::verifyNe22( second, true );
@@ -63,8 +63,8 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-093_Np_236m1.endf", false );
-        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-093_Np_236m1.endf", true );
+        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "n-093_Np_236m1.endf", false, true );
+        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "n-093_Np_236m1.endf", true, true );
 
         neutron::np236m1::verifyNp236m1( first, false );
         neutron::np236m1::verifyNp236m1( second, true );
@@ -84,8 +84,8 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", false );
-        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", true );
+        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", false, true );
+        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", true, true );
 
         electron::h0::endf81::verifyDocumentation( first.documentation() );
         electron::h0::endf81::verifyDocumentation( second.documentation() );
@@ -99,8 +99,8 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "e-001_H_000-endf80.endf", false );
-        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "e-001_H_000-endf80.endf", true );
+        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "e-001_H_000-endf80.endf", false, true );
+        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "e-001_H_000-endf80.endf", true, true );
 
         electron::h0::endf80::verifyDocumentation( first.documentation() );
         electron::h0::endf80::verifyDocumentation( second.documentation() );
@@ -117,8 +117,8 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
-        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+        ProjectileTarget first = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false, true );
+        ProjectileTarget second = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true, true );
 
         photoatomic::h0::verifyH0( first, false );
         photoatomic::h0::verifyH0( second, true );

@@ -30,7 +30,7 @@ SCENARIO( "createTabulatedAverageEnergy" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedAverageEnergy( distribution );
+        auto chunk = endf::read::createTabulatedAverageEnergy( distribution, true );
 
         verifyElectronChunk( chunk );
       } // THEN

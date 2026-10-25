@@ -27,7 +27,7 @@ SCENARIO( "createIncoherentInelasticScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::thermal::createIncoherentInelasticScattering( 1e-5, 10., section );
+        auto chunk = endf::read::thermal::createIncoherentInelasticScattering( 1e-5, 10., section, true );
 
         verifyChunk( chunk );
       } // THEN

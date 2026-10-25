@@ -32,8 +32,8 @@ SCENARIO( "createReactions" ) {
         id::ParticleID target( "H1" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, masses );
-        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, masses );
+        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, true, masses );
+        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, true, masses );
 
         CHECK( 3 == reactions1.size() );
         auto total = reactions1[0];
@@ -65,8 +65,8 @@ SCENARIO( "createReactions" ) {
         id::ParticleID target( "Li7" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, masses );
-        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, masses );
+        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, true, masses );
+        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, true, masses );
 
         CHECK( 49 == reactions1.size() );
         auto total = reactions1[0];
@@ -145,8 +145,8 @@ SCENARIO( "createReactions" ) {
         id::ParticleID target( "Np236_e2" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, masses );
-        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, masses );
+        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, true, masses );
+        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, true, masses );
 
         CHECK( 15 == reactions1.size() );
         auto total = reactions1[0];
@@ -229,8 +229,8 @@ SCENARIO( "createReactions" ) {
         id::ParticleID target( "H" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, masses );
-        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, masses );
+        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, true, masses );
+        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, true, masses );
 
         CHECK( 8 == reactions1.size() );
         auto total = reactions1[0];
@@ -285,8 +285,8 @@ SCENARIO( "createReactions" ) {
         id::ParticleID target( "H" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, masses );
-        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, masses );
+        std::vector< Reaction > reactions1 = endf::read::createReactions( projectile, target, material, false, true, masses );
+        std::vector< Reaction > reactions2 = endf::read::createReactions( projectile, target, material, true, true, masses );
 
         CHECK( 8 == reactions1.size() );
         auto total = reactions1[0];

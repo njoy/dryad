@@ -34,7 +34,7 @@ SCENARIO( "createParticleDatabase" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
         std::map< id::ParticleID, double > masses;
-        auto reactions = endf::read::createReactions( projectile, target, material, false, masses );
+        auto reactions = endf::read::createReactions( projectile, target, material, false, true, masses );
         auto particles = endf::read::createParticleDatabase( projectile, target, reactions, information, masses );
 
         CHECK( 4 == particles.numberParticles() );

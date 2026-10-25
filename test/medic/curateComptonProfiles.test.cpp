@@ -30,7 +30,7 @@ SCENARIO( "curateComptonProfiles" ) {
 
       auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-001_H_000.endf", true );
       relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false, true );
       external::ComptonProfiles::apply( photoatomic );
 
       verifyUnmodifiedChunk( photoatomic );
@@ -44,7 +44,7 @@ SCENARIO( "curateComptonProfiles" ) {
 
       auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-077_Ir_000.endf", true );
       relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-077_Ir_000.endf", false );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-077_Ir_000.endf", false, true );
       external::ComptonProfiles::apply( photoatomic );
 
       verifyInitialChunkForIr( photoatomic );
@@ -58,7 +58,7 @@ SCENARIO( "curateComptonProfiles" ) {
 
       auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-094_Pu_000.endf", true );
       relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", false );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", false, true );
       external::ComptonProfiles::apply( photoatomic );
 
       verifyInitialChunkForPu( photoatomic );

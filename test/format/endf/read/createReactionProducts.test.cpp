@@ -34,8 +34,8 @@ SCENARIO( "createReactionProducts" ) {
         id::ReactionID reaction( "e-,H->bremsstrahlung" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< ReactionProduct > products1 = endf::read::createReactionProducts( reaction, material, 527, false, masses );
-        std::vector< ReactionProduct > products2 = endf::read::createReactionProducts( reaction, material, 527, true, masses );
+        std::vector< ReactionProduct > products1 = endf::read::createReactionProducts( reaction, material, 527, false, true, masses );
+        std::vector< ReactionProduct > products2 = endf::read::createReactionProducts( reaction, material, 527, true, true, masses );
 
         CHECK( 3 == products1.size() );
         verifyElectronBremsstrahlungPhotonProduct( products1[0], false );
@@ -63,8 +63,8 @@ SCENARIO( "createReactionProducts" ) {
         id::ReactionID reaction( "g,H->coherent" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< ReactionProduct > products1 = endf::read::createReactionProducts( reaction, material, 502, false, masses );
-        std::vector< ReactionProduct > products2 = endf::read::createReactionProducts( reaction, material, 502, true, masses );
+        std::vector< ReactionProduct > products1 = endf::read::createReactionProducts( reaction, material, 502, false, true, masses );
+        std::vector< ReactionProduct > products2 = endf::read::createReactionProducts( reaction, material, 502, true, true, masses );
 
         CHECK( 2 == products1.size() );
         verifyPhotonCoherentProduct( products1[0] );

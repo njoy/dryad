@@ -28,7 +28,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedCrossSection( section );
+        auto chunk = endf::read::createTabulatedCrossSection( section, true );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -38,7 +38,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedCrossSection( section.parse< 3 >() );
+        auto chunk = endf::read::createTabulatedCrossSection( section.parse< 3 >(), true );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -55,7 +55,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedCrossSection( section );
+        auto chunk = endf::read::createTabulatedCrossSection( section, true );
 
         verifyElectronChunk( chunk );
       } // THEN
@@ -65,7 +65,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedCrossSection( section.parse< 23 >() );
+        auto chunk = endf::read::createTabulatedCrossSection( section.parse< 23 >(), true );
 
         verifyElectronChunk( chunk );
       } // THEN

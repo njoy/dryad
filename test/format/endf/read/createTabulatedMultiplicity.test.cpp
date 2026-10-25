@@ -30,7 +30,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity );
+        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity, true );
 
         verifyFissionChunk( chunk );
       } // THEN
@@ -48,7 +48,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity );
+        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity, true );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -66,7 +66,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity );
+        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity, true );
 
         verifyElectronChunk( chunk );
       } // THEN

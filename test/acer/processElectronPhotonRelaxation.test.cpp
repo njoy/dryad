@@ -26,12 +26,12 @@ SCENARIO( "processElectronPhotonRelaxation" ) {
 
       auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-001_H_000.endf", true );
       relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
       external::ComptonProfiles::apply( photoatomic, true );
-      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", true );
+      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", true, true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
 
@@ -55,12 +55,12 @@ SCENARIO( "processElectronPhotonRelaxation" ) {
 
       auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-029_Cu_000.endf", true );
       relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
       external::ComptonProfiles::apply( photoatomic, true );
-      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-029_Cu_000.endf", true );
+      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-029_Cu_000.endf", true, true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
 
@@ -84,12 +84,12 @@ SCENARIO( "processElectronPhotonRelaxation" ) {
 
       auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-032_Ge_000.endf", true );
       relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
       external::ComptonProfiles::apply( photoatomic, true );
-      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-032_Ge_000.endf", true );
+      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-032_Ge_000.endf", true, true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
 
@@ -113,12 +113,12 @@ SCENARIO( "processElectronPhotonRelaxation" ) {
 
       auto relaxation = endf::read::createAtomicRelaxationFromFile( "atom-094_Pu_000.endf", true );
       relaxation.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
       external::ComptonProfiles::apply( photoatomic, true );
-      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-094_Pu_000.endf", true );
+      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-094_Pu_000.endf", true, true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
 

@@ -31,8 +31,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = endf::read::createTabulatedAngularDistributions( distribution, false );
-        auto chunk2 = endf::read::createTabulatedAngularDistributions( distribution, true );
+        auto chunk1 = endf::read::createTabulatedAngularDistributions( distribution, false, true );
+        auto chunk2 = endf::read::createTabulatedAngularDistributions( distribution, true, true );
 
         verifyNeutronMF4LTT2Chunk( chunk1, false );
         verifyNeutronMF4LTT2Chunk( chunk2, true );
@@ -53,8 +53,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = endf::read::createTabulatedAngularDistributions( distribution, false );
-        auto chunk2 = endf::read::createTabulatedAngularDistributions( distribution, true );
+        auto chunk1 = endf::read::createTabulatedAngularDistributions( distribution, false, true );
+        auto chunk2 = endf::read::createTabulatedAngularDistributions( distribution, true, true );
 
         verifyElectronChunk( chunk1, false );
         verifyElectronChunk( chunk2, true );

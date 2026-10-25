@@ -27,7 +27,7 @@ SCENARIO( "createTabulatedScatteringFunction" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedScatteringFunction( section );
+        auto chunk = endf::read::createTabulatedScatteringFunction( section, true );
 
         verifyChunk( chunk );
       } // THEN
@@ -37,7 +37,7 @@ SCENARIO( "createTabulatedScatteringFunction" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedScatteringFunction( section.parse< 27 >() );
+        auto chunk = endf::read::createTabulatedScatteringFunction( section.parse< 27 >(), true );
 
         verifyChunk( chunk );
       } // THEN

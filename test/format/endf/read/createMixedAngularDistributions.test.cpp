@@ -30,8 +30,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = endf::read::createMixedAngularDistributions( distribution, false );
-        auto chunk2 = endf::read::createMixedAngularDistributions( distribution, true );
+        auto chunk1 = endf::read::createMixedAngularDistributions( distribution, false, true );
+        auto chunk2 = endf::read::createMixedAngularDistributions( distribution, true, true );
 
         verifyChunk( chunk1, false );
         verifyChunk( chunk2, true );

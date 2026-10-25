@@ -27,7 +27,7 @@ SCENARIO( "createTabulatedFormFactor" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedFormFactor( section );
+        auto chunk = endf::read::createTabulatedFormFactor( section, true );
 
         verifyChunk( chunk );
       } // THEN
@@ -37,7 +37,7 @@ SCENARIO( "createTabulatedFormFactor" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createTabulatedFormFactor( section.parse< 27 >() );
+        auto chunk = endf::read::createTabulatedFormFactor( section.parse< 27 >(), true );
 
         verifyChunk( chunk );
       } // THEN

@@ -50,7 +50,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createMultiplicity( 1e-5, 2e+7, multiplicity );
+        auto chunk = endf::read::createMultiplicity( 1e-5, 2e+7, multiplicity, true );
 
         verifyFissionPolynomialChunk( chunk );
       } // THEN
@@ -68,7 +68,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createMultiplicity( 1e-5, 2e+7, multiplicity );
+        auto chunk = endf::read::createMultiplicity( 1e-5, 2e+7, multiplicity, true );
 
         verifyFissionTabulatedChunk( chunk );
       } // THEN
@@ -87,7 +87,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createMultiplicity( constant );
+        auto chunk = endf::read::createMultiplicity( constant, true );
 
         verifyNeutronConstantChunk( chunk );
       } // THEN
@@ -97,7 +97,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createMultiplicity( tabulated );
+        auto chunk = endf::read::createMultiplicity( tabulated, true );
 
         verifyNeutronTabulatedChunk( chunk );
       } // THEN
@@ -115,7 +115,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::createMultiplicity( constant );
+        auto chunk = endf::read::createMultiplicity( constant, true );
 
         verifyElectronConstantChunk( chunk );
       } // THEN
