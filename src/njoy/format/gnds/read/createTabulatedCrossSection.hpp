@@ -2,6 +2,8 @@
 #define NJOY_FORMAT_GNDS_READ_CREATETABULATEDCROSSSECTION
 
 // system includes
+#include <algorithm>
+#include <optional>
 #include <vector>
 
 // other includes
@@ -21,10 +23,12 @@ namespace read {
   /**
    *  @brief Create a TabulatedCrossSection from a GNDS XYs1d or regions1d node
    *
-   *  @param[in] node   the gnds XYs1d or regions1d node
+   *  @param[in] node        the gnds XYs1d or regions1d node
+   *  @param[in] threshold   the threshold value for Coulomb penetrability interpolation
    */
   inline dryad::TabulatedCrossSection
-  createTabulatedCrossSectionFromNodes( const pugi::xml_node& node ) {
+  createTabulatedCrossSectionFromNodes( const pugi::xml_node& node,
+                                        std::optional< double > threshold ) {
 
     std::vector< double > energies;
     std::vector< double > values;
@@ -100,16 +104,40 @@ namespace read {
       throw std::exception();
     }
 
+    auto is_charged_particle = [] ( auto&& interpolant ) {
+
+      return interpolant == dryad::InterpolationType::CoulombPenetrability;
+    };
+    if ( std::any_of( interpolants.begin(), interpolants.end(), is_charged_particle ) ) {
+
+      if ( ! threshold.has_value() ) {
+
+        Log::error( "Found a threshold reaction or summation reaction using Coulomb penetrability interpolation, "
+                    "contact an njoy developer" );
+        throw std::exception();
+      }
+    }
+    else {
+
+      threshold = std::nullopt;
+    }
+
     return dryad::TabulatedCrossSection(
              std::move( energies ), std::move( values ),
-             std::move( boundaries ), std::move( interpolants ) );
+             std::move( boundaries ), std::move( interpolants ),
+             false, std::move( threshold ) );
   }
 
   /**
    *  @brief Create a TabulatedCrossSection from a GNDS cross section node
+   *
+   *  @param[in] xs          the gnds cross section node
+   *  @param[in] threshold   the threshold value for Coulomb penetrability interpolation
+   *  @param[in] style       the gnds style to process (default is eval)
    */
   static dryad::TabulatedCrossSection
   createTabulatedCrossSection( const pugi::xml_node& xs,
+                               std::optional< double > threshold,
                                const std::string& style = "eval" ) {
 
     Log::info( "Reading cross section data" );
@@ -121,12 +149,12 @@ namespace read {
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
       // return a cross section
-      return createTabulatedCrossSectionFromNodes( node );
+      return createTabulatedCrossSectionFromNodes( node, std::move( threshold ) );
     }
     else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
 
       // return a cross section
-      return createTabulatedCrossSectionFromNodes( node );
+      return createTabulatedCrossSectionFromNodes( node, std::move( threshold ) );
     }
     else if ( strcmp( node.name(), "resonancesWithBackground" ) == 0 ) {
 
@@ -139,7 +167,7 @@ namespace read {
       auto resolved = node.child( "background" ).child( "resolvedRegion" );
       if ( resolved ) {
 
-        auto result = createTabulatedCrossSectionFromNodes( resolved.first_child() );
+        auto result = createTabulatedCrossSectionFromNodes( resolved.first_child(), threshold );
 
         // start to assemble the data together
         energies = result.energies();
@@ -152,7 +180,7 @@ namespace read {
       auto unresolved = node.child( "background" ).child( "unresolvedRegion" );
       if ( unresolved ) {
 
-        auto result = createTabulatedCrossSectionFromNodes( unresolved.first_child() );
+        auto result = createTabulatedCrossSectionFromNodes( unresolved.first_child(), threshold );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t size = energies.size();
@@ -180,7 +208,7 @@ namespace read {
       auto fast = node.child( "background" ).child( "fastRegion" );
       if ( fast ) {
 
-        auto result = createTabulatedCrossSectionFromNodes( fast.first_child() );
+        auto result = createTabulatedCrossSectionFromNodes( fast.first_child(), threshold );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t size = energies.size();
@@ -206,7 +234,8 @@ namespace read {
 
       return dryad::TabulatedCrossSection(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               false, std::move( threshold ) );
     }
     else if ( strcmp( node.name(), "CoulombPlusNuclearElastic" ) == 0 ) {
 
