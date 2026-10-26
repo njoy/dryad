@@ -57,6 +57,12 @@ void wrapInterpolationType( python::module& module ) {
     "LogLog",
     Component::LogLog,
     "ln(y) is linear in ln(x)"
+  )
+  .value(
+
+    "CoulombPenetrability",
+    Component::CoulombPenetrability,
+    "Special Coulomb penetrability interpolation"
   );
 }
 

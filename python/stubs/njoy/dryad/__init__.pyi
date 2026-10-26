@@ -506,13 +506,16 @@ class InterpolationType:
       LogLinear : ln(y) is linear in x
     
       LogLog : ln(y) is linear in ln(x)
+    
+      CoulombPenetrability : Special Coulomb penetrability interpolation
     """
+    CoulombPenetrability: typing.ClassVar[InterpolationType]  # value = <InterpolationType.CoulombPenetrability: 6>
     Histogram: typing.ClassVar[InterpolationType]  # value = <InterpolationType.Histogram: 1>
     LinearLinear: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LinearLinear: 2>
     LinearLog: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LinearLog: 3>
     LogLinear: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LogLinear: 4>
     LogLog: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LogLog: 5>
-    __members__: typing.ClassVar[dict[str, InterpolationType]]  # value = {'Histogram': <InterpolationType.Histogram: 1>, 'LinearLinear': <InterpolationType.LinearLinear: 2>, 'LinearLog': <InterpolationType.LinearLog: 3>, 'LogLinear': <InterpolationType.LogLinear: 4>, 'LogLog': <InterpolationType.LogLog: 5>}
+    __members__: typing.ClassVar[dict[str, InterpolationType]]  # value = {'Histogram': <InterpolationType.Histogram: 1>, 'LinearLinear': <InterpolationType.LinearLinear: 2>, 'LinearLog': <InterpolationType.LinearLog: 3>, 'LogLinear': <InterpolationType.LogLinear: 4>, 'LogLog': <InterpolationType.LogLog: 5>, 'CoulombPenetrability': <InterpolationType.CoulombPenetrability: 6>}
     def __eq__(self, other: typing.Any) -> bool:
         ...
     def __ge__(self, other: typing.Any) -> bool:
