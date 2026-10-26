@@ -48,7 +48,7 @@ namespace read {
     std::vector< dryad::Reaction > reactions = createReactions( projectile, target, material, normalise, curate, masses );
 
     std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
-    if ( type == dryad::InteractionType::Nuclear ) {
+    if ( type == dryad::InteractionType::Nuclear && material.hasSection( 2, 151 ) ) {
 
       resonances = resonances::createResonanceParameters( projectile, target,
                                                           material.section( 2, 151 ).parse< 2, 151 >(),
