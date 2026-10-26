@@ -20,11 +20,12 @@ SCENARIO( "createInterpolant" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( 1 == endf::write::createInterpolant( InterpolationType::Histogram    ) );
-        CHECK( 2 == endf::write::createInterpolant( InterpolationType::LinearLinear ) );
-        CHECK( 3 == endf::write::createInterpolant( InterpolationType::LinearLog    ) );
-        CHECK( 4 == endf::write::createInterpolant( InterpolationType::LogLinear    ) );
-        CHECK( 5 == endf::write::createInterpolant( InterpolationType::LogLog       ) );
+        CHECK( 1 == endf::write::createInterpolant( InterpolationType::Histogram            ) );
+        CHECK( 2 == endf::write::createInterpolant( InterpolationType::LinearLinear         ) );
+        CHECK( 3 == endf::write::createInterpolant( InterpolationType::LinearLog            ) );
+        CHECK( 4 == endf::write::createInterpolant( InterpolationType::LogLinear            ) );
+        CHECK( 5 == endf::write::createInterpolant( InterpolationType::LogLog               ) );
+        CHECK( 6 == endf::write::createInterpolant( InterpolationType::CoulombPenetrability ) );
       } // THEN
     } // WHEN
   } // GIVEN

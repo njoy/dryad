@@ -25,6 +25,7 @@ SCENARIO( "createInterpolationType" ) {
         CHECK( "log-lin" == gnds::write::createInterpolationType( InterpolationType::LogLinear ) );
         CHECK( "lin-log" == gnds::write::createInterpolationType( InterpolationType::LinearLog ) );
         CHECK( "flat" == gnds::write::createInterpolationType( InterpolationType::Histogram ) );
+        CHECK( "charged-particle" == gnds::write::createInterpolationType( InterpolationType::CoulombPenetrability ) );
       } // THEN
     } // WHEN
   } // GIVEN

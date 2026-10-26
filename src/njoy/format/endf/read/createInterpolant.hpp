@@ -28,6 +28,7 @@ namespace read {
       case 3 : return dryad::InterpolationType::LinearLog;
       case 4 : return dryad::InterpolationType::LogLinear;
       case 5 : return dryad::InterpolationType::LogLog;
+      case 6 : return dryad::InterpolationType::CoulombPenetrability;
       default : {
 
         Log::error( "Cannot convert or handle ENDF interpolation type {}",
