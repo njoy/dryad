@@ -14,6 +14,7 @@ using namespace njoy::dryad;
 using namespace njoy::format;
 
 void verifyNeutronChunk( const TabulatedCrossSection& );
+void verifyDeuteronChunk( const TabulatedCrossSection& );
 void verifyElectronChunk( const TabulatedCrossSection& );
 
 SCENARIO( "createTabulatedCrossSection" ) {
@@ -41,6 +42,33 @@ SCENARIO( "createTabulatedCrossSection" ) {
         auto chunk = endf::read::createTabulatedCrossSection( section.parse< 3 >(), true );
 
         verifyNeutronChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "ENDF MF3 sections with Coulomb penetrability interpolation" ) {
+
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "d-001_H_003.endf" );
+    auto section = tape.materials().front().section( 3, 50 );
+
+    WHEN( "a single unparsed MF3 section is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = endf::read::createTabulatedCrossSection( section, true );
+
+        verifyDeuteronChunk( chunk );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single parsed MF3 section is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = endf::read::createTabulatedCrossSection( section.parse< 3 >(), true );
+
+        verifyDeuteronChunk( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -92,6 +120,27 @@ void verifyNeutronChunk( const TabulatedCrossSection& chunk ) {
   CHECK_THAT( 1.672869e+1, WithinRel( chunk.values()[0] ) );
   CHECK_THAT( 4.950573e-4, WithinRel( chunk.values()[32] ) );
   CHECK_THAT( 2.710792e-5, WithinRel( chunk.values()[152] ) );
+  CHECK( std::nullopt == chunk.threshold() );
+}
+
+void verifyDeuteronChunk( const TabulatedCrossSection& chunk ) {
+
+  CHECK( false == chunk.isLinearised() );
+  CHECK( 210 == chunk.numberPoints() );
+  CHECK( 2 == chunk.numberRegions() );
+  CHECK( 210 == chunk.energies().size() );
+  CHECK( 210 == chunk.values().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK( 29 == chunk.boundaries()[0] );
+  CHECK( 209 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::CoulombPenetrability == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK_THAT( 1e+2, WithinRel( chunk.energies()[0] ) );
+  CHECK_THAT( 4e+7, WithinRel( chunk.energies()[209] ) );
+  CHECK_THAT( 2.04690e-56, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT( 1.496200e-2, WithinRel( chunk.values()[209] ) );
+  CHECK( 0 == chunk.threshold() );
 }
 
 void verifyElectronChunk( const TabulatedCrossSection& chunk ) {
@@ -111,4 +160,5 @@ void verifyElectronChunk( const TabulatedCrossSection& chunk ) {
   CHECK_THAT(  29.7832, WithinRel( chunk.values()[0] ) );
   CHECK_THAT( 0.552449, WithinRel( chunk.values()[65] ) );
   CHECK_THAT( 0.990621, WithinRel( chunk.values()[95] ) );
+  CHECK( std::nullopt == chunk.threshold() );
 }
