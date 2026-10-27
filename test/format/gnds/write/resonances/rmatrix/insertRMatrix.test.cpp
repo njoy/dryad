@@ -542,6 +542,9 @@ std::string chunkSi29() {
   return
     "<RMatrix label=\"eval\" approximation=\"ReichMoore\" boundaryCondition=\"EliminateShiftFunction\" reducedWidthAmplitudes=\"true\">\n"
     "  <PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
+    "    <aliases>\n"
+    "      <alias id=\"g\" pid=\"photon\" />\n"
+    "    </aliases>\n"
     "    <gaugeBosons>\n"
     "      <gaugeBoson id=\"g\">\n"
     "        <mass>\n"
@@ -950,6 +953,9 @@ std::string chunkCu63() {
   return
     "<RMatrix label=\"eval\" approximation=\"ReichMoore\" boundaryCondition=\"Given\" reducedWidthAmplitudes=\"true\">\n"
     "  <PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
+    "    <aliases>\n"
+    "      <alias id=\"g\" pid=\"photon\" />\n"
+    "    </aliases>\n"
     "    <gaugeBosons>\n"
     "      <gaugeBoson id=\"g\">\n"
     "        <mass>\n"
@@ -1313,6 +1319,9 @@ std::string chunkCl35() {
   return
     "<RMatrix label=\"eval\" approximation=\"ReichMoore\" boundaryCondition=\"EliminateShiftFunction\" reducedWidthAmplitudes=\"true\">\n"
     "  <PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
+    "    <aliases>\n"
+    "      <alias id=\"g\" pid=\"photon\" />\n"
+    "    </aliases>\n"
     "    <gaugeBosons>\n"
     "      <gaugeBoson id=\"g\">\n"
     "        <mass>\n"
@@ -1925,6 +1934,9 @@ std::string chunkSr88() {
   return
     "<RMatrix label=\"eval\" approximation=\"ReichMoore\" boundaryCondition=\"EliminateShiftFunction\" reducedWidthAmplitudes=\"true\">\n"
     "  <PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
+    "    <aliases>\n"
+    "      <alias id=\"g\" pid=\"photon\" />\n"
+    "    </aliases>\n"
     "    <gaugeBosons>\n"
     "      <gaugeBoson id=\"g\">\n"
     "        <mass>\n"
