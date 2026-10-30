@@ -54,15 +54,13 @@ void wrapIsotropicAngularDistributionFunction( python::module& module ) {
   .def_property_readonly(
 
     "lower_cosine_limit",
-    [] ( const Component& self ) -> decltype(auto)
-       { return self.lowerCosineLimit(); },
+    &Component::lowerCosineLimit,
     "The lower cosine limit"
   )
   .def_property_readonly(
 
     "upper_cosine_limit",
-    [] ( const Component& self ) -> decltype(auto)
-       { return self.upperCosineLimit(); },
+    &Component::upperCosineLimit,
     "The upper cosine limit"
   )
   .def(

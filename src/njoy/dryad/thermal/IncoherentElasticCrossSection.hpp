@@ -68,7 +68,7 @@ namespace thermal {
     /**
      *  @brief Return the lower limit of the domain
      */
-    double lower() const noexcept {
+    double lower() const {
 
       return this->lower_;
     }
@@ -76,7 +76,7 @@ namespace thermal {
     /**
      *  @brief Return the upper limit of the domain
      */
-    double upper() const noexcept {
+    double upper() const {
 
       return this->upper_;
     }
