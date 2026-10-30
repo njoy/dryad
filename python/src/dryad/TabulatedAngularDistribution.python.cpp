@@ -120,6 +120,18 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
   )
   .def_property_readonly(
 
+    "lower_cosine_limit",
+    &Component::lowerCosineLimit,
+    "The lower cosine limit"
+  )
+  .def_property_readonly(
+
+    "upper_cosine_limit",
+    &Component::upperCosineLimit,
+    "The upper cosine limit"
+  )
+  .def_property_readonly(
+
     "pdf",
     python::overload_cast<>( &Component::pdf, python::const_ ),
     "The probability distribution function (pdf) of the distribution"

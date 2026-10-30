@@ -131,6 +131,38 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the lower cosine limit
+     */
+    double lowerCosineLimit() const {
+
+      return this->pdf().lowerLimit();
+    }
+
+    /**
+     *  @brief Return the upper cosine limit
+     */
+    double upperCosineLimit() const {
+
+      return this->pdf().upperLimit();
+    }
+
+    /**
+     *  @brief Return the lower limit of the domain
+     */
+    double lowerLimit() const {
+
+      return this->pdf().lowerLimit();
+    }
+
+    /**
+     *  @brief Return the upper limit of the domain
+     */
+    double upperLimit() const {
+
+      return this->pdf().upperLimit();
+    }
+
+    /**
      *  @brief Normalise the distribution
      */
     void normalise() {

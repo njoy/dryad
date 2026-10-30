@@ -79,6 +79,8 @@ void verifyChunk( const LegendreAngularDistribution& chunk, bool normalise ) {
 
   CHECK_THAT( 1.0 / normalisation, WithinRel( chunk.coefficients()[0] ) );
   CHECK_THAT( 0.5 / normalisation, WithinRel( chunk.coefficients()[1] ) );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );

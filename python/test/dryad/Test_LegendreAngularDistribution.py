@@ -20,6 +20,8 @@ class Test_LegendreAngularDistribution( unittest.TestCase ) :
             # verify content
             self.assertAlmostEqual( 1.0 / normalisation, chunk.coefficients[0] )
             self.assertAlmostEqual( 0.5 / normalisation, chunk.coefficients[1] )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             pdf = chunk.pdf
             self.assertAlmostEqual( -1., pdf.lower_cosine_limit )

@@ -171,6 +171,8 @@ void verifyChunk( const TabulatedEnergyDistribution& chunk, bool normalise ) {
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( true == chunk.isCurated() );
+  CHECK_THAT( 0., WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );
@@ -296,6 +298,8 @@ void verifyChunkNotCurated( const TabulatedEnergyDistribution& chunk ) {
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
   CHECK( false == chunk.isCurated() );
+  CHECK_THAT( 0., WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );
@@ -371,6 +375,8 @@ void verifyChunkCurated( const TabulatedEnergyDistribution& chunk ) {
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
   CHECK( true == chunk.isCurated() );
+  CHECK_THAT( 0., WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );

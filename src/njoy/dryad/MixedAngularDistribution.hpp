@@ -223,6 +223,38 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the lower cosine limit
+     */
+    double lowerCosineLimit() const {
+
+      return std::visit( [] ( auto&& function ) { return function.lowerCosineLimit(); }, this->pdf() );
+    }
+
+    /**
+     *  @brief Return the upper cosine limit
+     */
+    double upperCosineLimit() const {
+
+      return std::visit( [] ( auto&& function ) { return function.upperCosineLimit(); }, this->pdf() );
+    }
+
+    /**
+     *  @brief Return the lower limit of the domain
+     */
+    double lowerLimit() const {
+
+      return std::visit( [] ( auto&& function ) { return function.lowerLimit(); }, this->pdf() );
+    }
+
+    /**
+     *  @brief Return the upper limit of the domain
+     */
+    double upperLimit() const {
+
+      return std::visit( [] ( auto&& function ) { return function.upperLimit(); }, this->pdf() );
+    }
+
+    /**
      *  @brief Normalise the distribution
      */
     void normalise() {
