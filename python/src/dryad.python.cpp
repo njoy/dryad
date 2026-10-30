@@ -71,6 +71,7 @@ namespace dryad {
   void wrapMultigroupAverageEnergy( python::module& );
   void wrapTabulatedAverageCosine( python::module& );
   void wrapTabulatedAverageEnergy( python::module& );
+  void wrapTabulatedLegendreMoment( python::module& );
   void wrapTabulatedFormFactor( python::module& );
   void wrapTabulatedScatteringFunction( python::module& );
   void wrapTwoBodyDistributionData( python::module& );
@@ -133,6 +134,7 @@ void wrapDryad( python::module& module ) {
   dryad::wrapMultigroupAverageEnergy( submodule );
   dryad::wrapTabulatedAverageCosine( submodule );
   dryad::wrapTabulatedAverageEnergy( submodule );
+  dryad::wrapTabulatedLegendreMoment( submodule );
   dryad::wrapIsotropicAngularDistributions( submodule );
   dryad::wrapIsotropicAngularDistributionFunction( submodule );
   dryad::wrapTabulatedAngularDistributionFunction( submodule );
