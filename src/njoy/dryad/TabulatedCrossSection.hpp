@@ -113,7 +113,7 @@ namespace dryad {
      */
     double lowerEnergyLimit() const {
 
-      return this->x().front();
+      return this->lowerLimit();
     }
 
     /**
@@ -121,9 +121,11 @@ namespace dryad {
      */
     double upperEnergyLimit() const {
 
-      return this->x().back();
+      return this->upperLimit();
     }
 
+    using InterpolationTable::x;
+    using InterpolationTable::y;
     using InterpolationTable::boundaries;
     using InterpolationTable::interpolants;
     using InterpolationTable::numberPoints;
@@ -134,6 +136,8 @@ namespace dryad {
     using InterpolationTable::curate;
 
     using InterpolationTable::operator();
+    using InterpolationTable::lowerLimit;
+    using InterpolationTable::upperLimit;
 
     /**
      *  @brief Return a linearised cross section table

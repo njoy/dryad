@@ -103,7 +103,7 @@ namespace dryad {
      */
     double lowerInverseLengthLimit() const {
 
-      return this->x().front();
+      return this->lowerLimit();
     }
 
     /**
@@ -111,7 +111,7 @@ namespace dryad {
      */
     double upperInverseLengthLimit() const {
 
-      return this->x().back();
+      return this->upperLimit();
     }
 
     /**
@@ -126,6 +126,8 @@ namespace dryad {
       return constant * energy * std::sqrt( 0.5 * ( 1 - cosine ) );
     }
 
+    using InterpolationTable::x;
+    using InterpolationTable::y;
     using InterpolationTable::boundaries;
     using InterpolationTable::interpolants;
     using InterpolationTable::numberPoints;
@@ -135,6 +137,8 @@ namespace dryad {
     using InterpolationTable::curate;
 
     using InterpolationTable::operator();
+    using InterpolationTable::lowerLimit;
+    using InterpolationTable::upperLimit;
 
     /**
      *  @brief Evaluate the scattering function for an energy,cosine pair

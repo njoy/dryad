@@ -68,13 +68,15 @@ namespace dryad {
     using PolynomialSeries::coefficients;
     using PolynomialSeries::order;
     using PolynomialSeries::operator();
+    using PolynomialSeries::lowerLimit;
+    using PolynomialSeries::upperLimit;
 
     /**
      *  @brief Return the lower energy limit
      */
     double lowerEnergyLimit() const {
 
-      return std::get< njoy::scion::math::IntervalDomain< double > >( this->domain() ).lowerLimit();
+      return this->lowerLimit();
     }
 
     /**
@@ -82,7 +84,7 @@ namespace dryad {
      */
     double upperEnergyLimit() const {
 
-      return std::get< njoy::scion::math::IntervalDomain< double > >( this->domain() ).upperLimit();
+      return this->upperLimit();
     }
 
     /**

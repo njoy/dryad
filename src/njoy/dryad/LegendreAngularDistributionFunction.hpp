@@ -87,8 +87,6 @@ namespace dryad {
 
     /* methods */
 
-    using LegendreSeries::coefficients;
-
     /**
      *  @brief Return the lower cosine limit
      */
@@ -99,8 +97,11 @@ namespace dryad {
      */
     static constexpr double upperCosineLimit() { return 1.0; }
 
-    using LegendreSeries::operator();
+    using LegendreSeries::coefficients;
     using LegendreSeries::order;
+    using LegendreSeries::operator();
+    using LegendreSeries::lowerLimit;
+    using LegendreSeries::upperLimit;
 
     using LegendreSeries::integral;
     using LegendreSeries::mean;

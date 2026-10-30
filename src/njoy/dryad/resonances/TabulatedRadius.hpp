@@ -108,7 +108,7 @@ namespace resonances {
      */
     double lowerEnergyLimit() const {
 
-      return this->x().front();
+      return this->lowerLimit();
     }
 
     /**
@@ -116,9 +116,11 @@ namespace resonances {
      */
     double upperEnergyLimit() const {
 
-      return this->x().back();
+      return this->upperLimit();
     }
 
+    using InterpolationTable::x;
+    using InterpolationTable::y;
     using InterpolationTable::boundaries;
     using InterpolationTable::interpolants;
     using InterpolationTable::numberPoints;
@@ -128,6 +130,8 @@ namespace resonances {
     using InterpolationTable::curate;
 
     using InterpolationTable::operator();
+    using InterpolationTable::lowerLimit;
+    using InterpolationTable::upperLimit;
 
     /**
      *  @brief Return a linearised radius table

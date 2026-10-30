@@ -6,6 +6,7 @@
 #include <tuple>
 
 // other includes
+#include "tools/Log.hpp"
 #include "scion/math/OneDimensionalFunctionBase.hpp"
 #include "scion/linearisation/Lineariser.hpp"
 #include "scion/linearisation/MidpointSplit.hpp"
@@ -35,6 +36,8 @@ namespace thermal {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     double bound_xs_;
     double debye_waller_;
 
@@ -63,6 +66,22 @@ namespace thermal {
     /* interface imposed function */
 
     /**
+     *  @brief Return the lower limit of the domain
+     */
+    double lower() const noexcept {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the upper limit of the domain
+     */
+    double upper() const noexcept {
+
+      return this->upper_;
+    }
+
+    /**
      *  @brief Evaluate the cross section for a given energy value
      *
      *  @param[in] energy   the energy value
@@ -79,7 +98,6 @@ namespace thermal {
 
     using typename Parent::XType;
     using typename Parent::YType;
-    using typename Parent::DomainVariant;
 
     /* constructor */
 
@@ -106,7 +124,8 @@ namespace thermal {
                                    double upper,
                                    double xs,
                                    double debyeWallerIntegral ) :
-      Parent( scion::math::IntervalDomain< double >( lower, upper ) ),
+      lower_( std::move( lower ) ),
+      upper_( std::move( upper ) ),
       bound_xs_( std::move( xs ) ),
       debye_waller_( std::move( debyeWallerIntegral ) ) {}
 
@@ -117,7 +136,7 @@ namespace thermal {
      */
     double lowerEnergyLimit() const {
 
-      return std::get< scion::math::IntervalDomain< double > >( this->domain() ).lowerLimit();
+      return this->lowerLimit();
     }
 
     /**
@@ -125,7 +144,7 @@ namespace thermal {
      */
     double upperEnergyLimit() const {
 
-      return std::get< scion::math::IntervalDomain< double > >( this->domain() ).upperLimit();
+      return this->upperLimit();
     }
 
     /**
@@ -145,6 +164,8 @@ namespace thermal {
     }
 
     using Parent::operator();
+    using Parent::lowerLimit;
+    using Parent::upperLimit;
 
     /**
      *  @brief Return a linearised cross section table
@@ -175,8 +196,8 @@ namespace thermal {
      */
     bool operator==( const IncoherentElasticCrossSection& right ) const {
 
-      return std::tie( this->bound_xs_, this->debye_waller_, this->domain() ) ==
-             std::tie( right.bound_xs_, right.debye_waller_, right.domain() );
+      return std::tie( this->lower_, this->upper_, this->bound_xs_, this->debye_waller_ ) ==
+             std::tie( right.lower_, right.upper_, right.bound_xs_, right.debye_waller_ );
     }
 
     /**
