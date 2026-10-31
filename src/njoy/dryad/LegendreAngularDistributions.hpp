@@ -8,6 +8,7 @@
 #include "njoy/dryad/base/GridDistributions.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAverageCosine.hpp"
+#include "njoy/dryad/TabulatedLegendreMoment.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
 
 namespace njoy {
@@ -138,8 +139,24 @@ namespace dryad {
                       std::back_inserter( cosines ),
                       [] ( auto&& distribution ) { return distribution.averageCosine(); } );
       return TabulatedAverageCosine( this->grid(), std::move( cosines ),
-                                     this->boundaries(),
-                                     this->interpolants() );
+                                     this->boundaries(), this->interpolants() );
+    }
+
+    /**
+     *  @brief Return the Legendre moment values
+     *
+     *  @param[in] order   the order of the Legendre moment to calculate
+     */
+    TabulatedLegendreMoment legendreMoments( std::size_t order ) const {
+
+      std::vector< double > moments;
+      moments.reserve( this->numberPoints() );
+      std::transform( this->distributions().begin(), this->distributions().end(),
+                      std::back_inserter( moments ),
+                      [&] ( auto&& distribution ) { return distribution.legendreMoment( order ); } );
+      return TabulatedLegendreMoment( order,
+                                      this->grid(), std::move( moments ),
+                                      this->boundaries(), this->interpolants() );
     }
 
     /**

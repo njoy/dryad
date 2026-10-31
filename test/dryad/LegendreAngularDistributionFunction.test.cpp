@@ -56,6 +56,15 @@ SCENARIO( "LegendreAngularDistributionFunction" ) {
         CHECK_THAT( 146./15. / (-62./3.), WithinRel( chunk.mean() ) );
       } // THEN
 
+      THEN( "the Legendre moments can be calculated" ) {
+
+        CHECK_THAT( -62./3. , WithinRel( chunk.legendreMoment( 0 ) ) );
+        CHECK_THAT( 146./15., WithinRel( chunk.legendreMoment( 1 ) ) );
+        CHECK_THAT( -28./15., WithinRel( chunk.legendreMoment( 2 ) ) );
+        CHECK_THAT(   4./35., WithinRel( chunk.legendreMoment( 3 ) ) );
+        CHECK_THAT(   0.    , WithinRel( chunk.legendreMoment( 4 ) ) );
+      } // THEN
+
       THEN( "a LegendreAngularDistributionFunction can be linearised" ) {
 
         TabulatedAngularDistributionFunction linear = chunk.linearise( 0.01 );
