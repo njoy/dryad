@@ -686,6 +686,15 @@ class LegendreAngularDistribution:
         """
     def __ne__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
+    def legendre_moment(self, order: int) -> float:
+        """
+        Return the Legendre moment defined by the distribution
+        
+        Parameters
+        ----------
+            order : int
+                the order of the Legendre moment to calculate
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
@@ -815,6 +824,15 @@ class LegendreAngularDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
+    def legendre_moment(self, order: int) -> float:
+        """
+        Return the Legendre moment defined by the distribution function
+        
+        Parameters
+        ----------
+            order : int
+                the order of the Legendre moment to calculate
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
         Linearise the series
@@ -915,6 +933,15 @@ class LegendreAngularDistributions:
         Curate the table
         
         This removes extraneous interior points in discontinuities in the data.
+        """
+    def legendre_moments(self, order: int) -> TabulatedLegendreMoment:
+        """
+        Return the Legendre moment values
+        
+        Parameters
+        ----------
+            order : int
+                the order of the Legendre moment to calculate
         """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
