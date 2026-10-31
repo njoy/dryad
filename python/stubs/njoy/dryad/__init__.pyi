@@ -688,7 +688,7 @@ class LegendreAngularDistribution:
         ...
     def legendre_moment(self, order: int) -> float:
         """
-        Return the Legendre moment defined by the distribution
+        Return a Legendre moment of the distribution
         
         Parameters
         ----------
@@ -826,7 +826,7 @@ class LegendreAngularDistributionFunction:
         ...
     def legendre_moment(self, order: int) -> float:
         """
-        Return the Legendre moment defined by the distribution function
+        Return a Legendre moment of the distribution function
         
         Parameters
         ----------
