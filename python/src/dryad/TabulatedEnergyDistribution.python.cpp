@@ -48,29 +48,41 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "        the cumulative distribution function\n"
     "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "        all probability data (default: no normalisation)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< std::vector< double >,
+                  std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType >,
+                  bool,
                   bool >(),
-    python::arg( "energies" ), python::arg( "values" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "energies" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the energy distribution with multiple interpolation zones"
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
-                  InterpolationType, bool >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::init< std::vector< double >,
+                  std::vector< double >,
+                  InterpolationType,
+                  bool,
+                  bool >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the energy distribution with a single interpolation zone"
   )
   .def(
@@ -139,6 +151,18 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "normalise",
     &Component::normalise,
     "Normalise the distribution"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the distribution"
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    &Component::isCurated,
+    "Flag indicating whether or not the distribution is curated"
   )
   .def_property_readonly(
 

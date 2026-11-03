@@ -40,7 +40,9 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
-    "        the interpolation type for single-region tables"
+    "        the interpolation type for single-region tables\n"
+    "    curate : bool, default=False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -51,12 +53,14 @@ void wrapTabulatedAverageWidths( python::module& module ) {
                   std::vector< double >,
                   std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "dof" ),
     python::arg( "energies" ),
     python::arg( "values" ),
     python::arg( "boundaries" ),
     python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the average width table with multiple interpolation regions"
   )
   .def(
@@ -64,11 +68,13 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     python::init< double,
                   std::vector< double >,
                   std::vector< double >,
-                  InterpolationType >(),
+                  InterpolationType,
+                  bool >(),
     python::arg( "dof" ),
     python::arg( "energies" ),
     python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the average width table with a single interpolation region"
   )
   .def(
@@ -76,21 +82,25 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "energies" ),
     python::arg( "values" ),
     python::arg( "boundaries" ),
     python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the average width table with multiple interpolation regions"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< double >,
-                  InterpolationType >(),
+                  InterpolationType,
+                  bool >(),
     python::arg( "energies" ),
     python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the average width table with a single interpolation region"
   )
   .def_property(

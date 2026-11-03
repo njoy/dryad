@@ -62,6 +62,8 @@ namespace read {
    *  @param[in] material     the unparsed ENDF material
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    *  @param[in] masses       the atomic mass values read from the ENDF file
    */
   inline std::vector< dryad::Reaction >
@@ -69,6 +71,7 @@ namespace read {
                    const dryad::id::ParticleID& target,
                    const ENDFtk::tree::Material& material,
                    bool normalise,
+                   bool curate,
                    std::map< dryad::id::ParticleID, double >& masses ) {
 
     std::vector< dryad::Reaction > reactions;
@@ -83,7 +86,8 @@ namespace read {
 
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
-          reactions.emplace_back( createReaction( projectile, target, material, mt, normalise, masses ) );
+          reactions.emplace_back( createReaction( projectile, target, material,
+                                                  mt, normalise, curate, masses ) );
         }
         else {
 

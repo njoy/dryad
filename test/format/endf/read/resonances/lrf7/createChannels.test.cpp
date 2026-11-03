@@ -40,7 +40,7 @@ SCENARIO( "createChannels" ) {
         auto boundary_condition = endf::read::resonances::lrf7::createBoundaryCondition( pairs );
         auto kinematics = resonances::Kinematics::NonRelativistic;
         auto chunk = endf::read::resonances::lrf7::createChannels(
-                       projectile, target, boundary_condition, kinematics, pairs, channels, background );
+                       projectile, target, boundary_condition, kinematics, pairs, channels, background, true );
 
         verifyChunk( chunk );
       } // THEN
@@ -67,7 +67,7 @@ SCENARIO( "createChannels" ) {
         auto boundary_condition = endf::read::resonances::lrf7::createBoundaryCondition( pairs );
         auto kinematics = resonances::Kinematics::NonRelativistic;
         auto chunk = endf::read::resonances::lrf7::createChannels(
-                       projectile, target, boundary_condition, kinematics, pairs, channels, background );
+                       projectile, target, boundary_condition, kinematics, pairs, channels, background, true );
 
         verifyChunkWithBackground( chunk );
       } // THEN

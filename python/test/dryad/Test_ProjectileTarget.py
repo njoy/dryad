@@ -19,6 +19,19 @@ from njoy.dryad import TabulatedAngularDistributions
 from njoy.dryad import ReactionProduct
 from njoy.dryad import TwoBodyDistributionData
 from njoy.dryad.id import ParticleID
+from njoy.dryad.id import ChannelID
+from njoy.dryad import TabulatedMultiplicity
+from njoy.dryad import Particle
+from njoy.dryad.resonances import ParticlePair
+from njoy.dryad.resonances import ChannelRadii
+from njoy.dryad.resonances import Channel
+from njoy.dryad.resonances import ResonanceTable
+from njoy.dryad.resonances import Formalism
+from njoy.dryad.resonances import BoundaryCondition
+from njoy.dryad.resonances import SpinGroup
+from njoy.dryad.resonances import CompoundSystem
+from njoy.dryad.resonances import ResonanceParameters
+from njoy.dryad.resonances import TabulatedRadius
 
 def make_projectile_target( normalise ) :
 
@@ -1062,6 +1075,78 @@ class Test_ProjectileTarget( unittest.TestCase ) :
         chunk.calculate_summation_cross_sections()
 
         verify_correct_summation( self, chunk )
+
+    def test_curation( self ) :
+
+        # the data is given explicitly
+        chunk = ProjectileTarget( projectile = ParticleID( 'n' ),
+                                  target = ParticleID( 'Fe56' ),
+                                  type = InteractionType.Nuclear,
+                                  reactions = [ Reaction( ReactionID( 'n,Fe56->n,Fe56' ),
+                                                          TabulatedCrossSection( [ 1., 2., 2., 2., 4. ],    # <-- discontinuity with 3 points
+                                                                                 [ 4., 3., 4., 5., 2. ] ),
+                                                          [ ReactionProduct( ParticleID( 'n' ), TabulatedMultiplicity( [ 1., 2., 2., 2., 4. ],    # <-- discontinuity with 3 points
+                                                                                                                       [ 1., 1., 2., 1., 1. ] ) ) ] ),
+                                                Reaction( ReactionID( 'n,Fe56->g,Fe57[all]' ),
+                                                          TabulatedCrossSection( [ 1., 3., 3., 3., 4. ],    # <-- discontinuity with 3 points
+                                                                                 [ 4., 3., 4., 5., 2. ] ),
+                                                          [ ReactionProduct( ParticleID( 'g' ), TabulatedMultiplicity( [ 1., 3., 3., 3., 4. ],    # <-- discontinuity with 3 points
+                                                                                                                       [ 1., 2., 3., 4., 5. ] ) ) ] ) ] )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.reactions[0].cross_section.is_curated )
+        self.assertEqual( False, chunk.reactions[0].products[0].multiplicity.is_curated )
+        self.assertEqual( False, chunk.reactions[1].cross_section.is_curated )
+        self.assertEqual( False, chunk.reactions[1].products[0].multiplicity.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.reactions[0].cross_section.is_curated )
+        self.assertEqual( True, chunk.reactions[0].products[0].multiplicity.is_curated )
+        self.assertEqual( True, chunk.reactions[1].cross_section.is_curated )
+        self.assertEqual( True, chunk.reactions[1].products[0].multiplicity.is_curated )
+
+        # the data is given explicitly with resonance parameters
+        neutron_mass = 1.00866491574
+        photon_pair = ParticlePair( Particle( ParticleID.photon(), 0, 1, +1 ),
+                                    Particle( ParticleID( 'Cl36[all]' ), 35.65932 * neutron_mass, 0, +1 ) )
+        neutron_pair = ParticlePair( Particle( ParticleID.neutron(), neutron_mass, 0.5, +1 ),
+                                     Particle( ParticleID( 'Cl35' ), 34.66845 * neutron_mass, 1.5, +1 ) )
+
+        resonances = ResonanceParameters(
+                       [ CompoundSystem( 1e-5, 1e+4,
+                                         [ SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                                                 neutron_pair, photon_pair, 0., None,
+                                                                 ChannelRadii( 0. ), False ),
+                                                        Channel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                                                                 neutron_pair, neutron_pair, 0., None,
+                                                                 ChannelRadii( TabulatedRadius( [ 1e-5, 1., 1., 1., 2e+7 ],    # <-- discontinuity with 3 points
+                                                                                                [ 4., 4., 4.5, 5., 5. ] ) ) ) ],
+                                                      ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                                                        ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ) ],
+                                                                      [ 1. ], [ [ 2. ], [ 3. ] ] ),
+                                                      Formalism.ReichMoore, BoundaryCondition.ShiftFactor ) ] ) ] )
+
+        chunk = ProjectileTarget( projectile = ParticleID( 'n' ),
+                                  target = ParticleID( 'Cl35' ),
+                                  type = InteractionType.Nuclear,
+                                  reactions = [ Reaction( ReactionID( 'n,Cl35->n,Cl35' ),
+                                                          TabulatedCrossSection( [ 1., 2., 2., 2., 4. ],    # <-- discontinuity with 3 points
+                                                                                 [ 4., 3., 4., 5., 2. ] ) ) ],
+                                  resonances = resonances )
+
+        # the tabulated data is not curated
+        channel = chunk.resonances.resolved[0].spin_groups[0].channels[1]
+        self.assertEqual( False, channel.channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( False, chunk.reactions[0].cross_section.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        channel = chunk.resonances.resolved[0].spin_groups[0].channels[1]
+        self.assertEqual( True, channel.channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( True, chunk.reactions[0].cross_section.is_curated )
 
     def test_setter_functions( self ) :
 

@@ -239,6 +239,18 @@ namespace resonances{
     }
 
     /**
+     *  @brief Curate the resonance parameter data
+     */
+    void curate() {
+
+      for ( auto& widths : this->widths() ) {
+
+        widths.curate();
+      }
+      this->spacings().curate();
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side

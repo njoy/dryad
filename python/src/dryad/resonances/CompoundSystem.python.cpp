@@ -123,6 +123,12 @@ void wrapCompoundSystem( python::module& module ) {
     "----------\n"
     "    energies : list of float\n"
     "        the energy values"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the compound system data"
   );
 
   // add standard comparison definitions

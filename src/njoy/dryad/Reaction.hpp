@@ -578,6 +578,18 @@ namespace dryad {
     }
 
     /**
+     *  @brief Curate the reaction data
+     */
+    void curate() {
+
+      this->crossSection().curate();
+      for ( auto&& product : this->products() ) {
+
+        product.curate();
+      }
+    }
+
+    /**
      *  @brief Calculate average outgoing energies for all reaction products
      *
      *  @param[in] tolerance   the integration tolerance (default: 1e-8)

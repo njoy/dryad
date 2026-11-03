@@ -11,6 +11,8 @@ from njoy.dryad.resonances import ChannelQuantumNumbers
 from njoy.dryad.resonances import ChannelRadii
 from njoy.dryad.resonances import ParticlePair
 from njoy.dryad.resonances import Kinematics
+from njoy.dryad.resonances import TabulatedRadius
+from njoy.dryad.resonances import TabulatedBackground
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ReactionID
 from njoy.dryad.id import ParticleID
@@ -179,6 +181,40 @@ class Test_Channel( unittest.TestCase ) :
         self.assertAlmostEqual( -1.872686299035523   , proton.shift_factor( energy ) )
         self.assertAlmostEqual(  2.168669356291763e-6, proton.phase_shift( energy ) )
         self.assertAlmostEqual( 0., proton.phase_shift_difference( energy ) )
+
+    def test_curation( self ) :
+
+        identifier = ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' )
+        pair = ParticlePair( Particle( ParticleID.neutron(), 1.00866491574, 0.5, +1 ),
+                             Particle( ParticleID( 'Cl35' ), 34.9688491981, 1.5, +1 ) )
+
+        # the data is given explicitly
+        chunk = Channel( identifier, pair, pair, 0., None,
+                         ChannelRadii( TabulatedRadius( [ 1e-5, 1., 1., 1., 2e+7 ],
+                                                        [ 4., 4., 4.5, 5., 5. ] ),
+                                       TabulatedRadius( [ 1e-5, 2., 2., 2., 2e+7 ],
+                                                        [ 3., 3., 3.5, 4., 4. ] ),
+                                       TabulatedRadius( [ 1e-5, 3., 3., 3., 2e+7 ],
+                                                        [ 2., 2., 2.5, 3., 3. ] ) ),
+                         True, Kinematics.NonRelativistic,
+                         TabulatedBackground( [ 1e-5, 1., 1., 1., 2e+7 ],
+                                              [ 1.+0.j, 1.+0.j, 2.+0.j, 3.+0.j, 3.+0.j ] ) )
+
+        # the tabulated data is not curated
+        radii = chunk.channel_radii
+        self.assertEqual( False, chunk.background.is_curated )
+        self.assertEqual( False, radii.penetrability_radius.is_curated )
+        self.assertEqual( False, radii.shift_factor_radius.is_curated )
+        self.assertEqual( False, radii.phase_shift_radius.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        radii = chunk.channel_radii
+        self.assertEqual( True, chunk.background.is_curated )
+        self.assertEqual( True, radii.penetrability_radius.is_curated )
+        self.assertEqual( True, radii.shift_factor_radius.is_curated )
+        self.assertEqual( True, radii.phase_shift_radius.is_curated )
 
     def test_comparison( self ) :
 

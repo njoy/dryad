@@ -39,7 +39,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Si29" );
-        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1.3e+6, parameters );
+        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1.3e+6, parameters, true );
 
         verifyChunkSi29( chunk );
       } // THEN
@@ -63,7 +63,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cu63" );
-        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1e+5, parameters );
+        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1e+5, parameters, true );
 
         verifyChunkCu63( chunk );
       } // THEN
@@ -89,7 +89,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cl35" );
-        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1.2e+6, parameters );
+        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1.2e+6, parameters, true );
 
         verifyChunkCl35( chunk );
       } // THEN
@@ -113,7 +113,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Sr88" );
-        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 9.5e+5, parameters );
+        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 9.5e+5, parameters, true );
 
         verifyChunkSr88( chunk );
       } // THEN
@@ -137,7 +137,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::helion();
         id::ParticleID target = id::ParticleID( "He4" );
-        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e+4, 2e+7, parameters );
+        auto chunk = endf::read::resonances::lrf7::createCompoundSystem( projectile, target, 1e+4, 2e+7, parameters, true );
 
         verifyChunkHe4( chunk );
       } // THEN

@@ -28,6 +28,8 @@ namespace caseC {
    *  @param[in] naps         the channel radius option as given in the ENDF file
    *  @param[in] nro          the energy dependent scattering radius (if defined, given in fm)
    *  @param[in] endf         the parsed ENDF fully energy-dependent unresolved data
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline auto createCompoundSystem( const dryad::id::ParticleID& projectile,
                                     const dryad::id::ParticleID& target,
@@ -35,9 +37,10 @@ namespace caseC {
                                     double upper,
                                     int naps,
                                     const std::optional< dryad::resonances::TabulatedRadius >& nro,
-                                    const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependent& endf ) {
+                                    const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependent& endf,
+                                    bool curate ) {
 
-    auto groups = caseC::createSpinGroups( projectile, target, naps, nro, lower, upper, endf );
+    auto groups = caseC::createSpinGroups( projectile, target, naps, nro, lower, upper, endf, curate );
     return dryad::resonances::UnresolvedCompoundSystem( lower, upper, std::move( groups ) );
   }
 

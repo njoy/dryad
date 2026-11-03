@@ -241,6 +241,12 @@ void wrapReaction( python::module& module ) {
   )
   .def(
 
+    "curate",
+    &Component::curate,
+    "Curate the reaction data"
+  )
+  .def(
+
     "calculate_average_energy",
     &Component::calculateAverageEnergy,
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,

@@ -19,6 +19,7 @@ from njoy.dryad.resonances import UnresolvedSpinGroup
 from njoy.dryad.resonances import UnresolvedCompoundSystem
 from njoy.dryad.resonances import TabulatedAverageWidths
 from njoy.dryad.resonances import TabulatedLevelSpacing
+from njoy.dryad.resonances import TabulatedRadius
 from njoy.dryad.resonances import ResonanceParameters
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
@@ -179,6 +180,63 @@ class Test_ResonanceParameters( unittest.TestCase ) :
         self.assertEqual( False, chunk.has_parameters )
 
         self.assertEqual( 0, len( chunk.resolved ) )
+        self.assertEqual( None, chunk.unresolved )
+
+    def test_curation( self ) :
+
+        neutron_mass = 1.00866491574
+
+        photon_pair = ParticlePair( Particle( ParticleID.photon(), 0, 1, +1 ),
+                                    Particle( ParticleID( 'Cl36[all]' ), 35.65932 * neutron_mass, 0, +1 ) )
+        neutron_pair = ParticlePair( Particle( ParticleID.neutron(), neutron_mass, 0.5, +1 ),
+                                     Particle( ParticleID( 'Cl35' ), 34.66845 * neutron_mass, 1.5, +1 ) )
+
+        spingroup = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                          neutron_pair, photon_pair, 0., None,
+                                          ChannelRadii( 0. ), False ),
+                                 Channel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                                          neutron_pair, neutron_pair, 0., None,
+                                          ChannelRadii( TabulatedRadius( [ 1e-5, 1., 1., 1., 2e+7 ],    # <-- threshold with 3 points
+                                                                         [ 4., 4., 4.5, 5., 5. ] ) ) ) ],
+                               ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                                 ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ) ],
+                                               [ 1. ], [ [ 2. ], [ 3. ] ] ),
+                               Formalism.ReichMoore, BoundaryCondition.ShiftFactor )
+
+        resolved = CompoundSystem( 1e-5, 1e+4, [ spingroup ] )
+
+        unresolved = UnresolvedCompoundSystem(
+                       1e+4, 1e+6,
+                       [ UnresolvedSpinGroup( [ UnresolvedChannel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                                                                   neutron_pair, neutron_pair, 0., None,
+                                                                   ChannelRadii( 4.822220 ) ) ],
+                                              UnresolvedResonanceTable( [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ) ],
+                                                                        [ TabulatedAverageWidths( [ 1e+4, 1e+5, 1e+5, 1e+5, 1e+6 ],    # <-- threshold with 3 points
+                                                                                                  [ 0.1, 0.2, 0.3, 0.35, 0.4 ] ) ],
+                                                                        TabulatedLevelSpacing( [ 1e+4, 1e+6 ], [ 10., 40. ] ) ) ) ] )
+
+        # the data is given explicitly
+        chunk = ResonanceParameters( [ resolved ], unresolved )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.resolved[0].spin_groups[0].channels[1].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( False, chunk.unresolved.spin_groups[0].resonance_table.widths[0].is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.resolved[0].spin_groups[0].channels[1].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( True, chunk.unresolved.spin_groups[0].resonance_table.widths[0].is_curated )
+
+        # the data is given explicitly without unresolved data
+        chunk = ResonanceParameters( [ resolved ] )
+
+        # the tabulated data can be curated
+        self.assertEqual( False, chunk.resolved[0].spin_groups[0].channels[1].channel_radii.penetrability_radius.is_curated )
+
+        chunk.curate()
+
+        self.assertEqual( True, chunk.resolved[0].spin_groups[0].channels[1].channel_radii.penetrability_radius.is_curated )
         self.assertEqual( None, chunk.unresolved )
 
     def test_comparison( self ) :

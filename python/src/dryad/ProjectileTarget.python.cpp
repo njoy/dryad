@@ -66,7 +66,10 @@ void wrapProjectileTarget( python::module& module ) {
     "        the optional covariance data\n"
     "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data"
+    "        all probability data\n"
+    "    curate : bool, default False\n"
+    "        option to indicate whether or not to curate\n"
+    "        all tabulated data"
   );
 
   // wrap the component
@@ -81,6 +84,7 @@ void wrapProjectileTarget( python::module& module ) {
                   std::optional< ParticleDatabase >,
                   std::optional< ResonanceParameters >,
                   std::optional< CovarianceData >,
+                  bool,
                   bool >(),
     python::arg( "documentation" ), python::arg( "projectile" ),
     python::arg( "target" ), python::arg( "type" ),
@@ -89,6 +93,7 @@ void wrapProjectileTarget( python::module& module ) {
     python::arg( "resonances" ) = std::nullopt,
     python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the ProjectileTarget with documentation"
   )
   .def(
@@ -100,6 +105,7 @@ void wrapProjectileTarget( python::module& module ) {
                   std::optional< ParticleDatabase >,
                   std::optional< ResonanceParameters >,
                   std::optional< CovarianceData >,
+                  bool,
                   bool >(),
     python::arg( "projectile" ),
     python::arg( "target" ),
@@ -109,6 +115,7 @@ void wrapProjectileTarget( python::module& module ) {
     python::arg( "resonances" ) = std::nullopt,
     python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the ProjectileTarget without documentation"
   )
   .def_property(
@@ -242,15 +249,22 @@ void wrapProjectileTarget( python::module& module ) {
     &Component::normalise,
     "Normalise the distribution data"
   )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the data"
+  )
   .def_static(
 
     "from_endf_file",
-    [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
+    [] ( const std::string& filename, bool normalise, bool curate ) -> decltype(auto) {
 
-      return njoy::format::endf::read::createProjectileTargetFromFile( filename, normalise );
+      return njoy::format::endf::read::createProjectileTargetFromFile( filename, normalise, curate );
     },
     python::arg( "filename" ),
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Create ProjectileTarget data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a ProjectileTarget.\n\n"
@@ -260,7 +274,10 @@ void wrapProjectileTarget( python::module& module ) {
     "        the ENDF file name\n"
     "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data"
+    "        all probability data\n"
+    "    curate : bool, default False\n"
+    "        option to indicate whether or not to curate\n"
+    "        all tabulated data"
   )
   .def_static(
 

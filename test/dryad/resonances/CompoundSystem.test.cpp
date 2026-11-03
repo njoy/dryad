@@ -152,6 +152,55 @@ SCENARIO( "CompoundSystem" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "a CompoundSystem with tabulated data that is not curated" ) {
+
+    ParticlePair photon_pair( Particle( id::ParticleID::photon(), 0, 1, +1 ),
+                              Particle( id::ParticleID( "Cl36[all]" ), 35.65932 * constants::neutron_mass, 0, +1 ) );
+    ParticlePair neutron_pair( Particle( id::ParticleID::neutron(), constants::neutron_mass, 0.5, +1 ),
+                               Particle( id::ParticleID( "Cl35" ), 34.66845 * constants::neutron_mass, 1.5, +1 ) );
+
+    WHEN( "the data is given explicitly" ) {
+
+      CompoundSystem chunk( 1e-5, 1e+4,
+                            { SpinGroup( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                                             neutron_pair, photon_pair, 0., std::nullopt,
+                                             ChannelRadii( 0. ), false },
+                                           { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                                             neutron_pair, neutron_pair, 0., std::nullopt,
+                                             ChannelRadii( TabulatedRadius( { 1e-5, 1., 1., 1., 2e+7 },  // <-- discontinuity of 3 points
+                                                                            { 4., 4., 4.5, 5., 5. } ) ) } },
+                                         { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                                             id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                                           { 1. }, { { 2. }, { 3. } } },
+                                         Formalism::ReichMoore, BoundaryCondition::ShiftFactor ),
+                              SpinGroup( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                                             neutron_pair, photon_pair, 0., std::nullopt,
+                                             ChannelRadii( 0. ), false },
+                                           { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
+                                             neutron_pair, neutron_pair, 0., std::nullopt,
+                                             ChannelRadii( TabulatedRadius( { 1e-5, 2., 2., 2., 2e+7 },  // <-- discontinuity of 3 points
+                                                                            { 4., 4., 4.5, 5., 5. } ) ) } },
+                                         { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                                             id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
+                                           { 1. }, { { 2. }, { 3. } } },
+                                         Formalism::ReichMoore, BoundaryCondition::ShiftFactor ) } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< TabulatedRadius >( chunk.spinGroups()[0].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( false == std::get< TabulatedRadius >( chunk.spinGroups()[1].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedRadius >( chunk.spinGroups()[0].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( true == std::get< TabulatedRadius >( chunk.spinGroups()[1].channels()[1].channelRadii().penetrabilityRadius() ).isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of CompoundSystem are given" ) {

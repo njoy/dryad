@@ -33,13 +33,16 @@ namespace caseC {
    *  @param[in] lower        the lower energy limit of the range (eV)
    *  @param[in] upper        the upper energy limit of the range (eV)
    *  @param[in] endf         the parsed ENDF fully energy-dependent unresolved data
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline auto createSpinGroups( const dryad::id::ParticleID& projectile,
                                 const dryad::id::ParticleID& target,
                                 int naps,
                                 const std::optional< dryad::resonances::TabulatedRadius >& nro,
                                 double lower, double upper,
-                                const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependent& endf ) {
+                                const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependent& endf,
+                                bool curate ) {
 
     std::vector< dryad::resonances::UnresolvedSpinGroup > groups;
 
@@ -67,7 +70,7 @@ namespace caseC {
         // resolve the elastic channel's quantum numbers
         auto numbers = retrieveQuantumNumber( l, jvalue.AJ(), available );
 
-        auto [channels, table] = caseC::createChannelData( projectile, target, incident, radii, numbers, jvalue );
+        auto [channels, table] = caseC::createChannelData( projectile, target, incident, radii, numbers, jvalue, curate );
 
         groups.emplace_back( std::move( channels ), std::move( table ) );
       }

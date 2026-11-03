@@ -123,6 +123,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the scattering function
+     */
+    TabulatedScatteringFunction& scatteringFunction() {
+
+      return this->scattering_;
+    }
+
+    /**
      *  @brief Set the scattering function
      *
      *  @param[in] scattering   the scattering function
@@ -232,6 +240,21 @@ namespace dryad {
         for ( auto& profile : this->comptonProfiles().value() ) {
 
           profile.normalise();
+        }
+      }
+    }
+
+    /**
+     *  @brief Curate the distribution data
+     */
+    void curate() {
+
+      this->scatteringFunction().curate();
+      if ( this->comptonProfiles().has_value() ) {
+
+        for ( auto& profile : this->comptonProfiles().value() ) {
+
+          profile.curate();
         }
       }
     }

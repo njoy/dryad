@@ -17,7 +17,6 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
 
         def verify_chunk( self, chunk ) :
 
-            # verify content
             self.assertEqual( 4, chunk.number_points )
             self.assertEqual( 1, chunk.number_regions )
             self.assertEqual( 4, len( chunk.grid ) )
@@ -29,20 +28,21 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 3., chunk.grid[2] )
             self.assertAlmostEqual( 4., chunk.grid[3] )
             self.assertAlmostEqual( -0.5 , chunk.distributions[0].cosines[0] )
-            self.assertAlmostEqual(  0.5 , chunk.distributions[0].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[0].cosines[1] )
             self.assertAlmostEqual( -0.5 , chunk.distributions[1].cosines[0] )
-            self.assertAlmostEqual(  0.02, chunk.distributions[1].cosines[1] )
-            self.assertAlmostEqual(  0.5 , chunk.distributions[1].cosines[2] )
+            self.assertAlmostEqual( 0.02, chunk.distributions[1].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[1].cosines[2] )
             self.assertAlmostEqual( -0.5 , chunk.distributions[2].cosines[0] )
-            self.assertAlmostEqual(  0.2 , chunk.distributions[2].cosines[1] )
-            self.assertAlmostEqual(  0.5 , chunk.distributions[2].cosines[2] )
-            self.assertAlmostEqual( -1.  , chunk.distributions[3].cosines[0] )
-            self.assertAlmostEqual(  0.8 , chunk.distributions[3].cosines[1] )
-            self.assertAlmostEqual(  1.  , chunk.distributions[3].cosines[2] )
+            self.assertAlmostEqual( 0.2 , chunk.distributions[2].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[2].cosines[2] )
+            self.assertAlmostEqual( -1. , chunk.distributions[3].cosines[0] )
+            self.assertAlmostEqual( 0.8 , chunk.distributions[3].cosines[1] )
+            self.assertAlmostEqual( 1. , chunk.distributions[3].cosines[2] )
             self.assertEqual( 3, chunk.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( True, chunk.is_curated )
 
-            # verify average cosines
+            # average cosines
             cosines = chunk.average_cosines
             self.assertAlmostEqual( 1., cosines.lower_energy_limit )
             self.assertAlmostEqual( 4., cosines.upper_energy_limit )
@@ -56,7 +56,7 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., cosines.energies[1] )
             self.assertAlmostEqual( 3., cosines.energies[2] )
             self.assertAlmostEqual( 4., cosines.energies[3] )
-            self.assertAlmostEqual( 0.       , cosines.values[0] )
+            self.assertAlmostEqual( 0. , cosines.values[0] )
             self.assertAlmostEqual( 0.02 / 3., cosines.values[1] )
             self.assertAlmostEqual( 0.2 / 3. , cosines.values[2] )
             self.assertAlmostEqual( 0.8 / 3. , cosines.values[3] )
@@ -64,9 +64,8 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, cosines.interpolants[0] )
             self.assertEqual( True, cosines.is_linearised )
 
-        def verify_chunk_jump( self, chunk ) :
+        def verify_chunk_with_jump_curated( self, chunk ) :
 
-            # verify content
             self.assertEqual( 5, chunk.number_points )
             self.assertEqual( 2, chunk.number_regions )
             self.assertEqual( 5, len( chunk.grid ) )
@@ -79,25 +78,64 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 3., chunk.grid[3] )
             self.assertAlmostEqual( 4., chunk.grid[4] )
             self.assertAlmostEqual( -0.5 , chunk.distributions[0].cosines[0] )
-            self.assertAlmostEqual(  0.5 , chunk.distributions[0].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[0].cosines[1] )
             self.assertAlmostEqual( -0.5 , chunk.distributions[1].cosines[0] )
-            self.assertAlmostEqual(  0.02, chunk.distributions[1].cosines[1] )
-            self.assertAlmostEqual(  0.5 , chunk.distributions[1].cosines[2] )
+            self.assertAlmostEqual( 0.02, chunk.distributions[1].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[1].cosines[2] )
             self.assertAlmostEqual( -0.5 , chunk.distributions[2].cosines[0] )
-            self.assertAlmostEqual(  1.0 , chunk.distributions[2].cosines[1] )
-            self.assertAlmostEqual(  0.5 , chunk.distributions[2].cosines[2] )
+            self.assertAlmostEqual( 1.0 , chunk.distributions[2].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[2].cosines[2] )
             self.assertAlmostEqual( -0.5 , chunk.distributions[3].cosines[0] )
-            self.assertAlmostEqual(  0.2 , chunk.distributions[3].cosines[1] )
-            self.assertAlmostEqual(  0.5 , chunk.distributions[3].cosines[2] )
-            self.assertAlmostEqual( -1.  , chunk.distributions[4].cosines[0] )
-            self.assertAlmostEqual(  0.8 , chunk.distributions[4].cosines[1] )
-            self.assertAlmostEqual(  1.  , chunk.distributions[4].cosines[2] )
+            self.assertAlmostEqual( 0.2 , chunk.distributions[3].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[3].cosines[2] )
+            self.assertAlmostEqual( -1. , chunk.distributions[4].cosines[0] )
+            self.assertAlmostEqual( 0.8 , chunk.distributions[4].cosines[1] )
+            self.assertAlmostEqual( 1. , chunk.distributions[4].cosines[2] )
             self.assertEqual( 1, chunk.boundaries[0] )
             self.assertEqual( 4, chunk.boundaries[1] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+            self.assertEqual( True, chunk.is_curated )
 
-        # the data is given explicitly
+        def verify_chunk_with_jump_not_curated( self, chunk ) :
+
+            self.assertEqual( 6, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
+            self.assertEqual( 6, len( chunk.grid ) )
+            self.assertEqual( 6, len( chunk.distributions ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.grid[0] )
+            self.assertAlmostEqual( 2., chunk.grid[1] )
+            self.assertAlmostEqual( 2., chunk.grid[2] )
+            self.assertAlmostEqual( 2., chunk.grid[3] )
+            self.assertAlmostEqual( 3., chunk.grid[4] )
+            self.assertAlmostEqual( 4., chunk.grid[5] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[0].cosines[0] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[0].cosines[1] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[1].cosines[0] )
+            self.assertAlmostEqual( 0.02, chunk.distributions[1].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[1].cosines[2] )
+            self.assertAlmostEqual( -0.9 , chunk.distributions[2].cosines[0] )
+            self.assertAlmostEqual( 0.8 , chunk.distributions[2].cosines[1] )
+            self.assertAlmostEqual( 0.9 , chunk.distributions[2].cosines[2] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[3].cosines[0] )
+            self.assertAlmostEqual( 1.0 , chunk.distributions[3].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[3].cosines[2] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[4].cosines[0] )
+            self.assertAlmostEqual( 0.2 , chunk.distributions[4].cosines[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[4].cosines[2] )
+            self.assertAlmostEqual( -1. , chunk.distributions[5].cosines[0] )
+            self.assertAlmostEqual( 0.8 , chunk.distributions[5].cosines[1] )
+            self.assertAlmostEqual( 1. , chunk.distributions[5].cosines[2] )
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 5, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_curated )
+
+        # linearised data without boundaries and no jumps
+
         chunk = UniformAngularDistributions( grid = [ 1., 2., 3., 4. ],
                                              distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
@@ -105,9 +143,35 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
                                                                UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
                                              interpolant = InterpolationType.LinearLinear )
 
+        # a UniformAngularDistributions can be constructed and members can be tested
         verify_chunk( self, chunk )
 
-        # the data is given explicitly with a jump that uses more than 2 x values
+        # linearised data with a jump that consist of more than 2 points (curate is not requested)
+        # note: by default (curate = false), the extraneous points in between the first and
+        # last x value in the jump are kept. boundaries always point to the first point
+        # in the jump, regardless of curation.
+
+        chunk = UniformAngularDistributions( grid = [ 1., 2., 2., 2., 3., 4. ],
+                                             distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.9, 0.8, 0.9 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+
+        # a UniformAngularDistributions can be constructed and members can be tested
+        verify_chunk_with_jump_not_curated( self, chunk )
+
+        # the table can be curated on demand and the extraneous points are removed
+        chunk.curate()
+
+        verify_chunk_with_jump_curated( self, chunk )
+
+        # linearised data with a jump that consist of more than 2 points (curate is requested)
+        # note: by default (curate = false), the extraneous points in between the first and
+        # last x value in the jump are kept. boundaries always point to the first point
+        # in the jump, regardless of curation.
+
         chunk = UniformAngularDistributions( grid = [ 1., 2., 2., 2., 3., 4. ],
                                              distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
@@ -115,31 +179,86 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
                                                                UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
-                                             interpolant = InterpolationType.LinearLinear )
+                                             interpolant = InterpolationType.LinearLinear,
+                                             curate = True )
 
-        verify_chunk_jump( self, chunk )
+        # a UniformAngularDistributions can be constructed and members can be tested
+        verify_chunk_with_jump_curated( self, chunk )
 
-        # the data is given explicitly with a jump at the beginning
+        # calling curate() again on an already curated table does not change anything
+        chunk.curate()
+
+        verify_chunk_with_jump_curated( self, chunk )
+
+        # data with a jump at the beginning
+        # note: at construction time, the first point is removed
+
         chunk = UniformAngularDistributions( grid = [ 1., 1., 2., 3., 4. ],
                                              distributions = [ UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
-                                                               UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
-                                             interpolant = InterpolationType.LinearLinear )
+                                                               UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
 
-        verify_chunk( self, chunk )
+        # a UniformAngularDistributions can be constructed and members can be tested
+        self.assertEqual( 4, chunk.number_points )
+        self.assertEqual( 1, chunk.number_regions )
+        self.assertEqual( 4, len( chunk.grid ) )
+        self.assertEqual( 4, len( chunk.distributions ) )
+        self.assertEqual( 1, len( chunk.boundaries ) )
+        self.assertEqual( 1, len( chunk.interpolants ) )
+        self.assertAlmostEqual( 1., chunk.grid[0] )
+        self.assertAlmostEqual( 2., chunk.grid[1] )
+        self.assertAlmostEqual( 3., chunk.grid[2] )
+        self.assertAlmostEqual( 4., chunk.grid[3] )
+        self.assertAlmostEqual( -0.5 , chunk.distributions[0].cosines[0] )
+        self.assertAlmostEqual( 0.5 , chunk.distributions[0].cosines[1] )
+        self.assertAlmostEqual( -0.5 , chunk.distributions[1].cosines[0] )
+        self.assertAlmostEqual( 0.02, chunk.distributions[1].cosines[1] )
+        self.assertAlmostEqual( 0.5 , chunk.distributions[1].cosines[2] )
+        self.assertAlmostEqual( -0.5 , chunk.distributions[2].cosines[0] )
+        self.assertAlmostEqual( 0.2 , chunk.distributions[2].cosines[1] )
+        self.assertAlmostEqual( 0.5 , chunk.distributions[2].cosines[2] )
+        self.assertAlmostEqual( -1. , chunk.distributions[3].cosines[0] )
+        self.assertAlmostEqual( 0.8 , chunk.distributions[3].cosines[1] )
+        self.assertAlmostEqual( 1. , chunk.distributions[3].cosines[2] )
+        self.assertEqual( 3, chunk.boundaries[0] )
+        self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 
-        # the data is given explicitly with a jump at the end
+        # data with a jump at the end
+        # note: at construction time, the last point is removed
+
         chunk = UniformAngularDistributions( grid = [ 1., 2., 3., 4., 4. ],
                                              distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ),
-                                                               UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ) ],
-                                             interpolant = InterpolationType.LinearLinear )
+                                                               UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ) ] )
 
-        verify_chunk( self, chunk )
+        # a UniformAngularDistributions can be constructed and members can be tested
+        self.assertEqual( 4, chunk.number_points )
+        self.assertEqual( 1, chunk.number_regions )
+        self.assertEqual( 4, len( chunk.grid ) )
+        self.assertEqual( 4, len( chunk.distributions ) )
+        self.assertEqual( 1, len( chunk.boundaries ) )
+        self.assertEqual( 1, len( chunk.interpolants ) )
+        self.assertAlmostEqual( 1., chunk.grid[0] )
+        self.assertAlmostEqual( 2., chunk.grid[1] )
+        self.assertAlmostEqual( 3., chunk.grid[2] )
+        self.assertAlmostEqual( 4., chunk.grid[3] )
+        self.assertAlmostEqual( -0.5 , chunk.distributions[0].cosines[0] )
+        self.assertAlmostEqual( 0.5 , chunk.distributions[0].cosines[1] )
+        self.assertAlmostEqual( -0.5 , chunk.distributions[1].cosines[0] )
+        self.assertAlmostEqual( 0.02, chunk.distributions[1].cosines[1] )
+        self.assertAlmostEqual( 0.5 , chunk.distributions[1].cosines[2] )
+        self.assertAlmostEqual( -0.5 , chunk.distributions[2].cosines[0] )
+        self.assertAlmostEqual( 0.2 , chunk.distributions[2].cosines[1] )
+        self.assertAlmostEqual( 0.5 , chunk.distributions[2].cosines[2] )
+        self.assertAlmostEqual( -1. , chunk.distributions[3].cosines[0] )
+        self.assertAlmostEqual( 0.8 , chunk.distributions[3].cosines[1] )
+        self.assertAlmostEqual( 1. , chunk.distributions[3].cosines[2] )
+        self.assertEqual( 3, chunk.boundaries[0] )
+        self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 
     def test_comparison( self ) :
 
@@ -177,33 +296,34 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
         with self.assertRaises( Exception ) :
 
             chunk = UniformAngularDistributions( grid = [ 1. ],
-                                                 distributions = [ [ -0.5, 0.5 ], UniformDistributionType.Discrete ] )
+                                                 distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ] )
 
         with self.assertRaises( Exception ) :
 
             chunk = UniformAngularDistributions( grid = [],
-                                                 distributions = [ [ -0.5, 0.5 ], UniformDistributionType.Discrete ] )
+                                                 distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = UniformAngularDistributions( grid = [ 1. ], distributions = [] )
+            chunk = UniformAngularDistributions( grid = [ 1. ],
+                                                 distributions = [] )
 
-        # the x and y grid do not have the same number of points
+        # the x and f(y) grid do not have the same number of points
         with self.assertRaises( Exception ) :
 
             chunk = UniformAngularDistributions( grid = [ 1., 2., 3., 4. ],
                                                  distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ] )
+                                                                   UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                                   UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ) ] )
 
         # the boundaries and interpolants do not have the same size
         with self.assertRaises( Exception ) :
 
             chunk = UniformAngularDistributions( grid = [ 1., 2., 3., 4. ],
                                                  distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ],
+                                                                   UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                                   UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                                                   UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
                                                  boundaries = [ 3 ],
                                                  interpolants = [] )
 
@@ -212,18 +332,18 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
 
             chunk = UniformAngularDistributions( grid = [ 1., 3., 2., 4. ],
                                                  distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ] )
+                                                                   UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                                   UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                                                   UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
 
         # the last boundary does not point to the last point
         with self.assertRaises( Exception ) :
 
             chunk = UniformAngularDistributions( grid = [ 1., 2., 3., 4. ],
                                                  distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ],
+                                                                   UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                                   UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                                                   UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
                                                  boundaries = [ 2 ],
                                                  interpolants = [ InterpolationType.LinearLinear ] )
 

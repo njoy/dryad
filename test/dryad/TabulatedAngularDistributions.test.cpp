@@ -13,7 +13,10 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 
 void verifyChunk( const TabulatedAngularDistributions&, bool );
-void verifyChunkWithJump( const TabulatedAngularDistributions&, bool );
+void verifyChunkWithJumpCurated( const TabulatedAngularDistributions& );
+void verifyChunkWithJumpNotCurated( const TabulatedAngularDistributions& );
+void verifyChunkWithDistributionJumpCurated( const TabulatedAngularDistributions& );
+void verifyChunkWithDistributionJumpNotCurated( const TabulatedAngularDistributions& );
 
 SCENARIO( "TabulatedAngularDistributions" ) {
 
@@ -21,8 +24,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 1.0, 1.0 } },
         { { -1., +1. }, { 0.98, 1.02 } },
@@ -31,7 +34,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedAngularDistributions chunk1( std::move( grid ), std::move( distributions ),
+      TabulatedAngularDistributions chunk1( grid, distributions,
                                             interpolant, false );
       TabulatedAngularDistributions chunk2( std::move( grid ), std::move( distributions ),
                                             interpolant, true );
@@ -47,16 +50,16 @@ SCENARIO( "TabulatedAngularDistributions" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "data with a jump that consist of more than 2 points" ) {
+  GIVEN( "linearised data with a jump that consist of more than 2 points" ) {
 
-    // note: at construction time, the extraneous points in between the first and last
-    //       x value in the jump are removed. boundaries always point to the first point
-    //       in the jump
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump are kept. boundaries always point to the first point
+    //       in the jump, regardless of curation.
 
-    WHEN( "the data is given explicitly" ) {
+    WHEN( "the data is given explicitly and curate is not requested" ) {
 
-      const std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 1.0, 1.0 } },
         { { -1., +1. }, { 0.98, 1.02 } },
@@ -66,12 +69,119 @@ SCENARIO( "TabulatedAngularDistributions" ) {
         { { -1., +1. }, { 0.2, 1.8 } }
       };
 
-      TabulatedAngularDistributions
-      chunk( std::move( grid ), std::move( distributions ) );
+      TabulatedAngularDistributions chunk( std::move( grid ), std::move( distributions ) );
 
       THEN( "a TabulatedAngularDistributions can be constructed and members can be tested" ) {
 
-        verifyChunkWithJump( chunk, false );
+        verifyChunkWithJumpNotCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be linearised and the extraneous point in the jump is removed" ) {
+
+        TabulatedAngularDistributions linear = chunk.linearise();
+
+        verifyChunkWithJumpCurated( linear );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 1.0, 1.0 } },
+        { { -1., +1. }, { 0.98, 1.02 } },
+        { { -1., +1. }, { 0.0, 2.0 } },
+        { { -1., +1. }, { 0.3, 1.7 } },
+        { { -1., +1. }, { 0.8, 1.2 } },
+        { { -1., +1. }, { 0.2, 1.8 } }
+      };
+
+      TabulatedAngularDistributions chunk( std::move( grid ), std::move( distributions ),
+                                           InterpolationType::LinearLinear, false, true );
+
+      THEN( "a TabulatedAngularDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "linearised data with a jump that consist of more than 2 points in one of the distributions" ) {
+
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump of a distribution are kept. curation of the
+    //       distributions removes them from both the pdf and the cdf.
+
+    WHEN( "the data is given explicitly and curate is not requested" ) {
+
+      std::vector< double > grid = { 1., 2., 3. };
+      std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 1.0, 1.0 } },
+        { { -1., -0.5, 0., 0., 0., +1. }, { 0., 1., 2., 3., 1., 2. } }, // <-- jump of 3 x values
+        { { -1., +1. }, { 0.5, 1.5 } }
+      };
+
+      TabulatedAngularDistributions chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a TabulatedAngularDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithDistributionJumpNotCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        chunk.curate();
+
+        verifyChunkWithDistributionJumpCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be linearised and the extraneous point in the jump is removed" ) {
+
+        TabulatedAngularDistributions linear = chunk.linearise();
+
+        verifyChunkWithDistributionJumpCurated( linear );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      std::vector< double > grid = { 1., 2., 3. };
+      std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 1.0, 1.0 } },
+        { { -1., -0.5, 0., 0., 0., +1. }, { 0., 1., 2., 3., 1., 2. } }, // <-- jump of 3 x values
+        { { -1., +1. }, { 0.5, 1.5 } }
+      };
+
+      TabulatedAngularDistributions chunk( std::move( grid ), std::move( distributions ),
+                                           InterpolationType::LinearLinear, false, true );
+
+      THEN( "a TabulatedAngularDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithDistributionJumpCurated( chunk );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunkWithDistributionJumpCurated( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -82,8 +192,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.0, 2.0 } },
         { { -1., +1. }, { 1.0, 1.0 } },
@@ -108,8 +218,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 1.0, 1.0 } },
         { { -1., +1. }, { 0.98, 1.02 } },
@@ -205,8 +315,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the boundaries and interpolants do not have the same size" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.5, 0.5 } },
         { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
@@ -227,8 +337,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the x grid is not sorted" ) {
 
-      const std::vector< double > grid = { 1., 3., 2., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 3., 2., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.5, 0.5 } },
         { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
@@ -245,8 +355,8 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
     WHEN( "the last boundary does not point to the last point" ) {
 
-      const std::vector< double > grid = { 1., 2., 3., 4. };
-      const std::vector< TabulatedAngularDistribution > distributions = {
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
 
         { { -1., +1. }, { 0.5, 0.5 } },
         { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
@@ -331,6 +441,7 @@ void verifyChunk( const TabulatedAngularDistributions& chunk, bool normalise ) {
   CHECK_THAT( 2.0 / normalisation, WithinRel( chunk.distributions()[3].cdf().values()[1] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // evaluate
 
@@ -445,9 +556,7 @@ void verifyChunk( const TabulatedAngularDistributions& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
 }
 
-void verifyChunkWithJump( const TabulatedAngularDistributions& chunk, bool normalise ) {
-
-  double normalisation = normalise ? 2.0 : 1.0;
+void verifyChunkWithJumpCurated( const TabulatedAngularDistributions& chunk ) {
 
   CHECK( 5 == chunk.numberPoints() );
   CHECK( 2 == chunk.numberRegions() );
@@ -480,18 +589,372 @@ void verifyChunkWithJump( const TabulatedAngularDistributions& chunk, bool norma
   CHECK_THAT(  1.  , WithinRel( chunk.distributions()[3].pdf().cosines()[1] ) );
   CHECK_THAT( -1.  , WithinRel( chunk.distributions()[4].pdf().cosines()[0] ) );
   CHECK_THAT(  1.  , WithinRel( chunk.distributions()[4].pdf().cosines()[1] ) );
-  CHECK_THAT(  1.0  / normalisation, WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  1.0  / normalisation, WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
-  CHECK_THAT(  0.98 / normalisation, WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  1.02 / normalisation, WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
-  CHECK_THAT(  0.3  / normalisation, WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
-  CHECK_THAT(  1.7  / normalisation, WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
-  CHECK_THAT(  0.8  / normalisation, WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
-  CHECK_THAT(  1.2  / normalisation, WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
-  CHECK_THAT(  0.2  / normalisation, WithinRel( chunk.distributions()[4].pdf().values()[0] ) );
-  CHECK_THAT(  1.8  / normalisation, WithinRel( chunk.distributions()[4].pdf().values()[1] ) );
+  CHECK_THAT(  1.0 , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  1.0 , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.98, WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  1.02, WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.3 , WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT(  1.7 , WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK_THAT(  0.8 , WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
+  CHECK_THAT(  1.2 , WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
+  CHECK_THAT(  0.2 , WithinRel( chunk.distributions()[4].pdf().values()[0] ) );
+  CHECK_THAT(  1.8 , WithinRel( chunk.distributions()[4].pdf().values()[1] ) );
+  CHECK( 2 == chunk.distributions()[0].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().values().size() );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[0].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[0].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[1].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[1].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[2].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[2].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[3].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[3].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[4].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[4].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[3].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[3].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[4].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[4].cdf().values()[1] ) );
   CHECK( 1 == chunk.boundaries()[0] );
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
+}
+
+void verifyChunkWithJumpNotCurated( const TabulatedAngularDistributions& chunk ) {
+
+  CHECK( 6 == chunk.numberPoints() );
+  CHECK( 2 == chunk.numberRegions() );
+  CHECK( 6 == chunk.grid().size() );
+  CHECK( 6 == chunk.distributions().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[3] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.grid()[5] ) );
+  CHECK( 2 == chunk.distributions()[0].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[0].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[3].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[3].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[4].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[4].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[5].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[5].pdf().values().size() );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[0].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[0].pdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[1].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[1].pdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[2].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[2].pdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[3].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[3].pdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[4].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[4].pdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[5].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[5].pdf().cosines()[1] ) );
+  CHECK_THAT(  1.0 , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  1.0 , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.98, WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  1.02, WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK_THAT(  0.3 , WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
+  CHECK_THAT(  1.7 , WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
+  CHECK_THAT(  0.8 , WithinRel( chunk.distributions()[4].pdf().values()[0] ) );
+  CHECK_THAT(  1.2 , WithinRel( chunk.distributions()[4].pdf().values()[1] ) );
+  CHECK_THAT(  0.2 , WithinRel( chunk.distributions()[5].pdf().values()[0] ) );
+  CHECK_THAT(  1.8 , WithinRel( chunk.distributions()[5].pdf().values()[1] ) );
+  CHECK( 2 == chunk.distributions()[0].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[3].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[4].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[5].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[5].cdf().values().size() );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[0].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[0].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[1].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[1].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[2].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[2].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[3].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[3].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[4].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[4].cdf().cosines()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( chunk.distributions()[5].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.distributions()[5].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[3].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[3].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[4].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[4].cdf().values()[1] ) );
+  CHECK_THAT(  0.0 , WithinRel( chunk.distributions()[5].cdf().values()[0] ) );
+  CHECK_THAT(  2.0 , WithinRel( chunk.distributions()[5].cdf().values()[1] ) );
+  CHECK( 1 == chunk.boundaries()[0] );
+  CHECK( 5 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
+}
+
+void verifyChunkWithDistributionJumpCurated( const TabulatedAngularDistributions& chunk ) {
+
+  CHECK( 3 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 3 == chunk.grid().size() );
+  CHECK( 3 == chunk.distributions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
+
+  // distribution 0: no jump
+  CHECK( 2 == chunk.distributions()[0].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[0].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().interpolants().size() );
+  CHECK_THAT( -1., WithinRel( chunk.distributions()[0].pdf().cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].pdf().cosines()[1] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[0].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().interpolants().size() );
+  CHECK_THAT( -1., WithinRel( chunk.distributions()[0].cdf().cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].cdf().cosines()[1] ) );
+  CHECK_THAT(  0., WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2., WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[0].isCurated() );
+
+  // distribution 1: jump with the extraneous point removed
+  CHECK( 5 == chunk.distributions()[1].pdf().cosines().size() );
+  CHECK( 5 == chunk.distributions()[1].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().interpolants().size() );
+  CHECK_THAT( -1. , WithinRel( chunk.distributions()[1].pdf().cosines()[0] ) );
+  CHECK_THAT( -0.5, WithinRel( chunk.distributions()[1].pdf().cosines()[1] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].pdf().cosines()[2] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].pdf().cosines()[3] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].pdf().cosines()[4] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[2] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[4] ) );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries()[0] );
+  CHECK( 4 == chunk.distributions()[1].pdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[1].pdf().isCurated() );
+  CHECK( 5 == chunk.distributions()[1].cdf().cosines().size() );
+  CHECK( 5 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().interpolants().size() );
+  CHECK_THAT( -1. , WithinRel( chunk.distributions()[1].cdf().cosines()[0] ) );
+  CHECK_THAT( -0.5, WithinRel( chunk.distributions()[1].cdf().cosines()[1] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].cdf().cosines()[2] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].cdf().cosines()[3] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].cdf().cosines()[4] ) );
+  CHECK_THAT( 0.  , WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT( 0.25, WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT( 1.  , WithinRel( chunk.distributions()[1].cdf().values()[2] ) );
+  CHECK_THAT( 1.  , WithinRel( chunk.distributions()[1].cdf().values()[3] ) );
+  CHECK_THAT( 2.5 , WithinRel( chunk.distributions()[1].cdf().values()[4] ) );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries()[0] );
+  CHECK( 4 == chunk.distributions()[1].cdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[1].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[1].isCurated() );
+
+  // distribution 2: no jump
+  CHECK( 2 == chunk.distributions()[2].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().interpolants().size() );
+  CHECK_THAT( -1. , WithinRel( chunk.distributions()[2].pdf().cosines()[0] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[2].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.5, WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT(  1.5, WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[2].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().interpolants().size() );
+  CHECK_THAT( -1., WithinRel( chunk.distributions()[2].cdf().cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[2].cdf().cosines()[1] ) );
+  CHECK_THAT(  0., WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT(  2., WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[2].isCurated() );
+}
+
+void verifyChunkWithDistributionJumpNotCurated( const TabulatedAngularDistributions& chunk ) {
+
+  CHECK( 3 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 3 == chunk.grid().size() );
+  CHECK( 3 == chunk.distributions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( false == chunk.isCurated() ); // the grid is curated but distribution 1 is not
+
+  // distribution 0: no jump
+  CHECK( 2 == chunk.distributions()[0].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[0].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].pdf().interpolants().size() );
+  CHECK_THAT( -1., WithinRel( chunk.distributions()[0].pdf().cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].pdf().cosines()[1] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[0].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[0].cdf().interpolants().size() );
+  CHECK_THAT( -1., WithinRel( chunk.distributions()[0].cdf().cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[0].cdf().cosines()[1] ) );
+  CHECK_THAT(  0., WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2., WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[0].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[0].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[0].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[0].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[0].isCurated() );
+
+  // distribution 1: jump with the extraneous point still present
+  CHECK( 6 == chunk.distributions()[1].pdf().cosines().size() );
+  CHECK( 6 == chunk.distributions()[1].pdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().interpolants().size() );
+  CHECK_THAT( -1. , WithinRel( chunk.distributions()[1].pdf().cosines()[0] ) );
+  CHECK_THAT( -0.5, WithinRel( chunk.distributions()[1].pdf().cosines()[1] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].pdf().cosines()[2] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].pdf().cosines()[3] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].pdf().cosines()[4] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].pdf().cosines()[5] ) );
+  CHECK_THAT( 0., WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.distributions()[1].pdf().values()[3] ) );
+  CHECK_THAT( 1., WithinRel( chunk.distributions()[1].pdf().values()[4] ) );
+  CHECK_THAT( 2., WithinRel( chunk.distributions()[1].pdf().values()[5] ) );
+  CHECK( 2 == chunk.distributions()[1].pdf().boundaries()[0] );
+  CHECK( 5 == chunk.distributions()[1].pdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].pdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].pdf().isLinearised() );
+  CHECK( false == chunk.distributions()[1].pdf().isCurated() );
+  CHECK( 6 == chunk.distributions()[1].cdf().cosines().size() );
+  CHECK( 6 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries().size() );
+  CHECK( 2 == chunk.distributions()[1].cdf().interpolants().size() );
+  CHECK_THAT( -1. , WithinRel( chunk.distributions()[1].cdf().cosines()[0] ) );
+  CHECK_THAT( -0.5, WithinRel( chunk.distributions()[1].cdf().cosines()[1] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].cdf().cosines()[2] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].cdf().cosines()[3] ) );
+  CHECK_THAT(  0. , WithinRel( chunk.distributions()[1].cdf().cosines()[4] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].cdf().cosines()[5] ) );
+  CHECK_THAT( 0.  , WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT( 0.25, WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT( 1.  , WithinRel( chunk.distributions()[1].cdf().values()[2] ) );
+  CHECK_THAT( 1.  , WithinRel( chunk.distributions()[1].cdf().values()[3] ) );
+  CHECK_THAT( 1.  , WithinRel( chunk.distributions()[1].cdf().values()[4] ) );
+  CHECK_THAT( 2.5 , WithinRel( chunk.distributions()[1].cdf().values()[5] ) );
+  CHECK( 2 == chunk.distributions()[1].cdf().boundaries()[0] );
+  CHECK( 5 == chunk.distributions()[1].cdf().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[1].cdf().interpolants()[1] );
+  CHECK( true == chunk.distributions()[1].cdf().isLinearised() );
+  CHECK( false == chunk.distributions()[1].cdf().isCurated() );
+  CHECK( false == chunk.distributions()[1].isCurated() );
+
+  // distribution 2: no jump
+  CHECK( 2 == chunk.distributions()[2].pdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].pdf().interpolants().size() );
+  CHECK_THAT( -1. , WithinRel( chunk.distributions()[2].pdf().cosines()[0] ) );
+  CHECK_THAT(  1. , WithinRel( chunk.distributions()[2].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.5, WithinRel( chunk.distributions()[2].pdf().values()[0] ) );
+  CHECK_THAT(  1.5, WithinRel( chunk.distributions()[2].pdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].pdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].pdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].pdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].pdf().isCurated() );
+  CHECK( 2 == chunk.distributions()[2].cdf().cosines().size() );
+  CHECK( 2 == chunk.distributions()[2].cdf().values().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries().size() );
+  CHECK( 1 == chunk.distributions()[2].cdf().interpolants().size() );
+  CHECK_THAT( -1., WithinRel( chunk.distributions()[2].cdf().cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( chunk.distributions()[2].cdf().cosines()[1] ) );
+  CHECK_THAT(  0., WithinRel( chunk.distributions()[2].cdf().values()[0] ) );
+  CHECK_THAT(  2., WithinRel( chunk.distributions()[2].cdf().values()[1] ) );
+  CHECK( 1 == chunk.distributions()[2].cdf().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.distributions()[2].cdf().interpolants()[0] );
+  CHECK( true == chunk.distributions()[2].cdf().isLinearised() );
+  CHECK( true == chunk.distributions()[2].cdf().isCurated() );
+  CHECK( true == chunk.distributions()[2].isCurated() );
 }

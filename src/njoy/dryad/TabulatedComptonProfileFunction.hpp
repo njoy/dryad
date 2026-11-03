@@ -81,14 +81,17 @@ namespace dryad {
      *  @param[in] values         the probability values
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedComptonProfileFunction(
         std::vector< double > momentum,
         std::vector< double > values,
         std::vector< std::size_t > boundaries,
-        std::vector< InterpolationType > interpolants ) :
+        std::vector< InterpolationType > interpolants,
+        bool curate = false ) :
       InterpolationTable( std::move( momentum ), std::move( values ),
-                          std::move( boundaries ), std::move( interpolants ) ) {}
+                          std::move( boundaries ), std::move( interpolants ),
+                          curate ) {}
 
     /**
      *  @brief Constructor for a probability using a single interpolation zone
@@ -96,12 +99,14 @@ namespace dryad {
      *  @param[in] momentum       the momentum values
      *  @param[in] values         the probability values
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedComptonProfileFunction(
         std::vector< double > momentum,
         std::vector< double > values,
-        InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      InterpolationTable( std::move( momentum ), std::move( values ), interpolant ) {}
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool curate = false ) :
+      InterpolationTable( std::move( momentum ), std::move( values ), interpolant, curate ) {}
 
     /* methods */
 
@@ -142,6 +147,8 @@ namespace dryad {
     using InterpolationTable::numberPoints;
     using InterpolationTable::numberRegions;
     using InterpolationTable::isLinearised;
+    using InterpolationTable::isCurated;
+    using InterpolationTable::curate;
 
     using InterpolationTable::operator();
 

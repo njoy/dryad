@@ -34,7 +34,7 @@ SCENARIO( "createCompoundSystem" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Eu156" );
-        auto chunk = endf::read::resonances::urr::caseC::createCompoundSystem( projectile, target, 1., 1e5, 0, std::nullopt, parameters );
+        auto chunk = endf::read::resonances::urr::caseC::createCompoundSystem( projectile, target, 1., 1e5, 0, std::nullopt, parameters, true );
 
         verifyChunkEu156( chunk );
       } // THEN
@@ -119,7 +119,7 @@ void verifyChunkEu156( const resonances::UnresolvedCompoundSystem& chunk ) {
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 2: competitive
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  
+
   auto channel2 = channels[2];
   CHECK( id::ChannelID( "n,Eu156->competitive{0,0,1/2-}" ) == channel2.identifier() );
 

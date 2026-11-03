@@ -14,7 +14,10 @@ using namespace njoy::dryad;
 using namespace njoy::dryad::thermal;
 
 void verifyChunk( const TabulatedScatteringKernel& );
-void verifyChunkWithJump( const TabulatedScatteringKernel& );
+void verifyChunkWithJumpCurated( const TabulatedScatteringKernel& );
+void verifyChunkWithJumpNotCurated( const TabulatedScatteringKernel& );
+void verifyChunkWithDistributionJumpCurated( const TabulatedScatteringKernel& );
+void verifyChunkWithDistributionJumpNotCurated( const TabulatedScatteringKernel& );
 
 SCENARIO( "TabulatedScatteringKernel" ) {
 
@@ -40,13 +43,13 @@ SCENARIO( "TabulatedScatteringKernel" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "data with a jump that consist of more than 2 points" ) {
+  GIVEN( "linearised data with a jump that consist of more than 2 points" ) {
 
-    // note: at construction time, the extraneous points in between the first and last
-    //       x value in the jump are removed. boundaries always point to the first point
-    //       in the jump
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump are kept. boundaries always point to the first point
+    //       in the jump, regardless of curation.
 
-    WHEN( "the data is given explicitly" ) {
+    WHEN( "the data is given explicitly and curate is not requested" ) {
 
       const std::vector< double > energyTransfers = { 1., 2., 2., 2., 3., 4. };
       const std::vector< TabulatedScatteringKernelFunction > functions = {
@@ -59,13 +62,119 @@ SCENARIO( "TabulatedScatteringKernel" ) {
         { { 0., 4. }, { 0.2, 0.8 } }
       };
 
-      TabulatedScatteringKernel
-      chunk( std::move( energyTransfers ),
-             std::move( functions ) );
+      TabulatedScatteringKernel chunk( std::move( energyTransfers ), std::move( functions ) );
 
       THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
 
-        verifyChunkWithJump( chunk );
+        verifyChunkWithJumpNotCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be linearised and the extraneous point in the jump is removed" ) {
+
+        TabulatedScatteringKernel linear = chunk.linearise();
+
+        verifyChunkWithJumpCurated( linear );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      const std::vector< double > energyTransfers = { 1., 2., 2., 2., 3., 4. };
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
+
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 4. }, { 0.52, 0.48 } },
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 4. }, { 0.51, 0.49 } },
+        { { 0., 4. }, { 0.48, 0.52 } },
+        { { 0., 4. }, { 0.2, 0.8 } }
+      };
+
+      TabulatedScatteringKernel chunk( std::move( energyTransfers ), std::move( functions ),
+                                       InterpolationType::LinearLinear, true );
+
+      THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunkWithJumpCurated( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "linearised data with a jump that consist of more than 2 points in one of the functions" ) {
+
+    // note: by default (curate = false), the extraneous points in between the first and
+    //       last x value in the jump of a function are kept. curation of the
+    //       functions removes them.
+
+    WHEN( "the data is given explicitly and curate is not requested" ) {
+
+      const std::vector< double > energyTransfers = { 1., 2., 3. };
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
+
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 1., 2., 2., 2., 4. }, { 0., 1., 2., 3., 1., 2. } }, // <-- jump of 3 x values
+        { { 0., 4. }, { 0.2, 0.8 } }
+      };
+
+      TabulatedScatteringKernel chunk( std::move( energyTransfers ), std::move( functions ) );
+
+      THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
+
+        verifyChunkWithDistributionJumpNotCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be curated on demand and the extraneous points are removed" ) {
+
+        chunk.curate();
+
+        verifyChunkWithDistributionJumpCurated( chunk );
+      } // THEN
+
+      THEN( "the table can be linearised and the extraneous point in the jump is removed" ) {
+
+        TabulatedScatteringKernel linear = chunk.linearise();
+
+        verifyChunkWithDistributionJumpCurated( linear );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly and curate is requested" ) {
+
+      const std::vector< double > energyTransfers = { 1., 2., 3. };
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
+
+        { { 0., 4. }, { 0.5, 0.5 } },
+        { { 0., 1., 2., 2., 2., 4. }, { 0., 1., 2., 3., 1., 2. } }, // <-- jump of 3 x values
+        { { 0., 4. }, { 0.2, 0.8 } }
+      };
+
+      TabulatedScatteringKernel chunk( std::move( energyTransfers ), std::move( functions ),
+                                       InterpolationType::LinearLinear, true );
+
+      THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
+
+        verifyChunkWithDistributionJumpCurated( chunk );
+      } // THEN
+
+      THEN( "calling curate() again on an already curated table does not change anything" ) {
+
+        chunk.curate();
+
+        verifyChunkWithDistributionJumpCurated( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -295,6 +404,7 @@ void verifyChunk( const TabulatedScatteringKernel& chunk ) {
   CHECK_THAT( 0.8 , WithinRel( chunk.functions()[3].values()[1] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
 
   // evaluate
 
@@ -363,7 +473,7 @@ void verifyChunk( const TabulatedScatteringKernel& chunk ) {
   CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
 }
 
-void verifyChunkWithJump( const TabulatedScatteringKernel& chunk ) {
+void verifyChunkWithJumpCurated( const TabulatedScatteringKernel& chunk ) {
 
   CHECK_THAT( 1., WithinRel( chunk.lowerEnergyTransferLimit() ) );
   CHECK_THAT( 4., WithinRel( chunk.upperEnergyTransferLimit() ) );
@@ -415,4 +525,211 @@ void verifyChunkWithJump( const TabulatedScatteringKernel& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( true == chunk.isCurated() );
+}
+
+void verifyChunkWithJumpNotCurated( const TabulatedScatteringKernel& chunk ) {
+
+  CHECK_THAT( 1., WithinRel( chunk.lowerEnergyTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperEnergyTransferLimit() ) );
+  CHECK_THAT( 0., WithinRel( chunk.lowerMomentumTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
+
+  CHECK( 6 == chunk.numberPoints() );
+  CHECK( 2 == chunk.numberRegions() );
+  CHECK( 6 == chunk.energyTransfers().size() );
+  CHECK( 6 == chunk.functions().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.energyTransfers()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.energyTransfers()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.energyTransfers()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.energyTransfers()[3] ) );
+  CHECK_THAT( 3., WithinRel( chunk.energyTransfers()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.energyTransfers()[5] ) );
+  CHECK( 2 == chunk.functions()[0].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[0].values().size() );
+  CHECK( 2 == chunk.functions()[1].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[1].values().size() );
+  CHECK( 2 == chunk.functions()[2].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[2].values().size() );
+  CHECK( 2 == chunk.functions()[3].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[3].values().size() );
+  CHECK( 2 == chunk.functions()[4].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[4].values().size() );
+  CHECK( 2 == chunk.functions()[5].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[5].values().size() );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[0].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[0].momentumTransfers()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[1].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[1].momentumTransfers()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[2].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[2].momentumTransfers()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[3].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[3].momentumTransfers()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[4].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[4].momentumTransfers()[1] ) );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[5].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[5].momentumTransfers()[1] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.functions()[0].values()[0] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.functions()[0].values()[1] ) );
+  CHECK_THAT( 0.52, WithinRel( chunk.functions()[1].values()[0] ) );
+  CHECK_THAT( 0.48, WithinRel( chunk.functions()[1].values()[1] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.functions()[2].values()[0] ) );
+  CHECK_THAT( 0.5 , WithinRel( chunk.functions()[2].values()[1] ) );
+  CHECK_THAT( 0.51, WithinRel( chunk.functions()[3].values()[0] ) );
+  CHECK_THAT( 0.49, WithinRel( chunk.functions()[3].values()[1] ) );
+  CHECK_THAT( 0.48, WithinRel( chunk.functions()[4].values()[0] ) );
+  CHECK_THAT( 0.52, WithinRel( chunk.functions()[4].values()[1] ) );
+  CHECK_THAT( 0.2 , WithinRel( chunk.functions()[5].values()[0] ) );
+  CHECK_THAT( 0.8 , WithinRel( chunk.functions()[5].values()[1] ) );
+  CHECK( 1 == chunk.boundaries()[0] );
+  CHECK( 5 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK( false == chunk.isCurated() );
+}
+
+void verifyChunkWithDistributionJumpCurated( const TabulatedScatteringKernel& chunk ) {
+
+  CHECK_THAT( 1., WithinRel( chunk.lowerEnergyTransferLimit() ) );
+  CHECK_THAT( 3., WithinRel( chunk.upperEnergyTransferLimit() ) );
+  CHECK_THAT( 0., WithinRel( chunk.lowerMomentumTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
+
+  CHECK( 3 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 3 == chunk.energyTransfers().size() );
+  CHECK( 3 == chunk.functions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.energyTransfers()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.energyTransfers()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.energyTransfers()[2] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( true == chunk.isCurated() );
+
+  // function 0: no jump
+  CHECK( 2 == chunk.functions()[0].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[0].values().size() );
+  CHECK( 1 == chunk.functions()[0].boundaries().size() );
+  CHECK( 1 == chunk.functions()[0].interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[0].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[0].momentumTransfers()[1] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.functions()[0].values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.functions()[0].values()[1] ) );
+  CHECK( 1 == chunk.functions()[0].boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[0].interpolants()[0] );
+  CHECK( true == chunk.functions()[0].isLinearised() );
+  CHECK( true == chunk.functions()[0].isCurated() );
+
+  // function 1: jump with the extraneous point removed
+  CHECK( 5 == chunk.functions()[1].momentumTransfers().size() );
+  CHECK( 5 == chunk.functions()[1].values().size() );
+  CHECK( 2 == chunk.functions()[1].boundaries().size() );
+  CHECK( 2 == chunk.functions()[1].interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[1].momentumTransfers()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.functions()[1].momentumTransfers()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].momentumTransfers()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].momentumTransfers()[3] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[1].momentumTransfers()[4] ) );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[1].values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.functions()[1].values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].values()[2] ) );
+  CHECK_THAT( 1., WithinRel( chunk.functions()[1].values()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].values()[4] ) );
+  CHECK( 2 == chunk.functions()[1].boundaries()[0] );
+  CHECK( 4 == chunk.functions()[1].boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[1].interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[1].interpolants()[1] );
+  CHECK( true == chunk.functions()[1].isLinearised() );
+  CHECK( true == chunk.functions()[1].isCurated() );
+
+  // function 2: no jump
+  CHECK( 2 == chunk.functions()[2].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[2].values().size() );
+  CHECK( 1 == chunk.functions()[2].boundaries().size() );
+  CHECK( 1 == chunk.functions()[2].interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[2].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[2].momentumTransfers()[1] ) );
+  CHECK_THAT( 0.2, WithinRel( chunk.functions()[2].values()[0] ) );
+  CHECK_THAT( 0.8, WithinRel( chunk.functions()[2].values()[1] ) );
+  CHECK( 1 == chunk.functions()[2].boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[2].interpolants()[0] );
+  CHECK( true == chunk.functions()[2].isLinearised() );
+  CHECK( true == chunk.functions()[2].isCurated() );
+}
+
+void verifyChunkWithDistributionJumpNotCurated( const TabulatedScatteringKernel& chunk ) {
+
+  CHECK_THAT( 1., WithinRel( chunk.lowerEnergyTransferLimit() ) );
+  CHECK_THAT( 3., WithinRel( chunk.upperEnergyTransferLimit() ) );
+  CHECK_THAT( 0., WithinRel( chunk.lowerMomentumTransferLimit() ) );
+  CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
+
+  CHECK( 3 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 3 == chunk.energyTransfers().size() );
+  CHECK( 3 == chunk.functions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.energyTransfers()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.energyTransfers()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.energyTransfers()[2] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( false == chunk.isCurated() ); // the grid is curated but function 1 is not
+
+  // function 0: no jump
+  CHECK( 2 == chunk.functions()[0].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[0].values().size() );
+  CHECK( 1 == chunk.functions()[0].boundaries().size() );
+  CHECK( 1 == chunk.functions()[0].interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[0].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[0].momentumTransfers()[1] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.functions()[0].values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( chunk.functions()[0].values()[1] ) );
+  CHECK( 1 == chunk.functions()[0].boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[0].interpolants()[0] );
+  CHECK( true == chunk.functions()[0].isLinearised() );
+  CHECK( true == chunk.functions()[0].isCurated() );
+
+  // function 1: jump with the extraneous point still present
+  CHECK( 6 == chunk.functions()[1].momentumTransfers().size() );
+  CHECK( 6 == chunk.functions()[1].values().size() );
+  CHECK( 2 == chunk.functions()[1].boundaries().size() );
+  CHECK( 2 == chunk.functions()[1].interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[1].momentumTransfers()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.functions()[1].momentumTransfers()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].momentumTransfers()[2] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].momentumTransfers()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].momentumTransfers()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[1].momentumTransfers()[5] ) );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[1].values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.functions()[1].values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].values()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.functions()[1].values()[3] ) );
+  CHECK_THAT( 1., WithinRel( chunk.functions()[1].values()[4] ) );
+  CHECK_THAT( 2., WithinRel( chunk.functions()[1].values()[5] ) );
+  CHECK( 2 == chunk.functions()[1].boundaries()[0] );
+  CHECK( 5 == chunk.functions()[1].boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[1].interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[1].interpolants()[1] );
+  CHECK( true == chunk.functions()[1].isLinearised() );
+  CHECK( false == chunk.functions()[1].isCurated() );
+
+  // function 2: no jump
+  CHECK( 2 == chunk.functions()[2].momentumTransfers().size() );
+  CHECK( 2 == chunk.functions()[2].values().size() );
+  CHECK( 1 == chunk.functions()[2].boundaries().size() );
+  CHECK( 1 == chunk.functions()[2].interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.functions()[2].momentumTransfers()[0] ) );
+  CHECK_THAT( 4., WithinRel( chunk.functions()[2].momentumTransfers()[1] ) );
+  CHECK_THAT( 0.2, WithinRel( chunk.functions()[2].values()[0] ) );
+  CHECK_THAT( 0.8, WithinRel( chunk.functions()[2].values()[1] ) );
+  CHECK( 1 == chunk.functions()[2].boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.functions()[2].interpolants()[0] );
+  CHECK( true == chunk.functions()[2].isLinearised() );
+  CHECK( true == chunk.functions()[2].isCurated() );
 }

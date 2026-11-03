@@ -17,6 +17,8 @@ using namespace njoy::format;
 
 std::string chunk1();
 std::string chunk2();
+std::string chunk3();
+std::string chunk4();
 
 SCENARIO( "insertBackgroundCrossSection" ) {
 
@@ -97,6 +99,62 @@ SCENARIO( "insertBackgroundCrossSection" ) {
       CHECK( out.str() == chunk2() );
     } // THEN
   } // GIVEN
+
+  GIVEN( "a parent node, resonance parameters and xs - upper resolved present as a discontinuity "
+         "with more than 2 points" ) {
+
+    gnds::write::Options options;
+
+    THEN( "a crossSection node using a resonancesWithBackground can be inserted" ) {
+
+      TabulatedCrossSection table( {  1.,  2.,  3.,  4.,  5., 5., 5., 6. }, {  7.,  8.,  9., 10., 11., 99., 12., 13. } );
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertBackgroundCrossSection( parent, options, table, resonances, "eval" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk2() );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "a parent node, resonance parameters and xs - upper resolved present as an interpolation "
+         "region boundary" ) {
+
+    gnds::write::Options options;
+
+    THEN( "a crossSection node using a resonancesWithBackground can be inserted" ) {
+
+      TabulatedCrossSection table( {  1.,  2.,  3.,  4.,  5.,  6.,  7. }, {  7.,  8.,  9., 10., 11., 12., 13. },
+                                   { 4, 6 }, { InterpolationType::LinearLinear, InterpolationType::LogLog } );
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertBackgroundCrossSection( parent, options, table, resonances, "eval" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk3() );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "a parent node, resonance parameters and xs - multiple interpolation regions in each region" ) {
+
+    gnds::write::Options options;
+
+    THEN( "a crossSection node using a resonancesWithBackground can be inserted" ) {
+
+      TabulatedCrossSection table( {  1.,  2.,  3.,  4.,  5.,  6.,  7. }, {  7.,  8.,  9., 10., 11., 12., 13. },
+                                   { 2, 5, 6 }, { InterpolationType::LinearLinear, InterpolationType::LinearLinear,
+                                                  InterpolationType::LogLog } );
+
+      pugi::xml_document parent;
+      auto node = gnds::write::insertBackgroundCrossSection( parent, options, table, resonances, "eval" );
+
+      std::ostringstream out;
+      node.print( out, "  " );
+      CHECK( out.str() == chunk4() );
+    } // THEN
+  } // GIVEN
 } // SCENARIO
 
 std::string chunk1() {
@@ -159,6 +217,90 @@ std::string chunk2() {
          "            5 12 6 13\n"
          "          </values>\n"
          "        </XYs1d>\n"
+         "      </fastRegion>\n"
+         "    </background>\n"
+         "  </resonancesWithBackground>\n"
+         "</crossSection>\n";
+}
+
+std::string chunk3() {
+
+  return "<crossSection>\n"
+         "  <resonancesWithBackground label=\"eval\">\n"
+         "    <resonances href=\"/reactionSuite/resonances\" />\n"
+         "    <background>\n"
+         "      <resolvedRegion>\n"
+         "        <XYs1d>\n"
+         "          <axes>\n"
+         "            <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "            <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
+         "          </axes>\n"
+         "          <values>\n"
+         "            1 7 2 8 3 9 4 10 5 11\n"
+         "          </values>\n"
+         "        </XYs1d>\n"
+         "      </resolvedRegion>\n"
+         "      <fastRegion>\n"
+         "        <XYs1d interpolation=\"log-log\">\n"
+         "          <axes>\n"
+         "            <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "            <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
+         "          </axes>\n"
+         "          <values>\n"
+         "            5 11 6 12 7 13\n"
+         "          </values>\n"
+         "        </XYs1d>\n"
+         "      </fastRegion>\n"
+         "    </background>\n"
+         "  </resonancesWithBackground>\n"
+         "</crossSection>\n";
+}
+
+std::string chunk4() {
+
+  return "<crossSection>\n"
+         "  <resonancesWithBackground label=\"eval\">\n"
+         "    <resonances href=\"/reactionSuite/resonances\" />\n"
+         "    <background>\n"
+         "      <resolvedRegion>\n"
+         "        <regions1d>\n"
+         "          <axes>\n"
+         "            <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "            <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
+         "          </axes>\n"
+         "          <function1ds>\n"
+         "            <XYs1d index=\"0\">\n"
+         "              <values>\n"
+         "                1 7 2 8 3 9\n"
+         "              </values>\n"
+         "            </XYs1d>\n"
+         "            <XYs1d index=\"1\">\n"
+         "              <values>\n"
+         "                3 9 4 10 5 11\n"
+         "              </values>\n"
+         "            </XYs1d>\n"
+         "          </function1ds>\n"
+         "        </regions1d>\n"
+         "      </resolvedRegion>\n"
+         "      <fastRegion>\n"
+         "        <regions1d>\n"
+         "          <axes>\n"
+         "            <axis index=\"1\" label=\"incidentEnergy\" unit=\"eV\" />\n"
+         "            <axis index=\"0\" label=\"crossSection\" unit=\"b\" />\n"
+         "          </axes>\n"
+         "          <function1ds>\n"
+         "            <XYs1d index=\"0\">\n"
+         "              <values>\n"
+         "                5 11 6 12\n"
+         "              </values>\n"
+         "            </XYs1d>\n"
+         "            <XYs1d index=\"1\" interpolation=\"log-log\">\n"
+         "              <values>\n"
+         "                6 12 7 13\n"
+         "              </values>\n"
+         "            </XYs1d>\n"
+         "          </function1ds>\n"
+         "        </regions1d>\n"
          "      </fastRegion>\n"
          "    </background>\n"
          "  </resonancesWithBackground>\n"

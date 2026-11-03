@@ -29,6 +29,8 @@ namespace read {
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    *  @param[in,out] masses   the atomic mass values read from the ENDF file
    */
   inline dryad::Reaction
@@ -37,6 +39,7 @@ namespace read {
                   const ENDFtk::tree::Material& material,
                   int mt,
                   bool normalise,
+                  bool curate,
                   std::map< dryad::id::ParticleID, double >& masses ) {
 
     // metadata and miscellaneous information
@@ -47,7 +50,7 @@ namespace read {
 
       // cross section
       auto section = material.section( 3, mt ).parse< 3 >();
-      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section );
+      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section, curate );
 
       // Q values
       std::optional< double > mass_q = std::nullopt;
@@ -56,7 +59,7 @@ namespace read {
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
         // reaction products
-        std::vector< dryad::ReactionProduct > products = createReactionProducts( id, material, mt, normalise, masses );
+        std::vector< dryad::ReactionProduct > products = createReactionProducts( id, material, mt, normalise, curate, masses );
 
         // Q values
         if ( mt == 18 ) {
@@ -98,14 +101,14 @@ namespace read {
 
       // cross section
       auto section = material.section( 23, mt ).parse< 23 >();
-      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section );
+      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section, curate );
 
       // q values
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< dryad::ReactionProduct > products = createReactionProducts( id, material, mt, normalise, masses );
+      std::vector< dryad::ReactionProduct > products = createReactionProducts( id, material, mt, normalise, curate, masses );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 

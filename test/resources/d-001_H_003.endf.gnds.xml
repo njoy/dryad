@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reactionSuite projectile="H2" target="H3" evaluation="ENDF/B-8.1" format="2.0" projectileFrame="lab" interaction="nuclear">
+  <styles>
+    <evaluated label="eval" date="2023-12-01" library="ENDF/B" version="8.1.2">
+      <documentation>
+        <authors>
+          <author name="G. M. HALE, M. PARIS, M. DROSG"></author></authors>
+        <dates>
+          <date value="2023-12-01" dateType="created"/></dates>
+        <title><![CDATA[ENDF-6 file from ENDF/B version 8.1.2 translated to GNDS by FUDGE.]]></title>
+        <body><![CDATA[See the endfCompatible section.]]></body>
+        <endfCompatible><![CDATA[  1-H -  3 LANL       EVAL-DEC23 G. M. HALE, M. PARIS, M. DROSG
+ NDS 2024             DIST-AUG24 REV1-JUL24            20240830
+---- ENDF/B-VIII.1    MATERIAL  131         REVISION 1
+----- INCIDENT-DEUTERON DATA
+------ ENDF-6
+
+*****************************************************************
+ENDF/B-VIII.1beta3 (G. Hale/M. Paris 2023-Dec):
+
+-MF3 MT51: previously (ENDF/B-VIII.) LR=1; now LR=0, to be more
+consistent with [1]; extended for this VIII.1beta3 release to 20
+MeV in MF3 (& MF6 -- see below)
+
+-MF3 MT91: T(d,gamma_{0+1}) up to 25 MeV (new for this release)
+
+-MF6 MT51: extended to 20 MeV
+
+Addendum (2024-01-11):
+-MF6 MT91: included neutron continuum contributions from
+ LLNL (C. Mattoon/I. Thompson)
+
+[1] C. Poppe et al PR 129, 733, 1963 (Table 1, p.738)
+*****************************************************************
+
+*****************************************************************
+d-t reaction evaluation, based on 5He system R-matrix analysis
+by G. Hale (7/94), and T(d,n) Legendre coefficients evaluated by
+M. Drosg (6/97).  This version replaces Drosg's 12/94 Legendre
+moments for the T(d,n) differential cross section up to 30 MeV by
+his new evaluation at energies between 7.5 and 40 MeV.
+*****************************************************************
+
+   This evaluation contains integrated cross sections and angular
+distributions for the reactions initiated by deuterons on tritons
+at deuteron energies up to 10 MeV.  The energy range for the
+T(d,n)4He reaction has been extended to 40 MeV by matching to
+Legendre coefficients obtained by Drosg.  The information below 10
+MeV comes primarily from the solution parameters of an extensive
+multi-channel R-matrix analysis of reactions in the 5He system
+(including n-alpha elastic scattering) at deuteron energies up to
+10 MeV (neutron energies up to 29 MeV), for which chi-square
+per degree of freedom is about 1.6.
+
+MF=3, Integrated cross sections:
+--------------------------------
+    MT=2, nuclear cross sections for d-t elastic scattering.  The
+elastic scattering data set included 675 data points and 5
+different types of polarization measurements in addition to the
+differential cross sections.
+
+    MT=50, T(d,n)4He reaction cross section.  The R-matrix data
+set for this reaction contained 1169 data points, including the
+recent measurements of the low-energy integrated cross section by
+Jarmie and Brown, recent measurements of the differential
+cross section in the MeV range by Drosg, and 13 different types
+of polarization measurements.  The matching energy for joining
+the R-matrix results with Drosg's Legendre coefficients was taken
+to be 7 MeV.
+
+    MT=51, T(d,n)4He* reaction cross section.  The data set for
+this reaction contained 11 data points, including the measurement
+of the zero-degree excitation function, and an angular
+distribution at one energy, by Poppe.
+
+
+MF=6,  Legendre coefficients for angular distributions:
+-------------------------------------------------------
+    MT=2, d+t elastic scattering.  Coefficients are calculated
+from the R-matrix fit using the exact (LAW=5) nuclear amplitude
+representation (LTP=1).  Nuclear partial waves up through H-
+waves were allowed in the analysis, giving Legendre orders
+L=0 to 10 in the nuclear cross  section and L=0 to 5 in the
+complex nuclear amplitude that interferes with the Coulomb
+amplitude.
+
+    MT=50, T(d,n)4He reaction.  Coefficients (LAW=2) to L=10 are
+given for calculated neutron angular distributions at energies
+up to 7 MeV.  Above that energy, the evaluated coefficients of
+Drosg `97 are used.  Data included the most recent differential
+cross section measurements in the MeV range.  Alpha distributions
+are obtained by recoil (LAW=4).
+
+    MT=51, T(d,n)4He* reaction.  Two-body (LAW=2) Legendre coef-
+ficients are given to L=2 at energies up to 10 MeV.  The decay of
+the residual 4He* into p and t is approximated by a phase-space
+(LAW=6) representation.
+ ****************************************************************]]></endfCompatible></documentation>
+      <temperature value="0" unit="K"/>
+      <projectileEnergyDomain min="1e4" max="1e7" unit="eV"/></evaluated></styles>
+  <PoPs name="protare_internal" version="1.0" format="2.0">
+    <aliases>
+      <alias id="t" pid="h3"/>
+      <alias id="d" pid="h2"/>
+      <alias id="a" pid="he4"/></aliases>
+    <gaugeBosons>
+      <gaugeBoson id="photon">
+        <mass>
+          <double label="eval" value="0." unit="amu"/></mass>
+        <spin>
+          <fraction label="eval" value="1" unit="hbar"/></spin>
+        <parity>
+          <integer label="eval" value="1"/></parity>
+        <charge>
+          <integer label="eval" value="0" unit="e"/></charge>
+        <halflife>
+          <string label="eval" value="stable" unit="s"/></halflife></gaugeBoson></gaugeBosons>
+    <baryons>
+      <baryon id="n">
+        <mass>
+          <double label="eval" value="1.00866491574" unit="amu"/></mass>
+        <spin>
+          <fraction label="eval" value="1/2" unit="hbar"/></spin>
+        <parity>
+          <integer label="eval" value="1"/></parity>
+        <charge>
+          <integer label="eval" value="0" unit="e"/></charge>
+        <halflife>
+          <double label="eval" value="881.5" unit="s"/></halflife></baryon>
+      <baryon id="p">
+        <mass>
+          <double label="eval" value="1.00727646662" unit="amu"/></mass>
+        <spin>
+          <fraction label="eval" value="1/2" unit="hbar"/></spin>
+        <parity>
+          <integer label="eval" value="1"/></parity>
+        <charge>
+          <integer label="eval" value="1" unit="e"/></charge>
+        <halflife>
+          <string label="eval" value="stable" unit="s"/></halflife></baryon></baryons>
+    <chemicalElements>
+      <chemicalElement symbol="H" Z="1" name="Hydrogen">
+        <isotopes>
+          <isotope symbol="H1" A="1">
+            <nuclides>
+              <nuclide id="H1">
+                <mass>
+                  <double label="eval" value="1.00782495281" unit="amu"/></mass>
+                <charge>
+                  <integer label="eval" value="0" unit="e"/></charge>
+                <nucleus id="h1" index="0">
+                  <mass>
+                    <double label="eval" value="1.00727646662" unit="amu"/></mass>
+                  <spin>
+                    <fraction label="eval" value="1/2" unit="hbar"/></spin>
+                  <parity>
+                    <integer label="eval" value="1"/></parity>
+                  <charge>
+                    <integer label="eval" value="1" unit="e"/></charge>
+                  <halflife>
+                    <string label="eval" value="stable" unit="s"/></halflife>
+                  <energy>
+                    <double label="eval" value="0." unit="eV"/></energy></nucleus></nuclide></nuclides></isotope>
+          <isotope symbol="H2" A="2">
+            <nuclides>
+              <nuclide id="H2">
+                <mass>
+                  <double label="eval" value="2.01410195518" unit="amu"/></mass>
+                <charge>
+                  <integer label="eval" value="0" unit="e"/></charge>
+                <nucleus id="h2" index="0">
+                  <mass>
+                    <double label="eval" value="2.01355321275" unit="amu"/></mass>
+                  <spin>
+                    <fraction label="eval" value="1" unit="hbar"/></spin>
+                  <parity>
+                    <integer label="eval" value="1"/></parity>
+                  <charge>
+                    <integer label="eval" value="1" unit="e"/></charge>
+                  <halflife>
+                    <string label="eval" value="stable" unit="s"/></halflife>
+                  <energy>
+                    <double label="eval" value="0." unit="eV"/></energy></nucleus></nuclide></nuclides></isotope>
+          <isotope symbol="H3" A="3">
+            <nuclides>
+              <nuclide id="H3">
+                <mass>
+                  <double label="eval" value="3.01550059744" unit="amu"/></mass>
+                <charge>
+                  <integer label="eval" value="0" unit="e"/></charge>
+                <nucleus id="h3" index="0">
+                  <mass>
+                    <double label="eval" value="3.01550071621" unit="amu"/></mass>
+                  <spin>
+                    <fraction label="eval" value="1/2" unit="hbar"/></spin>
+                  <parity>
+                    <integer label="eval" value="1"/></parity>
+                  <charge>
+                    <integer label="eval" value="1" unit="e"/></charge>
+                  <halflife>
+                    <double label="eval" value="3.88789e8" unit="s"/></halflife>
+                  <energy>
+                    <double label="eval" value="0." unit="eV"/></energy></nucleus></nuclide></nuclides></isotope></isotopes></chemicalElement>
+      <chemicalElement symbol="He" Z="2" name="Helium">
+        <isotopes>
+          <isotope symbol="He4" A="4">
+            <nuclides>
+              <nuclide id="He4">
+                <mass>
+                  <double label="eval" value="4.00257166668" unit="amu"/></mass>
+                <charge>
+                  <integer label="eval" value="0" unit="e"/></charge>
+                <nucleus id="he4" index="0">
+                  <mass>
+                    <double label="eval" value="4.0015061791" unit="amu"/></mass>
+                  <spin>
+                    <fraction label="eval" value="0" unit="hbar"/></spin>
+                  <parity>
+                    <integer label="eval" value="1"/></parity>
+                  <charge>
+                    <integer label="eval" value="2" unit="e"/></charge>
+                  <halflife>
+                    <string label="eval" value="stable" unit="s"/></halflife>
+                  <energy>
+                    <double label="eval" value="0." unit="eV"/></energy></nucleus></nuclide>
+              <nuclide id="He4_e1">
+                <charge>
+                  <integer label="eval" value="0" unit="e"/></charge>
+                <nucleus id="he4_e1" index="1">
+                  <mass>
+                    <double label="eval" value="4.0015061791" unit="amu"/></mass>
+                  <spin>
+                    <fraction label="eval" value="0" unit="hbar"/></spin>
+                  <parity>
+                    <integer label="eval" value="1"/></parity>
+                  <charge>
+                    <integer label="eval" value="2" unit="e"/></charge>
+                  <halflife>
+                    <string label="eval" value="stable" unit="s"/></halflife>
+                  <energy>
+                    <double label="eval" value="19332404.784" unit="eV"/></energy></nucleus></nuclide></nuclides></isotope></isotopes></chemicalElement></chemicalElements></PoPs>
+  <reactions>
+    <reaction label="H2 + H3" ENDF_MT="2">
+      <doubleDifferentialCrossSection>
+        <CoulombPlusNuclearElastic label="eval" pid="H2" productFrame="centerOfMass">
+          <RutherfordScattering/>
+          <nuclearAmplitudeExpansion>
+            <nuclearTerm>
+              <regions2d>
+                <axes>
+                  <axis index="2" label="energy_in" unit="eV"/>
+                  <axis index="1" label="mu" unit=""/>
+                  <axis index="0" label="P(mu|energy_in)" unit=""/></axes>
+                <function2ds>
+                  <XYs2d index="0" interpolation="charged-particle">
+                    <function1ds>
+                      <Legendre outerDomainValue="1e4"><values>9.4279e-9 4.1399e-12 -2.8278e-14 4.7365e-18 4.8542e-20 -1.9619e-22 7.5337e-23 -7.2351e-23 5.294e-23 -6.4433e-23 5.483e-23</values></Legendre>
+                      <Legendre outerDomainValue="2e4"><values>1.9755e-5 -2.2639e-9 -1.066e-10 2.2023e-14 2.8199e-16 -2.0822e-19 -6.4635e-20 4.1561e-20 -9.5665e-21 3.2811e-20 -1.8877e-20</values></Legendre>
+                      <Legendre outerDomainValue="3e4"><values>5.7271e-4 -3.3639e-7 -3.3575e-9 1.3011e-12 1.8139e-14 -1.1907e-17 -7.4727e-18 5.6089e-18 -3.6735e-18 4.702e-18 -3.5159e-18</values></Legendre>
+                      <Legendre outerDomainValue="4e4"><values>4.3095e-3 -4.3536e-6 -1.9904e-8 1.1606e-11 2.5288e-13 -2.7247e-16 -1.0035e-16 7.5403e-17 -5.2246e-17 6.2815e-17 -4.9357e-17</values></Legendre>
+                      <Legendre outerDomainValue="5e4"><values>0.017237 -2.409e-5 -3.0135e-8 1.8827e-11 1.6645e-12 -2.501e-15 -5.6365e-16 4.0338e-16 -2.8735e-16 3.5717e-16 -2.8053e-16</values></Legendre></function1ds></XYs2d>
+                  <XYs2d index="1">
+                    <function1ds>
+                      <Legendre outerDomainValue="5e4"><values>0.017237 -2.409e-5 -3.0135e-8 1.8827e-11 1.6645e-12 -2.501e-15 -5.6365e-16 4.0338e-16 -2.8735e-16 3.5717e-16 -2.8053e-16</values></Legendre>
+                      <Legendre outerDomainValue="6e4"><values>0.047732 -8.3912e-5 1.2992e-7 -1.9119e-10 7.0575e-12 -1.3582e-14 -1.9386e-15 1.4322e-15 -1.0384e-15 1.2344e-15 -1.0025e-15</values></Legendre>
+                      <Legendre outerDomainValue="7e4"><values>0.10297 -2.16e-4 9.0607e-7 -1.4803e-9 2.2458e-11 -5.266e-14 -5.0216e-15 3.6563e-15 -2.7429e-15 3.1992e-15 -2.5985e-15</values></Legendre>
+                      <Legendre outerDomainValue="8e4"><values>0.18395 -4.454e-4 3.0376e-6 -5.9181e-9 5.8474e-11 -1.6147e-13 -1.0146e-14 7.6531e-15 -5.7993e-15 6.486e-15 -5.53e-15</values></Legendre>
+                      <Legendre outerDomainValue="9e4"><values>0.28284 -7.7288e-4 7.3287e-6 -1.6969e-8 1.3155e-10 -4.176e-13 -1.8037e-14 1.3411e-14 -1.0031e-14 1.1628e-14 -9.6642e-15</values></Legendre>
+                      <Legendre outerDomainValue="1e5"><values>0.38609 -1.1715e-3 1.4305e-5 -3.8964e-8 2.6542e-10 -9.5066e-13 -2.7055e-14 2.0339e-14 -1.5778e-14 1.7647e-14 -1.4803e-14</values></Legendre>
+                      <Legendre outerDomainValue="1.1e5"><values>0.48092 -1.601e-3 2.4047e-5 -7.6254e-8 4.9296e-10 -1.9625e-12 -3.662e-14 2.8422e-14 -2.1421e-14 2.4507e-14 -2.0719e-14</values></Legendre>
+                      <Legendre outerDomainValue="1.2e5"><values>0.55982 -2.026e-3 3.63e-5 -1.3272e-7 8.5829e-10 -3.7474e-12 -4.4682e-14 3.7007e-14 -2.7795e-14 3.139e-14 -2.6296e-14</values></Legendre>
+                      <Legendre outerDomainValue="1.4e5"><values>0.66549 -2.7893e-3 6.6906e-5 -3.1703e-7 2.2464e-9 -1.1448e-11 -5.2744e-14 5.1337e-14 -3.8662e-14 4.4689e-14 -3.7737e-14</values></Legendre>
+                      <Legendre outerDomainValue="1.6e5"><values>0.71737 -3.4172e-3 1.0393e-4 -6.1999e-7 5.074e-9 -2.9361e-11 -3.4297e-14 6.5488e-14 -4.8902e-14 5.6843e-14 -4.7539e-14</values></Legendre>
+                      <Legendre outerDomainValue="1.8e5"><values>0.73724 -3.9406e-3 1.4648e-4 -1.0737e-6 1.0265e-8 -6.6245e-11 3.1769e-14 7.8456e-14 -5.7993e-14 6.7221e-14 -5.6727e-14</values></Legendre>
+                      <Legendre outerDomainValue="2e5"><values>0.73961 -4.3957e-3 1.9441e-4 -1.7151e-6 1.9057e-8 -1.3547e-10 1.9219e-13 9.1423e-14 -6.7502e-14 7.7318e-14 -6.4678e-14</values></Legendre>
+                      <Legendre outerDomainValue="2.2e5"><values>0.73263 -4.8093e-3 2.4783e-4 -2.5856e-6 3.3039e-8 -2.5628e-10 5.1289e-13 1.0291e-13 -7.5965e-14 8.7789e-14 -7.3127e-14</values></Legendre>
+                      <Legendre outerDomainValue="2.4e5"><values>0.72067 -5.1984e-3 3.0696e-4 -3.73e-6 5.4175e-8 -4.5518e-10 1.1009e-12 1.1718e-13 -8.4534e-14 9.7559e-14 -8.1744e-14</values></Legendre>
+                      <Legendre outerDomainValue="2.6e5"><values>0.70612 -5.5742e-3 3.7198e-4 -5.1957e-6 8.4835e-8 -7.6733e-10 2.1103e-12 1.3216e-13 -9.3624e-14 1.0857e-13 -9.0076e-14</values></Legendre>
+                      <Legendre outerDomainValue="2.8e5"><values>0.69032 -5.9438e-3 4.431e-4 -7.0324e-6 1.2781e-7 -1.2381e-9 3.755e-12 1.5123e-13 -1.0313e-13 1.1997e-13 -9.9201e-14</values></Legendre>
+                      <Legendre outerDomainValue="3e5"><values>0.67402 -6.3118e-3 5.2047e-4 -9.2918e-6 1.8633e-7 -1.9245e-9 6.3299e-12 1.7379e-13 -1.1264e-13 1.3129e-13 -1.0939e-13</values></Legendre>
+                      <Legendre outerDomainValue="3.2e5"><values>0.65768 -6.6813e-3 6.0426e-4 -1.2027e-5 2.6411e-7 -2.897e-9 1.0222e-11 2.0268e-13 -1.2351e-13 1.4318e-13 -1.1922e-13</values></Legendre>
+                      <Legendre outerDomainValue="3.4e5"><values>0.64153 -7.0543e-3 6.946e-4 -1.5292e-5 3.6529e-7 -4.241e-9 1.5936e-11 2.4076e-13 -1.3396e-13 1.5592e-13 -1.2974e-13</values></Legendre>
+                      <Legendre outerDomainValue="3.6e5"><values>0.62575 -7.432e-3 7.9159e-4 -1.9143e-5 4.9454e-7 -6.0583e-9 2.411e-11 2.9168e-13 -1.4629e-13 1.7009e-13 -1.4102e-13</values></Legendre>
+                      <Legendre outerDomainValue="3.8e5"><values>0.61041 -7.8152e-3 8.9535e-4 -2.3636e-5 6.5701e-7 -8.4693e-9 3.5548e-11 3.6054e-13 -1.5862e-13 1.8469e-13 -1.5286e-13</values></Legendre>
+                      <Legendre outerDomainValue="4e5"><values>0.59556 -8.2043e-3 1.006e-3 -2.8826e-5 8.5836e-7 -1.1614e-8 5.1238e-11 4.5344e-13 -1.7241e-13 1.9984e-13 -1.6489e-13</values></Legendre>
+                      <Legendre outerDomainValue="4.2e5"><values>0.58122 -8.5995e-3 1.1235e-3 -3.4772e-5 1.1047e-6 -1.5654e-8 7.2382e-11 5.7963e-13 -1.8652e-13 2.158e-13 -1.7831e-13</values></Legendre>
+                      <Legendre outerDomainValue="4.4e5"><values>0.56739 -9.0009e-3 1.248e-3 -4.153e-5 1.4028e-6 -2.0776e-8 1.0042e-10 7.5027e-13 -2.0125e-13 2.3261e-13 -1.9206e-13</values></Legendre>
+                      <Legendre outerDomainValue="4.6e5"><values>0.55407 -9.4083e-3 1.3796e-3 -4.9157e-5 1.7599e-6 -2.7188e-8 1.3709e-10 9.7664e-13 -2.1755e-13 2.5021e-13 -2.0654e-13</values></Legendre>
+                      <Legendre outerDomainValue="4.8e5"><values>0.54126 -9.8214e-3 1.5183e-3 -5.7711e-5 2.1836e-6 -3.5129e-8 1.8441e-10 1.2802e-12 -2.3437e-13 2.6816e-13 -2.2196e-13</values></Legendre>
+                      <Legendre outerDomainValue="5e5"><values>0.52892 -0.01024 1.6641e-3 -6.7248e-5 2.6823e-6 -4.4864e-8 2.4476e-10 1.6784e-12 -2.5391e-13 2.8775e-13 -2.3751e-13</values></Legendre>
+                      <Legendre outerDomainValue="5.5e5"><values>0.50008 -0.011308 2.0599e-3 -9.5765e-5 4.316e-6 -7.9069e-8 4.718e-10 3.2767e-12 -3.0825e-13 3.3882e-13 -2.801e-13</values></Legendre>
+                      <Legendre outerDomainValue="6e5"><values>0.47386 -0.012403 2.5007e-3 -1.3166e-4 6.6272e-6 -1.3195e-7 8.5412e-10 6.2202e-12 -3.7847e-13 3.9603e-13 -3.2789e-13</values></Legendre>
+                      <Legendre outerDomainValue="6.5e5"><values>0.44997 -0.013519 2.9864e-3 -1.7577e-4 9.7897e-6 -2.1045e-7 1.4677e-9 1.1382e-11 -4.722e-13 4.5821e-13 -3.8016e-13</values></Legendre>
+                      <Legendre outerDomainValue="7e5"><values>0.42815 -0.014651 3.5169e-3 -2.2894e-4 1.3999e-5 -3.2307e-7 2.4136e-9 2.0054e-11 -6.0213e-13 5.2466e-13 -4.3744e-13</values></Legendre>
+                      <Legendre outerDomainValue="7.5e5"><values>0.40818 -0.015792 4.0918e-3 -2.9196e-4 1.9471e-5 -4.8005e-7 3.8226e-9 3.4083e-11 -7.8902e-13 5.944e-13 -5.0008e-13</values></Legendre>
+                      <Legendre outerDomainValue="8e5"><values>0.38986 -0.01694 4.7108e-3 -3.6558e-4 2.6444e-5 -6.935e-7 5.8603e-9 5.6036e-11 -1.0609e-12 6.6527e-13 -5.6802e-13</values></Legendre>
+                      <Legendre outerDomainValue="8.5e5"><values>0.373 -0.01809 5.3732e-3 -4.5055e-4 3.5178e-5 -9.7757e-7 8.7323e-9 8.9402e-11 -1.4611e-12 7.3506e-13 -6.4142e-13</values></Legendre>
+                      <Legendre outerDomainValue="9e5"><values>0.35747 -0.019239 6.0785e-3 -5.4754e-4 4.5955e-5 -1.3486e-6 1.269e-8 1.3883e-10 -2.0479e-12 7.9872e-13 -7.2057e-13</values></Legendre>
+                      <Legendre outerDomainValue="9.5e5"><values>0.34312 -0.020383 6.8261e-3 -6.5721e-4 5.9075e-5 -1.8251e-6 1.8036e-8 2.1039e-10 -2.9028e-12 8.4967e-13 -8.0562e-13</values></Legendre>
+                      <Legendre outerDomainValue="1e6"><values>0.32985 -0.021522 7.6152e-3 -7.8018e-4 7.4863e-5 -2.4282e-6 2.5131e-8 3.1191e-10 -4.1351e-12 8.7785e-13 -8.9697e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.1e6"><values>0.30613 -0.023773 9.3152e-3 -1.0682e-3 1.1584e-4 -4.1113e-6 4.6324e-8 6.4699e-10 -8.3538e-12 8.0598e-13 -1.0997e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.2e6"><values>0.28565 -0.025982 0.011173 -1.4158e-3 1.719e-4 -6.6195e-6 8.0517e-8 1.2564e-9 -1.6449e-11 3.9996e-13 -1.3315e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.3e6"><values>0.26788 -0.028143 0.013182 -1.8263e-3 2.4638e-4 -1.0221e-5 1.3325e-7 2.3088e-9 -3.1226e-11 -6.6812e-13 -1.5969e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.4e6"><values>0.25242 -0.030252 0.015336 -2.3025e-3 3.4294e-4 -1.5231e-5 2.1155e-7 4.0485e-9 -5.7002e-11 -2.9513e-12 -1.9028e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.5e6"><values>0.23895 -0.03231 0.01763 -2.8464e-3 4.6557e-4 -2.202e-5 3.2409e-7 6.8194e-9 -1.0018e-10 -7.3462e-12 -2.2603e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.6e6"><values>0.22719 -0.034319 0.020059 -3.4592e-3 6.1855e-4 -3.1006e-5 4.814e-7 1.1093e-8 -1.6995e-10 -1.5252e-11 -2.6859e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.7e6"><values>0.21694 -0.036282 0.022617 -4.1415e-3 8.0645e-4 -4.2665e-5 6.9602e-7 1.7504e-8 -2.7918e-10 -2.8783e-11 -3.2056e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.8e6"><values>0.20802 -0.038201 0.025298 -4.8928e-3 1.0341e-3 -5.7524e-5 9.8263e-7 2.6886e-8 -4.4542e-10 -5.105e-11 -3.8591e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.9e6"><values>0.20029 -0.04008 0.028098 -5.7119e-3 1.3066e-3 -7.616e-5 1.3582e-6 4.032e-8 -6.9216e-10 -8.6514e-11 -4.7057e-12</values></Legendre>
+                      <Legendre outerDomainValue="2e6"><values>0.19363 -0.041923 0.03101 -6.5967e-3 1.6292e-3 -9.92e-5 1.8423e-6 5.9188e-8 -1.0502e-9 -1.4144e-10 -5.8318e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.2e6"><values>0.18318 -0.045506 0.037152 -8.5489e-3 2.4463e-3 -1.6121e-4 3.2269e-6 1.2059e-7 -2.2696e-9 -3.4729e-10 -9.4775e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.4e6"><values>0.1761 -0.048953 0.043675 -0.01071 3.5293e-3 -2.4931e-4 5.3472e-6 2.3049e-7 -4.5625e-9 -7.7951e-10 -1.6539e-11</values></Legendre>
+                      <Legendre outerDomainValue="2.6e6"><values>0.17199 -0.052239 0.050519 -0.01302 4.9204e-3 -3.6949e-4 8.4639e-6 4.1745e-7 -8.6288e-9 -1.629e-9 -3.0286e-11</values></Legendre>
+                      <Legendre outerDomainValue="2.8e6"><values>0.17058 -0.055307 0.057608 -0.015398 6.6567e-3 -5.2751e-4 1.2895e-5 7.2189e-7 -1.549e-8 -3.2085e-9 -5.6541e-11</values></Legendre>
+                      <Legendre outerDomainValue="3e6"><values>0.17168 -0.058063 0.064845 -0.017741 8.7648e-3 -7.2823e-4 1.9026e-5 1.1988e-6 -2.6582e-8 -6.0103e-9 -1.0521e-10</values></Legendre>
+                      <Legendre outerDomainValue="3.2e6"><values>0.17508 -0.060376 0.072113 -0.019928 0.011256 -9.7476e-4 2.7321e-5 1.9204e-6 -4.3853e-8 -1.0782e-8 -1.9249e-10</values></Legendre>
+                      <Legendre outerDomainValue="3.4e6"><values>0.18057 -0.062094 0.079272 -0.021821 0.014121 -1.2676e-3 3.834e-5 2.9781e-6 -6.9864e-8 -1.8627e-8 -3.4397e-10</values></Legendre>
+                      <Legendre outerDomainValue="3.6e6"><values>0.18779 -0.063059 0.086171 -0.023277 0.017324 -1.6038e-3 5.275e-5 4.4834e-6 -1.0789e-7 -3.1125e-8 -5.9888e-10</values></Legendre>
+                      <Legendre outerDomainValue="3.8e6"><values>0.1958 -0.062611 0.092749 -0.024138 0.020799 -1.976e-3 7.134e-5 6.5693e-6 -1.6202e-7 -5.0495e-8 -1.0158e-9</values></Legendre>
+                      <Legendre outerDomainValue="4e6"><values>0.20598 -0.060934 0.098737 -0.024339 0.024474 -2.3742e-3 9.5044e-5 9.3852e-6 -2.3719e-7 -7.9782e-8 -1.6802e-9</values></Legendre>
+                      <Legendre outerDomainValue="4.2e6"><values>0.21697 -0.058116 0.10395 -0.023808 0.02824 -2.7835e-3 1.2491e-4 1.3104e-5 -3.3927e-7 -1.2309e-7 -2.7142e-9</values></Legendre>
+                      <Legendre outerDomainValue="4.4e6"><values>0.22824 -0.054089 0.10833 -0.022519 0.031987 -3.1872e-3 1.6208e-4 1.7921e-5 -4.7502e-7 -1.8588e-7 -4.2889e-9</values></Legendre>
+                      <Legendre outerDomainValue="4.6e6"><values>0.23933 -0.048892 0.11184 -0.0205 0.03561 -3.5679e-3 2.0777e-4 2.4057e-5 -6.5216e-7 -2.7527e-7 -6.6403e-9</values></Legendre>
+                      <Legendre outerDomainValue="4.8e6"><values>0.24982 -0.04264 0.1145 -0.017822 0.03902 -3.9092e-3 2.632e-4 3.1771e-5 -8.7929e-7 -4.0047e-7 -1.0089e-8</values></Legendre>
+                      <Legendre outerDomainValue="5e6"><values>0.25938 -0.035519 0.11636 -0.014598 0.04215 -4.197e-3 3.2953e-4 4.1366e-5 -1.1658e-6 -5.7328e-7 -1.5065e-8</values></Legendre>
+                      <Legendre outerDomainValue="5.2e6"><values>0.26775 -0.027765 0.11753 -0.010957 0.044956 -4.4202e-3 4.079e-4 5.321e-5 -1.5217e-6 -8.0859e-7 -2.2136e-8</values></Legendre>
+                      <Legendre outerDomainValue="5.4e6"><values>0.27484 -0.019642 0.11811 -7.0354e-3 0.047423 -4.5709e-3 4.9934e-4 6.7742e-5 -1.9577e-6 -1.1251e-6 -3.2049e-8</values></Legendre>
+                      <Legendre outerDomainValue="5.6e6"><values>0.28063 -0.011399 0.11825 -2.9579e-3 0.049557 -4.6441e-3 6.0491e-4 8.5491e-5 -2.4845e-6 -1.5461e-6 -4.5768e-8</values></Legendre>
+                      <Legendre outerDomainValue="5.8e6"><values>0.28524 -3.2412e-3 0.11808 1.1728e-3 0.051382 -4.6368e-3 7.2568e-4 1.0708e-4 -3.1129e-6 -2.1004e-6 -6.4537e-8</values></Legendre>
+                      <Legendre outerDomainValue="6e6"><values>0.28882 4.6884e-3 0.11776 5.28e-3 0.052935 -4.5476e-3 8.6286e-4 1.3324e-4 -3.8529e-6 -2.8234e-6 -8.9941e-8</values></Legendre>
+                      <Legendre outerDomainValue="6.2e6"><values>0.29157 0.012309 0.11739 9.3105e-3 0.054257 -4.3762e-3 1.0177e-3 1.6479e-4 -4.7133e-6 -3.7584e-6 -1.2399e-7</values></Legendre>
+                      <Legendre outerDomainValue="6.4e6"><values>0.29371 0.019584 0.11708 0.01323 0.055391 -4.1234e-3 1.1915e-3 2.0266e-4 -5.7004e-6 -4.9581e-6 -1.6921e-7</values></Legendre>
+                      <Legendre outerDomainValue="6.6e6"><values>0.29539 0.026508 0.11691 0.017019 0.056375 -3.7908e-3 1.3855e-3 2.4787e-4 -6.8169e-6 -6.4864e-6 -2.2877e-7</values></Legendre>
+                      <Legendre outerDomainValue="6.8e6"><values>0.29677 0.033087 0.11692 0.020666 0.05724 -3.3812e-3 1.6009e-3 3.0149e-4 -8.0596e-6 -8.4205e-6 -3.0664e-7</values></Legendre>
+                      <Legendre outerDomainValue="7e6"><values>0.29796 0.039333 0.11714 0.024166 0.058011 -2.898e-3 1.8388e-3 3.6465e-4 -9.417e-6 -1.0854e-5 -4.0773e-7</values></Legendre>
+                      <Legendre outerDomainValue="7.2e6"><values>0.29903 0.045259 0.11756 0.027518 0.058706 -2.3458e-3 2.1e-3 4.3851e-4 -1.0865e-5 -1.3898e-5 -5.3815e-7</values></Legendre>
+                      <Legendre outerDomainValue="7.4e6"><values>0.30003 0.050875 0.11818 0.030723 0.059335 -1.7295e-3 2.3853e-3 5.2426e-4 -1.2364e-5 -1.7689e-5 -7.0546e-7</values></Legendre>
+                      <Legendre outerDomainValue="7.6e6"><values>0.30099 0.056191 0.11897 0.033784 0.059904 -1.0545e-3 2.695e-3 6.2314e-4 -1.3849e-5 -2.239e-5 -9.1902e-7</values></Legendre>
+                      <Legendre outerDomainValue="7.8e6"><values>0.30191 0.061212 0.11989 0.036706 0.060413 -3.2603e-4 3.0295e-3 7.3645e-4 -1.5221e-5 -2.8196e-5 -1.1904e-6</values></Legendre>
+                      <Legendre outerDomainValue="8e6"><values>0.30277 0.065947 0.12091 0.039495 0.060859 4.515e-4 3.3892e-3 8.6563e-4 -1.6338e-5 -3.5345e-5 -1.534e-6</values></Legendre>
+                      <Legendre outerDomainValue="8.5e6"><values>0.30452 0.076584 0.12363 0.045934 0.061681 2.5912e-3 4.4009e-3 1.2702e-3 -1.6413e-5 -6.1129e-5 -2.8367e-6</values></Legendre>
+                      <Legendre outerDomainValue="9e6"><values>0.30542 0.085663 0.1262 0.051749 0.062065 5.0156e-3 5.5848e-3 1.8271e-3 -6.7989e-6 -1.0376e-4 -5.1377e-6</values></Legendre>
+                      <Legendre outerDomainValue="9.5e6"><values>0.30537 0.093471 0.12838 0.057192 0.062077 7.8096e-3 6.9776e-3 2.6202e-3 2.8079e-5 -1.7417e-4 -9.1909e-6</values></Legendre>
+                      <Legendre outerDomainValue="1e7"><values>0.30481 0.1004 0.13026 0.062667 0.061928 0.011182 8.6755e-3 3.8303e-3 1.2596e-4 -2.9119e-4 -1.6363e-5</values></Legendre></function1ds></XYs2d></function2ds></regions2d></nuclearTerm>
+            <realInterferenceTerm>
+              <regions2d>
+                <axes>
+                  <axis index="2" label="energy_in" unit="eV"/>
+                  <axis index="1" label="mu" unit=""/>
+                  <axis index="0" label="P(mu|energy_in)" unit=""/></axes>
+                <function2ds>
+                  <XYs2d index="0" interpolation="charged-particle">
+                    <function1ds>
+                      <Legendre outerDomainValue="1e4"><values>5.2299e-4 2.1998e-7 -8.6093e-10 -1.4922e-13 -1.0959e-17 8.7413e-21</values></Legendre>
+                      <Legendre outerDomainValue="2e4"><values>0.016635 4.9164e-6 -6.6183e-8 9.5876e-12 -5.6123e-16 2.9648e-18</values></Legendre>
+                      <Legendre outerDomainValue="3e4"><values>0.07121 1.2946e-5 -4.1473e-7 1.6965e-10 6.208e-15 1.2717e-17</values></Legendre>
+                      <Legendre outerDomainValue="4e4"><values>0.16227 1.2678e-5 -1.1872e-6 8.0159e-10 7.0963e-14 -1.3304e-16</values></Legendre>
+                      <Legendre outerDomainValue="5e4"><values>0.27227 -5.4854e-6 -2.3572e-6 2.2466e-9 3.0355e-13 -1.1345e-15</values></Legendre></function1ds></XYs2d>
+                  <XYs2d index="1">
+                    <function1ds>
+                      <Legendre outerDomainValue="5e4"><values>0.27227 -5.4854e-6 -2.3572e-6 2.2466e-9 3.0355e-13 -1.1345e-15</values></Legendre>
+                      <Legendre outerDomainValue="6e4"><values>0.37592 -4.6189e-5 -3.8024e-6 4.7483e-9 8.5864e-13 -4.5624e-15</values></Legendre>
+                      <Legendre outerDomainValue="7e4"><values>0.44525 -1.1051e-4 -5.3658e-6 8.4201e-9 1.9121e-12 -1.3031e-14</values></Legendre>
+                      <Legendre outerDomainValue="8e4"><values>0.45879 -1.9755e-4 -6.8848e-6 1.3253e-8 3.6395e-12 -3.0217e-14</values></Legendre>
+                      <Legendre outerDomainValue="9e4"><values>0.41184 -3.0542e-4 -8.2039e-6 1.9135e-8 6.1996e-12 -6.0774e-14</values></Legendre>
+                      <Legendre outerDomainValue="1e5"><values>0.31839 -4.319e-4 -9.1823e-6 2.5874e-8 9.7229e-12 -1.1017e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.1e5"><values>0.20198 -5.747e-4 -9.7002e-6 3.3215e-8 1.4303e-11 -1.8448e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.2e5"><values>0.084103 -7.3165e-4 -9.6614e-6 4.0857e-8 1.9992e-11 -2.9014e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.4e5"><values>-0.11014 -1.0803e-3 -7.6283e-6 5.5675e-8 3.4675e-11 -6.2161e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.6e5"><values>-0.23402 -1.4642e-3 -2.6548e-6 6.7382e-8 5.3253e-11 -1.1537e-12</values></Legendre>
+                      <Legendre outerDomainValue="1.8e5"><values>-0.30323 -1.8731e-3 5.5297e-6 7.2828e-8 7.4437e-11 -1.9248e-12</values></Legendre>
+                      <Legendre outerDomainValue="2e5"><values>-0.33742 -2.2988e-3 1.7097e-5 6.8784e-8 9.6174e-11 -2.9538e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.2e5"><values>-0.35047 -2.7354e-3 3.2154e-5 5.2024e-8 1.1568e-10 -4.2324e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.4e5"><values>-0.35104 -3.1782e-3 5.0756e-5 1.9362e-8 1.2948e-10 -5.7168e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.6e5"><values>-0.34433 -3.6238e-3 7.2928e-5 -3.2314e-8 1.3343e-10 -7.3203e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.8e5"><values>-0.33345 -4.0694e-3 9.867e-5 -1.0603e-7 1.2278e-10 -8.9061e-12</values></Legendre>
+                      <Legendre outerDomainValue="3e5"><values>-0.3203 -4.513e-3 1.2797e-4 -2.0473e-7 9.2193e-11 -1.028e-11</values></Legendre>
+                      <Legendre outerDomainValue="3.2e5"><values>-0.30604 -4.9532e-3 1.6079e-4 -3.3125e-7 3.579e-11 -1.1183e-11</values></Legendre>
+                      <Legendre outerDomainValue="3.4e5"><values>-0.29138 -5.3886e-3 1.9709e-4 -4.8832e-7 -5.2807e-11 -1.1286e-11</values></Legendre>
+                      <Legendre outerDomainValue="3.6e5"><values>-0.27677 -5.8185e-3 2.3685e-4 -6.786e-7 -1.8045e-10 -1.0183e-11</values></Legendre>
+                      <Legendre outerDomainValue="3.8e5"><values>-0.26246 -6.2422e-3 2.8e-4 -9.0463e-7 -3.5441e-10 -7.3848e-12</values></Legendre>
+                      <Legendre outerDomainValue="4e5"><values>-0.24862 -6.6592e-3 3.265e-4 -1.1689e-6 -5.824e-10 -2.3125e-12</values></Legendre>
+                      <Legendre outerDomainValue="4.2e5"><values>-0.23534 -7.0691e-3 3.763e-4 -1.4737e-6 -8.7247e-10 5.7074e-12</values></Legendre>
+                      <Legendre outerDomainValue="4.4e5"><values>-0.22266 -7.4718e-3 4.2935e-4 -1.8213e-6 -1.233e-9 1.7449e-11</values></Legendre>
+                      <Legendre outerDomainValue="4.6e5"><values>-0.21059 -7.8671e-3 4.8559e-4 -2.2141e-6 -1.6728e-9 3.3793e-11</values></Legendre>
+                      <Legendre outerDomainValue="4.8e5"><values>-0.19913 -8.2548e-3 5.4498e-4 -2.6539e-6 -2.2008e-9 5.5731e-11</values></Legendre>
+                      <Legendre outerDomainValue="5e5"><values>-0.18828 -8.6351e-3 6.0747e-4 -3.143e-6 -2.8264e-9 8.4372e-11</values></Legendre>
+                      <Legendre outerDomainValue="5.5e5"><values>-0.1636 -9.5532e-3 7.7693e-4 -4.5938e-6 -4.88e-9 1.9369e-10</values></Legendre>
+                      <Legendre outerDomainValue="6e5"><values>-0.1421 -0.010426 9.6469e-4 -6.3931e-6 -7.7577e-9 3.7573e-10</values></Legendre>
+                      <Legendre outerDomainValue="6.5e5"><values>-0.12335 -0.011254 1.1701e-3 -8.5672e-6 -1.1621e-8 6.5872e-10</values></Legendre>
+                      <Legendre outerDomainValue="7e5"><values>-0.10696 -0.012041 1.3924e-3 -1.114e-5 -1.6634e-8 1.0768e-9</values></Legendre>
+                      <Legendre outerDomainValue="7.5e5"><values>-0.092594 -0.012789 1.6311e-3 -1.4133e-5 -2.2966e-8 1.6703e-9</values></Legendre>
+                      <Legendre outerDomainValue="8e5"><values>-0.079953 -0.013501 1.8856e-3 -1.7567e-5 -3.0787e-8 2.4864e-9</values></Legendre>
+                      <Legendre outerDomainValue="8.5e5"><values>-0.068797 -0.014177 2.1553e-3 -2.1459e-5 -4.0265e-8 3.5794e-9</values></Legendre>
+                      <Legendre outerDomainValue="9e5"><values>-0.058921 -0.014822 2.4398e-3 -2.5827e-5 -5.1568e-8 5.0111e-9</values></Legendre>
+                      <Legendre outerDomainValue="9.5e5"><values>-0.050152 -0.015436 2.7385e-3 -3.0683e-5 -6.486e-8 6.8513e-9</values></Legendre>
+                      <Legendre outerDomainValue="1e6"><values>-0.042346 -0.016023 3.0511e-3 -3.6043e-5 -8.0302e-8 9.1778e-9</values></Legendre>
+                      <Legendre outerDomainValue="1.1e6"><values>-0.02915 -0.017118 3.7159e-3 -4.8319e-5 -1.1824e-7 1.5646e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.2e6"><values>-0.018558 -0.018122 4.4312e-3 -6.2735e-5 -1.6654e-7 2.5218e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.3e6"><values>-0.010002 -0.019046 5.1937e-3 -7.9353e-5 -2.2621e-7 3.8852e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.4e6"><values>-3.0575e-3 -0.019899 6.0007e-3 -9.8221e-5 -2.981e-7 5.7672e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.5e6"><values>2.5941e-3 -0.020688 6.8493e-3 -1.1937e-4 -3.8284e-7 8.2978e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.6e6"><values>7.199e-3 -0.021421 7.7367e-3 -1.4282e-4 -4.8088e-7 1.1626e-7</values></Legendre>
+                      <Legendre outerDomainValue="1.7e6"><values>0.010948 -0.022103 8.6598e-3 -1.6858e-4 -5.9241e-7 1.5919e-7</values></Legendre>
+                      <Legendre outerDomainValue="1.8e6"><values>0.013992 -0.022739 9.6156e-3 -1.9664e-4 -7.1737e-7 2.1367e-7</values></Legendre>
+                      <Legendre outerDomainValue="1.9e6"><values>0.016451 -0.023331 0.010601 -2.2699e-4 -8.5542e-7 2.818e-7</values></Legendre>
+                      <Legendre outerDomainValue="2e6"><values>0.018421 -0.023882 0.011612 -2.5962e-4 -1.0059e-6 3.6592e-7</values></Legendre>
+                      <Legendre outerDomainValue="2.2e6"><values>0.021192 -0.024874 0.013696 -3.3156e-4 -1.3405e-6 5.9265e-7</values></Legendre>
+                      <Legendre outerDomainValue="2.4e6"><values>0.022779 -0.025726 0.015834 -4.1215e-4 -1.7103e-6 9.1749e-7</values></Legendre>
+                      <Legendre outerDomainValue="2.6e6"><values>0.023507 -0.026449 0.017985 -5.01e-4 -2.1e-6 1.3684e-6</values></Legendre>
+                      <Legendre outerDomainValue="2.8e6"><values>0.023604 -0.027048 0.020099 -5.9763e-4 -2.4904e-6 1.9779e-6</values></Legendre>
+                      <Legendre outerDomainValue="3e6"><values>0.023238 -0.027527 0.022123 -7.0155e-4 -2.8589e-6 2.7838e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.2e6"><values>0.022533 -0.027889 0.023997 -8.1218e-4 -3.1811e-6 3.8291e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.4e6"><values>0.02159 -0.028133 0.025659 -9.2898e-4 -3.4317e-6 5.1632e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.6e6"><values>0.020521 -0.028254 0.027053 -1.0513e-3 -3.5862e-6 6.8414e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.8e6"><values>0.020228 -0.028236 0.028131 -1.1787e-3 -3.6209e-6 8.9264e-6</values></Legendre>
+                      <Legendre outerDomainValue="4e6"><values>0.019251 -0.028219 0.028876 -1.3104e-3 -3.5125e-6 1.1488e-5</values></Legendre>
+                      <Legendre outerDomainValue="4.2e6"><values>0.01803 -0.028197 0.029268 -1.4461e-3 -3.2369e-6 1.4606e-5</values></Legendre>
+                      <Legendre outerDomainValue="4.4e6"><values>0.01671 -0.028158 0.029321 -1.5853e-3 -2.7658e-6 1.8367e-5</values></Legendre>
+                      <Legendre outerDomainValue="4.6e6"><values>0.015347 -0.028112 0.029071 -1.7274e-3 -2.0641e-6 2.2869e-5</values></Legendre>
+                      <Legendre outerDomainValue="4.8e6"><values>0.013971 -0.02808 0.028568 -1.8722e-3 -1.0869e-6 2.8222e-5</values></Legendre>
+                      <Legendre outerDomainValue="5e6"><values>0.012605 -0.028084 0.027875 -2.0192e-3 2.2208e-7 3.4545e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.2e6"><values>0.011265 -0.02814 0.027054 -2.1682e-3 1.9305e-6 4.1976e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.4e6"><values>9.9635e-3 -0.028246 0.026161 -2.3189e-3 4.1165e-6 5.0663e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.6e6"><values>8.7097e-3 -0.028382 0.025246 -2.4711e-3 6.8663e-6 6.0775e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.8e6"><values>7.5114e-3 -0.028518 0.024344 -2.6246e-3 1.0272e-5 7.2498e-5</values></Legendre>
+                      <Legendre outerDomainValue="6e6"><values>6.3746e-3 -0.028621 0.023479 -2.779e-3 1.4428e-5 8.6042e-5</values></Legendre>
+                      <Legendre outerDomainValue="6.2e6"><values>5.3039e-3 -0.028668 0.022663 -2.9343e-3 1.9431e-5 1.0164e-4</values></Legendre>
+                      <Legendre outerDomainValue="6.4e6"><values>4.3024e-3 -0.028645 0.0219 -3.0901e-3 2.5374e-5 1.1956e-4</values></Legendre>
+                      <Legendre outerDomainValue="6.6e6"><values>3.3723e-3 -0.028551 0.021187 -3.2465e-3 3.2351e-5 1.4009e-4</values></Legendre>
+                      <Legendre outerDomainValue="6.8e6"><values>2.5146e-3 -0.028389 0.020516 -3.4032e-3 4.0447e-5 1.6357e-4</values></Legendre>
+                      <Legendre outerDomainValue="7e6"><values>1.7288e-3 -0.028166 0.019874 -3.5602e-3 4.9743e-5 1.9038e-4</values></Legendre>
+                      <Legendre outerDomainValue="7.2e6"><values>1.0136e-3 -0.027891 0.019251 -3.7175e-3 6.0313e-5 2.2094e-4</values></Legendre>
+                      <Legendre outerDomainValue="7.4e6"><values>3.6592e-4 -0.027574 0.018635 -3.8751e-3 7.2218e-5 2.5575e-4</values></Legendre>
+                      <Legendre outerDomainValue="7.6e6"><values>-2.1813e-4 -0.027221 0.018015 -4.0329e-3 8.551e-5 2.9537e-4</values></Legendre>
+                      <Legendre outerDomainValue="7.8e6"><values>-7.4368e-4 -0.02684 0.017386 -4.191e-3 1.0023e-4 3.4046e-4</values></Legendre>
+                      <Legendre outerDomainValue="8e6"><values>-1.2167e-3 -0.026437 0.016743 -4.3494e-3 1.1639e-4 3.9175e-4</values></Legendre>
+                      <Legendre outerDomainValue="8.5e6"><values>-2.2114e-3 -0.025359 0.01507 -4.7471e-3 1.6305e-4 5.5325e-4</values></Legendre>
+                      <Legendre outerDomainValue="9e6"><values>-3.0141e-3 -0.024218 0.013347 -5.1476e-3 2.1802e-4 7.7775e-4</values></Legendre>
+                      <Legendre outerDomainValue="9.5e6"><values>-3.6947e-3 -0.023042 0.011652 -5.5517e-3 2.7948e-4 1.0931e-3</values></Legendre>
+                      <Legendre outerDomainValue="1e7"><values>-4.2865e-3 -0.021838 0.010058 -5.96e-3 3.4428e-4 1.5414e-3</values></Legendre></function1ds></XYs2d></function2ds></regions2d></realInterferenceTerm>
+            <imaginaryInterferenceTerm>
+              <regions2d>
+                <axes>
+                  <axis index="2" label="energy_in" unit="eV"/>
+                  <axis index="1" label="mu" unit=""/>
+                  <axis index="0" label="P(mu|energy_in)" unit=""/></axes>
+                <function2ds>
+                  <XYs2d index="0" interpolation="charged-particle">
+                    <function1ds>
+                      <Legendre outerDomainValue="1e4"><values>2.7574e-4 -2.5627e-7 -9.9872e-10 2.4883e-13 1.1874e-19 9.7638e-21</values></Legendre>
+                      <Legendre outerDomainValue="2e4"><values>9.517e-3 -1.0941e-5 -1.5501e-8 2.2564e-11 1.5305e-15 -2.0122e-18</values></Legendre>
+                      <Legendre outerDomainValue="3e4"><values>0.045285 -5.4806e-5 6.2352e-8 1.2368e-10 1.8987e-14 -6.2757e-17</values></Legendre>
+                      <Legendre outerDomainValue="4e4"><values>0.11831 -1.3974e-4 5.2193e-7 2.1536e-10 7.4253e-14 -4.123e-16</values></Legendre>
+                      <Legendre outerDomainValue="5e4"><values>0.23529 -2.609e-4 1.66e-6 -2.4647e-11 1.5783e-13 -1.3863e-15</values></Legendre></function1ds></XYs2d>
+                  <XYs2d index="1">
+                    <function1ds>
+                      <Legendre outerDomainValue="5e4"><values>0.23529 -2.609e-4 1.66e-6 -2.4647e-11 1.5783e-13 -1.3863e-15</values></Legendre>
+                      <Legendre outerDomainValue="6e4"><values>0.39817 -4.0976e-4 3.6921e-6 -1.0897e-9 1.9532e-13 -3.0918e-15</values></Legendre>
+                      <Legendre outerDomainValue="7e4"><values>0.59844 -5.7809e-4 6.7468e-6 -3.5628e-9 3.1904e-14 -4.9399e-15</values></Legendre>
+                      <Legendre outerDomainValue="8e4"><values>0.81368 -7.5913e-4 1.0885e-5 -8.0583e-9 -5.7064e-13 -5.1535e-15</values></Legendre>
+                      <Legendre outerDomainValue="9e4"><values>1.0133 -9.4765e-4 1.6126e-5 -1.5186e-8 -1.9305e-12 -3.0111e-16</values></Legendre>
+                      <Legendre outerDomainValue="1e5"><values>1.1717 -1.1397e-3 2.2464e-5 -2.5535e-8 -4.4393e-12 1.5126e-14</values></Legendre>
+                      <Legendre outerDomainValue="1.1e5"><values>1.2781 -1.3325e-3 2.9887e-5 -3.9657e-8 -8.5554e-12 4.9088e-14</values></Legendre>
+                      <Legendre outerDomainValue="1.2e5"><values>1.3359 -1.5237e-3 3.8371e-5 -5.8072e-8 -1.4796e-11 1.1233e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.4e5"><values>1.3501 -1.8964e-3 5.8405e-5 -1.0966e-7 -3.5978e-11 3.853e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.6e5"><values>1.2977 -2.25e-3 8.2279e-5 -1.8372e-7 -7.3069e-11 9.8607e-13</values></Legendre>
+                      <Legendre outerDomainValue="1.8e5"><values>1.2259 -2.5812e-3 1.0968e-4 -2.8315e-7 -1.3173e-10 2.1269e-12</values></Legendre>
+                      <Legendre outerDomainValue="2e5"><values>1.1539 -2.8888e-3 1.4028e-4 -4.1043e-7 -2.1809e-10 4.0862e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.2e5"><values>1.0877 -3.1725e-3 1.7382e-4 -5.6764e-7 -3.386e-10 7.2129e-12</values></Legendre>
+                      <Legendre outerDomainValue="2.4e5"><values>1.0285 -3.4332e-3 2.1002e-4 -7.5658e-7 -4.9999e-10 1.1931e-11</values></Legendre>
+                      <Legendre outerDomainValue="2.6e5"><values>0.97589 -3.6716e-3 2.4868e-4 -9.788e-7 -7.0918e-10 1.8741e-11</values></Legendre>
+                      <Legendre outerDomainValue="2.8e5"><values>0.92912 -3.8889e-3 2.8957e-4 -1.2356e-6 -9.7324e-10 2.8227e-11</values></Legendre>
+                      <Legendre outerDomainValue="3e5"><values>0.8873 -4.0863e-3 3.3254e-4 -1.5281e-6 -1.2993e-9 4.1053e-11</values></Legendre>
+                      <Legendre outerDomainValue="3.2e5"><values>0.84964 -4.2649e-3 3.7742e-4 -1.8573e-6 -1.6947e-9 5.7973e-11</values></Legendre>
+                      <Legendre outerDomainValue="3.4e5"><values>0.81552 -4.4257e-3 4.2408e-4 -2.224e-6 -2.1667e-9 7.9825e-11</values></Legendre>
+                      <Legendre outerDomainValue="3.6e5"><values>0.7844 -4.5699e-3 4.7239e-4 -2.629e-6 -2.7224e-9 1.0754e-10</values></Legendre>
+                      <Legendre outerDomainValue="3.8e5"><values>0.75586 -4.6983e-3 5.2225e-4 -3.0728e-6 -3.3692e-9 1.4213e-10</values></Legendre>
+                      <Legendre outerDomainValue="4e5"><values>0.72955 -4.812e-3 5.7355e-4 -3.556e-6 -4.1142e-9 1.8472e-10</values></Legendre>
+                      <Legendre outerDomainValue="4.2e5"><values>0.70518 -4.9116e-3 6.262e-4 -4.079e-6 -4.9647e-9 2.365e-10</values></Legendre>
+                      <Legendre outerDomainValue="4.4e5"><values>0.68252 -4.9981e-3 6.8014e-4 -4.6423e-6 -5.9277e-9 2.9879e-10</values></Legendre>
+                      <Legendre outerDomainValue="4.6e5"><values>0.66135 -5.0721e-3 7.3529e-4 -5.246e-6 -7.0102e-9 3.7298e-10</values></Legendre>
+                      <Legendre outerDomainValue="4.8e5"><values>0.64153 -5.1344e-3 7.9159e-4 -5.8905e-6 -8.2192e-9 4.6056e-10</values></Legendre>
+                      <Legendre outerDomainValue="5e5"><values>0.6229 -5.1854e-3 8.4897e-4 -6.5759e-6 -9.5613e-9 5.6313e-10</values></Legendre>
+                      <Legendre outerDomainValue="5.5e5"><values>0.58082 -5.2679e-3 9.9688e-4 -8.4697e-6 -1.3543e-8 8.965e-10</values></Legendre>
+                      <Legendre outerDomainValue="6e5"><values>0.54405 -5.292e-3 1.1506e-3 -1.0622e-5 -1.85e-8 1.3636e-9</values></Legendre>
+                      <Legendre outerDomainValue="6.5e5"><values>0.51153 -5.2644e-3 1.3097e-3 -1.3032e-5 -2.4526e-8 1.9977e-9</values></Legendre>
+                      <Legendre outerDomainValue="7e5"><values>0.4825 -5.1909e-3 1.4736e-3 -1.5699e-5 -3.1712e-8 2.8361e-9</values></Legendre>
+                      <Legendre outerDomainValue="7.5e5"><values>0.45638 -5.0764e-3 1.6422e-3 -1.8622e-5 -4.0138e-8 3.9201e-9</values></Legendre>
+                      <Legendre outerDomainValue="8e5"><values>0.43272 -4.9251e-3 1.8152e-3 -2.1797e-5 -4.988e-8 5.2954e-9</values></Legendre>
+                      <Legendre outerDomainValue="8.5e5"><values>0.41116 -4.7409e-3 1.9925e-3 -2.5223e-5 -6.1005e-8 7.0118e-9</values></Legendre>
+                      <Legendre outerDomainValue="9e5"><values>0.39142 -4.5269e-3 2.1739e-3 -2.8894e-5 -7.3573e-8 9.1235e-9</values></Legendre>
+                      <Legendre outerDomainValue="9.5e5"><values>0.37325 -4.2863e-3 2.3594e-3 -3.2806e-5 -8.7633e-8 1.1689e-8</values></Legendre>
+                      <Legendre outerDomainValue="1e6"><values>0.35648 -4.0217e-3 2.549e-3 -3.6956e-5 -1.0323e-7 1.4771e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.1e6"><values>0.3265 -3.4297e-3 2.9407e-3 -4.5947e-5 -1.3915e-7 2.2759e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.2e6"><values>0.30044 -2.7679e-3 3.3496e-3 -5.5824e-5 -1.8149e-7 3.3678e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.3e6"><values>0.27757 -2.0504e-3 3.7767e-3 -6.6541e-5 -2.3025e-7 4.8196e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.4e6"><values>0.25732 -1.2892e-3 4.2236e-3 -7.8048e-5 -2.8526e-7 6.705e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.5e6"><values>0.23928 -4.9472e-4 4.6919e-3 -9.0294e-5 -3.4616e-7 9.1055e-8</values></Legendre>
+                      <Legendre outerDomainValue="1.6e6"><values>0.22308 3.243e-4 5.1837e-3 -1.0322e-4 -4.1242e-7 1.211e-7</values></Legendre>
+                      <Legendre outerDomainValue="1.7e6"><values>0.20848 1.1602e-3 5.7011e-3 -1.1678e-4 -4.833e-7 1.5816e-7</values></Legendre>
+                      <Legendre outerDomainValue="1.8e6"><values>0.19524 2.0064e-3 6.2466e-3 -1.309e-4 -5.5784e-7 2.0328e-7</values></Legendre>
+                      <Legendre outerDomainValue="1.9e6"><values>0.18319 2.8573e-3 6.8228e-3 -1.4553e-4 -6.3483e-7 2.576e-7</values></Legendre>
+                      <Legendre outerDomainValue="2e6"><values>0.17218 3.7081e-3 7.4323e-3 -1.6061e-4 -7.1285e-7 3.2232e-7</values></Legendre>
+                      <Legendre outerDomainValue="2.2e6"><values>0.15279 5.3943e-3 8.762e-3 -1.9184e-4 -8.648e-7 4.8824e-7</values></Legendre>
+                      <Legendre outerDomainValue="2.4e6"><values>0.1363 7.0404e-3 0.010257 -2.2407e-4 -9.9636e-7 7.1249e-7</values></Legendre>
+                      <Legendre outerDomainValue="2.6e6"><values>0.12213 8.6306e-3 0.011936 -2.5675e-4 -1.0849e-6 1.0079e-6</values></Legendre>
+                      <Legendre outerDomainValue="2.8e6"><values>0.10984 0.010156 0.013813 -2.893e-4 -1.102e-6 1.389e-6</values></Legendre>
+                      <Legendre outerDomainValue="3e6"><values>0.099101 0.011612 0.015893 -3.2115e-4 -1.0128e-6 1.8716e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.2e6"><values>0.089632 0.013001 0.018171 -3.5169e-4 -7.7618e-7 2.4737e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.4e6"><values>0.081196 0.014326 0.020624 -3.8031e-4 -3.454e-7 3.2146e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.6e6"><values>0.073517 0.015599 0.023214 -4.064e-4 3.3074e-7 4.1162e-6</values></Legendre>
+                      <Legendre outerDomainValue="3.8e6"><values>0.066716 0.016887 0.025878 -4.2929e-4 1.3058e-6 5.2021e-6</values></Legendre>
+                      <Legendre outerDomainValue="4e6"><values>0.061377 0.018211 0.02856 -4.4829e-4 2.6336e-6 6.4986e-6</values></Legendre>
+                      <Legendre outerDomainValue="4.2e6"><values>0.056518 0.019491 0.031186 -4.6281e-4 4.3659e-6 8.0346e-6</values></Legendre>
+                      <Legendre outerDomainValue="4.4e6"><values>0.052131 0.020727 0.03368 -4.722e-4 6.5515e-6 9.842e-6</values></Legendre>
+                      <Legendre outerDomainValue="4.6e6"><values>0.048173 0.021926 0.035977 -4.7585e-4 9.2368e-6 1.1956e-5</values></Legendre>
+                      <Legendre outerDomainValue="4.8e6"><values>0.044599 0.023089 0.038026 -4.7316e-4 1.2467e-5 1.4416e-5</values></Legendre>
+                      <Legendre outerDomainValue="5e6"><values>0.041367 0.024202 0.0398 -4.636e-4 1.6291e-5 1.7265e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.2e6"><values>0.038442 0.025239 0.041287 -4.4666e-4 2.0763e-5 2.0551e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.4e6"><values>0.035792 0.026166 0.042496 -4.2192e-4 2.5946e-5 2.433e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.6e6"><values>0.033389 0.026957 0.043451 -3.8902e-4 3.1915e-5 2.8663e-5</values></Legendre>
+                      <Legendre outerDomainValue="5.8e6"><values>0.03121 0.027599 0.04418 -3.4765e-4 3.8759e-5 3.3618e-5</values></Legendre>
+                      <Legendre outerDomainValue="6e6"><values>0.029234 0.028095 0.044718 -2.9753e-4 4.6579e-5 3.9276e-5</values></Legendre>
+                      <Legendre outerDomainValue="6.2e6"><values>0.027444 0.028465 0.045099 -2.3838e-4 5.5492e-5 4.5728e-5</values></Legendre>
+                      <Legendre outerDomainValue="6.4e6"><values>0.025825 0.028731 0.045355 -1.6997e-4 6.5629e-5 5.3078e-5</values></Legendre>
+                      <Legendre outerDomainValue="6.6e6"><values>0.024364 0.028916 0.045513 -9.2086e-5 7.7135e-5 6.1448e-5</values></Legendre>
+                      <Legendre outerDomainValue="6.8e6"><values>0.02305 0.029039 0.045595 -4.5632e-6 9.0167e-5 7.0981e-5</values></Legendre>
+                      <Legendre outerDomainValue="7e6"><values>0.021875 0.029115 0.045616 9.2714e-5 1.049e-4 8.1846e-5</values></Legendre>
+                      <Legendre outerDomainValue="7.2e6"><values>0.020831 0.029155 0.045586 1.9981e-4 1.2151e-4 9.4243e-5</values></Legendre>
+                      <Legendre outerDomainValue="7.4e6"><values>0.019912 0.029165 0.045511 3.1673e-4 1.4021e-4 1.0841e-4</values></Legendre>
+                      <Legendre outerDomainValue="7.6e6"><values>0.019111 0.02915 0.045392 4.4343e-4 1.6121e-4 1.2465e-4</values></Legendre>
+                      <Legendre outerDomainValue="7.8e6"><values>0.018423 0.029112 0.045227 5.7983e-4 1.8473e-4 1.433e-4</values></Legendre>
+                      <Legendre outerDomainValue="8e6"><values>0.017841 0.029054 0.045014 7.2576e-4 2.11e-4 1.6481e-4</values></Legendre>
+                      <Legendre outerDomainValue="8.5e6"><values>0.016807 0.028822 0.04424 1.131e-3 2.9043e-4 2.3504e-4</values></Legendre>
+                      <Legendre outerDomainValue="9e6"><values>0.016277 0.028471 0.043096 1.5906e-3 3.928e-4 3.405e-4</values></Legendre>
+                      <Legendre outerDomainValue="9.5e6"><values>0.016115 0.028003 0.041587 2.099e-3 5.2237e-4 5.077e-4</values></Legendre>
+                      <Legendre outerDomainValue="1e7"><values>0.016198 0.027422 0.039768 2.6493e-3 6.8306e-4 7.938e-4</values></Legendre></function1ds></XYs2d></function2ds></regions2d></imaginaryInterferenceTerm></nuclearAmplitudeExpansion></CoulombPlusNuclearElastic></doubleDifferentialCrossSection>
+      <crossSection>
+        <CoulombPlusNuclearElastic label="eval" href="../../doubleDifferentialCrossSection/CoulombPlusNuclearElastic[@label='eval']"/></crossSection>
+      <outputChannel genre="twoBody">
+        <Q>
+          <constant1d label="eval" value="0" domainMin="1e4" domainMax="1e7">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="H2" label="H2">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1e4" domainMax="1e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <CoulombPlusNuclearElastic label="eval" href="../../../../../doubleDifferentialCrossSection/CoulombPlusNuclearElastic[@label='eval']"/></distribution></product>
+          <product pid="H3" label="H3">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1e4" domainMax="1e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <angularTwoBody label="eval" productFrame="centerOfMass">
+                <recoil href="../../../../product[@label='H2']/distribution/CoulombPlusNuclearElastic[@label='eval']"/></angularTwoBody></distribution></product></products></outputChannel></reaction>
+    <reaction label="n + He4" ENDF_MT="50">
+      <crossSection>
+        <regions1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <function1ds>
+            <XYs1d index="0" interpolation="charged-particle">
+              <values>
+                1.00000000e+02 2.04690000e-56 2.00000000e+02 7.43270000e-39 3.00000000e+02 4.05550000e-31 4.00000000e+02 1.58620000e-26 5.00000000e+02 2.10290000e-23 6.00000000e+02 4.17040000e-21 7.00000000e+02 2.51410000e-19 8.00000000e+02 6.78280000e-18 9.00000000e+02 1.03210000e-16 1.00000000e+03 1.02680000e-15 2.00000000e+03 2.30630000e-10 3.00000000e+03 4.93690000e-08 4.00000000e+03 1.16040000e-06 5.00000000e+03 9.77670000e-06 6.00000000e+03 4.64530000e-05 7.00000000e+03 1.54430000e-04 8.00000000e+03 4.03830000e-04 9.00000000e+03 8.90740000e-04 1.00000000e+04 1.73260000e-03 1.10000000e+04 3.06200000e-03 1.20000000e+04 5.02020000e-03 1.40000000e+04 1.13990000e-02 1.60000000e+04 2.19860000e-02 1.80000000e+04 3.77910000e-02 2.00000000e+04 5.96780000e-02 2.20000000e+04 8.83590000e-02 2.40000000e+04 1.24410000e-01 2.60000000e+04 1.68300000e-01 2.80000000e+04 2.20390000e-01 3.00000000e+04 2.80960000e-01</values></XYs1d>
+            <XYs1d index="1">
+              <values>
+                3.00000000e+04 2.80960000e-01 3.50000000e+04 4.70730000e-01 4.00000000e+04 7.16360000e-01 4.50000000e+04 1.01730000e+00 5.00000000e+04 1.37020000e+00 5.50000000e+04 1.76860000e+00 6.00000000e+04 2.20210000e+00 6.50000000e+04 2.65630000e+00 7.00000000e+04 3.11340000e+00 7.50000000e+04 3.55350000e+00 8.00000000e+04 3.95710000e+00 8.50000000e+04 4.30680000e+00 9.00000000e+04 4.59020000e+00 9.50000000e+04 4.80050000e+00 1.00000000e+05 4.93700000e+00 1.02000000e+05 4.97180000e+00 1.04000000e+05 4.99590000e+00 1.06000000e+05 5.00980000e+00 1.08000000e+05 5.01420000e+00 1.10000000e+05 5.00970000e+00 1.12000000e+05 4.99690000e+00 1.14000000e+05 4.97660000e+00 1.20000000e+05 4.87690000e+00 1.25000000e+05 4.75920000e+00 1.30000000e+05 4.61940000e+00 1.35000000e+05 4.46520000e+00 1.40000000e+05 4.30270000e+00 1.45000000e+05 4.13660000e+00 1.50000000e+05 3.97040000e+00 1.60000000e+05 3.64750000e+00 1.70000000e+05 3.34650000e+00 1.80000000e+05 3.07230000e+00 1.90000000e+05 2.82560000e+00 2.00000000e+05 2.60510000e+00 2.20000000e+05 2.23320000e+00 2.40000000e+05 1.93690000e+00 2.60000000e+05 1.69850000e+00 2.80000000e+05 1.50460000e+00 3.00000000e+05 1.34480000e+00 3.20000000e+05 1.21160000e+00 3.40000000e+05 1.09940000e+00 3.60000000e+05 1.00390000e+00 3.80000000e+05 9.21820000e-01 4.00000000e+05 8.50740000e-01 4.20000000e+05 7.88700000e-01 4.40000000e+05 7.34200000e-01 4.60000000e+05 6.86000000e-01 4.80000000e+05 6.43150000e-01 5.00000000e+05 6.04850000e-01 5.50000000e+05 5.25040000e-01
+                6.00000000e+05 4.62490000e-01 6.50000000e+05 4.12400000e-01 7.00000000e+05 3.71570000e-01 7.50000000e+05 3.37780000e-01 8.00000000e+05 3.09440000e-01 8.50000000e+05 2.85410000e-01 9.00000000e+05 2.64830000e-01 9.50000000e+05 2.47050000e-01 1.00000000e+06 2.31580000e-01 1.10000000e+06 2.06070000e-01 1.20000000e+06 1.86030000e-01 1.30000000e+06 1.69990000e-01 1.40000000e+06 1.56950000e-01 1.50000000e+06 1.46200000e-01 1.60000000e+06 1.37250000e-01 1.70000000e+06 1.29710000e-01 1.80000000e+06 1.23330000e-01 1.90000000e+06 1.17880000e-01 2.00000000e+06 1.13200000e-01 2.10000000e+06 1.09160000e-01 2.20000000e+06 1.05670000e-01 2.30000000e+06 1.02630000e-01 2.40000000e+06 9.99950000e-02 2.50000000e+06 9.76970000e-02 2.60000000e+06 9.56950000e-02 2.70000000e+06 9.39520000e-02 2.80000000e+06 9.24380000e-02 2.90000000e+06 9.11260000e-02 3.00000000e+06 8.99920000e-02 3.10000000e+06 8.90170000e-02 3.20000000e+06 8.81840000e-02 3.30000000e+06 8.74750000e-02 3.40000000e+06 8.68770000e-02 3.50000000e+06 8.63800000e-02 3.60000000e+06 8.59750000e-02 3.70000000e+06 8.56980000e-02 3.80000000e+06 8.52620000e-02 3.90000000e+06 8.48430000e-02 4.00000000e+06 8.44610000e-02 4.10000000e+06 8.41020000e-02 4.20000000e+06 8.37560000e-02 4.30000000e+06 8.34150000e-02 4.40000000e+06 8.30700000e-02 4.50000000e+06 8.27150000e-02 4.60000000e+06 8.23420000e-02 4.70000000e+06 8.19460000e-02 4.80000000e+06 8.15230000e-02 4.90000000e+06 8.10690000e-02 5.00000000e+06 8.05820000e-02 5.20000000e+06 7.95090000e-02
+                5.40000000e+06 7.83150000e-02 5.60000000e+06 7.70300000e-02 5.80000000e+06 7.56950000e-02 6.00000000e+06 7.43480000e-02 6.20000000e+06 7.30150000e-02 6.40000000e+06 7.17120000e-02 6.60000000e+06 7.04420000e-02 6.80000000e+06 6.92010000e-02 7.00000000e+06 6.79790000e-02 7.50000000e+06 6.44640000e-02 8.00000000e+06 6.10690000e-02 8.50000000e+06 5.78970000e-02 9.00000000e+06 5.53900000e-02 9.50000000e+06 5.32500000e-02 1.00000000e+07 5.13940000e-02 1.02500000e+07 5.05310000e-02 1.05000000e+07 4.97090000e-02 1.07500000e+07 4.89060000e-02 1.10000000e+07 4.81020000e-02 1.14000000e+07 4.68230000e-02 1.20000000e+07 4.50800000e-02 1.27500000e+07 4.31160000e-02 1.30000000e+07 4.24790000e-02 1.32500000e+07 4.18790000e-02 1.33600000e+07 4.16030000e-02 1.35000000e+07 4.13320000e-02 1.37500000e+07 4.08220000e-02 1.37900000e+07 4.07160000e-02 1.40000000e+07 4.03230000e-02 1.42500000e+07 3.98730000e-02 1.45000000e+07 3.93630000e-02 1.46200000e+07 3.91030000e-02 1.47500000e+07 3.88410000e-02 1.50000000e+07 3.83150000e-02 1.55000000e+07 3.72350000e-02 1.60000000e+07 3.62350000e-02 1.65000000e+07 3.53320000e-02 1.70000000e+07 3.45910000e-02 1.72500000e+07 3.42820000e-02 1.75000000e+07 3.39940000e-02 1.77500000e+07 3.37250000e-02 1.80000000e+07 3.34550000e-02 1.85000000e+07 3.29760000e-02 1.90000000e+07 3.24970000e-02 1.96900000e+07 3.18070000e-02 2.00000000e+07 3.14880000e-02 2.05000000e+07 3.09790000e-02 2.10000000e+07 3.04840000e-02 2.15000000e+07 2.99820000e-02 2.20000000e+07 2.94770000e-02
+                2.25000000e+07 2.89570000e-02 2.30000000e+07 2.84840000e-02 2.30800000e+07 2.84120000e-02 2.40000000e+07 2.74140000e-02 2.42500000e+07 2.71500000e-02 2.48900000e+07 2.64690000e-02 2.50000000e+07 2.63660000e-02 2.60000000e+07 2.53580000e-02 2.65000000e+07 2.48760000e-02 2.70000000e+07 2.44140000e-02 2.75000000e+07 2.39510000e-02 2.80000000e+07 2.34980000e-02 2.90000000e+07 2.26530000e-02 2.91700000e+07 2.25100000e-02 3.00000000e+07 2.18620000e-02 3.00200000e+07 2.18570000e-02 3.10000000e+07 2.11080000e-02 3.15600000e+07 2.06930000e-02 3.20000000e+07 2.03670000e-02 3.25000000e+07 2.00110000e-02 3.30000000e+07 1.96580000e-02 3.35000000e+07 1.92990000e-02 3.40000000e+07 1.89450000e-02 3.45000000e+07 1.86020000e-02 3.49200000e+07 1.82880000e-02 3.50000000e+07 1.82440000e-02 3.60000000e+07 1.75370000e-02 3.70000000e+07 1.68440000e-02 3.80000000e+07 1.61820000e-02 3.90000000e+07 1.55670000e-02 4.00000000e+07 1.49620000e-02</values></XYs1d></function1ds></regions1d></crossSection>
+      <outputChannel genre="twoBody">
+        <Q>
+          <constant1d label="eval" value="17589930" domainMin="1e2" domainMax="4e7">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="n" label="n">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1e2" domainMax="4e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <angularTwoBody label="eval" productFrame="centerOfMass">
+                <XYs2d>
+                  <axes>
+                    <axis index="2" label="energy_in" unit="eV"/>
+                    <axis index="1" label="mu" unit=""/>
+                    <axis index="0" label="P(mu|energy_in)" unit=""/></axes>
+                  <function1ds>
+                    <Legendre outerDomainValue="1e2"><values>1 -3.7741e-4 9.528e-5 -2.5638e-7 -7.9026e-9 1.284e-10 1.6512e-12 1.8717e-14 -1.0138e-14 1.2436e-14 -9.9937e-15</values></Legendre>
+                    <Legendre outerDomainValue="1e4"><values>1 7.3277e-5 1.6082e-4 -7.4731e-7 -4.2038e-8 5.1108e-10 1.4578e-11 1.1512e-13 -7.9561e-15 1.0885e-14 -8.5751e-15</values></Legendre>
+                    <Legendre outerDomainValue="2e4"><values>1 2.9841e-4 1.6536e-4 -8.8079e-7 -5.9313e-8 1.0572e-9 3.969e-11 3.4502e-13 0 8.4592e-15 -6.5403e-15</values></Legendre>
+                    <Legendre outerDomainValue="3e4"><values>1 4.6805e-4 1.519e-4 -8.589e-7 -6.6685e-8 2.0015e-9 7.5034e-11 7.0314e-13 1.4751e-14 4.4103e-15 -3.9607e-15</values></Legendre>
+                    <Legendre outerDomainValue="4e4"><values>1 6.1157e-4 1.2589e-4 -7.1217e-7 -6.4724e-8 3.3599e-9 1.18e-10 1.1357e-12 3.8035e-14 6.9189e-16 -4.1733e-16</values></Legendre>
+                    <Legendre outerDomainValue="5e4"><values>1 7.4186e-4 8.9688e-5 -4.5401e-7 -5.3194e-8 5.1596e-9 1.6755e-10 1.6002e-12 7.2114e-14 -3.537e-15 2.9819e-15</values></Legendre>
+                    <Legendre outerDomainValue="6e4"><values>1 8.6598e-4 4.4676e-5 -9.224e-8 -3.1396e-8 7.4783e-9 2.2623e-10 2.1409e-12 1.2015e-13 -8.9366e-15 7.5123e-15</values></Legendre>
+                    <Legendre outerDomainValue="7e4"><values>1 9.8817e-4 -8.1734e-6 3.6816e-7 1.7342e-9 1.046e-8 3.018e-10 2.9482e-12 1.8684e-13 -1.401e-14 1.2206e-14</values></Legendre>
+                    <Legendre outerDomainValue="8e4"><values>1 1.1111e-3 -6.8119e-5 9.2401e-7 4.7576e-8 1.4324e-8 4.0844e-10 4.4484e-12 2.8604e-13 -2.0152e-14 1.6856e-14</values></Legendre>
+                    <Legendre outerDomainValue="9e4"><values>1 1.2365e-3 -1.3456e-4 1.5735e-6 1.0778e-7 1.9366e-8 5.678e-10 7.359e-12 4.341e-13 -2.4795e-14 2.3273e-14</values></Legendre>
+                    <Legendre outerDomainValue="1e5"><values>1 1.3656e-3 -2.07e-4 2.3157e-6 1.8426e-7 2.5961e-8 8.0983e-10 1.2771e-11 6.6372e-13 -3.0193e-14 2.947e-14</values></Legendre>
+                    <Legendre outerDomainValue="1.08e5"><values>1 1.472e-3 -2.6896e-4 2.9762e-6 2.5857e-7 3.2656e-8 1.0888e-9 1.9909e-11 9.3489e-13 -3.3857e-14 3.4184e-14</values></Legendre>
+                    <Legendre outerDomainValue="1.2e5"><values>1 1.6373e-3 -3.6814e-4 4.0788e-6 3.9467e-7 4.5694e-8 1.7071e-9 3.7694e-11 1.5596e-12 -3.6738e-14 4.2148e-14</values></Legendre>
+                    <Legendre outerDomainValue="1.4e5"><values>1 1.9296e-3 -5.4863e-4 6.2198e-6 6.9792e-7 7.8052e-8 3.5285e-9 9.7788e-11 3.5524e-12 -3.2391e-14 5.8519e-14</values></Legendre>
+                    <Legendre outerDomainValue="1.6e5"><values>1 2.2435e-3 -7.4604e-4 8.7517e-6 1.1156e-6 1.2873e-7 6.8684e-9 2.2154e-10 7.6189e-12 -3.6236e-16 7.6244e-14</values></Legendre>
+                    <Legendre outerDomainValue="1.8e5"><values>1 2.5788e-3 -9.5836e-4 1.1692e-5 1.6714e-6 2.0454e-7 1.2497e-8 4.4916e-10 1.5236e-11 8.0806e-14 9.9773e-14</values></Legendre>
+                    <Legendre outerDomainValue="2e5"><values>1 2.9349e-3 -1.1838e-3 1.5061e-5 2.3904e-6 3.1333e-7 2.1368e-8 8.3424e-10 2.8519e-11 2.4686e-13 1.3054e-13</values></Legendre>
+                    <Legendre outerDomainValue="2.2e5"><values>1 3.3109e-3 -1.4209e-3 1.8882e-5 3.2992e-6 4.6392e-7 3.4623e-8 1.4453e-9 5.0342e-11 5.49e-13 1.7165e-13</values></Legendre>
+                    <Legendre outerDomainValue="2.4e5"><values>1 3.7056e-3 -1.6682e-3 2.3178e-5 4.4255e-6 6.6604e-7 5.3595e-8 2.3671e-9 8.4466e-11 1.0562e-12 2.2951e-13</values></Legendre>
+                    <Legendre outerDomainValue="2.6e5"><values>1 4.1179e-3 -1.9244e-3 2.7975e-5 5.7976e-6 9.3029e-7 7.9812e-8 3.7022e-9 1.3568e-10 1.8631e-12 3.1268e-13</values></Legendre>
+                    <Legendre outerDomainValue="2.8e5"><values>1 4.5466e-3 -2.1884e-3 3.3298e-5 7.445e-6 1.2681e-6 1.15e-7 5.5719e-9 2.0991e-10 3.0904e-12 4.3089e-13</values></Legendre>
+                    <Legendre outerDomainValue="3e5"><values>1 4.9907e-3 -2.4591e-3 3.9175e-5 9.3973e-6 1.6915e-6 1.6107e-7 8.1177e-9 3.1438e-10 4.8903e-12 6.0075e-13</values></Legendre>
+                    <Legendre outerDomainValue="3.2e5"><values>1 5.4491e-3 -2.7356e-3 4.5633e-5 1.1685e-5 2.2134e-6 2.2013e-7 1.1502e-8 4.5772e-10 7.4552e-12 8.3958e-13</values></Legendre>
+                    <Legendre outerDomainValue="3.4e5"><values>1 5.9207e-3 -3.0169e-3 5.27e-5 1.4338e-5 2.8472e-6 2.945e-7 1.5909e-8 6.5013e-10 1.1017e-11 1.1727e-12</values></Legendre>
+                    <Legendre outerDomainValue="3.6e5"><values>1 6.4046e-3 -3.3021e-3 6.0403e-5 1.7389e-5 3.6071e-6 3.8668e-7 2.1547e-8 9.0345e-10 1.5855e-11 1.6295e-12</values></Legendre>
+                    <Legendre outerDomainValue="3.8e5"><values>1 6.8998e-3 -3.5904e-3 6.8773e-5 2.0868e-5 4.5076e-6 4.9934e-7 2.8646e-8 1.2313e-9 2.2304e-11 2.2482e-12</values></Legendre>
+                    <Legendre outerDomainValue="4e5"><values>1 7.4056e-3 -3.8811e-3 7.7838e-5 2.4806e-5 5.5639e-6 6.3537e-7 3.7461e-8 1.6494e-9 3.0755e-11 3.073e-12</values></Legendre>
+                    <Legendre outerDomainValue="4.2e5"><values>1 7.9211e-3 -4.1734e-3 8.7629e-5 2.9235e-5 6.7915e-6 7.9782e-7 4.8275e-8 2.1753e-9 4.1663e-11 4.1582e-12</values></Legendre>
+                    <Legendre outerDomainValue="4.4e5"><values>1 8.4455e-3 -4.4665e-3 9.8175e-5 3.4186e-5 8.2064e-6 9.8993e-7 6.1392e-8 2.8288e-9 5.5554e-11 5.5671e-12</values></Legendre>
+                    <Legendre outerDomainValue="4.6e5"><values>1 8.9782e-3 -4.7599e-3 1.0951e-4 3.9691e-5 9.8252e-6 1.2151e-6 7.7147e-8 3.632e-9 7.3031e-11 7.3777e-12</values></Legendre>
+                    <Legendre outerDomainValue="4.8e5"><values>1 9.5184e-3 -5.0527e-3 1.2166e-4 4.5781e-5 1.1664e-5 1.477e-6 9.5898e-8 4.6095e-9 9.4779e-11 9.6769e-12</values></Legendre>
+                    <Legendre outerDomainValue="5e5"><values>1 0.010066 -5.3445e-3 1.3466e-4 5.2488e-5 1.3741e-5 1.7793e-6 1.1803e-7 5.7882e-9 1.2157e-10 1.2566e-11</values></Legendre>
+                    <Legendre outerDomainValue="5.5e5"><values>1 0.01146 -6.0651e-3 1.711e-4 7.2156e-5 2.0087e-5 2.738e-6 1.9096e-7 9.817e-9 2.1653e-10 2.3189e-11</values></Legendre>
+                    <Legendre outerDomainValue="6e5"><values>1 0.012886 -6.7661e-3 2.1356e-4 9.6353e-5 2.8303e-5 4.0398e-6 2.9494e-7 1.5836e-8 3.6511e-10 4.0617e-11</values></Legendre>
+                    <Legendre outerDomainValue="6.5e5"><values>1 0.014336 -7.4389e-3 2.6259e-4 1.2555e-4 3.8673e-5 5.756e-6 4.3832e-7 2.4503e-8 5.8825e-10 6.7991e-11</values></Legendre>
+                    <Legendre outerDomainValue="7e5"><values>1 0.015805 -8.0759e-3 3.1872e-4 1.6021e-4 5.1484e-5 7.9631e-6 6.3057e-7 3.6597e-8 9.1202e-10 1.0943e-10</values></Legendre>
+                    <Legendre outerDomainValue="7.5e5"><values>1 0.017286 -8.6696e-3 3.825e-4 2.0077e-4 6.7022e-5 1.0742e-5 8.8229e-7 5.303e-8 1.3682e-9 1.702e-10</values></Legendre>
+                    <Legendre outerDomainValue="8e5"><values>1 0.018776 -9.2131e-3 4.5449e-4 2.4766e-4 8.5573e-5 1.4178e-5 1.2052e-6 7.4854e-8 1.9949e-9 2.5691e-10</values></Legendre>
+                    <Legendre outerDomainValue="8.5e5"><values>1 0.020269 -9.7001e-3 5.3525e-4 3.0129e-4 1.0742e-4 1.836e-5 1.612e-6 1.0326e-7 2.837e-9 3.7769e-10</values></Legendre>
+                    <Legendre outerDomainValue="9e5"><values>1 0.021764 -0.010124 6.2532e-4 3.6203e-4 1.3284e-4 2.3379e-5 2.1165e-6 1.396e-7 3.9468e-9 5.4243e-10</values></Legendre>
+                    <Legendre outerDomainValue="9.5e5"><values>1 0.023255 -0.01048 7.2524e-4 4.3026e-4 1.6209e-4 2.933e-5 2.7338e-6 1.8535e-7 5.3843e-9 7.6292e-10</values></Legendre>
+                    <Legendre outerDomainValue="1e6"><values>1 0.024742 -0.010763 8.3554e-4 5.0629e-4 1.9545e-4 3.6307e-5 3.4794e-6 2.4216e-7 7.2179e-9 1.0531e-9</values></Legendre>
+                    <Legendre outerDomainValue="1.1e6"><values>1 0.027693 -0.011087 1.0893e-3 6.8297e-4 2.7545e-4 5.3733e-5 5.4243e-6 3.9632e-7 1.239e-8 1.9107e-9</values></Legendre>
+                    <Legendre outerDomainValue="1.2e6"><values>1 0.0306 -0.011062 1.3902e-3 8.9412e-4 3.747e-4 7.6438e-5 8.0958e-6 6.1829e-7 2.0189e-8 3.278e-9</values></Legendre>
+                    <Legendre outerDomainValue="1.3e6"><values>1 0.033455 -0.010659 1.7415e-3 1.1413e-3 4.9487e-4 1.052e-4 1.1652e-5 9.2671e-7 3.1492e-8 5.3663e-9</values></Legendre>
+                    <Legendre outerDomainValue="1.4e6"><values>1 0.036252 -9.8527e-3 2.1458e-3 1.4253e-3 6.3741e-4 1.408e-4 1.626e-5 1.3426e-6 4.7338e-8 8.4421e-9</values></Legendre>
+                    <Legendre outerDomainValue="1.5e6"><values>1 0.038986 -8.6237e-3 2.6048e-3 1.7466e-3 8.0361e-4 1.8396e-4 2.21e-5 1.889e-6 6.8927e-8 1.2834e-8</values></Legendre>
+                    <Legendre outerDomainValue="1.6e6"><values>1 0.041657 -6.9575e-3 3.1198e-3 2.1049e-3 9.9451e-4 2.3541e-4 2.9358e-5 2.5915e-6 9.7625e-8 1.8939e-8</values></Legendre>
+                    <Legendre outerDomainValue="1.7e6"><values>1 0.044265 -4.8434e-3 3.691e-3 2.4991e-3 1.211e-3 2.9581e-4 3.8227e-5 3.4771e-6 1.3496e-7 2.7231e-8</values></Legendre>
+                    <Legendre outerDomainValue="1.8e6"><values>1 0.046812 -2.275e-3 4.318e-3 2.9278e-3 1.4538e-3 3.6579e-4 4.8906e-5 4.5752e-6 1.8263e-7 3.8263e-8</values></Legendre>
+                    <Legendre outerDomainValue="1.9e6"><values>1 0.0493 7.5016e-4 4.9997e-3 3.3886e-3 1.7235e-3 4.4593e-4 6.1599e-5 5.9163e-6 2.425e-7 5.2678e-8</values></Legendre>
+                    <Legendre outerDomainValue="2e6"><values>1 0.051734 4.2307e-3 5.7343e-3 3.8787e-3 2.0206e-3 5.3676e-4 7.6512e-5 7.5328e-6 3.1656e-7 7.1212e-8</values></Legendre>
+                    <Legendre outerDomainValue="2.2e6"><values>1 0.056447 0.012533 7.3522e-3 4.9327e-3 2.6979e-3 7.5232e-4 1.1383e-4 1.1727e-5 5.1608e-7 1.2408e-7</values></Legendre>
+                    <Legendre outerDomainValue="2.4e6"><values>1 0.060974 0.022536 9.1453e-3 6.0564e-3 3.4869e-3 1.0155e-3 1.625e-4 1.744e-5 8.0021e-7 2.0485e-7</values></Legendre>
+                    <Legendre outerDomainValue="2.6e6"><values>1 0.065332 0.034069 0.011079 7.2098e-3 4.3877e-3 1.3284e-3 2.2412e-4 2.4964e-5 1.1902e-6 3.2334e-7</values></Legendre>
+                    <Legendre outerDomainValue="2.8e6"><values>1 0.069529 0.046866 0.013111 8.3495e-3 5.3988e-3 1.6918e-3 3.001e-4 3.4601e-5 1.7094e-6 4.9136e-7</values></Legendre>
+                    <Legendre outerDomainValue="3e6"><values>1 0.073569 0.060559 0.015189 9.4334e-3 6.5181e-3 2.1053e-3 3.9164e-4 4.6653e-5 2.3836e-6 7.2291e-7</values></Legendre>
+                    <Legendre outerDomainValue="3.2e6"><values>1 0.077458 0.07467 0.017254 0.010426 7.7426e-3 2.5675e-3 4.9958e-4 6.1425e-5 3.2415e-6 1.0344e-6</values></Legendre>
+                    <Legendre outerDomainValue="3.4e6"><values>1 0.081236 0.088622 0.019234 0.011308 9.0693e-3 3.0758e-3 6.2432e-4 7.9224e-5 4.3157e-6 1.4449e-6</values></Legendre>
+                    <Legendre outerDomainValue="3.6e6"><values>1 0.085079 0.10171 0.021022 0.012087 0.010494 3.6263e-3 7.6567e-4 1.0035e-4 5.6433e-6 1.9764e-6</values></Legendre>
+                    <Legendre outerDomainValue="3.8e6"><values>1 0.091365 0.1145 0.022925 0.012895 0.012039 4.2204e-3 9.2433e-4 1.253e-4 7.2792e-6 2.6586e-6</values></Legendre>
+                    <Legendre outerDomainValue="4e6"><values>1 0.095466 0.12657 0.024911 0.01347 0.013731 4.8687e-3 1.1026e-3 1.5491e-4 9.3069e-6 3.5338e-6</values></Legendre>
+                    <Legendre outerDomainValue="4.2e6"><values>1 0.098898 0.13651 0.026625 0.014018 0.015541 5.561e-3 1.2976e-3 1.894e-4 1.1785e-5 4.6371e-6</values></Legendre>
+                    <Legendre outerDomainValue="4.4e6"><values>1 0.10199 0.14422 0.028127 0.01464 0.017482 6.2997e-3 1.5093e-3 2.2943e-4 1.4805e-5 6.0196e-6</values></Legendre>
+                    <Legendre outerDomainValue="4.6e6"><values>1 0.10485 0.14969 0.029436 0.01543 0.019566 7.0888e-3 1.7377e-3 2.7576e-4 1.8481e-5 7.7439e-6</values></Legendre>
+                    <Legendre outerDomainValue="4.8e6"><values>1 0.10754 0.15306 0.030559 0.016471 0.021807 7.9344e-3 1.984e-3 3.2932e-4 2.2946e-5 9.8867e-6</values></Legendre>
+                    <Legendre outerDomainValue="5e6"><values>1 0.11011 0.15459 0.03149 0.017823 0.024214 8.8437e-3 2.2495e-3 3.9116e-4 2.8357e-5 1.2542e-5</values></Legendre>
+                    <Legendre outerDomainValue="5.2e6"><values>1 0.11254 0.15457 0.032194 0.019515 0.026794 9.8238e-3 2.5362e-3 4.6247e-4 3.4896e-5 1.5822e-5</values></Legendre>
+                    <Legendre outerDomainValue="5.4e6"><values>1 0.1148 0.15333 0.032615 0.021543 0.02954 0.01088 2.8461e-3 5.4449e-4 4.2763e-5 1.9859e-5</values></Legendre>
+                    <Legendre outerDomainValue="5.6e6"><values>1 0.11681 0.15116 0.032685 0.023878 0.032432 0.012016 3.1806e-3 6.3842e-4 5.2178e-5 2.4806e-5</values></Legendre>
+                    <Legendre outerDomainValue="5.8e6"><values>1 0.11846 0.14836 0.032343 0.026472 0.035438 0.01323 3.5404e-3 7.4543e-4 6.3372e-5 3.0836e-5</values></Legendre>
+                    <Legendre outerDomainValue="6e6"><values>1 0.11966 0.14517 0.031554 0.029271 0.038515 0.014519 3.9254e-3 8.666e-4 7.6596e-5 3.8145e-5</values></Legendre>
+                    <Legendre outerDomainValue="6.2e6"><values>1 0.12032 0.14187 0.030312 0.032217 0.041619 0.015878 4.3348e-3 1.003e-3 9.2121e-5 4.6959e-5</values></Legendre>
+                    <Legendre outerDomainValue="6.4e6"><values>1 0.12037 0.13864 0.028636 0.035251 0.0447 0.017303 4.7674e-3 1.1557e-3 1.1025e-4 5.7535e-5</values></Legendre>
+                    <Legendre outerDomainValue="6.6e6"><values>1 0.11979 0.13567 0.026565 0.038312 0.047713 0.018788 5.2219e-3 1.326e-3 1.3132e-4 7.0178e-5</values></Legendre>
+                    <Legendre outerDomainValue="6.8e6"><values>1 0.11858 0.13307 0.024149 0.04134 0.050617 0.020329 5.6963e-3 1.5151e-3 1.5574e-4 8.5244e-5</values></Legendre>
+                    <Legendre outerDomainValue="7e6"><values>1 0.11676 0.1309 0.021444 0.044273 0.053372 0.021923 6.1887e-3 1.7243e-3 1.8395e-4 1.0315e-4</values></Legendre>
+                    <Legendre outerDomainValue="7.5e6"><values>1 0.10874 0.12902 0.014664 0.051248 0.059395 0.026265 7.4933e-3 2.3306e-3 3.3232e-4 1.8462e-4 9.6326e-6 2.954e-6</values></Legendre>
+                    <Legendre outerDomainValue="8e6"><values>1 0.10024 0.1308 8.3058e-3 0.055899 0.063794 0.030789 8.6459e-3 3.065e-3 6.4337e-4 3.0378e-4 4.1522e-5 2.7504e-5</values></Legendre>
+                    <Legendre outerDomainValue="8.5e6"><values>1 0.09303 0.13234 2.8679e-3 0.059002 0.067259 0.035473 9.6127e-3 3.9619e-3 9.0123e-4 4.7424e-4 7.5305e-5 1.2596e-4</values></Legendre>
+                    <Legendre outerDomainValue="9e6"><values>1 0.089364 0.13233 -2.2454e-3 0.060635 0.070012 0.040225 0.010492 5.0626e-3 1.1016e-3 6.6381e-4 1.1243e-4 2.7476e-4</values></Legendre>
+                    <Legendre outerDomainValue="9.5e6"><values>1 0.088129 0.13182 -7.0917e-3 0.061409 0.072165 0.045098 0.011332 5.9863e-3 1.3064e-3 8.6677e-4 1.4389e-4 4.6333e-4 1.9918e-5</values></Legendre>
+                    <Legendre outerDomainValue="1e7"><values>1 0.088231 0.13074 -0.011598 0.061311 0.074111 0.050122 0.012149 6.7902e-3 1.5133e-3 1.0671e-3 2.0222e-4 6.7653e-4 7.8302e-5</values></Legendre>
+                    <Legendre outerDomainValue="1.025e7"><values>1 0.088424 0.13012 -0.013669 0.061132 0.074949 0.05264 0.01253 7.1613e-3 1.6187e-3 1.1798e-3 2.2287e-4 7.689e-4 1.1075e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.05e7"><values>1 0.088946 0.12962 -0.015482 0.060929 0.075718 0.055234 0.012896 7.5434e-3 1.7271e-3 1.2953e-3 2.4405e-4 8.4629e-4 1.2793e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.075e7"><values>1 0.089811 0.12917 -0.017155 0.060699 0.076499 0.05781 0.013275 7.963e-3 1.8387e-3 1.414e-3 2.6581e-4 9.083e-4 1.6173e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.1e7"><values>1 0.090882 0.12886 -0.018686 0.06049 0.077291 0.060437 0.01364 8.3699e-3 1.9304e-3 1.5361e-3 2.8819e-4 9.7216e-4 1.8003e-4 3.0475e-5</values></Legendre>
+                    <Legendre outerDomainValue="1.14e7"><values>1 0.092876 0.12849 -0.020804 0.060064 0.078613 0.064577 0.014247 9.0437e-3 2.0882e-3 1.739e-3 3.3324e-4 1.064e-3 2.1708e-4 1.5547e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.2e7"><values>1 0.09619 0.12816 -0.023035 0.05917 0.080433 0.070596 0.015304 0.010059 2.3479e-3 2.0358e-3 4.0407e-4 1.1896e-3 2.7537e-4 3.2047e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.275e7"><values>1 0.1014 0.12776 -0.024281 0.057782 0.082657 0.077815 0.01661 0.011418 2.7193e-3 2.3683e-3 4.8286e-4 1.3134e-3 3.3979e-4 5.8276e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.3e7"><values>1 0.1035 0.12763 -0.02431 0.057158 0.083485 0.080008 0.017082 0.011851 2.831e-3 2.4916e-3 5.1026e-4 1.3496e-3 3.6222e-4 6.7448e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.325e7"><values>1 0.10572 0.12736 -0.024245 0.056463 0.084162 0.082023 0.017549 0.012283 2.9428e-3 2.6154e-3 5.3783e-4 1.3855e-3 3.6652e-4 8.1899e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.336e7"><values>1 0.10685 0.12743 -0.024106 0.056247 0.084619 0.082973 0.017753 0.012473 2.9866e-3 2.6547e-3 5.4104e-4 1.3937e-3 3.6871e-4 8.5821e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.35e7"><values>1 0.10833 0.12729 -0.023965 0.055917 0.084855 0.084088 0.017994 0.012696 3.0572e-3 2.7184e-3 5.6607e-4 1.4221e-3 3.7093e-4 8.461e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.375e7"><values>1 0.11134 0.12712 -0.023677 0.055302 0.085518 0.086358 0.018449 0.013148 3.1478e-3 2.8238e-3 5.9499e-4 1.4394e-3 3.7544e-4 8.3891e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.379e7"><values>1 0.11196 0.12713 -0.023664 0.055217 0.085735 0.086773 0.01853 0.013241 3.1558e-3 2.8552e-3 5.965e-4 1.4431e-3 3.7639e-4 8.4104e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.4e7"><values>1 0.11442 0.12694 -0.023309 0.054729 0.086198 0.088566 0.018916 0.013612 3.2405e-3 2.9563e-3 6.2462e-4 1.4572e-3 3.8006e-4 8.3155e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.425e7"><values>1 0.11745 0.12673 -0.022759 0.054201 0.086663 0.090615 0.019339 0.014072 3.3595e-3 3.0642e-3 6.5432e-4 1.4946e-3 3.844e-4 8.0525e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.45e7"><values>1 0.12075 0.12671 -0.022082 0.053745 0.087324 0.092736 0.019839 0.014598 3.4866e-3 3.2046e-3 6.8578e-4 1.5142e-3 4.0893e-4 7.7958e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.462e7"><values>1 0.12246 0.12684 -0.02178 0.053526 0.087685 0.093823 0.020081 0.014885 3.5385e-3 3.2771e-3 6.905e-4 1.5458e-3 4.1174e-4 7.8494e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.475e7"><values>1 0.1242 0.12687 -0.021322 0.053305 0.08805 0.094883 0.020327 0.015176 3.5911e-3 3.3506e-3 7.1846e-4 1.5778e-3 4.1459e-4 7.72e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.5e7"><values>1 0.12793 0.12703 -0.020309 0.053033 0.088796 0.097006 0.020829 0.015707 3.6984e-3 3.4749e-3 7.5206e-4 1.6e-3 4.2042e-4 7.6421e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.55e7"><values>1 0.13523 0.12743 -0.017966 0.052742 0.090454 0.10132 0.021888 0.016825 3.9247e-3 3.7364e-3 8.2263e-4 1.6472e-3 4.3282e-4 7.4837e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.6e7"><values>1 0.14188 0.12769 -0.015201 0.052441 0.092053 0.10531 0.02296 0.01797 4.1551e-3 4.0046e-3 8.9543e-4 1.7162e-3 4.4495e-4 7.299e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.65e7"><values>1 0.14847 0.12758 -0.01224 0.0521 0.093577 0.10884 0.023983 0.019056 4.4169e-3 4.2757e-3 9.6959e-4 1.8075e-3 4.5644e-4 7.0827e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.7e7"><values>1 0.15488 0.1271 -9.3354e-3 0.051625 0.094724 0.11174 0.02494 0.020031 4.6699e-3 4.5107e-3 1.0426e-3 1.8705e-3 4.6629e-4 6.8221e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.725e7"><values>1 0.15789 0.12668 -7.8645e-3 0.051354 0.095144 0.11289 0.025408 0.020462 4.776e-3 4.6092e-3 1.0784e-3 1.8875e-3 4.9293e-4 6.6754e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.75e7"><values>1 0.16087 0.12617 -6.3628e-3 0.05098 0.095513 0.11395 0.025829 0.020888 4.9131e-3 4.7067e-3 1.1407e-3 1.928e-3 4.9714e-4 6.5221e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.775e7"><values>1 0.164 0.12558 -4.8322e-3 0.050636 0.095885 0.11491 0.02624 0.021272 5.0172e-3 4.8029e-3 1.1765e-3 1.9434e-3 5.2389e-4 6.3621e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.8e7"><values>1 0.16698 0.12498 -3.3655e-3 0.050286 0.096207 0.11579 0.0267 0.021699 5.1555e-3 4.9007e-3 1.2399e-3 1.9839e-3 5.2812e-4 6.4134e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.85e7"><values>1 0.17296 0.12352 -4.4924e-4 0.049546 0.096855 0.11737 0.027547 0.022457 5.3956e-3 5.0913e-3 1.3399e-3 2.0377e-3 5.3576e-4 6.2893e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.9e7"><values>1 0.1789 0.1224 2.2792e-3 0.048855 0.097523 0.11889 0.028419 0.023237 5.6763e-3 5.2876e-3 1.4705e-3 2.0932e-3 5.4362e-4 6.1616e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.969e7"><values>1 0.18731 0.1219 5.5876e-3 0.048167 0.098495 0.12105 0.029639 0.02435 6.1072e-3 5.5566e-3 1.6722e-3 2.1643e-3 5.7946e-4 6.2941e-4</values></Legendre>
+                    <Legendre outerDomainValue="2e7"><values>1 0.19113 0.12192 7.0535e-3 0.047912 0.098929 0.12204 0.030195 0.024823 6.3061e-3 5.7055e-3 1.746e-3 2.212e-3 5.8518e-4 6.3563e-4 2.1236e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.05e7"><values>1 0.19732 0.12201 9.1734e-3 0.047566 0.099605 0.12354 0.031126 0.025693 6.6538e-3 5.9564e-3 1.8904e-3 2.301e-3 6.1935e-4 6.689e-4 2.1577e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.1e7"><values>1 0.20358 0.12228 0.011258 0.047177 0.10017 0.12505 0.03202 0.026535 7.0438e-3 6.1788e-3 2.038e-3 2.3641e-3 6.7935e-4 6.7935e-4 4.3829e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.15e7"><values>1 0.21003 0.12298 0.01331 0.046852 0.1007 0.12651 0.032942 0.027321 7.4825e-3 6.4084e-3 2.1904e-3 2.4569e-3 7.1569e-4 7.1393e-4 6.6787e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.2e7"><values>1 0.2163 0.1239 0.015317 0.046484 0.10117 0.12786 0.033824 0.028154 7.8929e-3 6.674e-3 2.3461e-3 2.5508e-3 7.5268e-4 7.491e-4 9.0422e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.25e7"><values>1 0.22278 0.12512 0.017387 0.046105 0.10159 0.12932 0.034733 0.02893 8.3536e-3 6.948e-3 2.5066e-3 2.6192e-3 7.9083e-4 7.8537e-4 1.148e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.3e7"><values>1 0.22888 0.12664 0.019391 0.045728 0.10181 0.13057 0.03562 0.02973 8.7403e-3 7.1858e-3 2.6369e-3 2.7148e-3 8.2899e-4 8.2161e-4 1.3975e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.308e7"><values>1 0.22986 0.12692 0.019744 0.045667 0.10183 0.13075 0.035745 0.029837 8.7973e-3 7.2359e-3 2.6741e-3 2.7207e-3 8.3079e-4 8.2339e-4 1.4005e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.4e7"><values>1 0.2408 0.13104 0.023134 0.045357 0.10292 0.13335 0.037562 0.031519 9.78e-3 7.8536e-3 3.0175e-3 2.8955e-3 9.1211e-4 9.0067e-4 1.9259e-4 2.2614e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.425e7"><values>1 0.24379 0.13228 0.023971 0.045314 0.10322 0.13405 0.038024 0.031957 0.010059 8.0261e-3 3.1079e-3 2.9496e-3 9.4752e-4 9.3407e-4 1.9418e-4 2.2801e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.489e7"><values>1 0.25135 0.13543 0.026244 0.045179 0.10398 0.13581 0.039303 0.033187 0.010801 8.455e-3 3.3419e-3 3.0746e-3 1.0249e-3 1.0072e-3 2.2315e-4 4.6584e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.5e7"><values>1 0.25263 0.13585 0.026655 0.045147 0.10402 0.13605 0.039527 0.03338 0.010916 8.5178e-3 3.3857e-3 3.084e-3 1.028e-3 1.0103e-3 2.2384e-4 4.6728e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.6e7"><values>1 0.26433 0.14029 0.030141 0.04494 0.10473 0.13841 0.041667 0.03536 0.012278 9.2129e-3 3.7386e-3 3.3439e-3 1.1795e-3 1.1805e-3 2.8251e-4 9.6506e-5</values></Legendre>
+                    <Legendre outerDomainValue="2.65e7"><values>1 0.27001 0.14244 0.031874 0.044912 0.10495 0.13942 0.042684 0.036331 0.012977 9.5854e-3 3.9014e-3 3.46e-3 1.2575e-3 1.2823e-3 3.1293e-4 1.4698e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.7e7"><values>1 0.27536 0.14454 0.0334 0.044846 0.10508 0.14041 0.043752 0.037253 0.013687 9.9223e-3 4.1017e-3 3.6095e-3 1.3369e-3 1.4144e-3 3.4402e-4 1.7401e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.75e7"><values>1 0.28088 0.14671 0.034971 0.04487 0.10514 0.14136 0.044796 0.038203 0.014462 0.010309 4.308e-3 3.7302e-3 1.4186e-3 1.5504e-3 4.0289e-4 2.0185e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.8e7"><values>1 0.28608 0.14886 0.036528 0.044913 0.1051 0.14203 0.045795 0.039067 0.01519 0.010649 4.5129e-3 3.8819e-3 1.5002e-3 1.6587e-3 4.3555e-4 2.3015e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.9e7"><values>1 0.29607 0.15321 0.039614 0.044772 0.10462 0.14311 0.047834 0.040881 0.016738 0.011471 4.8979e-3 4.2634e-3 1.701e-3 1.9423e-3 5.3111e-4 3.1511e-4</values></Legendre>
+                    <Legendre outerDomainValue="2.917e7"><values>1 0.29794 0.15405 0.040159 0.044773 0.10444 0.14327 0.048158 0.041161 0.016994 0.011604 4.9571e-3 4.3168e-3 1.7406e-3 1.9807e-3 5.615e-4 3.4285e-4</values></Legendre>
+                    <Legendre outerDomainValue="3e7"><values>1 0.30637 0.15822 0.042921 0.044543 0.10368 0.14379 0.049778 0.042667 0.018246 0.01236 5.3333e-3 4.6578e-3 1.9424e-3 2.2069e-3 6.595e-4 4.0404e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.002e7"><values>1 0.30637 0.15822 0.042921 0.044543 0.1036 0.14373 0.049837 0.042667 0.018292 0.01236 5.3333e-3 4.6578e-3 1.9424e-3 2.2069e-3 6.595e-4 4.0404e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.1e7"><values>1 0.31633 0.16321 0.046058 0.044222 0.10267 0.14425 0.051852 0.044519 0.019749 0.013184 5.8209e-3 5.0638e-3 2.1588e-3 2.481e-3 7.6385e-4 4.9677e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.156e7"><values>1 0.32195 0.1662 0.047751 0.044116 0.10216 0.1444 0.053062 0.045571 0.020606 0.013631 6.1022e-3 5.2816e-3 2.3255e-3 2.6109e-3 8.6379e-4 5.5961e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.2e7"><values>1 0.32649 0.16863 0.049086 0.044092 0.10186 0.14451 0.05403 0.046411 0.021328 0.014006 6.333e-3 5.4902e-3 2.4553e-3 2.7045e-3 9.3371e-4 5.9418e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.25e7"><values>1 0.33144 0.17127 0.050635 0.044108 0.10148 0.14454 0.055072 0.04737 0.022137 0.014425 6.5752e-3 5.7467e-3 2.5905e-3 2.8355e-3 1.0062e-3 6.4444e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.3e7"><values>1 0.3362 0.17416 0.052358 0.044125 0.10109 0.14442 0.05614 0.048354 0.023017 0.014855 6.8234e-3 6.0096e-3 2.729e-3 2.9698e-3 1.0804e-3 6.9595e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.35e7"><values>1 0.34125 0.17702 0.054082 0.044164 0.10078 0.14438 0.057134 0.049386 0.023981 0.015304 7.0813e-3 6.3597e-3 2.9084e-3 3.109e-3 1.1571e-3 7.3444e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.4e7"><values>1 0.34643 0.17976 0.055852 0.044204 0.10046 0.14425 0.058153 0.050445 0.024972 0.015764 7.346e-3 6.7583e-3 3.0925e-3 3.2687e-3 1.2358e-3 7.8883e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.45e7"><values>1 0.35158 0.18249 0.057711 0.044223 0.10005 0.14405 0.059104 0.051507 0.025975 0.016205 7.6141e-3 7.204e-3 3.2799e-3 3.4311e-3 1.316e-3 8.4426e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.492e7"><values>1 0.35651 0.18499 0.059446 0.044221 0.09984 0.14412 0.059983 0.052571 0.026939 0.016649 7.8195e-3 7.6373e-3 3.4518e-3 3.5959e-3 1.3813e-3 8.8543e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.5e7"><values>1 0.35721 0.18527 0.05968 0.044287 0.099716 0.14403 0.060141 0.05271 0.027033 0.016722 7.8533e-3 7.669e-3 3.4757e-3 3.6188e-3 1.3997e-3 9.0206e-4</values></Legendre>
+                    <Legendre outerDomainValue="3.6e7"><values>1 0.36864 0.19065 0.063937 0.044306 0.099028 0.14426 0.06234 0.055097 0.02924 0.017802 8.3751e-3 8.6397e-3 3.8845e-3 4.0463e-3 1.5744e-3 1.007e-3</values></Legendre>
+                    <Legendre outerDomainValue="3.7e7"><values>1 0.38039 0.19615 0.068449 0.044326 0.098298 0.1448 0.06467 0.057565 0.031523 0.018946 8.9282e-3 9.6684e-3 4.3177e-3 4.5362e-3 1.7595e-3 1.1019e-3</values></Legendre>
+                    <Legendre outerDomainValue="3.8e7"><values>1 0.3917 0.20154 0.073159 0.044175 0.097417 0.14567 0.06707 0.060119 0.033793 0.020138 9.4809e-3 0.010749 4.752e-3 5.0889e-3 1.9362e-3 1.2014e-3</values></Legendre>
+                    <Legendre outerDomainValue="3.9e7"><values>1 0.40321 0.2068 0.078187 0.043815 0.09642 0.14635 0.0695 0.06269 0.036082 0.021314 0.01005 0.011875 5.2041e-3 5.6657e-3 2.1201e-3 1.3048e-3</values></Legendre>
+                    <Legendre outerDomainValue="3.995e7"><values>1 0.41492 0.21212 0.08325 0.043383 0.095465 0.14712 0.072028 0.065268 0.0384 0.022533 0.010591 0.013007 5.6548e-3 6.2696e-3 2.2934e-3 1.4127e-3</values></Legendre>
+                    <Legendre outerDomainValue="4e7"><values>1 0.4154 0.21237 0.083514 0.043368 0.095364 0.1472 0.072151 0.065379 0.038506 0.022559 0.010603 0.013069 5.683e-3 6.2769e-3 2.2961e-3 1.4144e-3</values></Legendre></function1ds></XYs2d></angularTwoBody></distribution></product>
+          <product pid="He4" label="He4">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1e2" domainMax="4e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <angularTwoBody label="eval" productFrame="centerOfMass">
+                <recoil href="../../../../product[@label='n']/distribution/angularTwoBody[@label='eval']"/></angularTwoBody></distribution></product></products></outputChannel></reaction>
+    <reaction label="n + (He4_e1 -> H1 + H3)" ENDF_MT="51">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            3.71006200e+06 0.00000000e+00 3.90000000e+06 1.03520000e-02 4.00000000e+06 1.38940000e-02 4.10000000e+06 1.73120000e-02 4.20000000e+06 2.06890000e-02 4.30000000e+06 2.40770000e-02 4.40000000e+06 2.75230000e-02 4.50000000e+06 3.10710000e-02 4.60000000e+06 3.47630000e-02 4.70000000e+06 3.86330000e-02 4.80000000e+06 4.27040000e-02 4.90000000e+06 4.69890000e-02 5.00000000e+06 5.14790000e-02 5.10000000e+06 5.61510000e-02 5.20000000e+06 6.09590000e-02 5.30000000e+06 6.58470000e-02 5.40000000e+06 7.07420000e-02 5.60000000e+06 8.02540000e-02 5.80000000e+06 8.89390000e-02 6.00000000e+06 9.64040000e-02 6.20000000e+06 1.02480000e-01 6.40000000e+06 1.07200000e-01 6.60000000e+06 1.10690000e-01 6.80000000e+06 1.13140000e-01 7.00000000e+06 1.14700000e-01 7.20000000e+06 1.15540000e-01 7.40000000e+06 1.15770000e-01 7.60000000e+06 1.15460000e-01 7.80000000e+06 1.14700000e-01 8.00000000e+06 1.13530000e-01 8.20000000e+06 1.11990000e-01 8.40000000e+06 1.10140000e-01 8.60000000e+06 1.08030000e-01 9.00000000e+06 1.03180000e-01 9.50000000e+06 9.64700000e-02 1.00000000e+07 8.96440000e-02 1.10000000e+07 7.72970000e-02 1.20000000e+07 6.74210000e-02 1.30000000e+07 5.97910000e-02 1.40000000e+07 5.38270000e-02 1.50000000e+07 4.90430000e-02 1.60000000e+07 4.51060000e-02 1.70000000e+07 4.17900000e-02 1.80000000e+07 3.89460000e-02 1.90000000e+07 3.64690000e-02 2.00000000e+07 3.42860000e-02</values></XYs1d></crossSection>
+      <outputChannel genre="twoBody">
+        <Q>
+          <constant1d label="eval" value="-2224612" domainMin="3710062" domainMax="2e7">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="n" label="n">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="3710062" domainMax="2e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <angularTwoBody label="eval" productFrame="centerOfMass">
+                <XYs2d>
+                  <axes>
+                    <axis index="2" label="energy_in" unit="eV"/>
+                    <axis index="1" label="mu" unit=""/>
+                    <axis index="0" label="P(mu|energy_in)" unit=""/></axes>
+                  <function1ds>
+                    <Legendre outerDomainValue="3710062"><values>1 0 0</values></Legendre>
+                    <Legendre outerDomainValue="3.9e6"><values>1 0.14079 0.026804</values></Legendre>
+                    <Legendre outerDomainValue="4e6"><values>1 0.13159 0.04242</values></Legendre>
+                    <Legendre outerDomainValue="4.1e6"><values>1 0.11398 0.058803</values></Legendre>
+                    <Legendre outerDomainValue="4.2e6"><values>1 0.091823 0.075727</values></Legendre>
+                    <Legendre outerDomainValue="4.4e6"><values>1 0.039345 0.10992</values></Legendre>
+                    <Legendre outerDomainValue="4.6e6"><values>1 -0.019817 0.14182</values></Legendre>
+                    <Legendre outerDomainValue="4.8e6"><values>1 -0.081502 0.16791</values></Legendre>
+                    <Legendre outerDomainValue="5e6"><values>1 -0.14114 0.18551</values></Legendre>
+                    <Legendre outerDomainValue="5.2e6"><values>1 -0.19455 0.19367</values></Legendre>
+                    <Legendre outerDomainValue="5.4e6"><values>1 -0.23905 0.19322</values></Legendre>
+                    <Legendre outerDomainValue="5.6e6"><values>1 -0.27381 0.18614</values></Legendre>
+                    <Legendre outerDomainValue="5.8e6"><values>1 -0.29944 0.17471</values></Legendre>
+                    <Legendre outerDomainValue="6e6"><values>1 -0.31735 0.16094</values></Legendre>
+                    <Legendre outerDomainValue="6.2e6"><values>1 -0.32915 0.14631</values></Legendre>
+                    <Legendre outerDomainValue="6.4e6"><values>1 -0.33631 0.13182</values></Legendre>
+                    <Legendre outerDomainValue="6.6e6"><values>1 -0.34 0.11806</values></Legendre>
+                    <Legendre outerDomainValue="6.8e6"><values>1 -0.34114 0.10533</values></Legendre>
+                    <Legendre outerDomainValue="7e6"><values>1 -0.34038 0.093752</values></Legendre>
+                    <Legendre outerDomainValue="7.2e6"><values>1 -0.33817 0.083326</values></Legendre>
+                    <Legendre outerDomainValue="7.4e6"><values>1 -0.33483 0.074002</values></Legendre>
+                    <Legendre outerDomainValue="7.6e6"><values>1 -0.33057 0.065691</values></Legendre>
+                    <Legendre outerDomainValue="7.8e6"><values>1 -0.32556 0.058291</values></Legendre>
+                    <Legendre outerDomainValue="8e6"><values>1 -0.31989 0.051694</values></Legendre>
+                    <Legendre outerDomainValue="8.2e6"><values>1 -0.31366 0.045798</values></Legendre>
+                    <Legendre outerDomainValue="8.4e6"><values>1 -0.30694 0.040505</values></Legendre>
+                    <Legendre outerDomainValue="8.6e6"><values>1 -0.2998 0.035726</values></Legendre>
+                    <Legendre outerDomainValue="9e6"><values>1 -0.28457 0.027405</values></Legendre>
+                    <Legendre outerDomainValue="9.5e6"><values>1 -0.26446 0.018695</values></Legendre>
+                    <Legendre outerDomainValue="1e7"><values>1 -0.24417 0.011232</values></Legendre>
+                    <Legendre outerDomainValue="1.1e7"><values>1 -0.2060555 -5.68193e-4</values></Legendre>
+                    <Legendre outerDomainValue="1.2e7"><values>1 -0.1746023 -0.01262761</values></Legendre>
+                    <Legendre outerDomainValue="1.3e7"><values>1 -0.1498228 -0.02276813</values></Legendre>
+                    <Legendre outerDomainValue="1.4e7"><values>1 -0.1304774 -0.03127764</values></Legendre>
+                    <Legendre outerDomainValue="1.5e7"><values>1 -0.1152423 -0.03842671</values></Legendre>
+                    <Legendre outerDomainValue="1.6e7"><values>1 -0.1030561 -0.04446231</values></Legendre>
+                    <Legendre outerDomainValue="1.7e7"><values>1 -0.09314065 -0.04959396</values></Legendre>
+                    <Legendre outerDomainValue="1.8e7"><values>1 -0.08494027 -0.05399175</values></Legendre>
+                    <Legendre outerDomainValue="1.9e7"><values>1 -0.078058 -0.0577909</values></Legendre>
+                    <Legendre outerDomainValue="2e7"><values>1 -0.07220713 -0.0610981</values></Legendre></function1ds></XYs2d></angularTwoBody></distribution></product>
+          <product pid="He4_e1" label="He4_e1">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="3710062" domainMax="2e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <angularTwoBody label="eval" productFrame="centerOfMass">
+                <recoil href="../../../../product[@label='n']/distribution/angularTwoBody[@label='eval']"/></angularTwoBody></distribution>
+            <outputChannel genre="NBody">
+              <Q>
+                <constant1d label="eval" value="19814542" domainMin="3710062" domainMax="2e7">
+                  <axes>
+                    <axis index="1" label="energy_in" unit="eV"/>
+                    <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+              <products>
+                <product pid="H1" label="H1">
+                  <multiplicity>
+                    <constant1d label="eval" value="1" domainMin="3710062" domainMax="2e7">
+                      <axes>
+                        <axis index="1" label="energy_in" unit="eV"/>
+                        <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+                  <distribution>
+                    <uncorrelated label="eval" productFrame="centerOfMass">
+                      <angular>
+                        <isotropic2d/></angular>
+                      <energy>
+                        <NBodyPhaseSpace numberOfProducts="2">
+                          <mass value="4.02277658159" unit="amu"/></NBodyPhaseSpace></energy></uncorrelated></distribution></product>
+                <product pid="H3" label="H3">
+                  <multiplicity>
+                    <constant1d label="eval" value="1" domainMin="3710062" domainMax="2e7">
+                      <axes>
+                        <axis index="1" label="energy_in" unit="eV"/>
+                        <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+                  <distribution>
+                    <uncorrelated label="eval" productFrame="centerOfMass">
+                      <angular>
+                        <isotropic2d/></angular>
+                      <energy>
+                        <NBodyPhaseSpace numberOfProducts="2">
+                          <mass value="4.02277658159" unit="amu"/></NBodyPhaseSpace></energy></uncorrelated></distribution></product></products></outputChannel></product></products></outputChannel></reaction>
+    <reaction label="n + He4 + photon [continuum]" ENDF_MT="91">
+      <crossSection>
+        <regions1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <function1ds>
+            <XYs1d index="0" interpolation="charged-particle">
+              <values>
+                1.00000000e+02 1.31400000e-60 2.00000000e+02 4.77030000e-43 3.00000000e+02 2.60240000e-35 4.00000000e+02 1.01780000e-30 5.00000000e+02 1.34910000e-27 6.00000000e+02 2.67520000e-25 7.00000000e+02 1.61250000e-23 8.00000000e+02 4.35010000e-22 9.00000000e+02 6.61860000e-21 1.00000000e+03 6.58420000e-20 2.00000000e+03 1.47750000e-14 3.00000000e+03 3.16000000e-12 4.00000000e+03 7.42140000e-11 5.00000000e+03 6.24710000e-10 6.00000000e+03 2.96570000e-09 7.00000000e+03 9.85080000e-09 8.00000000e+03 2.57380000e-08 9.00000000e+03 5.67230000e-08 1.00000000e+04 1.10240000e-07 1.10000000e+04 1.94660000e-07 1.20000000e+04 3.18880000e-07 1.40000000e+04 7.22850000e-07 1.60000000e+04 1.39190000e-06 1.80000000e+04 2.38850000e-06 2.00000000e+04 3.76560000e-06 2.20000000e+04 5.56640000e-06 2.40000000e+04 7.82520000e-06 2.60000000e+04 1.05700000e-05 2.80000000e+04 1.38200000e-05 3.00000000e+04 1.75900000e-05</values></XYs1d>
+            <XYs1d index="1">
+              <values>
+                3.00000000e+04 1.75900000e-05 3.50000000e+04 2.93600000e-05 4.00000000e+04 4.45300000e-05 4.50000000e+04 6.30300000e-05 5.00000000e+04 8.46500000e-05 5.50000000e+04 1.08970000e-04 6.00000000e+04 1.35340000e-04 6.50000000e+04 1.62890000e-04 7.00000000e+04 1.90530000e-04 7.50000000e+04 2.17070000e-04 8.00000000e+04 2.41310000e-04 8.50000000e+04 2.62240000e-04 9.00000000e+04 2.79110000e-04 9.50000000e+04 2.91550000e-04 1.00000000e+05 2.99520000e-04 1.02000000e+05 3.01510000e-04 1.04000000e+05 3.02860000e-04 1.06000000e+05 3.03600000e-04 1.08000000e+05 3.03770000e-04 1.10000000e+05 3.03410000e-04 1.12000000e+05 3.02560000e-04 1.14000000e+05 3.01260000e-04 1.20000000e+05 2.95070000e-04 1.25000000e+05 2.87870000e-04 1.30000000e+05 2.79390000e-04 1.35000000e+05 2.70090000e-04 1.40000000e+05 2.60330000e-04 1.45000000e+05 2.50380000e-04 1.50000000e+05 2.40460000e-04 1.60000000e+05 2.21260000e-04 1.70000000e+05 2.03440000e-04 1.80000000e+05 1.87260000e-04 1.90000000e+05 1.72770000e-04 2.00000000e+05 1.59850000e-04 2.20000000e+05 1.38150000e-04 2.40000000e+05 1.20940000e-04 2.60000000e+05 1.07160000e-04 2.80000000e+05 9.59900000e-05 3.00000000e+05 8.68100000e-05 3.20000000e+05 7.91800000e-05 3.40000000e+05 7.27700000e-05 3.60000000e+05 6.73100000e-05 3.80000000e+05 6.26300000e-05 4.00000000e+05 5.85900000e-05 4.20000000e+05 5.50500000e-05 4.40000000e+05 5.19500000e-05 4.60000000e+05 4.92100000e-05 4.80000000e+05 4.67700000e-05 5.00000000e+05 4.45800000e-05 5.50000000e+05 4.00300000e-05
+                6.00000000e+05 3.64500000e-05 6.50000000e+05 3.35700000e-05 7.00000000e+05 3.12100000e-05 7.50000000e+05 2.92400000e-05 8.00000000e+05 2.75900000e-05 8.50000000e+05 2.61700000e-05 9.00000000e+05 2.49600000e-05 9.50000000e+05 2.39000000e-05 1.00000000e+06 2.29700000e-05 1.10000000e+06 2.14300000e-05 1.20000000e+06 2.02000000e-05 1.30000000e+06 1.92100000e-05 1.40000000e+06 1.84000000e-05 1.50000000e+06 1.77300000e-05 1.60000000e+06 1.71700000e-05 1.70000000e+06 1.67000000e-05 1.80000000e+06 1.63100000e-05 1.90000000e+06 1.59800000e-05 2.00000000e+06 1.57100000e-05 2.10000000e+06 1.54800000e-05 2.20000000e+06 1.52900000e-05 2.30000000e+06 1.51400000e-05 2.40000000e+06 1.50300000e-05 2.50000000e+06 1.49500000e-05 2.60000000e+06 1.48900000e-05 2.70000000e+06 1.48700000e-05 2.80000000e+06 1.48700000e-05 2.90000000e+06 1.49000000e-05 3.00000000e+06 1.49600000e-05 3.10000000e+06 1.50500000e-05 3.20000000e+06 1.51800000e-05 3.30000000e+06 1.53300000e-05 3.40000000e+06 1.55300000e-05 3.50000000e+06 1.57900000e-05 3.60000000e+06 1.61000000e-05 3.70000000e+06 1.65100000e-05 3.80000000e+06 1.70900000e-05 3.90000000e+06 1.83400000e-05 4.00000000e+06 1.79500000e-05 4.10000000e+06 1.76900000e-05 4.20000000e+06 1.75100000e-05 4.30000000e+06 1.73600000e-05 4.40000000e+06 1.72400000e-05 4.50000000e+06 1.71400000e-05 4.60000000e+06 1.70500000e-05 4.70000000e+06 1.69700000e-05 4.80000000e+06 1.69000000e-05 4.90000000e+06 1.68500000e-05 5.00000000e+06 1.68000000e-05 5.20000000e+06 1.67300000e-05
+                5.40000000e+06 1.66900000e-05 5.60000000e+06 1.66600000e-05 5.80000000e+06 1.66400000e-05 6.00000000e+06 1.66200000e-05 6.20000000e+06 1.65800000e-05 6.40000000e+06 1.65300000e-05 6.60000000e+06 1.64400000e-05 6.80000000e+06 1.63200000e-05 7.00000000e+06 1.61400000e-05 7.50000000e+06 1.54400000e-05 8.00000000e+06 1.43500000e-05 8.50000000e+06 1.29000000e-05 9.00000000e+06 1.12500000e-05 1.00000000e+07 7.96260000e-06 1.02500000e+07 7.23340000e-06 1.05000000e+07 6.55660000e-06 1.07500000e+07 5.93430000e-06 1.10000000e+07 5.36660000e-06 1.14000000e+07 4.56690000e-06 1.20000000e+07 3.59290000e-06 1.27500000e+07 2.68510000e-06 1.30000000e+07 2.44350000e-06 1.32500000e+07 2.22720000e-06 1.33600000e+07 2.13930000e-06 1.35000000e+07 2.03330000e-06 1.37500000e+07 1.85940000e-06 1.37900000e+07 1.83330000e-06 1.40000000e+07 1.70320000e-06 1.42500000e+07 1.56270000e-06 1.45000000e+07 1.43620000e-06 1.46200000e+07 1.38000000e-06 1.47500000e+07 1.32220000e-06 1.50000000e+07 1.21920000e-06 1.55000000e+07 1.04160000e-06 1.60000000e+07 8.95470000e-07 1.65000000e+07 7.74450000e-07 1.70000000e+07 6.73620000e-07 1.72500000e+07 6.29530000e-07 1.75000000e+07 5.89110000e-07 1.77500000e+07 5.52000000e-07 1.80000000e+07 5.17890000e-07 1.85000000e+07 4.57530000e-07 1.90000000e+07 4.06110000e-07 1.96900000e+07 3.47040000e-07 2.00000000e+07 3.24230000e-07 2.05000000e+07 2.91510000e-07 2.10000000e+07 2.63120000e-07 2.15000000e+07 2.38380000e-07 2.20000000e+07 2.16730000e-07 2.25000000e+07 1.97730000e-07
+                2.30000000e+07 1.80970000e-07 2.30800000e+07 1.78480000e-07 2.40000000e+07 1.53020000e-07 2.42500000e+07 1.47000000e-07 2.48900000e+07 1.33070000e-07 2.50000000e+07 1.30870000e-07</values></XYs1d></function1ds></regions1d></crossSection>
+      <outputChannel genre="NBody" process="continuum">
+        <Q>
+          <constant1d label="eval" value="17589930" domainMin="1e2" domainMax="2.5e7">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="n" label="n">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1e2" domainMax="2.5e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d interpolationQualifier="unitbase">
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="1e2"><values>0 0 1e5 1.3994e-6 2e5 1.81241e-6 3e5 1.96891e-6 4e5 1.93531e-6 5e5 1.69991e-6 6e5 1.1247e-6 7e5 5.93702e-8 8e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e3"><values>0 0 1e5 1.3994e-6 2e5 1.81241e-6 3e5 1.96891e-6 4e5 1.93531e-6 5e5 1.69991e-6 6e5 1.1247e-6 7e5 5.93702e-8 8e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="6e3"><values>0 0 1e5 1.39238e-6 2e5 1.80378e-6 3e5 1.96017e-6 4e5 1.92797e-6 5e5 1.69548e-6 6e5 1.11129e-6 7e5 1.08929e-7 8e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e4"><values>0 0 1e5 1.3865e-6 2e5 1.79651e-6 3e5 1.95311e-6 4e5 1.92221e-6 5e5 1.69191e-6 6e5 1.1073e-6 7e5 1.4247e-7 8e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2e4"><values>0 0 1e5 1.3716e-6 2e5 1.7784e-6 3e5 1.9352e-6 4e5 1.9073e-6 5e5 1.683e-6 6e5 1.1056e-6 7e5 2.1891e-7 8e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="6e4"><values>0 0 1e5 1.31409e-6 2e5 1.70798e-6 3e5 1.86528e-6 4e5 1.84908e-6 5e5 1.64828e-6 6e5 1.12379e-6 7e5 4.46265e-7 8e5 4.52325e-8 9e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e5"><values>0 0 1e5 1.26e-6 2e5 1.64161e-6 3e5 1.79891e-6 4e5 1.79331e-6 5e5 1.61441e-6 6e5 1.1451e-6 7e5 5.81042e-7 8e5 1.63661e-7 9e5 1.96531e-9 1e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2.5e5"><values>0 0 1e5 1.08629e-6 2e5 1.42648e-6 3e5 1.58168e-6 4e5 1.60578e-6 5e5 1.49448e-6 6e5 1.18099e-6 7e5 8.21701e-7 8e5 5.04804e-7 9e5 2.42187e-7 1e6 5.56044e-8 1.1e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="5e5"><values>0 0 1e5 8.72806e-7 2e5 1.15841e-6 3e5 1.30401e-6 4e5 1.35481e-6 5e5 1.31481e-6 6e5 1.14631e-6 7e5 9.28696e-7 8e5 7.22625e-7 9e5 5.31324e-7 1e6 3.58412e-7 1.1e6 2.08341e-7 1.2e6 8.76536e-8 1.3e6 1.18011e-8 1.4e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e6"><values>0 0 1e5 6.09164e-7 2e5 8.20732e-7 3e5 9.42641e-7 4e5 1.00809e-6 5e5 1.02549e-6 6e5 9.86331e-7 9e5 6.79354e-7 1.1e6 4.82036e-7 1.2e6 3.89806e-7 1.3e6 3.03197e-7 1.4e6 2.23208e-7 1.5e6 1.51129e-7 1.6e6 8.85992e-8 1.7e6 3.81566e-8 1.8e6 5.68525e-9 1.9e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1.5e6"><values>0 0 1e5 4.55841e-7 2e5 6.20182e-7 3e5 7.21382e-7 4e5 7.84522e-7 5e5 8.17552e-7 6e5 8.21652e-7 7e5 7.86942e-7 1.2e6 4.80651e-7 1.4e6 3.64061e-7 1.6e6 2.55851e-7 1.7e6 2.05821e-7 1.8e6 1.591e-7 1.9e6 1.1619e-7 2e6 7.77252e-8 2.1e6 4.46121e-8 2.2e6 1.82441e-8 2.3e6 2.17011e-9 2.4e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2e6"><values>0 0 1e5 3.57871e-7 2e5 4.90301e-7 3e5 5.75221e-7 4e5 6.32401e-7 5e5 6.68632e-7 6e5 6.86282e-7 7e5 6.84362e-7 8e5 6.54941e-7 1.4e6 4.10651e-7 1.7e6 2.93131e-7 1.9e6 2.20141e-7 2e6 1.8579e-7 2.1e6 1.5313e-7 2.2e6 1.2237e-7 2.3e6 9.37882e-8 2.4e6 6.76772e-8 2.5e6 4.44331e-8 2.6e6 2.46091e-8 2.7e6 9.16762e-9 2.8e6 7.02622e-10 2.9e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2.5e6"><values>0 0 1e5 2.90499e-7 2e5 4.00049e-7 3e5 4.72248e-7 4e5 5.23178e-7 5e5 5.58438e-7 6e5 5.80508e-7 7e5 5.90018e-7 8e5 5.84988e-7 9e5 5.60858e-7 1.9e6 2.72739e-7 2.2e6 1.92679e-7 2.4e6 1.4353e-7 2.5e6 1.2054e-7 2.6e6 9.87627e-8 2.7e6 7.83417e-8 2.8e6 5.94368e-8 2.9e6 4.22649e-8 3e6 2.71059e-8 3.1e6 1.4313e-8 3.2e6 4.62118e-9 3.3e6 1.70929e-10 3.4e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="3e6"><values>0 0 1e5 2.4208e-7 2e5 3.3469e-7 3e5 3.9697e-7 4e5 4.4224e-7 5e5 4.7526e-7 6e5 4.9829e-7 7e5 5.1226e-7 8e5 5.1712e-7 9e5 5.1033e-7 1e6 4.9106e-7 2.2e6 2.3174e-7 2.4e6 1.9094e-7 2.6e6 1.5215e-7 2.8e6 1.1583e-7 2.9e6 9.876e-8 3e6 8.2506e-8 3.1e6 6.7181e-8 3.2e6 5.2851e-8 3.3e6 3.9644e-8 3.4e6 2.7713e-8 3.5e6 1.7248e-8 3.6e6 8.5736e-9 3.7e6 2.2719e-9 3.8e6 1.5396e-11 3.9e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="4e6"><values>0 0 1e5 1.77579e-7 2e5 2.46939e-7 3e5 2.94829e-7 4e5 3.30958e-7 5e5 3.58888e-7 6e5 3.80358e-7 7e5 3.96278e-7 8e5 4.07118e-7 9e5 4.12958e-7 1e6 4.13258e-7 1.1e6 4.05408e-7 1.3e6 3.80518e-7 2.8e6 1.77859e-7 3.2e6 1.27659e-7 3.5e6 9.29925e-8 3.7e6 7.16786e-8 3.9e6 5.20997e-8 4e6 4.30468e-8 4.1e6 3.45578e-8 4.2e6 2.66759e-8 4.3e6 1.94669e-8 4.4e6 1.30509e-8 4.5e6 7.52686e-9 4.6e6 3.13688e-9 4.7e6 4.01578e-10 4.8e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="8e6"><values>1e4 0 2e4 5.68489e-10 1.2e5 6.28729e-10 2.2e5 6.95269e-10 4e5 8.32969e-10 5.7e5 9.87568e-10 7.4e5 1.1704e-9 9e5 1.3726e-9 1.05e6 1.5933e-9 1.19e6 1.8306e-9 1.33e6 2.1026e-9 1.52e6 2.5359e-9 1.7e6 3.0266e-9 1.87e6 3.57479e-9 2.03e6 4.17889e-9 2.2e6 4.93009e-9 2.37e6 5.81249e-9 2.52e6 6.71749e-9 2.67e6 7.75899e-9 2.81e6 8.87139e-9 2.95e6 1.0138e-8 3.08e6 1.1469e-8 3.21e6 1.2969e-8 3.34e6 1.4658e-8 3.46e6 1.6402e-8 3.58e6 1.8345e-8 3.7e6 2.0507e-8 3.82e6 2.2913e-8 3.93e6 2.5352e-8 4.14e6 3.0707e-8 4.34e6 3.67879e-8 4.53e6 4.35969e-8 4.71e6 5.11139e-8 4.89e6 5.98119e-8 5.04e6 6.80739e-8 5.19e6 7.73549e-8 5.34e6 8.77529e-8 5.48e6 9.85498e-8 5.62e6 1.1048e-7 5.75e6 1.2264e-7 6.02e6 1.5145e-7 6.28e6 1.8396e-7 6.55e6 2.2264e-7 6.8e6 2.6236e-7 7.3e6 3.46409e-7 7.52e6 3.79579e-7 7.75e6 4.04999e-7 7.94e6 4.12989e-7 8.08e6 4.07189e-7 8.21e6 3.89429e-7  8.33e6 3.59289e-7 8.39e6 3.38179e-7 8.44e6 3.1704e-7 8.5e6 2.8693e-7 8.55e6 2.5749e-7 8.6e6 2.2371e-7 8.65e6 1.8517e-7 8.7e6 1.4144e-7 8.74e6 1.0242e-7 8.77e6 7.06139e-8 8.79e6 4.81439e-8 8.81e6 2.4618e-8 8.83e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1.2e7"><values>1e4 0 2e4 3.88758e-10 3.1e5 4.75248e-10 5.8e5 5.72728e-10 8.3e5 6.80417e-10 1.07e6 8.02497e-10 1.3e6 9.39606e-10 1.51e6 1.0848e-9 1.72e6 1.25199e-9 1.92e6 1.43469e-9 2.2e6 1.73489e-9 2.46e6 2.06859e-9 2.71e6 2.44829e-9 2.95e6 2.87649e-9 3.2e6 3.40039e-9 3.44e6 3.99018e-9 3.67e6 4.64848e-9 3.89e6 5.37638e-9 4.1e6 6.17367e-9 4.3e6 7.03907e-9 4.49e6 7.96907e-9 4.67e6 8.95896e-9 4.86e6 1.0132e-8 5.04e6 1.1379e-8 5.22e6 1.27729e-8 5.39e6 1.42379e-8 5.71e6 1.74419e-8 6.02e6 2.11909e-8 6.31e6 2.53779e-8 6.59e6 3.01459e-8 6.86e6 3.55239e-8 7.11e6 4.12778e-8 7.33e6 4.70348e-8 7.55e6 5.35088e-8 7.76e6 6.04197e-8 7.97e6 6.81067e-8 8.17e6 7.62027e-8 8.37e6 8.51026e-8 8.75e6 1.0439e-7 9.13e6 1.26919e-7 9.52e6 1.53409e-7 9.88e6 1.80519e-7 1.061e7 2.38619e-7 1.092e7 2.60779e-7 1.125e7 2.78289e-7 1.153e7 2.84199e-7 1.174e7 2.80209e-7 1.193e7 2.67899e-7 1.202e7 2.58459e-7 1.211e7 2.46259e-7  1.219e7 2.32839e-7 1.227e7 2.16709e-7 1.235e7 1.97579e-7 1.242e7 1.78129e-7 1.25e7 1.52509e-7 1.257e7 1.26829e-7 1.264e7 9.78246e-8 1.27e7 7.01037e-8 1.274e7 5.00558e-8 1.277e7 3.41519e-8 1.28e7 1.74759e-8 1.281e7 1.1741e-8 1.283e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1.6e7"><values>1e4 0 2e4 2.9539e-10 4e5 3.6103e-10 7.5e5 4.3413e-10 1.08e6 5.1632e-10 1.4e6 6.1061e-10 1.7e6 7.1431e-10 1.99e6 8.3095e-10 2.26e6 9.5628e-10 2.52e6 1.0945e-9 2.89e6 1.3254e-9 3.23e6 1.5794e-9 3.55e6 1.8617e-9 3.86e6 2.182e-9 4.19e6 2.5821e-9 4.5e6 3.0227e-9 4.8e6 3.5184e-9 5.09e6 4.0723e-9 5.37e6 4.687e-9 5.63e6 5.3377e-9 5.88e6 6.0454e-9 6.13e6 6.8433e-9 6.38e6 7.7423e-9 6.62e6 8.7116e-9 6.85e6 9.7492e-9 7.07e6 1.0852e-8 7.29e6 1.2072e-8 7.5e6 1.3359e-8 7.9e6 1.618e-8 8.28e6 1.9371e-8 8.65e6 2.304e-8 9e6 2.7096e-8 9.33e6 3.1516e-8 9.62e6 3.5933e-8 9.91e6 4.0903e-8 1.018e7 4.6073e-8 1.045e7 5.1812e-8 1.071e7 5.7915e-8 1.097e7 6.462e-8 1.148e7 7.9638e-8 1.198e7 9.6885e-8 1.249e7 1.1703e-7 1.297e7 1.3805e-7 1.392e7 1.82e-7 1.433e7 1.9901e-7 1.477e7 2.1242e-7 1.513e7 2.1666e-7 1.54e7 2.1361e-7 1.565e7 2.042e-7 1.577e7 1.9685e-7  1.588e7 1.8822e-7 1.599e7 1.7755e-7 1.609e7 1.6589e-7 1.619e7 1.5217e-7 1.629e7 1.3617e-7 1.639e7 1.1767e-7 1.648e7 9.86959e-8 1.657e7 7.7304e-8 1.662e7 6.4302e-8 1.666e7 5.3293e-8 1.671e7 3.8742e-8 1.675e7 2.6443e-8 1.679e7 1.3536e-8 1.681e7 6.8482e-9 1.683e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2e7"><values>1e4 0 2e4 2.38179e-10 4.8e5 2.89829e-10 9.2e5 3.49529e-10 1.34e6 4.17759e-10 1.73e6 4.92789e-10 2.1e6 5.76149e-10 2.46e6 6.70538e-10 2.8e6 7.73568e-10 3.12e6 8.84658e-10 3.57e6 1.0679e-9 4e6 1.2774e-9 4.4e6 1.5081e-9 4.78e6 1.7648e-9 5.19e6 2.0898e-9 5.58e6 2.45269e-9 5.95e6 2.85339e-9 6.3e6 3.29059e-9 6.64e6 3.77729e-9 6.97e6 4.31599e-9 7.28e6 4.88939e-9 7.58e6 5.51389e-9 7.89e6 6.23979e-9 8.18e6 7.00148e-9 8.46e6 7.82108e-9 8.74e6 8.73228e-9 9.01e6 9.70628e-9 9.27e6 1.0742e-8 9.77e6 1.3034e-8 1.024e7 1.5604e-8 1.069e7 1.8505e-8 1.112e7 2.17379e-8 1.154e7 2.53929e-8 1.19e7 2.89649e-8 1.225e7 3.28669e-8 1.259e7 3.71009e-8 1.293e7 4.18089e-8 1.325e7 4.67059e-8 1.357e7 5.20829e-8 1.42e7 6.41688e-8 1.482e7 7.81038e-8 1.546e7 9.45988e-8 1.605e7 1.1147e-7 1.722e7 1.4681e-7 1.773e7 1.6064e-7 1.827e7 1.7148e-7 1.873e7 1.7505e-7 1.907e7 1.7244e-7 1.937e7 1.6497e-7 1.952e7 1.5896e-7  1.966e7 1.5174e-7 1.979e7 1.4348e-7 1.992e7 1.3355e-7 2.005e7 1.2176e-7 2.017e7 1.0908e-7 2.029e7 9.44858e-8 2.04e7 7.92768e-8 2.051e7 6.21639e-8 2.057e7 5.19689e-8 2.062e7 4.29849e-8 2.068e7 3.15919e-8 2.073e7 2.15669e-8 2.078e7 1.1043e-8 2.081e7 4.48069e-9 2.083e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2.5e7"><values>1e4 0 22300 1.93641e-10 588100 2.35633e-10 1129300 2.84169e-10 1645900 3.39641e-10 2125600 4.00641e-10 2580700 4.68413e-10 3023500 5.45152e-10 3441700 6.28916e-10 3835300 7.19233e-10 4388800 8.6821e-10 4917700 1.038535e-9 5409700 1.226096e-9 5877100 1.434794e-9 6381400 1.699022e-9 6861100 1.994054e-9 7316200 2.319826e-9 7746700 2.675272e-9 8164900 3.070963e-9 8570800 3.508929e-9 8952100 3.975108e-9 9321100 4.48283e-9 9702400 5.072992e-9 10059100 5.692251e-9 10403500 6.358592e-9 10747900 7.099403e-9 1.108e7 7.891272e-9 11399800 8.73332e-9 12014800 1.059673e-8 12592900 1.268616e-8 13146400 1.504469e-8 13675300 1.767306e-8 14191900 2.06446e-8 14634700 2.354866e-8 15065200 2.672101e-8 15483400 3.016329e-8 15901600 3.399092e-8 16295200 3.797222e-8 16688800 4.234375e-8 17463700 5.216967e-8 18226300 6.349892e-8 19013500 7.690947e-8 19739200 9.062587e-8 21178300 1.193575e-7 21805600 1.306014e-7 22469800 1.394144e-7 23035600 1.423168e-7 23453800 1.401949e-7 23822800 1.341217e-7 24007300 1.292356e-7  24179500 1.233657e-7 24339400 1.166502e-7 24499300 1.085771e-7 24659200 9.899171e-8 24806800 8.868279e-8 24954400 7.68176e-8 25089700 6.445258e-8 2.5225e7 5.053968e-8 25298800 4.225107e-8 25360300 3.494702e-8 25434100 2.568443e-8 25495600 1.753404e-8 25557100 8.978035e-9 2.5594e7 3.642832e-9 25618600 0</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="He4" label="He4">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1e2" domainMax="2.5e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d interpolationQualifier="unitbase">
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="1e2"><values>0 0 1e5 9.10257e-6 2e5 8.97427e-7 3e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e3"><values>0 0 1e5 9.10257e-6 2e5 8.97427e-7 3e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="6e3"><values>0 0 1e5 8.779e-6 2e5 1.221e-6 3e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e4"><values>0 0 1e5 8.5479e-6 2e5 1.4521e-6 3e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2e4"><values>0 0 1e5 8.0722e-6 2e5 1.9278e-6 3e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="6e4"><values>0 0 1e5 6.7433e-6 2e5 2.948e-6 3e5 3.087e-7 4e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e5"><values>0 0 1e5 5.81653e-6 2e5 3.25642e-6 3e5 9.20995e-7 4e5 6.05793e-9 5e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2.5e5"><values>0 0 1e5 3.78356e-6 2e5 3.09657e-6 4e5 9.4338e-7 5e5 1.56518e-7 6e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="5e5"><values>0 0 1e5 2.22841e-6 2e5 2.32381e-6 3e5 2.03471e-6 4e5 1.58281e-6 5e5 1.073e-6 6e5 5.79282e-7 7e5 1.75181e-7 8e5 2.80611e-9 9e5 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e6"><values>0 0 1e5 9.73373e-7 2e5 1.3104e-6 3e5 1.411e-6 4e5 1.3812e-6 5e5 1.2701e-6 6e5 1.1074e-6 7e5 9.13593e-7 9e5 4.93202e-7 1e6 2.94981e-7 1.1e6 1.2558e-7 1.2e6 1.5754e-8 1.3e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1.5e6"><values>0 0 1e5 4.74006e-7 2e5 7.81373e-7 3e5 9.44982e-7 4e5 1.02029e-6 5e5 1.03509e-6 6e5 1.00609e-6 7e5 9.45082e-7 8e5 8.60543e-7 9e5 7.59393e-7 1e6 6.47134e-7 1.3e6 2.92447e-7 1.4e6 1.83888e-7 1.5e6 8.97582e-8 1.6e6 2.03368e-8 1.7e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2e6"><values>0 0 1e5 2.3623e-7 2e5 4.8375e-7 3e5 6.4398e-7 4e5 7.4416e-7 5e5 8.007e-7 6e5 8.2398e-7 7e5 8.2142e-7 8e5 7.9832e-7 9e5 7.5914e-7 1e6 7.0745e-7 1.1e6 6.4573e-7 1.2e6 5.7658e-7 1.3e6 5.0254e-7 1.6e6 2.7018e-7 1.7e6 1.9615e-7 1.8e6 1.2771e-7 1.9e6 6.7665e-8 2e6 2.1081e-8 2.1e6 5.143e-10 2.2e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2.5e6"><values>0 0 1e5 1.1405e-7 2e5 3.05369e-7 3e5 4.46769e-7 4e5 5.46999e-7 5e5 6.15549e-7 6e5 6.59029e-7 7e5 6.82379e-7 8e5 6.89219e-7 9e5 6.82379e-7 1e6 6.64319e-7 1.1e6 6.36899e-7 1.2e6 6.01789e-7 1.3e6 5.60359e-7 1.5e6 4.63959e-7 2e6 1.9302e-7 2.1e6 1.4199e-7 2.2e6 9.48788e-8 2.3e6 5.34089e-8 2.4e6 2.0125e-8 2.5e6 1.3958e-9 2.6e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="3e6"><values>0 0 1e5 5.09471e-8 2e5 1.9367e-7 3e5 3.1388e-7 4e5 4.0607e-7 5e5 4.75111e-7 6e5 5.25281e-7 7e5 5.59681e-7 8e5 5.80881e-7 9e5 5.90991e-7 1e6 5.91571e-7 1.1e6 5.84041e-7 1.2e6 5.69581e-7 1.4e6 5.23891e-7 1.5e6 4.94321e-7 1.7e6 4.2537e-7 1.9e6 3.4762e-7 2.3e6 1.8427e-7 2.4e6 1.4526e-7 2.5e6 1.0809e-7 2.6e6 7.38981e-8 2.7e6 4.3572e-8 2.8e6 1.8574e-8 2.9e6 2.5183e-9 3e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="4e6"><values>0 0 1e5 6.6324e-9 2e5 7.4551e-8 3e5 1.576e-7 4e5 2.2939e-7 5e5 2.8893e-7 6e5 3.3743e-7 7e5 3.7623e-7 8e5 4.0649e-7 9e5 4.2945e-7 1e6 4.4585e-7 1.1e6 4.5653e-7 1.3e6 4.6315e-7 1.4e6 4.6015e-7 1.6e6 4.4393e-7 1.7e6 4.314e-7 1.9e6 3.9919e-7 2.1e6 3.595e-7 2.3e6 3.1426e-7 3e6 1.3903e-7 3.2e6 9.16391e-8 3.3e6 6.9682e-8 3.4e6 4.9352e-8 3.5e6 3.1109e-8 3.6e6 1.5676e-8 3.7e6 4.2378e-9 3.8e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="8e6"><values>1e4 0 2e4 2.46189e-8 4e4 4.81448e-8 6e4 7.06158e-8 8e4 9.20667e-8 1.1e5 1.224e-7 1.4e5 1.50629e-7 1.7e5 1.76859e-7 2.2e5 2.16399e-7 2.7e5 2.51099e-7 3.2e5 2.81379e-7 3.8e5 3.12389e-7 4.3e5 3.34229e-7 4.9e5 3.56079e-7 5.5e5 3.73669e-7 6.1e5 3.87469e-7 7.4e5 4.06299e-7 8.9e5 4.12999e-7 1.08e6 4.05009e-7 1.31e6 3.79589e-7 1.53e6 3.46419e-7 2.03e6 2.62369e-7 2.28e6 2.22639e-7 2.55e6 1.83969e-7 2.81e6 1.51449e-7 3.08e6 1.2264e-7 3.21e6 1.1049e-7 3.35e6 9.85517e-8 3.49e6 8.77547e-8 3.64e6 7.73567e-8 3.79e6 6.80748e-8 3.94e6 5.98138e-8 4.12e6 5.11148e-8 4.3e6 4.35978e-8 4.49e6 3.67889e-8 4.69e6 3.07079e-8 4.9e6 2.53519e-8 5.01e6 2.29139e-8 5.13e6 2.05079e-8 5.25e6 1.83459e-8 5.37e6 1.64019e-8 5.49e6 1.46579e-8 5.62e6 1.297e-8 5.75e6 1.147e-8 5.88e6 1.0138e-8 6.02e6 8.87157e-9 6.16e6 7.75917e-9 6.31e6 6.71768e-9 6.47e6 5.75668e-9 6.64e6 4.88258e-9  6.81e6 4.13859e-9 6.97e6 3.54009e-9 7.14e6 2.99709e-9 7.32e6 2.51109e-9 7.51e6 2.08189e-9 7.65e6 1.81259e-9 7.79e6 1.57769e-9 7.94e6 1.3591e-9 8.1e6 1.1588e-9 8.27e6 9.77757e-10 8.44e6 8.24677e-10 8.62e6 6.88328e-10 8.72e6 6.22448e-10 8.82e6 5.62808e-10 8.83e6 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1.2e7"><values>1e4 0 2e4 1.1742e-8 4e4 2.31231e-8 6e4 3.41541e-8 1e5 5.51922e-8 1.3e5 7.01072e-8 1.7e5 8.88923e-8 2.1e5 1.0647e-7 2.5e5 1.229e-7 3.2e5 1.4904e-7 4e5 1.75141e-7 4.8e5 1.97581e-7 5.6e5 2.16721e-7 6.4e5 2.32851e-7 7.2e5 2.46271e-7 8.1e5 2.58471e-7 9e5 2.67911e-7 1.09e6 2.80221e-7 1.3e6 2.84211e-7 1.58e6 2.78301e-7 1.91e6 2.60791e-7 2.22e6 2.38631e-7 2.95e6 1.80521e-7 3.31e6 1.5342e-7 3.7e6 1.2692e-7 4.08e6 1.0439e-7 4.46e6 8.51073e-8 4.66e6 7.62062e-8 4.86e6 6.81102e-8 5.07e6 6.04232e-8 5.28e6 5.35112e-8 5.5e6 4.70371e-8 5.72e6 4.12801e-8 5.97e6 3.55251e-8 6.24e6 3.01471e-8 6.52e6 2.53791e-8 6.81e6 2.11921e-8 7.12e6 1.74431e-8 7.44e6 1.4238e-8 7.61e6 1.2773e-8 7.79e6 1.138e-8 7.97e6 1.0133e-8 8.16e6 8.95943e-9 8.35e6 7.91772e-9 8.54e6 6.99342e-9 8.74e6 6.13352e-9 8.95e6 5.34132e-9 9.17e6 4.61811e-9 9.4e6 3.96401e-9 9.64e6 3.37781e-9  9.89e6 2.85741e-9 1.013e7 2.43191e-9 1.038e7 2.05471e-9 1.064e7 1.72331e-9 1.092e7 1.4249e-9 1.112e7 1.2435e-9 1.133e7 1.0774e-9 1.154e7 9.33243e-10 1.177e7 7.97042e-10 1.201e7 6.75792e-10 1.226e7 5.68822e-10 1.253e7 4.72001e-10 1.282e7 3.86091e-10 1.283e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1.6e7"><values>1e4 0 2e4 6.84867e-9 5e4 1.68219e-8 8e4 2.64449e-8 1.4e5 4.46718e-8 1.8e5 5.60998e-8 2.3e5 6.96057e-8 3.3e5 9.41637e-8 4.2e5 1.1367e-7 5.2e5 1.3269e-7 6.2e5 1.49169e-7 7.3e5 1.64629e-7 8.3e5 1.76479e-7 9.4e5 1.87349e-7 1.05e6 1.96159e-7 1.17e6 2.03679e-7 1.42e6 2.13389e-7 1.7e6 2.16669e-7 2.06e6 2.12439e-7 2.5e6 1.99019e-7 2.91e6 1.82009e-7 3.86e6 1.38059e-7 4.34e6 1.1704e-7 4.85e6 9.68906e-8 5.35e6 7.96427e-8 5.86e6 6.46238e-8 6.12e6 5.79178e-8 6.38e6 5.18158e-8 6.65e6 4.60758e-8 6.92e6 4.09048e-8 7.21e6 3.59349e-8 7.5e6 3.15179e-8 7.83e6 2.70979e-8 8.18e6 2.30419e-8 8.55e6 1.93719e-8 8.93e6 1.61809e-8 9.33e6 1.336e-8 9.54e6 1.2073e-8 9.76e6 1.0852e-8 9.99e6 9.70236e-9 1.022e7 8.66947e-9 1.046e7 7.70477e-9 1.071e7 6.80987e-9 1.095e7 6.04578e-9 1.12e7 5.33808e-9 1.146e7 4.68728e-9 1.174e7 4.07248e-9 1.203e7 3.51859e-9 1.233e7 3.02289e-9 1.264e7 2.58219e-9  1.297e7 2.18209e-9 1.328e7 1.86179e-9 1.361e7 1.57139e-9 1.395e7 1.3187e-9 1.432e7 1.0888e-9 1.458e7 9.51376e-10 1.485e7 8.26687e-10 1.514e7 7.10637e-10 1.544e7 6.07458e-10 1.576e7 5.13648e-10 1.609e7 4.31878e-10 1.644e7 3.59149e-10 1.682e7 2.93839e-10 1.683e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2e7"><values>1e4 0 2e4 4.48082e-9 3e4 6.68944e-9 6e4 1.31891e-8 1e5 2.15681e-8 1.4e5 2.96262e-8 1.8e5 3.73742e-8 2.4e5 4.84313e-8 3e5 5.88363e-8 4.2e5 7.78044e-8 5.4e5 9.44885e-8 6.6e5 1.09081e-7 7.8e5 1.21771e-7 9.1e5 1.33551e-7 1.04e6 1.43481e-7 1.17e6 1.51741e-7 1.31e6 1.58971e-7 1.46e6 1.64971e-7 1.76e6 1.72441e-7 2.1e6 1.75061e-7 2.56e6 1.71481e-7 3.1e6 1.60651e-7 3.61e6 1.46811e-7 4.78e6 1.11471e-7 5.37e6 9.46015e-8 6.01e6 7.81064e-8 6.63e6 6.41704e-8 7.26e6 5.20853e-8 7.58e6 4.67073e-8 7.9e6 4.18102e-8 8.24e6 3.71012e-8 8.58e6 3.28682e-8 8.93e6 2.89662e-8 9.29e6 2.53941e-8 9.71e6 2.17391e-8 1.014e7 1.85051e-8 1.059e7 1.56051e-8 1.106e7 1.30341e-8 1.156e7 1.07421e-8 1.182e7 9.70665e-9 1.209e7 8.73255e-9 1.237e7 7.82134e-9 1.265e7 7.00174e-9 1.295e7 6.21513e-9 1.326e7 5.49203e-9 1.356e7 4.86993e-9 1.387e7 4.29882e-9 1.42e7 3.76212e-9 1.454e7 3.27732e-9 1.489e7 2.84192e-9  1.526e7 2.44271e-9 1.565e7 2.08121e-9 1.606e7 1.75771e-9 1.644e7 1.50191e-9 1.684e7 1.27211e-9 1.727e7 1.06341e-9 1.772e7 8.81005e-10 1.804e7 7.70344e-10 1.838e7 6.67754e-10 1.874e7 5.73753e-10 1.911e7 4.90723e-10 1.95e7 4.16002e-10 1.992e7 3.48062e-10 2.036e7 2.88612e-10 2.082e7 2.37171e-10 2.083e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2.5e7"><values>1e4 0 22300 3.64294e-9 34600 5.438564e-9 71500 1.072284e-8 120700 1.753503e-8 169900 2.408632e-8 219100 3.03855e-8 292900 3.937501e-8 366700 4.783435e-8 514300 6.325555e-8 661900 7.681985e-8 809500 8.868366e-8 957100 9.900073e-8 1.117e6 1.08578e-7 1276900 1.166511e-7 1436800 1.233666e-7 1.609e6 1.292446e-7 1793500 1.341226e-7 2162500 1.401958e-7 2580700 1.423259e-7 3146500 1.394153e-7 3810700 1.306105e-7 4.438e6 1.193584e-7 5877100 9.062675e-8 6602800 7.691172e-8 7.39e6 6.350108e-8 8152600 5.217101e-8 8927500 4.234574e-8 9321100 3.797338e-8 9714700 3.3992e-8 10132900 3.016355e-8 10551100 2.672209e-8 10981600 2.354974e-8 11424400 2.064559e-8 1.1941e7 1.767405e-8 12469900 1.504478e-8 13023400 1.268706e-8 13601500 1.059682e-8 14216500 8.733407e-9 14536300 7.891578e-9 14868400 7.099628e-9 15212800 6.358807e-9 15557200 5.692467e-9 15926200 5.052947e-9 16307500 4.465061e-9 16676500 3.959289e-9 17057800 3.494973e-9 17463700 3.058631e-9 17881900 2.664485e-9 18312400 2.310502e-9  18767500 1.985941e-9 19247200 1.692039e-9 19751500 1.429031e-9 20218900 1.221064e-9 20710900 1.034235e-9 21239800 8.6456e-10 21793300 7.16264e-10 22186900 6.26295e-10 22605100 5.42889e-10 23047900 4.66465e-10 2.3503e7 3.98961e-10 23982700 3.38213e-10 24499300 2.82977e-10 25040500 2.34644e-10 25606300 1.92822e-10 25618600 0</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="photon" label="photon">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1e2" domainMax="2.5e7">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d interpolationQualifier="unitbase">
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="1e2"><values>1.675e7 0 1.676e7 1e-4 1.677e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="1e3"><values>1.675e7 0 1.676e7 1e-4 1.677e7 0</values></XYs1d>
+                      <XYs1d outerDomainValue="2.5e7"><values>1.675e7 0 1.676e7 1e-4 1.677e7 0</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product></products></outputChannel></reaction></reactions>
+  <applicationData>
+    <institution label="LLNL">
+      <ENDFconversionFlags>
+        <conversion flags="MF6" href="/reactionSuite/reactions/reaction[@label='n + He4 + photon [continuum]']/outputChannel/products/product[@label='photon']" />
+        <conversion flags="QI=17589930.0" href="/reactionSuite/reactions/reaction[@label='n + He4 + photon [continuum]']/outputChannel/Q" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='H2 + H3']/outputChannel/products/product[@label='H3']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='n + (He4_e1 -> H1 + H3)']/outputChannel/products/product[@label='He4_e1']" /></ENDFconversionFlags></institution></applicationData>
+</reactionSuite>

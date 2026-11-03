@@ -31,6 +31,56 @@ SCENARIO( "IncoherentDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "incoherent distribution data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      IncoherentDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                        TabulatedScatteringFunction( { 1., 2., 2., 2., 1e+6 },        // <-- discontinuity with 3 points
+                                                                     { 2., 1.9, 1.8, 1.7, 1. } ),
+                                        std::vector< TabulatedComptonProfile >{
+
+                                          { id::ElectronSubshellID( "1s" ),
+                                            { 0., 2., 3., 3., 3., 4. }, { 0., 1., 2., 3., 1., 2. } }, // <-- discontinuity with 3 points
+                                          { id::ElectronSubshellID( "2s" ),
+                                            { 0., 1., 2., 2., 2., 4. }, { 0., 1., 2., 3., 1., 2. } }  // <-- discontinuity with 3 points
+                                        } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.scatteringFunction().isCurated() );
+        CHECK( false == chunk.comptonProfiles()->at( 0 ).isCurated() );
+        CHECK( false == chunk.comptonProfiles()->at( 1 ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.scatteringFunction().isCurated() );
+        CHECK( true == chunk.comptonProfiles()->at( 0 ).isCurated() );
+        CHECK( true == chunk.comptonProfiles()->at( 1 ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly without Compton profiles" ) {
+
+      IncoherentDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                        TabulatedScatteringFunction( { 1., 2., 2., 2., 1e+6 },   // <-- discontinuity with 3 points
+                                                                     { 2., 1.9, 1.8, 1.7, 1. } ) );
+
+      THEN( "the tabulated data can be curated" ) {
+
+        CHECK( false == chunk.scatteringFunction().isCurated() );
+
+        chunk.curate();
+
+        CHECK( true == chunk.scatteringFunction().isCurated() );
+        CHECK( std::nullopt == chunk.comptonProfiles() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of IncoherentDistributionData is given" ) {

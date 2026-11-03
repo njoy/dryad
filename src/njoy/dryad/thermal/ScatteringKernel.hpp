@@ -226,17 +226,20 @@ namespace thermal {
      *  @param[in] functions              the associated scattering functions
      *  @param[in] boundaries             the boundaries of the interpolation regions
      *  @param[in] interpolants           the interpolation types of the interpolation regions
+     *  @param[in] curate                 flag to indicate whether or not to curate the data (default: false)
      */
     ScatteringKernel( double moderatorTemperature,
                       double effectiveTemperature,
                       std::vector< double > energyTransfers,
                       std::vector< TabulatedScatteringKernelFunction > functions,
                       std::vector< std::size_t > boundaries,
-                      std::vector< InterpolationType > interpolants ) :
+                      std::vector< InterpolationType > interpolants,
+                      bool curate = false ) :
         ScatteringKernel(
             moderatorTemperature, effectiveTemperature,
             TabulatedScatteringKernel( std::move( energyTransfers ), std::move( functions ),
-                                       std::move( boundaries ), std::move( interpolants ) ) ) {}
+                                       std::move( boundaries ), std::move( interpolants ),
+                                       curate ) ) {}
 
     /**
      *  @brief Constructor using a single interpolation zone
@@ -246,16 +249,18 @@ namespace thermal {
      *  @param[in] energyTransfers        the energy transfer values
      *  @param[in] functions              the associated functions
      *  @param[in] interpolant            the interpolation type of the data (default lin-lin)
+     *  @param[in] curate                 flag to indicate whether or not to curate the data (default: false)
      */
     ScatteringKernel( double moderatorTemperature,
                       double effectiveTemperature,
                       std::vector< double > energyTransfers,
                       std::vector< TabulatedScatteringKernelFunction > functions,
-                      InterpolationType interpolant = InterpolationType::LinearLinear ) :
+                      InterpolationType interpolant = InterpolationType::LinearLinear,
+                      bool curate = false ) :
         ScatteringKernel(
             moderatorTemperature, effectiveTemperature,
             TabulatedScatteringKernel( std::move( energyTransfers ), std::move( functions ),
-                                       interpolant ) ) {}
+                                       interpolant, curate ) ) {}
 
     /* methods */
 
@@ -305,6 +310,14 @@ namespace thermal {
     TabulatedScatteringKernel& tabulatedScatteringKernel() {
 
       return this->sab_;
+    }
+
+    /**
+     *  @brief Curate the scattering kernel
+     */
+    void curate() {
+
+      this->tabulatedScatteringKernel().curate();
     }
 
     /**

@@ -7,6 +7,7 @@ import sys
 # local imports
 from njoy.dryad import Reaction
 from njoy.dryad import ReactionProduct
+from njoy.dryad import TabulatedMultiplicity
 from njoy.dryad import TabulatedCrossSection
 from njoy.dryad import InterpolationType
 from njoy.dryad import ReactionCategory
@@ -277,6 +278,28 @@ class Test_Reaction( unittest.TestCase ) :
                                                          InterpolationType.LinearLog ] ) )
 
         verify_summation_chunk( self, chunk )
+
+    def test_curation( self ) :
+
+        # the data is given explicitly
+        chunk = Reaction( ReactionID( 'n,Fe56->n,Fe56_e1' ),
+                          TabulatedCrossSection( [ 1., 2., 2., 2., 4. ], [ 4., 3., 4., 5., 2. ] ),    # <-- discontinuity with 3 points
+                          [ ReactionProduct( ParticleID( 'n' ), TabulatedMultiplicity( [ 1., 2., 2., 2., 4. ],    # <-- discontinuity with 3 points
+                                                                                       [ 1., 1., 2., 1., 1. ] ) ),
+                            ReactionProduct( ParticleID( 'g' ), TabulatedMultiplicity( [ 1., 3., 3., 3., 4. ],    # <-- discontinuity with 3 points
+                                                                                       [ 1., 2., 3., 4., 5. ] ) ) ] )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.cross_section.is_curated )
+        self.assertEqual( False, chunk.products[0].multiplicity.is_curated )
+        self.assertEqual( False, chunk.products[1].multiplicity.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.cross_section.is_curated )
+        self.assertEqual( True, chunk.products[0].multiplicity.is_curated )
+        self.assertEqual( True, chunk.products[1].multiplicity.is_curated )
 
     def test_setter_functions( self ) :
 

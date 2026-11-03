@@ -23,11 +23,16 @@ namespace read {
    *         ENDF MF4 section
    *
    *  @param[in] distribution   the parsed MF4 Legendre distributions
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   inline dryad::LegendreAngularDistributions
   createLegendreAngularDistributions(
       const ENDFtk::section::Type< 4 >::LegendreDistributions& distribution,
-      bool ) {
+      bool /* normalise */,
+      bool curate ) {
 
     // MF4 sections assume that the first coefficient is 0.5 so it is always normalised.
     // As such, we can read the distributions with normalise = false directly.
@@ -45,7 +50,8 @@ namespace read {
       auto interpolants = createInterpolants( distribution.interpolants() );
       return dryad::LegendreAngularDistributions(
                std::move( energies ), std::move( distributions ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               false, curate );
     }
     catch ( ... ) {
 

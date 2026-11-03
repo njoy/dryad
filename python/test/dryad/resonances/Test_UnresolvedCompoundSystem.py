@@ -279,6 +279,39 @@ class Test_UnresolvedCompoundSystem( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_curation( self ) :
+
+        elastic_pair = ParticlePair( Particle( ParticleID.neutron(), 1.00866491574, 0.5, +1 ),
+                                     Particle( ParticleID( 'Cl35' ), 34.9688491981, 1.5, +1 ) )
+
+        # the data is given explicitly
+        chunk = UnresolvedCompoundSystem(
+                  1e+4, 1e+6,
+                  [ UnresolvedSpinGroup( [ UnresolvedChannel( ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ),
+                                                              elastic_pair, elastic_pair, 0., None,
+                                                              ChannelRadii( 4.822220 ) ) ],
+                                         UnresolvedResonanceTable( [ ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ) ],
+                                                                   [ TabulatedAverageWidths( [ 1e+4, 1e+5, 1e+5, 1e+5, 1e+6 ],    # <-- discontinuity of 3 points
+                                                                                             [ 0.1, 0.2, 0.3, 0.35, 0.4 ] ) ],
+                                                                   TabulatedLevelSpacing( [ 1e+4, 1e+6 ], [ 10., 40. ] ) ) ),
+                    UnresolvedSpinGroup( [ UnresolvedChannel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                                                              elastic_pair, elastic_pair, 0., None,
+                                                              ChannelRadii( 4.822220 ) ) ],
+                                         UnresolvedResonanceTable( [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ) ],
+                                                                   [ TabulatedAverageWidths( [ 1e+4, 1e+6 ], [ 1.1, 1.4 ] ) ],
+                                                                   TabulatedLevelSpacing( [ 1e+4, 2e+5, 2e+5, 2e+5, 1e+6 ],    # <-- discontinuity of 3 points
+                                                                                          [ 10., 20., 30., 35., 40. ] ) ) ) ] )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.spin_groups[0].resonance_table.widths[0].is_curated )
+        self.assertEqual( False, chunk.spin_groups[1].resonance_table.spacings.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.spin_groups[0].resonance_table.widths[0].is_curated )
+        self.assertEqual( True, chunk.spin_groups[1].resonance_table.spacings.is_curated )
+
     def test_setters( self ) :
 
         group1p, group2p, group0m, group1m = make_spin_groups()

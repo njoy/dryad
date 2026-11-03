@@ -30,8 +30,8 @@ SCENARIO( "createTabulatedEnergyDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = endf::read::createTabulatedEnergyDistributions( distribution, false );
-        auto chunk2 = endf::read::createTabulatedEnergyDistributions( distribution, true );
+        auto chunk1 = endf::read::createTabulatedEnergyDistributions( distribution, false, true );
+        auto chunk2 = endf::read::createTabulatedEnergyDistributions( distribution, true, true );
 
         verifyElectronChunk( chunk1, false );
         verifyElectronChunk( chunk2, true );

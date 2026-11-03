@@ -100,6 +100,12 @@ void wrapIncoherentDistributionData( python::module& module ) {
   )
   .def(
 
+    "curate",
+    &Component::curate,
+    "Curate the distribution data"
+  )
+  .def(
+
     "average_energy",
     python::overload_cast< double, double >( &Component::averageEnergy, python::const_ ),
     python::arg( "energy" ),

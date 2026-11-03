@@ -56,25 +56,39 @@ namespace dryad {
      *  @param[in] values         the cross section values
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
+     *  @param[in] threshold      the optional threshold value (only used for Coulomb penetrability
+     *                            interpolation, default: none)
      */
     TabulatedCrossSection( std::vector< double > energies,
                            std::vector< double > values,
                            std::vector< std::size_t > boundaries,
-                           std::vector< InterpolationType > interpolants ) :
+                           std::vector< InterpolationType > interpolants,
+                           bool curate = false,
+                           std::optional< double > threshold = std::nullopt ) :
       InterpolationTable( std::move( energies ), std::move( values ),
-                          std::move( boundaries ), std::move( interpolants ) ) {}
+                          std::move( boundaries ), std::move( interpolants ),
+                          curate,
+                          std::move( threshold ) ) {}
 
     /**
-     *  @brief Constructor for a cross section using a single interpolation zone
+     *  @brief Constructor using a single interpolation zone
      *
      *  @param[in] energies       the energy values
      *  @param[in] values         the cross section values
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
+     *  @param[in] threshold      the optional threshold value (only used for Coulomb penetrability
+     *                            interpolation, default: none)
      */
     TabulatedCrossSection( std::vector< double > energies,
                            std::vector< double > values,
-                           InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
+                           InterpolationType interpolant = InterpolationType::LinearLinear,
+                           bool curate = false,
+                           std::optional< double > threshold = std::nullopt ) :
+      InterpolationTable( std::move( energies ), std::move( values ),
+                          interpolant, curate,
+                          std::move( threshold ) ) {}
 
     /* methods */
 
@@ -114,7 +128,10 @@ namespace dryad {
     using InterpolationTable::interpolants;
     using InterpolationTable::numberPoints;
     using InterpolationTable::numberRegions;
+    using InterpolationTable::threshold;
     using InterpolationTable::isLinearised;
+    using InterpolationTable::isCurated;
+    using InterpolationTable::curate;
 
     using InterpolationTable::operator();
 

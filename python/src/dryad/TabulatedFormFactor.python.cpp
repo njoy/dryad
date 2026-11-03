@@ -36,26 +36,36 @@ void wrapTabulatedFormFactor( python::module& module ) {
     "    interpolants : list of InterpolationType, optional\n"
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : InterpolationType, default=LinearLinear\n"
-    "        the interpolation type for single-region tables"
+    "        the interpolation type for single-region tables\n"
+    "    curate : bool, default=False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< std::vector< double >,
+                  std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
-    python::arg( "energies" ), python::arg( "values" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
+                  std::vector< InterpolationType >,
+                  bool >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the form factor table with multiple interpolation regions"
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
-                  InterpolationType >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::init< std::vector< double >,
+                  std::vector< double >,
+                  InterpolationType, bool >(),
+    python::arg( "energies" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the form factor table with a single interpolation region"
   )
   .def_property_readonly(

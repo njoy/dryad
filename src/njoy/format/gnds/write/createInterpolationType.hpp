@@ -21,11 +21,12 @@ namespace write {
 
     switch ( type ) {
 
-      case dryad::InterpolationType::Histogram    : return "flat";
-      case dryad::InterpolationType::LinearLinear : return "lin-lin";
-      case dryad::InterpolationType::LinearLog    : return "lin-log";
-      case dryad::InterpolationType::LogLinear    : return "log-lin";
-      case dryad::InterpolationType::LogLog       : return "log-log";
+      case dryad::InterpolationType::Histogram            : return "flat";
+      case dryad::InterpolationType::LinearLinear         : return "lin-lin";
+      case dryad::InterpolationType::LinearLog            : return "lin-log";
+      case dryad::InterpolationType::LogLinear            : return "log-lin";
+      case dryad::InterpolationType::LogLog               : return "log-log";
+      case dryad::InterpolationType::CoulombPenetrability : return "charged-particle";
       default : {
 
         throw std::runtime_error( "You have somehow reached unreachable code, "

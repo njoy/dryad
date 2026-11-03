@@ -28,7 +28,7 @@ SCENARIO( "createTabulatedRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::resonances::createTabulatedRadius( radius );
+        auto chunk = endf::read::resonances::createTabulatedRadius( radius, true );
 
         verifyChunk( chunk );
       } // THEN

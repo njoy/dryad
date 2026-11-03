@@ -58,25 +58,30 @@ namespace resonances {
      *  @param[in] values         the wave function values
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedWaveFunction( std::vector< double > ratios,
                            std::vector< double > values,
                            std::vector< std::size_t > boundaries,
-                           std::vector< InterpolationType > interpolants ) :
+                           std::vector< InterpolationType > interpolants,
+                           bool curate = false ) :
       InterpolationTable( std::move( ratios ), std::move( values ),
-                          std::move( boundaries ), std::move( interpolants ) ) {}
+                          std::move( boundaries ), std::move( interpolants ),
+                          curate ) {}
 
     /**
-     *  @brief Constructor for a wave function using a single interpolation zone
+     *  @brief Constructor using a single interpolation zone
      *
      *  @param[in] ratios        the ratio values
      *  @param[in] values        the wave function values
      *  @param[in] interpolant   the interpolation type of the data (default lin-lin)
+     *  @param[in] curate        flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedWaveFunction( std::vector< double > ratios,
                            std::vector< double > values,
-                           InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      InterpolationTable( std::move( ratios ), std::move( values ), interpolant ) {}
+                           InterpolationType interpolant = InterpolationType::LinearLinear,
+                           bool curate = false ) :
+      InterpolationTable( std::move( ratios ), std::move( values ), interpolant, curate ) {}
 
     /* methods */
 
@@ -117,6 +122,8 @@ namespace resonances {
     using InterpolationTable::numberPoints;
     using InterpolationTable::numberRegions;
     using InterpolationTable::isLinearised;
+    using InterpolationTable::isCurated;
+    using InterpolationTable::curate;
 
     using InterpolationTable::operator();
 

@@ -12,6 +12,7 @@ from njoy.dryad.resonances import UnresolvedChannel
 from njoy.dryad.resonances import UnresolvedResonanceTable
 from njoy.dryad.resonances import UnresolvedSpinGroup
 from njoy.dryad.resonances import TabulatedAverageWidths, TabulatedLevelSpacing
+from njoy.dryad.resonances import TabulatedRadius
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
@@ -185,6 +186,35 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
         chunk = UnresolvedSpinGroup( [ proton, capture, inelastic, elastic ], table )
 
         verify_chunk( self, chunk )
+
+    def test_curation( self ) :
+
+        n = Particle( ParticleID.neutron(), 1.00866491574, 0.5, +1 )
+        cl35 = Particle( ParticleID( 'Cl35' ), 34.9688491981, 1.5, +1 )
+        elasticPair = ParticlePair( n, cl35 )
+
+        # the data is given explicitly
+        chunk = UnresolvedSpinGroup( [ UnresolvedChannel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                                                          elasticPair, elasticPair, 0., None,
+                                                          ChannelRadii( TabulatedRadius( [ 1e-5, 1., 1., 1., 2e+7 ],    # <-- discontinuity of 3 points
+                                                                                         [ 4., 4., 4.5, 5., 5. ] ) ) ) ],
+                                     UnresolvedResonanceTable( [ ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ) ],
+                                                               [ TabulatedAverageWidths( [ 1., 2., 2., 2., 4. ],    # <-- discontinuity of 3 points
+                                                                                         [ 0.11, 0.12, 0.13, 0.14, 0.15 ] ) ],
+                                                               TabulatedLevelSpacing( [ 1., 2., 2., 2., 4. ],    # <-- discontinuity of 3 points
+                                                                                      [ 10., 11., 12., 13., 14. ] ) ) )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.channels[0].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( False, chunk.resonance_table.widths[0].is_curated )
+        self.assertEqual( False, chunk.resonance_table.spacings.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.channels[0].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( True, chunk.resonance_table.widths[0].is_curated )
+        self.assertEqual( True, chunk.resonance_table.spacings.is_curated )
 
     def test_comparison( self ) :
 

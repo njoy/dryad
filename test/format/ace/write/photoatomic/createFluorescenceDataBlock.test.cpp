@@ -22,7 +22,7 @@ SCENARIO( "createFluorescenceDataBlock" ) {
 
       auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-001_H_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
@@ -41,7 +41,7 @@ SCENARIO( "createFluorescenceDataBlock" ) {
 
       auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-029_Cu_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
@@ -84,7 +84,7 @@ SCENARIO( "createFluorescenceDataBlock" ) {
 
       auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-032_Ge_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
@@ -131,7 +131,7 @@ SCENARIO( "createFluorescenceDataBlock" ) {
 
       auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-094_Pu_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 

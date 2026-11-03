@@ -22,14 +22,16 @@ namespace read {
    *  @param[in] filename    the ENDF file name
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
+   *  @param[in] curate      the flag to indicate whether or not tabulated data
+   *                         need to be curated
    */
   inline dryad::ProjectileTarget
-  createProjectileTargetFromFile( const std::string& filename, bool normalise ) {
+  createProjectileTargetFromFile( const std::string& filename, bool normalise, bool curate ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 
     auto tape = ENDFtk::tree::fromFile< ENDFtk::tree::Tape >( filename );
-    return createProjectileTarget( tape.materials().front(), normalise );
+    return createProjectileTarget( tape.materials().front(), normalise, curate );
   }
 
 } // read namespace

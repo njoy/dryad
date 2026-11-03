@@ -34,7 +34,7 @@ SCENARIO( "createCompoundSystem" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Pu238" );
-        auto chunk = endf::read::resonances::urr::caseB::createCompoundSystem( projectile, target, 200., 1e4, 0, std::nullopt, parameters );
+        auto chunk = endf::read::resonances::urr::caseB::createCompoundSystem( projectile, target, 200., 1e4, 0, std::nullopt, parameters, true );
 
         verifyChunkPu238( chunk );
       } // THEN

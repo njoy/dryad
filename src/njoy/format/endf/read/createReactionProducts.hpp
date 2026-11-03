@@ -50,6 +50,8 @@ namespace read {
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    *  @param[in] masses       the atomic mass values read from the ENDF file
    */
   inline std::vector< dryad::ReactionProduct >
@@ -57,6 +59,7 @@ namespace read {
                           const ENDFtk::tree::Material& material,
                           int mt,
                           bool normalise,
+                          bool curate,
                           std::map< dryad::id::ParticleID, double >& masses ) {
 
     std::vector< dryad::ReactionProduct > products;
@@ -88,7 +91,7 @@ namespace read {
           else if ( has_mf4 ) {
 
             auto section = material.section( 4, mt ).parse< 4 >();
-            products.emplace_back( createReactionProduct( reaction, section, normalise ) );
+            products.emplace_back( createReactionProduct( reaction, section, normalise, curate ) );
           }
           else {
 
@@ -150,7 +153,7 @@ namespace read {
             }
             else {
 
-              products.emplace_back( createReactionProduct( reaction, product, normalise ) );
+              products.emplace_back( createReactionProduct( reaction, product, normalise, curate ) );
 
               auto id = products.back().productIdentifier().groundState();
               if ( id != dryad::id::ParticleID::photon() ) {
@@ -221,7 +224,7 @@ namespace read {
         auto section = material.section( 26, mt ).parse< 26 >();
         for ( const auto& product : section.reactionProducts() ) {
 
-          products.emplace_back( createReactionProduct( reaction, product, mt, normalise ) );
+          products.emplace_back( createReactionProduct( reaction, product, mt, normalise, curate ) );
         }
       }
       else if ( material.hasSection( 27, mt ) ) {
@@ -235,13 +238,13 @@ namespace read {
             std::optional< ENDFtk::section::Type< 27 > > imaginary = std::nullopt;
             if ( material.hasSection( 27, 506 ) ) { real = material.section( 27, 506 ).parse< 27 >(); }
             if ( material.hasSection( 27, 505 ) ) { imaginary = material.section( 27, 505 ).parse< 27 >(); }
-            products.emplace_back( createReactionProduct( reaction, section, real, imaginary, mt, normalise ) );
+            products.emplace_back( createReactionProduct( reaction, section, real, imaginary, mt, normalise, curate ) );
             break;
           }
           case 504 : {
 
             auto section = material.section( 27, mt ).parse< 27 >();
-            products.emplace_back( createReactionProduct( reaction, section, mt, normalise ) );
+            products.emplace_back( createReactionProduct( reaction, section, mt, normalise, curate ) );
             break;
           }
           default : {

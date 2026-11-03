@@ -313,6 +313,12 @@ void wrapChannel( python::module& module ) {
     "----------\n"
     "    energy : float\n"
     "        the energy (given in eV)"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the channel data"
   );
 
   // add standard equality comparison definitions

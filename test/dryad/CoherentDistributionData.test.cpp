@@ -51,6 +51,54 @@ SCENARIO( "CoherentDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "coherent distribution data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      CoherentDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                      TabulatedScatteringFunction( { 0., 1., 1., 1., 2. },
+                                                                   { 2., 1.5, 1.4, 1.3, 1. } ),
+                                      TabulatedFormFactor( { 1., 2., 2., 2., 3. },
+                                                           { 1., 1.5, 1.6, 1.7, 2. } ),
+                                      TabulatedFormFactor( { 1., 2., 2., 2., 3. },
+                                                           { 0.5, 0.55, 0.56, 0.57, 0.6 } ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.scatteringFunction().isCurated() );
+        CHECK( false == chunk.realAnomalousFormFactor()->isCurated() );
+        CHECK( false == chunk.imaginaryAnomalousFormFactor()->isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.scatteringFunction().isCurated() );
+        CHECK( true == chunk.realAnomalousFormFactor()->isCurated() );
+        CHECK( true == chunk.imaginaryAnomalousFormFactor()->isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly without the anomalous form factor" ) {
+
+      CoherentDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                      TabulatedScatteringFunction( { 0., 1., 1., 1., 2. },
+                                                                   { 2., 1.5, 1.4, 1.3, 1. } ) );
+
+      THEN( "the tabulated data can be curated" ) {
+
+        CHECK( false == chunk.scatteringFunction().isCurated() );
+
+        chunk.curate();
+
+        CHECK( true == chunk.scatteringFunction().isCurated() );
+        CHECK( std::nullopt == chunk.realAnomalousFormFactor() );
+        CHECK( std::nullopt == chunk.imaginaryAnomalousFormFactor() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of CoherentDistributionData is given" ) {

@@ -43,7 +43,9 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
     "    interpolants : list of njoy.dryad.InterpolationType\n"
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "        the interpolation type (default lin-lin)"
+    "        the interpolation type (default lin-lin)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -53,21 +55,25 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "energy_transfers" ),
     python::arg( "functions" ),
     python::arg( "boundaries" ),
     python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the tabulated S(a,b) scattering kernel with multiple interpolation zones"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
-                  InterpolationType >(),
+                  InterpolationType,
+                  bool >(),
     python::arg( "energy_transfers" ),
     python::arg( "functions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the tabulated S(a,b) scattering kernel with a single interpolation zone"
   )
   .def_property_readonly(
@@ -130,6 +136,19 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
                  "----------\n"
                  "    tolerance : float, default " + tolerance.str() + "\n"
                  "        the linearisation tolerance" ).c_str()
+  )
+  .def(
+
+    "curate",
+    [] ( Component& self ) { self.curate(); },
+    "Curate the scattering functions"
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isCurated(); },
+    "Flag indicating whether or not the scattering kernel is curated"
   );
 
   // add standard equality comparison definitions

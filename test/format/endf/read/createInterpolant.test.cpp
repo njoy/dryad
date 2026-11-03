@@ -20,17 +20,18 @@ SCENARIO( "createInterpolant" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( InterpolationType::Histogram    == endf::read::createInterpolant( 1 ) );
-        CHECK( InterpolationType::LinearLinear == endf::read::createInterpolant( 2 ) );
-        CHECK( InterpolationType::LinearLog    == endf::read::createInterpolant( 3 ) );
-        CHECK( InterpolationType::LogLinear    == endf::read::createInterpolant( 4 ) );
-        CHECK( InterpolationType::LogLog       == endf::read::createInterpolant( 5 ) );
+        CHECK( InterpolationType::Histogram            == endf::read::createInterpolant( 1 ) );
+        CHECK( InterpolationType::LinearLinear         == endf::read::createInterpolant( 2 ) );
+        CHECK( InterpolationType::LinearLog            == endf::read::createInterpolant( 3 ) );
+        CHECK( InterpolationType::LogLinear            == endf::read::createInterpolant( 4 ) );
+        CHECK( InterpolationType::LogLog               == endf::read::createInterpolant( 5 ) );
+        CHECK( InterpolationType::CoulombPenetrability == endf::read::createInterpolant( 6 ) );
       } // THEN
 
       THEN( "an exception is thrown for an unknown or unsupported type" ) {
 
         CHECK_THROWS( endf::read::createInterpolant( 0 ) );
-        CHECK_THROWS( endf::read::createInterpolant( 6 ) );
+        CHECK_THROWS( endf::read::createInterpolant( 7 ) );
       } // THEN
     } // WHEN
   } // GIVEN

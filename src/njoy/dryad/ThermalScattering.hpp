@@ -234,6 +234,17 @@ namespace dryad {
     }
 
     /**
+     *  @brief Curate the thermal scattering data
+     */
+    void curate() {
+
+      if ( this->hasIncoherentInelasticScattering() ) {
+
+        this->incoherentInelasticScattering()->curate();
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

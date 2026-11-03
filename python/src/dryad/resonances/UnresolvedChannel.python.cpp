@@ -219,6 +219,12 @@ void wrapUnresolvedChannel( python::module& module ) {
     "----------\n"
     "    energy : float\n"
     "        the energy (given in eV)"
+  )
+  .def(
+
+    "curate",
+    [] ( Component& self ) { self.curate(); },
+    "Curate the channel data"
   );
 
   // add standard equality comparison definitions

@@ -155,6 +155,50 @@ class Test_TwoBodyDistributionData( unittest.TestCase ) :
         verify_tabulated_chunk( self, chunk1, True )
         verify_tabulated_chunk( self, chunk2, True )
 
+    def test_curation( self ) :
+
+        # the data is given explicitly using Legendre distributions
+        chunk = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                         angle = LegendreAngularDistributions(
+                                                   [ 1e-5, 1., 1., 1., 20. ],    # <-- discontinuity with 3 points
+                                                   [ LegendreAngularDistribution( [ 1.0 ] ),
+                                                     LegendreAngularDistribution( [ 1.0, 0.1 ] ),
+                                                     LegendreAngularDistribution( [ 1.0, 0.2 ] ),
+                                                     LegendreAngularDistribution( [ 1.0, 0.3 ] ),
+                                                     LegendreAngularDistribution( [ 1.0, 0.4 ] ) ] ) )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.angle.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.angle.is_curated )
+
+        # the data is given explicitly using tabulated distributions
+        chunk = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                         angle = TabulatedAngularDistributions(
+                                                   [ 1e-5, 20. ],
+                                                   [ TabulatedAngularDistribution( [ -1., 0., 0., 0., +1. ], [ 1., 1., 1.1, 0.9, 1. ] ),    # <-- discontinuity with 3 points
+                                                     TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.angle.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.angle.is_curated )
+
+        # the data is given explicitly using isotropic distributions
+        chunk = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                         angle = IsotropicAngularDistributions() )
+
+        # curating does not change anything
+        chunk.curate()
+
+        verify_isotropic_chunk( self, chunk )
+
     def test_setter_functions( self ) :
 
         chunk = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,

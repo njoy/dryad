@@ -45,7 +45,9 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     "        the interpolation type (default lin-lin)\n"
     "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "        all probability data (default: no normalisation)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -56,20 +58,28 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
                   std::vector< TabulatedEnergyDistribution >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType >,
+                  bool,
                   bool >(),
-    python::arg( "grid" ), python::arg( "distributions" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "grid" ),
+    python::arg( "distributions" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the energy distributions with multiple interpolation zones"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< TabulatedEnergyDistribution >,
-                  InterpolationType, bool >(),
-    python::arg( "grid" ), python::arg( "distributions" ),
+                  InterpolationType,
+                  bool,
+                  bool >(),
+    python::arg( "grid" ),
+    python::arg( "distributions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
+    python::arg( "curate" ) = false,
     "Initialise the energy distributions with a single interpolation zone"
   )
   .def_property_readonly(
@@ -109,6 +119,18 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     "      to avoid changing the full distribution (ie the normalisation moves\n"
     "      every distribution up or down by the same amount to avoid changing\n"
     "      the full distribution shape)."
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the distributions"
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    &Component::isCurated,
+    "Flag indicating whether or not the distributions are curated"
   )
   .def_property_readonly(
 

@@ -20,17 +20,20 @@ namespace read {
    *  will be transformed into a ThermalScattering instance.
    *
    *  @param[in] filename   the ENDF file name
+   *  @param[in] curate     the flag to indicate whether or not tabulated data
+   *                        need to be curated
    *  @param[in] upper      the optional upper energy limit (default: use the upper
    *                        energy limit of the evaluation)
    */
   inline dryad::ThermalScattering
   createThermalScatteringFromFile( const std::string& filename,
+                                   bool curate,
                                    const std::optional< double >& upper = std::nullopt ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 
     auto tape = ENDFtk::tree::fromFile< ENDFtk::tree::Tape >( filename );
-    return createThermalScattering( tape.materials().front(), std::move( upper ) );
+    return createThermalScattering( tape.materials().front(), curate, std::move( upper ) );
   }
 
 } // read namespace

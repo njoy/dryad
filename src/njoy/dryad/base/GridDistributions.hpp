@@ -42,28 +42,30 @@ namespace base {
     /**
      *  @brief Constructor
      *
-     *   @param[in] grid            the grid values
-     *   @param[in] distributions   the associated distributions
-     *   @param[in] boundaries      the boundaries of the interpolation regions
-     *   @param[in] interpolants    the interpolation types of the interpolation regions
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] boundaries      the boundaries of the interpolation regions
+     *  @param[in] interpolants    the interpolation types of the interpolation regions
      */
-    GridDistributions( std::vector< double > grid,
-                       std::vector< Distribution > distributions,
-                       std::vector< std::size_t > boundaries,
-                       std::vector< InterpolationType > interpolants ) :
+    GridDistributions(
+        std::vector< double > grid,
+        std::vector< Distribution > distributions,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants ) :
       Parent( std::move( grid ), std::move( distributions ),
               std::move( boundaries ), std::move( interpolants ) ) {}
 
     /**
      *  @brief Constructor for angular distributions using a single interpolation zone
      *
-     *   @param[in] grid            the grid values
-     *   @param[in] distributions   the associated distributions
-     *   @param[in] interpolant     the interpolation type of the data (default lin-lin)
+     *  @param[in] grid            the grid values
+     *  @param[in] distributions   the associated distributions
+     *  @param[in] interpolant     the interpolation type of the data (default lin-lin)
      */
-    GridDistributions( std::vector< double > grid,
-                       std::vector< Distribution > distributions,
-                       InterpolationType interpolant = InterpolationType::LinearLinear ) :
+    GridDistributions(
+        std::vector< double > grid,
+        std::vector< Distribution > distributions,
+        InterpolationType interpolant = InterpolationType::LinearLinear ) :
       Parent( std::move( grid ), std::move( distributions ), interpolant ) {}
 
     /* methods */
@@ -98,6 +100,9 @@ namespace base {
     using Parent::numberRegions;
 
     using Parent::operator();
+
+    using Parent::isCurated;
+    using Parent::curate;
   };
 
 } // base namespace

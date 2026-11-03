@@ -227,6 +227,12 @@ void wrapSpinGroup( python::module& module ) {
     "----------\n"
     "    energy : float\n"
     "        the energy value"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the spin group data"
   );
 
   // add standard comparison definitions

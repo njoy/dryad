@@ -76,33 +76,47 @@ namespace thermal {
     /**
      *  @brief Constructor
      *
-     *  @param[in] energyTransfers        the energy transfer values
-     *  @param[in] functions              the associated scattering functions
-     *  @param[in] boundaries             the boundaries of the interpolation regions
-     *  @param[in] interpolants           the interpolation types of the interpolation regions
+     *  @param[in] energyTransfers   the energy transfer values
+     *  @param[in] functions         the associated scattering functions
+     *  @param[in] boundaries        the boundaries of the interpolation regions
+     *  @param[in] interpolants      the interpolation types of the interpolation regions
+     *  @param[in] curate            flag to indicate whether or not to curate the data (default: false)
      */
-    TabulatedScatteringKernel( std::vector< double > energyTransfers,
-                               std::vector< TabulatedScatteringKernelFunction > functions,
-                               std::vector< std::size_t > boundaries,
-                               std::vector< InterpolationType > interpolants ) :
-        Parent( std::move( energyTransfers ), std::move( functions ),
-                std::move( boundaries ), std::move( interpolants ) ) {
+    TabulatedScatteringKernel(
+        std::vector< double > energyTransfers,
+        std::vector< TabulatedScatteringKernelFunction > functions,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants,
+        bool curate = false ) :
+      Parent( std::move( energyTransfers ), std::move( functions ),
+              std::move( boundaries ), std::move( interpolants ) ) {
 
+      if ( curate ) {
+
+        this->curate();
+      }
       this->retrieveMomentumTransferLimits();
     }
 
     /**
      *  @brief Constructor for scattering functions using a single interpolation zone
      *
-     *  @param[in] energyTransfers        the energy transfer values
-     *  @param[in] functions              the associated functions
-     *  @param[in] interpolant            the interpolation type of the data (default lin-lin)
+     *  @param[in] energyTransfers   the energy transfer values
+     *  @param[in] functions         the associated functions
+     *  @param[in] interpolant       the interpolation type of the data (default lin-lin)
+     *  @param[in] curate            flag to indicate whether or not to curate the data (default: false)
      */
-    TabulatedScatteringKernel( std::vector< double > energyTransfers,
-                               std::vector< TabulatedScatteringKernelFunction > functions,
-                               InterpolationType interpolant = InterpolationType::LinearLinear ) :
-        Parent( std::move( energyTransfers ), std::move( functions ), interpolant ) {
+    TabulatedScatteringKernel(
+        std::vector< double > energyTransfers,
+        std::vector< TabulatedScatteringKernelFunction > functions,
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool curate = false ) :
+      Parent( std::move( energyTransfers ), std::move( functions ), interpolant ) {
 
+      if ( curate ) {
+
+        this->curate();
+      }
       this->retrieveMomentumTransferLimits();
     }
 
@@ -133,7 +147,7 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return the associated distributions
+     *  @brief Return the associated scattering functions
      */
     std::vector< TabulatedScatteringKernelFunction >& functions() {
 
@@ -178,6 +192,28 @@ namespace thermal {
     using Parent::numberRegions;
 
     /**
+     *  @brief Return whether or not the scattering kernel is curated
+     */
+    bool isCurated() const {
+
+      return Parent::isCurated() &&
+             std::all_of( this->functions().begin(), this->functions().end(),
+                          [] ( auto&& function ) { return function.isCurated(); } );
+    }
+
+    /**
+     *  @brief Curate the scattering functions
+     */
+    void curate() {
+
+      Parent::curate();
+      for ( auto& function : this->functions() ) {
+
+        function.curate();
+      }
+    }
+
+    /**
      *  @brief Evaluate the scattering kernel for a given momentum and energy transfer value
      *
      *  @param[in] a   the momentum transfer value
@@ -201,9 +237,9 @@ namespace thermal {
                       std::back_inserter( functions ),
                       [tolerance]
                         ( auto&& function )
-                        { return function.linearise( std::move( tolerance ) ); } );
+                        { return function.linearise( tolerance ); } );
       return TabulatedScatteringKernel( this->energyTransfers(), std::move( functions ),
-                                        this->boundaries(), this->interpolants() );
+                                        this->boundaries(), this->interpolants(), true );
     }
 
     /**

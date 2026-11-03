@@ -22,9 +22,11 @@ namespace read {
    *  @brief Create a TabulatedScatteringFunction from a parsed ENDF section
    *
    *  @param[in] section   the parsed ENDF MF27 section
+   *  @param[in] curate    the flag to indicate whether or not tabulated data
+   *                       need to be curated
    */
   inline dryad::TabulatedScatteringFunction
-  createTabulatedScatteringFunction( const ENDFtk::section::Type< 27 >& section ) {
+  createTabulatedScatteringFunction( const ENDFtk::section::Type< 27 >& section, bool curate ) {
 
     if ( ( section.sectionNumber() != 502 ) && ( section.sectionNumber() != 504 ) ) {
 
@@ -42,7 +44,8 @@ namespace read {
       auto interpolants = createInterpolants( section.interpolants() );
       return dryad::TabulatedScatteringFunction(
                std::move( x ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               curate );
     }
     catch ( ... ) {
 
@@ -55,13 +58,15 @@ namespace read {
    *  @brief Create a TabulatedScatteringFunction from an unparsed ENDF section
    *
    *  @param[in] section   the unparsed ENDF MF27 section
+   *  @param[in] curate    the flag to indicate whether or not tabulated data
+   *                       need to be curated
    */
   inline dryad::TabulatedScatteringFunction
-  createTabulatedScatteringFunction( const ENDFtk::tree::Section& tree ) {
+  createTabulatedScatteringFunction( const ENDFtk::tree::Section& tree, bool curate ) {
 
     if ( tree.fileNumber() == 27 ) {
 
-      return createTabulatedScatteringFunction( tree.parse< 27 >() );
+      return createTabulatedScatteringFunction( tree.parse< 27 >(), curate );
     }
     else {
 

@@ -319,6 +319,17 @@ namespace thermal {
     }
 
     /**
+     *  @brief Curate the scattering kernels
+     */
+    void curate() {
+
+      for ( auto& kernel : this->scatteringKernels() ) {
+
+        kernel.curate();
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

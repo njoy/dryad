@@ -32,18 +32,18 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H1" );
         std::map< id::ParticleID, double > masses;
 
-        Reaction total1 = endf::read::createReaction( projectile, target, material, 1, false, masses );
-        Reaction total2 = endf::read::createReaction( projectile, target, material, 1, true, masses );
+        Reaction total1 = endf::read::createReaction( projectile, target, material, 1, false, true, masses );
+        Reaction total2 = endf::read::createReaction( projectile, target, material, 1, true, true, masses );
         neutron::h1::verifyTotalReaction( total1 );
         neutron::h1::verifyTotalReaction( total2 );
 
-        Reaction elastic1 = endf::read::createReaction( projectile, target, material, 2, false, masses );
-        Reaction elastic2 = endf::read::createReaction( projectile, target, material, 2, true, masses );
+        Reaction elastic1 = endf::read::createReaction( projectile, target, material, 2, false, true, masses );
+        Reaction elastic2 = endf::read::createReaction( projectile, target, material, 2, true, true, masses );
         neutron::h1::verifyElasticReaction( elastic1 );
         neutron::h1::verifyElasticReaction( elastic2 );
 
-        Reaction capture1 = endf::read::createReaction( projectile, target, material, 102, false, masses );
-        Reaction capture2 = endf::read::createReaction( projectile, target, material, 102, true, masses );
+        Reaction capture1 = endf::read::createReaction( projectile, target, material, 102, false, true, masses );
+        Reaction capture2 = endf::read::createReaction( projectile, target, material, 102, true, true, masses );
         neutron::h1::verifyCaptureReaction( capture1 );
         neutron::h1::verifyCaptureReaction( capture2 );
       } // THEN
@@ -64,28 +64,28 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "Np236_e2" );
         std::map< id::ParticleID, double > masses;
 
-        Reaction total1 = endf::read::createReaction( projectile, target, material, 1, false, masses );
-        Reaction total2 = endf::read::createReaction( projectile, target, material, 1, true, masses );
+        Reaction total1 = endf::read::createReaction( projectile, target, material, 1, false, true, masses );
+        Reaction total2 = endf::read::createReaction( projectile, target, material, 1, true, true, masses );
         neutron::np236m1::verifyTotalReaction( total1 );
         neutron::np236m1::verifyTotalReaction( total2 );
 
-        Reaction elastic1 = endf::read::createReaction( projectile, target, material, 2, false, masses );
-        Reaction elastic2 = endf::read::createReaction( projectile, target, material, 2, true, masses );
+        Reaction elastic1 = endf::read::createReaction( projectile, target, material, 2, false, true, masses );
+        Reaction elastic2 = endf::read::createReaction( projectile, target, material, 2, true, true, masses );
         neutron::np236m1::verifyElasticReaction( elastic1 );
         neutron::np236m1::verifyElasticReaction( elastic2 );
 
-        Reaction inelastic01 = endf::read::createReaction( projectile, target, material, 51, false, masses );
-        Reaction inelastic02 = endf::read::createReaction( projectile, target, material, 51, true, masses );
+        Reaction inelastic01 = endf::read::createReaction( projectile, target, material, 51, false, true, masses );
+        Reaction inelastic02 = endf::read::createReaction( projectile, target, material, 51, true, true, masses );
         neutron::np236m1::verifyInelasticReactionLevel0( inelastic01 );
         neutron::np236m1::verifyInelasticReactionLevel0( inelastic02 );
 
-        Reaction inelastic1 = endf::read::createReaction( projectile, target, material, 4, false, masses );
-        Reaction inelastic2 = endf::read::createReaction( projectile, target, material, 4, true, masses );
+        Reaction inelastic1 = endf::read::createReaction( projectile, target, material, 4, false, true, masses );
+        Reaction inelastic2 = endf::read::createReaction( projectile, target, material, 4, true, true, masses );
         neutron::np236m1::verifyInelasticReaction( inelastic1 );
         neutron::np236m1::verifyInelasticReaction( inelastic2 );
 
-        Reaction capture1 = endf::read::createReaction( projectile, target, material, 102, false, masses );
-        Reaction capture2 = endf::read::createReaction( projectile, target, material, 102, true, masses );
+        Reaction capture1 = endf::read::createReaction( projectile, target, material, 102, false, true, masses );
+        Reaction capture2 = endf::read::createReaction( projectile, target, material, 102, true, true, masses );
         neutron::np236m1::verifyCaptureReaction( capture1 );
         neutron::np236m1::verifyCaptureReaction( capture2 );
       } // THEN
@@ -106,38 +106,38 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H" );
         std::map< id::ParticleID, double > masses;
 
-        Reaction total1 = endf::read::createReaction( projectile, target, material, 501, false, masses );
-        Reaction total2 = endf::read::createReaction( projectile, target, material, 501, true, masses );
+        Reaction total1 = endf::read::createReaction( projectile, target, material, 501, false, true, masses );
+        Reaction total2 = endf::read::createReaction( projectile, target, material, 501, true, true, masses );
         electron::h0::verifyTotalReaction( total1 );
         electron::h0::verifyTotalReaction( total2 );
 
-        Reaction ionisation1 = endf::read::createReaction( projectile, target, material, 522, false, masses );
-        Reaction ionisation2 = endf::read::createReaction( projectile, target, material, 522, true, masses );
+        Reaction ionisation1 = endf::read::createReaction( projectile, target, material, 522, false, true, masses );
+        Reaction ionisation2 = endf::read::createReaction( projectile, target, material, 522, true, true, masses );
         electron::h0::verifyTotalIonisationReaction( ionisation1 );
         electron::h0::verifyTotalIonisationReaction( ionisation2 );
 
-        Reaction elastic1 = endf::read::createReaction( projectile, target, material, 525, false, masses );
-        Reaction elastic2 = endf::read::createReaction( projectile, target, material, 525, true, masses );
+        Reaction elastic1 = endf::read::createReaction( projectile, target, material, 525, false, true, masses );
+        Reaction elastic2 = endf::read::createReaction( projectile, target, material, 525, true, true, masses );
         electron::h0::verifyElasticReaction( elastic1, false );
         electron::h0::verifyElasticReaction( elastic2, true );
 
-        Reaction telastic1 = endf::read::createReaction( projectile, target, material, 526, false, masses );
-        Reaction telastic2 = endf::read::createReaction( projectile, target, material, 526, true, masses );
+        Reaction telastic1 = endf::read::createReaction( projectile, target, material, 526, false, true, masses );
+        Reaction telastic2 = endf::read::createReaction( projectile, target, material, 526, true, true, masses );
         electron::h0::verifyTotalElasticReaction( telastic1 );
         electron::h0::verifyTotalElasticReaction( telastic2 );
 
-        Reaction bremsstrahlung1 = endf::read::createReaction( projectile, target, material, 527, false, masses );
-        Reaction bremsstrahlung2 = endf::read::createReaction( projectile, target, material, 527, true, masses );
+        Reaction bremsstrahlung1 = endf::read::createReaction( projectile, target, material, 527, false, true, masses );
+        Reaction bremsstrahlung2 = endf::read::createReaction( projectile, target, material, 527, true, true, masses );
         electron::h0::verifyBremsstrahlungReaction( bremsstrahlung1, false );
         electron::h0::verifyBremsstrahlungReaction( bremsstrahlung2, true );
 
-        Reaction excitation1 = endf::read::createReaction( projectile, target, material, 528, false, masses );
-        Reaction excitation2 = endf::read::createReaction( projectile, target, material, 528, true, masses );
+        Reaction excitation1 = endf::read::createReaction( projectile, target, material, 528, false, true, masses );
+        Reaction excitation2 = endf::read::createReaction( projectile, target, material, 528, true, true, masses );
         electron::h0::verifyExcitationReaction( excitation1 );
         electron::h0::verifyExcitationReaction( excitation2 );
 
-        Reaction subionisation1 = endf::read::createReaction( projectile, target, material, 534, false, masses );
-        Reaction subionisation2 = endf::read::createReaction( projectile, target, material, 534, true, masses );
+        Reaction subionisation1 = endf::read::createReaction( projectile, target, material, 534, false, true, masses );
+        Reaction subionisation2 = endf::read::createReaction( projectile, target, material, 534, true, true, masses );
         electron::h0::verifySubshellIonisationReaction( subionisation1, false );
         electron::h0::verifySubshellIonisationReaction( subionisation2, true );
       } // THEN
@@ -158,43 +158,43 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H" );
         std::map< id::ParticleID, double > masses;
 
-        Reaction total1 = endf::read::createReaction( projectile, target, material, 501, false, masses );
-        Reaction total2 = endf::read::createReaction( projectile, target, material, 501, true, masses );
+        Reaction total1 = endf::read::createReaction( projectile, target, material, 501, false, true, masses );
+        Reaction total2 = endf::read::createReaction( projectile, target, material, 501, true, true, masses );
         photoatomic::h0::verifyTotalReaction( total1 );
         photoatomic::h0::verifyTotalReaction( total2 );
 
-        Reaction coherent1 = endf::read::createReaction( projectile, target, material, 502, false, masses );
-        Reaction coherent2 = endf::read::createReaction( projectile, target, material, 502, true, masses );
+        Reaction coherent1 = endf::read::createReaction( projectile, target, material, 502, false, true, masses );
+        Reaction coherent2 = endf::read::createReaction( projectile, target, material, 502, true, true, masses );
         photoatomic::h0::verifyCoherentReaction( coherent1 );
         photoatomic::h0::verifyCoherentReaction( coherent2 );
 
-        Reaction incoherent1 = endf::read::createReaction( projectile, target, material, 504, false, masses );
-        Reaction incoherent2 = endf::read::createReaction( projectile, target, material, 504, true, masses );
+        Reaction incoherent1 = endf::read::createReaction( projectile, target, material, 504, false, true, masses );
+        Reaction incoherent2 = endf::read::createReaction( projectile, target, material, 504, true, true, masses );
         photoatomic::h0::verifyIncoherentReaction( incoherent1 );
         photoatomic::h0::verifyIncoherentReaction( incoherent2 );
 
-        Reaction epairproduction1 = endf::read::createReaction( projectile, target, material, 515, false, masses );
-        Reaction epairproduction2 = endf::read::createReaction( projectile, target, material, 515, true, masses );
+        Reaction epairproduction1 = endf::read::createReaction( projectile, target, material, 515, false, true, masses );
+        Reaction epairproduction2 = endf::read::createReaction( projectile, target, material, 515, true, true, masses );
         photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction1 );
         photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction2 );
 
-        Reaction tpairproduction1 = endf::read::createReaction( projectile, target, material, 516, false, masses );
-        Reaction tpairproduction2 = endf::read::createReaction( projectile, target, material, 516, true, masses );
+        Reaction tpairproduction1 = endf::read::createReaction( projectile, target, material, 516, false, true, masses );
+        Reaction tpairproduction2 = endf::read::createReaction( projectile, target, material, 516, true, true, masses );
         photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction1 );
         photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction2 );
 
-        Reaction npairproduction1 = endf::read::createReaction( projectile, target, material, 517, true, masses );
-        Reaction npairproduction2 = endf::read::createReaction( projectile, target, material, 517, false, masses );
+        Reaction npairproduction1 = endf::read::createReaction( projectile, target, material, 517, true, true, masses );
+        Reaction npairproduction2 = endf::read::createReaction( projectile, target, material, 517, false, true, masses );
         photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction1 );
         photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction2 );
 
-        Reaction tionisation1 = endf::read::createReaction( projectile, target, material, 522, false, masses );
-        Reaction tionisation2 = endf::read::createReaction( projectile, target, material, 522, true, masses );
+        Reaction tionisation1 = endf::read::createReaction( projectile, target, material, 522, false, true, masses );
+        Reaction tionisation2 = endf::read::createReaction( projectile, target, material, 522, true, true, masses );
         photoatomic::h0::verifyTotalIonisationReaction( tionisation1 );
         photoatomic::h0::verifyTotalIonisationReaction( tionisation2 );
 
-        Reaction ionisation1 = endf::read::createReaction( projectile, target, material, 534, false, masses );
-        Reaction ionisation2 = endf::read::createReaction( projectile, target, material, 534, true, masses );
+        Reaction ionisation1 = endf::read::createReaction( projectile, target, material, 534, false, true, masses );
+        Reaction ionisation2 = endf::read::createReaction( projectile, target, material, 534, true, true, masses );
         photoatomic::h0::verifyIonisationReaction( ionisation1 );
         photoatomic::h0::verifyIonisationReaction( ionisation2 );
       } // THEN

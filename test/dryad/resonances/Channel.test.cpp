@@ -180,6 +180,47 @@ SCENARIO( "Channel" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "a Channel with tabulated data that is not curated" ) {
+
+    id::ChannelID identifier( "n,Cl35->n,Cl35{0,1,1+}" );
+    ParticlePair pair( Particle( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 ),
+                       Particle( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 ) );
+
+    WHEN( "the data is given explicitly" ) {
+
+      Channel chunk( identifier, pair, pair, 0., std::nullopt,
+                     ChannelRadii( TabulatedRadius( { 1e-5, 1., 1., 1., 2e+7 },  // <-- discontinuity with 3 points
+                                                    { 4., 4., 4.5, 5., 5. } ),
+                                   TabulatedRadius( { 1e-5, 2., 2., 2., 2e+7 },  // <-- discontinuity with 3 points
+                                                    { 3., 3., 3.5, 4., 4. } ),
+                                   TabulatedRadius( { 1e-5, 3., 3., 3., 2e+7 },  // <-- discontinuity with 3 points
+                                                    { 2., 2., 2.5, 3., 3. } ) ),
+                     true, Kinematics::NonRelativistic,
+                     TabulatedBackground( { 1e-5, 1., 1., 1., 2e+7 },
+                                          { { 1., 0. }, { 1., 0. }, { 2., 0. }, { 3., 0. }, { 3., 0. } } ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        const auto& radii = chunk.channelRadii();
+        CHECK( false == std::get< TabulatedBackground >( chunk.background().value() ).isCurated() );
+        CHECK( false == std::get< TabulatedRadius >( radii.penetrabilityRadius() ).isCurated() );
+        CHECK( false == std::get< TabulatedRadius >( radii.shiftFactorRadius().value() ).isCurated() );
+        CHECK( false == std::get< TabulatedRadius >( radii.phaseShiftRadius().value() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        const auto& radii = chunk.channelRadii();
+        CHECK( true == std::get< TabulatedBackground >( chunk.background().value() ).isCurated() );
+        CHECK( true == std::get< TabulatedRadius >( radii.penetrabilityRadius() ).isCurated() );
+        CHECK( true == std::get< TabulatedRadius >( radii.shiftFactorRadius().value() ).isCurated() );
+        CHECK( true == std::get< TabulatedRadius >( radii.phaseShiftRadius().value() ).isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of Channel are given" ) {

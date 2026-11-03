@@ -485,6 +485,14 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the background function (if defined)
+     */
+    std::optional< Background >& background() {
+
+      return this->background_;
+    }
+
+    /**
      *  @brief Set the background function
      *
      *  @param[in] background   the background function
@@ -498,6 +506,14 @@ namespace resonances {
      *  @brief Return the channel radii
      */
     const ChannelRadii& channelRadii() const {
+
+      return this->radii_;
+    }
+
+    /**
+     *  @brief Return the channel radii
+     */
+    ChannelRadii& channelRadii() {
 
       return this->radii_;
     }
@@ -796,6 +812,35 @@ namespace resonances {
       };
 
       return std::visit( visitor, this->phase_shift_difference_ );
+    }
+
+    /**
+     *  @brief Curate the channel data
+     */
+    void curate() {
+
+      if ( this->hasBackground() ) {
+
+        auto curate = tools::overload{
+
+          [] ( TabulatedBackground& background ) { background.curate(); },
+          [] ( auto& ) {}
+        };
+
+        std::visit( curate, this->background().value() );
+      }
+
+      this->channelRadii().curate();
+
+      auto curate = tools::overload{
+
+        [] ( TabulatedWaveFunction& function ) { function.curate(); },
+        [] ( auto& ) {}
+      };
+
+      std::visit( curate, this->penetrability_ );
+      std::visit( curate, this->shift_factor_ );
+      std::visit( curate, this->phase_shift_ );
     }
 
     /**

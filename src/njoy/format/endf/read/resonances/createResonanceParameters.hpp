@@ -28,11 +28,14 @@ namespace resonances {
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] section      the parsed MF2 MT151 section
+   *  @param[in] curate       the flag to indicate whether or not tabulated data
+   *                          need to be curated
    */
   inline std::optional< dryad::resonances::ResonanceParameters >
   createResonanceParameters( const dryad::id::ParticleID& projectile,
                              const dryad::id::ParticleID& target,
-                             const ENDFtk::section::Type< 2, 151 >& section ) {
+                             const ENDFtk::section::Type< 2, 151 >& section,
+                             bool curate ) {
 
     double lowerEnergy;
     double upperEnergy;
@@ -49,7 +52,7 @@ namespace resonances {
       std::optional< dryad::resonances::TabulatedRadius > nro = std::nullopt;
       if ( range.scatteringRadius().has_value() ) {
 
-        nro = createTabulatedRadius( range.scatteringRadius().value() );
+        nro = createTabulatedRadius( range.scatteringRadius().value(), curate );
       }
 
       if ( range.type() == 0 ) {
@@ -75,7 +78,7 @@ namespace resonances {
           case 7 : {
 
             decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::RMatrixLimited >( range.parameters() );
-            resolved.emplace_back( lrf7::createCompoundSystem( projectile, target, lower, upper, parameters ) );
+            resolved.emplace_back( lrf7::createCompoundSystem( projectile, target, lower, upper, parameters, curate ) );
             break;
           }
           default : {
@@ -98,13 +101,13 @@ namespace resonances {
 
           // Case B: energy-dependent-fission-width unresolved parameters (LRF = 1, LFW = 1)
           decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyDependentFissionWidths >( range.parameters() );
-          unresolved = urr::caseB::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters );
+          unresolved = urr::caseB::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters, curate );
         }
         else if ( range.representation() == 2 ) {
 
           // Case C: fully energy-dependent unresolved parameters (LRF = 2)
           decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::UnresolvedEnergyDependent >( range.parameters() );
-          unresolved = urr::caseC::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters );
+          unresolved = urr::caseC::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters, curate );
         }
         else {
 

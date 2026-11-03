@@ -28,8 +28,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTarget( material, false );
-        ProjectileTarget second = endf::read::createProjectileTarget( material, true );
+        ProjectileTarget first = endf::read::createProjectileTarget( material, false, true );
+        ProjectileTarget second = endf::read::createProjectileTarget( material, true, true );
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
@@ -44,8 +44,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTarget( material, false );
-        ProjectileTarget second = endf::read::createProjectileTarget( material, true );
+        ProjectileTarget first = endf::read::createProjectileTarget( material, false, true );
+        ProjectileTarget second = endf::read::createProjectileTarget( material, true, true );
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
@@ -60,8 +60,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTarget( material, false );
-        ProjectileTarget second = endf::read::createProjectileTarget( material, true );
+        ProjectileTarget first = endf::read::createProjectileTarget( material, false, true );
+        ProjectileTarget second = endf::read::createProjectileTarget( material, true, true );
 
         neutron::ne22::verifyNe22( first, false );
         neutron::ne22::verifyNe22( second, true );
@@ -79,8 +79,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTarget( material, false );
-        ProjectileTarget second = endf::read::createProjectileTarget( material, true );
+        ProjectileTarget first = endf::read::createProjectileTarget( material, false, true );
+        ProjectileTarget second = endf::read::createProjectileTarget( material, true, true );
 
         neutron::np236m1::verifyNp236m1( first, false );
         neutron::np236m1::verifyNp236m1( second, true );
@@ -98,8 +98,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTarget( material, false );
-        ProjectileTarget second = endf::read::createProjectileTarget( material, true );
+        ProjectileTarget first = endf::read::createProjectileTarget( material, false, true );
+        ProjectileTarget second = endf::read::createProjectileTarget( material, true, true );
 
         electron::h0::verifyH0( first, false );
         electron::h0::verifyH0( second, true );
@@ -117,8 +117,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = endf::read::createProjectileTarget( material, false );
-        ProjectileTarget second = endf::read::createProjectileTarget( material, true );
+        ProjectileTarget first = endf::read::createProjectileTarget( material, false, true );
+        ProjectileTarget second = endf::read::createProjectileTarget( material, true, true );
 
         photoatomic::h0::verifyH0( first, false );
         photoatomic::h0::verifyH0( second, true );

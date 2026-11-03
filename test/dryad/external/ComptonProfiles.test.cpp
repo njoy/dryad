@@ -44,11 +44,11 @@ SCENARIO( "ComptonProfiles" ) {
 
     THEN( "Biggs, Mendelsohn and Mann profiles can be added" ) {
 
-      auto chunk1 = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      auto chunk1 = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false, true );
       verifyProjectileTargetHasNoProfiles( chunk1 );
       external::ComptonProfiles::apply( chunk1, false );
 
-      auto chunk2 = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      auto chunk2 = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false, true );
       verifyProjectileTargetHasNoProfiles( chunk2 );
       external::ComptonProfiles::apply( chunk2, true );
 

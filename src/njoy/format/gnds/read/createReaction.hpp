@@ -2,6 +2,8 @@
 #define NJOY_FORMAT_GNDS_READ_CREATEREACTION
 
 // system includes
+#include <algorithm>
+#include <optional>
 #include <vector>
 
 // other includes
@@ -45,18 +47,23 @@ namespace read {
       dryad::id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
       Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
-      // cross section
-      auto section = reaction.child( "crossSection" );
-      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section, style );
-
       // Q values
       auto output = reaction.child( "outputChannel" );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = createQValue( output.child( "Q" ), style );
+      std::optional< double > threshold = std::nullopt;
       if ( mt == 515 || mt == 517 ) {
 
         reaction_q = -2. * constants::electron_rest_mass;
       }
+      if ( reaction_q >= 0 ) {
+
+        threshold = 0;
+      }
+
+      // cross section
+      auto section = reaction.child( "crossSection" );
+      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section, threshold, style );
 
       // reaction products
       std::vector< dryad::ReactionProduct > products;
@@ -126,7 +133,7 @@ namespace read {
 
       // cross section
       auto section = reaction.child( "crossSection" );
-      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section );
+      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section, std::nullopt, style );
 
       // return the reaction data
       return dryad::Reaction( std::move( id ), std::move( partials ), std::move( xs ), {} );

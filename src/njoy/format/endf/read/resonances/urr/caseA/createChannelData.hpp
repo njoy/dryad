@@ -53,10 +53,10 @@ namespace caseA {
 
     dryad::id::ChannelID elastic_id( dryad::id::ReactionID( projectile, target, 2 ), numbers );
     dryad::resonances::UnresolvedChannel elastic( elastic_id, incident, incident,
-                                                  0., std::nullopt, radii, 
+                                                  0., std::nullopt, radii,
                                                   true );
-    dryad::resonances::TabulatedAverageWidths elastic_widths( amun, 
-                                                              { lower, upper }, 
+    dryad::resonances::TabulatedAverageWidths elastic_widths( amun,
+                                                              { lower, upper },
                                                               { gn, gn } );
 
     unsigned int elastic_l = numbers.orbitalAngularMomentum();

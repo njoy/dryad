@@ -187,6 +187,10 @@ class CoherentDistributionData:
         """
     def __ne__(self, arg0: CoherentDistributionData) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distribution data
+        """
     @property
     def frame(self) -> ReferenceFrame:
         """
@@ -395,6 +399,10 @@ class IncoherentDistributionData:
         """
         Calculate the average outgoing energy
         """
+    def curate(self) -> None:
+        """
+        Curate the distribution data
+        """
     def normalise(self) -> None:
         """
         Normalise the Compton profiles
@@ -498,13 +506,16 @@ class InterpolationType:
       LogLinear : ln(y) is linear in x
     
       LogLog : ln(y) is linear in ln(x)
+    
+      CoulombPenetrability : Special Coulomb penetrability interpolation
     """
+    CoulombPenetrability: typing.ClassVar[InterpolationType]  # value = <InterpolationType.CoulombPenetrability: 6>
     Histogram: typing.ClassVar[InterpolationType]  # value = <InterpolationType.Histogram: 1>
     LinearLinear: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LinearLinear: 2>
     LinearLog: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LinearLog: 3>
     LogLinear: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LogLinear: 4>
     LogLog: typing.ClassVar[InterpolationType]  # value = <InterpolationType.LogLog: 5>
-    __members__: typing.ClassVar[dict[str, InterpolationType]]  # value = {'Histogram': <InterpolationType.Histogram: 1>, 'LinearLinear': <InterpolationType.LinearLinear: 2>, 'LinearLog': <InterpolationType.LinearLog: 3>, 'LogLinear': <InterpolationType.LogLinear: 4>, 'LogLog': <InterpolationType.LogLog: 5>}
+    __members__: typing.ClassVar[dict[str, InterpolationType]]  # value = {'Histogram': <InterpolationType.Histogram: 1>, 'LinearLinear': <InterpolationType.LinearLinear: 2>, 'LinearLog': <InterpolationType.LinearLog: 3>, 'LogLinear': <InterpolationType.LogLinear: 4>, 'LogLog': <InterpolationType.LogLog: 5>, 'CoulombPenetrability': <InterpolationType.CoulombPenetrability: 6>}
     def __eq__(self, other: typing.Any) -> bool:
         ...
     def __ge__(self, other: typing.Any) -> bool:
@@ -856,6 +867,8 @@ class LegendreAngularDistributions:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
@@ -876,17 +889,23 @@ class LegendreAngularDistributions:
     def __eq__(self, arg0: LegendreAngularDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distributions with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distributions with a single interpolation zone
         """
     def __ne__(self, arg0: LegendreAngularDistributions) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distributions
@@ -934,6 +953,11 @@ class LegendreAngularDistributions:
         The interpolation types of the interpolation regions
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
+        """
+    @property
     def number_points(self) -> int:
         """
         The number of points in the table
@@ -970,6 +994,8 @@ class MixedAngularDistribution:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
@@ -1003,19 +1029,23 @@ class MixedAngularDistribution:
         Initialise the angular distribution with Legendre coefficients
         """
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distribution with tabulated data with multiple
         interpolation zones
         """
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distribution with tabulated data with a single
         interpolation zone
         """
     def __ne__(self, arg0: MixedAngularDistribution) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distribution
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
@@ -1043,6 +1073,11 @@ class MixedAngularDistribution:
         The cumulative distribution function (cdf) of the distribution
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the distribution is curated
+        """
+    @property
     def pdf(self) -> IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
@@ -1066,6 +1101,8 @@ class MixedAngularDistributions:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
@@ -1086,17 +1123,21 @@ class MixedAngularDistributions:
     def __eq__(self, arg0: MixedAngularDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distributions with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[MixedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distributions with a single interpolation zone
         """
     def __ne__(self, arg0: MixedAngularDistributions) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distributions
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distributions
@@ -1142,6 +1183,11 @@ class MixedAngularDistributions:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the distributions are curated
         """
     @property
     def number_points(self) -> int:
@@ -2329,6 +2375,9 @@ class ProjectileTarget:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data
+        curate : bool, default False
+            option to indicate whether or not to curate
+            all tabulated data
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -2349,7 +2398,7 @@ class ProjectileTarget:
                 all probability data
         """
     @staticmethod
-    def from_endf_file(filename: str, normalise: bool = False) -> ProjectileTarget:
+    def from_endf_file(filename: str, normalise: bool = False, curate: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from an ENDF file
         
@@ -2363,6 +2412,9 @@ class ProjectileTarget:
             normalise : bool, default False
                 option to indicate whether or not to normalise
                 all probability data
+            curate : bool, default False
+                option to indicate whether or not to curate
+                all tabulated data
         """
     @staticmethod
     def from_gnds_file(filename: str, normalise: bool = False, style: njoy.format.gnds.StyleType = ...) -> ProjectileTarget:
@@ -2384,12 +2436,12 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the ProjectileTarget with documentation
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the ProjectileTarget without documentation
         """
@@ -2412,6 +2464,10 @@ class ProjectileTarget:
         ----------
             tolerance : float, default 0.001
                 the linearisation tolerance
+        """
+    def curate(self) -> None:
+        """
+        Curate the data
         """
     def has_reaction(self, id: id.ReactionID) -> bool:
         """
@@ -2602,6 +2658,10 @@ class Reaction:
         ----------
             tolerance : float, default 1e-08
                 the integration tolerance
+        """
+    def curate(self) -> None:
+        """
+        Curate the reaction data
         """
     @typing.overload
     def has_product(self, type: id.ParticleID) -> bool:
@@ -2831,6 +2891,10 @@ class ReactionProduct:
         """
     def __ne__(self, arg0: ReactionProduct) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the reaction product data
+        """
     def normalise(self) -> None:
         """
         Normalise the distribution data
@@ -2980,6 +3044,8 @@ class TabulatedAngularDistribution:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
@@ -2998,12 +3064,12 @@ class TabulatedAngularDistribution:
     def __eq__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distribution with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distribution with a single interpolation zone
         """
@@ -3019,6 +3085,10 @@ class TabulatedAngularDistribution:
         """
     def __ne__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distribution
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
@@ -3061,6 +3131,11 @@ class TabulatedAngularDistribution:
         The interpolation types of the interpolation regions
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the distribution is curated
+        """
+    @property
     def pdf(self) -> TabulatedAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
@@ -3089,6 +3164,8 @@ class TabulatedAngularDistributionFunction:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3121,12 +3198,12 @@ class TabulatedAngularDistributionFunction:
     def __imul__(self, arg0: float) -> TabulatedAngularDistributionFunction:
         ...
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the angular distribution function with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the angular distribution function with a single interpolation zone
         """
@@ -3158,6 +3235,12 @@ class TabulatedAngularDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedAngularDistributionFunction:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
         Linearise the table
@@ -3195,6 +3278,11 @@ class TabulatedAngularDistributionFunction:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -3250,6 +3338,8 @@ class TabulatedAngularDistributions:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
@@ -3270,17 +3360,21 @@ class TabulatedAngularDistributions:
     def __eq__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distributions with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the angular distributions with a single interpolation zone
         """
     def __ne__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distributions
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distributions
@@ -3328,6 +3422,11 @@ class TabulatedAngularDistributions:
         The interpolation types of the interpolation regions
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the distributions are curated
+        """
+    @property
     def number_points(self) -> int:
         """
         The number of points in the table
@@ -3353,6 +3452,8 @@ class TabulatedAverageCosine:
             the interpolation types of the interpolation regions
         interpolant : InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3385,12 +3486,12 @@ class TabulatedAverageCosine:
     def __imul__(self, arg0: float) -> TabulatedAverageCosine:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the average cosine table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the average cosine table with single interpolation type
         """
@@ -3422,6 +3523,12 @@ class TabulatedAverageCosine:
         ...
     def __truediv__(self, arg0: float) -> TabulatedAverageCosine:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedAverageCosine:
         """
         Linearise the table
@@ -3445,6 +3552,11 @@ class TabulatedAverageCosine:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -3492,6 +3604,8 @@ class TabulatedAverageEnergy:
             the interpolation types of the interpolation regions
         interpolant : InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3524,12 +3638,12 @@ class TabulatedAverageEnergy:
     def __imul__(self, arg0: float) -> TabulatedAverageEnergy:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the average reaction product energy table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the average reaction product energy table with a single interpolation region
         """
@@ -3561,6 +3675,12 @@ class TabulatedAverageEnergy:
         ...
     def __truediv__(self, arg0: float) -> TabulatedAverageEnergy:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedAverageEnergy:
         """
         Linearise the table
@@ -3584,6 +3704,11 @@ class TabulatedAverageEnergy:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -3637,9 +3762,15 @@ class TabulatedComptonProfile:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
             the interpolation type (default lin-lin)
+        pdf : njoy.dryad.TabulatedComptonProfileFunction
+            the probability distribution function
+        cdf : njoy.dryad.TabulatedComptonProfileFunction
+            the cumulative distribution function
         normalise : bool, default false
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default false
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, momentum: float) -> float:
@@ -3658,17 +3789,31 @@ class TabulatedComptonProfile:
     def __eq__(self, arg0: TabulatedComptonProfile) -> bool:
         ...
     @typing.overload
-    def __init__(self, subshell_identifier: id.ElectronSubshellID, momentum: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, subshell_identifier: id.ElectronSubshellID, momentum: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the compton profile with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, subshell_identifier: id.ElectronSubshellID, momentum: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, subshell_identifier: id.ElectronSubshellID, momentum: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the compton profile with a single interpolation zone
         """
+    @typing.overload
+    def __init__(self, subshell_identifier: id.ElectronSubshellID, pdf: TabulatedComptonProfileFunction, normalise: bool = False) -> None:
+        """
+        Initialise the compton profile using a pdf
+        """
+    @typing.overload
+    def __init__(self, subshell_identifier: id.ElectronSubshellID, pdf: TabulatedComptonProfileFunction, cdf: TabulatedComptonProfileFunction) -> None:
+        """
+        Initialise the compton profile using a pdf and cdf
+        """
     def __ne__(self, arg0: TabulatedComptonProfile) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distribution
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedComptonProfile:
         """
         Linearise the distributions
@@ -3704,6 +3849,11 @@ class TabulatedComptonProfile:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the distribution is curated
         """
     @property
     def momentum(self) -> list[float]:
@@ -3744,6 +3894,8 @@ class TabulatedComptonProfileFunction:
         normalise : bool, default false
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3776,12 +3928,12 @@ class TabulatedComptonProfileFunction:
     def __imul__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
     @typing.overload
-    def __init__(self, momentum: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, momentum: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the compton profile function with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, momentum: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, momentum: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the compton profile function with a single interpolation zone
         """
@@ -3813,6 +3965,12 @@ class TabulatedComptonProfileFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedComptonProfileFunction:
         """
         Linearise the table
@@ -3847,6 +4005,11 @@ class TabulatedComptonProfileFunction:
         The interpolation types of the interpolation regions
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
+        """
+    @property
     def is_linearised(self) -> bool:
         """
         Flag indicating whether or not the table is linearised
@@ -3855,6 +4018,11 @@ class TabulatedComptonProfileFunction:
     def lower_momentum_limit(self) -> float:
         """
         The lower momentum limit
+        """
+    @property
+    def mean(self) -> float:
+        """
+        The mean value of the Compton profile function over its domain
         """
     @property
     def momentum(self) -> list[float]:
@@ -3897,6 +4065,11 @@ class TabulatedCrossSection:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
             the interpolation type (default lin-lin)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
+        threshold : float, optional
+            the optional threshold value (only used for Coulomb penetrability
+            interpolation, default: none)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3929,12 +4102,12 @@ class TabulatedCrossSection:
     def __imul__(self, arg0: float) -> TabulatedCrossSection:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False, threshold: float | None = None) -> None:
         """
         Initialise the cross section table with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False, threshold: float | None = None) -> None:
         """
         Initialise the cross section table with a single interpolation zone
         """
@@ -3966,6 +4139,12 @@ class TabulatedCrossSection:
         ...
     def __truediv__(self, arg0: float) -> TabulatedCrossSection:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedCrossSection:
         """
         Linearise the table
@@ -3991,6 +4170,11 @@ class TabulatedCrossSection:
         The interpolation types of the interpolation regions
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
+        """
+    @property
     def is_linearised(self) -> bool:
         """
         Flag indicating whether or not the table is linearised
@@ -4009,6 +4193,11 @@ class TabulatedCrossSection:
     def number_regions(self) -> int:
         """
         The number of interpolation regions in the table
+        """
+    @property
+    def threshold(self) -> float | None:
+        """
+        The optional threshold value (required for Coulomb penetrability interpolation)
         """
     @property
     def upper_energy_limit(self) -> float:
@@ -4043,6 +4232,8 @@ class TabulatedEnergyDistribution:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, energy: float) -> float:
@@ -4061,12 +4252,12 @@ class TabulatedEnergyDistribution:
     def __eq__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the energy distribution with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the energy distribution with a single interpolation zone
         """
@@ -4082,6 +4273,10 @@ class TabulatedEnergyDistribution:
         """
     def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distribution
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedEnergyDistribution:
         """
         Linearise the distribution
@@ -4124,6 +4319,11 @@ class TabulatedEnergyDistribution:
         The interpolation types of the interpolation regions
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the distribution is curated
+        """
+    @property
     def pdf(self) -> TabulatedEnergyDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
@@ -4149,6 +4349,8 @@ class TabulatedEnergyDistributionFunction:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
             the interpolation type (default lin-lin)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -4181,12 +4383,12 @@ class TabulatedEnergyDistributionFunction:
     def __imul__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the energy distribution function with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the energy distribution function with a single interpolation zone
         """
@@ -4218,6 +4420,12 @@ class TabulatedEnergyDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedEnergyDistributionFunction:
         """
         Linearise the table
@@ -4255,6 +4463,11 @@ class TabulatedEnergyDistributionFunction:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -4310,6 +4523,8 @@ class TabulatedEnergyDistributions:
         normalise : bool, default False
             option to indicate whether or not to normalise
             all probability data (default: no normalisation)
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, energy: float) -> float:
@@ -4330,17 +4545,21 @@ class TabulatedEnergyDistributions:
     def __eq__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the energy distributions with multiple interpolation zones
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ..., normalise: bool = False, curate: bool = False) -> None:
         """
         Initialise the energy distributions with a single interpolation zone
         """
     def __ne__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distributions
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedEnergyDistributions:
         """
         Linearise the distributions
@@ -4388,6 +4607,11 @@ class TabulatedEnergyDistributions:
         The interpolation types of the interpolation regions
         """
     @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the distributions are curated
+        """
+    @property
     def number_points(self) -> int:
         """
         The number of points in the table
@@ -4413,6 +4637,8 @@ class TabulatedFormFactor:
             the interpolation types of the interpolation regions
         interpolant : InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -4445,12 +4671,12 @@ class TabulatedFormFactor:
     def __imul__(self, arg0: float) -> TabulatedFormFactor:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the form factor table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the form factor table with a single interpolation region
         """
@@ -4482,6 +4708,12 @@ class TabulatedFormFactor:
         ...
     def __truediv__(self, arg0: float) -> TabulatedFormFactor:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedFormFactor:
         """
         Linearise the table
@@ -4505,6 +4737,11 @@ class TabulatedFormFactor:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -4552,6 +4789,8 @@ class TabulatedMultiplicity:
             the interpolation types of the interpolation regions
         interpolant : InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -4584,12 +4823,12 @@ class TabulatedMultiplicity:
     def __imul__(self, arg0: float) -> TabulatedMultiplicity:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the multiplicity table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the multiplicity table with single interpolation type
         """
@@ -4621,6 +4860,12 @@ class TabulatedMultiplicity:
         ...
     def __truediv__(self, arg0: float) -> TabulatedMultiplicity:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedMultiplicity:
         """
         Linearise the table
@@ -4644,6 +4889,11 @@ class TabulatedMultiplicity:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -4691,6 +4941,8 @@ class TabulatedScatteringFunction:
             the interpolation types of the interpolation regions
         interpolant : InterpolationType, default=LinearLinear
             the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -4736,12 +4988,12 @@ class TabulatedScatteringFunction:
     def __imul__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
     @typing.overload
-    def __init__(self, inverse_lengths: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, inverse_lengths: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the scattering function table with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, inverse_lengths: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, inverse_lengths: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the scattering function table with single interpolation type
         """
@@ -4773,6 +5025,12 @@ class TabulatedScatteringFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
     def inverse_length(self, energy: float, cosine: float) -> float:
         """
         Calculate the inverse length value associated to an energy,cosine pair
@@ -4807,6 +5065,11 @@ class TabulatedScatteringFunction:
     def inverse_lengths(self) -> list[float]:
         """
         The inverse length values
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def is_linearised(self) -> bool:
@@ -4855,7 +5118,7 @@ class ThermalScattering:
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
-    def from_endf_file(filename: str, upper: float | None = None) -> ThermalScattering:
+    def from_endf_file(filename: str, upper: float | None = None, curate: bool = False) -> ThermalScattering:
         """
         Create ThermalScattering data from an ENDF file
         
@@ -4869,6 +5132,9 @@ class ThermalScattering:
             upper : float, default None
                 the upper energy limit, the upper energy limit of the evaluation is used
                 if no value is defined
+            curate : bool, default False
+                option to indicate whether or not to curate
+                all tabulated data
         """
     @staticmethod
     def from_gnds_file(filename: str, upper: float | None = None, style: njoy.format.gnds.StyleType = ...) -> ThermalScattering:
@@ -4903,6 +5169,10 @@ class ThermalScattering:
         """
     def __ne__(self, arg0: ThermalScattering) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the thermal scattering data
+        """
     def to_endf_file(self, za: int, mat: int, filename: str) -> None:
         """
         Write the ThermalScattering data to an ENDF file
@@ -5009,6 +5279,10 @@ class TwoBodyDistributionData:
         """
     def __ne__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distribution data
+        """
     def normalise(self) -> None:
         """
         Normalise the distribution data
@@ -5073,6 +5347,10 @@ class UncorrelatedDistributionData:
         """
     def __ne__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the distribution data
+        """
     def normalise(self) -> None:
         """
         Normalise the distribution data
@@ -5171,6 +5449,8 @@ class UniformAngularDistributions:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default LinearLinear
             the interpolation type
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UniformAngularDistributions:
@@ -5180,17 +5460,21 @@ class UniformAngularDistributions:
     def __eq__(self, arg0: UniformAngularDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the angular distributions with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the angular distributions with a single interpolation region
         """
     def __ne__(self, arg0: UniformAngularDistributions) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the data
+        """
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
         """
@@ -5215,6 +5499,11 @@ class UniformAngularDistributions:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def number_points(self) -> int:
@@ -5336,6 +5625,8 @@ class UniformEnergyDistributions:
             the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default LinearLinear
             the interpolation type
+        curate : bool, default False
+            flag to indicate whether or not to curate the data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> UniformEnergyDistributions:
@@ -5345,17 +5636,21 @@ class UniformEnergyDistributions:
     def __eq__(self, arg0: UniformEnergyDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
         """
         Initialise the energy distributions with multiple interpolation regions
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], interpolant: InterpolationType = ..., curate: bool = False) -> None:
         """
         Initialise the energy distributions with a single interpolation region
         """
     def __ne__(self, arg0: UniformEnergyDistributions) -> bool:
         ...
+    def curate(self) -> None:
+        """
+        Curate the data
+        """
     @property
     def average_energies(self) -> TabulatedAverageEnergy:
         """
@@ -5380,6 +5675,11 @@ class UniformEnergyDistributions:
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
         """
     @property
     def number_points(self) -> int:

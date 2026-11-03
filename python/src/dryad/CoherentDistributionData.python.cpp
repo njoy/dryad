@@ -105,6 +105,12 @@ void wrapCoherentDistributionData( python::module& module ) {
     python::overload_cast<>( &Component::imaginaryAnomalousFormFactor, python::const_ ),
     python::overload_cast< std::optional< TabulatedFormFactor > >( &Component::imaginaryAnomalousFormFactor ),
     "The imaginary part of the anomalous form factor"
+  )
+  .def(
+
+    "curate",
+    &Component::curate,
+    "Curate the distribution data"
   );
 
   // add standard equality comparison definitions

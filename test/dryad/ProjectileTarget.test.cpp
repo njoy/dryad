@@ -75,6 +75,94 @@ SCENARIO( "ProjectileTarget" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "projectile target data with tabulated data that is not curated" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      id::ParticleID n = id::ParticleID::neutron();
+      id::ParticleID g = id::ParticleID::photon();
+      id::ParticleID fe56( "Fe56" );
+
+      ProjectileTarget chunk( Documentation(), n, fe56, InteractionType::Nuclear,
+                              { Reaction( id::ReactionID( n, fe56, id::ReactionType::elastic( n ) ),
+                                          TabulatedCrossSection( { 1., 2., 2., 2., 4. },                                // <-- discontinuity with 3 points
+                                                                 { 4., 3., 4., 5., 2. } ),
+                                          { ReactionProduct( n, TabulatedMultiplicity( { 1., 2., 2., 2., 4. },          // <-- discontinuity with 3 points
+                                                                                       { 1., 1., 2., 1., 1. } ) ) } ),
+                                Reaction( id::ReactionID( n, fe56, id::ReactionType( 102 ) ),
+                                          TabulatedCrossSection( { 1., 3., 3., 3., 4. },                                // <-- discontinuity with 3 points
+                                                                 { 4., 3., 4., 5., 2. } ),
+                                          { ReactionProduct( g, TabulatedMultiplicity( { 1., 3., 3., 3., 4. },          // <-- discontinuity with 3 points
+                                                                                       { 1., 2., 3., 4., 5. } ) ) } ) } );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == chunk.reactions()[0].crossSection().isCurated() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.reactions()[0].products()[0].multiplicity() ).isCurated() );
+        CHECK( false == chunk.reactions()[1].crossSection().isCurated() );
+        CHECK( false == std::get< TabulatedMultiplicity >( chunk.reactions()[1].products()[0].multiplicity() ).isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == chunk.reactions()[0].crossSection().isCurated() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.reactions()[0].products()[0].multiplicity() ).isCurated() );
+        CHECK( true == chunk.reactions()[1].crossSection().isCurated() );
+        CHECK( true == std::get< TabulatedMultiplicity >( chunk.reactions()[1].products()[0].multiplicity() ).isCurated() );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly with resonance parameters" ) {
+
+      using namespace resonances;
+
+      id::ParticleID n = id::ParticleID::neutron();
+      id::ParticleID cl35( "Cl35" );
+      ParticlePair photon_pair( Particle( id::ParticleID::photon(), 0, 1, +1 ),
+                                Particle( id::ParticleID( "Cl36[all]" ), 35.65932 * njoy::constants::neutron_mass, 0, +1 ) );
+      ParticlePair neutron_pair( Particle( n, njoy::constants::neutron_mass, 0.5, +1 ),
+                                 Particle( cl35, 34.66845 * njoy::constants::neutron_mass, 1.5, +1 ) );
+
+      ResonanceParameters resonances(
+        { CompoundSystem( 1e-5, 1e+4,
+                          { SpinGroup( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                                           neutron_pair, photon_pair, 0., std::nullopt,
+                                           ChannelRadii( 0. ), false },
+                                         { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                                           neutron_pair, neutron_pair, 0., std::nullopt,
+                                           ChannelRadii( TabulatedRadius( { 1e-5, 1., 1., 1., 2e+7 },  // <-- discontinuity with 3 points
+                                                                          { 4., 4., 4.5, 5., 5. } ) ) } },
+                                       { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                                           id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                                         { 1. }, { { 2. }, { 3. } } },
+                                       Formalism::ReichMoore, BoundaryCondition::ShiftFactor ) } ) } );
+
+      ProjectileTarget chunk( Documentation(), n, cl35, InteractionType::Nuclear,
+                              { Reaction( id::ReactionID( n, cl35, id::ReactionType::elastic( n ) ),
+                                          TabulatedCrossSection( { 1., 2., 2., 2., 4. },               // <-- discontinuity with 3 points
+                                                                 { 4., 3., 4., 5., 2. } ) ) },
+                              std::nullopt, std::move( resonances ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        const auto& channel = chunk.resonances()->resolved()[0].spinGroups()[0].channels()[1];
+        CHECK( false == std::get< TabulatedRadius >( channel.channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( false == chunk.reactions()[0].crossSection().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        const auto& channel = chunk.resonances()->resolved()[0].spinGroups()[0].channels()[1];
+        CHECK( true == std::get< TabulatedRadius >( channel.channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( true == chunk.reactions()[0].crossSection().isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "setter functions" ) {
 
     WHEN( "an instance of ProjectileTarget is given" ) {

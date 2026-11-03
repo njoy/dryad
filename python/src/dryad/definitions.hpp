@@ -191,6 +191,7 @@ void addStandardInterpolationTableDefinitions( PythonClass& component ) {
  *    - linearise
  *    - boundaries, interpolants
  *    - number_points, number_regions
+ *    - curate, is_curated
  *    - is_linearised
  *    - arithmetic operators
  *
@@ -221,6 +222,20 @@ void addStandardTabulatedDefinitions( PythonClass& component ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.isLinearised(); },
     "Flag indicating whether or not the table is linearised"
+  )
+  .def(
+
+    "curate",
+    [] ( Component& self ) { self.curate(); },
+    "Curate the table\n\n"
+    "This removes extraneous interior points in discontinuities in the data."
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isCurated(); },
+    "Flag indicating whether or not the data is curated"
   );
 
   // add math operators

@@ -123,6 +123,14 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the penetrability radius
+     */
+    Radius& penetrabilityRadius() {
+
+      return this->penetrability_;
+    }
+
+    /**
      *  @brief Return the shift factor radius
      */
     const std::optional< Radius >& shiftFactorRadius() const {
@@ -131,9 +139,25 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the shift factor radius
+     */
+    std::optional< Radius >& shiftFactorRadius() {
+
+      return this->shift_factor_;
+    }
+
+    /**
      *  @brief Return the phase shift radius
      */
     const std::optional< Radius >& phaseShiftRadius() const {
+
+      return this->phase_shift_;
+    }
+
+    /**
+     *  @brief Return the phase shift radius
+     */
+    std::optional< Radius >& phaseShiftRadius() {
 
       return this->phase_shift_;
     }
@@ -200,6 +224,28 @@ namespace resonances {
       return this->hasPhaseShiftRadius()
                ? radius( energy, this->phaseShiftRadius().value() )
                : this->calculatePenetrabilityRadius( energy );
+    }
+
+    /**
+     *  @brief Curate the channel radii
+     */
+    void curate() {
+
+      auto curate = tools::overload{
+
+        [] ( double ) {},
+        [] ( TabulatedRadius& radius ) { radius.curate(); }
+      };
+
+      std::visit( curate, this->penetrabilityRadius() );
+      if ( this->hasShiftFactorRadius() ) {
+
+        std::visit( curate, this->shiftFactorRadius().value() );
+      }
+      if ( this->hasPhaseShiftRadius() ) {
+
+        std::visit( curate, this->phaseShiftRadius().value() );
+      }
     }
 
     /**

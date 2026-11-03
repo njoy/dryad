@@ -112,6 +112,43 @@ class Test_CoherentDistributionData( unittest.TestCase ) :
 
         verify_chunk_with_anomalous_form_factor( self, chunk )
 
+    def test_curation( self ) :
+
+        # the data is given explicitly
+        chunk = CoherentDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                          scattering = TabulatedScatteringFunction( [ 0., 1., 1., 1., 2. ],
+                                                                                    [ 2., 1.5, 1.4, 1.3, 1. ] ),
+                                          real = TabulatedFormFactor( [ 1., 2., 2., 2., 3. ],
+                                                                      [ 1., 1.5, 1.6, 1.7, 2. ] ),
+                                          imaginary = TabulatedFormFactor( [ 1., 2., 2., 2., 3. ],
+                                                                           [ 0.5, 0.55, 0.56, 0.57, 0.6 ] ) )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.scattering_function.is_curated )
+        self.assertEqual( False, chunk.real_anomalous_form_factor.is_curated )
+        self.assertEqual( False, chunk.imaginary_anomalous_form_factor.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.scattering_function.is_curated )
+        self.assertEqual( True, chunk.real_anomalous_form_factor.is_curated )
+        self.assertEqual( True, chunk.imaginary_anomalous_form_factor.is_curated )
+
+        # the data is given explicitly without the anomalous form factor
+        chunk = CoherentDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                          scattering = TabulatedScatteringFunction( [ 0., 1., 1., 1., 2. ],
+                                                                                    [ 2., 1.5, 1.4, 1.3, 1. ] ) )
+
+        # the tabulated data can be curated
+        self.assertEqual( False, chunk.scattering_function.is_curated )
+
+        chunk.curate()
+
+        self.assertEqual( True, chunk.scattering_function.is_curated )
+        self.assertEqual( None, chunk.real_anomalous_form_factor )
+        self.assertEqual( None, chunk.imaginary_anomalous_form_factor )
+
     def test_setter_functions( self ) :
 
         chunk = CoherentDistributionData( frame = ReferenceFrame.CentreOfMass,

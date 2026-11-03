@@ -19,7 +19,7 @@ SCENARIO( "createIncoherentScatteringFunctionBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true, true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 

@@ -22,9 +22,11 @@ namespace read {
    *  @brief Create a TabulatedFormFactor from a parsed ENDF section
    *
    *  @param[in] section   the parsed ENDF form factors
+   *  @param[in] curate    the flag to indicate whether or not tabulated data
+   *                       need to be curated
    */
   inline dryad::TabulatedFormFactor
-  createTabulatedFormFactor( const ENDFtk::section::Type< 27 >& section ) {
+  createTabulatedFormFactor( const ENDFtk::section::Type< 27 >& section, bool curate ) {
 
     if ( ( section.sectionNumber() != 505 ) && ( section.sectionNumber() != 506 ) ) {
 
@@ -42,7 +44,8 @@ namespace read {
       auto interpolants = createInterpolants( section.interpolants() );
       return dryad::TabulatedFormFactor(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               curate );
     }
     catch ( ... ) {
 
@@ -55,13 +58,15 @@ namespace read {
    *  @brief Create a TabulatedFormFactor from an unparsed ENDF section
    *
    *  @param[in] section   the unparsed ENDF form factors
+   *  @param[in] curate    the flag to indicate whether or not tabulated data
+   *                       need to be curated
    */
   dryad::TabulatedFormFactor
-  createTabulatedFormFactor( const ENDFtk::tree::Section& tree ) {
+  createTabulatedFormFactor( const ENDFtk::tree::Section& tree, bool curate ) {
 
     if ( tree.fileNumber() == 27 ) {
 
-      return createTabulatedFormFactor( tree.parse< 27 >() );
+      return createTabulatedFormFactor( tree.parse< 27 >(), curate );
     }
     else {
 

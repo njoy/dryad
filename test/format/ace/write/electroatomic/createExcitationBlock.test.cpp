@@ -19,7 +19,7 @@ SCENARIO( "createExcitationBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", true );
+      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", true, true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
 

@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_TABULATEDENERGYDISTRIBUTIONS
 
 // system includes
+#include <algorithm>
 
 // other includes
 #include "njoy/dryad/base/GridDistributions.hpp"
@@ -45,15 +46,22 @@ namespace dryad {
      *  @param[in] interpolants    the interpolation types of the interpolation regions
      *  @param[in] normalise       option to indicate whether or not to normalise
      *                             all probability data (default: no normalisation)
+     *  @param[in] curate          flag to indicate whether or not to curate the data (default: false)
      */
-    TabulatedEnergyDistributions( std::vector< double > grid,
-                                  std::vector< TabulatedEnergyDistribution > distributions,
-                                  std::vector< std::size_t > boundaries,
-                                  std::vector< InterpolationType > interpolants,
-                                  bool normalise = false ) :
+    TabulatedEnergyDistributions(
+        std::vector< double > grid,
+        std::vector< TabulatedEnergyDistribution > distributions,
+        std::vector< std::size_t > boundaries,
+        std::vector< InterpolationType > interpolants,
+        bool normalise = false,
+        bool curate = false ) :
       Parent( std::move( grid ), std::move( distributions ),
               std::move( boundaries ), std::move( interpolants ) ) {
 
+      if ( curate ) {
+
+        this->curate();
+      }
       if ( normalise ) {
 
         this->normalise();
@@ -68,13 +76,20 @@ namespace dryad {
      *  @param[in] interpolant     the interpolation type of the data (default lin-lin)
      *  @param[in] normalise       option to indicate whether or not to normalise
      *                             all probability data (default: no normalisation)
+     *  @param[in] curate          flag to indicate whether or not to curate the data (default: false)
      */
-    TabulatedEnergyDistributions( std::vector< double > grid,
-                                  std::vector< TabulatedEnergyDistribution > distributions,
-                                  InterpolationType interpolant = InterpolationType::LinearLinear,
-                                  bool normalise = false ) :
+    TabulatedEnergyDistributions(
+        std::vector< double > grid,
+        std::vector< TabulatedEnergyDistribution > distributions,
+        InterpolationType interpolant = InterpolationType::LinearLinear,
+        bool normalise = false,
+        bool curate = false ) :
       Parent( std::move( grid ), std::move( distributions ), interpolant ) {
 
+      if ( curate ) {
+
+        this->curate();
+      }
       if ( normalise ) {
 
         this->normalise();
@@ -108,6 +123,28 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not the distributions are curated
+     */
+    bool isCurated() const {
+
+      return Parent::isCurated() &&
+             std::all_of( this->distributions().begin(), this->distributions().end(),
+                          [] ( auto&& distribution ) { return distribution.isCurated(); } );
+    }
+
+    /**
+     *  @brief Curate the distributions
+     */
+    void curate() {
+
+      Parent::curate();
+      for ( auto& distribution : this->distributions() ) {
+
+        distribution.curate();
+      }
+    }
+
+    /**
      *  @brief Return the average energy values
      */
     TabulatedAverageEnergy averageEnergies() const {
@@ -136,11 +173,12 @@ namespace dryad {
       distributions.reserve( this->numberPoints() );
       std::transform( this->distributions().begin(), this->distributions().end(),
                       std::back_inserter( distributions ),
-                      [tolerance, normalise]
+                      [tolerance]
                         ( auto&& distribution )
-                        { return distribution.linearise( std::move( tolerance ), normalise ); } );
+                        { return distribution.linearise( tolerance ); } );
       return TabulatedEnergyDistributions( this->grid(), std::move( distributions ),
-                                           this->boundaries(), this->interpolants() );
+                                           this->boundaries(), this->interpolants(),
+                                           normalise, true );
     }
 
     /**

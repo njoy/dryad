@@ -37,7 +37,9 @@ void wrapUniformEnergyDistributions( python::module& module ) {
     "    interpolants : list of njoy.dryad.InterpolationType\n"
     "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default LinearLinear\n"
-    "        the interpolation type"
+    "        the interpolation type\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
@@ -47,18 +49,25 @@ void wrapUniformEnergyDistributions( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< UniformEnergyDistribution >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
-    python::arg( "grid" ), python::arg( "distributions" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
+                  std::vector< InterpolationType >,
+                  bool >(),
+    python::arg( "grid" ),
+    python::arg( "distributions" ),
+    python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the energy distributions with multiple interpolation regions"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< UniformEnergyDistribution >,
-                  InterpolationType >(),
-    python::arg( "grid" ), python::arg( "distributions" ),
+                  InterpolationType,
+                  bool >(),
+    python::arg( "grid" ),
+    python::arg( "distributions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the energy distributions with a single interpolation region"
   )
   .def_property_readonly(
@@ -80,6 +89,19 @@ void wrapUniformEnergyDistributions( python::module& module ) {
     "average_energies",
     &Component::averageEnergies,
     "The average energy values"
+  )
+  .def(
+
+    "curate",
+    [] ( Component& self ) { self.curate(); },
+    "Curate the data"
+  )
+  .def_property_readonly(
+
+    "is_curated",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isCurated(); },
+    "Flag indicating whether or not the data is curated"
   );
 
   // add standard equality comparison definitions

@@ -41,7 +41,7 @@ SCENARIO( "createTabulatedRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = endf::read::resonances::lrf7::createTabulatedBackground( background );
+        auto chunk = endf::read::resonances::lrf7::createTabulatedBackground( background, true );
 
         verifyChunk( chunk );
       } // THEN

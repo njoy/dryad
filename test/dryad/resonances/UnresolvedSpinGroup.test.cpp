@@ -101,6 +101,43 @@ SCENARIO( "UnresolvedSpinGroup" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "an UnresolvedSpinGroup with tabulated data that is not curated" ) {
+
+    Particle n( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
+    Particle cl35( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 );
+    ParticlePair elasticPair( n, cl35 );
+
+    WHEN( "the data is given explicitly" ) {
+
+      UnresolvedSpinGroup
+      chunk( { UnresolvedChannel( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                                  elasticPair, elasticPair, 0., std::nullopt,
+                                  ChannelRadii( TabulatedRadius( { 1e-5, 1., 1., 1., 2e+7 },  // <-- discontinuity of 3 points
+                                                                 { 4., 4., 4.5, 5., 5. } ) ) ) },
+             UnresolvedResonanceTable( { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) },
+                                       { TabulatedAverageWidths( { 1., 2., 2., 2., 4. },      // <-- discontinuity of 3 points
+                                                                 { 0.11, 0.12, 0.13, 0.14, 0.15 } ) },
+                                       TabulatedLevelSpacing( { 1., 2., 2., 2., 4. },         // <-- discontinuity of 3 points
+                                                              { 10., 11., 12., 13., 14. } ) ) );
+
+      THEN( "the tabulated data is not curated" ) {
+
+        CHECK( false == std::get< TabulatedRadius >( chunk.channels()[0].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( false == chunk.resonanceTable().widths()[0].isCurated() );
+        CHECK( false == chunk.resonanceTable().spacings().isCurated() );
+      } // THEN
+
+      THEN( "the tabulated data can be curated" ) {
+
+        chunk.curate();
+
+        CHECK( true == std::get< TabulatedRadius >( chunk.channels()[0].channelRadii().penetrabilityRadius() ).isCurated() );
+        CHECK( true == chunk.resonanceTable().widths()[0].isCurated() );
+        CHECK( true == chunk.resonanceTable().spacings().isCurated() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of UnresolvedSpinGroup are given" ) {

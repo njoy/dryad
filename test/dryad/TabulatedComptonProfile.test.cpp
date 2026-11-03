@@ -13,6 +13,8 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 
 void verifyChunk( const TabulatedComptonProfile&, bool );
+void verifyChunkCurated( const TabulatedComptonProfile& );
+void verifyChunkNotCurated( const TabulatedComptonProfile& );
 
 SCENARIO( "TabulatedComptonProfile" ) {
 
@@ -21,8 +23,8 @@ SCENARIO( "TabulatedComptonProfile" ) {
     WHEN( "the data is given explicitly" ) {
 
       const id::ElectronSubshellID identifier( "1s" );
-      const std::vector< double > momentum = { 0., 1., 1.5, 2. };
-      const std::vector< double > values = { 0., 1., 1.5, 2. };
+      std::vector< double > momentum = { 0., 1., 1.5, 2. };
+      std::vector< double > values = { 0., 1., 1.5, 2. };
 
       TabulatedComptonProfile chunk1( identifier, momentum, values, InterpolationType::LinearLinear, false );
       TabulatedComptonProfile chunk2( std::move( identifier ), std::move( momentum ),
@@ -36,6 +38,82 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       verifyChunk( chunk1, true );
       verifyChunk( chunk2, true );
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "momentum and probabilities for a table with discontinuities" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      const id::ElectronSubshellID identifier( "1s" );
+      std::vector< double > momentum = { 0., 2., 3., 3., 3., 4. };
+      std::vector< double > values = { 0., 1., 2., 3., 1., 2. };
+
+      // curation can be requested at construction time
+
+      TabulatedComptonProfile chunk1( identifier, momentum, values,
+                                      InterpolationType::LinearLinear, false, false );
+      TabulatedComptonProfile chunk2( identifier, std::move( momentum ), std::move( values ),
+                                      InterpolationType::LinearLinear, false, true );
+
+      verifyChunkNotCurated( chunk1 );
+      verifyChunkCurated( chunk2 );
+
+      // curation happens when linearising
+
+      auto linear1 = chunk1.linearise();
+      auto linear2 = chunk2.linearise();
+
+      verifyChunkCurated( linear1 );
+      verifyChunkCurated( linear2 );
+
+      // curation can be requested after construction
+
+      chunk1.curate();
+      chunk2.curate();
+
+      verifyChunkCurated( chunk1 );
+      verifyChunkCurated( chunk2 );
+    } // WHEN
+
+    WHEN( "the pdf and cdf are given explicitly and only one of them is curated" ) {
+
+      const id::ElectronSubshellID identifier( "1s" );
+      std::vector< double > momentum = { 0., 2., 3., 3., 3., 4. };
+      std::vector< double > pdfValues = { 0., 1., 2., 3., 1., 2. };
+      std::vector< double > cdfValues = { 0., 1., 2.5, 2.5, 2.5, 4. };
+
+      TabulatedComptonProfileFunction curatedPdf( momentum, pdfValues,
+                                                  InterpolationType::LinearLinear, true );
+      TabulatedComptonProfileFunction curatedCdf( momentum, cdfValues,
+                                                  InterpolationType::LinearLinear, true );
+      TabulatedComptonProfileFunction notCuratedPdf( momentum, pdfValues,
+                                                     InterpolationType::LinearLinear, false );
+      TabulatedComptonProfileFunction notCuratedCdf( momentum, cdfValues,
+                                                     InterpolationType::LinearLinear, false );
+
+      TabulatedComptonProfile chunk1( identifier, curatedPdf, notCuratedCdf );
+      TabulatedComptonProfile chunk2( identifier, notCuratedPdf, curatedCdf );
+
+      THEN( "the distribution is not curated" ) {
+
+        CHECK( true == chunk1.pdf().isCurated() );
+        CHECK( false == chunk1.cdf().isCurated() );
+        CHECK( false == chunk1.isCurated() );
+
+        CHECK( false == chunk2.pdf().isCurated() );
+        CHECK( true == chunk2.cdf().isCurated() );
+        CHECK( false == chunk2.isCurated() );
+      } // THEN
+
+      THEN( "the distribution can be curated on demand" ) {
+
+        chunk1.curate();
+        chunk2.curate();
+
+        verifyChunkCurated( chunk1 );
+        verifyChunkCurated( chunk2 );
+      } // THEN
     } // WHEN
   } // GIVEN
 
@@ -70,8 +148,8 @@ SCENARIO( "TabulatedComptonProfile" ) {
       THEN( "an exception is thrown" ) {
 
         const id::ElectronSubshellID identifier( "1s" );
-        const std::vector< double > momentum = { 0., 2. };
-        const std::vector< double > values = { 0., 0.5, 0.75, 1. };
+        std::vector< double > momentum = { 0., 2. };
+        std::vector< double > values = { 0., 0.5, 0.75, 1. };
 
         CHECK_THROWS( TabulatedComptonProfile( identifier, momentum, values ) );
       } // THEN
@@ -99,6 +177,8 @@ void verifyChunk( const TabulatedComptonProfile& chunk, bool normalise ) {
   CHECK_THAT( 2.  / normalisation, WithinRel( chunk.values()[3] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+  CHECK( true == chunk.isCurated() );
 
   auto pdf = chunk.pdf();
   CHECK_THAT( 0., WithinRel( pdf.lowerMomentumLimit() ) );
@@ -195,4 +275,154 @@ void verifyChunk( const TabulatedComptonProfile& chunk, bool normalise ) {
   CHECK_THAT( 2.    / normalisation, WithinRel( cdf.values()[3] ) );
   CHECK( 3 == cdf.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+}
+
+void verifyChunkCurated( const TabulatedComptonProfile& chunk ) {
+
+  CHECK( 5 == chunk.momentum().size() );
+  CHECK( 5 == chunk.values().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.momentum()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.momentum()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.momentum()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.momentum()[3] ) );
+  CHECK_THAT( 4., WithinRel( chunk.momentum()[4] ) );
+  CHECK_THAT( 0., WithinRel( chunk.values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+  CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( 4 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+  CHECK( true == chunk.isCurated() );
+
+  auto pdf = chunk.pdf();
+  CHECK_THAT( 0., WithinRel( pdf.lowerMomentumLimit() ) );
+  CHECK_THAT( 4., WithinRel( pdf.upperMomentumLimit() ) );
+  CHECK( 5 == pdf.momentum().size() );
+  CHECK( 5 == pdf.values().size() );
+  CHECK( 2 == pdf.boundaries().size() );
+  CHECK( 2 == pdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( pdf.momentum()[0] ) );
+  CHECK_THAT( 2., WithinRel( pdf.momentum()[1] ) );
+  CHECK_THAT( 3., WithinRel( pdf.momentum()[2] ) );
+  CHECK_THAT( 3., WithinRel( pdf.momentum()[3] ) );
+  CHECK_THAT( 4., WithinRel( pdf.momentum()[4] ) );
+  CHECK_THAT( 0., WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 1., WithinRel( pdf.values()[1] ) );
+  CHECK_THAT( 2., WithinRel( pdf.values()[2] ) );
+  CHECK_THAT( 1., WithinRel( pdf.values()[3] ) );
+  CHECK_THAT( 2., WithinRel( pdf.values()[4] ) );
+  CHECK( 2 == pdf.boundaries()[0] );
+  CHECK( 4 == pdf.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[1] );
+  CHECK( true == pdf.isLinearised() );
+  CHECK( true == pdf.isCurated() );
+
+  auto cdf = chunk.cdf();
+  CHECK_THAT( 0., WithinRel( cdf.lowerMomentumLimit() ) );
+  CHECK_THAT( 4., WithinRel( cdf.upperMomentumLimit() ) );
+  CHECK( 5 == cdf.momentum().size() );
+  CHECK( 5 == cdf.values().size() );
+  CHECK( 2 == cdf.boundaries().size() );
+  CHECK( 2 == cdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( cdf.momentum()[0] ) );
+  CHECK_THAT( 2., WithinRel( cdf.momentum()[1] ) );
+  CHECK_THAT( 3., WithinRel( cdf.momentum()[2] ) );
+  CHECK_THAT( 3., WithinRel( cdf.momentum()[3] ) );
+  CHECK_THAT( 4., WithinRel( cdf.momentum()[4] ) );
+  CHECK_THAT( 0. , WithinRel( cdf.values()[0] ) );
+  CHECK_THAT( 1. , WithinRel( cdf.values()[1] ) );
+  CHECK_THAT( 2.5, WithinRel( cdf.values()[2] ) );
+  CHECK_THAT( 2.5, WithinRel( cdf.values()[3] ) );
+  CHECK_THAT( 4. , WithinRel( cdf.values()[4] ) );
+  CHECK( 2 == cdf.boundaries()[0] );
+  CHECK( 4 == cdf.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[1] );
+  CHECK( true == cdf.isLinearised() );
+  CHECK( true == cdf.isCurated() );
+}
+
+void verifyChunkNotCurated( const TabulatedComptonProfile& chunk ) {
+
+  CHECK( 6 == chunk.momentum().size() );
+  CHECK( 6 == chunk.values().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.momentum()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.momentum()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.momentum()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.momentum()[3] ) );
+  CHECK_THAT( 3., WithinRel( chunk.momentum()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.momentum()[5] ) );
+  CHECK_THAT( 0., WithinRel( chunk.values()[0] ) );
+  CHECK_THAT( 1., WithinRel( chunk.values()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+  CHECK_THAT( 1., WithinRel( chunk.values()[4] ) );
+  CHECK_THAT( 2., WithinRel( chunk.values()[5] ) );
+  CHECK( 2 == chunk.boundaries()[0] );
+  CHECK( 5 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+  CHECK( false == chunk.isCurated() );
+
+  auto pdf = chunk.pdf();
+  CHECK_THAT( 0., WithinRel( pdf.lowerMomentumLimit() ) );
+  CHECK_THAT( 4., WithinRel( pdf.upperMomentumLimit() ) );
+  CHECK( 6 == pdf.momentum().size() );
+  CHECK( 6 == pdf.values().size() );
+  CHECK( 2 == pdf.boundaries().size() );
+  CHECK( 2 == pdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( pdf.momentum()[0] ) );
+  CHECK_THAT( 2., WithinRel( pdf.momentum()[1] ) );
+  CHECK_THAT( 3., WithinRel( pdf.momentum()[2] ) );
+  CHECK_THAT( 3., WithinRel( pdf.momentum()[3] ) );
+  CHECK_THAT( 3., WithinRel( pdf.momentum()[4] ) );
+  CHECK_THAT( 4., WithinRel( pdf.momentum()[5] ) );
+  CHECK_THAT( 0., WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 1., WithinRel( pdf.values()[1] ) );
+  CHECK_THAT( 2., WithinRel( pdf.values()[2] ) );
+  CHECK_THAT( 3., WithinRel( pdf.values()[3] ) );
+  CHECK_THAT( 1., WithinRel( pdf.values()[4] ) );
+  CHECK_THAT( 2., WithinRel( pdf.values()[5] ) );
+  CHECK( 2 == pdf.boundaries()[0] );
+  CHECK( 5 == pdf.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[1] );
+  CHECK( true == pdf.isLinearised() );
+  CHECK( false == pdf.isCurated() );
+
+  auto cdf = chunk.cdf();
+  CHECK_THAT( 0., WithinRel( cdf.lowerMomentumLimit() ) );
+  CHECK_THAT( 4., WithinRel( cdf.upperMomentumLimit() ) );
+  CHECK( 6 == cdf.momentum().size() );
+  CHECK( 6 == cdf.values().size() );
+  CHECK( 2 == cdf.boundaries().size() );
+  CHECK( 2 == cdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( cdf.momentum()[0] ) );
+  CHECK_THAT( 2., WithinRel( cdf.momentum()[1] ) );
+  CHECK_THAT( 3., WithinRel( cdf.momentum()[2] ) );
+  CHECK_THAT( 3., WithinRel( cdf.momentum()[3] ) );
+  CHECK_THAT( 3., WithinRel( cdf.momentum()[4] ) );
+  CHECK_THAT( 4., WithinRel( cdf.momentum()[5] ) );
+  CHECK_THAT( 0. , WithinRel( cdf.values()[0] ) );
+  CHECK_THAT( 1. , WithinRel( cdf.values()[1] ) );
+  CHECK_THAT( 2.5, WithinRel( cdf.values()[2] ) );
+  CHECK_THAT( 2.5, WithinRel( cdf.values()[3] ) );
+  CHECK_THAT( 2.5, WithinRel( cdf.values()[4] ) );
+  CHECK_THAT( 4. , WithinRel( cdf.values()[5] ) );
+  CHECK( 2 == cdf.boundaries()[0] );
+  CHECK( 5 == cdf.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[1] );
+  CHECK( true == cdf.isLinearised() );
+  CHECK( false == cdf.isCurated() );
 }

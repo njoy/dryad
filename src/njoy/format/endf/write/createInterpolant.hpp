@@ -27,6 +27,7 @@ namespace write {
       case dryad::InterpolationType::LinearLog : return 3;
       case dryad::InterpolationType::LogLinear : return 4;
       case dryad::InterpolationType::LogLog : return 5;
+      case dryad::InterpolationType::CoulombPenetrability : return 6;
       default : {
 
         Log::error( "Cannot convert or handle interpolation type {}",

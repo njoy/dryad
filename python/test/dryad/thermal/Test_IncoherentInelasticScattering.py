@@ -111,6 +111,36 @@ class Test_IncoherentInelasticScattering( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_curation( self ) :
+
+        # the data is given explicitly
+        chunk = IncoherentInelasticScattering(
+                  1e-5, 10., 6.337872, 1.,
+                  [ ScatteringKernel( 293.6, 300.,
+                                      [ 0., 2., 2., 2., 4. ],    # <-- discontinuity with 3 points
+                                      [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.8, 0.2 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.6, 0.4 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.4, 0.6 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ),
+                    ScatteringKernel( 325, 350.,
+                                      [ 0., 3., 3., 3., 5. ],    # <-- discontinuity with 3 points
+                                      [ TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.9, 0.1 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.7, 0.3 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.5, 0.5 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.3, 0.7 ] ),
+                                        TabulatedScatteringKernelFunction( [ 0., 5. ], [ 0.1, 0.9 ] ) ] ) ] )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.scattering_kernels[0].tabulated_scattering_kernel.is_curated )
+        self.assertEqual( False, chunk.scattering_kernels[1].tabulated_scattering_kernel.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.scattering_kernels[0].tabulated_scattering_kernel.is_curated )
+        self.assertEqual( True, chunk.scattering_kernels[1].tabulated_scattering_kernel.is_curated )
+
     def test_setter_functions( self ) :
 
         chunk = IncoherentInelasticScattering(

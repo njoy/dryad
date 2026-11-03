@@ -39,26 +39,34 @@ void wrapTabulatedAngularDistributionFunction( python::module& module ) {
     "        the interpolation type (default lin-lin)\n"
     "    normalise : bool, default False\n"
     "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "        all probability data (default: no normalisation)\n"
+    "    curate : bool, default False\n"
+    "        flag to indicate whether or not to curate the data"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< std::vector< double >,
+                  std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "cosines" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "curate" ) = false,
     "Initialise the angular distribution function with multiple interpolation zones"
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
-                  InterpolationType >(),
+    python::init< std::vector< double >,
+                  std::vector< double >,
+                  InterpolationType,
+                  bool >(),
     python::arg( "cosines" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "curate" ) = false,
     "Initialise the angular distribution function with a single interpolation zone"
   )
   .def_property_readonly(

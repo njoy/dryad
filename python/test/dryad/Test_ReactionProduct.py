@@ -15,6 +15,12 @@ from njoy.dryad import TwoBodyDistributionData
 from njoy.dryad import IsotropicAngularDistributions
 from njoy.dryad import TabulatedAngularDistribution
 from njoy.dryad import TabulatedAngularDistributions
+from njoy.dryad import TabulatedEnergyDistribution
+from njoy.dryad import TabulatedEnergyDistributions
+from njoy.dryad import UncorrelatedDistributionData
+from njoy.dryad import CoherentDistributionData
+from njoy.dryad import IncoherentDistributionData
+from njoy.dryad import TabulatedScatteringFunction
 from njoy.dryad import DistributionDataType
 from njoy.dryad.id import ParticleID
 
@@ -224,6 +230,122 @@ class Test_ReactionProduct( unittest.TestCase ) :
 
         verify_tabulated_chunk( self, chunk1, True )
         verify_tabulated_chunk( self, chunk2, True )
+
+    def test_curation( self ) :
+
+        id = ParticleID.neutron()
+        multiplicity = TabulatedMultiplicity( [ 1., 2., 2., 2., 4. ], [ 4., 3., 4., 5., 2. ] )    # <-- discontinuity with 3 points
+        cosine = TabulatedAverageCosine( [ 1., 2., 2., 2., 4. ], [ 0., 0.1, 0.2, 0.3, 0.4 ] )     # <-- discontinuity with 3 points
+        energy = TabulatedAverageEnergy( [ 1., 2., 2., 2., 4. ], [ 0.5, 1., 1.5, 2., 3. ] )       # <-- discontinuity with 3 points
+
+        # the data is given explicitly using two body distribution data
+        chunk = ReactionProduct( id, multiplicity,
+                                 TwoBodyDistributionData(
+                                   ReferenceFrame.CentreOfMass,
+                                   TabulatedAngularDistributions(
+                                     [ 1e-5, 20. ],
+                                     [ TabulatedAngularDistribution( [ -1., 0., 0., 0., +1. ], [ 1., 1., 1.1, 0.9, 1. ] ),    # <-- discontinuity with 3 points
+                                       TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ),
+                                 cosine, energy )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.multiplicity.is_curated )
+        self.assertEqual( False, chunk.average_cosine.is_curated )
+        self.assertEqual( False, chunk.average_energy.is_curated )
+        self.assertEqual( False, chunk.distribution_data.angle.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.multiplicity.is_curated )
+        self.assertEqual( True, chunk.average_cosine.is_curated )
+        self.assertEqual( True, chunk.average_energy.is_curated )
+        self.assertEqual( True, chunk.distribution_data.angle.is_curated )
+
+        # the data is given explicitly using uncorrelated distribution data
+        chunk = ReactionProduct( id, multiplicity,
+                                 UncorrelatedDistributionData(
+                                   ReferenceFrame.CentreOfMass,
+                                   TabulatedAngularDistributions(
+                                     [ 1e-5, 20. ],
+                                     [ TabulatedAngularDistribution( [ -1., 0., 0., 0., +1. ], [ 1., 1., 1.1, 0.9, 1. ] ),    # <-- discontinuity with 3 points
+                                       TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ),
+                                   TabulatedEnergyDistributions(
+                                     [ 1e-5, 20. ],
+                                     [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.2 ] ),
+                                       TabulatedEnergyDistribution( [ 0., 10., 10., 10., 20. ], [ 0.1, 0.1, 0.2, 0.05, 0.1 ] ) ] ) ),    # <-- discontinuity with 3 points
+                                 cosine, energy )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.multiplicity.is_curated )
+        self.assertEqual( False, chunk.average_cosine.is_curated )
+        self.assertEqual( False, chunk.average_energy.is_curated )
+        self.assertEqual( False, chunk.distribution_data.angle.is_curated )
+        self.assertEqual( False, chunk.distribution_data.energy.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.multiplicity.is_curated )
+        self.assertEqual( True, chunk.average_cosine.is_curated )
+        self.assertEqual( True, chunk.average_energy.is_curated )
+        self.assertEqual( True, chunk.distribution_data.angle.is_curated )
+        self.assertEqual( True, chunk.distribution_data.energy.is_curated )
+
+        # the data is given explicitly using coherent distribution data
+        chunk = ReactionProduct( id, multiplicity,
+                                 CoherentDistributionData(
+                                   ReferenceFrame.CentreOfMass,
+                                   TabulatedScatteringFunction( [ 0., 1., 1., 1., 2. ],    # <-- discontinuity with 3 points
+                                                                [ 2., 1.5, 1.4, 1.3, 1. ] ) ),
+                                 cosine, energy )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.multiplicity.is_curated )
+        self.assertEqual( False, chunk.average_cosine.is_curated )
+        self.assertEqual( False, chunk.average_energy.is_curated )
+        self.assertEqual( False, chunk.distribution_data.scattering_function.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.multiplicity.is_curated )
+        self.assertEqual( True, chunk.average_cosine.is_curated )
+        self.assertEqual( True, chunk.average_energy.is_curated )
+        self.assertEqual( True, chunk.distribution_data.scattering_function.is_curated )
+
+        # the data is given explicitly using incoherent distribution data
+        chunk = ReactionProduct( id, multiplicity,
+                                 IncoherentDistributionData(
+                                   ReferenceFrame.CentreOfMass,
+                                   TabulatedScatteringFunction( [ 1., 2., 2., 2., 1e+6 ],    # <-- discontinuity with 3 points
+                                                                [ 2., 1.9, 1.8, 1.7, 1. ] ) ),
+                                 cosine, energy )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.multiplicity.is_curated )
+        self.assertEqual( False, chunk.average_cosine.is_curated )
+        self.assertEqual( False, chunk.average_energy.is_curated )
+        self.assertEqual( False, chunk.distribution_data.scattering_function.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.multiplicity.is_curated )
+        self.assertEqual( True, chunk.average_cosine.is_curated )
+        self.assertEqual( True, chunk.average_energy.is_curated )
+        self.assertEqual( True, chunk.distribution_data.scattering_function.is_curated )
+
+        # the data is given explicitly using an integer multiplicity and no other data
+        chunk = ReactionProduct( id, 1 )
+
+        # curating does not change anything
+        chunk.curate()
+
+        self.assertEqual( 1, chunk.multiplicity )
+        self.assertEqual( None, chunk.average_cosine )
+        self.assertEqual( None, chunk.average_energy )
+        self.assertEqual( None, chunk.distribution_data )
 
     def test_setter_functions( self ) :
 

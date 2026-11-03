@@ -30,6 +30,8 @@ namespace lrf7 {
    *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
    *  @param[in] endfPairs            the parsed ENDF particle pairs
    *  @param[in] endfSpinGroup        the parsed ENDF spin group
+   *  @param[in] curate               the flag to indicate whether or not tabulated data
+   *                                  need to be curated
    */
   inline auto createChannelData(
                   const dryad::id::ParticleID& projectile,
@@ -39,14 +41,15 @@ namespace lrf7 {
                   const dryad::resonances::Kinematics& kinematics,
                   bool reduced_amplitudes,
                   const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
-                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup& endfSpinGroup ) {
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup& endfSpinGroup,
+                  bool curate ) {
 
     std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
 
     // get the channels
     auto channels = lrf7::createChannels( projectile, target, boundary_condition,
                                           kinematics, endfPairs, endfSpinGroup.channels(),
-                                          endfSpinGroup.background() );
+                                          endfSpinGroup.background(), curate );
 
     // go over all channels
     auto is_reichmoore = formalism == dryad::resonances::Formalism::ReichMoore;

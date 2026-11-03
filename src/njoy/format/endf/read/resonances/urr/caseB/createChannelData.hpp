@@ -29,7 +29,6 @@ namespace caseB {
    *         spin group of energy-dependent-fission-width unresolved resonance
    *         parameters (Case B)
    *
-   *
    *  @param[in] projectile        the projectile identifier
    *  @param[in] target            the target identifier
    *  @param[in] incident          the incident particle pair
@@ -39,6 +38,8 @@ namespace caseB {
    *  @param[in] upper             the upper energy limit of the range (eV)
    *  @param[in] jvalue            the parsed ENDF energy-dependent-fission-width j-value data
    *  @param[in] fissionEnergies   the shared fission width energy grid (eV)
+   *  @param[in] curate            the flag to indicate whether or not tabulated data
+   *                               need to be curated
    */
   inline std::pair< std::vector< dryad::resonances::UnresolvedChannel >,
                     dryad::resonances::UnresolvedResonanceTable >
@@ -50,7 +51,8 @@ namespace caseB {
       const dryad::resonances::ChannelQuantumNumbers& numbers,
       double lower, double upper,
       const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyDependentFissionWidths::JValue& jvalue,
-      const std::vector< double >& fissionEnergies ) {
+      const std::vector< double >& fissionEnergies,
+      bool curate ) {
 
     // the elastic channel: same incident and outgoing particle pair, wave
     // functions are calculated using the channel radii. Its average width is
@@ -74,19 +76,20 @@ namespace caseB {
         { dryad::id::ParticleID::photon(), 0., 0., +1 },
         { capture_id.reaction().residual().value(), 0., 0., +1 } );
     dryad::resonances::UnresolvedChannel capture( capture_id, incident, capture_pair,
-                                                  0., std::nullopt, 
+                                                  0., std::nullopt,
                                                   zero_radii, false );
     dryad::resonances::TabulatedAverageWidths capture_widths(
         jvalue.AMUG(), { lower, upper }, { jvalue.GG(), jvalue.GG() } );
 
-    
+
     dryad::id::ChannelID fission_id( dryad::id::ReactionID( projectile, target, 18 ), level_numbers );
-    dryad::resonances::UnresolvedChannel fission( fission_id, 
+    dryad::resonances::UnresolvedChannel fission( fission_id,
                                                   incident, std::nullopt,
                                                   0., std::nullopt,
                                                   zero_radii, false );
-    dryad::resonances::TabulatedAverageWidths fission_widths( jvalue.AMUF(), fissionEnergies, 
-                                                              format::createVector( jvalue.GF() ) );
+    dryad::resonances::TabulatedAverageWidths fission_widths( jvalue.AMUF(), fissionEnergies,
+                                                              format::createVector( jvalue.GF() ),
+                                                              dryad::InterpolationType::LinearLinear, curate );
 
     dryad::resonances::TabulatedLevelSpacing spacing(
         std::vector< double >{ lower, upper },

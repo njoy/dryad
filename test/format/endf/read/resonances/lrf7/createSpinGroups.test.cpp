@@ -42,8 +42,9 @@ SCENARIO( "createSpinGroups" ) {
         auto boundary = resonances::BoundaryCondition::Constant;
         auto kinematics = resonances::Kinematics::NonRelativistic;
         auto chunk = endf::read::resonances::lrf7::createSpinGroups( projectile, target,
-                                                                       formalism, boundary,
-                                                                       kinematics, parameters );
+                                                                     formalism, boundary,
+                                                                     kinematics, parameters,
+                                                                     true );
 
         verifyChunkCu63( chunk );
       } // THEN
@@ -73,8 +74,9 @@ SCENARIO( "createSpinGroups" ) {
         auto boundary = resonances::BoundaryCondition::ShiftFactor;
         auto kinematics = resonances::Kinematics::NonRelativistic;
         auto chunk = endf::read::resonances::lrf7::createSpinGroups( projectile, target,
-                                                                       formalism, boundary,
-                                                                       kinematics, parameters );
+                                                                     formalism, boundary,
+                                                                     kinematics, parameters,
+                                                                     true );
 
         verifyChunkCl35( chunk );
       } // THEN

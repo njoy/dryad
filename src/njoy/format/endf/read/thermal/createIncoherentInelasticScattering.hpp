@@ -29,11 +29,14 @@ namespace thermal {
    *  @param[in] lower       the lower energy limit
    *  @param[in] upper       the upper energy limit
    *  @param[in] inelastic   the incoherent inelastic thermal scattering component
+   *  @param[in] curate      the flag to indicate whether or not tabulated data
+   *                         need to be curated
    */
   inline dryad::thermal::IncoherentInelasticScattering
   createIncoherentInelasticScattering(
       double lower, double upper,
-      const ENDFtk::section::Type< 7, 4 >& inelastic ) {
+      const ENDFtk::section::Type< 7, 4 >& inelastic,
+      bool curate ) {
 
     Log::info( "Reading incoherent inelastic scattering data" );
 
@@ -164,7 +167,7 @@ namespace thermal {
       }
 
       kernels.emplace_back( moderator[i], effective[i], std::move( current_betas ), std::move( functions ),
-                            boundaries, interpolants );
+                            boundaries, interpolants, curate );
     }
 
     return dryad::thermal::IncoherentInelasticScattering( lower, upper, xs, awr, std::move( kernels ) );

@@ -38,26 +38,26 @@ namespace caseA {
                                 int naps,
                                 const std::optional< dryad::resonances::TabulatedRadius >& nro,
                                 double lower, double upper,
-                                const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyIndependent& urr_endf ) {
+                                const ENDFtk::section::Type< 2, 151 >::UnresolvedEnergyIndependent& endf ) {
 
     std::vector< dryad::resonances::UnresolvedSpinGroup > groups;
 
     // create all possible channel quantum numbers
-    auto spin = urr_endf.spin();
-    auto lmax = urr_endf.lValues().back().orbitalMomentum();
+    auto spin = endf.spin();
+    auto lmax = endf.lValues().back().orbitalMomentum();
     auto available = dryad::resonances::ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, spin, lmax );
 
     // the incident particle pair
-    auto awri = urr_endf.lValues().front().atomicWeightRatio();
+    auto awri = endf.lValues().front().atomicWeightRatio();
     dryad::resonances::ParticlePair incident( dryad::Particle( projectile, constants::neutron_mass, 0.5, +1 ),
                                               dryad::Particle( target, awri * constants::neutron_mass, spin, +1 ) );
 
     // channel radii - URR has no l-dependent scattering radius, so one value serves every spin group
-    auto ap = urr_endf.scatteringRadius() * constants::deca;
+    auto ap = endf.scatteringRadius() * constants::deca;
     dryad::resonances::ChannelRadii radii = createChannelRadii( naps, nro, ap, awri );
 
     // go over each l value and each j value - one spin group per (l,J)
-    for ( const auto& lvalue : urr_endf.lValues() ) {
+    for ( const auto& lvalue : endf.lValues() ) {
 
       unsigned int l = lvalue.orbitalMomentum();
 

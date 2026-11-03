@@ -60,25 +60,30 @@ namespace resonances {
      *  @param[in] values         the radius values
      *  @param[in] boundaries     the boundaries of the interpolation regions
      *  @param[in] interpolants   the interpolation types of the interpolation regions
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedRadius( std::vector< double > energies,
                      std::vector< double > values,
                      std::vector< std::size_t > boundaries,
-                     std::vector< InterpolationType > interpolants ) :
+                     std::vector< InterpolationType > interpolants,
+                     bool curate = false ) :
       InterpolationTable( std::move( energies ), std::move( values ),
-                          std::move( boundaries ), std::move( interpolants ) ) {}
+                          std::move( boundaries ), std::move( interpolants ),
+                          curate ) {}
 
     /**
-     *  @brief Constructor for a radius using a single interpolation zone
+     *  @brief Constructor using a single interpolation zone
      *
      *  @param[in] energies       the energy values
      *  @param[in] values         the radius values
      *  @param[in] interpolant    the interpolation type of the data (default lin-lin)
+     *  @param[in] curate         flag to indicate whether or not to curate the data (default: false)
      */
     TabulatedRadius( std::vector< double > energies,
                      std::vector< double > values,
-                     InterpolationType interpolant = InterpolationType::LinearLinear ) :
-      InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
+                     InterpolationType interpolant = InterpolationType::LinearLinear,
+                     bool curate = false ) :
+      InterpolationTable( std::move( energies ), std::move( values ), interpolant, curate ) {}
 
     /* methods */
 
@@ -119,6 +124,8 @@ namespace resonances {
     using InterpolationTable::numberPoints;
     using InterpolationTable::numberRegions;
     using InterpolationTable::isLinearised;
+    using InterpolationTable::isCurated;
+    using InterpolationTable::curate;
 
     using InterpolationTable::operator();
 

@@ -31,6 +31,8 @@ namespace lrf7 {
    *  @param[in] kinematics           the kinematics type to be applied
    *  @param[in] endfPairs            the parsed ENDF particle pairs
    *  @param[in] endfChannels         the parsed ENDF channels
+   *  @param[in] curate               the flag to indicate whether or not tabulated data
+   *                                  need to be curated
    */
   inline auto createChannels(
                   const dryad::id::ParticleID& projectile,
@@ -39,7 +41,8 @@ namespace lrf7 {
                   const dryad::resonances::Kinematics& kinematics,
                   const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
                   const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels& endfChannels,
-                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels& endfBackground ) {
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels& endfBackground,
+                  bool curate ) {
 
     std::vector< dryad::resonances::Channel > channels;
 
@@ -110,7 +113,7 @@ namespace lrf7 {
             },
             [&] ( const TabulatedBackgroundRMatrix& data ) -> std::optional< Background > {
 
-              return createTabulatedBackground( data );
+              return createTabulatedBackground( data, curate );
             }
           };
 

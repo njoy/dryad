@@ -41,6 +41,10 @@ namespace read {
 
       return dryad::InterpolationType::LogLinear;
     }
+    else if ( type == "charged-particle" ) {
+
+      return dryad::InterpolationType::CoulombPenetrability;
+    }
     else {
 
       Log::error( "GNDS interpolation type \'{}\' is not recognised", type );

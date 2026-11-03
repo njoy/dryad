@@ -151,6 +151,19 @@ namespace dryad {
     }
 
     /**
+     *  @brief Curate the distribution data
+     */
+    void curate() {
+
+      std::visit( tools::overload{
+
+                    [] ( IsotropicAngularDistributions& ) {},
+                    [] ( auto&& data ) { data.curate(); }
+                  },
+                  this->angle() );
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

@@ -14,6 +14,7 @@ from njoy.dryad.resonances import Formalism
 from njoy.dryad.resonances import BoundaryCondition
 from njoy.dryad.resonances import SpinGroup
 from njoy.dryad.resonances import Kinematics
+from njoy.dryad.resonances import TabulatedRadius
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
@@ -191,6 +192,40 @@ class Test_SpinGroup( unittest.TestCase ) :
                            formalism, boundary )
 
         verify_chunk( self, chunk )
+
+    def test_curation( self ) :
+
+        g = Particle( ParticleID.photon(), 0, 1, +1 )
+        n = Particle( ParticleID.neutron(), 1.00866491574, 0.5, +1 )
+        cl36 = Particle( ParticleID( 'Cl36' ), 35.9683050031, 0, +1 )
+        cl35 = Particle( ParticleID( 'Cl35' ), 34.9688491981, 1.5, +1 )
+        elasticPair = ParticlePair( n, cl35 )
+        capturePair = ParticlePair( g, cl36 )
+
+        # the data is given explicitly
+        chunk = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                      elasticPair, capturePair, 0., None,
+                                      ChannelRadii( TabulatedRadius( [ 1e-5, 1., 1., 1., 2e+7 ],    # <-- discontinuity of 3 points
+                                                                     [ 4., 4., 4.5, 5., 5. ] ) ),
+                                      False ),
+                             Channel( ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
+                                      elasticPair, elasticPair, 0., None,
+                                      ChannelRadii( TabulatedRadius( [ 1e-5, 2., 2., 2., 2e+7 ],    # <-- discontinuity of 3 points
+                                                                     [ 4., 4., 4.5, 5., 5. ] ) ) ) ],
+                           ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
+                                             ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ) ],
+                                           [ 1. ], [ [ 2. ], [ 3. ] ] ),
+                           Formalism.ReichMoore, BoundaryCondition.ShiftFactor )
+
+        # the tabulated data is not curated
+        self.assertEqual( False, chunk.channels[0].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( False, chunk.channels[1].channel_radii.penetrability_radius.is_curated )
+
+        # the tabulated data can be curated
+        chunk.curate()
+
+        self.assertEqual( True, chunk.channels[0].channel_radii.penetrability_radius.is_curated )
+        self.assertEqual( True, chunk.channels[1].channel_radii.penetrability_radius.is_curated )
 
     def test_comparison( self ) :
 

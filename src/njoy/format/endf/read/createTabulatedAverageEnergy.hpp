@@ -23,9 +23,12 @@ namespace read {
    *         energy transfer component
    *
    *  @param[in] transfer   the parsed ENDF energy transfer data
+   *  @param[in] curate     the flag to indicate whether or not tabulated data
+   *                        need to be curated
    */
   inline dryad::TabulatedAverageEnergy
-  createTabulatedAverageEnergy( const ENDFtk::section::Type< 26 >::EnergyTransfer& transfer ) {
+  createTabulatedAverageEnergy( const ENDFtk::section::Type< 26 >::EnergyTransfer& transfer,
+                                bool curate ) {
 
     try {
 
@@ -40,7 +43,8 @@ namespace read {
       auto interpolants = createInterpolants( transfer.interpolants() );
       return dryad::TabulatedAverageEnergy(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               curate );
     }
     catch ( ... ) {
 

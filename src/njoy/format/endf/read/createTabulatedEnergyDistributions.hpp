@@ -26,11 +26,14 @@ namespace read {
    *  @param[in] distribution   the parsed ENDF continuum angle distribution
    *  @param[in] normalise      the flag to indicate whether or not distributions
    *                            need to be normalised
+   *  @param[in] curate         the flag to indicate whether or not tabulated data
+   *                            need to be curated
    */
   inline dryad::TabulatedEnergyDistributions
   createTabulatedEnergyDistributions(
       const ENDFtk::section::Type< 26 >::ContinuumEnergyAngle& distribution,
-      bool normalise ) {
+      bool normalise,
+      bool curate ) {
 
     try {
 
@@ -46,7 +49,8 @@ namespace read {
       auto interpolants = createInterpolants( distribution.interpolants() );
       return dryad::TabulatedEnergyDistributions(
                std::move( energies ), std::move( distributions ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               false, curate );
     }
     catch ( ... ) {
 

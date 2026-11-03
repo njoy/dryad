@@ -23,11 +23,14 @@ namespace read {
    *  @brief Create a ThermalScattering instance from an unparsed ENDF material
    *
    *  @param[in] material   the unparsed ENDF material
+   *  @param[in] curate     the flag to indicate whether or not tabulated data
+   *                        need to be curated
    *  @param[in] upper      the optional upper energy limit (default: use the upper
    *                        energy limit of the evaluation)
    */
   inline dryad::ThermalScattering
   createThermalScattering( const ENDFtk::tree::Material& material,
+                           bool curate,
                            const std::optional< double >& upper = std::nullopt ) {
 
     if ( material.hasSection( 7, 2 ) || material.hasSection( 7, 4 ) ) {
@@ -50,7 +53,7 @@ namespace read {
 
           upper_limit = section.constants().upperEnergyLimit();
         }
-        inelastic = thermal::createIncoherentInelasticScattering( lower_limit, upper_limit, section );
+        inelastic = thermal::createIncoherentInelasticScattering( lower_limit, upper_limit, section, curate );
       }
 
       if ( material.hasSection( 7, 2 ) ) {

@@ -18,7 +18,7 @@ SCENARIO( "UniformEnergyDistribution" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > energies = { 2., 3., 10. };
+      std::vector< double > energies = { 2., 3., 10. };
       UniformDistributionType type = UniformDistributionType::Discrete;
 
       UniformEnergyDistribution chunk( std::move( energies ), std::move( type ) );
@@ -45,7 +45,7 @@ SCENARIO( "UniformEnergyDistribution" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > energies = { 0., 1., 4., 8., 10. };
+      std::vector< double > energies = { 0., 1., 4., 8., 10. };
       UniformDistributionType type = UniformDistributionType::Interval;
 
       UniformEnergyDistribution chunk( std::move( energies ), std::move( type ) );
