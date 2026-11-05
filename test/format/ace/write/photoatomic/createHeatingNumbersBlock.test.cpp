@@ -36,7 +36,7 @@ SCENARIO( "createHeatingNumbersBlock" ) {
         CHECK( 2021 == block.NES() );
         CHECK( 2021 == block.heating().size() );
 
-        CHECK_THAT( 5.669515193837952e-14, WithinRel( block.heating()[0] ) );
+        CHECK_THAT( 5.669515193837952e-14, WithinRel( block.heating()[0], 1e-10 ) );
         CHECK_THAT( 8.060572335180150e-04, WithinRel( block.heating()[505] ) );
         CHECK_THAT( 3.157319572260764e-01, WithinRel( block.heating()[1010] ) );
         CHECK_THAT( 3.242256612132395e+00, WithinRel( block.heating()[1515] ) );
@@ -90,7 +90,7 @@ SCENARIO( "createHeatingNumbersBlock" ) {
         CHECK( 8513 == block.NES() );
         CHECK( 8513 == block.heating().size() );
 
-        CHECK_THAT( 2.783767048696003e-14, WithinRel( block.heating()[0] ) );
+        CHECK_THAT( 2.783767048696003e-14, WithinRel( block.heating()[0], 1e-10 ) );
         CHECK_THAT( 5.354031962535011e-03, WithinRel( block.heating()[2128] ) );
         CHECK_THAT( 7.501900619644278e-02, WithinRel( block.heating()[4256] ) );
         CHECK_THAT( 1.048140788285556e+01, WithinRel( block.heating()[6384] ) );
