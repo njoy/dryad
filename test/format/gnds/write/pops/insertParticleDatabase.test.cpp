@@ -82,6 +82,9 @@ SCENARIO( "insertParticleDatabase" ) {
 std::string chunkAtomic() {
 
   return "<PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
+         "  <aliases>\n"
+         "    <alias id=\"g\" pid=\"photon\" />\n"
+         "  </aliases>\n"
          "  <gaugeBosons>\n"
          "    <gaugeBoson id=\"g\">\n"
          "      <mass>\n"
@@ -149,6 +152,9 @@ std::string chunkAtomic() {
 std::string chunkAtomicWithMass() {
 
   return "<PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
+         "  <aliases>\n"
+         "    <alias id=\"g\" pid=\"photon\" />\n"
+         "  </aliases>\n"
          "  <gaugeBosons>\n"
          "    <gaugeBoson id=\"g\">\n"
          "      <mass>\n"
@@ -237,6 +243,7 @@ std::string chunkNuclear() {
 
   return "<PoPs name=\"particles\" version=\"1.0\" format=\"2.1\">\n"
          "  <aliases>\n"
+         "    <alias id=\"g\" pid=\"photon\" />\n"
          "    <alias id=\"d\" pid=\"h2\" />\n"
          "    <alias id=\"t\" pid=\"h3\" />\n"
          "    <alias id=\"h\" pid=\"he3\" />\n"

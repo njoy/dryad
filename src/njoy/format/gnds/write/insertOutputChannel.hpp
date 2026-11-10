@@ -58,8 +58,22 @@ namespace write {
           if ( product.chainIndex() == 0 ) {
 
             auto product_node = products_node.append_child( "product" );
-            product_node.append_attribute( "pid" ) = product.productIdentifier().symbol();
-            product_node.append_attribute( "label" ) = product.productIdentifier().symbol();
+            if ( product.productIdentifier().e() == dryad::id::LevelID::continuum ||
+                 product.productIdentifier().e() == dryad::id::LevelID::all ) {
+
+              auto id = product.productIdentifier().groundState();
+              product_node.append_attribute( "pid" ) = id.symbol();
+              product_node.append_attribute( "label" ) = id.symbol();
+              if ( product.productIdentifier().e() == dryad::id::LevelID::continuum ) {
+
+                node.append_attribute( "process" ) = "continuum";
+              }
+            }
+            else {
+
+              product_node.append_attribute( "pid" ) = product.productIdentifier().symbol();
+              product_node.append_attribute( "label" ) = product.productIdentifier().symbol();
+            }
 
             insertMultiplicity( product_node, options, product.multiplicity(), min, max, style );
 
@@ -75,7 +89,7 @@ namespace write {
     return node;
   }
 
-} // read namespace
+} // write namespace
 } // gnds namespace
 } // format namespace
 } // njoy namespace

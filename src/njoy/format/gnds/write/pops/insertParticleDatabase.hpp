@@ -50,9 +50,16 @@ namespace pops {
     if ( database.hasParticle( dryad::id::ParticleID::deuteron() ) ||
          database.hasParticle( dryad::id::ParticleID::triton() ) ||
          database.hasParticle( dryad::id::ParticleID::helion() ) ||
-         database.hasParticle( dryad::id::ParticleID::alpha() )) {
+         database.hasParticle( dryad::id::ParticleID::alpha() ) ||
+         database.hasParticle( dryad::id::ParticleID::photon() ) ) {
 
       aliases = node.append_child( "aliases" );
+      if ( database.hasParticle( dryad::id::ParticleID::photon() ) ) {
+
+        auto alias = aliases.append_child( "alias" );
+        alias.append_attribute( "id" ) = dryad::id::ParticleID::photon().symbol().c_str();
+        alias.append_attribute( "pid" ) = "photon";
+      }
     }
 
     if ( database.hasParticle( dryad::id::ParticleID::photon() ) ) {

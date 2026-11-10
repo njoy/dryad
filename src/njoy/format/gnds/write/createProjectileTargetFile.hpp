@@ -43,9 +43,9 @@ namespace write {
     pugi::xml_node suite = gnds.append_child( "reactionSuite" );
     suite.append_attribute( "projectile" ) = transport.projectileIdentifier().symbol();
     suite.append_attribute( "target" ) = transport.targetIdentifier().symbol();
-    suite.append_attribute( "frame" ) = "lab";
+    suite.append_attribute( "projectileFrame" ) = "lab";
     suite.append_attribute( "interaction" ) = createInteractionType( transport.interactionType() );
-    suite.append_attribute( "format" ) = "2.2";
+    suite.append_attribute( "format" ) = "2.2.rc1";
     suite.append_attribute( "evaluation" ) = "justGoofingAround";
 
     std::string style_label;
