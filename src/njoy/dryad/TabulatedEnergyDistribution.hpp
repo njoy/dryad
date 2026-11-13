@@ -196,13 +196,61 @@ namespace dryad {
     }
 
     /**
-     *  @brief Evaluate the pdf of the distribution for a cosine value
+     *  @brief Evaluate the pdf of the distribution for an energy value
      *
-     *  @param[in] cosine   the value to be evaluated
+     *  @param[in] energy   the value to be evaluated
      */
-    double operator()( double cosine ) const {
+    double operator()( double energy ) const {
 
-      return this->pdf()( cosine );
+      return this->pdf()( energy );
+    }
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->pdf().lowerLimit();
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->pdf().upperLimit();
+    }
+
+    /**
+     *  @brief Return the x values of the table
+     */
+    const std::vector< double >& x() const {
+
+      return this->pdf().x();
+    }
+
+    /**
+     *  @brief Return the y values of the table
+     */
+    const std::vector< double >& y() const {
+
+      return this->pdf().y();
+    }
+
+    /**
+     *  @brief Return the lower limit of the domain
+     */
+    double lowerLimit() const {
+
+      return this->pdf().lowerLimit();
+    }
+
+    /**
+     *  @brief Return the upper limit of the domain
+     */
+    double upperLimit() const {
+
+      return this->pdf().upperLimit();
     }
 
     /**

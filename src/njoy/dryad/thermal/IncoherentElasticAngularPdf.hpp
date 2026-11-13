@@ -56,6 +56,22 @@ namespace thermal {
     /* interface imposed function */
 
     /**
+     *  @brief Return the lower limit of the domain
+     */
+    static constexpr double lower() {
+
+      return -1;
+    }
+
+    /**
+     *  @brief Return the upper limit of the domain
+     */
+    static constexpr double upper() {
+
+      return +1;
+    }
+
+    /**
      *  @brief Evaluate the angular distribution pdf for a given cosine value
      *
      *  The differential cross section is given by:
@@ -88,7 +104,6 @@ namespace thermal {
 
     using typename Parent::XType;
     using typename Parent::YType;
-    using typename Parent::DomainVariant;
 
     /* constructor */
 
@@ -111,7 +126,6 @@ namespace thermal {
      */
     IncoherentElasticAngularPdf( double incident,
                                  double debyeWallerIntegral ) :
-      Parent( scion::math::IntervalDomain< double >( -1., 1. ) ),
       incident_( incident ),
       debye_waller_( debyeWallerIntegral ) {}
 
@@ -122,7 +136,7 @@ namespace thermal {
      */
     double lowerCosineLimit() const {
 
-      return std::get< scion::math::IntervalDomain< double > >( this->domain() ).lowerLimit();
+      return this->lowerLimit();
     }
 
     /**
@@ -130,7 +144,7 @@ namespace thermal {
      */
     double upperCosineLimit() const {
 
-      return std::get< scion::math::IntervalDomain< double > >( this->domain() ).upperLimit();
+      return this->upperLimit();
     }
 
     /**
@@ -150,6 +164,8 @@ namespace thermal {
     }
 
     using Parent::operator();
+    using Parent::lowerLimit;
+    using Parent::upperLimit;
 
     /**
      *  @brief Calculate the integral over the distribution domain

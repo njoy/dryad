@@ -20,6 +20,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
 
             self.assertEqual( True, isinstance( chunk.pdf, IsotropicAngularDistributionFunction ) )
             self.assertEqual( True, isinstance( chunk.cdf, TabulatedAngularDistributionFunction ) )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( True, chunk.is_curated )
 
@@ -82,6 +84,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
 
             self.assertEqual( True, isinstance( chunk.pdf, LegendreAngularDistributionFunction ) )
             self.assertEqual( True, isinstance( chunk.cdf, LegendreAngularDistributionFunction ) )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( True, chunk.is_curated )
 
@@ -151,6 +155,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
 
             self.assertEqual( True, isinstance( chunk.pdf, TabulatedAngularDistributionFunction ) )
             self.assertEqual( True, isinstance( chunk.cdf, TabulatedAngularDistributionFunction ) )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( True, chunk.is_curated )
 
@@ -254,6 +260,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
 
             self.assertEqual( True, isinstance( chunk.pdf, TabulatedAngularDistributionFunction ) )
             self.assertEqual( True, isinstance( chunk.cdf, TabulatedAngularDistributionFunction ) )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( False, chunk.is_curated )
 
@@ -313,6 +321,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
 
             self.assertEqual( True, isinstance( chunk.pdf, TabulatedAngularDistributionFunction ) )
             self.assertEqual( True, isinstance( chunk.cdf, TabulatedAngularDistributionFunction ) )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( True, chunk.is_curated )
 
@@ -364,83 +374,6 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
             self.assertEqual( True, cdf.is_linearised )
             self.assertEqual( True, cdf.is_curated )
 
-        def verify_chunk_not_curated_tabulated_angular_distribution( self, chunk ) :
-
-            self.assertEqual( 6, len( chunk.cosines ) )
-            self.assertEqual( 6, len( chunk.values ) )
-            self.assertEqual( 2, len( chunk.boundaries ) )
-            self.assertEqual( 2, len( chunk.interpolants ) )
-            self.assertAlmostEqual( -1. , chunk.cosines[0] )
-            self.assertAlmostEqual( -0.5, chunk.cosines[1] )
-            self.assertAlmostEqual( 0. , chunk.cosines[2] )
-            self.assertAlmostEqual( 0. , chunk.cosines[3] )
-            self.assertAlmostEqual( 0. , chunk.cosines[4] )
-            self.assertAlmostEqual( 1. , chunk.cosines[5] )
-            self.assertAlmostEqual( 0., chunk.values[0] )
-            self.assertAlmostEqual( 1., chunk.values[1] )
-            self.assertAlmostEqual( 2., chunk.values[2] )
-            self.assertAlmostEqual( 3., chunk.values[3] )
-            self.assertAlmostEqual( 1., chunk.values[4] )
-            self.assertAlmostEqual( 2., chunk.values[5] )
-            self.assertEqual( 2, chunk.boundaries[0] )
-            self.assertEqual( 5, chunk.boundaries[1] )
-            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
-            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
-
-            self.assertEqual( False, chunk.is_curated )
-
-            pdf = chunk.pdf
-            self.assertAlmostEqual( -1., pdf.lower_cosine_limit )
-            self.assertAlmostEqual( 1., pdf.upper_cosine_limit )
-            self.assertEqual( 6, len( pdf.cosines ) )
-            self.assertEqual( 6, len( pdf.values ) )
-            self.assertEqual( 2, len( pdf.boundaries ) )
-            self.assertEqual( 2, len( pdf.interpolants ) )
-            self.assertAlmostEqual( -1. , pdf.cosines[0] )
-            self.assertAlmostEqual( -0.5, pdf.cosines[1] )
-            self.assertAlmostEqual( 0. , pdf.cosines[2] )
-            self.assertAlmostEqual( 0. , pdf.cosines[3] )
-            self.assertAlmostEqual( 0. , pdf.cosines[4] )
-            self.assertAlmostEqual( 1. , pdf.cosines[5] )
-            self.assertAlmostEqual( 0., pdf.values[0] )
-            self.assertAlmostEqual( 1., pdf.values[1] )
-            self.assertAlmostEqual( 2., pdf.values[2] )
-            self.assertAlmostEqual( 3., pdf.values[3] )
-            self.assertAlmostEqual( 1., pdf.values[4] )
-            self.assertAlmostEqual( 2., pdf.values[5] )
-            self.assertEqual( 2, pdf.boundaries[0] )
-            self.assertEqual( 5, pdf.boundaries[1] )
-            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[0] )
-            self.assertEqual( InterpolationType.LinearLinear, pdf.interpolants[1] )
-            self.assertEqual( True, pdf.is_linearised )
-            self.assertEqual( False, pdf.is_curated )
-
-            cdf = chunk.cdf
-            self.assertAlmostEqual( -1., cdf.lower_cosine_limit )
-            self.assertAlmostEqual( 1., cdf.upper_cosine_limit )
-            self.assertEqual( 6, len( cdf.cosines ) )
-            self.assertEqual( 6, len( cdf.values ) )
-            self.assertEqual( 2, len( cdf.boundaries ) )
-            self.assertEqual( 2, len( cdf.interpolants ) )
-            self.assertAlmostEqual( -1. , cdf.cosines[0] )
-            self.assertAlmostEqual( -0.5, cdf.cosines[1] )
-            self.assertAlmostEqual( 0. , cdf.cosines[2] )
-            self.assertAlmostEqual( 0. , cdf.cosines[3] )
-            self.assertAlmostEqual( 0. , cdf.cosines[4] )
-            self.assertAlmostEqual( 1. , cdf.cosines[5] )
-            self.assertAlmostEqual( 0. , cdf.values[0] )
-            self.assertAlmostEqual( 0.25, cdf.values[1] )
-            self.assertAlmostEqual( 1. , cdf.values[2] )
-            self.assertAlmostEqual( 1. , cdf.values[3] )
-            self.assertAlmostEqual( 1. , cdf.values[4] )
-            self.assertAlmostEqual( 2.5 , cdf.values[5] )
-            self.assertEqual( 2, cdf.boundaries[0] )
-            self.assertEqual( 5, cdf.boundaries[1] )
-            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
-            self.assertEqual( InterpolationType.LinearLinear, cdf.interpolants[1] )
-            self.assertEqual( True, cdf.is_linearised )
-            self.assertEqual( False, cdf.is_curated )
-
         def verify_chunk_curated_tabulated_angular_distribution( self, chunk ) :
 
             self.assertEqual( 5, len( chunk.cosines ) )
@@ -461,6 +394,8 @@ class Test_MixedAngularDistribution( unittest.TestCase ) :
             self.assertEqual( 4, chunk.boundaries[1] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( True, chunk.is_curated )
 

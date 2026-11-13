@@ -718,9 +718,19 @@ class LegendreAngularDistribution:
         The coefficients
         """
     @property
+    def lower_cosine_limit(self) -> float:
+        """
+        The lower cosine limit
+        """
+    @property
     def pdf(self) -> LegendreAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
+        """
+    @property
+    def upper_cosine_limit(self) -> float:
+        """
+        The upper cosine limit
         """
 class LegendreAngularDistributionFunction:
     """
@@ -1078,9 +1088,19 @@ class MixedAngularDistribution:
         Flag indicating whether or not the distribution is curated
         """
     @property
+    def lower_cosine_limit(self) -> float:
+        """
+        The lower cosine limit
+        """
+    @property
     def pdf(self) -> IsotropicAngularDistributionFunction | ... | TabulatedAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
+        """
+    @property
+    def upper_cosine_limit(self) -> float:
+        """
+        The upper cosine limit
         """
 class MixedAngularDistributions:
     """
@@ -3136,9 +3156,19 @@ class TabulatedAngularDistribution:
         Flag indicating whether or not the distribution is curated
         """
     @property
+    def lower_cosine_limit(self) -> float:
+        """
+        The lower cosine limit
+        """
+    @property
     def pdf(self) -> TabulatedAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
+        """
+    @property
+    def upper_cosine_limit(self) -> float:
+        """
+        The upper cosine limit
         """
     @property
     def values(self) -> list[float]:
@@ -4324,9 +4354,19 @@ class TabulatedEnergyDistribution:
         Flag indicating whether or not the distribution is curated
         """
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
     def pdf(self) -> TabulatedEnergyDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
         """
     @property
     def values(self) -> list[float]:

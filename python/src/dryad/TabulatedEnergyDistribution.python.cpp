@@ -124,6 +124,18 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
   )
   .def_property_readonly(
 
+    "lower_energy_limit",
+    &Component::lowerEnergyLimit,
+    "The lower energy limit"
+  )
+  .def_property_readonly(
+
+    "upper_energy_limit",
+    &Component::upperEnergyLimit,
+    "The upper energy limit"
+  )
+  .def_property_readonly(
+
     "pdf",
     python::overload_cast<>( &Component::pdf, python::const_ ),
     "The probability distribution function (pdf) of the distribution"

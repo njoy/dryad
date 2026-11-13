@@ -33,6 +33,8 @@ class Test_TabulatedEnergyDistribution( unittest.TestCase ) :
             self.assertEqual( 3, chunk.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( True, chunk.is_curated )
+            self.assertAlmostEqual( 0., chunk.lower_energy_limit )
+            self.assertAlmostEqual( 4., chunk.upper_energy_limit )
 
             pdf = chunk.pdf
             self.assertAlmostEqual( 0., pdf.lower_energy_limit )
@@ -157,6 +159,8 @@ class Test_TabulatedEnergyDistribution( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
             self.assertEqual( False, chunk.is_curated )
+            self.assertAlmostEqual( 0., chunk.lower_energy_limit )
+            self.assertAlmostEqual( 4., chunk.upper_energy_limit )
 
             pdf = chunk.pdf
             self.assertAlmostEqual( 0., pdf.lower_energy_limit )
@@ -231,6 +235,8 @@ class Test_TabulatedEnergyDistribution( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
             self.assertEqual( True, chunk.is_curated )
+            self.assertAlmostEqual( 0., chunk.lower_energy_limit )
+            self.assertAlmostEqual( 4., chunk.upper_energy_limit )
 
             pdf = chunk.pdf
             self.assertAlmostEqual( 0., pdf.lower_energy_limit )

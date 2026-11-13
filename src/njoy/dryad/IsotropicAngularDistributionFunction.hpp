@@ -45,6 +45,22 @@ namespace dryad {
     /* interface imposed functions */
 
     /**
+     *  @brief Return the lower limit of the domain
+     */
+    static constexpr double lower() {
+
+      return -1;
+    }
+
+    /**
+     *  @brief Return the upper limit of the domain
+     */
+    static constexpr double upper() {
+
+      return +1;
+    }
+
+    /**
      *  @brief Evaluate the function
      *
      *  @param[in] cosine   the cosine value
@@ -79,7 +95,6 @@ namespace dryad {
      *  @param[in] value   the value of the distribution (0.5 for a normalised distribution)
      */
     IsotropicAngularDistributionFunction( double value = 0.5 ) :
-      Parent( scion::math::IntervalDomain< double >( -1.0, 1.0 ) ),
       value_( std::move( value ) ) {}
 
     IsotropicAngularDistributionFunction( const IsotropicAngularDistributionFunction& ) = default;
@@ -109,14 +124,22 @@ namespace dryad {
     /**
      *  @brief Return the lower cosine limit
      */
-    static constexpr double lowerCosineLimit() { return -1.0; }
+    double lowerCosineLimit() const {
+
+      return this->lowerLimit();
+    }
 
     /**
      *  @brief Return the upper cosine limit
      */
-    static constexpr double upperCosineLimit() { return 1.0; }
+    double upperCosineLimit() const {
+
+      return this->upperLimit();
+    }
 
     using Parent::operator();
+    using Parent::lowerLimit;
+    using Parent::upperLimit;
 
     /**
      *  @brief Return the integral of the distribution function over its domain

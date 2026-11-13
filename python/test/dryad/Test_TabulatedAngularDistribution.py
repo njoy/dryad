@@ -32,6 +32,8 @@ class Test_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 2. / normalisation, chunk.values[3] )
             self.assertEqual( 3, chunk.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( True, chunk.is_curated )
 
@@ -151,6 +153,8 @@ class Test_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertEqual( 5, chunk.boundaries[1] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( False, chunk.is_curated )
 
@@ -226,6 +230,8 @@ class Test_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertEqual( 4, chunk.boundaries[1] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
 
             self.assertEqual( True, chunk.is_curated )
 

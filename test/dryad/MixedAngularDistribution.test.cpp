@@ -18,7 +18,6 @@ void verifyTabulatedChunk( const MixedAngularDistribution&, bool );
 void verifyChunkCurated( const MixedAngularDistribution& );
 void verifyChunkNotCurated( const MixedAngularDistribution& );
 void verifyChunkCurated( const TabulatedAngularDistribution& );
-void verifyChunkNotCurated( const TabulatedAngularDistribution& );
 
 SCENARIO( "MixedAngularDistribution" ) {
 
@@ -141,6 +140,8 @@ void verifyIsotropicChunk( const MixedAngularDistribution& chunk, bool normalise
 
   CHECK( true == std::holds_alternative< IsotropicAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( true == chunk.isCurated() );
 
@@ -204,6 +205,8 @@ void verifyLegendreChunk( const MixedAngularDistribution& chunk, bool normalise 
 
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< LegendreAngularDistributionFunction >( chunk.cdf() ) );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( true == chunk.isCurated() );
 
@@ -274,6 +277,8 @@ void verifyTabulatedChunk( const MixedAngularDistribution& chunk, bool normalise
 
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( true == chunk.isCurated() );
 
@@ -378,6 +383,8 @@ void verifyChunkNotCurated( const MixedAngularDistribution& chunk ) {
 
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( false == chunk.isCurated() );
 
@@ -438,6 +445,8 @@ void verifyChunkCurated( const MixedAngularDistribution& chunk ) {
 
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.pdf() ) );
   CHECK( true == std::holds_alternative< TabulatedAngularDistributionFunction >( chunk.cdf() ) );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( true == chunk.isCurated() );
 
@@ -490,84 +499,6 @@ void verifyChunkCurated( const MixedAngularDistribution& chunk ) {
   CHECK( true == cdf.isCurated() );
 }
 
-void verifyChunkNotCurated( const TabulatedAngularDistribution& chunk ) {
-
-  CHECK( 6 == chunk.cosines().size() );
-  CHECK( 6 == chunk.values().size() );
-  CHECK( 2 == chunk.boundaries().size() );
-  CHECK( 2 == chunk.interpolants().size() );
-  CHECK_THAT( -1. , WithinRel( chunk.cosines()[0] ) );
-  CHECK_THAT( -0.5, WithinRel( chunk.cosines()[1] ) );
-  CHECK_THAT(  0. , WithinRel( chunk.cosines()[2] ) );
-  CHECK_THAT(  0. , WithinRel( chunk.cosines()[3] ) );
-  CHECK_THAT(  0. , WithinRel( chunk.cosines()[4] ) );
-  CHECK_THAT(  1. , WithinRel( chunk.cosines()[5] ) );
-  CHECK_THAT( 0., WithinRel( chunk.values()[0] ) );
-  CHECK_THAT( 1., WithinRel( chunk.values()[1] ) );
-  CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
-  CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-  CHECK_THAT( 1., WithinRel( chunk.values()[4] ) );
-  CHECK_THAT( 2., WithinRel( chunk.values()[5] ) );
-  CHECK( 2 == chunk.boundaries()[0] );
-  CHECK( 5 == chunk.boundaries()[1] );
-  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
-
-  CHECK( false == chunk.isCurated() );
-
-  auto pdf = chunk.pdf();
-  CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
-  CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
-  CHECK( 6 == pdf.cosines().size() );
-  CHECK( 6 == pdf.values().size() );
-  CHECK( 2 == pdf.boundaries().size() );
-  CHECK( 2 == pdf.interpolants().size() );
-  CHECK_THAT( -1. , WithinRel( pdf.cosines()[0] ) );
-  CHECK_THAT( -0.5, WithinRel( pdf.cosines()[1] ) );
-  CHECK_THAT(  0. , WithinRel( pdf.cosines()[2] ) );
-  CHECK_THAT(  0. , WithinRel( pdf.cosines()[3] ) );
-  CHECK_THAT(  0. , WithinRel( pdf.cosines()[4] ) );
-  CHECK_THAT(  1. , WithinRel( pdf.cosines()[5] ) );
-  CHECK_THAT( 0., WithinRel( pdf.values()[0] ) );
-  CHECK_THAT( 1., WithinRel( pdf.values()[1] ) );
-  CHECK_THAT( 2., WithinRel( pdf.values()[2] ) );
-  CHECK_THAT( 3., WithinRel( pdf.values()[3] ) );
-  CHECK_THAT( 1., WithinRel( pdf.values()[4] ) );
-  CHECK_THAT( 2., WithinRel( pdf.values()[5] ) );
-  CHECK( 2 == pdf.boundaries()[0] );
-  CHECK( 5 == pdf.boundaries()[1] );
-  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
-  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[1] );
-  CHECK( true == pdf.isLinearised() );
-  CHECK( false == pdf.isCurated() );
-
-  auto cdf = chunk.cdf();
-  CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
-  CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
-  CHECK( 6 == cdf.cosines().size() );
-  CHECK( 6 == cdf.values().size() );
-  CHECK( 2 == cdf.boundaries().size() );
-  CHECK( 2 == cdf.interpolants().size() );
-  CHECK_THAT( -1. , WithinRel( cdf.cosines()[0] ) );
-  CHECK_THAT( -0.5, WithinRel( cdf.cosines()[1] ) );
-  CHECK_THAT(  0. , WithinRel( cdf.cosines()[2] ) );
-  CHECK_THAT(  0. , WithinRel( cdf.cosines()[3] ) );
-  CHECK_THAT(  0. , WithinRel( cdf.cosines()[4] ) );
-  CHECK_THAT(  1. , WithinRel( cdf.cosines()[5] ) );
-  CHECK_THAT( 0.  , WithinRel( cdf.values()[0] ) );
-  CHECK_THAT( 0.25, WithinRel( cdf.values()[1] ) );
-  CHECK_THAT( 1.  , WithinRel( cdf.values()[2] ) );
-  CHECK_THAT( 1.  , WithinRel( cdf.values()[3] ) );
-  CHECK_THAT( 1.  , WithinRel( cdf.values()[4] ) );
-  CHECK_THAT( 2.5 , WithinRel( cdf.values()[5] ) );
-  CHECK( 2 == cdf.boundaries()[0] );
-  CHECK( 5 == cdf.boundaries()[1] );
-  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
-  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[1] );
-  CHECK( true == cdf.isLinearised() );
-  CHECK( false == cdf.isCurated() );
-}
-
 void verifyChunkCurated( const TabulatedAngularDistribution& chunk ) {
 
   CHECK( 5 == chunk.cosines().size() );
@@ -588,6 +519,8 @@ void verifyChunkCurated( const TabulatedAngularDistribution& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( true == chunk.isCurated() );
 

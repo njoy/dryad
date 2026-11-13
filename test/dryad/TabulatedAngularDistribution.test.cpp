@@ -167,6 +167,8 @@ void verifyChunk( const TabulatedAngularDistribution& chunk, bool normalise ) {
   CHECK_THAT(  2.  / normalisation, WithinRel( chunk.values()[3] ) );
   CHECK( 3 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( true == chunk.isCurated() );
 
@@ -289,6 +291,8 @@ void verifyChunkNotCurated( const TabulatedAngularDistribution& chunk ) {
   CHECK( 5 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( false == chunk.isCurated() );
 
@@ -365,6 +369,8 @@ void verifyChunkCurated( const TabulatedAngularDistribution& chunk ) {
   CHECK( 4 == chunk.boundaries()[1] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+  CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
 
   CHECK( true == chunk.isCurated() );
 
