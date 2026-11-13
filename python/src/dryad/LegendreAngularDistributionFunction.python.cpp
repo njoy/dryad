@@ -88,6 +88,17 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
   )
   .def(
 
+    "legendre_moment",
+    &Component::legendreMoment,
+    python::arg( "order" ),
+    "Return a Legendre moment of the distribution function\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    order : int\n"
+    "        the order of the Legendre moment to calculate"
+  )
+  .def(
+
     "normalise",
     &Component::normalise,
     "Normalise the distribution function"

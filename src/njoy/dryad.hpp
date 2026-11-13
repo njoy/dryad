@@ -64,6 +64,7 @@
 #include "njoy/dryad/TabulatedEnergyDistribution.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributions.hpp"
 #include "njoy/dryad/TabulatedAverageCosine.hpp"
+#include "njoy/dryad/TabulatedLegendreMoment.hpp"
 #include "njoy/dryad/TabulatedAverageEnergy.hpp"
 #include "njoy/dryad/MultiEnergyDistributions.hpp"
 #include "njoy/dryad/TwoBodyDistributionData.hpp"

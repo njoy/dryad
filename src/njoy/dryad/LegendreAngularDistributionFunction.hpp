@@ -107,6 +107,18 @@ namespace dryad {
     using LegendreSeries::mean;
 
     /**
+     *  @brief Return a Legendre moment of the distribution
+     *
+     *  @param[in] order   the order of the Legendre moment to calculate
+     */
+    double legendreMoment( std::size_t order ) const {
+
+      return this->order() < order
+             ? 0.
+             : 2. * this->coefficients()[order] / ( 2. * order + 1. ) ;
+    }
+
+    /**
      *  @brief Normalise the distribution function
      */
     void normalise() {

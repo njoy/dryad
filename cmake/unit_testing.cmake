@@ -132,6 +132,7 @@ add_cpp_test( dryad.PolynomialMultiplicity                                      
 add_cpp_test( dryad.TabulatedMultiplicity                                                    dryad/TabulatedMultiplicity.test.cpp )
 add_cpp_test( dryad.TabulatedAverageCosine                                                   dryad/TabulatedAverageCosine.test.cpp )
 add_cpp_test( dryad.TabulatedAverageEnergy                                                   dryad/TabulatedAverageEnergy.test.cpp )
+add_cpp_test( dryad.TabulatedLegendreMoment                                                  dryad/TabulatedLegendreMoment.test.cpp )
 add_cpp_test( dryad.IsotropicAngularDistributionFunction                                     dryad/IsotropicAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.LegendreAngularDistributionFunction                                      dryad/LegendreAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.LegendreAngularDistribution                                              dryad/LegendreAngularDistribution.test.cpp )

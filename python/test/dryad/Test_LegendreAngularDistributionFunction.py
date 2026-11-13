@@ -35,6 +35,13 @@ class Test_LegendreAngularDistributionFunction( unittest.TestCase ) :
             self.assertAlmostEqual(  -62./3., chunk.integral )
             self.assertAlmostEqual( 146./15. / (-62./3.), chunk.mean )
 
+            # verify legendre moments
+            self.assertAlmostEqual( -62./3. , chunk.legendre_moment( 0 ) )
+            self.assertAlmostEqual( 146./15., chunk.legendre_moment( 1 ) )
+            self.assertAlmostEqual( -28./15., chunk.legendre_moment( 2 ) )
+            self.assertAlmostEqual(   4./35., chunk.legendre_moment( 3 ) )
+            self.assertAlmostEqual(   0.    , chunk.legendre_moment( 4 ) )
+
             # verify linearisation
             linear = chunk.linearise( 0.01 )
 

@@ -395,6 +395,75 @@ void verifyChunk( const LegendreAngularDistributions& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLinear == cosines.interpolants()[0] );
   CHECK( true == cosines.isLinearised() );
 
+  // legendre moment 0
+  auto moments = chunk.legendreMoments( 0 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 4 == moments.numberPoints() );
+  CHECK( 1 == moments.numberRegions() );
+  CHECK( 4 == moments.energies().size() );
+  CHECK( 4 == moments.values().size() );
+  CHECK( 1 == moments.boundaries().size() );
+  CHECK( 1 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 2. / normalisation, WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 2. / normalisation, WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 2. / normalisation, WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 2. / normalisation, WithinRel( moments.values()[3] ) );
+  CHECK( 3 == moments.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( true == moments.isLinearised() );
+
+  // legendre moment 1
+  moments = chunk.legendreMoments( 1 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 4 == moments.numberPoints() );
+  CHECK( 1 == moments.numberRegions() );
+  CHECK( 4 == moments.energies().size() );
+  CHECK( 4 == moments.values().size() );
+  CHECK( 1 == moments.boundaries().size() );
+  CHECK( 1 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 0.                       , WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 0.04 / 3. / normalisation, WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 0.4 / 3.  / normalisation, WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 1.6 / 3.  / normalisation, WithinRel( moments.values()[3] ) );
+  CHECK( 3 == moments.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( true == moments.isLinearised() );
+
+  // legendre moment 2
+  moments = chunk.legendreMoments( 2 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 4 == moments.numberPoints() );
+  CHECK( 1 == moments.numberRegions() );
+  CHECK( 4 == moments.energies().size() );
+  CHECK( 4 == moments.values().size() );
+  CHECK( 1 == moments.boundaries().size() );
+  CHECK( 1 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[3] ) );
+  CHECK( 3 == moments.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( true == moments.isLinearised() );
+
   // linearisation
   auto linear = chunk.linearise();
 
@@ -519,6 +588,87 @@ void verifyChunkWithJumpCurated( const LegendreAngularDistributions& chunk ) {
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
   CHECK( true == chunk.isCurated() );
+
+  // legendre moment 0
+  auto moments = chunk.legendreMoments( 0 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 5 == moments.numberPoints() );
+  CHECK( 2 == moments.numberRegions() );
+  CHECK( 5 == moments.energies().size() );
+  CHECK( 5 == moments.values().size() );
+  CHECK( 2 == moments.boundaries().size() );
+  CHECK( 2 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[4] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[3] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[4] ) );
+  CHECK( 1 == moments.boundaries()[0] );
+  CHECK( 4 == moments.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[1] );
+  CHECK( true == moments.isLinearised() );
+
+  // legendre moment 1
+  moments = chunk.legendreMoments( 1 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 5 == moments.numberPoints() );
+  CHECK( 2 == moments.numberRegions() );
+  CHECK( 5 == moments.energies().size() );
+  CHECK( 5 == moments.values().size() );
+  CHECK( 2 == moments.boundaries().size() );
+  CHECK( 2 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[4] ) );
+  CHECK_THAT( 0.       , WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 0.04 / 3., WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 0.02 / 3., WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 0.4 / 3. , WithinRel( moments.values()[3] ) );
+  CHECK_THAT( 1.6 / 3. , WithinRel( moments.values()[4] ) );
+  CHECK( 1 == moments.boundaries()[0] );
+  CHECK( 4 == moments.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[1] );
+  CHECK( true == moments.isLinearised() );
+
+  // legendre moment 2
+  moments = chunk.legendreMoments( 2 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 5 == moments.numberPoints() );
+  CHECK( 2 == moments.numberRegions() );
+  CHECK( 5 == moments.energies().size() );
+  CHECK( 5 == moments.values().size() );
+  CHECK( 2 == moments.boundaries().size() );
+  CHECK( 2 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[4] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[3] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[4] ) );
+  CHECK( 1 == moments.boundaries()[0] );
+  CHECK( 4 == moments.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[1] );
+  CHECK( true == moments.isLinearised() );
 }
 
 void verifyChunkWithJumpNotCurated( const LegendreAngularDistributions& chunk ) {
@@ -580,6 +730,93 @@ void verifyChunkWithJumpNotCurated( const LegendreAngularDistributions& chunk ) 
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
   CHECK( false == chunk.isCurated() );
+
+  // legendre moment 0
+  auto moments = chunk.legendreMoments( 0 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 6 == moments.numberPoints() );
+  CHECK( 2 == moments.numberRegions() );
+  CHECK( 6 == moments.energies().size() );
+  CHECK( 6 == moments.values().size() );
+  CHECK( 2 == moments.boundaries().size() );
+  CHECK( 2 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[4] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[5] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[3] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[4] ) );
+  CHECK_THAT( 2., WithinRel( moments.values()[5] ) );
+  CHECK( 1 == moments.boundaries()[0] );
+  CHECK( 5 == moments.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[1] );
+  CHECK( true == moments.isLinearised() );
+
+  // legendre moment 1
+  moments = chunk.legendreMoments( 1 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 6 == moments.numberPoints() );
+  CHECK( 2 == moments.numberRegions() );
+  CHECK( 6 == moments.energies().size() );
+  CHECK( 6 == moments.values().size() );
+  CHECK( 2 == moments.boundaries().size() );
+  CHECK( 2 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[4] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[5] ) );
+  CHECK_THAT( 0.       , WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 0.04 / 3., WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 0.1 / 3. , WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 0.02 / 3., WithinRel( moments.values()[3] ) );
+  CHECK_THAT( 0.4 / 3. , WithinRel( moments.values()[4] ) );
+  CHECK_THAT( 1.6 / 3. , WithinRel( moments.values()[5] ) );
+  CHECK( 1 == moments.boundaries()[0] );
+  CHECK( 5 == moments.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[1] );
+  CHECK( true == moments.isLinearised() );
+
+  // legendre moment 2
+  moments = chunk.legendreMoments( 2 );
+
+  CHECK_THAT( 1., WithinRel( moments.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( moments.upperEnergyLimit() ) );
+  CHECK( 6 == moments.numberPoints() );
+  CHECK( 2 == moments.numberRegions() );
+  CHECK( 6 == moments.energies().size() );
+  CHECK( 6 == moments.values().size() );
+  CHECK( 2 == moments.boundaries().size() );
+  CHECK( 2 == moments.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( moments.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[2] ) );
+  CHECK_THAT( 2., WithinRel( moments.energies()[3] ) );
+  CHECK_THAT( 3., WithinRel( moments.energies()[4] ) );
+  CHECK_THAT( 4., WithinRel( moments.energies()[5] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[0] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[1] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[2] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[3] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[4] ) );
+  CHECK_THAT( 0., WithinRel( moments.values()[5] ) );
+  CHECK( 1 == moments.boundaries()[0] );
+  CHECK( 5 == moments.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == moments.interpolants()[1] );
+  CHECK( true == moments.isLinearised() );
 }
 
 void verifyLinearisedChunkWithJump( const TabulatedAngularDistributions& chunk ) {

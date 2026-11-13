@@ -180,6 +180,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return a Legendre moment of the distribution
+     *
+     *  @param[in] order   the order of the Legendre moment to calculate
+     */
+    double legendreMoment( std::size_t order ) const {
+
+      return this->pdf().legendreMoment( order );
+    }
+
+    /**
      *  @brief Return a linearised angular distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)

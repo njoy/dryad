@@ -139,6 +139,17 @@ void wrapLegendreAngularDistributions( python::module& module ) {
   )
   .def(
 
+    "legendre_moments",
+    &Component::legendreMoments,
+    python::arg( "order" ),
+    "Return the Legendre moment values\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    order : int\n"
+    "        the order of the Legendre moment to calculate"
+  )
+  .def(
+
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,

@@ -111,6 +111,11 @@ void verifyChunk( const LegendreAngularDistribution& chunk, bool normalise ) {
   // average cosine - always the mean value even for unnormalised distributions
   CHECK_THAT( 1. / 3. / 2., WithinRel( chunk.averageCosine() ) );
 
+  // legendre moments
+  CHECK_THAT( 2.    / normalisation, WithinRel( chunk.legendreMoment( 0 ) ) );
+  CHECK_THAT( 1./3. / normalisation, WithinRel( chunk.legendreMoment( 1 ) ) );
+  CHECK_THAT( 0.                   , WithinRel( chunk.legendreMoment( 2 ) ) );
+
   // linearisation
   auto linear = chunk.linearise();
 

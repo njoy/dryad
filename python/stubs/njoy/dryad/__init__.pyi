@@ -10,7 +10,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'MultigroupAverageCosine', 'MultigroupAverageEnergy', 'MultigroupCrossSection', 'MultigroupMultiplicity', 'MultigroupProjectileTarget', 'MultigroupReaction', 'MultigroupReactionProduct', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributionFunction', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MixedAngularDistribution', 'MixedAngularDistributions', 'MultiEnergyDistributions', 'MultigroupAverageCosine', 'MultigroupAverageEnergy', 'MultigroupCrossSection', 'MultigroupMultiplicity', 'MultigroupProjectileTarget', 'MultigroupReaction', 'MultigroupReactionProduct', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedLegendreMoment', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -686,6 +686,15 @@ class LegendreAngularDistribution:
         """
     def __ne__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
+    def legendre_moment(self, order: int) -> float:
+        """
+        Return a Legendre moment of the distribution
+        
+        Parameters
+        ----------
+            order : int
+                the order of the Legendre moment to calculate
+        """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
@@ -815,6 +824,15 @@ class LegendreAngularDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
+    def legendre_moment(self, order: int) -> float:
+        """
+        Return a Legendre moment of the distribution function
+        
+        Parameters
+        ----------
+            order : int
+                the order of the Legendre moment to calculate
+        """
     def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
         Linearise the series
@@ -915,6 +933,15 @@ class LegendreAngularDistributions:
         Curate the table
         
         This removes extraneous interior points in discontinuities in the data.
+        """
+    def legendre_moments(self, order: int) -> TabulatedLegendreMoment:
+        """
+        Return the Legendre moment values
+        
+        Parameters
+        ----------
+            order : int
+                the order of the Legendre moment to calculate
         """
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
@@ -4812,6 +4839,165 @@ class TabulatedFormFactor:
     def values(self) -> list[float]:
         """
         The form factor values
+        """
+class TabulatedLegendreMoment:
+    """
+    A Legendre moment table
+    
+    Parameters
+    ----------
+        order : int
+            the order of the Legendre moment
+        energies : list of float
+            the energy values
+        values : list of float
+            the Legendre moment values
+        boundaries : list of int, optional
+            the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+            the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+            the interpolation type for single-region tables
+        curate : bool, default=False
+            flag to indicate whether or not to curate the data
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    @typing.overload
+    def __add__(self, arg0: TabulatedLegendreMoment) -> TabulatedLegendreMoment:
+        ...
+    def __call__(self, energy: float) -> float:
+        """
+        Evaluate the table for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> TabulatedLegendreMoment:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedLegendreMoment:
+        ...
+    def __eq__(self, arg0: TabulatedLegendreMoment) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: TabulatedLegendreMoment) -> TabulatedLegendreMoment:
+        ...
+    def __imul__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    @typing.overload
+    def __init__(self, order: int, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], curate: bool = False) -> None:
+        """
+        Initialise the Legendre moment table with multiple interpolation regions
+        """
+    @typing.overload
+    def __init__(self, order: int, energies: list[float], values: list[float], interpolant: InterpolationType = ..., curate: bool = False) -> None:
+        """
+        Initialise the Legendre moment table with single interpolation type
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: TabulatedLegendreMoment) -> TabulatedLegendreMoment:
+        ...
+    def __itruediv__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    def __mul__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    def __ne__(self, arg0: TabulatedLegendreMoment) -> bool:
+        ...
+    def __neg__(self) -> TabulatedLegendreMoment:
+        ...
+    def __radd__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    def __rmul__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    def __rsub__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: TabulatedLegendreMoment) -> TabulatedLegendreMoment:
+        ...
+    def __truediv__(self, arg0: float) -> TabulatedLegendreMoment:
+        ...
+    def curate(self) -> None:
+        """
+        Curate the table
+        
+        This removes extraneous interior points in discontinuities in the data.
+        """
+    def linearise(self, tolerance: float = 0.001) -> TabulatedLegendreMoment:
+        """
+        Linearise the table
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                the linearisation tolerance
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy values
+        """
+    @property
+    def interpolants(self) -> list[InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def is_curated(self) -> bool:
+        """
+        Flag indicating whether or not the data is curated
+        """
+    @property
+    def is_linearised(self) -> bool:
+        """
+        Flag indicating whether or not the table is linearised
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
+        """
+    @property
+    def order(self) -> int:
+        """
+        The order of the Legendre moment
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The Legendre moment values
         """
 class TabulatedMultiplicity:
     """

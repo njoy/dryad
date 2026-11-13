@@ -50,6 +50,11 @@ class Test_LegendreAngularDistribution( unittest.TestCase ) :
             # verify average cosine - always the mean value even for unnormalised distributions
             self.assertAlmostEqual( 1. / 3. / 2., chunk.average_cosine )
 
+            # verify legendre moments
+            self.assertAlmostEqual( 2. / normalisation, chunk.legendre_moment( 0 ) )
+            self.assertAlmostEqual( 1. / 3. / normalisation, chunk.legendre_moment( 1 ) )
+            self.assertAlmostEqual( 0., chunk.legendre_moment( 2 ) )
+
             # verify linearisation
             linear = chunk.linearise()
             self.assertAlmostEqual( -1., linear.pdf.lower_cosine_limit )
