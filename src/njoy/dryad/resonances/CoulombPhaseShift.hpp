@@ -72,7 +72,7 @@ namespace resonances {
       double G = gf.real();
       return F == 0. && G == 0.
              ? 0.
-             : std::acos( G / std::sqrt( F * F + G * G ) );
+             : - std::acos( G / std::sqrt( F * F + G * G ) );
     }
 
     /**

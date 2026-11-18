@@ -94,7 +94,7 @@ namespace resonances {
      */
     double operator()( double ratio ) const {
 
-      return ratio - std::atan( this->ratio_( ratio ) );
+      return - ( ratio - std::atan( this->ratio_( ratio ) ) );
     }
 
     /**
