@@ -493,7 +493,7 @@ namespace calculator {
       unsigned int number_channels = channels.size() - 1;
       for ( unsigned int c = 0; c < number_channels; ++c ) {
 
-        double shift = this->phaseShiftDifferences()[c] - this->phaseShifts()[c];
+        double shift = this->phaseShiftDifferences()[c] + this->phaseShifts()[c];
         this->omega_matrix_.diagonal()[c] = std::exp( std::complex< double >( 0., shift ) );
       }
 
