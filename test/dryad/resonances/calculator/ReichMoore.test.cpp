@@ -74,7 +74,7 @@ SCENARIO( "ReichMoore" ) {
 
     double e = 1.;
 
-    auto omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+    auto omega = std::exp( std::complex< double >( 0., elastic.phaseShift( e ) ) );
 
     auto matrix = rlmatrix_shiftfactor.r_l_matrix( e, { capture, elastic }, table );
     auto result = calculate_shiftfactor( e );
@@ -106,7 +106,7 @@ SCENARIO( "ReichMoore" ) {
 
     e = 2.;
 
-    omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+    omega = std::exp( std::complex< double >( 0., elastic.phaseShift( e ) ) );
 
     matrix = rlmatrix_shiftfactor.r_l_matrix( e, { capture, elastic }, table );
     result = calculate_shiftfactor( e );
@@ -143,7 +143,7 @@ SCENARIO( "ReichMoore" ) {
 
     e = 1.;
 
-    omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+    omega = std::exp( std::complex< double >( 0., elastic.phaseShift( e ) ) );
 
     matrix = rlmatrix_constant.r_l_matrix( e, { capture, elastic }, table );
     result = calculate_constant( e );
@@ -175,7 +175,7 @@ SCENARIO( "ReichMoore" ) {
 
     e = 2.;
 
-    omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+    omega = std::exp( std::complex< double >( 0., elastic.phaseShift( e ) ) );
 
     matrix = rlmatrix_constant.r_l_matrix( e, { capture, elastic }, table );
     result = calculate_constant( e );
